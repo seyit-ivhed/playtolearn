@@ -1,0 +1,127 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: var(--color-bg-secondary);
+    border-radius: 16px;
+    border: 2px solid var(--color-ui-success);
+    box-shadow: 0 0 40px rgba(0, 255, 136, 0.2);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.title {
+    font-size: 2.5rem;
+    color: var(--color-ui-success);
+    margin: 0 0 1rem 0;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.subtitle {
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.rewardsContainer {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 100%;
+    margin-bottom: 2rem;
+    border: 1px solid var(--color-bg-tertiary);
+}
+
+.rewardItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+    animation: slideIn 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.rewardItem:last-child {
+    margin-bottom: 0;
+}
+
+.rewardItem:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.rewardItem:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.rewardItem:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.icon {
+    font-size: 2rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.button {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+
+.primaryButton {
+    background-color: var(--color-ui-success);
+    color: var(--color-bg-primary);
+    border: none;
+}
+
+.primaryButton:hover {
+    background-color: #00cc6a;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.secondaryButton {
+    background-color: transparent;
+    border: 2px solid var(--color-text-disabled);
+    color: var(--color-text-secondary);
+}
+
+.secondaryButton:hover {
+    border-color: var(--color-text-primary);
+    color: var(--color-text-primary);
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

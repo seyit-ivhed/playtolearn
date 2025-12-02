@@ -1,0 +1,50 @@
+/* Mission Page Styles */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.missionGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.missionNode {
+    transition: transform 0.2s ease;
+}
+
+.missionNode:hover {
+    transform: translateY(-4px);
+}
+
+@media (max-width: 768px) {
+    .missionGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .missionGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.missionCard {
+    background: rgba(26, 31, 58, 0.8);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+}
+
+.deployButton {
+    margin-top: 1rem;
+    width: 100%;
+}

@@ -1,0 +1,216 @@
+.feedbackContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-out;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 3px solid;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    animation: iconBounce 0.5s ease-out;
+}
+
+.icon {
+    font-size: 2rem;
+    animation: rotate 0.6s ease-out;
+}
+
+.message {
+    flex: 1;
+    margin: 0;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Correct state - Celebration */
+.correct {
+    background: linear-gradient(135deg, #51cf66 0%, #2f9e44 100%);
+    border-color: #69db7c;
+    animation: slideIn 0.3s ease-out, celebrate 0.5s ease-out 0.2s;
+}
+
+.correct .iconWrapper {
+    background: rgba(255, 255, 255, 0.3);
+    animation: iconBounce 0.5s ease-out, spin 0.8s ease-out;
+}
+
+.correct .icon {
+    animation: rotate 0.6s ease-out, grow 0.4s ease-out 0.3s;
+}
+
+/* Incorrect state - Gentle shake */
+.incorrect {
+    background: linear-gradient(135deg, #ff6b6b 0%, #e03131 100%);
+    border-color: #ff8787;
+    animation: slideIn 0.3s ease-out, shake 0.5s ease-out 0.2s;
+}
+
+.incorrect .iconWrapper {
+    background: rgba(255, 255, 255, 0.25);
+    animation: iconBounce 0.5s ease-out;
+}
+
+/* Pending state - Pulsing */
+.pending {
+    background: linear-gradient(135deg, #8a2be2 0%, #5a1895 100%);
+    border-color: #9d4edd;
+    animation: slideIn 0.3s ease-out, pulse 1.5s ease-in-out infinite;
+}
+
+.pending .iconWrapper {
+    background: rgba(255, 255, 255, 0.25);
+    animation: iconBounce 0.5s ease-out, pulse 1.5s ease-in-out infinite;
+}
+
+.pending .icon {
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes iconBounce {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes celebrate {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-10px);
+    }
+
+    75% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg) scale(1);
+    }
+
+    to {
+        transform: rotate(720deg) scale(1);
+    }
+}
+
+@keyframes grow {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .feedbackContainer {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .iconWrapper {
+        width: 50px;
+        height: 50px;
+    }
+
+    .icon {
+        font-size: 1.5rem;
+    }
+}

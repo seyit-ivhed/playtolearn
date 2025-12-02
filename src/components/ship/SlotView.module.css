@@ -1,0 +1,80 @@
+.slotContainer {
+    background: rgba(30, 30, 40, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.slotContainer:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(30, 30, 40, 0.8);
+}
+
+.slotContainer.selected {
+    border-color: #4488ff;
+    box-shadow: 0 0 12px rgba(68, 136, 255, 0.4);
+    background: rgba(40, 50, 70, 0.8);
+}
+
+.slotHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.slotTypeIcon {
+    font-size: 1.25rem;
+}
+
+.slotName {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.slotContent {
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.equippedCard {
+    width: 100%;
+}
+
+.emptySlot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    width: 100%;
+}
+
+.emptyIcon {
+    font-size: 2rem;
+    opacity: 0.3;
+}
+
+.emptyText {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+.allowedTypes {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: center;
+}

@@ -1,0 +1,114 @@
+:root {
+  /* Color Palette - Deep Space Background */
+  --color-bg-primary: #0A0E27;
+  --color-bg-secondary: #1A1F3A;
+  --color-bg-tertiary: #2D3561;
+
+  /* Accent Colors */
+  --color-accent-primary: #00D9FF; /* Cyan Glow */
+  --color-accent-secondary: #FF6B35; /* Solar Orange */
+  --color-accent-tertiary: #B537F2; /* Nebula Purple */
+  --color-accent-quaternary: #39FF14; /* Neon Green */
+
+  /* UI Colors */
+  --color-ui-success: #00FF88;
+  --color-ui-error: #FF4757;
+  --color-ui-warning: #FFA502;
+  --color-ui-info: #5F9EFF;
+  --color-ui-neutral: #8B93B0;
+
+  /* Text Colors */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B8C5D6;
+  --color-text-disabled: #6B7A8F;
+  --color-text-highlight: #00D9FF;
+
+  /* Typography */
+  --font-primary: 'Orbitron', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  font-family: var(--font-secondary);
+  line-height: 1.6;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  background-image: linear-gradient(180deg, #0A0E27 0%, #1A1F3A 100%);
+  min-height: 100vh;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Font Imports would go here in a real setup, assuming they are loaded via HTML or @import */
+
+a {
+  font-weight: 500;
+  color: var(--color-accent-primary);
+  text-decoration: inherit;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #535bf2; /* Fallback/Mix */
+  filter: brightness(1.2);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 3.2em;
+  font-weight: 700;
+}
+
+button {
+  border-radius: 12px;
+  border: 2px solid transparent;
+  padding: 0.8em 1.6em;
+  font-size: 1em;
+  font-weight: 700;
+  font-family: var(--font-primary);
+  background-color: var(--color-bg-tertiary);
+  cursor: pointer;
+  transition: all 0.25s;
+  color: var(--color-text-primary);
+}
+
+button:hover {
+  border-color: var(--color-accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Utility Classes */
+.text-accent { color: var(--color-accent-primary); }
+.text-error { color: var(--color-ui-error); }
+.text-success { color: var(--color-ui-success); }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}

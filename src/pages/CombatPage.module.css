@@ -1,0 +1,168 @@
+/* Combat Page Styles */
+
+.container {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.5s ease-in-out;
+}
+
+.trainingBackground {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../assets/images/backgrounds/training_zone.png');
+}
+
+.deepSpaceBackground {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../assets/images/backgrounds/deep_space.png');
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.headerControls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.abortLink {
+    color: var(--color-ui-error);
+}
+
+.arena {
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4rem;
+}
+
+.combatant {
+    text-align: center;
+}
+
+.playerShip {
+    width: 120px;
+    height: 80px;
+    background: #4A90E2;
+    margin-bottom: 1rem;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.enemyShip {
+    width: 100px;
+    height: 100px;
+    background: var(--color-ui-error);
+    margin-bottom: 1rem;
+    border-radius: 50%;
+}
+
+.healthBar {
+    width: 150px;
+    height: 10px;
+    background: #333;
+    border-radius: 5px;
+}
+
+.healthBarFill {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.playerHealth {
+    background: var(--color-ui-success);
+}
+
+.enemyHealth {
+    background: var(--color-ui-error);
+}
+
+.controls {
+    background: rgba(10, 14, 39, 0.9);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 2px solid var(--color-accent-primary);
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.lockedButton {
+    opacity: 0.5;
+}
+
+/* Math Modal */
+.mathModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.mathModalContent {
+    background: var(--color-bg-card);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 2px solid var(--color-accent-primary);
+    min-width: 400px;
+    text-align: center;
+}
+
+.mathModalContent h3 {
+    margin-bottom: 1.5rem;
+    color: var(--color-accent-primary);
+}
+
+/* End Screens */
+.endScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.endScreenContent {
+    background: var(--color-bg-card);
+    padding: 3rem;
+    border-radius: 16px;
+    border: 2px solid var(--color-accent-primary);
+    text-align: center;
+    min-width: 400px;
+}
+
+.endScreenContent h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.endScreenContent p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-secondary);
+}
+
+.endScreenContent button {
+    margin: 0.5rem;
+}

@@ -1,0 +1,115 @@
+import { ModuleType, type ShipModule } from '../types/ship.types';
+
+export const SHIP_MODULES: Record<string, ShipModule> = {
+    // Weapons
+    'weapon_laser_1': {
+        id: 'weapon_laser_1',
+        name: 'Basic Laser',
+        type: ModuleType.WEAPON,
+        stats: {
+            attack: 10,
+            energyCost: 0
+        },
+        cost: 0,
+        description: 'Standard issue laser cannon. Reliable and energy efficient.',
+        requirements: {
+            minLevel: 1
+        }
+    },
+    'weapon_missile_1': {
+        id: 'weapon_missile_1',
+        name: 'Missile Launcher',
+        type: ModuleType.WEAPON,
+        stats: {
+            attack: 25,
+            energyCost: 5
+        },
+        cost: 100,
+        description: 'High damage missile system. Requires energy to fire.',
+        requirements: {
+            missionId: 2
+        }
+    },
+    'weapon_plasma_1': {
+        id: 'weapon_plasma_1',
+        name: 'Plasma Beam',
+        type: ModuleType.WEAPON,
+        stats: {
+            attack: 15,
+            energyCost: 2
+        },
+        cost: 150,
+        description: 'Continuous beam weapon that melts through armor.',
+        requirements: {
+            missionId: 3
+        }
+    },
+
+    // Shields
+    'shield_basic_1': {
+        id: 'shield_basic_1',
+        name: 'Training Shield',
+        type: ModuleType.SHIELD,
+        stats: {
+            defense: 5,
+            energyCost: 1
+        },
+        cost: 0,
+        description: 'Basic energy shield for training purposes.',
+        requirements: {
+            minLevel: 1
+        }
+    },
+    'shield_energy_1': {
+        id: 'shield_energy_1',
+        name: 'Energy Shield',
+        type: ModuleType.SHIELD,
+        stats: {
+            defense: 15,
+            energyCost: 3
+        },
+        cost: 200,
+        description: 'Advanced shield generator providing superior protection.',
+        requirements: {
+            missionId: 4
+        }
+    },
+
+    // Special
+    'special_repair_1': {
+        id: 'special_repair_1',
+        name: 'Nano-Repair',
+        type: ModuleType.SPECIAL,
+        stats: {
+            health: 20,
+            energyCost: 10
+        },
+        cost: 300,
+        description: 'Emergency repair system. Restores hull integrity.',
+        requirements: {
+            missionId: 5
+        }
+    },
+    'armor_reinforced_1': {
+        id: 'armor_reinforced_1',
+        name: 'Reinforced Armor',
+        type: ModuleType.SPECIAL,
+        stats: {
+            health: 50,
+            speed: -5
+        },
+        cost: 150,
+        description: 'Heavy plating that increases hull strength but reduces speed.',
+        requirements: {
+            missionId: 2
+        }
+    }
+};
+
+export const getModuleById = (id: string): ShipModule | undefined => {
+    return SHIP_MODULES[id];
+};
+
+export const getAllModules = (): ShipModule[] => {
+    return Object.values(SHIP_MODULES);
+};

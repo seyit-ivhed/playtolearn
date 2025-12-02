@@ -1,0 +1,150 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #0f172a;
+    /* Dark space blue */
+    color: #e2e8f0;
+    font-family: 'Outfit', sans-serif;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #94a3b8;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    background: rgba(30, 41, 59, 0.5);
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.controlGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.select {
+    padding: 0.5rem 1rem;
+    background: #1e293b;
+    border: 1px solid #475569;
+    border-radius: 0.5rem;
+    color: #f1f5f9;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.select:hover {
+    border-color: #60a5fa;
+}
+
+.select:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+}
+
+.gameArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.stats {
+    display: flex;
+    gap: 2rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.statItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.statLabel {
+    color: #94a3b8;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+.nextButton {
+    margin-top: 2rem;
+    padding: 0.75rem 2rem;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.nextButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15), 0 3px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.nextButton:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.backButton {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid #475569;
+    color: #94a3b8;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.backButton:hover {
+    background: #1e293b;
+    color: #f1f5f9;
+    border-color: #64748b;
+}
