@@ -11,7 +11,9 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "start-project": "bash scripts/start-project.sh",
+    "complete-project": "bash scripts/complete-project.sh"
   },
   "dependencies": {
     "clsx": "^2.1.1",
