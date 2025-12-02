@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ShipSlot, ShipModule } from '../../types/ship.types';
 import { ModuleType } from '../../types/ship.types';
 import { ModuleCard } from './ModuleCard';
@@ -19,6 +20,8 @@ export const SlotView: React.FC<SlotViewProps> = ({
     onSelect,
     isSelected
 }) => {
+    const { t } = useTranslation();
+
     const getTypeIcon = (type: ModuleType) => {
         switch (type) {
             case ModuleType.WEAPON: return '⚔️';
@@ -36,7 +39,7 @@ export const SlotView: React.FC<SlotViewProps> = ({
         >
             <div className={styles.slotHeader}>
                 <span className={styles.slotTypeIcon}>{getTypeIcon(slot.type)}</span>
-                <span className={styles.slotName}>{slot.name}</span>
+                <span className={styles.slotName}>{t(`slots.${slot.name}`)}</span>
             </div>
 
             <div className={styles.slotContent}>
@@ -50,9 +53,9 @@ export const SlotView: React.FC<SlotViewProps> = ({
                 ) : (
                     <div className={styles.emptySlot}>
                         <span className={styles.emptyIcon}>⛌</span>
-                        <span className={styles.emptyText}>Empty Slot</span>
+                        <span className={styles.emptyText}>{t('empty_slot')}</span>
                         <span className={styles.allowedTypes}>
-                            Accepts: {slot.allowedTypes.join(', ')}
+                            {t('loadout.accepts', { types: slot.allowedTypes.join(', ') })}
                         </span>
                     </div>
                 )}

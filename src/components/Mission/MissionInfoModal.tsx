@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './MissionInfoModal.module.css';
 import type { Mission } from '../../types/mission.types';
 
@@ -13,53 +14,55 @@ export const MissionInfoModal: React.FC<MissionInfoModalProps> = ({
     onStart,
     onClose,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.overlay} onClick={onClose} data-testid="mission-info-modal">
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
-                    <h2 className={styles.title} data-testid="mission-title">{mission.title}</h2>
+                    <h2 className={styles.title} data-testid="mission-title">{t(`missions.${mission.id}.title`)}</h2>
                     <button className={styles.closeButton} onClick={onClose} aria-label="Close">
                         &times;
                     </button>
                 </div>
 
                 <div className={styles.content}>
-                    <p className={styles.description}>{mission.description}</p>
+                    <p className={styles.description}>{t(`missions.${mission.id}.description`)}</p>
 
                     <div className={styles.section}>
-                        <span className={styles.sectionTitle}>Target Enemy</span>
+                        <span className={styles.sectionTitle}>{t('mission.target_enemy')}</span>
                         <div className={styles.enemyInfo}>
                             <span className={styles.enemyIcon}>👾</span>
                             <div>
-                                <strong>{mission.enemy.name}</strong>
+                                <strong>{t(`enemies.${mission.enemy.id}`)}</strong>
                                 <div style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>
-                                    ATK: {mission.enemy.attack} | DEF: {mission.enemy.defense} | HP: {mission.enemy.maxHealth}
+                                    {t('mission.stats.atk')}: {mission.enemy.attack} | {t('mission.stats.def')}: {mission.enemy.defense} | {t('mission.stats.hp')}: {mission.enemy.maxHealth}
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div className={styles.section}>
-                        <span className={styles.sectionTitle}>Mission Rewards</span>
+                        <span className={styles.sectionTitle}>{t('mission.rewards')}</span>
                         <ul className={styles.rewardsList}>
                             {mission.rewards.xp && (
                                 <li className={styles.rewardItem}>
-                                    <span>✨</span> {mission.rewards.xp} XP
+                                    <span>✨</span> {t('rewards.xp', { amount: mission.rewards.xp })}
                                 </li>
                             )}
                             {mission.rewards.currency && (
                                 <li className={styles.rewardItem}>
-                                    <span>💎</span> {mission.rewards.currency} Credits
+                                    <span>💎</span> {t('rewards.credits', { amount: mission.rewards.currency })}
                                 </li>
                             )}
                             {mission.rewards.unlocksModuleId && (
                                 <li className={styles.rewardItem}>
-                                    <span>🎁</span> New Module Unlocked!
+                                    <span>🎁</span> {t('rewards.module_unlocked')}
                                 </li>
                             )}
                             {!mission.rewards.xp && !mission.rewards.currency && !mission.rewards.unlocksModuleId && (
                                 <li className={styles.rewardItem} style={{ color: 'var(--color-text-disabled)' }}>
-                                    No rewards listed
+                                    {t('mission.no_rewards')}
                                 </li>
                             )}
                         </ul>
@@ -68,10 +71,10 @@ export const MissionInfoModal: React.FC<MissionInfoModalProps> = ({
 
                 <div className={styles.footer}>
                     <button className={styles.cancelButton} onClick={onClose}>
-                        Cancel
+                        {t('mission.cancel')}
                     </button>
                     <button className={styles.startButton} onClick={onStart} data-testid="start-mission-btn">
-                        Start Mission
+                        {t('mission.start')}
                     </button>
                 </div>
             </div>

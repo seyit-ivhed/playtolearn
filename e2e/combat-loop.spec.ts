@@ -24,14 +24,14 @@ test.describe('Combat Loop E2E', () => {
         await fiveButton.click();
 
         // Click submit button
-        const submitButton = page.locator('button').filter({ hasText: /submit/i }).first();
+        const submitButton = page.getByTestId('submit-answer-btn');
         await submitButton.click();
 
         // Math modal should close
         await expect(page.getByTestId('math-modal')).not.toBeVisible({ timeout: 2000 });
 
         // Wait for enemy turn
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(3000);
 
         // Attack button should be visible again (back to PLAYER_INPUT phase)
         await expect(page.getByTestId('attack-btn')).toBeVisible();
@@ -45,11 +45,11 @@ test.describe('Combat Loop E2E', () => {
         // Submit any answer
         const fiveButton = page.locator('button').filter({ hasText: /^5$/ }).first();
         await fiveButton.click();
-        const submitButton = page.locator('button').filter({ hasText: /submit/i }).first();
+        const submitButton = page.getByTestId('submit-answer-btn');
         await submitButton.click();
 
         // Verify combat continues (enemy turn happens)
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(3000);
 
         // Player should be able to take another action
         await expect(page.getByTestId('attack-btn')).toBeVisible();
@@ -90,11 +90,11 @@ test.describe('Combat Loop E2E', () => {
                 await page.locator('button').filter({ hasText: new RegExp(`^${digit}$`) }).first().click();
             }
 
-            const submitButton = page.locator('button').filter({ hasText: /submit/i }).first();
+            const submitButton = page.getByTestId('submit-answer-btn');
             await submitButton.click();
 
             // Wait for enemy turn
-            await page.waitForTimeout(2000);
+            await page.waitForTimeout(3000);
         }
 
         // Eventually we should see victory (or defeat)
@@ -134,9 +134,9 @@ test.describe('Combat Loop E2E', () => {
                     await page.locator('button').filter({ hasText: new RegExp(`^${digit}$`) }).first().click();
                 }
 
-                const submitButton = page.locator('button').filter({ hasText: /submit/i }).first();
+                const submitButton = page.getByTestId('submit-answer-btn');
                 await submitButton.click({ timeout: 1000 });
-                await page.waitForTimeout(1800);
+                await page.waitForTimeout(3000);
             } catch (e) {
                 // Check if we won
                 if (await page.getByTestId('victory-screen').isVisible().catch(() => false)) {
@@ -153,10 +153,10 @@ test.describe('Combat Loop E2E', () => {
         await expect(page.getByTestId('victory-title')).toBeVisible();
 
         // Click collect rewards button
-        await page.getByText('Collect Rewards').click();
+        await page.getByTestId('collect-rewards-button').click();
 
         // Click return button
-        const returnButton = page.locator('button').filter({ hasText: /return to base/i });
+        const returnButton = page.getByTestId('return-to-base-button');
         await returnButton.click();
         await expect(page).toHaveURL(/.*mission-select/);
     });

@@ -13,8 +13,8 @@
     "sector_training_zone": "Sector 1: Training Zone",
     "deploy": "Deploy",
     "star_fighter_mk1": "Star Fighter MK-1",
-    "modules": "Modules",
-    "laser_cannon": "Laser Cannon",
+    "modules_label": "Modules",
+    "laser_cannon_label": "Laser Cannon",
     "equipped": "Equipped",
     "empty_slot": "Empty Slot",
     "combat_simulation": "Combat Simulation",
@@ -25,5 +25,144 @@
     "select_action": "Select Action",
     "laser_cannon_add": "Laser Cannon (Add)",
     "missiles_locked": "Missiles (Locked)",
-    "math_sandbox": "Math Sandbox"
+    "math_sandbox": "Math Sandbox",
+    "combat": {
+        "action": {
+            "attack": "Attack",
+            "defend": "Defend",
+            "special": "Special",
+            "energy_cost": "{{cost}} Energy",
+            "attack_tooltip": "Attack (Cost: {{cost}})",
+            "defend_tooltip": "Defend (Cost: {{cost}})",
+            "special_tooltip": "Special (Cost: {{cost}})"
+        },
+        "victory": {
+            "title": "Victory! 🎉",
+            "message": "You defeated the {{enemyName}}!",
+            "collect_rewards": "Collect Rewards"
+        },
+        "defeat": {
+            "title": "Defeat 💥",
+            "message": "Your ship was destroyed!",
+            "retry": "Retry",
+            "return": "Return to Missions"
+        },
+        "math": {
+            "title": "Solve to Attack!"
+        }
+    },
+    "rewards": {
+        "title": "Mission Complete!",
+        "subtitle": "Excellent work, Cadet. Here are your rewards:",
+        "xp": "+{{amount}} XP",
+        "credits": "+{{amount}} Credits",
+        "module_unlocked": "New Module Unlocked!",
+        "none": "No rewards for this mission.",
+        "return_to_base": "Return to Base",
+        "next_mission": "Next Mission"
+    },
+    "ship": {
+        "status": "Ship Status",
+        "stats": {
+            "health": "Health",
+            "energy": "Energy",
+            "attack": "Attack",
+            "defense": "Defense",
+            "speed": "Speed"
+        }
+    },
+    "mission": {
+        "target_enemy": "Target Enemy",
+        "rewards": "Mission Rewards",
+        "no_rewards": "No rewards listed",
+        "cancel": "Cancel",
+        "start": "Start Mission",
+        "stats": {
+            "atk": "ATK",
+            "def": "DEF",
+            "hp": "HP"
+        }
+    },
+    "missions": {
+        "1": {
+            "title": "Flight Training",
+            "description": "Basic combat training against a target drone. Learn the ropes of your ship systems."
+        },
+        "2": {
+            "title": "Asteroid Ambush",
+            "description": "A Space Pirate scout has been spotted in the asteroid belt. Intercept and drive them off."
+        },
+        "3": {
+            "title": "Nebula Patrol",
+            "description": "Patrol the nebula sector. Beware of pirates hiding in the gas clouds."
+        },
+        "4": {
+            "title": "Rescue Signal",
+            "description": "We received a distress signal. A transport ship is under attack by a Pirate Ace."
+        },
+        "5": {
+            "title": "Sector Guardian",
+            "description": "The Pirate Mothership has arrived. Defeat it to secure the sector!"
+        }
+    },
+    "enemies": {
+        "training_drone": "Training Drone",
+        "pirate_scout": "Pirate Scout",
+        "pirate_fighter": "Pirate Fighter",
+        "pirate_ace": "Pirate Ace",
+        "pirate_mothership": "Pirate Mothership"
+    },
+    "modules": {
+        "weapon_laser_1": {
+            "name": "Basic Laser",
+            "description": "Standard issue laser cannon. Reliable and energy efficient."
+        },
+        "weapon_missile_1": {
+            "name": "Missile Launcher",
+            "description": "High damage missile system. Requires energy to fire."
+        },
+        "weapon_plasma_1": {
+            "name": "Plasma Beam",
+            "description": "Continuous beam weapon that melts through armor."
+        },
+        "shield_basic_1": {
+            "name": "Training Shield",
+            "description": "Basic energy shield for training purposes."
+        },
+        "shield_energy_1": {
+            "name": "Energy Shield",
+            "description": "Advanced shield generator providing superior protection."
+        },
+        "special_repair_1": {
+            "name": "Nano-Repair",
+            "description": "Emergency repair system. Restores hull integrity."
+        },
+        "armor_reinforced_1": {
+            "name": "Reinforced Armor",
+            "description": "Heavy plating that increases hull strength but reduces speed."
+        }
+    },
+    "slots": {
+        "primary_weapon": "Primary Weapon",
+        "secondary_weapon": "Secondary Weapon",
+        "defense_system": "Defense System",
+        "special_module": "Special Module"
+    },
+    "loadout": {
+        "title": "Ship Loadout",
+        "select_module": "Select Module for {{slot}}",
+        "available_modules": "Available Modules",
+        "allowed_types": "Allowed types: {{types}}",
+        "cancel_selection": "Cancel Selection",
+        "empty_inventory": "No unequipped modules available",
+        "empty_hint": "Complete missions to unlock new modules!",
+        "equip": "Equip",
+        "unequip": "Unequip",
+        "buy": "Buy ({{cost}})",
+        "locked": "Locked",
+        "accepts": "Accepts: {{types}}"
+    },
+    "math": {
+        "submit_answer": "Submit Answer"
+    }
 }

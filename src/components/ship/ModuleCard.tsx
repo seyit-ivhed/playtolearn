@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { type ShipModule, ModuleType } from '../../types/ship.types';
 import styles from './ModuleCard.module.css';
 
@@ -19,6 +20,8 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
     onBuy,
     className = ''
 }) => {
+    const { t } = useTranslation();
+
     const getStatIcon = (statName: string) => {
         switch (statName) {
             case 'attack': return '⚔️';
@@ -46,19 +49,19 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
             <div className={styles.header}>
                 <span className={styles.icon}>
                     {module.icon?.startsWith('/') ? (
-                        <img src={module.icon} alt={module.name} className={styles.moduleIcon} />
+                        <img src={module.icon} alt={t(`modules.${module.id}.name`)} className={styles.moduleIcon} />
                     ) : (
                         module.icon || '📦'
                     )}
                 </span>
                 <div className={styles.titleInfo}>
-                    <h3 className={styles.name}>{module.name}</h3>
+                    <h3 className={styles.name}>{t(`modules.${module.id}.name`)}</h3>
                     <span className={styles.type}>{module.type}</span>
                 </div>
             </div>
 
             <div className={styles.content}>
-                <p className={styles.description}>{module.description}</p>
+                <p className={styles.description}>{t(`modules.${module.id}.description`)}</p>
 
                 <div className={styles.stats}>
                     {Object.entries(module.stats).map(([key, value]) => (
@@ -73,21 +76,21 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
             <div className={styles.actions}>
                 {state === 'owned' && onEquip && (
                     <button className={styles.equipBtn} onClick={() => onEquip(module)}>
-                        Equip
+                        {t('loadout.equip')}
                     </button>
                 )}
                 {state === 'equipped' && onUnequip && (
                     <button className={styles.unequipBtn} onClick={() => onUnequip(module)}>
-                        Unequip
+                        {t('loadout.unequip')}
                     </button>
                 )}
                 {state === 'shop' && onBuy && (
                     <button className={styles.buyBtn} onClick={() => onBuy(module)}>
-                        Buy ({module.cost})
+                        {t('loadout.buy', { cost: module.cost })}
                     </button>
                 )}
                 {state === 'locked' && (
-                    <span className={styles.lockedLabel}>Locked</span>
+                    <span className={styles.lockedLabel}>{t('loadout.locked')}</span>
                 )}
             </div>
         </div>

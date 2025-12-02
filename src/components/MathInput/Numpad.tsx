@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './Numpad.module.css';
 
 interface NumpadProps {
@@ -7,6 +8,7 @@ interface NumpadProps {
 }
 
 export default function Numpad({ onSubmit, disabled = false }: NumpadProps) {
+    const { t } = useTranslation();
     const [value, setValue] = useState<string>('');
 
     const handleNumberClick = (num: number) => {
@@ -116,8 +118,9 @@ export default function Numpad({ onSubmit, disabled = false }: NumpadProps) {
                 className={styles.submitButton}
                 onClick={handleSubmit}
                 disabled={disabled || value === ''}
+                data-testid="submit-answer-btn"
             >
-                Submit Answer
+                {t('math.submit_answer')}
             </button>
         </div>
     );

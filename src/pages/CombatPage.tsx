@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useCombatStore } from '../stores/combat.store';
 import { useMathStore } from '../stores/math.store';
 import { useMissionStore } from '../stores/mission.store';
@@ -25,6 +26,7 @@ import { soundManager, SoundType } from '../utils/sound-manager';
 import styles from './CombatPage.module.css';
 
 export default function CombatPage() {
+    const { t } = useTranslation();
     const [searchParams] = useSearchParams();
     const missionId = searchParams.get('missionId');
     const { navigateToMissionSelect } = useMissionNavigation();
@@ -55,8 +57,10 @@ export default function CombatPage() {
 
     // Handle enemy turn automatically
     useEffect(() => {
+        console.log('CombatPage phase:', phase);
         if (phase === CombatPhase.ENEMY_ACTION) {
             setTimeout(() => {
+                console.log('Executing enemy turn');
                 const action = decideEnemyAction(enemy, player);
                 soundManager.playSound(SoundType.LASER);
                 enemyTurn(action);
@@ -125,10 +129,10 @@ export default function CombatPage() {
     return (
         <div className={`${styles.container} ${getBackgroundClass()}`} data-testid="combat-page">
             <div className={styles.header}>
-                <h2 data-testid="combat-title">Combat Simulation</h2>
+                <h2 data-testid="combat-title">{t('combat_simulation')}</h2>
                 <div className={styles.headerControls}>
                     <AudioSettings />
-                    <Link to="/mission-select" className={styles.abortLink}>Abort Mission</Link>
+                    <Link to="/mission-select" className={styles.abortLink}>{t('abort_mission')}</Link>
                 </div>
             </div>
 

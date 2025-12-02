@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './MultipleChoice.module.css';
 
 interface MultipleChoiceProps {
@@ -12,6 +13,7 @@ export default function MultipleChoice({
     onSubmit,
     disabled = false
 }: MultipleChoiceProps) {
+    const { t } = useTranslation();
     const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
 
     const handleChoiceClick = (choice: number) => {
@@ -48,8 +50,9 @@ export default function MultipleChoice({
                 className={styles.submitButton}
                 onClick={handleSubmit}
                 disabled={disabled || selectedChoice === null}
+                data-testid="submit-answer-btn"
             >
-                Submit Answer
+                {t('math.submit_answer')}
             </button>
         </div>
     );

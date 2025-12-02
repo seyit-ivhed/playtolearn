@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ShipModule, ShipSlot, ShipStats } from '../../types/ship.types';
 import { ModuleCard } from './ModuleCard';
 import { SlotView } from './SlotView';
@@ -22,6 +23,7 @@ export const LoadoutManager: React.FC<LoadoutManagerProps> = ({
     onUnequipModule,
     baseStats
 }) => {
+    const { t } = useTranslation();
     const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
 
     // Get equipped modules
@@ -86,7 +88,7 @@ export const LoadoutManager: React.FC<LoadoutManagerProps> = ({
         <div className={styles.container}>
             <div className={styles.leftPanel}>
                 <div className={styles.section}>
-                    <h2 className={styles.sectionTitle}>Ship Loadout</h2>
+                    <h2 className={styles.sectionTitle}>{t('loadout.title')}</h2>
                     <div className={styles.slotsGrid}>
                         {slots.map(slot => (
                             <SlotView
@@ -110,18 +112,18 @@ export const LoadoutManager: React.FC<LoadoutManagerProps> = ({
                 <div className={styles.section}>
                     <h2 className={styles.sectionTitle}>
                         {selectedSlot
-                            ? `Select Module for ${selectedSlot.name}`
-                            : 'Available Modules'}
+                            ? t('loadout.select_module', { slot: t(`slots.${selectedSlot.name}`) })
+                            : t('loadout.available_modules')}
                     </h2>
 
                     {selectedSlot && (
                         <div className={styles.slotInfo}>
-                            <p>Allowed types: {selectedSlot.allowedTypes.join(', ')}</p>
+                            <p>{t('loadout.allowed_types', { types: selectedSlot.allowedTypes.join(', ') })}</p>
                             <button
                                 className={styles.cancelBtn}
                                 onClick={() => setSelectedSlotId(null)}
                             >
-                                Cancel Selection
+                                {t('loadout.cancel_selection')}
                             </button>
                         </div>
                     )}
@@ -143,9 +145,9 @@ export const LoadoutManager: React.FC<LoadoutManagerProps> = ({
                         ) : (
                             <div className={styles.emptyInventory}>
                                 <span className={styles.emptyIcon}>📦</span>
-                                <p>No unequipped modules available</p>
+                                <p>{t('loadout.empty_inventory')}</p>
                                 <p className={styles.emptyHint}>
-                                    Complete missions to unlock new modules!
+                                    {t('loadout.empty_hint')}
                                 </p>
                             </div>
                         )}

@@ -13,8 +13,8 @@
     "sector_training_zone": "Sektor 1: Träningszon",
     "deploy": "Starta",
     "star_fighter_mk1": "Stjärnjägare MK-1",
-    "modules": "Moduler",
-    "laser_cannon": "Laserkanon",
+    "modules_label": "Moduler",
+    "laser_cannon_label": "Laserkanon",
     "equipped": "Utrustad",
     "empty_slot": "Tom Plats",
     "combat_simulation": "Stridssimulering",
@@ -25,5 +25,144 @@
     "select_action": "Välj Handling",
     "laser_cannon_add": "Laserkanon (Addera)",
     "missiles_locked": "Missiler (Låst)",
-    "math_sandbox": "Mattesandlåda"
+    "math_sandbox": "Mattesandlåda",
+    "combat": {
+        "action": {
+            "attack": "Attackera",
+            "defend": "Försvara",
+            "special": "Special",
+            "energy_cost": "{{cost}} Energi",
+            "attack_tooltip": "Attackera (Kostnad: {{cost}})",
+            "defend_tooltip": "Försvara (Kostnad: {{cost}})",
+            "special_tooltip": "Special (Kostnad: {{cost}})"
+        },
+        "victory": {
+            "title": "Seger! 🎉",
+            "message": "Du besegrade {{enemyName}}!",
+            "collect_rewards": "Samla Belöningar"
+        },
+        "defeat": {
+            "title": "Nederlag 💥",
+            "message": "Ditt skepp förstördes!",
+            "retry": "Försök Igen",
+            "return": "Tillbaka till Uppdrag"
+        },
+        "math": {
+            "title": "Lös för att Attackera!"
+        }
+    },
+    "rewards": {
+        "title": "Uppdrag Slutfört!",
+        "subtitle": "Utmärkt arbete, Kadett. Här är dina belöningar:",
+        "xp": "+{{amount}} XP",
+        "credits": "+{{amount}} Krediter",
+        "module_unlocked": "Ny Modul Upplåst!",
+        "none": "Inga belöningar för detta uppdrag.",
+        "return_to_base": "Återvänd till Basen",
+        "next_mission": "Nästa Uppdrag"
+    },
+    "ship": {
+        "status": "Skeppsstatus",
+        "stats": {
+            "health": "Hälsa",
+            "energy": "Energi",
+            "attack": "Attack",
+            "defense": "Försvar",
+            "speed": "Hastighet"
+        }
+    },
+    "mission": {
+        "target_enemy": "Målfende",
+        "rewards": "Uppdragsbelöningar",
+        "no_rewards": "Inga belöningar listade",
+        "cancel": "Avbryt",
+        "start": "Starta Uppdrag",
+        "stats": {
+            "atk": "ATT",
+            "def": "FÖR",
+            "hp": "HP"
+        }
+    },
+    "missions": {
+        "1": {
+            "title": "Flygträning",
+            "description": "Grundläggande stridsträning mot en måldrönare. Lär dig grunderna i dina skeppssystem."
+        },
+        "2": {
+            "title": "Asteroidbakhåll",
+            "description": "En rymdpiratspanare har siktats i asteroidbältet. Avlyssna och driva bort dem."
+        },
+        "3": {
+            "title": "Nebulapatrull",
+            "description": "Patrullera nebulasektorn. Akta dig för pirater som gömmer sig i gasmolnen."
+        },
+        "4": {
+            "title": "Räddningssignal",
+            "description": "Vi har tagit emot en nödsignal. Ett transportfartyg är under attack av ett Piratäss."
+        },
+        "5": {
+            "title": "Sektorvaktare",
+            "description": "Piratmodersskeppet har anlänt. Besegra det för att säkra sektorn!"
+        }
+    },
+    "enemies": {
+        "training_drone": "Träningsdrönare",
+        "pirate_scout": "Piratspanare",
+        "pirate_fighter": "Piratjägare",
+        "pirate_ace": "Piratäss",
+        "pirate_mothership": "Piratmoderskepp"
+    },
+    "modules": {
+        "weapon_laser_1": {
+            "name": "Grundläggande Laser",
+            "description": "Standardutgåva laserkanon. Pålitlig och energieffektiv."
+        },
+        "weapon_missile_1": {
+            "name": "Missilsystem",
+            "description": "Högskademissilsystem. Kräver energi för att avfyra."
+        },
+        "weapon_plasma_1": {
+            "name": "Plasmastråle",
+            "description": "Kontinuerligt strålvapen som smälter genom rustning."
+        },
+        "shield_basic_1": {
+            "name": "Träningssköld",
+            "description": "Grundläggande energisköld för träningsändamål."
+        },
+        "shield_energy_1": {
+            "name": "Energisköld",
+            "description": "Avancerad sköldgenerator som ger överlägset skydd."
+        },
+        "special_repair_1": {
+            "name": "Nano-Reparation",
+            "description": "Nödreparationssystem. Återställer skrovintegritet."
+        },
+        "armor_reinforced_1": {
+            "name": "Förstärkt Rustning",
+            "description": "Tung pansarplåt som ökar skrovstyrka men minskar hastighet."
+        }
+    },
+    "slots": {
+        "primary_weapon": "Primärt Vapen",
+        "secondary_weapon": "Sekundärt Vapen",
+        "defense_system": "Försvarssystem",
+        "special_module": "Specialmodul"
+    },
+    "loadout": {
+        "title": "Skeppsutrustning",
+        "select_module": "Välj Modul för {{slot}}",
+        "available_modules": "Tillgängliga Moduler",
+        "allowed_types": "Tillåtna typer: {{types}}",
+        "cancel_selection": "Avbryt Val",
+        "empty_inventory": "Inga outrustade moduler tillgängliga",
+        "empty_hint": "Slutför uppdrag för att låsa upp nya moduler!",
+        "equip": "Utrusta",
+        "unequip": "Ta bort",
+        "buy": "Köp ({{cost}})",
+        "locked": "Låst",
+        "accepts": "Accepterar: {{types}}"
+    },
+    "math": {
+        "submit_answer": "Skicka Svar"
+    }
 }

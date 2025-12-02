@@ -7,7 +7,7 @@ export const MISSIONS: Mission[] = [
         description: 'Basic combat training against a target drone. Learn the ropes of your ship systems.',
         difficulty: 1,
         enemy: {
-            id: 'enemy_drone_1',
+            id: 'training_drone',
             name: 'Training Drone',
             sprite: '/src/assets/images/ships/training_drone.png',
             maxHealth: 30,
@@ -26,7 +26,7 @@ export const MISSIONS: Mission[] = [
         description: 'A Space Pirate scout has been spotted in the asteroid belt. Intercept and drive them off.',
         difficulty: 2,
         enemy: {
-            id: 'enemy_scout_1',
+            id: 'pirate_scout',
             name: 'Pirate Scout',
             sprite: '/src/assets/images/ships/pirate_scout.png',
             maxHealth: 50,
@@ -49,7 +49,7 @@ export const MISSIONS: Mission[] = [
         description: 'Patrol the nebula sector. Beware of pirates hiding in the gas clouds.',
         difficulty: 3,
         enemy: {
-            id: 'enemy_fighter_1',
+            id: 'pirate_fighter',
             name: 'Pirate Fighter',
             sprite: '/src/assets/images/ships/pirate_fighter.png',
             maxHealth: 80,
@@ -73,7 +73,7 @@ export const MISSIONS: Mission[] = [
         description: 'We received a distress signal. A transport ship is under attack by a Pirate Ace.',
         difficulty: 4,
         enemy: {
-            id: 'enemy_ace_1',
+            id: 'pirate_ace',
             name: 'Pirate Ace',
             sprite: '/src/assets/images/ships/pirate_fighter.png',
             maxHealth: 100,
@@ -97,7 +97,7 @@ export const MISSIONS: Mission[] = [
         description: 'The Pirate Mothership has arrived. Defeat it to secure the sector!',
         difficulty: 5,
         enemy: {
-            id: 'enemy_boss_1',
+            id: 'pirate_mothership',
             name: 'Pirate Mothership',
             sprite: '/src/assets/images/ships/pirate_fighter.png',
             maxHealth: 200,

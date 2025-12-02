@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { soundManager, SoundType } from '../../utils/sound-manager';
 import styles from './CombatActionMenu.module.css';
 
@@ -17,6 +18,8 @@ export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
     disabled = false,
     className = ''
 }) => {
+    const { t } = useTranslation();
+
     // Mock costs for now
     const COSTS = {
         attack: 2,
@@ -34,11 +37,11 @@ export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
                     onAction('attack');
                 }}
                 disabled={disabled || currentEnergy < COSTS.attack}
-                title={`Attack (Cost: ${COSTS.attack})`}
+                title={t('combat.action.attack_tooltip', { cost: COSTS.attack })}
             >
                 <span className={styles.icon}>⚔️</span>
-                <span className={styles.label}>Attack</span>
-                <span className={styles.cost}>{COSTS.attack} Energy</span>
+                <span className={styles.label}>{t('combat.action.attack')}</span>
+                <span className={styles.cost}>{t('combat.action.energy_cost', { cost: COSTS.attack })}</span>
             </button>
 
             <button
@@ -49,11 +52,11 @@ export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
                     onAction('defend');
                 }}
                 disabled={disabled || currentEnergy < COSTS.defend}
-                title={`Defend (Cost: ${COSTS.defend})`}
+                title={t('combat.action.defend_tooltip', { cost: COSTS.defend })}
             >
                 <span className={styles.icon}>🛡️</span>
-                <span className={styles.label}>Defend</span>
-                <span className={styles.cost}>{COSTS.defend} Energy</span>
+                <span className={styles.label}>{t('combat.action.defend')}</span>
+                <span className={styles.cost}>{t('combat.action.energy_cost', { cost: COSTS.defend })}</span>
             </button>
 
             <button
@@ -64,12 +67,13 @@ export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
                     onAction('special');
                 }}
                 disabled={disabled || currentEnergy < COSTS.special}
-                title={`Special (Cost: ${COSTS.special})`}
+                title={t('combat.action.special_tooltip', { cost: COSTS.special })}
             >
                 <span className={styles.icon}>✨</span>
-                <span className={styles.label}>Special</span>
-                <span className={styles.cost}>{COSTS.special} Energy</span>
+                <span className={styles.label}>{t('combat.action.special')}</span>
+                <span className={styles.cost}>{t('combat.action.energy_cost', { cost: COSTS.special })}</span>
             </button>
         </div>
     );
 };
+
