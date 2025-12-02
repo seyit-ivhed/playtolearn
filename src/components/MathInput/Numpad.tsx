@@ -62,6 +62,7 @@ export default function Numpad({ onSubmit, disabled = false }: NumpadProps) {
                         className={styles.numButton}
                         onClick={() => handleNumberClick(num)}
                         disabled={disabled}
+                        data-testid={`numpad-${num}`}
                     >
                         {num}
                     </button>
@@ -73,6 +74,7 @@ export default function Numpad({ onSubmit, disabled = false }: NumpadProps) {
                         className={styles.numButton}
                         onClick={() => handleNumberClick(num)}
                         disabled={disabled}
+                        data-testid={`numpad-${num}`}
                     >
                         {num}
                     </button>
@@ -84,6 +86,7 @@ export default function Numpad({ onSubmit, disabled = false }: NumpadProps) {
                         className={styles.numButton}
                         onClick={() => handleNumberClick(num)}
                         disabled={disabled}
+                        data-testid={`numpad-${num}`}
                     >
                         {num}
                     </button>
@@ -93,6 +96,7 @@ export default function Numpad({ onSubmit, disabled = false }: NumpadProps) {
                     className={`${styles.actionButton} ${styles.clearButton}`}
                     onClick={handleClear}
                     disabled={disabled}
+                    data-testid="numpad-clear"
                 >
                     C
                 </button>
@@ -101,6 +105,7 @@ export default function Numpad({ onSubmit, disabled = false }: NumpadProps) {
                     className={styles.numButton}
                     onClick={() => handleNumberClick(0)}
                     disabled={disabled}
+                    data-testid="numpad-0"
                 >
                     0
                 </button>
@@ -109,6 +114,7 @@ export default function Numpad({ onSubmit, disabled = false }: NumpadProps) {
                     className={`${styles.actionButton} ${styles.backspaceButton}`}
                     onClick={handleBackspace}
                     disabled={disabled}
+                    data-testid="numpad-backspace"
                 >
                     ⌫
                 </button>
@@ -118,7 +124,7 @@ export default function Numpad({ onSubmit, disabled = false }: NumpadProps) {
                 className={styles.submitButton}
                 onClick={handleSubmit}
                 disabled={disabled || value === ''}
-                data-testid="submit-answer-btn"
+                data-testid="numpad-submit"
             >
                 {t('math.submit_answer')}
             </button>

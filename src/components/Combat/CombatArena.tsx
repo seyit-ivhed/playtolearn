@@ -30,7 +30,9 @@ export function CombatArena({ player, enemy, phase }: CombatArenaProps) {
             </div>
 
             {/* VS */}
-            <h1>VS</h1>
+            <div className={styles.vsContainer}>
+                <span className={styles.vsText}>VS</span>
+            </div>
 
             {/* Enemy */}
             <div className={styles.combatant}>
