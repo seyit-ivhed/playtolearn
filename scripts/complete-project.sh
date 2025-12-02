@@ -92,8 +92,32 @@ fi
 
 echo -e "${GREEN}Successfully merged $CURRENT_BRANCH into main.${NC}\n"
 
-# Step 8: Push main to origin
-echo -e "${YELLOW}Step 8: Pushing main to origin...${NC}"
+# Step 8: Run unit tests on main
+echo -e "${YELLOW}Step 8: Running unit tests on main...${NC}"
+npm run test -- --run
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Unit tests failed on main. Rolling back...${NC}"
+    git reset --hard HEAD~1
+    git checkout "$CURRENT_BRANCH"
+    exit 1
+fi
+
+echo -e "${GREEN}Unit tests passed on main.${NC}\n"
+
+# Step 9: Run E2E tests on main
+echo -e "${YELLOW}Step 9: Running E2E tests on main...${NC}"
+npx playwright test
+if [ $? -ne 0 ]; then
+    echo -e "${RED}E2E tests failed on main. Rolling back...${NC}"
+    git reset --hard HEAD~1
+    git checkout "$CURRENT_BRANCH"
+    exit 1
+fi
+
+echo -e "${GREEN}E2E tests passed on main.${NC}\n"
+
+# Step 10: Push main to origin
+echo -e "${YELLOW}Step 10: Pushing main to origin...${NC}"
 git push origin main
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to push main to origin.${NC}"
