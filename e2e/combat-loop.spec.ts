@@ -19,13 +19,10 @@ test.describe('Combat Loop E2E', () => {
         await expect(page.getByTestId('math-modal-title')).toBeVisible();
 
         // Enter answer using numpad
-        // Look for number buttons in the MathInput component
-        const fiveButton = page.locator('button').filter({ hasText: /^5$/ }).first();
-        await fiveButton.click();
+        await page.getByTestId('numpad-5').click();
 
         // Click submit button
-        const submitButton = page.locator('button').filter({ hasText: /submit/i }).first();
-        await submitButton.click();
+        await page.getByTestId('numpad-submit').click();
 
         // Math modal should close
         await expect(page.getByTestId('math-modal')).not.toBeVisible({ timeout: 2000 });
@@ -43,10 +40,8 @@ test.describe('Combat Loop E2E', () => {
         await expect(page.getByTestId('math-modal')).toBeVisible();
 
         // Submit any answer
-        const fiveButton = page.locator('button').filter({ hasText: /^5$/ }).first();
-        await fiveButton.click();
-        const submitButton = page.locator('button').filter({ hasText: /submit/i }).first();
-        await submitButton.click();
+        await page.getByTestId('numpad-5').click();
+        await page.getByTestId('numpad-submit').click();
 
         // Verify combat continues (enemy turn happens)
         await page.waitForTimeout(2000);
@@ -87,11 +82,11 @@ test.describe('Combat Loop E2E', () => {
 
             // Input answer
             for (const digit of answerStr) {
-                await page.locator('button').filter({ hasText: new RegExp(`^${digit}$`) }).first().click();
+                await page.getByTestId(`numpad-${digit}`).click();
             }
 
-            const submitButton = page.locator('button').filter({ hasText: /submit/i }).first();
-            await submitButton.click();
+            await expect(page.getByTestId('numpad-submit')).toBeEnabled();
+            await page.getByTestId('numpad-submit').click();
 
             // Wait for enemy turn
             await page.waitForTimeout(2000);
@@ -131,11 +126,10 @@ test.describe('Combat Loop E2E', () => {
                 const answerStr = answer.toString();
 
                 for (const digit of answerStr) {
-                    await page.locator('button').filter({ hasText: new RegExp(`^${digit}$`) }).first().click();
+                    await page.getByTestId(`numpad-${digit}`).click();
                 }
 
-                const submitButton = page.locator('button').filter({ hasText: /submit/i }).first();
-                await submitButton.click({ timeout: 1000 });
+                await page.getByTestId('numpad-submit').click({ timeout: 1000 });
                 await page.waitForTimeout(1800);
             } catch (e) {
                 // Check if we won
@@ -153,11 +147,10 @@ test.describe('Combat Loop E2E', () => {
         await expect(page.getByTestId('victory-title')).toBeVisible();
 
         // Click collect rewards button
-        await page.getByText('Collect Rewards').click();
+        await page.getByTestId('collect-rewards-button').click();
 
         // Click return button
-        const returnButton = page.locator('button').filter({ hasText: /return to base/i });
-        await returnButton.click();
+        await page.getByTestId('return-to-base-button').click();
         await expect(page).toHaveURL(/.*mission-select/);
     });
 });
