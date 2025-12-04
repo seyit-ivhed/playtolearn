@@ -10,106 +10,82 @@ test.describe('Combat Loop E2E', () => {
         await expect(page.getByTestId('combat-title')).toBeVisible();
     });
 
-    test('complete combat round: Attack → Math → Damage → Enemy Turn', async ({ page }) => {
-        // Click Attack button
+    test('complete combat round: Attack → Damage → Enemy Turn', async ({ page }) => {
+        // Click Attack button (has 3 energy initially)
         await page.getByTestId('attack-btn').click();
 
-        // Math modal should appear
-        await expect(page.getByTestId('math-modal')).toBeVisible();
-        await expect(page.getByTestId('math-modal-title')).toBeVisible();
+        // No math modal should appear for the first attack
+        await expect(page.getByTestId('math-modal')).not.toBeVisible();
 
-        // Enter answer using numpad
-        await page.getByTestId('numpad-5').click();
-
-        // Click submit button
-        await page.getByTestId('numpad-submit').click();
-
-        // Math modal should close
-        await expect(page.getByTestId('math-modal')).not.toBeVisible({ timeout: 2000 });
-
-        // Wait for enemy turn
+        // Wait for enemy turn (combat log or button disabled state could be checked, but timeout is simple)
         await page.waitForTimeout(3000);
 
         // Attack button should be visible again (back to PLAYER_INPUT phase)
         await expect(page.getByTestId('attack-btn')).toBeVisible();
     });
 
-    test('correct answer deals damage to enemy', async ({ page }) => {
-        // Click Attack
+    test('recharge flow: deplete energy -> math -> recharge', async ({ page }) => {
+        // Use mission 2 (50 HP enemy) so we don't win after 3 attacks (30 damage)
+        await page.goto('/combat?missionId=2');
+
+        // Deplete energy (3 attacks)
+        for (let i = 0; i < 3; i++) {
+            await page.getByTestId('attack-btn').click();
+            // Wait for enemy turn to complete and button to reappear
+            await expect(page.getByTestId('attack-btn')).toBeVisible({ timeout: 5000 });
+        }
+
+        // 4th click should trigger recharge
         await page.getByTestId('attack-btn').click();
         await expect(page.getByTestId('math-modal')).toBeVisible();
 
-        // Submit any answer
-        await page.getByTestId('numpad-5').click();
+        // Solve math
+        const op1Text = await page.getByTestId('operand1').textContent();
+        const op2Text = await page.getByTestId('operand2').textContent();
+        const operator = await page.getByTestId('operator').textContent();
+
+        const op1 = parseInt(op1Text || '0');
+        const op2 = parseInt(op2Text || '0');
+
+        let answer = 0;
+        if (operator === '+') answer = op1 + op2;
+        else if (operator === '-') answer = op1 - op2;
+        else if (operator === '×') answer = op1 * op2;
+        else if (operator === '÷') answer = op1 / op2;
+
+        const answerStr = answer.toString();
+        for (const digit of answerStr) {
+            await page.getByTestId(`numpad-${digit}`).click();
+        }
         await page.getByTestId('numpad-submit').click();
 
-        // Verify combat continues (enemy turn happens)
-        await page.waitForTimeout(3000);
+        // Math modal should close
+        await expect(page.getByTestId('math-modal')).not.toBeVisible();
 
-        // Player should be able to take another action
+        // Turn should NOT end (Attack button still enabled/visible immediately)
         await expect(page.getByTestId('attack-btn')).toBeVisible();
+
+        // Should be able to attack again immediately
+        await page.getByTestId('attack-btn').click();
     });
 
     test('can complete multiple rounds until victory', async ({ page }) => {
-        // Play multiple rounds
-        for (let round = 0; round < 5; round++) {
+        // Play multiple rounds until victory
+        // We need a loop that handles both attacking and recharging
+
+        let rounds = 0;
+        while (rounds < 20) { // Safety break
             // Check if we've won
-            const victoryScreen = page.getByTestId('victory-screen');
-            if (await victoryScreen.isVisible({ timeout: 1000 }).catch(() => false)) {
+            if (await page.getByTestId('victory-screen').isVisible().catch(() => false)) {
                 break;
             }
 
-            // Attack
+            // Try to attack
             await page.getByTestId('attack-btn').click();
 
-            // Solve math
-            await expect(page.getByTestId('math-modal')).toBeVisible();
-
-            const op1Text = await page.getByTestId('operand1').textContent();
-            const op2Text = await page.getByTestId('operand2').textContent();
-            const operator = await page.getByTestId('operator').textContent();
-
-            const op1 = parseInt(op1Text || '0');
-            const op2 = parseInt(op2Text || '0');
-
-            let answer = 0;
-            if (operator === '+') answer = op1 + op2;
-            else if (operator === '-') answer = op1 - op2;
-            else if (operator === '×') answer = op1 * op2;
-            else if (operator === '÷') answer = op1 / op2;
-
-            const answerStr = answer.toString();
-
-            // Input answer
-            for (const digit of answerStr) {
-                await page.getByTestId(`numpad-${digit}`).click();
-            }
-
-            await expect(page.getByTestId('numpad-submit')).toBeEnabled();
-            await page.getByTestId('numpad-submit').click();
-
-            // Wait for enemy turn
-            await page.waitForTimeout(3000);
-        }
-
-        // Eventually we should see victory (or defeat)
-        const endScreen = page.getByTestId('victory-screen').or(page.getByTestId('defeat-screen'));
-        await expect(endScreen).toBeVisible({ timeout: 10000 });
-    });
-
-    test('victory flow: shows victory screen and return button', async ({ page }) => {
-        // Fast-forward to victory by repeatedly attacking
-        for (let i = 0; i < 10; i++) {
-            try {
-                if (await page.getByTestId('victory-screen').isVisible().catch(() => false)) {
-                    break;
-                }
-
-                await page.getByTestId('attack-btn').click({ timeout: 2000 });
-
+            // Check if math modal appeared (recharge needed)
+            if (await page.getByTestId('math-modal').isVisible({ timeout: 500 }).catch(() => false)) {
                 // Solve math
-                await expect(page.getByTestId('math-modal')).toBeVisible();
-
                 const op1Text = await page.getByTestId('operand1').textContent();
                 const op2Text = await page.getByTestId('operand2').textContent();
                 const operator = await page.getByTestId('operator').textContent();
@@ -124,21 +100,83 @@ test.describe('Combat Loop E2E', () => {
                 else if (operator === '÷') answer = op1 / op2;
 
                 const answerStr = answer.toString();
-
                 for (const digit of answerStr) {
                     await page.getByTestId(`numpad-${digit}`).click();
                 }
+                await page.getByTestId('numpad-submit').click();
 
-                await page.getByTestId('numpad-submit').click({ timeout: 1000 });
-                await page.waitForTimeout(1800);
+                // After recharge, we need to click attack again to actually attack
+                // Wait for modal to close
+                await expect(page.getByTestId('math-modal')).not.toBeVisible();
+                await page.getByTestId('attack-btn').click();
+            }
+
+            // Wait for enemy turn to complete (button to reappear)
+            // Note: If we just recharged, it's still our turn, so button is already visible.
+            // But if we attacked, it's enemy turn.
+            // The logic above clicks attack again after recharge.
+            // So we always end up attacking in this loop iteration (unless we won).
+
+            // Wait for button to be visible again (after enemy turn)
+            // But we need to be careful: if we won, the button won't appear.
+
+            try {
+                await expect(page.getByTestId('attack-btn')).toBeVisible({ timeout: 5000 });
             } catch (e) {
-                // Check if we won
+                // If button doesn't appear, maybe we won or lost?
                 if (await page.getByTestId('victory-screen').isVisible().catch(() => false)) {
                     break;
                 }
-                console.log('Error in victory loop:', e);
-                // Continue trying
+                if (await page.getByTestId('defeat-screen').isVisible().catch(() => false)) {
+                    break;
+                }
+                throw e; // Rethrow if neither
             }
+
+            rounds++;
+        }
+
+        // Eventually we should see victory (or defeat)
+        const endScreen = page.getByTestId('victory-screen').or(page.getByTestId('defeat-screen'));
+        await expect(endScreen).toBeVisible({ timeout: 10000 });
+    });
+
+    test('victory flow: shows victory screen and return button', async ({ page }) => {
+        // Similar to above, but explicitly checking victory screen elements
+        let rounds = 0;
+        while (rounds < 20) {
+            if (await page.getByTestId('victory-screen').isVisible().catch(() => false)) {
+                break;
+            }
+
+            await page.getByTestId('attack-btn').click();
+
+            if (await page.getByTestId('math-modal').isVisible({ timeout: 500 }).catch(() => false)) {
+                const op1Text = await page.getByTestId('operand1').textContent();
+                const op2Text = await page.getByTestId('operand2').textContent();
+                const operator = await page.getByTestId('operator').textContent();
+
+                const op1 = parseInt(op1Text || '0');
+                const op2 = parseInt(op2Text || '0');
+
+                let answer = 0;
+                if (operator === '+') answer = op1 + op2;
+                else if (operator === '-') answer = op1 - op2;
+                else if (operator === '×') answer = op1 * op2;
+                else if (operator === '÷') answer = op1 / op2;
+
+                const answerStr = answer.toString();
+                for (const digit of answerStr) {
+                    await page.getByTestId(`numpad-${digit}`).click();
+                }
+                await page.getByTestId('numpad-submit').click();
+
+                await page.waitForTimeout(500);
+                await page.getByTestId('attack-btn').click();
+            }
+
+            await page.waitForTimeout(1500);
+            rounds++;
         }
 
         // Check for victory screen

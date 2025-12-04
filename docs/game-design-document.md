@@ -144,11 +144,14 @@ Example: Completing "Multiplication - Level 3" unlocks a Level 3 Laser Cannon (m
 
 #### Combat Mechanics (Turn-Based)
 - **Player Turn**:
-  - Player can choose to attack with any equipped weapon
-  - If weapon needs recharging, player must solve a math problem (matching the skill that unlocked that weapon)
-  - Solve correctly → Weapon recharges and attacks with full power
-  - Solve incorrectly → Weapon doesn't recharge, turn is wasted
-  - Player can also use shield if available (blocks next enemy attack)
+  - **Action Phase**: Player can choose to use any module (Attack, Defend, Special) that has energy.
+  - **Energy Cost**: Using a module consumes 1 energy point and ends the player's turn.
+  - **Recharge Mechanic**:
+    - If a module has 0 energy, the player can choose to **Recharge** it.
+    - Recharging triggers a math problem (matching the skill/difficulty).
+    - **Solve Correctly** → Specific module fully recharges.
+    - **Turn Logic**: Recharging does **not** end the player's turn. The player can immediately use the recharged module (or another action).
+    - **Limit**: Each module can only be recharged once per turn.
   
 - **Enemy Turn**:
   - Enemy attacks based on their stats
