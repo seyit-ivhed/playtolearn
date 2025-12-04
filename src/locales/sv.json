@@ -34,7 +34,12 @@
             "energy_cost": "{{cost}} Energi",
             "attack_tooltip": "Attackera (Kostnad: {{cost}})",
             "defend_tooltip": "Försvara (Kostnad: {{cost}})",
-            "special_tooltip": "Special (Kostnad: {{cost}})"
+            "special_tooltip": "Special (Kostnad: {{cost}})",
+            "recharge": "Ladda om",
+            "recharge_tooltip": "Ladda om Energi"
+        },
+        "stats": {
+            "energy": "Energi"
         },
         "victory": {
             "title": "Seger! 🎉",

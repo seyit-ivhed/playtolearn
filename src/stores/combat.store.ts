@@ -16,6 +16,13 @@ interface CombatStore extends CombatState {
     enemyTurn: (action: CombatAction) => void;
     resolveDamage: (target: 'player' | 'enemy', amount: number) => void;
     nextTurn: () => void;
+    // New fields for energy handling
+    rechargedThisTurn: boolean;
+    // Actions
+    consumeEnergy: (amount: number) => void;
+    fullRecharge: () => void;
+    resetRechargeFlag: () => void;
+    setRechargedThisTurn: (value: boolean) => void;
 }
 
 export const useCombatStore = create<CombatStore>((set, get) => ({
@@ -43,6 +50,8 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     },
     combatLog: [],
     lastDamageEvent: null,
+    // New state flag
+    rechargedThisTurn: false,
 
     initializeCombat: (player, enemy) => set({
         phase: CombatPhase.PLAYER_INPUT,
@@ -50,9 +59,20 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         player,
         enemy,
         combatLog: [`Combat started vs ${enemy.name}!`],
+        rechargedThisTurn: false,
     }),
 
     setPhase: (phase) => set({ phase }),
+
+    // Energy handling actions
+    consumeEnergy: (amount) => set(state => ({
+        player: { ...state.player, currentEnergy: Math.max(0, state.player.currentEnergy - amount) }
+    })),
+    fullRecharge: () => set(state => ({
+        player: { ...state.player, currentEnergy: state.player.maxEnergy }
+    })),
+    resetRechargeFlag: () => set({ rechargedThisTurn: false }),
+    setRechargedThisTurn: (value) => set({ rechargedThisTurn: value }),
 
     playerAction: (action) => {
         const { combatLog } = get();
@@ -85,6 +105,9 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             combatLog: [...combatLog, logEntry],
         });
 
+        // Reset recharge flag at end of player's turn
+        get().resetRechargeFlag();
+
         // Check win condition
         if (get().enemy.currentHealth <= 0) {
             set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
@@ -106,6 +129,9 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             turn: get().turn + 1,
             combatLog: [...combatLog, logEntry],
         });
+
+        // Reset recharge flag at start of new player turn
+        get().resetRechargeFlag();
 
         // Check loss condition
         if (get().player.currentHealth <= 0) {

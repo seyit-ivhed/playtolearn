@@ -6,7 +6,7 @@ import { MathOperation } from '../types/math.types';
 import { soundManager, SoundType } from '../utils/sound-manager';
 
 export function useCombatActions() {
-    const { phase, setPhase, playerAction } = useCombatStore();
+    const { phase, setPhase, playerAction, consumeEnergy, fullRecharge, rechargedThisTurn, setRechargedThisTurn } = useCombatStore();
     const { currentProblem, generateNewProblem, submitAnswer, reset } = useMathStore();
 
     const [selectedAction, setSelectedAction] = useState<CombatAction | null>(null);
@@ -18,12 +18,30 @@ export function useCombatActions() {
         setSelectedAction(action);
 
         if (action.type === 'ATTACK') {
-            // Trigger math challenge
+            // Consume energy for attack (cost 10)
+            consumeEnergy(10);
+            // Direct attack without math challenge
+            playerAction({ ...action, value: 10 });
+        } else if (action.type === 'RECHARGE') {
+            // Open math challenge for recharge if not already recharged this turn
+            if (rechargedThisTurn) {
+                // Already recharged this turn; ignore further attempts
+                return;
+            }
             setPhase(CombatPhase.MATH_CHALLENGE);
             generateNewProblem(MathOperation.ADD);
             setShowMathModal(true);
         } else {
-            // Execute other actions directly
+            // Other actions consume energy based on type
+            const energyCostMap: Record<string, number> = {
+                'DEFEND': 5,
+                'REPAIR': 8,
+                'SPECIAL': 12,
+            };
+            const cost = energyCostMap[action.type] ?? 0;
+            if (cost > 0) {
+                consumeEnergy(cost);
+            }
             playerAction(action);
         }
     };
@@ -34,17 +52,14 @@ export function useCombatActions() {
         const result = submitAnswer(answer);
 
         if (result.isCorrect) {
-            // Play correct answer sound
+            // Correct answer fully recharges energy
+            fullRecharge();
+            // Mark that recharge has occurred this turn
+            setRechargedThisTurn(true);
             soundManager.playSound(SoundType.CORRECT_ANSWER);
-            // Bonus damage for correct answer
-            playerAction({ ...selectedAction, value: 15 });
-            // Play laser sound for attack
-            soundManager.playSound(SoundType.LASER);
         } else {
-            // Play wrong answer sound
+            // Wrong answer – no recharge, show encouragement
             soundManager.playSound(SoundType.WRONG_ANSWER);
-            // Reduced damage for incorrect answer
-            playerAction({ ...selectedAction, value: 5 });
         }
 
         setShowMathModal(false);

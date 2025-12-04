@@ -2,6 +2,7 @@ import type { CombatEntity } from '../../types/combat.types';
 import { CombatPhase } from '../../types/combat.types';
 import { EntitySprite } from './EntitySprite';
 import { HealthGauge } from './HealthGauge';
+import { EnergyBar } from './EnergyBar';
 import styles from '../../pages/CombatPage.module.css';
 
 interface CombatArenaProps {
@@ -27,6 +28,9 @@ export function CombatArena({ player, enemy, phase }: CombatArenaProps) {
                     maxShield={player.maxShield}
                     label={player.name}
                 />
+                <div style={{ marginTop: '8px' }}>
+                    <EnergyBar current={player.currentEnergy} max={player.maxEnergy} />
+                </div>
             </div>
 
             {/* VS */}

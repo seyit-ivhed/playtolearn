@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.star {
+    font-size: 1.2rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.filled {
+    color: #FFD700; /* Gold */
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.empty {
+    color: #4a4a4a;
+}
+
+/* Animation for recharge */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.filled {
+    animation: pulse 0.3s ease-out;
+}

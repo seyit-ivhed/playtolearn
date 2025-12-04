@@ -34,7 +34,12 @@
             "energy_cost": "{{cost}} Energy",
             "attack_tooltip": "Attack (Cost: {{cost}})",
             "defend_tooltip": "Defend (Cost: {{cost}})",
-            "special_tooltip": "Special (Cost: {{cost}})"
+            "special_tooltip": "Special (Cost: {{cost}})",
+            "recharge": "Recharge",
+            "recharge_tooltip": "Recharge Energy"
+        },
+        "stats": {
+            "energy": "Energy"
         },
         "victory": {
             "title": "Victory! 🎉",

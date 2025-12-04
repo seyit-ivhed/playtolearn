@@ -91,4 +91,31 @@ describe('Combat Store', () => {
         expect(state.player.currentHealth).toBe(0);
         expect(state.phase).toBe(CombatPhase.DEFEAT);
     });
+
+    it('should consume energy correctly', () => {
+        useCombatStore.getState().consumeEnergy(30);
+        expect(useCombatStore.getState().player.currentEnergy).toBe(70);
+
+        useCombatStore.getState().consumeEnergy(80);
+        expect(useCombatStore.getState().player.currentEnergy).toBe(0); // Should not go below 0
+    });
+
+    it('should fully recharge energy', () => {
+        useCombatStore.setState(state => ({
+            player: { ...state.player, currentEnergy: 10 }
+        }));
+
+        useCombatStore.getState().fullRecharge();
+        expect(useCombatStore.getState().player.currentEnergy).toBe(100);
+    });
+
+    it('should handle recharge flag', () => {
+        expect(useCombatStore.getState().rechargedThisTurn).toBe(false);
+
+        useCombatStore.getState().setRechargedThisTurn(true);
+        expect(useCombatStore.getState().rechargedThisTurn).toBe(true);
+
+        useCombatStore.getState().resetRechargeFlag();
+        expect(useCombatStore.getState().rechargedThisTurn).toBe(false);
+    });
 });

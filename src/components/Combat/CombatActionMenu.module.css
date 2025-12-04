@@ -96,3 +96,36 @@
     box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.1));
 }
+
+.rechargeBtn {
+    border-color: rgba(34, 197, 94, 0.5);
+    /* Green */
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+}
+
+.rechargeBtn:hover:not(:disabled) {
+    border-color: #22c55e;
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.4);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+}
+
+.energyDisplay {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.energyLabel {
+    color: #d1d5db;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}

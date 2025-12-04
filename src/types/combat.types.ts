@@ -9,7 +9,7 @@ export const CombatPhase = {
 
 export type CombatPhase = typeof CombatPhase[keyof typeof CombatPhase];
 
-export type CombatActionType = 'ATTACK' | 'DEFEND' | 'REPAIR';
+export type CombatActionType = 'ATTACK' | 'DEFEND' | 'REPAIR' | 'RECHARGE';
 
 export interface CombatAction {
     type: CombatActionType;
