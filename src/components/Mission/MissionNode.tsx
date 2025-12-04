@@ -43,7 +43,7 @@ export const MissionNode: React.FC<MissionNodeProps> = ({
 
     const getIcon = () => {
         if (isLocked) return '🔒';
-        if (isCompleted) return '⭐';
+        if (isCompleted) return '✓';
         return '⚔️';
     };
 
@@ -57,7 +57,10 @@ export const MissionNode: React.FC<MissionNodeProps> = ({
             aria-disabled={isLocked}
             data-testid={`mission-node-${id}`}
         >
-            <span className={styles.icon}>{getIcon()}</span>
+            <div className={styles.ring}></div>
+            <div className={styles.nodeContent}>
+                <span className={styles.icon}>{getIcon()}</span>
+            </div>
             <div className={styles.label}>{title}</div>
         </div>
     );

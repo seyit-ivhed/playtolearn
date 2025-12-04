@@ -4,8 +4,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(10, 14, 39, 0.85);
-    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,76 +14,119 @@
 }
 
 .modal {
-    background-color: var(--color-bg-secondary);
-    border: 2px solid var(--color-accent-primary);
-    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(16, 24, 48, 0.95), rgba(26, 32, 60, 0.95));
+    border: 1px solid rgba(0, 217, 255, 0.5);
+    border-radius: 4px;
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
     padding: 0;
-    box-shadow: 0 0 30px rgba(0, 217, 255, 0.2);
+    box-shadow: 0 0 40px rgba(0, 217, 255, 0.15), inset 0 0 20px rgba(0, 217, 255, 0.05);
     display: flex;
     flex-direction: column;
-    animation: slideUp 0.3s ease-out;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
+    position: relative;
+}
+
+/* Holographic scanline effect */
+.modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 217, 255, 0.03) 3px,
+            rgba(0, 217, 255, 0.03) 4px);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .header {
-    padding: 1.5rem;
-    background-color: var(--color-bg-tertiary);
-    border-bottom: 1px solid var(--color-bg-primary);
+    padding: 1.5rem 2rem;
+    background: rgba(0, 217, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 217, 255, 0.3);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    z-index: 2;
 }
 
 .title {
     margin: 0;
-    color: var(--color-accent-primary);
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
     font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
 }
 
 .closeButton {
     background: none;
-    border: none;
-    color: var(--color-text-secondary);
-    font-size: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.2rem;
     cursor: pointer;
-    padding: 0.5rem;
-    line-height: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
 }
 
 .closeButton:hover {
-    color: var(--color-ui-error);
-    transform: none;
-    box-shadow: none;
+    color: #fff;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .content {
-    padding: 1.5rem;
+    padding: 2rem;
     color: var(--color-text-primary);
+    position: relative;
+    z-index: 2;
 }
 
 .description {
-    margin-bottom: 1.5rem;
-    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+    color: #a0aec0;
     line-height: 1.6;
+    font-size: 1.1rem;
+    border-left: 3px solid var(--color-accent-primary);
+    padding-left: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .section {
-    margin-bottom: 1.5rem;
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--color-bg-primary);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
 }
 
 .sectionTitle {
-    font-size: 0.9rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--color-text-disabled);
-    margin-bottom: 0.5rem;
+    color: var(--color-accent-primary);
+    margin-bottom: 1rem;
     display: block;
+    border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+    padding-bottom: 0.5rem;
 }
 
 .enemyInfo {
@@ -93,7 +136,36 @@
 }
 
 .enemyIcon {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+}
+
+.statGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.25rem;
+    border-radius: 2px;
+}
+
+.statLabel {
+    font-size: 0.6rem;
+    color: #718096;
+    text-transform: uppercase;
+}
+
+.statValue {
+    font-family: monospace;
+    color: #fff;
+    font-weight: bold;
 }
 
 .rewardsList {
@@ -105,34 +177,61 @@
 .rewardItem {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    color: var(--color-accent-secondary);
-    margin-bottom: 0.25rem;
+    gap: 0.75rem;
+    color: #e2e8f0;
+    margin-bottom: 0.5rem;
+    font-family: monospace;
+    font-size: 0.9rem;
 }
 
 .footer {
-    padding: 1.5rem;
-    border-top: 1px solid var(--color-bg-primary);
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 2;
 }
 
 .cancelButton {
-    background-color: transparent;
-    border: 1px solid var(--color-text-disabled);
-    color: var(--color-text-secondary);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #a0aec0;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancelButton:hover {
+    border-color: #fff;
+    color: #fff;
 }
 
 .startButton {
-    background-color: var(--color-accent-primary);
-    color: var(--color-bg-primary);
+    background: var(--color-accent-primary);
+    color: #000;
     border: none;
+    padding: 0.75rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
 }
 
 .startButton:hover {
-    background-color: #00b8d4;
-    box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+    background: #fff;
+    box-shadow: 0 0 25px rgba(0, 217, 255, 0.6);
+    transform: translateY(-1px);
 }
 
 @keyframes fadeIn {
@@ -147,12 +246,12 @@
 
 @keyframes slideUp {
     from {
-        transform: translateY(20px);
+        transform: translateY(30px) scale(0.95);
         opacity: 0;
     }
 
     to {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
         opacity: 1;
     }
 }
