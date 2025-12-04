@@ -62,6 +62,7 @@ export function useCombatActions() {
 
         setShowMathModal(false);
         reset();
+        setPhase(CombatPhase.PLAYER_INPUT);
         setPendingRechargeModule(null);
     };
 

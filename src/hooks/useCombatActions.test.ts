@@ -165,6 +165,7 @@ describe('useCombatActions', () => {
         });
 
         expect(mockFullRecharge).toHaveBeenCalledWith('attack');
+        expect(mockSetPhase).toHaveBeenCalledWith(CombatPhase.PLAYER_INPUT);
         expect(result.current.showMathModal).toBe(false);
     });
 
@@ -199,6 +200,7 @@ describe('useCombatActions', () => {
         });
 
         expect(mockFullRecharge).not.toHaveBeenCalled();
+        expect(mockSetPhase).toHaveBeenCalledWith(CombatPhase.PLAYER_INPUT);
         expect(result.current.showMathModal).toBe(false);
     });
 });
