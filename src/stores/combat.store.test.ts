@@ -10,8 +10,11 @@ describe('Combat Store', () => {
         currentHealth: 100,
         maxShield: 50,
         currentShield: 50,
-        maxEnergy: 100,
-        currentEnergy: 100,
+        modules: {
+            attack: { currentEnergy: 3, maxEnergy: 3 },
+            defend: { currentEnergy: 2, maxEnergy: 2 },
+            special: { currentEnergy: 2, maxEnergy: 2 },
+        },
     };
 
     const mockEnemy: CombatEntity = {
@@ -21,8 +24,11 @@ describe('Combat Store', () => {
         currentHealth: 50,
         maxShield: 0,
         currentShield: 0,
-        maxEnergy: 0,
-        currentEnergy: 0,
+        modules: {
+            attack: { currentEnergy: 0, maxEnergy: 0 },
+            defend: { currentEnergy: 0, maxEnergy: 0 },
+            special: { currentEnergy: 0, maxEnergy: 0 },
+        },
     };
 
     beforeEach(() => {
@@ -38,7 +44,7 @@ describe('Combat Store', () => {
     });
 
     it('should handle player attack', () => {
-        useCombatStore.getState().playerAction({ type: 'ATTACK', value: 20 });
+        useCombatStore.getState().playerAction({ type: 'attack', value: 20 });
         const state = useCombatStore.getState();
 
         expect(state.enemy.currentHealth).toBe(30);
@@ -52,7 +58,7 @@ describe('Combat Store', () => {
             player: { ...state.player, currentShield: 30 }
         }));
 
-        useCombatStore.getState().playerAction({ type: 'DEFEND', value: 15 });
+        useCombatStore.getState().playerAction({ type: 'defend', value: 15 });
         const state = useCombatStore.getState();
 
         expect(state.player.currentShield).toBe(45);
@@ -61,7 +67,7 @@ describe('Combat Store', () => {
     });
 
     it('should handle enemy attack', () => {
-        useCombatStore.getState().enemyTurn({ type: 'ATTACK', value: 10 });
+        useCombatStore.getState().enemyTurn({ type: 'attack', value: 10 });
         const state = useCombatStore.getState();
 
         // Player has 50 shield, so damage should go to shield first
@@ -72,7 +78,7 @@ describe('Combat Store', () => {
     });
 
     it('should detect victory', () => {
-        useCombatStore.getState().playerAction({ type: 'ATTACK', value: 50 });
+        useCombatStore.getState().playerAction({ type: 'attack', value: 50 });
         const state = useCombatStore.getState();
 
         expect(state.enemy.currentHealth).toBe(0);
@@ -85,37 +91,42 @@ describe('Combat Store', () => {
             player: { ...mockPlayer, currentHealth: 5, currentShield: 0 }
         });
 
-        useCombatStore.getState().enemyTurn({ type: 'ATTACK', value: 10 });
+        useCombatStore.getState().enemyTurn({ type: 'attack', value: 10 });
         const state = useCombatStore.getState();
 
         expect(state.player.currentHealth).toBe(0);
         expect(state.phase).toBe(CombatPhase.DEFEAT);
     });
 
-    it('should consume energy correctly', () => {
-        useCombatStore.getState().consumeEnergy(30);
-        expect(useCombatStore.getState().player.currentEnergy).toBe(70);
+    it('should consume module energy correctly', () => {
+        useCombatStore.getState().consumeModuleEnergy('attack');
+        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(2);
 
-        useCombatStore.getState().consumeEnergy(80);
-        expect(useCombatStore.getState().player.currentEnergy).toBe(0); // Should not go below 0
+        useCombatStore.getState().consumeModuleEnergy('attack');
+        useCombatStore.getState().consumeModuleEnergy('attack');
+        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(0);
+
+        // Should not go below 0
+        useCombatStore.getState().consumeModuleEnergy('attack');
+        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(0);
     });
 
-    it('should fully recharge energy', () => {
-        useCombatStore.setState(state => ({
-            player: { ...state.player, currentEnergy: 10 }
-        }));
+    it('should recharge module energy', () => {
+        // First consume some energy
+        useCombatStore.getState().consumeModuleEnergy('attack');
+        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(2);
 
-        useCombatStore.getState().fullRecharge();
-        expect(useCombatStore.getState().player.currentEnergy).toBe(100);
+        useCombatStore.getState().rechargeModule('attack');
+        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(3);
     });
 
     it('should handle recharge flag', () => {
-        expect(useCombatStore.getState().rechargedThisTurn).toBe(false);
+        expect(useCombatStore.getState().rechargedModules).toEqual([]);
 
-        useCombatStore.getState().setRechargedThisTurn(true);
-        expect(useCombatStore.getState().rechargedThisTurn).toBe(true);
+        useCombatStore.getState().rechargeModule('attack');
+        expect(useCombatStore.getState().rechargedModules).toContain('attack');
 
         useCombatStore.getState().resetRechargeFlag();
-        expect(useCombatStore.getState().rechargedThisTurn).toBe(false);
+        expect(useCombatStore.getState().rechargedModules).toEqual([]);
     });
 });

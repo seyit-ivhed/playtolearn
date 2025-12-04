@@ -15,7 +15,6 @@ describe('useCombatActions', () => {
     const mockSetPhase = vi.fn();
     const mockConsumeEnergy = vi.fn();
     const mockFullRecharge = vi.fn();
-    const mockSetRechargedThisTurn = vi.fn();
 
     const mockGenerateNewProblem = vi.fn();
     const mockSubmitAnswer = vi.fn();
@@ -29,10 +28,19 @@ describe('useCombatActions', () => {
             phase: CombatPhase.PLAYER_INPUT,
             setPhase: mockSetPhase,
             playerAction: mockPlayerAction,
-            consumeEnergy: mockConsumeEnergy,
-            fullRecharge: mockFullRecharge,
-            rechargedThisTurn: false,
-            setRechargedThisTurn: mockSetRechargedThisTurn,
+            consumeModuleEnergy: mockConsumeEnergy,
+            rechargeModule: mockFullRecharge, // mapping to same mock function for simplicity
+            rechargedModules: [],
+        });
+
+        (useCombatStore as any).getState = vi.fn().mockReturnValue({
+            player: {
+                modules: {
+                    attack: { currentEnergy: 3, maxEnergy: 3 },
+                    defend: { currentEnergy: 2, maxEnergy: 2 },
+                    special: { currentEnergy: 2, maxEnergy: 2 },
+                }
+            }
         });
 
         (useMathStore as any).mockReturnValue({
@@ -43,40 +51,83 @@ describe('useCombatActions', () => {
         });
     });
 
-    it('should handle ATTACK action', () => {
-        const { result } = renderHook(() => useCombatActions());
-
-        act(() => {
-            result.current.handleActionSelect({ type: 'ATTACK' });
+    it('should handle ATTACK action with energy', () => {
+        // Mock player with full energy
+        (useCombatStore as any).mockReturnValue({
+            phase: CombatPhase.PLAYER_INPUT,
+            setPhase: mockSetPhase,
+            playerAction: mockPlayerAction,
+            consumeModuleEnergy: mockConsumeEnergy,
+            rechargedModules: [],
         });
 
-        expect(mockConsumeEnergy).toHaveBeenCalledWith(10);
-        expect(mockPlayerAction).toHaveBeenCalledWith({ type: 'ATTACK', value: 10 });
-        expect(mockSetPhase).not.toHaveBeenCalled(); // Should not trigger math modal
-    });
+        (useCombatStore as any).getState.mockReturnValue({
+            player: {
+                modules: {
+                    attack: { currentEnergy: 3, maxEnergy: 3 }
+                }
+            }
+        });
 
-    it('should handle RECHARGE action', () => {
         const { result } = renderHook(() => useCombatActions());
 
         act(() => {
-            result.current.handleActionSelect({ type: 'RECHARGE' });
+            result.current.handleActionSelect({ type: 'attack' });
+        });
+
+        expect(mockConsumeEnergy).toHaveBeenCalledWith('attack');
+        expect(mockPlayerAction).toHaveBeenCalledWith({ type: 'attack', value: 10 });
+        expect(mockSetPhase).not.toHaveBeenCalled();
+    });
+
+    it('should trigger recharge when energy is 0', () => {
+        // Mock player with 0 energy
+        (useCombatStore as any).mockReturnValue({
+            phase: CombatPhase.PLAYER_INPUT,
+            setPhase: mockSetPhase,
+            playerAction: mockPlayerAction,
+            consumeModuleEnergy: mockConsumeEnergy,
+            rechargedModules: [],
+        });
+
+        (useCombatStore as any).getState.mockReturnValue({
+            player: {
+                modules: {
+                    attack: { currentEnergy: 0, maxEnergy: 3 }
+                }
+            }
+        });
+
+        const { result } = renderHook(() => useCombatActions());
+
+        act(() => {
+            result.current.handleActionSelect({ type: 'attack' });
         });
 
         expect(mockSetPhase).toHaveBeenCalledWith(CombatPhase.MATH_CHALLENGE);
         expect(result.current.showMathModal).toBe(true);
+        expect(mockConsumeEnergy).not.toHaveBeenCalled();
     });
 
-    it('should prevent RECHARGE if already recharged this turn', () => {
+    it('should prevent recharge if already recharged this module', () => {
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
-            rechargedThisTurn: true, // Already recharged
             setPhase: mockSetPhase,
+            rechargedModules: ['attack'], // Already recharged attack
+        });
+
+        (useCombatStore as any).getState.mockReturnValue({
+            player: {
+                modules: {
+                    attack: { currentEnergy: 0, maxEnergy: 3 }
+                }
+            }
         });
 
         const { result } = renderHook(() => useCombatActions());
 
         act(() => {
-            result.current.handleActionSelect({ type: 'RECHARGE' });
+            result.current.handleActionSelect({ type: 'attack' });
         });
 
         expect(mockSetPhase).not.toHaveBeenCalled();
@@ -84,11 +135,27 @@ describe('useCombatActions', () => {
     });
 
     it('should handle correct math answer for recharge', () => {
+        // Mock player with 0 energy to trigger recharge first
+        (useCombatStore as any).mockReturnValue({
+            phase: CombatPhase.PLAYER_INPUT,
+            setPhase: mockSetPhase,
+            rechargedModules: [],
+            rechargeModule: mockFullRecharge,
+        });
+
+        (useCombatStore as any).getState.mockReturnValue({
+            player: {
+                modules: {
+                    attack: { currentEnergy: 0, maxEnergy: 3 }
+                }
+            }
+        });
+
         const { result } = renderHook(() => useCombatActions());
 
-        // Select recharge first to set state
+        // Select action to trigger recharge state
         act(() => {
-            result.current.handleActionSelect({ type: 'RECHARGE' });
+            result.current.handleActionSelect({ type: 'attack' });
         });
 
         mockSubmitAnswer.mockReturnValue({ isCorrect: true });
@@ -97,17 +164,32 @@ describe('useCombatActions', () => {
             result.current.handleMathSubmit(2);
         });
 
-        expect(mockFullRecharge).toHaveBeenCalled();
-        expect(mockSetRechargedThisTurn).toHaveBeenCalledWith(true);
+        expect(mockFullRecharge).toHaveBeenCalledWith('attack');
         expect(result.current.showMathModal).toBe(false);
     });
 
     it('should handle wrong math answer for recharge', () => {
+        // Mock player with 0 energy
+        (useCombatStore as any).mockReturnValue({
+            phase: CombatPhase.PLAYER_INPUT,
+            setPhase: mockSetPhase,
+            rechargedModules: [],
+            rechargeModule: mockFullRecharge,
+        });
+
+        (useCombatStore as any).getState.mockReturnValue({
+            player: {
+                modules: {
+                    attack: { currentEnergy: 0, maxEnergy: 3 }
+                }
+            }
+        });
+
         const { result } = renderHook(() => useCombatActions());
 
-        // Select recharge first
+        // Select action first
         act(() => {
-            result.current.handleActionSelect({ type: 'RECHARGE' });
+            result.current.handleActionSelect({ type: 'attack' });
         });
 
         mockSubmitAnswer.mockReturnValue({ isCorrect: false });
@@ -117,7 +199,6 @@ describe('useCombatActions', () => {
         });
 
         expect(mockFullRecharge).not.toHaveBeenCalled();
-        expect(mockSetRechargedThisTurn).not.toHaveBeenCalled();
         expect(result.current.showMathModal).toBe(false);
     });
 });

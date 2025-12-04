@@ -16,8 +16,11 @@ export function useCombatEntitySetup() {
             currentHealth: shipStats.health,
             maxShield: 50,
             currentShield: 50,
-            maxEnergy: shipStats.maxEnergy,
-            currentEnergy: shipStats.energy,
+            modules: {
+                attack: { currentEnergy: 3, maxEnergy: 3 },
+                defend: { currentEnergy: 2, maxEnergy: 2 },
+                special: { currentEnergy: 2, maxEnergy: 2 },
+            },
         };
 
         const enemyStats: CombatEntity = {
@@ -28,8 +31,11 @@ export function useCombatEntitySetup() {
             currentHealth: mission.enemy.maxHealth,
             maxShield: mission.enemy.maxShield || 0,
             currentShield: mission.enemy.maxShield || 0,
-            maxEnergy: 0,
-            currentEnergy: 0,
+            modules: {
+                attack: { currentEnergy: 0, maxEnergy: 0 },
+                defend: { currentEnergy: 0, maxEnergy: 0 },
+                special: { currentEnergy: 0, maxEnergy: 0 },
+            },
         };
 
         return { playerStats, enemyStats };

@@ -172,13 +172,8 @@ export default function CombatPage() {
             {phase === CombatPhase.PLAYER_INPUT && (
                 <CombatActionMenu
                     onAction={(actionType: CombatActionType) => {
-                        if (actionType === 'attack') {
-                            handleActionSelect({ type: 'ATTACK', value: 10 });
-                        } else if (actionType === 'defend') {
-                            handleActionSelect({ type: 'DEFEND', value: 10 });
-                        }
+                        handleActionSelect({ type: actionType });
                     }}
-                    currentEnergy={player.currentEnergy}
                 />
             )}
 

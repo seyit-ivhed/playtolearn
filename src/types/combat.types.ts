@@ -9,11 +9,16 @@ export const CombatPhase = {
 
 export type CombatPhase = typeof CombatPhase[keyof typeof CombatPhase];
 
-export type CombatActionType = 'ATTACK' | 'DEFEND' | 'REPAIR' | 'RECHARGE';
+export type CombatActionType = 'attack' | 'defend' | 'special';
 
 export interface CombatAction {
     type: CombatActionType;
     value?: number; // e.g., damage amount, shield amount
+}
+
+export interface ModuleState {
+    currentEnergy: number;
+    maxEnergy: number;
 }
 
 export interface CombatEntity {
@@ -23,9 +28,12 @@ export interface CombatEntity {
     currentHealth: number;
     maxShield: number;
     currentShield: number;
-    maxEnergy: number;
-    currentEnergy: number;
-    sprite?: string;
+    modules: {
+        attack: ModuleState;
+        defend: ModuleState;
+        special: ModuleState;
+    };
+    sprite?: string; // Path to sprite image
 }
 
 export interface CombatState {

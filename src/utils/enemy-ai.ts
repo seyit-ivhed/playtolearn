@@ -10,9 +10,9 @@ export const decideEnemyAction = (enemy: CombatEntity, player: CombatEntity): Co
     if (healthPercent < 0.3) {
         const shouldDefend = Math.random() > 0.5;
         if (shouldDefend) {
-            return { type: 'DEFEND', value: 5 }; // Restore 5 shield or reduce damage
+            return { type: 'defend', value: 5 }; // Restore 5 shield or reduce damage
         }
     }
 
-    return { type: 'ATTACK', value: 10 }; // Default attack damage
+    return { type: 'attack', value: 10 }; // Default attack damage
 };

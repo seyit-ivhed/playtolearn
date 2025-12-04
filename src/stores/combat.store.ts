@@ -17,12 +17,11 @@ interface CombatStore extends CombatState {
     resolveDamage: (target: 'player' | 'enemy', amount: number) => void;
     nextTurn: () => void;
     // New fields for energy handling
-    rechargedThisTurn: boolean;
+    rechargedModules: string[]; // Track which modules were recharged this turn
     // Actions
-    consumeEnergy: (amount: number) => void;
-    fullRecharge: () => void;
+    consumeModuleEnergy: (module: 'attack' | 'defend' | 'special') => void;
+    rechargeModule: (module: 'attack' | 'defend' | 'special') => void;
     resetRechargeFlag: () => void;
-    setRechargedThisTurn: (value: boolean) => void;
 }
 
 export const useCombatStore = create<CombatStore>((set, get) => ({
@@ -35,8 +34,11 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         currentHealth: 100,
         maxShield: 50,
         currentShield: 50,
-        maxEnergy: 100,
-        currentEnergy: 100,
+        modules: {
+            attack: { currentEnergy: 3, maxEnergy: 3 },
+            defend: { currentEnergy: 2, maxEnergy: 2 },
+            special: { currentEnergy: 2, maxEnergy: 2 },
+        },
     },
     enemy: {
         id: 'enemy',
@@ -45,13 +47,16 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         currentHealth: 100,
         maxShield: 0,
         currentShield: 0,
-        maxEnergy: 0,
-        currentEnergy: 0,
+        modules: {
+            attack: { currentEnergy: 0, maxEnergy: 0 },
+            defend: { currentEnergy: 0, maxEnergy: 0 },
+            special: { currentEnergy: 0, maxEnergy: 0 },
+        },
     },
     combatLog: [],
     lastDamageEvent: null,
     // New state flag
-    rechargedThisTurn: false,
+    rechargedModules: [],
 
     initializeCombat: (player, enemy) => set({
         phase: CombatPhase.PLAYER_INPUT,
@@ -59,30 +64,51 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         player,
         enemy,
         combatLog: [`Combat started vs ${enemy.name}!`],
-        rechargedThisTurn: false,
+        rechargedModules: [],
     }),
 
-    setPhase: (phase) => set({ phase }),
-
     // Energy handling actions
-    consumeEnergy: (amount) => set(state => ({
-        player: { ...state.player, currentEnergy: Math.max(0, state.player.currentEnergy - amount) }
+    consumeModuleEnergy: (module) => set(state => {
+        const current = state.player.modules[module].currentEnergy;
+        return {
+            player: {
+                ...state.player,
+                modules: {
+                    ...state.player.modules,
+                    [module]: {
+                        ...state.player.modules[module],
+                        currentEnergy: Math.max(0, current - 1)
+                    }
+                }
+            }
+        };
+    }),
+    rechargeModule: (module) => set(state => ({
+        player: {
+            ...state.player,
+            modules: {
+                ...state.player.modules,
+                [module]: {
+                    ...state.player.modules[module],
+                    currentEnergy: state.player.modules[module].maxEnergy
+                }
+            }
+        },
+        rechargedModules: [...state.rechargedModules, module]
     })),
-    fullRecharge: () => set(state => ({
-        player: { ...state.player, currentEnergy: state.player.maxEnergy }
-    })),
-    resetRechargeFlag: () => set({ rechargedThisTurn: false }),
-    setRechargedThisTurn: (value) => set({ rechargedThisTurn: value }),
+    resetRechargeFlag: () => set({ rechargedModules: [] }),
+
+    setPhase: (phase) => set({ phase }),
 
     playerAction: (action) => {
         const { combatLog } = get();
         let logEntry = '';
 
-        if (action.type === 'ATTACK') {
+        if (action.type === 'attack') {
             const damage = action.value || 10;
             get().resolveDamage('enemy', damage);
             logEntry = `Player attacks for ${damage} damage!`;
-        } else if (action.type === 'DEFEND') {
+        } else if (action.type === 'defend') {
             const shieldBoost = action.value || 15;
             const { player } = get();
             const newShield = Math.min(player.maxShield, player.currentShield + shieldBoost);
@@ -95,9 +121,9 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             }));
 
             logEntry = `Player defends! Shield increased by ${newShield - player.currentShield}.`;
-        } else if (action.type === 'REPAIR') {
-            // Implement repair logic
-            logEntry = `Player repairs!`;
+        } else if (action.type === 'special') {
+            // Implement special logic (placeholder)
+            logEntry = `Player uses special!`;
         }
 
         set({
@@ -118,7 +144,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         const { combatLog } = get();
         let logEntry = '';
 
-        if (action.type === 'ATTACK') {
+        if (action.type === 'attack') {
             const damage = action.value || 5;
             get().resolveDamage('player', damage);
             logEntry = `Enemy attacks for ${damage} damage!`;
