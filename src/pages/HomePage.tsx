@@ -23,11 +23,7 @@ export default function HomePage() {
                         {t('ship_bay')}
                     </button>
                 </Link>
-                <Link to="/sandbox">
-                    <button data-testid="math-sandbox-btn" className={styles.secondaryButton}>
-                        {t('math_sandbox')}
-                    </button>
-                </Link>
+
             </div>
         </div>
     );
