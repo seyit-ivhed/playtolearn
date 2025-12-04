@@ -29,43 +29,62 @@ export const MissionInfoModal: React.FC<MissionInfoModalProps> = ({
                 <div className={styles.content}>
                     <p className={styles.description}>{t(`missions.${mission.id}.description`)}</p>
 
-                    <div className={styles.section}>
-                        <span className={styles.sectionTitle}>{t('mission.target_enemy')}</span>
-                        <div className={styles.enemyInfo}>
-                            <span className={styles.enemyIcon}>👾</span>
-                            <div>
-                                <strong>{t(`enemies.${mission.enemy.id}`)}</strong>
-                                <div style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>
-                                    {t('mission.stats.atk')}: {mission.enemy.attack} | {t('mission.stats.def')}: {mission.enemy.defense} | {t('mission.stats.hp')}: {mission.enemy.maxHealth}
+                    <div className={styles.grid}>
+                        <div className={styles.section}>
+                            <span className={styles.sectionTitle}>{t('mission.target_enemy')}</span>
+                            <div className={styles.enemyInfo}>
+                                <span className={styles.enemyIcon}>👾</span>
+                                <div style={{ width: '100%' }}>
+                                    <strong>{t(`enemies.${mission.enemy.id}`)}</strong>
+                                    <div className={styles.statGrid}>
+                                        <div className={styles.stat}>
+                                            <span className={styles.statLabel}>ATK</span>
+                                            <span className={styles.statValue}>{mission.enemy.attack}</span>
+                                        </div>
+                                        <div className={styles.stat}>
+                                            <span className={styles.statLabel}>DEF</span>
+                                            <span className={styles.statValue}>{mission.enemy.defense}</span>
+                                        </div>
+                                        <div className={styles.stat}>
+                                            <span className={styles.statLabel}>HP</span>
+                                            <span className={styles.statValue}>{mission.enemy.maxHealth}</span>
+                                        </div>
+                                        {mission.enemy.maxShield && (
+                                            <div className={styles.stat}>
+                                                <span className={styles.statLabel}>SHLD</span>
+                                                <span className={styles.statValue}>{mission.enemy.maxShield}</span>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className={styles.section}>
-                        <span className={styles.sectionTitle}>{t('mission.rewards')}</span>
-                        <ul className={styles.rewardsList}>
-                            {mission.rewards.xp && (
-                                <li className={styles.rewardItem}>
-                                    <span>✨</span> {t('rewards.xp', { amount: mission.rewards.xp })}
-                                </li>
-                            )}
-                            {mission.rewards.currency && (
-                                <li className={styles.rewardItem}>
-                                    <span>💎</span> {t('rewards.credits', { amount: mission.rewards.currency })}
-                                </li>
-                            )}
-                            {mission.rewards.unlocksModuleId && (
-                                <li className={styles.rewardItem}>
-                                    <span>🎁</span> {t('rewards.module_unlocked')}
-                                </li>
-                            )}
-                            {!mission.rewards.xp && !mission.rewards.currency && !mission.rewards.unlocksModuleId && (
-                                <li className={styles.rewardItem} style={{ color: 'var(--color-text-disabled)' }}>
-                                    {t('mission.no_rewards')}
-                                </li>
-                            )}
-                        </ul>
+                        <div className={styles.section}>
+                            <span className={styles.sectionTitle}>{t('mission.rewards')}</span>
+                            <ul className={styles.rewardsList}>
+                                {mission.rewards.xp && (
+                                    <li className={styles.rewardItem}>
+                                        <span>✨</span> {t('rewards.xp', { amount: mission.rewards.xp })}
+                                    </li>
+                                )}
+                                {mission.rewards.currency && (
+                                    <li className={styles.rewardItem}>
+                                        <span>💎</span> {t('rewards.credits', { amount: mission.rewards.currency })}
+                                    </li>
+                                )}
+                                {mission.rewards.unlocksModuleId && (
+                                    <li className={styles.rewardItem}>
+                                        <span>🎁</span> {t('rewards.module_unlocked')}
+                                    </li>
+                                )}
+                                {!mission.rewards.xp && !mission.rewards.currency && !mission.rewards.unlocksModuleId && (
+                                    <li className={styles.rewardItem} style={{ color: 'var(--color-text-disabled)' }}>
+                                        {t('mission.no_rewards')}
+                                    </li>
+                                )}
+                            </ul>
+                        </div>
                     </div>
                 </div>
 

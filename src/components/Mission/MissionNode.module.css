@@ -1,81 +1,123 @@
 .node {
     position: relative;
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    border: 3px solid var(--color-bg-tertiary);
-    background-color: var(--color-bg-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-.node:hover {
-    transform: scale(1.1);
     z-index: 10;
 }
 
-/* Status Variants */
-.locked {
-    border-color: var(--color-text-disabled);
-    background-color: var(--color-bg-primary);
-    opacity: 0.7;
-    cursor: not-allowed;
-    filter: grayscale(1);
+.nodeContent {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.5);
 }
 
-.available {
-    border-color: var(--color-accent-primary);
-    background-color: var(--color-bg-tertiary);
-    box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+.ring {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.node:hover {
+    transform: scale(1.2);
+}
+
+/* Status Variants */
+.locked .nodeContent {
+    background: radial-gradient(circle at 30% 30%, #4a5568, #2d3748);
+    border: 2px solid #4a5568;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.locked .ring {
+    border-color: rgba(255, 255, 255, 0.1);
+    border-style: dashed;
+}
+
+.available .nodeContent {
+    background: radial-gradient(circle at 30% 30%, #4fd1c5, #319795);
+    border: 2px solid #81e6d9;
+    box-shadow: 0 0 15px rgba(79, 209, 197, 0.4), inset -5px -5px 15px rgba(0, 0, 0, 0.3);
     animation: pulse 2s infinite;
 }
 
-.available:hover {
-    box-shadow: 0 0 25px rgba(0, 217, 255, 0.6);
-    border-color: #fff;
+.available .ring {
+    border-color: rgba(79, 209, 197, 0.3);
+    border-top-color: #81e6d9;
+    animation: spin 4s linear infinite;
 }
 
-.completed {
-    border-color: var(--color-ui-success);
-    background-color: var(--color-bg-tertiary);
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+.available:hover .nodeContent {
+    box-shadow: 0 0 25px rgba(79, 209, 197, 0.6), inset -5px -5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.completed .nodeContent {
+    background: radial-gradient(circle at 30% 30%, #68d391, #38a169);
+    border: 2px solid #9ae6b4;
+    box-shadow: 0 0 10px rgba(104, 211, 145, 0.3);
+}
+
+.completed .ring {
+    border-color: rgba(104, 211, 145, 0.5);
 }
 
 /* Content */
 .icon {
-    font-size: 1.5rem;
-    color: var(--color-text-primary);
+    font-size: 1.2rem;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 3;
 }
 
 .label {
     position: absolute;
-    bottom: -30px;
+    bottom: -35px;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(10, 14, 39, 0.9);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-family: var(--font-primary);
-    font-size: 0.8rem;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-family: 'Orbitron', sans-serif;
+    /* Fallback to sans-serif if not loaded */
+    font-size: 0.75rem;
     white-space: nowrap;
     color: var(--color-text-secondary);
-    border: 1px solid var(--color-bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s;
+    opacity: 0.8;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .node:hover .label {
     opacity: 1;
+    bottom: -40px;
+    border-color: var(--color-accent-primary);
+    color: var(--color-accent-primary);
 }
 
 .available .label {
     color: var(--color-accent-primary);
-    border-color: var(--color-accent-primary);
+    border-color: rgba(79, 209, 197, 0.3);
 }
 
 .completed .label {
@@ -84,14 +126,24 @@
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.4);
+        box-shadow: 0 0 0 0 rgba(79, 209, 197, 0.4);
     }
 
     70% {
-        box-shadow: 0 0 0 10px rgba(0, 217, 255, 0);
+        box-shadow: 0 0 0 10px rgba(79, 209, 197, 0);
     }
 
     100% {
-        box-shadow: 0 0 0 0 rgba(0, 217, 255, 0);
+        box-shadow: 0 0 0 0 rgba(79, 209, 197, 0);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }

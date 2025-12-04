@@ -1,50 +1,84 @@
 /* Mission Page Styles */
 
+.container {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    color: var(--color-text-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Stars effect using pseudo-elements could be added here, 
+   but for now we'll stick to a clean deep space look */
+
 .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    z-index: 10;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
 }
 
-.missionGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 0;
+.header h2 {
+    font-family: 'Orbitron', sans-serif; /* Assuming this font is available or falls back */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--color-accent-primary);
+    text-shadow: 0 0 10px var(--color-accent-primary);
+    margin: 0;
 }
 
-.missionNode {
-    transition: transform 0.2s ease;
+.header a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border: 1px solid var(--color-text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
 }
 
-.missionNode:hover {
-    transform: translateY(-4px);
+.header a:hover {
+    color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
 }
 
-@media (max-width: 768px) {
-    .missionGrid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .missionGrid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.missionCard {
-    background: rgba(26, 31, 58, 0.8);
-    padding: 1.5rem;
-    border-radius: 16px;
-    border: 1px solid rgba(0, 217, 255, 0.2);
-}
-
-.deployButton {
-    margin-top: 1rem;
+.mapContainer {
+    position: relative;
     width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mapContent {
+    position: relative;
+    width: 1000px;
+    height: 600px;
+    /* border: 1px dashed rgba(255, 255, 255, 0.1); Debugging guide */
+}
+
+.connections {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.missionNodeWrapper {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 2;
 }
