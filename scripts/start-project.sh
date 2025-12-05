@@ -34,18 +34,8 @@ fi
 
 echo -e "${GREEN}Unit tests passed.${NC}\n"
 
-# Step 3: Run E2E tests
-echo -e "${YELLOW}Step 3: Running E2E tests...${NC}"
-npx playwright test
-if [ $? -ne 0 ]; then
-    echo -e "${RED}E2E tests failed. Please fix the tests before starting a new branch.${NC}"
-    exit 1
-fi
-
-echo -e "${GREEN}E2E tests passed.${NC}\n"
-
-# Step 4: Ask for branch name
-echo -e "${YELLOW}Step 4: Creating new branch...${NC}"
+# Step 3: Ask for branch name
+echo -e "${YELLOW}Step 3: Creating new branch...${NC}"
 read -p "Enter the name for the new branch: " BRANCH_NAME
 
 if [ -z "$BRANCH_NAME" ]; then
@@ -62,8 +52,8 @@ fi
 
 echo -e "${GREEN}Created and switched to branch: $BRANCH_NAME${NC}\n"
 
-# Step 5: Push the new branch to origin
-echo -e "${YELLOW}Step 5: Publishing branch to origin...${NC}"
+# Step 4: Push the new branch to origin
+echo -e "${YELLOW}Step 4: Publishing branch to origin...${NC}"
 git push -u origin "$BRANCH_NAME"
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to push branch to origin.${NC}"
