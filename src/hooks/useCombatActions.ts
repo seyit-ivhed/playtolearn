@@ -6,11 +6,11 @@ import { MathOperation } from '../types/math.types';
 import { soundManager, SoundType } from '../utils/sound-manager';
 
 export function useCombatActions() {
-    const { phase, setPhase, playerAction, consumeModuleEnergy, rechargeModule, rechargedModules } = useCombatStore();
+    const { phase, playerAction, consumeModuleEnergy, rechargeModule, rechargedModules } = useCombatStore();
     const { currentProblem, generateNewProblem, submitAnswer, reset } = useMathStore();
 
     const [pendingRechargeModule, setPendingRechargeModule] = useState<'attack' | 'defend' | 'special' | null>(null);
-    const [showMathModal, setShowMathModal] = useState(false);
+    const [showInlineRecharge, setShowInlineRecharge] = useState(false);
 
     const handleActionSelect = (action: CombatAction) => {
         if (phase !== CombatPhase.PLAYER_INPUT) return;
@@ -27,11 +27,10 @@ export function useCombatActions() {
                 return;
             }
 
-            // Trigger recharge
+            // Trigger inline recharge
             setPendingRechargeModule(moduleType);
-            setPhase(CombatPhase.MATH_CHALLENGE);
             generateNewProblem(MathOperation.ADD);
-            setShowMathModal(true);
+            setShowInlineRecharge(true);
             return;
         }
 
@@ -60,15 +59,15 @@ export function useCombatActions() {
             soundManager.playSound(SoundType.WRONG_ANSWER);
         }
 
-        setShowMathModal(false);
+        setShowInlineRecharge(false);
         reset();
-        setPhase(CombatPhase.PLAYER_INPUT);
         setPendingRechargeModule(null);
     };
 
     return {
         handleActionSelect,
         handleMathSubmit,
-        showMathModal,
+        showInlineRecharge,
+        pendingRechargeModule,
     };
 }

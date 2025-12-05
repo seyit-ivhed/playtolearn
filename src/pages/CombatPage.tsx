@@ -10,7 +10,6 @@ import { CombatActionMenu, type CombatActionType } from '../components/Combat/Co
 import { CombatLog } from '../components/Combat/CombatLog';
 import { RewardSummary } from '../components/Mission/RewardSummary';
 import { CombatArena } from '../components/Combat/CombatArena';
-import { MathChallengeModal } from '../components/Combat/MathChallengeModal';
 import { VictoryScreen } from '../components/Combat/VictoryScreen';
 import { DefeatScreen } from '../components/Combat/DefeatScreen';
 import { ScreenShake } from '../components/Combat/ScreenShake';
@@ -36,7 +35,7 @@ export default function CombatPage() {
     const { completeMission } = useMissionStore();
     const { unlockModule } = useInventoryStore();
     const { createCombatEntities } = useCombatEntitySetup();
-    const { handleActionSelect, handleMathSubmit, showMathModal } = useCombatActions();
+    const { handleActionSelect, handleMathSubmit, showInlineRecharge, pendingRechargeModule } = useCombatActions();
 
     const currentMission = getMissionById(missionId || '1');
     const [showRewards, setShowRewards] = useState(false);
@@ -174,15 +173,12 @@ export default function CombatPage() {
                     onAction={(actionType: CombatActionType) => {
                         handleActionSelect({ type: actionType });
                     }}
+                    showInlineRecharge={showInlineRecharge}
+                    rechargeProblem={currentProblem}
+                    rechargeModule={pendingRechargeModule}
+                    onRechargeSubmit={handleMathSubmit}
                 />
             )}
-
-            {/* Math Challenge Modal */}
-            <MathChallengeModal
-                isOpen={showMathModal}
-                problem={currentProblem}
-                onSubmit={handleMathSubmit}
-            />
 
             {/* Victory Screen */}
             {phase === CombatPhase.VICTORY && !showRewards && (
