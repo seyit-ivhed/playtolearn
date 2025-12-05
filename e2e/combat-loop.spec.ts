@@ -14,8 +14,8 @@ test.describe('Combat Loop E2E', () => {
         // Click Attack button (has 3 energy initially)
         await page.getByTestId('attack-btn').click();
 
-        // No math modal should appear for the first attack
-        await expect(page.getByTestId('math-modal')).not.toBeVisible();
+        // No inline recharge should appear for the first attack
+        await expect(page.getByTestId('inline-recharge-title')).not.toBeVisible();
 
         // Wait for enemy turn (combat log or button disabled state could be checked, but timeout is simple)
         await page.waitForTimeout(3000);
@@ -35,32 +35,18 @@ test.describe('Combat Loop E2E', () => {
             await expect(page.getByTestId('attack-btn')).toBeVisible({ timeout: 5000 });
         }
 
-        // 4th click should trigger recharge
+        // 4th click should trigger inline recharge
         await page.getByTestId('attack-btn').click();
-        await expect(page.getByTestId('math-modal')).toBeVisible();
+        await expect(page.getByTestId('inline-recharge-title')).toBeVisible();
 
-        // Solve math
-        const op1Text = await page.getByTestId('operand1').textContent();
-        const op2Text = await page.getByTestId('operand2').textContent();
-        const operator = await page.getByTestId('operator').textContent();
+        // Solve math by clicking a choice button (auto-submits)
+        const op1Text = await page.getByTestId('inline-recharge-equation').textContent();
 
-        const op1 = parseInt(op1Text || '0');
-        const op2 = parseInt(op2Text || '0');
+        // Just click the first choice (A) - it will auto-submit
+        await page.getByTestId('inline-choice-0').click();
 
-        let answer = 0;
-        if (operator === '+') answer = op1 + op2;
-        else if (operator === '-') answer = op1 - op2;
-        else if (operator === '×') answer = op1 * op2;
-        else if (operator === '÷') answer = op1 / op2;
-
-        const answerStr = answer.toString();
-        for (const digit of answerStr) {
-            await page.getByTestId(`numpad-${digit}`).click();
-        }
-        await page.getByTestId('numpad-submit').click();
-
-        // Math modal should close
-        await expect(page.getByTestId('math-modal')).not.toBeVisible();
+        // Inline recharge should disappear
+        await expect(page.getByTestId('inline-recharge-title')).not.toBeVisible();
 
         // Turn should NOT end (Attack button still enabled/visible immediately)
         await expect(page.getByTestId('attack-btn')).toBeVisible();
@@ -83,31 +69,14 @@ test.describe('Combat Loop E2E', () => {
             // Try to attack
             await page.getByTestId('attack-btn').click();
 
-            // Check if math modal appeared (recharge needed)
-            if (await page.getByTestId('math-modal').isVisible({ timeout: 500 }).catch(() => false)) {
-                // Solve math
-                const op1Text = await page.getByTestId('operand1').textContent();
-                const op2Text = await page.getByTestId('operand2').textContent();
-                const operator = await page.getByTestId('operator').textContent();
-
-                const op1 = parseInt(op1Text || '0');
-                const op2 = parseInt(op2Text || '0');
-
-                let answer = 0;
-                if (operator === '+') answer = op1 + op2;
-                else if (operator === '-') answer = op1 - op2;
-                else if (operator === '×') answer = op1 * op2;
-                else if (operator === '÷') answer = op1 / op2;
-
-                const answerStr = answer.toString();
-                for (const digit of answerStr) {
-                    await page.getByTestId(`numpad-${digit}`).click();
-                }
-                await page.getByTestId('numpad-submit').click();
+            // Check if inline recharge appeared (recharge needed)
+            if (await page.getByTestId('inline-recharge-title').isVisible({ timeout: 500 }).catch(() => false)) {
+                // Click first choice to recharge (auto-submits)
+                await page.getByTestId('inline-choice-0').click();
 
                 // After recharge, we need to click attack again to actually attack
-                // Wait for modal to close
-                await expect(page.getByTestId('math-modal')).not.toBeVisible();
+                // Wait for inline recharge to close
+                await expect(page.getByTestId('inline-recharge-title')).not.toBeVisible();
                 await page.getByTestId('attack-btn').click();
             }
 
@@ -151,25 +120,9 @@ test.describe('Combat Loop E2E', () => {
 
             await page.getByTestId('attack-btn').click();
 
-            if (await page.getByTestId('math-modal').isVisible({ timeout: 500 }).catch(() => false)) {
-                const op1Text = await page.getByTestId('operand1').textContent();
-                const op2Text = await page.getByTestId('operand2').textContent();
-                const operator = await page.getByTestId('operator').textContent();
-
-                const op1 = parseInt(op1Text || '0');
-                const op2 = parseInt(op2Text || '0');
-
-                let answer = 0;
-                if (operator === '+') answer = op1 + op2;
-                else if (operator === '-') answer = op1 - op2;
-                else if (operator === '×') answer = op1 * op2;
-                else if (operator === '÷') answer = op1 / op2;
-
-                const answerStr = answer.toString();
-                for (const digit of answerStr) {
-                    await page.getByTestId(`numpad-${digit}`).click();
-                }
-                await page.getByTestId('numpad-submit').click();
+            if (await page.getByTestId('inline-recharge-title').isVisible({ timeout: 500 }).catch(() => false)) {
+                // Click first choice to recharge (auto-submits)
+                await page.getByTestId('inline-choice-0').click();
 
                 await page.waitForTimeout(500);
                 await page.getByTestId('attack-btn').click();

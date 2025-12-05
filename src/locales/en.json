@@ -53,7 +53,8 @@
             "return": "Return to Missions"
         },
         "math": {
-            "title": "Solve to Attack!"
+            "title": "Solve to Attack!",
+            "recharge_prompt": "Recharge Module"
         }
     },
     "rewards": {

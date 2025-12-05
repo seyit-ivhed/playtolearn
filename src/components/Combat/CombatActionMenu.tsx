@@ -4,6 +4,8 @@ import { soundManager, SoundType } from '../../utils/sound-manager';
 import styles from './CombatActionMenu.module.css';
 import { useCombatStore } from '../../stores/combat.store';
 import { EnergyBar } from './EnergyBar';
+import { InlineRecharge } from './InlineRecharge';
+import type { MathProblem } from '../../types/math.types';
 
 export type CombatActionType = 'attack' | 'defend' | 'special';
 
@@ -11,17 +13,39 @@ interface CombatActionMenuProps {
     onAction: (action: CombatActionType) => void;
     disabled?: boolean;
     className?: string;
+    // Inline recharge props
+    showInlineRecharge?: boolean;
+    rechargeProblem?: MathProblem | null;
+    rechargeModule?: CombatActionType | null;
+    onRechargeSubmit?: (answer: number) => void;
 }
 
 export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
     onAction,
     disabled = false,
-    className = ''
+    className = '',
+    showInlineRecharge = false,
+    rechargeProblem = null,
+    rechargeModule = null,
+    onRechargeSubmit
 }) => {
     const { player } = useCombatStore();
     const { t } = useTranslation();
 
     const modules = player.modules;
+
+    // Show inline recharge if needed
+    if (showInlineRecharge && rechargeProblem && rechargeModule && onRechargeSubmit) {
+        return (
+            <div className={`${styles.container} ${className}`}>
+                <InlineRecharge
+                    problem={rechargeProblem}
+                    onSubmit={onRechargeSubmit}
+                    moduleType={rechargeModule}
+                />
+            </div>
+        );
+    }
 
     return (
         <div className={`${styles.container} ${className}`}>
