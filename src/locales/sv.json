@@ -53,7 +53,8 @@
             "return": "Tillbaka till Uppdrag"
         },
         "math": {
-            "title": "Lös för att Attackera!"
+            "title": "Lös för att Attackera!",
+            "recharge_prompt": "Ladda om Modul"
         }
     },
     "rewards": {
