@@ -104,8 +104,9 @@ describe('useCombatActions', () => {
             result.current.handleActionSelect({ type: 'attack' });
         });
 
-        expect(mockSetPhase).toHaveBeenCalledWith(CombatPhase.MATH_CHALLENGE);
-        expect(result.current.showMathModal).toBe(true);
+        expect(mockSetPhase).not.toHaveBeenCalled();
+        expect(result.current.showInlineRecharge).toBe(true);
+        expect(result.current.pendingRechargeModule).toBe('attack');
         expect(mockConsumeEnergy).not.toHaveBeenCalled();
     });
 
@@ -131,7 +132,8 @@ describe('useCombatActions', () => {
         });
 
         expect(mockSetPhase).not.toHaveBeenCalled();
-        expect(result.current.showMathModal).toBe(false);
+        expect(result.current.showInlineRecharge).toBe(false);
+        expect(result.current.pendingRechargeModule).toBe(null);
     });
 
     it('should handle correct math answer for recharge', () => {
@@ -165,8 +167,8 @@ describe('useCombatActions', () => {
         });
 
         expect(mockFullRecharge).toHaveBeenCalledWith('attack');
-        expect(mockSetPhase).toHaveBeenCalledWith(CombatPhase.PLAYER_INPUT);
-        expect(result.current.showMathModal).toBe(false);
+        expect(result.current.showInlineRecharge).toBe(false);
+        expect(result.current.pendingRechargeModule).toBe(null);
     });
 
     it('should handle wrong math answer for recharge', () => {
@@ -200,7 +202,7 @@ describe('useCombatActions', () => {
         });
 
         expect(mockFullRecharge).not.toHaveBeenCalled();
-        expect(mockSetPhase).toHaveBeenCalledWith(CombatPhase.PLAYER_INPUT);
-        expect(result.current.showMathModal).toBe(false);
+        expect(result.current.showInlineRecharge).toBe(false);
+        expect(result.current.pendingRechargeModule).toBe(null);
     });
 });
