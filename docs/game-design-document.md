@@ -118,16 +118,12 @@ Example: Completing "Multiplication - Level 3" unlocks a Level 3 Laser Cannon (m
 - **Ion Blaster**: Unlocked by Division challenges
 - Each weapon has 5 power levels based on difficulty completed
 
-**2. Shields** (Defensive modules - block one attack)
-- **Energy Shield**: Unlocked by Fraction challenges
-- **Deflector Shield**: Unlocked by Decimal challenges
-- Shield blocks the next incoming attack, then needs recharging
-- Each shield has 5 levels affecting recharge speed
-
-**3. Armor** (Health modules - increase total HP)
-- **Hull Plating**: Unlocked by mixed operation challenges
-- **Reinforced Armor**: Unlocked by word problem challenges
-- Each armor level adds more maximum health
+**2. Support** (Defensive and utility modules)
+- **Energy Shield**: Unlocked by Fraction challenges - blocks the next incoming attack, then needs recharging
+- **Deflector Shield**: Unlocked by Decimal challenges - blocks the next incoming attack, then needs recharging
+- **Nano-Repair**: Unlocked by mixed operation challenges - restores hull integrity
+- **Reinforced Armor**: Unlocked by word problem challenges - increases total HP
+- Each support module has 5 levels affecting effectiveness
 
 #### Module Levels
 - Modules come in 5 levels (1-5) based on difficulty of challenge completed
@@ -331,7 +327,8 @@ Each sector:
   - Mission 3: Multiplication (unlocks Plasma Beam)
   - Mission 4: Division (unlocks Ion Blaster)
   - Mission 5: Boss Battle (unlocks Sector 2)
-- **4 modules**: 3 weapons + 1 shield
+- **6 modules**: 3 weapons + 3 support modules
+- **2 module types**: Weapon and Support (simplified for young children)
 - **2-3 enemy types**: Basic enemies + 1 boss
 - **Turn-based combat** with recharge mechanics
 - **Simple ship customization**: Equip unlocked modules

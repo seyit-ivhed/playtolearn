@@ -1,7 +1,6 @@
 export const ModuleType = {
     WEAPON: 'WEAPON',
-    SHIELD: 'SHIELD',
-    SPECIAL: 'SPECIAL',
+    SUPPORT: 'SUPPORT',
     CORE: 'CORE'
 } as const;
 

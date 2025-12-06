@@ -37,8 +37,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
     const getTypeColor = (type: ModuleType) => {
         switch (type) {
             case ModuleType.WEAPON: return styles.typeWeapon;
-            case ModuleType.SHIELD: return styles.typeShield;
-            case ModuleType.SPECIAL: return styles.typeSpecial;
+            case ModuleType.SUPPORT: return styles.typeSupport;
             case ModuleType.CORE: return styles.typeCore;
             default: return '';
         }

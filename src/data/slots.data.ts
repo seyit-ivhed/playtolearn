@@ -16,17 +16,17 @@ export const SHIP_SLOTS: ShipSlot[] = [
         equippedModuleId: null
     },
     {
-        id: 'slot_defense_1',
-        type: ModuleType.SHIELD,
-        name: 'defense_system',
-        allowedTypes: [ModuleType.SHIELD, ModuleType.CORE],
+        id: 'slot_support_1',
+        type: ModuleType.SUPPORT,
+        name: 'support_system_1',
+        allowedTypes: [ModuleType.SUPPORT, ModuleType.CORE],
         equippedModuleId: 'shield_basic_1'
     },
     {
-        id: 'slot_special_1',
-        type: ModuleType.SPECIAL,
-        name: 'special_module',
-        allowedTypes: [ModuleType.SPECIAL, ModuleType.CORE],
+        id: 'slot_support_2',
+        type: ModuleType.SUPPORT,
+        name: 'support_system_2',
+        allowedTypes: [ModuleType.SUPPORT, ModuleType.CORE],
         equippedModuleId: null
     }
 ];

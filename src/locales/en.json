@@ -151,7 +151,9 @@
         "primary_weapon": "Primary Weapon",
         "secondary_weapon": "Secondary Weapon",
         "defense_system": "Defense System",
-        "special_module": "Special Module"
+        "special_module": "Special Module",
+        "support_system_1": "Support System 1",
+        "support_system_2": "Support System 2"
     },
     "loadout": {
         "title": "Ship Loadout",

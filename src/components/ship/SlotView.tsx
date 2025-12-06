@@ -25,10 +25,9 @@ export const SlotView: React.FC<SlotViewProps> = ({
     const getTypeIcon = (type: ModuleType) => {
         switch (type) {
             case ModuleType.WEAPON: return '⚔️';
-            case ModuleType.SHIELD: return '🛡️';
-            case ModuleType.SPECIAL: return '⚡';
+            case ModuleType.SUPPORT: return '🛡️';
             case ModuleType.CORE: return '💎';
-            default: return '•';
+            default: return '❓';
         }
     };
 

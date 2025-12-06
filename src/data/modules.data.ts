@@ -45,11 +45,11 @@ export const SHIP_MODULES: Record<string, ShipModule> = {
         }
     },
 
-    // Shields
+    // Support Modules - Shields
     'shield_basic_1': {
         id: 'shield_basic_1',
         name: 'Training Shield',
-        type: ModuleType.SHIELD,
+        type: ModuleType.SUPPORT,
         stats: {
             defense: 5,
             energyCost: 1
@@ -63,7 +63,7 @@ export const SHIP_MODULES: Record<string, ShipModule> = {
     'shield_energy_1': {
         id: 'shield_energy_1',
         name: 'Energy Shield',
-        type: ModuleType.SHIELD,
+        type: ModuleType.SUPPORT,
         stats: {
             defense: 15,
             energyCost: 3
@@ -75,11 +75,11 @@ export const SHIP_MODULES: Record<string, ShipModule> = {
         }
     },
 
-    // Special
+    // Support Modules - Special Abilities
     'special_repair_1': {
         id: 'special_repair_1',
         name: 'Nano-Repair',
-        type: ModuleType.SPECIAL,
+        type: ModuleType.SUPPORT,
         stats: {
             health: 20,
             energyCost: 10
@@ -93,7 +93,7 @@ export const SHIP_MODULES: Record<string, ShipModule> = {
     'armor_reinforced_1': {
         id: 'armor_reinforced_1',
         name: 'Reinforced Armor',
-        type: ModuleType.SPECIAL,
+        type: ModuleType.SUPPORT,
         stats: {
             health: 50,
             speed: -5
