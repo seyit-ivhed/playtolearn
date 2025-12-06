@@ -9,6 +9,19 @@ import { CombatPhase } from '../types/combat.types';
 vi.mock('../stores/combat.store');
 vi.mock('../stores/math.store');
 vi.mock('../utils/sound-manager');
+vi.mock('../data/modules.data', () => ({
+    getModuleById: vi.fn((id) => {
+        if (id === 'weapon_laser_1') {
+            return {
+                id: 'weapon_laser_1',
+                name: 'Basic Laser',
+                combatAction: 'ATTACK',
+                stats: { attack: 10, maxEnergy: 3 }
+            };
+        }
+        return null;
+    })
+}));
 
 describe('useCombatActions', () => {
     const mockPlayerAction = vi.fn();
@@ -26,21 +39,22 @@ describe('useCombatActions', () => {
         // Setup default store mocks
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
+            player: {
+                equippedModules: [
+                    {
+                        moduleId: 'weapon_laser_1',
+                        slotId: 'slot_weapon_1',
+                        currentEnergy: 3,
+                        maxEnergy: 3,
+                        combatAction: 'ATTACK'
+                    }
+                ]
+            },
             setPhase: mockSetPhase,
             playerAction: mockPlayerAction,
             consumeModuleEnergy: mockConsumeEnergy,
-            rechargeModule: mockFullRecharge, // mapping to same mock function for simplicity
+            rechargeModule: mockFullRecharge,
             rechargedModules: [],
-        });
-
-        (useCombatStore as any).getState = vi.fn().mockReturnValue({
-            player: {
-                modules: {
-                    attack: { currentEnergy: 3, maxEnergy: 3 },
-                    defend: { currentEnergy: 2, maxEnergy: 2 },
-                    special: { currentEnergy: 2, maxEnergy: 2 },
-                }
-            }
         });
 
         (useMathStore as any).mockReturnValue({
@@ -52,31 +66,18 @@ describe('useCombatActions', () => {
     });
 
     it('should handle ATTACK action with energy', () => {
-        // Mock player with full energy
-        (useCombatStore as any).mockReturnValue({
-            phase: CombatPhase.PLAYER_INPUT,
-            setPhase: mockSetPhase,
-            playerAction: mockPlayerAction,
-            consumeModuleEnergy: mockConsumeEnergy,
-            rechargedModules: [],
-        });
-
-        (useCombatStore as any).getState.mockReturnValue({
-            player: {
-                modules: {
-                    attack: { currentEnergy: 3, maxEnergy: 3 }
-                }
-            }
-        });
-
         const { result } = renderHook(() => useCombatActions());
 
         act(() => {
-            result.current.handleActionSelect({ type: 'attack' });
+            result.current.handleActionSelect('weapon_laser_1');
         });
 
-        expect(mockConsumeEnergy).toHaveBeenCalledWith('attack');
-        expect(mockPlayerAction).toHaveBeenCalledWith({ type: 'attack', value: 10 });
+        expect(mockConsumeEnergy).toHaveBeenCalledWith('weapon_laser_1');
+        expect(mockPlayerAction).toHaveBeenCalledWith({
+            moduleId: 'weapon_laser_1',
+            behavior: 'ATTACK',
+            value: 10
+        });
         expect(mockSetPhase).not.toHaveBeenCalled();
     });
 
@@ -84,51 +85,57 @@ describe('useCombatActions', () => {
         // Mock player with 0 energy
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
+            player: {
+                equippedModules: [
+                    {
+                        moduleId: 'weapon_laser_1',
+                        slotId: 'slot_weapon_1',
+                        currentEnergy: 0,
+                        maxEnergy: 3,
+                        combatAction: 'ATTACK'
+                    }
+                ]
+            },
             setPhase: mockSetPhase,
             playerAction: mockPlayerAction,
             consumeModuleEnergy: mockConsumeEnergy,
             rechargedModules: [],
         });
 
-        (useCombatStore as any).getState.mockReturnValue({
-            player: {
-                modules: {
-                    attack: { currentEnergy: 0, maxEnergy: 3 }
-                }
-            }
-        });
-
         const { result } = renderHook(() => useCombatActions());
 
         act(() => {
-            result.current.handleActionSelect({ type: 'attack' });
+            result.current.handleActionSelect('weapon_laser_1');
         });
 
         expect(mockSetPhase).not.toHaveBeenCalled();
         expect(result.current.showInlineRecharge).toBe(true);
-        expect(result.current.pendingRechargeModule).toBe('attack');
+        expect(result.current.pendingRechargeModule).toBe('weapon_laser_1');
         expect(mockConsumeEnergy).not.toHaveBeenCalled();
     });
 
     it('should prevent recharge if already recharged this module', () => {
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
-            setPhase: mockSetPhase,
-            rechargedModules: ['attack'], // Already recharged attack
-        });
-
-        (useCombatStore as any).getState.mockReturnValue({
             player: {
-                modules: {
-                    attack: { currentEnergy: 0, maxEnergy: 3 }
-                }
-            }
+                equippedModules: [
+                    {
+                        moduleId: 'weapon_laser_1',
+                        slotId: 'slot_weapon_1',
+                        currentEnergy: 0,
+                        maxEnergy: 3,
+                        combatAction: 'ATTACK'
+                    }
+                ]
+            },
+            setPhase: mockSetPhase,
+            rechargedModules: ['weapon_laser_1'], // Already recharged
         });
 
         const { result } = renderHook(() => useCombatActions());
 
         act(() => {
-            result.current.handleActionSelect({ type: 'attack' });
+            result.current.handleActionSelect('weapon_laser_1');
         });
 
         expect(mockSetPhase).not.toHaveBeenCalled();
@@ -140,24 +147,27 @@ describe('useCombatActions', () => {
         // Mock player with 0 energy to trigger recharge first
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
+            player: {
+                equippedModules: [
+                    {
+                        moduleId: 'weapon_laser_1',
+                        slotId: 'slot_weapon_1',
+                        currentEnergy: 0,
+                        maxEnergy: 3,
+                        combatAction: 'ATTACK'
+                    }
+                ]
+            },
             setPhase: mockSetPhase,
             rechargedModules: [],
             rechargeModule: mockFullRecharge,
-        });
-
-        (useCombatStore as any).getState.mockReturnValue({
-            player: {
-                modules: {
-                    attack: { currentEnergy: 0, maxEnergy: 3 }
-                }
-            }
         });
 
         const { result } = renderHook(() => useCombatActions());
 
         // Select action to trigger recharge state
         act(() => {
-            result.current.handleActionSelect({ type: 'attack' });
+            result.current.handleActionSelect('weapon_laser_1');
         });
 
         mockSubmitAnswer.mockReturnValue({ isCorrect: true });
@@ -166,7 +176,7 @@ describe('useCombatActions', () => {
             result.current.handleMathSubmit(2);
         });
 
-        expect(mockFullRecharge).toHaveBeenCalledWith('attack');
+        expect(mockFullRecharge).toHaveBeenCalledWith('weapon_laser_1');
         expect(result.current.showInlineRecharge).toBe(false);
         expect(result.current.pendingRechargeModule).toBe(null);
     });
@@ -175,24 +185,27 @@ describe('useCombatActions', () => {
         // Mock player with 0 energy
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
+            player: {
+                equippedModules: [
+                    {
+                        moduleId: 'weapon_laser_1',
+                        slotId: 'slot_weapon_1',
+                        currentEnergy: 0,
+                        maxEnergy: 3,
+                        combatAction: 'ATTACK'
+                    }
+                ]
+            },
             setPhase: mockSetPhase,
             rechargedModules: [],
             rechargeModule: mockFullRecharge,
-        });
-
-        (useCombatStore as any).getState.mockReturnValue({
-            player: {
-                modules: {
-                    attack: { currentEnergy: 0, maxEnergy: 3 }
-                }
-            }
         });
 
         const { result } = renderHook(() => useCombatActions());
 
         // Select action first
         act(() => {
-            result.current.handleActionSelect({ type: 'attack' });
+            result.current.handleActionSelect('weapon_laser_1');
         });
 
         mockSubmitAnswer.mockReturnValue({ isCorrect: false });

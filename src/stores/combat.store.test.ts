@@ -10,6 +10,22 @@ describe('Combat Store', () => {
         currentHealth: 100,
         maxShield: 50,
         currentShield: 50,
+        equippedModules: [
+            {
+                moduleId: 'weapon_laser_1',
+                slotId: 'slot_weapon_1',
+                currentEnergy: 3,
+                maxEnergy: 3,
+                combatAction: 'ATTACK'
+            },
+            {
+                moduleId: 'shield_basic_1',
+                slotId: 'slot_support_1',
+                currentEnergy: 2,
+                maxEnergy: 2,
+                combatAction: 'DEFEND'
+            }
+        ],
         modules: {
             attack: { currentEnergy: 3, maxEnergy: 3 },
             defend: { currentEnergy: 2, maxEnergy: 2 },
@@ -24,6 +40,7 @@ describe('Combat Store', () => {
         currentHealth: 50,
         maxShield: 0,
         currentShield: 0,
+        equippedModules: [],
         modules: {
             attack: { currentEnergy: 0, maxEnergy: 0 },
             defend: { currentEnergy: 0, maxEnergy: 0 },
@@ -44,7 +61,7 @@ describe('Combat Store', () => {
     });
 
     it('should handle player attack', () => {
-        useCombatStore.getState().playerAction({ type: 'attack', value: 20 });
+        useCombatStore.getState().playerAction({ moduleId: 'weapon_laser_1', behavior: 'ATTACK', value: 20 });
         const state = useCombatStore.getState();
 
         expect(state.enemy.currentHealth).toBe(30);
@@ -58,7 +75,7 @@ describe('Combat Store', () => {
             player: { ...state.player, currentShield: 30 }
         }));
 
-        useCombatStore.getState().playerAction({ type: 'defend', value: 15 });
+        useCombatStore.getState().playerAction({ moduleId: 'shield_basic_1', behavior: 'DEFEND', value: 15 });
         const state = useCombatStore.getState();
 
         expect(state.player.currentShield).toBe(45);
@@ -67,7 +84,7 @@ describe('Combat Store', () => {
     });
 
     it('should handle enemy attack', () => {
-        useCombatStore.getState().enemyTurn({ type: 'attack', value: 10 });
+        useCombatStore.getState().enemyTurn({ moduleId: 'enemy_weapon', behavior: 'ATTACK', value: 10 });
         const state = useCombatStore.getState();
 
         // Player has 50 shield, so damage should go to shield first
@@ -78,7 +95,7 @@ describe('Combat Store', () => {
     });
 
     it('should detect victory', () => {
-        useCombatStore.getState().playerAction({ type: 'attack', value: 50 });
+        useCombatStore.getState().playerAction({ moduleId: 'weapon_laser_1', behavior: 'ATTACK', value: 50 });
         const state = useCombatStore.getState();
 
         expect(state.enemy.currentHealth).toBe(0);
@@ -91,7 +108,7 @@ describe('Combat Store', () => {
             player: { ...mockPlayer, currentHealth: 5, currentShield: 0 }
         });
 
-        useCombatStore.getState().enemyTurn({ type: 'attack', value: 10 });
+        useCombatStore.getState().enemyTurn({ moduleId: 'enemy_weapon', behavior: 'ATTACK', value: 10 });
         const state = useCombatStore.getState();
 
         expect(state.player.currentHealth).toBe(0);
@@ -99,32 +116,32 @@ describe('Combat Store', () => {
     });
 
     it('should consume module energy correctly', () => {
-        useCombatStore.getState().consumeModuleEnergy('attack');
-        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(2);
+        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
+        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(2);
 
-        useCombatStore.getState().consumeModuleEnergy('attack');
-        useCombatStore.getState().consumeModuleEnergy('attack');
-        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(0);
+        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
+        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
+        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(0);
 
         // Should not go below 0
-        useCombatStore.getState().consumeModuleEnergy('attack');
-        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(0);
+        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
+        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(0);
     });
 
     it('should recharge module energy', () => {
         // First consume some energy
-        useCombatStore.getState().consumeModuleEnergy('attack');
-        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(2);
+        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
+        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(2);
 
-        useCombatStore.getState().rechargeModule('attack');
-        expect(useCombatStore.getState().player.modules.attack.currentEnergy).toBe(3);
+        useCombatStore.getState().rechargeModule('weapon_laser_1');
+        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(3);
     });
 
     it('should handle recharge flag', () => {
         expect(useCombatStore.getState().rechargedModules).toEqual([]);
 
-        useCombatStore.getState().rechargeModule('attack');
-        expect(useCombatStore.getState().rechargedModules).toContain('attack');
+        useCombatStore.getState().rechargeModule('weapon_laser_1');
+        expect(useCombatStore.getState().rechargedModules).toContain('weapon_laser_1');
 
         useCombatStore.getState().resetRechargeFlag();
         expect(useCombatStore.getState().rechargedModules).toEqual([]);
