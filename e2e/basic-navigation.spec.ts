@@ -5,10 +5,10 @@ test('has title', async ({ page }) => {
     await expect(page).toHaveTitle(/Space Math Academy/);
 });
 
-test('can navigate to mission select', async ({ page }) => {
+test('mission select is the landing page', async ({ page }) => {
     await page.goto('/');
-    await page.getByTestId('start-mission-btn').click();
-    await expect(page).toHaveURL(/.*mission-select/);
+    // Should see mission select content immediately
+    await expect(page.getByTestId('mission-node-1')).toBeVisible();
 });
 
 test('can navigate to ship bay', async ({ page }) => {
@@ -18,7 +18,7 @@ test('can navigate to ship bay', async ({ page }) => {
 });
 
 test('can navigate to combat from mission select', async ({ page }) => {
-    await page.goto('/mission-select');
+    await page.goto('/');
     // Click the first mission node
     await page.getByTestId('mission-node-1').click();
     // Click the "Start Mission" button in the modal
