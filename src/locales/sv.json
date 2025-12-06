@@ -1,45 +1,21 @@
 {
-    "welcome": "Välkommen till Rymdmatteakademin",
     "app_title": "Rymdmatteakademin",
     "subtitle": "Bemästra matte för att rädda galaxen!",
     "start_mission": "Starta Uppdrag",
     "ship_bay": "Skeppsvarv",
-    "profile": "Profil",
-    "settings": "Inställningar",
-    "language": "Språk",
     "mission_select": "Välj Uppdrag",
     "back_to_home": "Tillbaka till Hem",
-    "mission_title": "Uppdrag {{number}}",
-    "sector_training_zone": "Sektor 1: Träningszon",
-    "deploy": "Starta",
-    "star_fighter_mk1": "Stjärnjägare MK-1",
-    "modules_label": "Moduler",
-    "laser_cannon_label": "Laserkanon",
-    "equipped": "Utrustad",
     "empty_slot": "Tom Plats",
     "combat_simulation": "Stridssimulering",
     "abort_mission": "Avbryt Uppdrag",
-    "player": "Spelare",
-    "vs": "MOT",
-    "training_drone": "Träningsdrönare",
-    "select_action": "Välj Handling",
-    "laser_cannon_add": "Laserkanon (Addera)",
-    "missiles_locked": "Missiler (Låst)",
-    "math_sandbox": "Mattesandlåda",
     "combat": {
         "action": {
             "attack": "Attackera",
             "defend": "Försvara",
             "special": "Special",
-            "energy_cost": "{{cost}} Energi",
             "attack_tooltip": "Attackera (Kostnad: {{cost}})",
             "defend_tooltip": "Försvara (Kostnad: {{cost}})",
-            "special_tooltip": "Special (Kostnad: {{cost}})",
-            "recharge": "Ladda om",
-            "recharge_tooltip": "Ladda om Energi"
-        },
-        "stats": {
-            "energy": "Energi"
+            "special_tooltip": "Special (Kostnad: {{cost}})"
         },
         "victory": {
             "title": "Seger! 🎉",
@@ -82,41 +58,21 @@
         "rewards": "Uppdragsbelöningar",
         "no_rewards": "Inga belöningar listade",
         "cancel": "Avbryt",
-        "start": "Starta Uppdrag",
-        "stats": {
-            "atk": "ATT",
-            "def": "FÖR",
-            "hp": "HP"
-        }
+        "start": "Starta Uppdrag"
     },
-    "missions": {
-        "1": {
-            "title": "Flygträning",
-            "description": "Grundläggande stridsträning mot en måldrönare. Lär dig grunderna i dina skeppssystem."
-        },
-        "2": {
-            "title": "Asteroidbakhåll",
-            "description": "En rymdpiratspanare har siktats i asteroidbältet. Avlyssna och driva bort dem."
-        },
-        "3": {
-            "title": "Nebulapatrull",
-            "description": "Patrullera nebulasektorn. Akta dig för pirater som gömmer sig i gasmolnen."
-        },
-        "4": {
-            "title": "Räddningssignal",
-            "description": "Vi har tagit emot en nödsignal. Ett transportfartyg är under attack av ett Piratäss."
-        },
-        "5": {
-            "title": "Sektorvaktare",
-            "description": "Piratmodersskeppet har anlänt. Besegra det för att säkra sektorn!"
-        }
-    },
-    "enemies": {
-        "training_drone": "Träningsdrönare",
-        "pirate_scout": "Piratspanare",
-        "pirate_fighter": "Piratjägare",
-        "pirate_ace": "Piratäss",
-        "pirate_mothership": "Piratmoderskepp"
+    "loadout": {
+        "title": "Skeppsutrustning",
+        "select_module": "Välj Modul för {{slot}}",
+        "available_modules": "Tillgängliga Moduler",
+        "allowed_types": "Tillåtna typer: {{types}}",
+        "cancel_selection": "Avbryt Val",
+        "empty_inventory": "Inga outrustade moduler tillgängliga",
+        "empty_hint": "Slutför uppdrag för att låsa upp nya moduler!",
+        "equip": "Utrusta",
+        "unequip": "Ta bort",
+        "buy": "Köp ({{cost}})",
+        "locked": "Låst",
+        "accepts": "Accepterar: {{types}}"
     },
     "modules": {
         "weapon_laser_1": {
@@ -151,22 +107,8 @@
     "slots": {
         "primary_weapon": "Primärt Vapen",
         "secondary_weapon": "Sekundärt Vapen",
-        "defense_system": "Försvarssystem",
-        "special_module": "Specialmodul"
-    },
-    "loadout": {
-        "title": "Skeppsutrustning",
-        "select_module": "Välj Modul för {{slot}}",
-        "available_modules": "Tillgängliga Moduler",
-        "allowed_types": "Tillåtna typer: {{types}}",
-        "cancel_selection": "Avbryt Val",
-        "empty_inventory": "Inga outrustade moduler tillgängliga",
-        "empty_hint": "Slutför uppdrag för att låsa upp nya moduler!",
-        "equip": "Utrusta",
-        "unequip": "Ta bort",
-        "buy": "Köp ({{cost}})",
-        "locked": "Låst",
-        "accepts": "Accepterar: {{types}}"
+        "support_system_1": "Stödsystem 1",
+        "support_system_2": "Stödsystem 2"
     },
     "math": {
         "submit_answer": "Skicka Svar"

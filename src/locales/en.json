@@ -1,45 +1,21 @@
 {
-    "welcome": "Welcome to Space Math Academy",
     "app_title": "Space Math Academy",
     "subtitle": "Master math to save the galaxy!",
     "start_mission": "Start Mission",
     "ship_bay": "Ship Bay",
-    "profile": "Profile",
-    "settings": "Settings",
-    "language": "Language",
     "mission_select": "Mission Select",
     "back_to_home": "Back to Home",
-    "mission_title": "Mission {{number}}",
-    "sector_training_zone": "Sector 1: Training Zone",
-    "deploy": "Deploy",
-    "star_fighter_mk1": "Star Fighter MK-1",
-    "modules_label": "Modules",
-    "laser_cannon_label": "Laser Cannon",
-    "equipped": "Equipped",
     "empty_slot": "Empty Slot",
     "combat_simulation": "Combat Simulation",
     "abort_mission": "Abort Mission",
-    "player": "Player",
-    "vs": "VS",
-    "training_drone": "Training Drone",
-    "select_action": "Select Action",
-    "laser_cannon_add": "Laser Cannon (Add)",
-    "missiles_locked": "Missiles (Locked)",
-    "math_sandbox": "Math Sandbox",
     "combat": {
         "action": {
             "attack": "Attack",
             "defend": "Defend",
             "special": "Special",
-            "energy_cost": "{{cost}} Energy",
             "attack_tooltip": "Attack (Cost: {{cost}})",
             "defend_tooltip": "Defend (Cost: {{cost}})",
-            "special_tooltip": "Special (Cost: {{cost}})",
-            "recharge": "Recharge",
-            "recharge_tooltip": "Recharge Energy"
-        },
-        "stats": {
-            "energy": "Energy"
+            "special_tooltip": "Special (Cost: {{cost}})"
         },
         "victory": {
             "title": "Victory! 🎉",
@@ -82,41 +58,21 @@
         "rewards": "Mission Rewards",
         "no_rewards": "No rewards listed",
         "cancel": "Cancel",
-        "start": "Start Mission",
-        "stats": {
-            "atk": "ATK",
-            "def": "DEF",
-            "hp": "HP"
-        }
+        "start": "Start Mission"
     },
-    "missions": {
-        "1": {
-            "title": "Flight Training",
-            "description": "Basic combat training against a target drone. Learn the ropes of your ship systems."
-        },
-        "2": {
-            "title": "Asteroid Ambush",
-            "description": "A Space Pirate scout has been spotted in the asteroid belt. Intercept and drive them off."
-        },
-        "3": {
-            "title": "Nebula Patrol",
-            "description": "Patrol the nebula sector. Beware of pirates hiding in the gas clouds."
-        },
-        "4": {
-            "title": "Rescue Signal",
-            "description": "We received a distress signal. A transport ship is under attack by a Pirate Ace."
-        },
-        "5": {
-            "title": "Sector Guardian",
-            "description": "The Pirate Mothership has arrived. Defeat it to secure the sector!"
-        }
-    },
-    "enemies": {
-        "training_drone": "Training Drone",
-        "pirate_scout": "Pirate Scout",
-        "pirate_fighter": "Pirate Fighter",
-        "pirate_ace": "Pirate Ace",
-        "pirate_mothership": "Pirate Mothership"
+    "loadout": {
+        "title": "Ship Loadout",
+        "select_module": "Select Module for {{slot}}",
+        "available_modules": "Available Modules",
+        "allowed_types": "Allowed types: {{types}}",
+        "cancel_selection": "Cancel Selection",
+        "empty_inventory": "No unequipped modules available",
+        "empty_hint": "Complete missions to unlock new modules!",
+        "equip": "Equip",
+        "unequip": "Unequip",
+        "buy": "Buy ({{cost}})",
+        "locked": "Locked",
+        "accepts": "Accepts: {{types}}"
     },
     "modules": {
         "weapon_laser_1": {
@@ -151,24 +107,8 @@
     "slots": {
         "primary_weapon": "Primary Weapon",
         "secondary_weapon": "Secondary Weapon",
-        "defense_system": "Defense System",
-        "special_module": "Special Module",
         "support_system_1": "Support System 1",
         "support_system_2": "Support System 2"
-    },
-    "loadout": {
-        "title": "Ship Loadout",
-        "select_module": "Select Module for {{slot}}",
-        "available_modules": "Available Modules",
-        "allowed_types": "Allowed types: {{types}}",
-        "cancel_selection": "Cancel Selection",
-        "empty_inventory": "No unequipped modules available",
-        "empty_hint": "Complete missions to unlock new modules!",
-        "equip": "Equip",
-        "unequip": "Unequip",
-        "buy": "Buy ({{cost}})",
-        "locked": "Locked",
-        "accepts": "Accepts: {{types}}"
     },
     "math": {
         "submit_answer": "Submit Answer"
