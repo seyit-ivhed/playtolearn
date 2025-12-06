@@ -6,7 +6,7 @@ import { useMathStore } from '../stores/math.store';
 import { useMissionStore } from '../stores/mission.store';
 import { useInventoryStore } from '../stores/inventory.store';
 import { CombatPhase } from '../types/combat.types';
-import { CombatActionMenu, type CombatActionType } from '../components/Combat/CombatActionMenu';
+import { CombatActionMenu } from '../components/Combat/CombatActionMenu';
 import { CombatLog } from '../components/Combat/CombatLog';
 import { RewardSummary } from '../components/Mission/RewardSummary';
 import { CombatArena } from '../components/Combat/CombatArena';
@@ -170,12 +170,12 @@ export default function CombatPage() {
             {/* Action Menu */}
             {phase === CombatPhase.PLAYER_INPUT && (
                 <CombatActionMenu
-                    onAction={(actionType: CombatActionType) => {
-                        handleActionSelect({ type: actionType });
+                    onAction={(moduleId: string) => {
+                        handleActionSelect(moduleId);
                     }}
                     showInlineRecharge={showInlineRecharge}
                     rechargeProblem={currentProblem}
-                    rechargeModule={pendingRechargeModule}
+                    rechargeModuleId={pendingRechargeModule}
                     onRechargeSubmit={handleMathSubmit}
                 />
             )}

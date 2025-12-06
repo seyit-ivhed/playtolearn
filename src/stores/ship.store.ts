@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { ShipLoadout, ShipStats } from '../types/ship.types';
+import type { ShipLoadout, ShipStats, ShipModule } from '../types/ship.types';
+import { ModuleType } from '../types/ship.types';
 import { getModuleById } from '../data/modules.data';
-import { SHIP_SLOTS } from '../data/slots.data';
+import { SHIP_SLOTS, getCombatSlots } from '../data/slots.data';
 
 export interface ShipState {
     loadout: ShipLoadout;
@@ -15,6 +16,8 @@ export interface ShipState {
 
     // Computed
     getTotalStats: () => ShipStats;
+    getCombatModules: () => ShipModule[];
+    isLoadoutCombatReady: () => boolean;
 }
 
 // Initialize loadout from SHIP_SLOTS
@@ -72,6 +75,28 @@ export const useShipStore = create<ShipState>()(
                 });
 
                 return totalStats;
+            },
+
+            getCombatModules: () => {
+                const state = get();
+                const combatSlots = getCombatSlots();
+
+                return combatSlots
+                    .map(slot => {
+                        const moduleId = state.loadout[slot.id];
+                        return moduleId ? getModuleById(moduleId) : null;
+                    })
+                    .filter((m): m is ShipModule => {
+                        return m !== null && m !== undefined && m.combatAction !== undefined;
+                    });
+            },
+
+            isLoadoutCombatReady: () => {
+                const modules = get().getCombatModules();
+                const weaponCount = modules.filter(m => m.type === ModuleType.WEAPON).length;
+
+                // Must have at least 1 weapon equipped
+                return weaponCount >= 1;
             }
         }),
         {

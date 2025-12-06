@@ -1,28 +1,18 @@
 import { useShipStore } from '../stores/ship.store';
 import type { CombatEntity } from '../types/combat.types';
 import type { Mission } from '../types/mission.types';
+import { createPlayerCombatEntity, createEnemyCombatEntity } from '../utils/combat-entity-factory';
 
 export function useCombatEntitySetup() {
-    const { getTotalStats } = useShipStore();
+    const { loadout, getTotalStats } = useShipStore();
 
     const createCombatEntities = (mission: Mission): { playerStats: CombatEntity; enemyStats: CombatEntity } => {
         const shipStats = getTotalStats();
 
-        const playerStats: CombatEntity = {
-            id: 'player',
-            name: 'Player Ship',
-            sprite: '/src/assets/images/ships/player_ship.png',
-            maxHealth: shipStats.maxHealth,
-            currentHealth: shipStats.health,
-            maxShield: 50,
-            currentShield: 50,
-            modules: {
-                attack: { currentEnergy: 3, maxEnergy: 3 },
-                defend: { currentEnergy: 2, maxEnergy: 2 },
-                special: { currentEnergy: 2, maxEnergy: 2 },
-            },
-        };
+        // Create player entity from actual ship loadout
+        const playerStats = createPlayerCombatEntity(loadout, shipStats);
 
+        // Create enemy entity with default setup
         const enemyStats: CombatEntity = {
             id: mission.enemy.id,
             name: mission.enemy.name,
@@ -31,6 +21,7 @@ export function useCombatEntitySetup() {
             currentHealth: mission.enemy.maxHealth,
             maxShield: mission.enemy.maxShield || 0,
             currentShield: mission.enemy.maxShield || 0,
+            equippedModules: [], // Enemies don't use dynamic modules yet
             modules: {
                 attack: { currentEnergy: 0, maxEnergy: 0 },
                 defend: { currentEnergy: 0, maxEnergy: 0 },

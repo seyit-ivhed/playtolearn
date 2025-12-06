@@ -11,8 +11,18 @@ export type CombatPhase = typeof CombatPhase[keyof typeof CombatPhase];
 
 export type CombatActionType = 'attack' | 'defend' | 'special';
 
+// Runtime instance of a module in combat
+export interface ModuleInstance {
+    moduleId: string; // Reference to ShipModule
+    slotId: string; // Which slot it's equipped in
+    currentEnergy: number;
+    maxEnergy: number;
+    combatAction: string; // Will be CombatActionBehavior value
+}
+
 export interface CombatAction {
-    type: CombatActionType;
+    moduleId: string; // Which module is performing the action
+    behavior: string; // CombatActionBehavior - what action this performs
     value?: number; // e.g., damage amount, shield amount
 }
 
@@ -28,7 +38,8 @@ export interface CombatEntity {
     currentHealth: number;
     maxShield: number;
     currentShield: number;
-    modules: {
+    equippedModules: ModuleInstance[]; // Dynamic array of equipped modules
+    modules: { // Legacy - kept for backward compatibility during migration
         attack: ModuleState;
         defend: ModuleState;
         special: ModuleState;

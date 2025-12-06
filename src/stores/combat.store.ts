@@ -16,11 +16,12 @@ interface CombatStore extends CombatState {
     enemyTurn: (action: CombatAction) => void;
     resolveDamage: (target: 'player' | 'enemy', amount: number) => void;
     nextTurn: () => void;
-    // New fields for energy handling
-    rechargedModules: string[]; // Track which modules were recharged this turn
+    // Energy handling for dynamic modules
+    rechargedModules: string[]; // Track which module IDs were recharged this turn
     // Actions
-    consumeModuleEnergy: (module: 'attack' | 'defend' | 'special') => void;
-    rechargeModule: (module: 'attack' | 'defend' | 'special') => void;
+    consumeModuleEnergy: (moduleId: string) => void;
+    rechargeModule: (moduleId: string) => void;
+    getModuleInstance: (moduleId: string) => any | null;
     resetRechargeFlag: () => void;
 }
 
@@ -34,6 +35,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         currentHealth: 100,
         maxShield: 50,
         currentShield: 50,
+        equippedModules: [], // Will be populated on combat init
         modules: {
             attack: { currentEnergy: 3, maxEnergy: 3 },
             defend: { currentEnergy: 2, maxEnergy: 2 },
@@ -47,6 +49,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         currentHealth: 100,
         maxShield: 0,
         currentShield: 0,
+        equippedModules: [], // Will be populated on combat init
         modules: {
             attack: { currentEnergy: 0, maxEnergy: 0 },
             defend: { currentEnergy: 0, maxEnergy: 0 },
@@ -67,35 +70,50 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         rechargedModules: [],
     }),
 
-    // Energy handling actions
-    consumeModuleEnergy: (module) => set(state => {
-        const current = state.player.modules[module].currentEnergy;
+    // Helper to get module instance by ID
+    getModuleInstance: (moduleId) => {
+        const state = get();
+        return state.player.equippedModules.find(m => m.moduleId === moduleId) || null;
+    },
+
+    // Energy handling actions - now works with module IDs
+    consumeModuleEnergy: (moduleId) => set(state => {
+        const moduleIndex = state.player.equippedModules.findIndex(m => m.moduleId === moduleId);
+        if (moduleIndex === -1) return state;
+
+        const updatedModules = [...state.player.equippedModules];
+        updatedModules[moduleIndex] = {
+            ...updatedModules[moduleIndex],
+            currentEnergy: Math.max(0, updatedModules[moduleIndex].currentEnergy - 1)
+        };
+
         return {
             player: {
                 ...state.player,
-                modules: {
-                    ...state.player.modules,
-                    [module]: {
-                        ...state.player.modules[module],
-                        currentEnergy: Math.max(0, current - 1)
-                    }
-                }
+                equippedModules: updatedModules
             }
         };
     }),
-    rechargeModule: (module) => set(state => ({
-        player: {
-            ...state.player,
-            modules: {
-                ...state.player.modules,
-                [module]: {
-                    ...state.player.modules[module],
-                    currentEnergy: state.player.modules[module].maxEnergy
-                }
-            }
-        },
-        rechargedModules: [...state.rechargedModules, module]
-    })),
+
+    rechargeModule: (moduleId) => set(state => {
+        const moduleIndex = state.player.equippedModules.findIndex(m => m.moduleId === moduleId);
+        if (moduleIndex === -1) return state;
+
+        const updatedModules = [...state.player.equippedModules];
+        updatedModules[moduleIndex] = {
+            ...updatedModules[moduleIndex],
+            currentEnergy: updatedModules[moduleIndex].maxEnergy
+        };
+
+        return {
+            player: {
+                ...state.player,
+                equippedModules: updatedModules
+            },
+            rechargedModules: [...state.rechargedModules, moduleId]
+        };
+    }),
+
     resetRechargeFlag: () => set({ rechargedModules: [] }),
 
     setPhase: (phase) => set({ phase }),
@@ -104,11 +122,11 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         const { combatLog } = get();
         let logEntry = '';
 
-        if (action.type === 'attack') {
+        if (action.behavior === 'ATTACK') {
             const damage = action.value || 10;
             get().resolveDamage('enemy', damage);
             logEntry = `Player attacks for ${damage} damage!`;
-        } else if (action.type === 'defend') {
+        } else if (action.behavior === 'DEFEND') {
             const shieldBoost = action.value || 15;
             const { player } = get();
             const newShield = Math.min(player.maxShield, player.currentShield + shieldBoost);
@@ -121,7 +139,20 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             }));
 
             logEntry = `Player defends! Shield increased by ${newShield - player.currentShield}.`;
-        } else if (action.type === 'special') {
+        } else if (action.behavior === 'HEAL') {
+            const healAmount = action.value || 20;
+            const { player } = get();
+            const newHealth = Math.min(player.maxHealth, player.currentHealth + healAmount);
+
+            set((state) => ({
+                player: {
+                    ...state.player,
+                    currentHealth: newHealth
+                }
+            }));
+
+            logEntry = `Player heals for ${newHealth - player.currentHealth} HP!`;
+        } else if (action.behavior === 'SPECIAL') {
             // Implement special logic (placeholder)
             logEntry = `Player uses special!`;
         }
@@ -144,7 +175,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         const { combatLog } = get();
         let logEntry = '';
 
-        if (action.type === 'attack') {
+        if (action.behavior === 'ATTACK') {
             const damage = action.value || 5;
             get().resolveDamage('player', damage);
             logEntry = `Enemy attacks for ${damage} damage!`;

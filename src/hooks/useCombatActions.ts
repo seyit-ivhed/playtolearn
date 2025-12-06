@@ -4,45 +4,51 @@ import { useMathStore } from '../stores/math.store';
 import { CombatPhase, type CombatAction } from '../types/combat.types';
 import { MathOperation } from '../types/math.types';
 import { soundManager, SoundType } from '../utils/sound-manager';
+import { getModuleById } from '../data/modules.data';
 
 export function useCombatActions() {
-    const { phase, playerAction, consumeModuleEnergy, rechargeModule, rechargedModules } = useCombatStore();
+    const { phase, player, playerAction, consumeModuleEnergy, rechargeModule, rechargedModules } = useCombatStore();
     const { currentProblem, generateNewProblem, submitAnswer, reset } = useMathStore();
 
-    const [pendingRechargeModule, setPendingRechargeModule] = useState<'attack' | 'defend' | 'special' | null>(null);
+    const [pendingRechargeModule, setPendingRechargeModule] = useState<string | null>(null);
     const [showInlineRecharge, setShowInlineRecharge] = useState(false);
 
-    const handleActionSelect = (action: CombatAction) => {
+    const handleActionSelect = (moduleId: string) => {
         if (phase !== CombatPhase.PLAYER_INPUT) return;
 
-        const moduleType = action.type;
-        const player = useCombatStore.getState().player;
-        const currentEnergy = player.modules[moduleType].currentEnergy;
+        // Find the module instance
+        const moduleInstance = player.equippedModules.find(m => m.moduleId === moduleId);
+        if (!moduleInstance) return;
 
         // Check if module needs recharge
-        if (currentEnergy <= 0) {
+        if (moduleInstance.currentEnergy <= 0) {
             // Check if already recharged this module this turn
-            if (rechargedModules.includes(moduleType)) {
+            if (rechargedModules.includes(moduleId)) {
                 // Already recharged this module this turn; ignore
                 return;
             }
 
             // Trigger inline recharge
-            setPendingRechargeModule(moduleType);
+            setPendingRechargeModule(moduleId);
             generateNewProblem(MathOperation.ADD);
             setShowInlineRecharge(true);
             return;
         }
 
-        // Execute action if energy is available
-        consumeModuleEnergy(moduleType);
+        // Get module definition for action details
+        const module = getModuleById(moduleId);
+        if (!module || !module.combatAction) return;
 
-        if (action.type === 'attack') {
-            // Direct attack without math challenge
-            playerAction({ ...action, value: 10 });
-        } else {
-            playerAction(action);
-        }
+        // Execute action if energy is available
+        consumeModuleEnergy(moduleId);
+
+        const action: CombatAction = {
+            moduleId,
+            behavior: module.combatAction,
+            value: module.stats.attack || module.stats.defense || module.stats.health || 10
+        };
+
+        playerAction(action);
     };
 
     const handleMathSubmit = (answer: number) => {

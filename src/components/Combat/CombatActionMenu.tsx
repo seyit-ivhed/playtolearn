@@ -1,24 +1,38 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { soundManager, SoundType } from '../../utils/sound-manager';
 import styles from './CombatActionMenu.module.css';
 import { useCombatStore } from '../../stores/combat.store';
 import { EnergyBar } from './EnergyBar';
 import { InlineRecharge } from './InlineRecharge';
 import type { MathProblem } from '../../types/math.types';
-
-export type CombatActionType = 'attack' | 'defend' | 'special';
+import { getModuleById } from '../../data/modules.data';
 
 interface CombatActionMenuProps {
-    onAction: (action: CombatActionType) => void;
+    onAction: (moduleId: string) => void;
     disabled?: boolean;
     className?: string;
     // Inline recharge props
     showInlineRecharge?: boolean;
     rechargeProblem?: MathProblem | null;
-    rechargeModule?: CombatActionType | null;
+    rechargeModuleId?: string | null;
     onRechargeSubmit?: (answer: number) => void;
 }
+
+// Map combat behaviors to icons
+const BEHAVIOR_ICONS: Record<string, string> = {
+    'ATTACK': '⚔️',
+    'DEFEND': '🛡️',
+    'HEAL': '❤️',
+    'SPECIAL': '✨'
+};
+
+// Map combat behaviors to sound effects
+const BEHAVIOR_SOUNDS: Record<string, any> = {
+    'ATTACK': SoundType.BUTTON_CLICK,
+    'DEFEND': SoundType.SHIELD,
+    'HEAL': SoundType.BUTTON_CLICK,
+    'SPECIAL': SoundType.BUTTON_CLICK
+};
 
 export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
     onAction,
@@ -26,22 +40,21 @@ export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
     className = '',
     showInlineRecharge = false,
     rechargeProblem = null,
-    rechargeModule = null,
+    rechargeModuleId = null,
     onRechargeSubmit
 }) => {
     const { player } = useCombatStore();
-    const { t } = useTranslation();
 
-    const modules = player.modules;
+    const equippedModules = player.equippedModules;
 
     // Show inline recharge if needed
-    if (showInlineRecharge && rechargeProblem && rechargeModule && onRechargeSubmit) {
+    if (showInlineRecharge && rechargeProblem && rechargeModuleId && onRechargeSubmit) {
         return (
             <div className={`${styles.container} ${className}`}>
                 <InlineRecharge
                     problem={rechargeProblem}
                     onSubmit={onRechargeSubmit}
-                    moduleType={rechargeModule}
+                    moduleId={rechargeModuleId}
                 />
             </div>
         );
@@ -49,51 +62,36 @@ export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
 
     return (
         <div className={`${styles.container} ${className}`}>
-            <button
-                data-testid="attack-btn"
-                className={`${styles.actionBtn} ${styles.attackBtn}`}
-                onClick={() => {
-                    soundManager.playSound(SoundType.BUTTON_CLICK);
-                    onAction('attack');
-                }}
-                disabled={disabled}
-                title={t('combat.action.attack_tooltip')}
-            >
-                <span className={styles.icon}>⚔️</span>
-                <span className={styles.label}>{t('combat.action.attack')}</span>
-                <EnergyBar current={modules.attack.currentEnergy} max={modules.attack.maxEnergy} />
-            </button>
+            {equippedModules.map((moduleInstance) => {
+                const module = getModuleById(moduleInstance.moduleId);
+                if (!module) return null;
 
-            <button
-                data-testid="defend-btn"
-                className={`${styles.actionBtn} ${styles.defendBtn}`}
-                onClick={() => {
-                    soundManager.playSound(SoundType.SHIELD);
-                    onAction('defend');
-                }}
-                disabled={disabled}
-                title={t('combat.action.defend_tooltip')}
-            >
-                <span className={styles.icon}>🛡️</span>
-                <span className={styles.label}>{t('combat.action.defend')}</span>
-                <EnergyBar current={modules.defend.currentEnergy} max={modules.defend.maxEnergy} />
-            </button>
+                const icon = BEHAVIOR_ICONS[moduleInstance.combatAction] || '❓';
+                const sound = BEHAVIOR_SOUNDS[moduleInstance.combatAction] || SoundType.BUTTON_CLICK;
+                const behaviorClass = `behavior${moduleInstance.combatAction}`;
 
-            <button
-                data-testid="special-btn"
-                className={`${styles.actionBtn} ${styles.specialBtn}`}
-                onClick={() => {
-                    soundManager.playSound(SoundType.BUTTON_CLICK);
-                    onAction('special');
-                }}
-                disabled={disabled}
-                title={t('combat.action.special_tooltip')}
-            >
-                <span className={styles.icon}>✨</span>
-                <span className={styles.label}>{t('combat.action.special')}</span>
-                <EnergyBar current={modules.special.currentEnergy} max={modules.special.maxEnergy} />
-            </button>
+                return (
+                    <button
+                        key={moduleInstance.moduleId}
+                        data-testid={`module-btn-${moduleInstance.moduleId}`}
+                        data-behavior={moduleInstance.combatAction}
+                        className={`${styles.actionBtn} ${styles[behaviorClass] || ''}`}
+                        onClick={() => {
+                            soundManager.playSound(sound);
+                            onAction(moduleInstance.moduleId);
+                        }}
+                        disabled={disabled}
+                        title={module.description}
+                    >
+                        <span className={styles.icon}>{icon}</span>
+                        <span className={styles.label}>{module.name}</span>
+                        <EnergyBar
+                            current={moduleInstance.currentEnergy}
+                            max={moduleInstance.maxEnergy}
+                        />
+                    </button>
+                );
+            })}
         </div>
     );
 };
-

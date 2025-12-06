@@ -2,17 +2,21 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MathProblem } from '../../types/math.types';
 import { MathOperation } from '../../types/math.types';
+import { getModuleById } from '../../data/modules.data';
 import styles from './InlineRecharge.module.css';
 
 interface InlineRechargeProps {
     problem: MathProblem;
     onSubmit: (answer: number) => void;
-    moduleType: 'attack' | 'defend' | 'special';
+    moduleId: string;
 }
 
-export function InlineRecharge({ problem, onSubmit, moduleType }: InlineRechargeProps) {
+export function InlineRecharge({ problem, onSubmit, moduleId }: InlineRechargeProps) {
     const { t } = useTranslation();
     const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
+
+    const module = getModuleById(moduleId);
+    const moduleName = module?.name || 'Module';
 
     const getOperationSymbol = (op: MathOperation) => {
         switch (op) {
@@ -33,10 +37,13 @@ export function InlineRecharge({ problem, onSubmit, moduleType }: InlineRecharge
     const operationSymbol = getOperationSymbol(problem.operation);
 
     const getModuleColor = () => {
-        switch (moduleType) {
-            case 'attack': return '#ef4444';
-            case 'defend': return '#3b82f6';
-            case 'special': return '#a855f7';
+        if (!module?.combatAction) return '#22c55e';
+
+        switch (module.combatAction) {
+            case 'ATTACK': return '#ef4444';
+            case 'DEFEND': return '#3b82f6';
+            case 'HEAL': return '#22c55e';
+            case 'SPECIAL': return '#a855f7';
             default: return '#22c55e';
         }
     };
@@ -47,7 +54,7 @@ export function InlineRecharge({ problem, onSubmit, moduleType }: InlineRecharge
                 <div className={styles.icon}>⚡</div>
                 <div className={styles.headerText}>
                     <h3 className={styles.title} data-testid="inline-recharge-title">
-                        {t('combat.math.recharge_prompt')}
+                        {t('combat.math.recharge_prompt')} {moduleName}
                     </h3>
                     <div className={styles.equation} data-testid="inline-recharge-equation">
                         <span className={styles.operand}>{problem.operand1}</span>
