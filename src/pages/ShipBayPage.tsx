@@ -11,7 +11,7 @@ export default function ShipBayPage() {
     const { t } = useTranslation();
 
     // Store hooks
-    const { loadout, getTotalStats, equipModule, unequipModule } = useShipStore();
+    const { loadout, equipModule, unequipModule } = useShipStore();
     const { ownedModuleIds } = useInventoryStore();
 
     // Derived state
@@ -21,7 +21,6 @@ export default function ShipBayPage() {
     }));
 
     const availableModules = getAllModules();
-    const totalStats = getTotalStats();
 
     return (
         <div className={styles.page}>
@@ -36,7 +35,6 @@ export default function ShipBayPage() {
                 ownedModuleIds={ownedModuleIds}
                 onEquipModule={equipModule}
                 onUnequipModule={unequipModule}
-                baseStats={totalStats}
             />
         </div>
     );

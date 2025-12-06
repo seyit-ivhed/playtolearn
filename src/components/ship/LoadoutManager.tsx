@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ShipModule, ShipSlot, ShipStats } from '../../types/ship.types';
+import type { ShipModule, ShipSlot } from '../../types/ship.types';
 import { ModuleCard } from './ModuleCard';
 import { SlotView } from './SlotView';
-import { ShipStatsDisplay } from './ShipStatsDisplay';
 import styles from './LoadoutManager.module.css';
 
 interface LoadoutManagerProps {
@@ -12,7 +11,6 @@ interface LoadoutManagerProps {
     ownedModuleIds: string[];
     onEquipModule: (slotId: string, moduleId: string) => void;
     onUnequipModule: (slotId: string) => void;
-    baseStats: ShipStats;
 }
 
 export const LoadoutManager: React.FC<LoadoutManagerProps> = ({
@@ -20,8 +18,7 @@ export const LoadoutManager: React.FC<LoadoutManagerProps> = ({
     availableModules,
     ownedModuleIds,
     onEquipModule,
-    onUnequipModule,
-    baseStats
+    onUnequipModule
 }) => {
     const { t } = useTranslation();
     const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
@@ -40,19 +37,7 @@ export const LoadoutManager: React.FC<LoadoutManagerProps> = ({
         return equipped;
     }, [slots, availableModules]);
 
-    // Calculate total stats
-    const totalStats = useMemo(() => {
-        const stats = { ...baseStats };
 
-        equippedModules.forEach(module => {
-            if (module.stats.attack) stats.attack += module.stats.attack;
-            if (module.stats.defense) stats.defense += module.stats.defense;
-            if (module.stats.health) stats.maxHealth += module.stats.health;
-            if (module.stats.speed) stats.speed += module.stats.speed;
-        });
-
-        return stats;
-    }, [baseStats, equippedModules]);
 
     // Get owned but unequipped modules
     const unequippedModules = useMemo(() => {
@@ -101,10 +86,6 @@ export const LoadoutManager: React.FC<LoadoutManagerProps> = ({
                             />
                         ))}
                     </div>
-                </div>
-
-                <div className={styles.section}>
-                    <ShipStatsDisplay stats={totalStats} />
                 </div>
             </div>
 
