@@ -21,11 +21,12 @@
     justify-content: space-between;
     align-items: center;
     z-index: 10;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
 }
 
 .header h2 {
-    font-family: 'Orbitron', sans-serif; /* Assuming this font is available or falls back */
+    font-family: 'Orbitron', sans-serif;
+    /* Assuming this font is available or falls back */
     text-transform: uppercase;
     letter-spacing: 4px;
     color: var(--color-accent-primary);
@@ -33,22 +34,34 @@
     margin: 0;
 }
 
-.header a {
-    color: var(--color-text-secondary);
+.shipBayButton {
+    color: var(--color-text-primary);
     text-decoration: none;
-    border: 1px solid var(--color-text-secondary);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(138, 43, 226, 0.1));
+    border: 2px solid var(--color-accent-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
 }
 
-.header a:hover {
-    color: var(--color-accent-primary);
-    border-color: var(--color-accent-primary);
-    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+.shipBayButton:hover {
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(138, 43, 226, 0.2));
+    border-color: var(--color-accent-secondary);
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.4), 0 0 15px rgba(138, 43, 226, 0.3);
+    transform: translateY(-2px);
+}
+
+.shipBayIcon {
+    font-size: 1.2rem;
+    filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.6));
 }
 
 .mapContainer {

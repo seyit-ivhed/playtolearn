@@ -142,6 +142,6 @@ test.describe('Combat Loop E2E', () => {
 
         // Click return button
         await page.getByTestId('return-to-base-button').click();
-        await expect(page).toHaveURL(/.*mission-select/);
+        await expect(page).toHaveURL('/');
     });
 });

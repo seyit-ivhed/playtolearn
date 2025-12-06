@@ -12,7 +12,7 @@ export const useMissionNavigation = () => {
     };
 
     const navigateToMissionSelect = () => {
-        navigate('/mission-select');
+        navigate('/');
     };
 
     const navigateToShipBay = () => {

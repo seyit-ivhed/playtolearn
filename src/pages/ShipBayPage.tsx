@@ -26,7 +26,7 @@ export default function ShipBayPage() {
         <div className={styles.page}>
             <div className={styles.header}>
                 <h1>{t('ship_bay')}</h1>
-                <Link to="/" className={styles.backLink}>{t('back_to_home')}</Link>
+                <Link to="/" className={styles.backLink}>{t('mission_select')}</Link>
             </div>
 
             <LoadoutManager
