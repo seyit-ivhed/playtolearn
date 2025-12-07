@@ -22,7 +22,15 @@ export interface Companion {
     // Visuals (placeholders for now)
     color: string;
     icon: string;
+    image: string;
 }
+
+// Images
+import fireKnightImg from '../assets/images/companions/fire_knight.png';
+import shadowArcherImg from '../assets/images/companions/shadow_archer.png';
+import crystalGuardianImg from '../assets/images/companions/crystal_guardian.png';
+import lightHealerImg from '../assets/images/companions/light_healer.png';
+import lightningMageImg from '../assets/images/companions/lightning_mage.png';
 
 export const COMPANIONS: Record<string, Companion> = {
     'fire_knight': {
@@ -36,7 +44,8 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityDescription: 'Deals 15 damage to a single enemy.',
         abilityDamage: 15,
         color: '#e74c3c', // Red
-        icon: '⚔️'
+        icon: '⚔️',
+        image: fireKnightImg
     },
     'shadow_archer': {
         id: 'shadow_archer',
@@ -49,7 +58,8 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityDescription: 'Deals 12 damage that ignores armor.',
         abilityDamage: 12,
         color: '#2c3e50', // Dark Blue
-        icon: '🏹'
+        icon: '🏹',
+        image: shadowArcherImg
     },
     'crystal_guardian': {
         id: 'crystal_guardian',
@@ -62,7 +72,8 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityDescription: 'Grants 20 Shield to a friend.',
         abilityShield: 20,
         color: '#3498db', // Blue
-        icon: '🛡️'
+        icon: '🛡️',
+        image: crystalGuardianImg
     },
     'light_healer': {
         id: 'light_healer',
@@ -75,7 +86,8 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityDescription: 'Heals a friend for 15 Health.',
         abilityHeal: 15,
         color: '#f1c40f', // Gold
-        icon: '✨'
+        icon: '✨',
+        image: lightHealerImg
     },
     // Extra for full party testing
     'lightning_mage': {
@@ -89,7 +101,8 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityDescription: 'Deals 25 massive damage, needs recharge often.',
         abilityDamage: 25,
         color: '#9b59b6', // Purple
-        icon: '⚡'
+        icon: '⚡',
+        image: lightningMageImg
     }
 };
 

@@ -44,8 +44,13 @@ const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
             )}
 
             {/* Icon */}
-            <div className="flex justify-center text-5xl my-2">
-                {unit.icon}
+            {/* Icon/Portrait */}
+            <div className="flex justify-center my-2 h-20 items-center">
+                {!isEnemy ? (
+                    <img src={getCompanionById(unit.templateId).image} alt={unit.name} className="w-20 h-20 object-cover rounded-full border-2 border-white shadow-sm" />
+                ) : (
+                    <div className="text-5xl">{unit.icon}</div>
+                )}
             </div>
 
             {/* Name */}
@@ -172,7 +177,7 @@ const CombatPage = () => {
                                         <div className="text-sm text-[var(--color-text-secondary)] mb-2 italic">"{data.description}"</div>
                                         <div className="bg-white p-2 rounded-lg border border-gray-300">
                                             <div className="flex items-center gap-2 mb-1">
-                                                <span className="text-2xl">{data.icon}</span>
+                                                <img src={data.image} alt={data.name} className="w-12 h-12 object-cover rounded-full border border-gray-400" />
                                                 <span className="font-bold text-[var(--color-brand-primary)]">{data.abilityName}</span>
                                             </div>
                                             <div className="text-xs">{data.abilityDescription}</div>

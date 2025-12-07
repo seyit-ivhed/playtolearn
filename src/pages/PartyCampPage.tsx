@@ -45,13 +45,18 @@ const PartyCampPage = () => {
 
                             const data = getCompanionById(companionId);
                             return (
-                                <div key={companionId} className="relative group card flex flex-col items-center justify-center gap-2 hover:border-[var(--color-danger)] cursor-pointer transition-all" onClick={() => removeFromParty(companionId)} data-testid={`party-card-${companionId}`}>
-                                    <div className="text-4xl">{data.icon}</div>
-                                    <div className="font-bold text-lg">{data.name}</div>
-                                    <div className="text-xs px-2 py-1 rounded bg-gray-200">{data.role}</div>
+                                <div key={companionId} className="relative group card flex flex-col items-center justify-center gap-2 hover:border-[var(--color-danger)] cursor-pointer transition-all overflow-hidden" onClick={() => removeFromParty(companionId)} data-testid={`party-card-${companionId}`}>
+                                    <div className="flex flex-col items-center z-10">
+                                        <img src={data.image} alt={data.name} className="w-24 h-24 object-cover rounded-full border-4 border-white shadow-md mb-2" />
+                                        <div className="font-bold text-lg text-shadow-sm">{data.name}</div>
+                                        <div className="text-xs px-2 py-1 rounded bg-white/80 font-bold">{data.role}</div>
+                                    </div>
 
-                                    <div className="absolute inset-0 bg-[var(--color-danger)] opacity-0 group-hover:opacity-20 rounded-xl transition-opacity" />
-                                    <div className="absolute top-2 right-2 text-[var(--color-danger)] opacity-0 group-hover:opacity-100 font-bold">✕ Remove</div>
+                                    {/* Subtle background glow based on character color */}
+                                    <div className="absolute inset-0 opacity-20" style={{ backgroundColor: data.color }}></div>
+
+                                    <div className="absolute inset-0 bg-[var(--color-danger)] opacity-0 group-hover:opacity-40 transition-opacity" />
+                                    <div className="absolute top-2 right-2 text-white drop-shadow-md opacity-0 group-hover:opacity-100 font-bold z-20">✕ Remove</div>
                                 </div>
                             );
                         })}
@@ -79,7 +84,7 @@ const PartyCampPage = () => {
                                     `}
                                     onClick={() => !inParty && addToParty(id)}
                                 >
-                                    <div className="text-3xl bg-gray-100 p-2 rounded-full">{data.icon}</div>
+                                    <img src={data.image} alt={data.name} className="w-12 h-12 object-cover rounded-full border-2 border-gray-300" />
                                     <div className="flex-1">
                                         <div className="font-bold">{data.name}</div>
                                         <div className="text-xs text-[var(--color-text-secondary)]">{data.role}</div>
