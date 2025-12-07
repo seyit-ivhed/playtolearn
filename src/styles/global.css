@@ -1,31 +1,46 @@
 :root {
-  /* Color Palette - Deep Space Background */
-  --color-bg-primary: #0A0E27;
-  --color-bg-secondary: #1A1F3A;
-  --color-bg-tertiary: #2D3561;
+  /* Color Palette - Fantasy Realm (Math Quest Adventures) */
+  --color-bg-primary: #1a0b2e;
+  /* Deep Indigo Void */
+  --color-bg-secondary: #2d1b4e;
+  /* Dark Mystic Purple */
+  --color-bg-tertiary: #4a235a;
+  /* Magical Stone/Button Background */
 
   /* Accent Colors */
-  --color-accent-primary: #00D9FF; /* Cyan Glow */
-  --color-accent-secondary: #FF6B35; /* Solar Orange */
-  --color-accent-tertiary: #B537F2; /* Nebula Purple */
-  --color-accent-quaternary: #39FF14; /* Neon Green */
+  --color-accent-primary: #ffa502;
+  /* Treasure Gold */
+  --color-accent-secondary: #ff4757;
+  /* Dragon Red (Attack) */
+  --color-accent-tertiary: #a55eea;
+  /* Wizard Purple (Magic) */
+  --color-accent-quaternary: #2ed573;
+  /* Emerald Guard (Defense/Success) */
 
   /* UI Colors */
-  --color-ui-success: #00FF88;
-  --color-ui-error: #FF4757;
-  --color-ui-warning: #FFA502;
-  --color-ui-info: #5F9EFF;
-  --color-ui-neutral: #8B93B0;
+  --color-ui-success: #2ed573;
+  --color-ui-error: #ff4757;
+  --color-ui-warning: #ffa502;
+  --color-ui-info: #1e90ff;
+  /* Mana Blue */
+  --color-ui-neutral: #a4b0be;
+  /* Silver/Grey */
 
   /* Text Colors */
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #B8C5D6;
-  --color-text-disabled: #6B7A8F;
-  --color-text-highlight: #00D9FF;
+  --color-text-primary: #f1f2f6;
+  /* White Mist */
+  --color-text-secondary: #ced6e0;
+  /* Light Grey */
+  --color-text-disabled: #57606f;
+  /* Stone Grey */
+  --color-text-highlight: #ffa502;
+  /* Gold */
 
   /* Typography */
-  --font-primary: 'Orbitron', sans-serif;
-  --font-secondary: 'Inter', sans-serif;
+  --font-primary: 'Fredoka', 'Cinzel', system-ui, sans-serif;
+  /* Friendly & Adventurous */
+  --font-secondary: 'Nunito', system-ui, sans-serif;
+  /* Readable Round */
   --font-mono: 'JetBrains Mono', monospace;
 
   font-family: var(--font-secondary);
@@ -35,7 +50,7 @@
   color-scheme: dark;
   color: var(--color-text-primary);
   background-color: var(--color-bg-primary);
-  background-image: linear-gradient(180deg, #0A0E27 0%, #1A1F3A 100%);
+  background-image: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
   min-height: 100vh;
 
   font-synthesis: none;
@@ -52,8 +67,10 @@ a {
   text-decoration: inherit;
   transition: color 0.2s;
 }
+
 a:hover {
-  color: #535bf2; /* Fallback/Mix */
+  color: #535bf2;
+  /* Fallback/Mix */
   filter: brightness(1.2);
 }
 
@@ -66,7 +83,12 @@ body {
   flex-direction: column;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-primary);
   line-height: 1.2;
   margin-bottom: 0.5em;
@@ -102,9 +124,17 @@ button:focus-visible {
 }
 
 /* Utility Classes */
-.text-accent { color: var(--color-accent-primary); }
-.text-error { color: var(--color-ui-error); }
-.text-success { color: var(--color-ui-success); }
+.text-accent {
+  color: var(--color-accent-primary);
+}
+
+.text-error {
+  color: var(--color-ui-error);
+}
+
+.text-success {
+  color: var(--color-ui-success);
+}
 
 .container {
   max-width: 1200px;
