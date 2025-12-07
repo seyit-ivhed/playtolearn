@@ -1,7 +1,8 @@
 .page {
     min-height: 100vh;
     padding: 2rem;
-    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+    color: var(--color-text-primary);
 }
 
 .header {
@@ -15,26 +16,37 @@
 
 .header h1 {
     margin: 0;
-    font-size: 2rem;
-    color: #fff;
+    font-size: 2.5rem;
+    font-family: var(--font-primary);
+    color: var(--color-accent-primary);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
 
 .backLink {
-    padding: 0.75rem 1.5rem;
-    background: rgba(68, 136, 255, 0.2);
-    color: #4488ff;
+    padding: 0.8em 1.6em;
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
     text-decoration: none;
-    border-radius: 8px;
-    border: 1px solid #4488ff;
-    font-weight: 600;
-    transition: all 0.2s;
+    border-radius: 12px;
+    border: 2px solid var(--color-text-disabled);
+    font-weight: 700;
+    font-family: var(--font-primary);
+    transition: all 0.25s;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
 }
 
 .backLink:hover {
-    background: rgba(68, 136, 255, 0.3);
+    border-color: var(--color-accent-primary);
     transform: translateY(-2px);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.3);
+    color: var(--color-text-highlight);
+}
+
+.backLink:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -43,6 +55,6 @@
     }
 
     .header h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 }

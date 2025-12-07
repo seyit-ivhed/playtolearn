@@ -1,64 +1,73 @@
 .card {
-    background: rgba(20, 20, 30, 0.8);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1rem;
+    background: var(--color-bg-tertiary);
+    /* Parchment/Card base */
+    border: 3px solid var(--color-text-disabled);
+    /* Stone border */
+    border-radius: 16px;
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    transition: all 0.2s ease;
+    gap: 1rem;
+    transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
-    color: #fff;
-    min-width: 200px;
+    color: var(--color-text-primary);
+    min-width: 220px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-4px) rotate(1deg);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    border-color: var(--color-accent-primary);
+    z-index: 10;
 }
 
-/* Type Variants */
+/* Type Variants - Magic Glows */
 .typeWeapon {
-    border-left: 4px solid #ff4444;
+    border-left: 6px solid var(--color-accent-secondary);
 }
 
 .typeSupport {
-    border-left: 4px solid #4488ff;
+    border-left: 6px solid var(--color-ui-info);
 }
 
 .typeCore {
-    border-left: 4px solid #44ff88;
+    border-left: 6px solid var(--color-ui-success);
 }
 
 /* State Variants */
 .equipped {
-    background: rgba(40, 60, 40, 0.9);
-    border-color: #44ff88;
+    background: linear-gradient(135deg, var(--color-bg-tertiary) 0%, rgba(40, 60, 40, 0.9) 100%);
+    border-color: var(--color-ui-success);
+    box-shadow: 0 0 15px rgba(46, 213, 115, 0.3);
 }
 
 .locked {
-    opacity: 0.6;
-    filter: grayscale(0.8);
+    opacity: 0.7;
+    filter: grayscale(1);
     pointer-events: none;
+    background: #000;
 }
 
 .header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.75rem;
 }
 
 .icon {
-    font-size: 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    width: 40px;
-    height: 40px;
+    font-size: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 50%;
+    border: 2px solid var(--color-text-disabled);
 }
 
 .moduleIcon {
@@ -74,30 +83,35 @@
 
 .name {
     margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    color: var(--color-text-highlight);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .type {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    opacity: 0.7;
+    letter-spacing: 0.1em;
+    opacity: 0.9;
+    font-weight: 600;
+    color: var(--color-text-secondary);
 }
 
 .content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
 }
 
 .description {
     margin: 0;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.4;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    font-style: italic;
 }
 
 .stats {
@@ -105,71 +119,95 @@
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: auto;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    border-radius: 8px;
 }
 
 .statItem {
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .statValue {
-    font-family: monospace;
+    font-family: var(--font-mono);
     font-weight: bold;
+    color: var(--color-text-primary);
 }
 
 .actions {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
 }
 
 .equipBtn,
 .unequipBtn,
 .buyBtn {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border: none;
-    border-radius: 6px;
-    font-weight: 600;
+    border-radius: 10px;
+    font-weight: 700;
+    font-family: var(--font-primary);
     cursor: pointer;
     transition: all 0.2s;
+    font-size: 1rem;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+    top: 0;
+}
+
+.equipBtn:active,
+.unequipBtn:active,
+.buyBtn:active {
+    top: 4px;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .equipBtn {
-    background: #4488ff;
-    color: white;
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-ui-success);
 }
 
 .equipBtn:hover {
-    background: #5599ff;
+    background: var(--color-ui-success);
+    color: #fff;
 }
 
 .unequipBtn {
-    background: rgba(255, 68, 68, 0.2);
-    color: #ff4444;
-    border: 1px solid #ff4444;
+    background: rgba(60, 20, 30, 0.8);
+    color: var(--color-ui-error);
+    border: 2px solid var(--color-ui-error);
 }
 
 .unequipBtn:hover {
-    background: rgba(255, 68, 68, 0.3);
+    background: var(--color-ui-error);
+    color: #fff;
 }
 
 .buyBtn {
-    background: #ffaa00;
-    color: #000;
+    background: var(--color-accent-primary);
+    color: #4a2300;
+    border: 2px solid #fff;
 }
 
 .buyBtn:hover {
-    background: #ffbb22;
+    background: #ffbb33;
+    transform: translateY(-2px);
 }
 
 .lockedLabel {
     display: block;
     text-align: center;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    color: var(--color-text-disabled);
     font-style: italic;
+    font-family: var(--font-secondary);
+    margin-top: 0.5rem;
 }
