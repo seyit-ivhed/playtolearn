@@ -86,7 +86,7 @@
             "name": "Kristallväktaren",
             "description": "Skyddad av kristallrustning. Skyddar gruppen från skada."
         },
-        "companion_earth_defender försvararen": {
+        "companion_earth_defender": {
             "name": "Jordförsvararen",
             "description": "Stark som sten. Reser jordvallar för att blockera attacker."
         },
