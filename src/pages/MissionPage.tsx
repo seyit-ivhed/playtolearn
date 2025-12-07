@@ -4,24 +4,29 @@ import { useCombatStore } from '../stores/combat.store';
 
 const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     // Vertical Layout Nodes - Shifted down by 150px to clear header
+    // Added 'type' to distinguish between combat and camp nodes
     const nodes = [
-        { id: 1, x: '50%', y: 250, label: 'Start' },
-        { id: 2, x: '30%', y: 450, label: 'Forest' },
-        { id: 3, x: '70%', y: 650, label: 'River' },
-        { id: 4, x: '40%', y: 850, label: 'Cave' },
-        { id: 5, x: '50%', y: 1050, label: 'Boss' }
+        { id: 1, x: '50%', y: 250, label: 'Start', type: 'combat' },
+        { id: 2, x: '30%', y: 450, label: 'Forest', type: 'combat' },
+        { id: 3, x: '70%', y: 650, label: 'Safe Haven', type: 'camp' }, // Camp Node
+        { id: 4, x: '40%', y: 850, label: 'Cave', type: 'combat' },
+        { id: 5, x: '50%', y: 1050, label: 'Boss', type: 'combat' }
     ];
 
     const navigate = useNavigate();
     const { activeParty: party } = useGameStore();
     const { initializeCombat } = useCombatStore();
 
-    const handleNodeClick = (nodeId: number) => {
-        if (nodeId === currentNode) {
-            const enemies = nodeId === 5 ? ['stone_golem'] : ['goblin_scout', 'goblin_scout'];
-            initializeCombat(party, enemies);
-            navigate('/encounter');
+    const handleNodeClick = (node: typeof nodes[0]) => {
+        if (node.type === 'camp') {
+            navigate('/camp');
+            return;
         }
+
+        // Combat Logic
+        const enemies = node.id === 5 ? ['stone_golem'] : ['goblin_scout', 'goblin_scout'];
+        initializeCombat(party, enemies);
+        navigate('/encounter');
     };
 
     return (
@@ -79,6 +84,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                         const isCompleted = node.id < currentNode;
                         const isCurrent = node.id === currentNode;
                         const isLocked = node.id > currentNode;
+                        const isCamp = node.type === 'camp';
 
                         // Map % coordinates to our viewBox system (500 width)
                         // This logic must match the SVG path coordinates above!
@@ -94,24 +100,44 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
 
                         let topPos = node.y; // pixels
 
+                        // Base styles
                         let statusClass = "bg-slate-700 ring-4 ring-slate-800 cursor-not-allowed opacity-70 grayscale";
-                        if (isCurrent) statusClass = "bg-[var(--color-brand-accent)] ring-4 ring-yellow-400 cursor-pointer animate-bounce shadow-[0_0_30px_rgba(251,191,36,0.6)]";
-                        if (isCompleted) statusClass = "bg-[var(--color-success)] ring-4 ring-green-800 cursor-pointer";
+                        let labelClass = "bg-slate-900/90 border-slate-700 text-slate-300";
+
+                        // Current node styles
+                        if (isCurrent) {
+                            labelClass = "bg-yellow-900/90 border-yellow-500 text-yellow-100";
+                            if (isCamp) {
+                                statusClass = "bg-emerald-600 ring-4 ring-emerald-400 cursor-pointer animate-bounce shadow-[0_0_30px_rgba(16,185,129,0.6)]";
+                                labelClass = "bg-emerald-900/90 border-emerald-500 text-emerald-100";
+                            } else {
+                                statusClass = "bg-[var(--color-brand-accent)] ring-4 ring-yellow-400 cursor-pointer animate-bounce shadow-[0_0_30px_rgba(251,191,36,0.6)]";
+                            }
+                        }
+
+                        // Completed node styles
+                        if (isCompleted) {
+                            if (isCamp) {
+                                statusClass = "bg-emerald-800 ring-4 ring-emerald-900 cursor-pointer";
+                            } else {
+                                statusClass = "bg-[var(--color-success)] ring-4 ring-green-800 cursor-pointer";
+                            }
+                        }
 
                         return (
                             <div
                                 key={node.id}
                                 className={`absolute flex flex-col items-center justify-center transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 hover:scale-110 z-10`}
                                 style={{ left: leftPos, top: topPos }}
-                                onClick={() => !isLocked && handleNodeClick(node.id)}
+                                onClick={() => !isLocked && handleNodeClick(node)}
                             >
                                 {/* Node Circle */}
                                 <div className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl font-black text-white shadow-2xl ${statusClass}`} data-testid={`map-node-${node.id}`}>
-                                    {isCompleted ? '✓' : node.id}
+                                    {isCompleted ? '✓' : (isCamp ? '⛺' : node.id)}
                                 </div>
 
                                 {/* Label */}
-                                <div className={`mt-3 px-6 py-2 rounded-full text-base font-bold shadow-lg border-2 backdrop-blur-md uppercase tracking-wider ${isCurrent ? 'bg-yellow-900/90 border-yellow-500 text-yellow-100' : 'bg-slate-900/90 border-slate-700 text-slate-300'}`}>
+                                <div className={`mt-3 px-6 py-2 rounded-full text-base font-bold shadow-lg border-2 backdrop-blur-md uppercase tracking-wider ${labelClass}`}>
                                     {node.label}
                                 </div>
                             </div>
@@ -124,7 +150,6 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
 };
 
 const MapPage = () => {
-    const navigate = useNavigate();
     const { currentMapNode } = useGameStore();
 
     return (
@@ -133,17 +158,6 @@ const MapPage = () => {
             <main className="min-h-full pb-32"> {/* pb-32 to allow scrolling past the last node */}
                 <FantasyMapPath currentNode={currentMapNode} />
             </main>
-
-            {/* FAB Camp Navigation - Redesigned to be more visible */}
-            <button
-                onClick={() => navigate('/camp')}
-                className="fixed bottom-8 right-8 px-8 py-4 bg-gradient-to-r from-[var(--color-brand-secondary)] to-purple-600 hover:from-[var(--color-brand-primary)] hover:to-purple-500 text-white rounded-full shadow-[0_4px_20px_rgba(147,51,234,0.5)] border-2 border-purple-300 flex items-center gap-3 text-xl font-bold transition-all transform hover:scale-105 active:scale-95 group z-50 animate-pulse hover:animate-none"
-                title="Go to Camp"
-                data-testid="nav-camp-btn"
-            >
-                <span className="text-3xl group-hover:rotate-12 transition-transform">⛺</span>
-                <span>CAMP</span>
-            </button>
         </div>
     );
 };

@@ -11,8 +11,33 @@ test.describe('Navigation Flow', () => {
         // Assert Map ID
         await expect(page.getByTestId('map-title')).toBeVisible();
 
-        // Go to Camp
-        await page.getByTestId('nav-camp-btn').click();
+        // 1. Hack the state to unlock Node 3 (Camp)
+        await page.evaluate(() => {
+            const storageKey = 'math-quest-fantasy-storage-v1';
+            const currentData = localStorage.getItem(storageKey);
+            const parsed = currentData ? JSON.parse(currentData) : { state: {} };
+
+            parsed.state = {
+                ...parsed.state,
+                currentMapNode: 3, // Unlock up to Node 3
+                // Ensure other required fields are present if needed, but partial update might work if hydration handles it
+                // Actually, let's just update currentMapNode, assuming other state is initialized
+            };
+
+            // Need valid structure for Zustand persist
+            localStorage.setItem(storageKey, JSON.stringify(parsed));
+        });
+
+        // 2. Reload to apply state
+        await page.reload();
+
+        // 3. Verify we are at Node 3 and it's a Camp
+        const campNode = page.getByTestId('map-node-3');
+        await expect(campNode).toBeVisible();
+        await expect(campNode).toHaveText('⛺'); // Check for Camp Icon
+
+        // 4. Click Camp Node
+        await campNode.click({ force: true });
         await expect(page).toHaveURL('/camp');
 
         // Assert Camp ID
