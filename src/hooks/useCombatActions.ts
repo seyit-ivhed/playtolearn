@@ -4,61 +4,61 @@ import { useMathStore } from '../stores/math.store';
 import { CombatPhase, type CombatAction } from '../types/combat.types';
 import { MathOperation } from '../types/math.types';
 import { soundManager, SoundType } from '../utils/sound-manager';
-import { getModuleById } from '../data/modules.data';
+import { getCompanionById } from '../data/companions.data';
 
 export function useCombatActions() {
-    const { phase, player, playerAction, consumeModuleEnergy, rechargeModule, rechargedModules } = useCombatStore();
+    const { phase, player, playerAction, consumeCompanionEnergy, rechargeCompanion, rechargedCompanions } = useCombatStore();
     const { currentProblem, generateNewProblem, submitAnswer, reset } = useMathStore();
 
-    const [pendingRechargeModule, setPendingRechargeModule] = useState<string | null>(null);
+    const [pendingRechargeCompanion, setPendingRechargeCompanion] = useState<string | null>(null);
     const [showInlineRecharge, setShowInlineRecharge] = useState(false);
 
-    const handleActionSelect = (moduleId: string) => {
+    const handleActionSelect = (companionId: string) => {
         if (phase !== CombatPhase.PLAYER_INPUT) return;
 
-        // Find the module instance
-        const moduleInstance = player.equippedModules.find(m => m.moduleId === moduleId);
-        if (!moduleInstance) return;
+        // Find the companion instance
+        const companionInstance = player.equippedCompanions.find(c => c.companionId === companionId);
+        if (!companionInstance) return;
 
-        // Check if module needs recharge
-        if (moduleInstance.currentEnergy <= 0) {
-            // Check if already recharged this module this turn
-            if (rechargedModules.includes(moduleId)) {
-                // Already recharged this module this turn; ignore
+        // Check if companion needs recharge
+        if (companionInstance.currentEnergy <= 0) {
+            // Check if already recharged this companion this turn
+            if (rechargedCompanions.includes(companionId)) {
+                // Already recharged this companion this turn; ignore
                 return;
             }
 
             // Trigger inline recharge
-            setPendingRechargeModule(moduleId);
+            setPendingRechargeCompanion(companionId);
             generateNewProblem(MathOperation.ADD);
             setShowInlineRecharge(true);
             return;
         }
 
-        // Get module definition for action details
-        const module = getModuleById(moduleId);
-        if (!module || !module.combatAction) return;
+        // Get companion definition for action details
+        const companion = getCompanionById(companionId);
+        if (!companion || !companion.combatAction) return;
 
         // Execute action if energy is available
-        consumeModuleEnergy(moduleId);
+        consumeCompanionEnergy(companionId);
 
         const action: CombatAction = {
-            moduleId,
-            behavior: module.combatAction,
-            value: module.stats.attack || module.stats.defense || module.stats.health || 10
+            companionId,
+            behavior: companion.combatAction,
+            value: companion.stats.attack || companion.stats.defense || companion.stats.health || 10
         };
 
         playerAction(action);
     };
 
     const handleMathSubmit = (answer: number) => {
-        if (!currentProblem || !pendingRechargeModule) return;
+        if (!currentProblem || !pendingRechargeCompanion) return;
 
         const result = submitAnswer(answer);
 
         if (result.isCorrect) {
-            // Correct answer fully recharges specific module
-            rechargeModule(pendingRechargeModule);
+            // Correct answer fully recharges specific companion
+            rechargeCompanion(pendingRechargeCompanion);
             soundManager.playSound(SoundType.CORRECT_ANSWER);
         } else {
             // Wrong answer – no recharge
@@ -67,13 +67,13 @@ export function useCombatActions() {
 
         setShowInlineRecharge(false);
         reset();
-        setPendingRechargeModule(null);
+        setPendingRechargeCompanion(null);
     };
 
     return {
         handleActionSelect,
         handleMathSubmit,
         showInlineRecharge,
-        pendingRechargeModule,
+        pendingRechargeCompanion,
     };
 }

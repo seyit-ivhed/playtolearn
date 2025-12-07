@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MissionPage from './pages/MissionPage';
-import ShipBayPage from './pages/ShipBayPage';
+import PartyCampPage from './pages/PartyCampPage';
 import CombatPage from './pages/CombatPage';
 
 import { CombatUITestPage } from './pages/CombatUITestPage';
@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MissionPage />} />
-        <Route path="/ship-bay" element={<ShipBayPage />} />
+        <Route path="/party-camp" element={<PartyCampPage />} />
         <Route path="/combat" element={<CombatPage />} />
 
         <Route path="/combat-ui-test" element={<CombatUITestPage />} />
@@ -20,3 +20,4 @@ function App() {
 }
 
 export default App;
+

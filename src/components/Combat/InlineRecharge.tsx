@@ -2,21 +2,21 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MathProblem } from '../../types/math.types';
 import { MathOperation } from '../../types/math.types';
-import { getModuleById } from '../../data/modules.data';
+import { getCompanionById } from '../../data/companions.data';
 import styles from './InlineRecharge.module.css';
 
 interface InlineRechargeProps {
     problem: MathProblem;
     onSubmit: (answer: number) => void;
-    moduleId: string;
+    companionId: string;
 }
 
-export function InlineRecharge({ problem, onSubmit, moduleId }: InlineRechargeProps) {
+export function InlineRecharge({ problem, onSubmit, companionId }: InlineRechargeProps) {
     const { t } = useTranslation();
     const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
 
-    const module = getModuleById(moduleId);
-    const moduleName = module?.name || 'Module';
+    const companion = getCompanionById(companionId);
+    const companionName = companion?.name || 'Companion';
 
     const getOperationSymbol = (op: MathOperation) => {
         switch (op) {
@@ -36,10 +36,10 @@ export function InlineRecharge({ problem, onSubmit, moduleId }: InlineRechargePr
 
     const operationSymbol = getOperationSymbol(problem.operation);
 
-    const getModuleColor = () => {
-        if (!module?.combatAction) return '#22c55e';
+    const getCompanionColor = () => {
+        if (!companion?.combatAction) return '#22c55e';
 
-        switch (module.combatAction) {
+        switch (companion.combatAction) {
             case 'ATTACK': return '#ef4444';
             case 'DEFEND': return '#3b82f6';
             case 'HEAL': return '#22c55e';
@@ -49,12 +49,12 @@ export function InlineRecharge({ problem, onSubmit, moduleId }: InlineRechargePr
     };
 
     return (
-        <div className={styles.container} style={{ '--module-color': getModuleColor() } as React.CSSProperties}>
+        <div className={styles.container} style={{ '--companion-color': getCompanionColor() } as React.CSSProperties}>
             <div className={styles.header}>
                 <div className={styles.icon}>⚡</div>
                 <div className={styles.headerText}>
                     <h3 className={styles.title} data-testid="inline-recharge-title">
-                        {t('combat.math.recharge_prompt')} {moduleName}
+                        {t('combat.math.recharge_prompt')} {companionName}
                     </h3>
                     <div className={styles.equation} data-testid="inline-recharge-equation">
                         <span className={styles.operand}>{problem.operand1}</span>

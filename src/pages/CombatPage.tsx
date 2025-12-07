@@ -33,9 +33,9 @@ export default function CombatPage() {
     const { phase, player, enemy, combatLog, lastDamageEvent, initializeCombat, enemyTurn } = useCombatStore();
     const { currentProblem } = useMathStore();
     const { completeMission } = useMissionStore();
-    const { unlockModule } = useInventoryStore();
+    const { unlockCompanion } = useInventoryStore();
     const { createCombatEntities } = useCombatEntitySetup();
-    const { handleActionSelect, handleMathSubmit, showInlineRecharge, pendingRechargeModule } = useCombatActions();
+    const { handleActionSelect, handleMathSubmit, showInlineRecharge, pendingRechargeCompanion } = useCombatActions();
 
     const currentMission = getMissionById(missionId || '1');
     const [showRewards, setShowRewards] = useState(false);
@@ -114,7 +114,7 @@ export default function CombatPage() {
 
         completeMission(currentMission.id);
         if (currentMission.rewards.unlocksModuleId) {
-            unlockModule(currentMission.rewards.unlocksModuleId);
+            unlockCompanion(currentMission.rewards.unlocksModuleId);
         }
         setShowRewards(true);
     };
@@ -170,12 +170,12 @@ export default function CombatPage() {
             {/* Action Menu */}
             {phase === CombatPhase.PLAYER_INPUT && (
                 <CombatActionMenu
-                    onAction={(moduleId: string) => {
-                        handleActionSelect(moduleId);
+                    onAction={(companionId: string) => {
+                        handleActionSelect(companionId);
                     }}
                     showInlineRecharge={showInlineRecharge}
                     rechargeProblem={currentProblem}
-                    rechargeModuleId={pendingRechargeModule}
+                    rechargeCompanionId={pendingRechargeCompanion}
                     onRechargeSubmit={handleMathSubmit}
                 />
             )}

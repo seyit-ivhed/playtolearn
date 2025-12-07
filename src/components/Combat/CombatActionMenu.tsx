@@ -5,16 +5,16 @@ import { useCombatStore } from '../../stores/combat.store';
 import { EnergyBar } from './EnergyBar';
 import { InlineRecharge } from './InlineRecharge';
 import type { MathProblem } from '../../types/math.types';
-import { getModuleById } from '../../data/modules.data';
+import { getCompanionById } from '../../data/companions.data';
 
 interface CombatActionMenuProps {
-    onAction: (moduleId: string) => void;
+    onAction: (companionId: string) => void;
     disabled?: boolean;
     className?: string;
     // Inline recharge props
     showInlineRecharge?: boolean;
     rechargeProblem?: MathProblem | null;
-    rechargeModuleId?: string | null;
+    rechargeCompanionId?: string | null;
     onRechargeSubmit?: (answer: number) => void;
 }
 
@@ -40,21 +40,21 @@ export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
     className = '',
     showInlineRecharge = false,
     rechargeProblem = null,
-    rechargeModuleId = null,
+    rechargeCompanionId = null,
     onRechargeSubmit
 }) => {
     const { player } = useCombatStore();
 
-    const equippedModules = player.equippedModules;
+    const equippedCompanions = player.equippedCompanions;
 
     // Show inline recharge if needed
-    if (showInlineRecharge && rechargeProblem && rechargeModuleId && onRechargeSubmit) {
+    if (showInlineRecharge && rechargeProblem && rechargeCompanionId && onRechargeSubmit) {
         return (
             <div className={`${styles.container} ${className}`}>
                 <InlineRecharge
                     problem={rechargeProblem}
                     onSubmit={onRechargeSubmit}
-                    moduleId={rechargeModuleId}
+                    companionId={rechargeCompanionId}
                 />
             </div>
         );
@@ -62,32 +62,32 @@ export const CombatActionMenu: React.FC<CombatActionMenuProps> = ({
 
     return (
         <div className={`${styles.container} ${className}`}>
-            {equippedModules.map((moduleInstance) => {
-                const module = getModuleById(moduleInstance.moduleId);
-                if (!module) return null;
+            {equippedCompanions.map((companionInstance) => {
+                const companion = getCompanionById(companionInstance.companionId);
+                if (!companion) return null;
 
-                const icon = BEHAVIOR_ICONS[moduleInstance.combatAction] || '❓';
-                const sound = BEHAVIOR_SOUNDS[moduleInstance.combatAction] || SoundType.BUTTON_CLICK;
-                const behaviorClass = `behavior${moduleInstance.combatAction}`;
+                const icon = BEHAVIOR_ICONS[companionInstance.combatAction] || '❓';
+                const sound = BEHAVIOR_SOUNDS[companionInstance.combatAction] || SoundType.BUTTON_CLICK;
+                const behaviorClass = `behavior${companionInstance.combatAction}`;
 
                 return (
                     <button
-                        key={moduleInstance.moduleId}
-                        data-testid={`module-btn-${moduleInstance.moduleId}`}
-                        data-behavior={moduleInstance.combatAction}
+                        key={companionInstance.companionId}
+                        data-testid={`companion-btn-${companionInstance.companionId}`}
+                        data-behavior={companionInstance.combatAction}
                         className={`${styles.actionBtn} ${styles[behaviorClass] || ''}`}
                         onClick={() => {
                             soundManager.playSound(sound);
-                            onAction(moduleInstance.moduleId);
+                            onAction(companionInstance.companionId);
                         }}
                         disabled={disabled}
-                        title={module.description}
+                        title={companion.description}
                     >
                         <span className={styles.icon}>{icon}</span>
-                        <span className={styles.label}>{module.name}</span>
+                        <span className={styles.label}>{companion.name}</span>
                         <EnergyBar
-                            current={moduleInstance.currentEnergy}
-                            max={moduleInstance.maxEnergy}
+                            current={companionInstance.currentEnergy}
+                            max={companionInstance.maxEnergy}
                         />
                     </button>
                 );

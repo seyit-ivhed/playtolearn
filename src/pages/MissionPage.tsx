@@ -68,9 +68,9 @@ export default function MissionPage() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <h2>{t('mission_select')}</h2>
-                <Link to="/ship-bay" className={styles.shipBayButton} data-testid="ship-bay-btn">
-                    <span className={styles.shipBayIcon}>🚀</span>
-                    {t('ship_bay')}
+                <Link to="/party-camp" className={styles.partyCampButton} data-testid="party-camp-btn">
+                    <span className={styles.partyCampIcon}>🏕️</span>
+                    {t('party_camp')}
                 </Link>
             </div>
 
