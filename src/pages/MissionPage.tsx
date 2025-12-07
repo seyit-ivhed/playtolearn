@@ -1,16 +1,19 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../stores/game.store';
 import { useCombatStore } from '../stores/combat.store';
 
 const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
+    const { t } = useTranslation();
+
     // Vertical Layout Nodes - Shifted down by 150px to clear header
     // Added 'type' to distinguish between combat and camp nodes
     const nodes = [
-        { id: 1, x: '50%', y: 250, label: 'Start', type: 'combat' },
-        { id: 2, x: '30%', y: 450, label: 'Forest', type: 'combat' },
-        { id: 3, x: '70%', y: 650, label: 'Safe Haven', type: 'camp' }, // Camp Node
-        { id: 4, x: '40%', y: 850, label: 'Cave', type: 'combat' },
-        { id: 5, x: '50%', y: 1050, label: 'Boss', type: 'combat' }
+        { id: 1, x: '50%', y: 250, label: t('mission.nodes.start'), type: 'combat' },
+        { id: 2, x: '30%', y: 450, label: t('mission.nodes.forest'), type: 'combat' },
+        { id: 3, x: '70%', y: 650, label: t('mission.nodes.camp'), type: 'camp' }, // Camp Node
+        { id: 4, x: '40%', y: 850, label: t('mission.nodes.cave'), type: 'combat' },
+        { id: 5, x: '50%', y: 1050, label: t('mission.nodes.boss'), type: 'combat' }
     ];
 
     const navigate = useNavigate();

@@ -2,7 +2,7 @@
     "app_title": "Matteäventyret",
     "subtitle": "Bemästra matte för att utforska rikena!",
     "start_mission": "Starta Äventyr",
-    "party_camp": "Lägerplats",
+    "party_camp": "Läger",
     "quest_map": "Äventyrskarta",
     "back_to_home": "Tillbaka Hem",
     "empty_slot": "Tom Plats",
@@ -104,7 +104,14 @@
         "rewards": "Uppdragsbelöningar",
         "no_rewards": "Inga belöningar listade",
         "cancel": "Avbryt",
-        "start": "Starta Äventyr"
+        "start": "Starta Äventyr",
+        "nodes": {
+            "start": "Start",
+            "forest": "Skog",
+            "camp": "Läger",
+            "cave": "Grotta",
+            "boss": "Boss"
+        }
     },
     "math": {
         "submit_answer": "Kasta Förtrollning"

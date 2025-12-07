@@ -104,7 +104,14 @@
         "rewards": "Quest Rewards",
         "no_rewards": "No rewards listed",
         "cancel": "Cancel",
-        "start": "Start Quest"
+        "start": "Start Quest",
+        "nodes": {
+            "start": "Start",
+            "forest": "Forest",
+            "camp": "Camp",
+            "cave": "Cave",
+            "boss": "Boss"
+        }
     },
     "math": {
         "submit_answer": "Cast Spell"
