@@ -1,20 +1,22 @@
 {
-    "app_title": "Space Math Academy",
-    "subtitle": "Master math to save the galaxy!",
-    "start_mission": "Start Mission",
-    "ship_bay": "Ship Bay",
-    "mission_select": "Mission Select",
+    "app_title": "Math Quest Adventures",
+    "subtitle": "Master math to explored the realms!",
+    "start_mission": "Start Quest",
+    "party_camp": "Party Camp",
+    "quest_map": "Quest Map",
     "back_to_home": "Back to Home",
     "empty_slot": "Empty Slot",
-    "combat_simulation": "Combat Simulation",
-    "abort_mission": "Abort Mission",
+    "combat_simulation": "Battle",
+    "abort_mission": "Retreat",
     "combat": {
         "action": {
             "attack": "Attack",
             "defend": "Defend",
+            "heal": "Heal",
             "special": "Special",
             "attack_tooltip": "Attack (Cost: {{cost}})",
             "defend_tooltip": "Defend (Cost: {{cost}})",
+            "heal_tooltip": "Heal (Cost: {{cost}})",
             "special_tooltip": "Special (Cost: {{cost}})"
         },
         "victory": {
@@ -24,27 +26,33 @@
         },
         "defeat": {
             "title": "Defeat 💥",
-            "message": "Your ship was destroyed!",
+            "message": "Your party was defeated!",
             "retry": "Retry",
-            "return": "Return to Missions"
+            "return": "Return to Quests"
         },
         "math": {
-            "title": "Solve to Attack!",
-            "recharge_prompt": "Recharge Module"
+            "title": "Solve to Act!",
+            "recharge_prompt": "Recharge"
         }
     },
     "rewards": {
-        "title": "Mission Complete!",
-        "subtitle": "Excellent work, Cadet. Here are your rewards:",
+        "title": "Quest Complete!",
+        "subtitle": "Excellent work, Adventurer. Here are your rewards:",
         "xp": "+{{amount}} XP",
-        "credits": "+{{amount}} Credits",
-        "module_unlocked": "New Module Unlocked!",
-        "none": "No rewards for this mission.",
-        "return_to_base": "Return to Base",
-        "next_mission": "Next Mission"
+        "credits": "+{{amount}} Gold",
+        "module_unlocked": "New Companion Unlocked!",
+        "none": "No rewards for this quest.",
+        "return_to_base": "Return to Camp",
+        "next_mission": "Next Quest"
     },
-    "ship": {
-        "status": "Ship Status",
+    "party": {
+        "title": "Party Management",
+        "select_companion": "Select Companion for {{slot}}",
+        "available_companions": "Available Companions",
+        "cancel_selection": "Cancel Selection",
+        "empty_roster": "No unassigned companions available",
+        "empty_hint": "Complete quests to recruit new companions!",
+        "select_companion_hint": "Select a companion",
         "stats": {
             "health": "Health",
             "energy": "Energy",
@@ -53,64 +61,52 @@
             "speed": "Speed"
         }
     },
-    "mission": {
-        "target_enemy": "Target Enemy",
-        "rewards": "Mission Rewards",
-        "no_rewards": "No rewards listed",
-        "cancel": "Cancel",
-        "start": "Start Mission"
-    },
-    "loadout": {
-        "title": "Ship Loadout",
-        "select_module": "Select Module for {{slot}}",
-        "available_modules": "Available Modules",
-        "allowed_types": "Allowed types: {{types}}",
-        "cancel_selection": "Cancel Selection",
-        "empty_inventory": "No unequipped modules available",
-        "empty_hint": "Complete missions to unlock new modules!",
-        "equip": "Equip",
-        "unequip": "Unequip",
-        "buy": "Buy ({{cost}})",
+    "companions": {
+        "add": "Add to Party",
+        "remove": "Remove",
         "locked": "Locked",
-        "accepts": "Accepts: {{types}}"
-    },
-    "modules": {
-        "weapon_laser_1": {
-            "name": "Basic Laser",
-            "description": "Standard issue laser cannon. Reliable and energy efficient."
+        "unlock_requirement": "Complete quests to unlock",
+        "companion_fire_knight": {
+            "name": "Fire Knight",
+            "description": "A brave knight wielding flames. Strikes enemies with burning attacks."
         },
-        "weapon_missile_1": {
-            "name": "Missile Launcher",
-            "description": "High damage missile system. Requires energy to fire."
+        "companion_shadow_archer": {
+            "name": "Shadow Archer",
+            "description": "Silent and precise. Shoots arrows from the shadows."
         },
-        "weapon_plasma_1": {
-            "name": "Plasma Beam",
-            "description": "Continuous beam weapon that melts through armor."
+        "companion_lightning_mage": {
+            "name": "Lightning Mage",
+            "description": "Channels the power of storms. Casts devastating lightning bolts."
         },
-        "shield_basic_1": {
-            "name": "Training Shield",
-            "description": "Basic energy shield for training purposes."
+        "companion_frost_ranger": {
+            "name": "Frost Ranger",
+            "description": "Master of ice and cold. Freezes enemies with chilling arrows."
         },
-        "shield_energy_1": {
-            "name": "Energy Shield",
-            "description": "Advanced shield generator providing superior protection."
+        "companion_crystal_guardian": {
+            "name": "Crystal Guardian",
+            "description": "Protected by crystalline armor. Shields the party from harm."
         },
-        "special_repair_1": {
-            "name": "Nano-Repair",
-            "description": "Emergency repair system. Restores hull integrity."
+        "companion_earth_defender": {
+            "name": "Earth Defender",
+            "description": "Strong as stone. Raises earthen barriers to block attacks."
         },
-        "armor_reinforced_1": {
-            "name": "Reinforced Armor",
-            "description": "Heavy plating that increases hull strength but reduces speed."
+        "companion_light_healer": {
+            "name": "Light Healer",
+            "description": "Blessed with healing magic. Restores the party with radiant light."
+        },
+        "companion_nature_druid": {
+            "name": "Nature Druid",
+            "description": "In harmony with nature. Provides gradual healing and protection."
         }
     },
-    "slots": {
-        "primary_weapon": "Primary Weapon",
-        "secondary_weapon": "Secondary Weapon",
-        "support_system_1": "Support System 1",
-        "support_system_2": "Support System 2"
+    "mission": {
+        "target_enemy": "Target Enemy",
+        "rewards": "Quest Rewards",
+        "no_rewards": "No rewards listed",
+        "cancel": "Cancel",
+        "start": "Start Quest"
     },
     "math": {
-        "submit_answer": "Submit Answer"
+        "submit_answer": "Cast Spell"
     }
 }

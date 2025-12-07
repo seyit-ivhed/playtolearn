@@ -3,13 +3,13 @@ import { type Mission } from '../types/mission.types';
 export const MISSIONS: Mission[] = [
     {
         id: '1',
-        title: 'Flight Training',
-        description: 'Basic combat training against a target drone. Learn the ropes of your ship systems.',
+        title: 'Village Defense',
+        description: 'A Goblin Scout has been spotted near the village. Drive it away to protect the townsfolk!',
         difficulty: 1,
         enemy: {
-            id: 'training_drone',
-            name: 'Training Drone',
-            sprite: '/src/assets/images/ships/training_drone.png',
+            id: 'goblin_scout',
+            name: 'Goblin Scout',
+            sprite: '/src/assets/images/enemies/goblin.png',
             maxHealth: 30,
             attack: 5,
             defense: 0,
@@ -22,20 +22,20 @@ export const MISSIONS: Mission[] = [
     },
     {
         id: '2',
-        title: 'Asteroid Ambush',
-        description: 'A Space Pirate scout has been spotted in the asteroid belt. Intercept and drive them off.',
+        title: 'Forest Ambush',
+        description: 'The path through the Whispering Woods is blocked by a Wolf Pack Leader. Clear the way!',
         difficulty: 2,
         enemy: {
-            id: 'pirate_scout',
-            name: 'Pirate Scout',
-            sprite: '/src/assets/images/ships/pirate_scout.png',
+            id: 'wolf_leader',
+            name: 'Wolf Leader',
+            sprite: '/src/assets/images/enemies/wolf.png',
             maxHealth: 50,
             attack: 8,
             defense: 2,
             speed: 12
         },
         rewards: {
-            unlocksModuleId: 'weapon_missile_1',
+            unlocksModuleId: 'companion_shadow_archer',
             xp: 200,
             currency: 100
         },
@@ -45,13 +45,13 @@ export const MISSIONS: Mission[] = [
     },
     {
         id: '3',
-        title: 'Nebula Patrol',
-        description: 'Patrol the nebula sector. Beware of pirates hiding in the gas clouds.',
+        title: 'Mountain Pass',
+        description: 'A Stone Golem blocks the pass to the Crystal Peaks. Your magic might be needed here.',
         difficulty: 3,
         enemy: {
-            id: 'pirate_fighter',
-            name: 'Pirate Fighter',
-            sprite: '/src/assets/images/ships/pirate_fighter.png',
+            id: 'stone_golem',
+            name: 'Stone Golem',
+            sprite: '/src/assets/images/enemies/golem.png',
             maxHealth: 80,
             maxShield: 20,
             attack: 12,
@@ -59,7 +59,7 @@ export const MISSIONS: Mission[] = [
             speed: 10
         },
         rewards: {
-            unlocksModuleId: 'weapon_plasma_1',
+            unlocksModuleId: 'companion_lightning_mage',
             xp: 350,
             currency: 150
         },
@@ -69,13 +69,13 @@ export const MISSIONS: Mission[] = [
     },
     {
         id: '4',
-        title: 'Rescue Signal',
-        description: 'We received a distress signal. A transport ship is under attack by a Pirate Ace.',
+        title: 'Ice Cavern',
+        description: 'An Ice Drake has made its lair in the caverns. It freezes everything in its path.',
         difficulty: 4,
         enemy: {
-            id: 'pirate_ace',
-            name: 'Pirate Ace',
-            sprite: '/src/assets/images/ships/pirate_fighter.png',
+            id: 'ice_drake',
+            name: 'Ice Drake',
+            sprite: '/src/assets/images/enemies/ice_drake.png',
             maxHealth: 100,
             maxShield: 40,
             attack: 15,
@@ -83,7 +83,7 @@ export const MISSIONS: Mission[] = [
             speed: 15
         },
         rewards: {
-            unlocksModuleId: 'shield_energy_1',
+            unlocksModuleId: 'companion_earth_defender',
             xp: 500,
             currency: 200
         },
@@ -93,13 +93,13 @@ export const MISSIONS: Mission[] = [
     },
     {
         id: '5',
-        title: 'Sector Guardian',
-        description: 'The Pirate Mothership has arrived. Defeat it to secure the sector!',
+        title: 'Dragon\'s Lair',
+        description: 'The Red Dragon threatens the entire realm. Assemble your party and defeat it!',
         difficulty: 5,
         enemy: {
-            id: 'pirate_mothership',
-            name: 'Pirate Mothership',
-            sprite: '/src/assets/images/ships/pirate_fighter.png',
+            id: 'red_dragon',
+            name: 'Red Dragon',
+            sprite: '/src/assets/images/enemies/dragon.png',
             maxHealth: 200,
             maxShield: 50,
             attack: 20,
@@ -107,7 +107,7 @@ export const MISSIONS: Mission[] = [
             speed: 5
         },
         rewards: {
-            unlocksModuleId: 'special_repair_1',
+            unlocksModuleId: 'companion_light_healer',
             xp: 1000,
             currency: 500
         },
