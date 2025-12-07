@@ -2,34 +2,45 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface InventoryState {
-    ownedModuleIds: string[];
+    unlockedCompanions: string[]; // Array of companion IDs
+    credits: number;
 
     // Actions
-    unlockModule: (moduleId: string) => void;
-    hasModule: (moduleId: string) => boolean;
-    resetInventory: () => void;
+    unlockCompanion: (companionId: string) => void;
+    addCredits: (amount: number) => void;
+    spendCredits: (amount: number) => boolean;
+    hasCompanion: (companionId: string) => boolean;
 }
 
 export const useInventoryStore = create<InventoryState>()(
     persist(
         (set, get) => ({
-            ownedModuleIds: ['weapon_laser_1', 'shield_basic_1'], // Default starting items
+            unlockedCompanions: ['companion_fire_knight', 'companion_crystal_guardian'], // Starting companions
+            credits: 0,
 
-            unlockModule: (moduleId) =>
+            unlockCompanion: (companionId) =>
                 set((state) => ({
-                    ownedModuleIds: state.ownedModuleIds.includes(moduleId)
-                        ? state.ownedModuleIds
-                        : [...state.ownedModuleIds, moduleId]
+                    unlockedCompanions: state.unlockedCompanions.includes(companionId)
+                        ? state.unlockedCompanions
+                        : [...state.unlockedCompanions, companionId]
                 })),
 
-            hasModule: (moduleId) => get().ownedModuleIds.includes(moduleId),
+            addCredits: (amount) =>
+                set((state) => ({ credits: state.credits + amount })),
 
-            resetInventory: () => set({
-                ownedModuleIds: ['weapon_laser_1', 'shield_basic_1']
-            })
+            spendCredits: (amount) => {
+                const { credits } = get();
+                if (credits >= amount) {
+                    set({ credits: credits - amount });
+                    return true;
+                }
+                return false;
+            },
+
+            hasCompanion: (companionId) => get().unlockedCompanions.includes(companionId)
         }),
         {
-            name: 'space-math-inventory-storage',
+            name: 'inventory-storage',
         }
     )
 );

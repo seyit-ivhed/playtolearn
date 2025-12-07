@@ -1,69 +1,69 @@
-import type { CombatEntity, ModuleInstance } from '../types/combat.types';
-import type { ShipLoadout, ShipStats, ShipModule } from '../types/ship.types';
-import { getCombatSlots } from '../data/slots.data';
-import { getModuleById } from '../data/modules.data';
+import type { CombatEntity, CompanionInstance } from '../types/combat.types';
+import type { PartyComposition, PartyStats, Companion } from '../types/party.types';
+import { getCombatSlots } from '../data/party-slots.data';
+import { getCompanionById } from '../data/companions.data';
 
 /**
- * Creates a CombatEntity from ship loadout and stats
- * Converts equipped modules into ModuleInstances for combat
+ * Creates a CombatEntity from party composition and stats
+ * Converts equipped companions into CompanionInstances for combat
  */
 export function createPlayerCombatEntity(
-    shipLoadout: ShipLoadout,
-    shipStats: ShipStats
+    partyComposition: PartyComposition,
+    partyStats: PartyStats
 ): CombatEntity {
     const combatSlots = getCombatSlots();
 
-    const equippedModules: ModuleInstance[] = combatSlots
+    const equippedCompanions: CompanionInstance[] = combatSlots
         .map(slot => {
-            const moduleId = shipLoadout[slot.id];
-            if (!moduleId) return null;
+            const companionId = partyComposition[slot.id];
+            if (!companionId) return null;
 
-            const module = getModuleById(moduleId);
-            if (!module || !module.combatAction) return null;
+            const companion = getCompanionById(companionId);
+            if (!companion || !companion.combatAction) return null;
 
             return {
-                moduleId: module.id,
+                companionId: companion.id,
                 slotId: slot.id,
-                currentEnergy: module.stats.maxEnergy || 1,
-                maxEnergy: module.stats.maxEnergy || 1,
-                combatAction: module.combatAction as string
+                currentEnergy: companion.stats.maxEnergy || 1,
+                maxEnergy: companion.stats.maxEnergy || 1,
+                combatAction: companion.combatAction as string
             };
         })
-        .filter((m): m is ModuleInstance => m !== null && m !== undefined);
+        .filter((c): c is CompanionInstance => c !== null && c !== undefined);
 
     return {
         id: 'player',
         name: 'Player',
-        maxHealth: shipStats.maxHealth,
-        currentHealth: shipStats.health,
+        maxHealth: partyStats.maxHealth,
+        currentHealth: partyStats.health,
         maxShield: 50,
         currentShield: 50,
-        equippedModules,
-        // Legacy modules structure for backward compatibility
-        modules: {
+        equippedCompanions,
+        // Legacy companions structure for backward compatibility
+        companions: {
             attack: { currentEnergy: 3, maxEnergy: 3 },
             defend: { currentEnergy: 2, maxEnergy: 2 },
             special: { currentEnergy: 2, maxEnergy: 2 },
         },
-        sprite: '/assets/images/ships/player_ship.png'
+        sprite: '/assets/images/party/player_party.png'
     };
 }
 
 /**
- * Creates an enemy CombatEntity with default modules
+ * Creates an enemy CombatEntity with default companions
  */
 export function createEnemyCombatEntity(
     name: string,
     health: number,
-    modules?: ShipModule[]
+    companions?: Companion[]
 ): CombatEntity {
-    const equippedModules: ModuleInstance[] = modules
-        ? modules.map((module, index) => ({
-            moduleId: module.id,
+    const equippedCompanions: CompanionInstance[] = companions
+        ? companions.map((companion, index) => ({
+            companionId: companion.id,
             slotId: `enemy_slot_${index}`,
-            currentEnergy: module.stats.maxEnergy || 1,
-            maxEnergy: module.stats.maxEnergy || 1,
-            combatAction: module.combatAction || 'ATTACK'
+            currentEnergy: companion.stats.maxEnergy || 1,
+            maxEnergy: companion.stats.maxEnergy || 1,
+            combatAction: companion.combatAction || 'ATTACK'
         }))
         : [];
 
@@ -74,9 +74,9 @@ export function createEnemyCombatEntity(
         currentHealth: health,
         maxShield: 0,
         currentShield: 0,
-        equippedModules,
-        // Legacy modules structure
-        modules: {
+        equippedCompanions,
+        // Legacy companions structure
+        companions: {
             attack: { currentEnergy: 0, maxEnergy: 0 },
             defend: { currentEnergy: 0, maxEnergy: 0 },
             special: { currentEnergy: 0, maxEnergy: 0 },

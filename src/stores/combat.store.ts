@@ -16,12 +16,12 @@ interface CombatStore extends CombatState {
     enemyTurn: (action: CombatAction) => void;
     resolveDamage: (target: 'player' | 'enemy', amount: number) => void;
     nextTurn: () => void;
-    // Energy handling for dynamic modules
-    rechargedModules: string[]; // Track which module IDs were recharged this turn
+    // Energy handling for companions
+    rechargedCompanions: string[]; // Track which companion IDs were recharged this turn
     // Actions
-    consumeModuleEnergy: (moduleId: string) => void;
-    rechargeModule: (moduleId: string) => void;
-    getModuleInstance: (moduleId: string) => any | null;
+    consumeCompanionEnergy: (companionId: string) => void;
+    rechargeCompanion: (companionId: string) => void;
+    getCompanionInstance: (companionId: string) => any | null;
     resetRechargeFlag: () => void;
 }
 
@@ -35,8 +35,8 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         currentHealth: 100,
         maxShield: 50,
         currentShield: 50,
-        equippedModules: [], // Will be populated on combat init
-        modules: {
+        equippedCompanions: [], // Will be populated on combat init
+        companions: {
             attack: { currentEnergy: 3, maxEnergy: 3 },
             defend: { currentEnergy: 2, maxEnergy: 2 },
             special: { currentEnergy: 2, maxEnergy: 2 },
@@ -49,8 +49,8 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         currentHealth: 100,
         maxShield: 0,
         currentShield: 0,
-        equippedModules: [], // Will be populated on combat init
-        modules: {
+        equippedCompanions: [], // Will be populated on combat init
+        companions: {
             attack: { currentEnergy: 0, maxEnergy: 0 },
             defend: { currentEnergy: 0, maxEnergy: 0 },
             special: { currentEnergy: 0, maxEnergy: 0 },
@@ -59,7 +59,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     combatLog: [],
     lastDamageEvent: null,
     // New state flag
-    rechargedModules: [],
+    rechargedCompanions: [],
 
     initializeCombat: (player, enemy) => set({
         phase: CombatPhase.PLAYER_INPUT,
@@ -67,54 +67,54 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         player,
         enemy,
         combatLog: [`Combat started vs ${enemy.name}!`],
-        rechargedModules: [],
+        rechargedCompanions: [],
     }),
 
-    // Helper to get module instance by ID
-    getModuleInstance: (moduleId) => {
+    // Helper to get companion instance by ID
+    getCompanionInstance: (companionId) => {
         const state = get();
-        return state.player.equippedModules.find(m => m.moduleId === moduleId) || null;
+        return state.player.equippedCompanions.find(c => c.companionId === companionId) || null;
     },
 
-    // Energy handling actions - now works with module IDs
-    consumeModuleEnergy: (moduleId) => set(state => {
-        const moduleIndex = state.player.equippedModules.findIndex(m => m.moduleId === moduleId);
-        if (moduleIndex === -1) return state;
+    // Energy handling actions - now works with companion IDs
+    consumeCompanionEnergy: (companionId) => set(state => {
+        const companionIndex = state.player.equippedCompanions.findIndex(c => c.companionId === companionId);
+        if (companionIndex === -1) return state;
 
-        const updatedModules = [...state.player.equippedModules];
-        updatedModules[moduleIndex] = {
-            ...updatedModules[moduleIndex],
-            currentEnergy: Math.max(0, updatedModules[moduleIndex].currentEnergy - 1)
+        const updatedCompanions = [...state.player.equippedCompanions];
+        updatedCompanions[companionIndex] = {
+            ...updatedCompanions[companionIndex],
+            currentEnergy: Math.max(0, updatedCompanions[companionIndex].currentEnergy - 1)
         };
 
         return {
             player: {
                 ...state.player,
-                equippedModules: updatedModules
+                equippedCompanions: updatedCompanions
             }
         };
     }),
 
-    rechargeModule: (moduleId) => set(state => {
-        const moduleIndex = state.player.equippedModules.findIndex(m => m.moduleId === moduleId);
-        if (moduleIndex === -1) return state;
+    rechargeCompanion: (companionId) => set(state => {
+        const companionIndex = state.player.equippedCompanions.findIndex(c => c.companionId === companionId);
+        if (companionIndex === -1) return state;
 
-        const updatedModules = [...state.player.equippedModules];
-        updatedModules[moduleIndex] = {
-            ...updatedModules[moduleIndex],
-            currentEnergy: updatedModules[moduleIndex].maxEnergy
+        const updatedCompanions = [...state.player.equippedCompanions];
+        updatedCompanions[companionIndex] = {
+            ...updatedCompanions[companionIndex],
+            currentEnergy: updatedCompanions[companionIndex].maxEnergy
         };
 
         return {
             player: {
                 ...state.player,
-                equippedModules: updatedModules
+                equippedCompanions: updatedCompanions
             },
-            rechargedModules: [...state.rechargedModules, moduleId]
+            rechargedCompanions: [...state.rechargedCompanions, companionId]
         };
     }),
 
-    resetRechargeFlag: () => set({ rechargedModules: [] }),
+    resetRechargeFlag: () => set({ rechargedCompanions: [] }),
 
     setPhase: (phase) => set({ phase }),
 
