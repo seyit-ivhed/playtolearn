@@ -1,79 +1,82 @@
-# Game Design Document: Space Math Academy
+# Game Design Document: Math Quest Adventures
 
 ## Executive Summary
 
-**Game Title:** Space Math Academy (working title)
+**Game Title:** Math Quest Adventures (working title)
 
 **Target Audience:** Children ages 6-12
 
 **Platform:** Web Browser (Desktop & Tablet)
 
-**Genre:** Educational Space Adventure / RPG Lite
+**Genre:** Educational Fantasy Adventure / RPG Lite
 
-**Core Concept:** Players pilot a customizable spaceship through the galaxy, completing missions that require solving math challenges. Success rewards players with ship modules, weapons, and upgrades that enable them to defeat NPC enemies and progress through increasingly challenging sectors of space.
+**Core Concept:** Players become the leader of an adventuring party on an epic journey through magical realms. As they progress, new companions join their party and existing companions grow stronger. Players help their companions overcome challenges (which cleverly integrate math skills) to defeat monsters, complete quests, and unlock new regions. The party grows from a small band to a formidable force of heroes.
 
 ---
 
 ## 1. Game Overview
 
 ### 1.1 Vision Statement
-Space Math Academy transforms math learning into an exciting space exploration adventure where every problem solved brings tangible rewards and progression. Players become space captains who must use their mathematical skills to upgrade their ship, defeat enemies, and unlock new regions of the galaxy.
+Math Quest Adventures transforms math learning into an exciting fantasy journey where every challenge overcome makes your party stronger. Players lead their own adventuring party, helping companions solve contextual challenges (naturally integrated math) to grow in power, defeat monsters, and unlock new regions of the realm.
 
 ### 1.2 Core Gameplay Loop
 ```mermaid
 graph LR
-    A[Select Mission] --> B[Solve Math Challenges]
-    B --> C[Earn Rewards]
-    C --> D[Upgrade Ship]
-    D --> E[Combat NPC Enemies]
-    E --> F[Unlock New Sectors]
-    F --> A
+    A[Select Quest] --> B[Solve Math Challenges]
+    B --> C[Earn Experience]
+    C --> D[Upgrade Companions]
+    D --> E[Choose Party of 4]
+    E --> F[Battle Monsters]
+    F --> G[Unlock New Regions]
+    G --> A
 ```
 
 ### 1.3 Key Features
 - **Progressive Math Curriculum**: Adaptive difficulty that grows with player skill
-- **Ship Customization**: Modular upgrade system for weapons, shields, engines, and utilities
-- **Mission-Based Progression**: Structured challenges with clear objectives
-- **NPC Combat System**: Turn-based or real-time combat using equipped modules
-- **Exploration**: Multiple sectors/zones with unique themes and challenges
+- **Companion Collection**: Recruit diverse heroes, each with unique abilities
+- **Party Customization**: Choose 4 companions to bring on each adventure
+- **Upgrade System**: Direct companion upgrades - no equipment micromanagement
+- **Quest-Based Progression**: Structured challenges with clear objectives
+- **Monster Combat System**: Turn-based combat using companion abilities
+- **Exploration**: Multiple realms with unique themes and challenges
 - **Reward System**: Immediate feedback and tangible progression
 
 ---
 
 ## 2. Game Mechanics
 
-### 2.1 Mission System
+### 2.1 Quest System
 
-#### Mission Types
-1. **Training Missions** (Tutorial)
+#### Quest Types
+1. **Training Quests** (Tutorial)
    - Introduction to basic controls
    - Simple math problems (addition, subtraction)
-   - Rewards: Basic ship modules
+   - Rewards: First companions, basic upgrades
 
-2. **Exploration Missions**
-   - Navigate to specific coordinates
-   - Solve math problems to scan planets/asteroids
-   - Rewards: Resources, ship parts, intel
+2. **Exploration Quests**
+   - Discover hidden locations
+   - Solve math problems to find treasures
+   - Rewards: Experience, companion unlocks, resources
 
-3. **Rescue Missions**
-   - Save stranded ships by solving math challenges
-   - Rewards: Module unlocks, badges
+3. **Rescue Quests**
+   - Save villagers by solving math challenges
+   - Rewards: Companion unlocks, badges
 
-4. **Boss Missions**
+4. **Boss Quests**
    - Multi-stage challenges requiring various math skills
-   - Rewards: Sector unlocks, special badges/achievements for defeating specific bosses
+   - Rewards: Realm unlocks, special badges for defeating bosses
 
-#### Mission Structure
-- **Objective**: Clear goal (e.g., "Solve 10 multiplication problems")
+#### Quest Structure
+- **Objective**: Story-driven goal (e.g., "Help villagers count their harvest" or "Divide treasure among the party")
 - **Difficulty Rating**: Stars (★☆☆ to ★★★★★)
-- **Math Focus**: Specific skill area (addition, multiplication, fractions, etc.)
-- **Rewards Preview**: Shows what modules or content player can unlock
+- **Skill Focus**: Hidden math skill practiced (addition, multiplication, fractions, etc.)
+- **Rewards Preview**: Shows what companions or upgrades player can unlock
 
 ### 2.2 Math Challenge System
 
 #### Two-Dimensional Difficulty System
 
-**Dimension 1: Math Skill** (determines which module is unlocked)
+**Dimension 1: Math Skill** (determines which companion skill is enhanced)
 - Addition
 - Subtraction
 - Multiplication
@@ -82,72 +85,120 @@ graph LR
 - Decimals
 - Algebra basics
 
-**Dimension 2: Difficulty Level** (determines module power/level)
+**Dimension 2: Difficulty Level** (determines companion upgrade level)
 - **Level 1**: Small numbers (e.g., single-digit)
 - **Level 2**: Medium numbers (e.g., double-digit)
 - **Level 3**: Large numbers (e.g., triple-digit or complex operations)
 - **Level 4**: Very large numbers or multi-step problems
 - **Level 5**: Expert level challenges
 
-Example: Completing "Multiplication - Level 3" unlocks a Level 3 Laser Cannon (multiplication weapon)
+Example: Completing "Multiplication - Level 3" unlocks or upgrades a companion's attack ability to Level 3
 
 #### Challenge Presentation
-- **Visual Context**: Math problems integrated into space scenarios
-  - "Calculate fuel needed to reach planet X"
-  - "How many asteroids in this field?" (counting/multiplication)
-  - "Distribute shields evenly across 4 sections" (division)
+- **Contextual Integration**: Math naturally woven into story scenarios (never explicit "math problems")
+  - "The merchant needs 7 potions but only has 3. How many more should we buy?"
+  - "There are goblins hiding behind rocks. Count them before they attack!"
+  - "We found 24 gold coins. Split them fairly among your 4 companions."
+  - "The bridge can hold 50 people. We have 32. How many more allies can cross?"
 - **Multiple Choice**: For younger players
-- **Free Input**: For older/advanced players
-- **Hints System**: Costs in-game currency but provides guidance
+- **Free Input**: For older/advanced players  
+- **Hints System**: Companion dialogue provides guidance (costs in-game currency)
 
 #### Player-Controlled Difficulty
-- Players choose both the math skill and difficulty level for each mission
+- Players choose both the math skill and difficulty level for each quest
 - Game encourages players to increase difficulty when they perform well (e.g., "You got 9/10 correct! Ready to try Level 3?")
 - Game suggests trying easier difficulty or previous skills if player struggles (e.g., "That was tough! Want to practice Level 2 first?")
 - No forced adjustments - player always has final choice
 - Progress tracking shows performance by skill and difficulty to help inform choices
 
-### 2.3 Ship Customization System
+### 2.3 Companion System
 
-#### Ship Components
+#### Core Design Philosophy
+- **Permanent Companions**: Once unlocked, companions are yours forever
+- **No Equipment**: Companions upgrade directly (simpler for children)
+- **Party Selection**: Choose which 4 companions to bring on each quest
+- **Diverse Heroes**: Each companion has unique personality, appearance, and role
 
-**1. Weapons** (Offensive modules - deal damage)
-- **Laser Cannon**: Unlocked by Addition challenges
-- **Missile Launcher**: Unlocked by Subtraction challenges
-- **Plasma Beam**: Unlocked by Multiplication challenges
-- **Ion Blaster**: Unlocked by Division challenges
-- Each weapon has 5 power levels based on difficulty completed
+#### Companion Roles & Abilities
 
-**2. Support** (Defensive and utility modules)
-- **Energy Shield**: Unlocked by Fraction challenges - blocks the next incoming attack, then needs recharging
-- **Deflector Shield**: Unlocked by Decimal challenges - blocks the next incoming attack, then needs recharging
-- **Nano-Repair**: Unlocked by mixed operation challenges - restores hull integrity
-- **Reinforced Armor**: Unlocked by word problem challenges - increases total HP
-- Each support module has 5 levels affecting effectiveness
+**Warrior Companions** (Offensive - Deal Damage)
+- **Fire Knight**: Unlocked by Addition challenges
+  - **Single Ability**: Flame Strike - high damage attack
+  - Personality: Brave and enthusiastic
+  - Visual: Red armor, flaming sword
 
-#### Module Levels
-- Modules come in 5 levels (1-5) based on difficulty of challenge completed
-- Higher level modules are more powerful
-- Visual changes to ship as better modules are equipped
-- Players earn better modules by completing harder math challenges
+- **Shadow Archer**: Unlocked by Subtraction challenges
+  - **Single Ability**: Shadow Arrow - piercing damage
+  - Personality: Calm and precise
+  - Visual: Dark green cloak, silver bow
+
+- **Lightning Mage**: Unlocked by Multiplication challenges
+  - **Single Ability**: Thunder Bolt - explosive damage
+  - Personality: Energetic and curious
+  - Visual: Purple robes, crackling staff
+
+- **Frost Ranger**: Unlocked by Division challenges
+  - **Single Ability**: Ice Arrow - damage with slow effect
+  - Personality: Cool and strategic
+  - Visual: Blue outfit, frost-tipped arrows
+
+**Guardian Companions** (Defensive - Protect Party)
+- **Crystal Guardian**: Unlocked by Fraction challenges
+  - **Single Ability**: Crystal Shield - blocks the next incoming attack
+  - Personality: Gentle and protective
+  - Visual: Translucent crystal armor, glowing shield
+
+- **Earth Defender**: Unlocked by Decimal challenges
+  - **Single Ability**: Stone Barrier - blocks the next incoming attack
+  - Personality: Steadfast and reliable
+  - Visual: Brown/green stone armor
+
+**Support Companions** (Healing & Utility)
+- **Light Healer**: Unlocked by mixed operation challenges
+  - **Single Ability**: Healing Light - restores party health
+  - Personality: Kind and compassionate
+  - Visual: White/gold robes, healing staff
+
+- **Nature Druid**: Unlocked by word problem challenges
+  - **Single Ability**: Nature's Blessing - restores health over time
+  - Personality: Wise and patient
+  - Visual: Green robes, nature-themed staff
+
+#### Companion Upgrade System
+- Companions have **5 upgrade levels** (Level 1-5)
+- Upgrades increase ability strength directly
+  - Level 1 Fire Knight: Flame Strike deals 10 damage
+  - Level 3 Fire Knight: Flame Strike deals 25 damage
+  - Level 5 Fire Knight: Flame Strike deals 45 damage
+- Visual changes as companions level up (better armor, glowing effects)
+- Players earn upgrades by completing harder math challenges
+- Simple progression: "Your Fire Knight is now Level 3!"
+
+#### Companion Collection
+- Start with 2 basic companions (e.g., Fire Knight + Light Healer)
+- Unlock new companions through quests and progression
+- Initially can have up to 4 total companions, expand to 8+ as you progress
+- Benched companions "rest at the Guild Hall" (not abandoned!)
+- Strategic choice: Which 4 to bring for this specific quest?
 
 ### 2.4 Combat System
 
 #### Combat Flow
-1. **Encounter**: Player meets NPC enemy ship
+1. **Encounter**: Player meets monster or enemy group
 2. **Combat Phase**: Turn-based combat begins
 3. **Victory/Defeat**: Unlock new content or retry option
 
 #### Combat Mechanics (Turn-Based)
 - **Player Turn**:
-  - **Action Phase**: Player can choose to use any module (Attack, Defend, Special) that has energy.
-  - **Energy Cost**: Using a module consumes 1 energy point and ends the player's turn.
+  - **Action Phase**: Player chooses one of their 4 companions to act (each companion has their single unique ability).
+  - **Energy Cost**: Using a companion's ability consumes 1 energy point and ends the player's turn.
   - **Recharge Mechanic**:
-    - If a module has 0 energy, the player can choose to **Recharge** it.
-    - Recharging triggers a math problem (matching the skill/difficulty).
-    - **Solve Correctly** → Specific module fully recharges.
-    - **Turn Logic**: Recharging does **not** end the player's turn. The player can immediately use the recharged module (or another action).
-    - **Limit**: Each module can only be recharged once per turn.
+    - If a companion has 0 energy, the player can choose to **Recharge** them.
+    - Recharging presents a contextual challenge relevant to the companion (math integrated into narrative).
+    - Example: "The Fire Knight needs to count enemies to aim properly: How many goblins are in the cave?"
+    - **Solve Correctly** → That companion fully recharges.
+    - **Turn Logic**: Recharging does **not** end the player's turn. The player can immediately use the recharged ability (or choose another action).
+    - **Limit**: Each companion can only be recharged once per turn.
   
 - **Enemy Turn**:
   - Enemy attacks based on their stats
@@ -159,78 +210,81 @@ Example: Completing "Multiplication - Level 3" unlocks a Level 3 Laser Cannon (m
   - Powerful effects activate on longer streaks
 
 #### Enemy Types
-- **Space Pirates**: Balanced stats, common
-- **Asteroid Drones**: Low health, high numbers
-- **Alien Scouts**: Fast, evasive
-- **Capital Ships**: High health, powerful attacks (boss-level)
-- **Space Anomalies**: Unique mechanics, puzzle-like
+- **Forest Goblins**: Balanced stats, common
+- **Stone Golems**: Low health, high numbers
+- **Shadow Spirits**: Fast, evasive
+- **Dragon Bosses**: High health, powerful attacks (boss-level)
+- **Magical Anomalies**: Unique mechanics, puzzle-like
 
 ### 2.5 Progression System
 
-#### Sector Progression
+#### Realm Progression
 ```mermaid
 graph TD
-    A[Sector 1: Training Zone] --> B[Sector 2: Asteroid Belt]
-    B --> C[Sector 3: Ice Planets]
-    C --> D[Sector 4: Nebula Fields]
-    D --> E[Sector 5: Alien Territory]
-    E --> F[Sector 6: Black Hole Region]
+    A[Realm 1: Training Grounds] --> B[Realm 2: Enchanted Forest]
+    B --> C[Realm 3: Frozen Mountains]
+    C --> D[Realm 4: Desert Kingdom]
+    D --> E[Realm 5: Shadow Lands]
+    E --> F[Realm 6: Dragon's Lair]
 ```
 
-Each sector:
+Each realm:
 - Unique visual theme
 - Specific math focus areas
 - New enemy types
-- New modules to unlock
-- Boss encounter that must be defeated to unlock next sector
-- Special badge/achievement for defeating the sector boss
+- New companions to unlock
+- Boss encounter that must be defeated to unlock next realm
+- Special badge/achievement for defeating the realm boss
 
 ---
 
 ## 3. Reward System
 
-### 3.1 Mission Rewards
-- **Module Unlocks**: Completing a mission unlocks the corresponding module
-  - Example: Complete "Addition - Level 3" mission → Unlock Level 3 Laser Cannon
-- **Content Unlocks**: Some missions unlock new sectors, mission types, or enemy encounters
+### 3.1 Quest Rewards
+- **Companion Unlocks**: Completing a quest unlocks a new companion
+  - Example: Complete "Addition - Level 1" quest → Unlock Fire Knight (Level 1)
+- **Companion Upgrades**: Completing quests upgrades existing companions
+  - Example: Complete "Addition - Level 3" quest → Upgrade Fire Knight to Level 3
+- **Content Unlocks**: Some quests unlock new realms, quest types, or enemy encounters
 - **Boss Badges**: Defeating bosses grants special achievement badges
 
 ### 3.2 Progression Through Mastery
 - Players progress by improving their math skills
-- Better modules come from completing harder challenges
+- Stronger companions come from completing harder challenges
 - No currency or resource grinding - pure skill-based progression
-- Defeating bosses unlocks new sectors with new challenges
+- Defeating bosses unlocks new realms with new challenges
 
 ---
 
 ## 4. User Interface & Experience
 
-### 4.1 Main Hub (Home Base)
-- **Ship Bay**: View and customize ship with unlocked modules
-- **Mission Board**: Select math skill, difficulty level, and launch missions
-- **Hangar**: View collection of unlocked modules
-- **Star Map**: Navigate between unlocked sectors
-- **Profile**: Stats, badges, progress by math skill
+### 4.1 Main Hub (Campfire / Party Camp)
+- **Party Circle**: View all unlocked companions gathered around the campfire
+- **Party Setup**: Choose which 4 companions to bring on next adventure
+- **Quest Map**: Select next adventure and see available paths
+- **Realm Map**: Navigate between unlocked realms
+- **Journal**: Stats, badges, progress, companion stories
 
-### 4.2 Mission Interface
+### 4.2 Quest Interface
 - **Problem Display**: Clear, large text
 - **Answer Input**: Number pad or multiple choice
-- **Progress Bar**: Shows mission completion (e.g., "5/10 problems solved")
+- **Progress Bar**: Shows quest completion (e.g., "5/10 problems solved")
 - **Feedback**: Immediate visual feedback on correct/incorrect answers
 - **Pause Menu**: Exit, settings
 
 ### 4.3 Combat Interface
-- **Player Ship**: Health, shields, energy
-- **Enemy Ship**: Health, shields
-- **Math Problem**: Center focus
-- **Action Buttons**: Attack, defend, special ability
+- **Your Party**: 4 companion portraits showing health and energy
+- **Enemy**: Health and shields
+- **Math Problem**: Center focus when recharging
+- **Action Buttons**: Choose which companion ability to use
 - **Combat Log**: Recent actions
 
 ### 4.4 Visual Design Principles
-- **Child-Friendly**: Bright colors, clear icons, no scary imagery
-- **Space Theme**: Stars, planets, nebulas, spaceships
+- **Child-Friendly**: Bright colors, clear icons, friendly characters
+- **Fantasy Theme**: Castles, forests, magical effects, heroes and monsters
 - **Feedback**: Animations for success/failure, level-ups
 - **Accessibility**: Adjustable text size, colorblind modes
+- **Character-Driven**: Companions have personality through dialogue and expressions
 
 ---
 
@@ -285,9 +339,8 @@ Each sector:
 **Intrinsic Motivation**
 - Progress is visible and meaningful
 - Rewards are immediately useful
-- Player agency in choosing missions
-
-
+- Player agency in choosing quests
+- Emotional connection to companions
 
 ---
 
@@ -302,52 +355,62 @@ Each sector:
 
 ### 6.2 Technology Stack
 - **Frontend**: HTML5, CSS3, TypeScript
-- **Framework**: React, Vue, or vanilla TypeScript
-- **Graphics**: Simple CSS animations and SVG for ship/combat visuals (no Canvas/WebGL needed initially)
-- **Backend**: Node.js with database for user accounts
-- **Database**: PostgreSQL or MongoDB for user data
-- **Authentication**: OAuth or simple email/password
+- **Framework**: React with TypeScript
+- **State Management**: Zustand (already in use)
+- **Routing**: React Router (already in use)
+- **Internationalization**: i18next (already in use)
+- **Testing**: Vitest for unit tests, Playwright for E2E (already in use)
+- **Build Tool**: Vite (already in use)
+- **Graphics**: CSS animations and SVG for companions/combat visuals
+- **AI Art**: Stable Diffusion or similar for companion portraits and backgrounds
 
 ### 6.3 Data Storage
-- **User Profile**: Username, current sector
-- **Inventory**: Unlocked modules and their levels
-- **Progress**: Completed missions, unlocked sectors, earned badges
+- **User Profile**: Username, current realm
+- **Companion Collection**: Unlocked companions and their levels
+- **Progress**: Completed quests, unlocked realms, earned badges
 - **Statistics**: Problems solved by math skill and difficulty, accuracy rates
 - **Settings**: Audio, visual preferences
+
+### 6.4 Art Asset Requirements (AI-Generated)
+- **Companion Portraits**: 8-12 unique character portraits (multiple levels each)
+- **Enemy Designs**: 6-10 enemy/monster designs
+- **Background Scenes**: 6 realm backgrounds (forest, mountains, desert, etc.)
+- **UI Elements**: Buttons, frames, decorative elements
+- **Ability Effects**: Visual effects for attacks, shields, healing
 
 ---
 
 ## 7. Content Roadmap
 
 ### 7.1 Initial Prototype
-- **1 sector** (Training Zone)
-- **5 missions** covering different math skills:
-  - Mission 1: Addition (unlocks Laser Cannon)
-  - Mission 2: Subtraction (unlocks Missile Launcher)
-  - Mission 3: Multiplication (unlocks Plasma Beam)
-  - Mission 4: Division (unlocks Ion Blaster)
-  - Mission 5: Boss Battle (unlocks Sector 2)
-- **6 modules**: 3 weapons + 3 support modules
-- **2 module types**: Weapon and Support (simplified for young children)
+- **1 realm** (Training Grounds)
+- **5 quests** covering different math skills:
+  - Quest 1: Addition (unlocks Fire Knight)
+  - Quest 2: Subtraction (unlocks Shadow Archer)
+  - Quest 3: Multiplication (unlocks Lightning Mage)
+  - Quest 4: Division (unlocks Frost Ranger)
+  - Quest 5: Boss Battle (unlocks Realm 2)
+- **6-8 companions**: Mix of warrior, guardian, and support classes
 - **2-3 enemy types**: Basic enemies + 1 boss
 - **Turn-based combat** with recharge mechanics
-- **Simple ship customization**: Equip unlocked modules
+- **Simple party selection**: Choose 4 companions before each quest
 
 ### 7.2 Version 1.0 (Full Release)
-- 4-5 sectors with 40+ missions
+- 4-5 realms with 40+ quests
 - 8-10 enemy types including bosses
-- 40+ modules across all categories
+- 12+ companions across all classes
 - Full combat system with special abilities
 - Comprehensive math curriculum (grades 1-6)
 - Achievement system
-- Shop and economy
+- Companion dialogue and personality
 
 ### 7.3 Future Expansions
-- **New Sectors**: Additional regions with unique themes
-- **Multiplayer**: Co-op missions, friendly competitions
-- **Science Expansion**: Physics, chemistry challenges
-- **Story Mode**: Narrative-driven campaign
-- **Custom Missions**: Parent/teacher created challenges
+- **New Realms**: Additional regions with unique themes
+- **More Companions**: Exotic classes (ninja, pirate, dragon rider)
+- **Multiplayer**: Co-op quests, friendly competitions
+- **Science Expansion**: Science-based quests
+- **Story Mode**: Narrative-driven campaign with companion backstories
+- **Custom Quests**: Parent/teacher created challenges
 - **Mobile App**: Native iOS/Android versions
 
 ---
@@ -361,8 +424,8 @@ Each sector:
 - Optional donation system
 
 ### 8.2 Optional Premium Features
-- **Cosmetic Items**: Ship skins, decals (small fee)
-- **Expansion Packs**: Additional sectors/content
+- **Cosmetic Items**: Companion skins, special effects (small fee)
+- **Expansion Packs**: Additional realms/companions
 - **Ad-Free Experience**: Remove optional ads
 - **Early Access**: New features before public release
 
@@ -378,8 +441,9 @@ Each sector:
 ### 9.1 Engagement Metrics
 - Daily/weekly active users
 - Average session length
-- Mission completion rates
+- Quest completion rates
 - Return player rate
+- Companion attachment (which are most used)
 
 ### 9.2 Educational Metrics
 - Problems solved per session
@@ -418,40 +482,47 @@ Each sector:
 - **Risk**: Not all children have same learning needs
 - **Mitigation**: Accessibility options, adjustable difficulty, hint system
 
+**Challenge**: AI Art Consistency
+- **Risk**: AI-generated art may lack cohesive style
+- **Mitigation**: Develop clear style guide, use same prompts/models, manual curation
+
 ---
 
 ## 11. Next Steps
 
 ### 11.1 Pre-Development
-1. **Validate Concept**: Test with your kids, gather feedback
+1. **Validate Concept**: Test fantasy theme with target audience (your kids!)
 2. **Create Prototype**: Simple playable version of core loop
-3. **Art Style**: Define visual direction, create mood board
-4. **Math Content**: Compile initial problem sets
-5. **Technical Planning**: Choose tech stack, set up development environment
+3. **AI Art Tests**: Generate companion portraits to establish visual style
+4. **Define Companions**: Finalize 6-8 core companions with personalities
+5. **Math Content**: Compile initial problem sets
+6. **Technical Planning**: Adapt existing codebase for fantasy theme
 
 ### 11.2 Development Phases
 
 **Phase 1: Foundation (Weeks 1-4)**
-- Basic UI/UX framework
-- Mission selection and math challenge system
-- Simple reward mechanism
-- Core data structures
+- Convert UI/UX from space to fantasy theme
+- Rename and restructure: Ship → Guild Hall, Modules → Companions
+- Quest selection and math challenge system (minimal changes)
+- Core data structures for companions
 
 **Phase 2: Core Gameplay (Weeks 5-8)**
-- Ship customization system
-- Module implementation
-- Combat system (basic version)
-- First 2 sectors with missions
+- Companion collection and upgrade system
+- Party selection interface (choose 4 before quest)
+- Combat system adaptation for companions
+- First 2 realms with quests
+- AI art generation and integration
 
 **Phase 3: Polish & Content (Weeks 9-12)**
-- Additional missions and enemies
+- Additional quests and enemies
 - Visual polish and animations
-- Sound effects and music
+- Sound effects and music (fantasy-themed)
+- Companion dialogue and personality
 - Achievement system
 - Bug fixes and optimization
 
 **Phase 4: Testing & Launch (Weeks 13-16)**
-- Extensive playtesting
+- Extensive playtesting with children
 - Balance adjustments
 - Performance optimization
 - Documentation
@@ -462,25 +533,35 @@ Each sector:
 ## 12. Appendix
 
 ### 12.1 Glossary
-- **Module**: Upgradeable ship component (weapon, shield, utility)
-- **Sector**: Major region of space with multiple missions
-- **Mission**: Discrete challenge with math problems and rewards
-- **NPC**: Non-player character (enemy ships)
-- **XP**: Experience points for player progression
+- **Companion**: Hero who joins your adventuring party, each with one unique ability
+- **Party Camp**: Main hub where companions gather and player prepares for adventures
+- **Realm**: Major region with multiple quests
+- **Quest/Adventure**: Story-driven challenge with contextual math integration
+- **Upgrade**: Improving a companion's level (1-5)
+- **Party**: The 4 companions chosen for a specific adventure
+- **Adventuring Party**: Your full collection of companions (only 4 active at a time)
 
 ### 12.2 References & Inspiration
 - **Educational Games**: Prodigy Math, DragonBox, Math Blaster
-- **Space Games**: FTL, Star Traders, Space Engineers
-- **Progression Systems**: RPG mechanics, roguelike elements
+- **Fantasy Games**: Pokémon, Ni no Kuni, Final Fantasy tactics
+- **Party Systems**: Dragon Quest, classic JRPGs
+- **Character Design**: Avatar: The Last Airbender, How to Train Your Dragon
 
-### 12.3 Contact & Contribution
+### 12.3 Companion Design Guidelines (AI Generation)
+- **Diversity**: Varied ethnicities, genders, ages
+- **Visual Clarity**: Clear silhouettes, distinct color palettes
+- **Age-Appropriate**: Friendly, heroic, not scary
+- **Personality Through Design**: Expressions, poses reflect character
+- **Consistency**: Same art style across all companions
+
+### 12.4 Contact & Contribution
 - Project repository: [To be created]
 - Issue tracker: [To be created]
 - Community forum: [To be created]
 
 ---
 
-**Document Version**: 1.0  
-**Last Updated**: 2025-11-26  
+**Document Version**: 2.0 (Fantasy Theme Revision)  
+**Last Updated**: 2025-12-07  
 **Author**: Seyit Ivhed  
-**Status**: Initial Draft
+**Status**: Design Revision - Pending Implementation
