@@ -106,13 +106,19 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                         // Base styles
                         let statusClass = "bg-slate-700 ring-4 ring-slate-800 cursor-not-allowed opacity-70 grayscale";
                         let labelClass = "bg-slate-900/90 border-slate-700 text-slate-300";
+                        let nodeSizeClass = "w-24 h-24 rounded-full"; // Default circle
+
+                        // Camp specific overrides
+                        if (isCamp) {
+                            nodeSizeClass = "w-28 h-28 rounded-3xl rotate-45 border-4 border-dashed"; // Diamond/Square shape for Camp
+                        }
 
                         // Current node styles
                         if (isCurrent) {
                             labelClass = "bg-yellow-900/90 border-yellow-500 text-yellow-100";
                             if (isCamp) {
-                                statusClass = "bg-emerald-600 ring-4 ring-emerald-400 cursor-pointer animate-bounce shadow-[0_0_30px_rgba(16,185,129,0.6)]";
-                                labelClass = "bg-emerald-900/90 border-emerald-500 text-emerald-100";
+                                statusClass = "bg-gradient-to-br from-emerald-500 to-teal-700 ring-4 ring-emerald-300 cursor-pointer animate-pulse shadow-[0_0_50px_rgba(16,185,129,0.8)]";
+                                labelClass = "bg-emerald-900/95 border-emerald-400 text-emerald-100 text-lg tracking-widest px-8 py-3 ring-2 ring-emerald-500/50";
                             } else {
                                 statusClass = "bg-[var(--color-brand-accent)] ring-4 ring-yellow-400 cursor-pointer animate-bounce shadow-[0_0_30px_rgba(251,191,36,0.6)]";
                             }
@@ -121,7 +127,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                         // Completed node styles
                         if (isCompleted) {
                             if (isCamp) {
-                                statusClass = "bg-emerald-800 ring-4 ring-emerald-900 cursor-pointer";
+                                statusClass = "bg-emerald-900 ring-4 ring-emerald-800 cursor-pointer opacity-80";
                             } else {
                                 statusClass = "bg-[var(--color-success)] ring-4 ring-green-800 cursor-pointer";
                             }
@@ -134,14 +140,19 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                                 style={{ left: leftPos, top: topPos }}
                                 onClick={() => !isLocked && handleNodeClick(node)}
                             >
-                                {/* Node Circle */}
-                                <div className={`w-24 h-24 rounded-full flex items-center justify-center text-4xl font-black text-white shadow-2xl ${statusClass}`} data-testid={`map-node-${node.id}`}>
-                                    {isCompleted ? '✓' : (isCamp ? '⛺' : node.id)}
+                                {/* Node Shape */}
+                                <div className={`${nodeSizeClass} flex items-center justify-center shadow-2xl ${statusClass}`} data-testid={`map-node-${node.id}`}>
+                                    {/* Rotate icon back if container is rotated */}
+                                    <span className={isCamp ? '-rotate-45 text-5xl drop-shadow-md' : 'text-4xl font-black'}>
+                                        {isCompleted ? '✓' : (isCamp ? '⛺' : node.id)}
+                                    </span>
                                 </div>
 
                                 {/* Label */}
-                                <div className={`mt-3 px-6 py-2 rounded-full text-base font-bold shadow-lg border-2 backdrop-blur-md uppercase tracking-wider ${labelClass}`}>
+                                <div className={`mt-6 px-6 py-2 rounded-full font-bold shadow-lg border-2 backdrop-blur-md uppercase ${labelClass}`}>
+                                    {isCamp && <span className="mr-2">✨</span>}
                                     {node.label}
+                                    {isCamp && <span className="ml-2">✨</span>}
                                 </div>
                             </div>
                         );
