@@ -81,7 +81,8 @@ export default function CombatPage() {
             }
 
             // Trigger particle effect at entity position
-            const x = lastDamageEvent.target === 'enemy' ? 600 : 200;
+            // Approximate positions for new wide layout
+            const x = lastDamageEvent.target === 'enemy' ? 1200 : 300;
             const y = 300;
             setParticleTrigger({
                 x,
@@ -135,12 +136,19 @@ export default function CombatPage() {
                 </div>
             </div>
 
-            {/* Screen Shake Wrapper */}
-            <ScreenShake intensity="medium" trigger={shakeTrigger}>
-                {/* Combat Arena */}
+            {/* Main Combat Area with Shake Effect */}
+            <ScreenShake intensity="medium" trigger={shakeTrigger} className={styles.combatBody}>
+                {/* Combat Arena (Grid Items: Player, Center, Enemy) */}
                 <CombatArena player={player} enemy={enemy} phase={phase} />
 
-                {/* Particle Effects */}
+                {/* Visual Effects Layer (Absolute or Overlay) */}
+                {/* We map effects to the grid or use coordinates relative to this container? 
+                    Particle/FloatingDamage use absolute positioning based on pixels currently (200/600).
+                    We might need to update those coordinates later as layout is now fluid. 
+                    For now, they are children of restricted positioned elements? No, ScreenShake is relative.
+                    So X/Y need to match the new positions. 
+                    TODO: Update effect coordinates in logic later or rely on current approximation.
+                */}
                 {particleTrigger && (
                     <ParticleEffect
                         x={particleTrigger.x}
@@ -149,14 +157,12 @@ export default function CombatPage() {
                         trigger={particleTrigger.timestamp}
                     />
                 )}
-
-                {/* Floating Damage Numbers */}
                 {lastDamageEvent && (
                     <FloatingDamage
                         trigger={{
                             value: lastDamageEvent.amount,
                             type: 'damage',
-                            x: lastDamageEvent.target === 'enemy' ? 600 : 200,
+                            x: lastDamageEvent.target === 'enemy' ? 1200 : 300, // Aligned with new layout
                             y: 300,
                             timestamp: lastDamageEvent.timestamp,
                         }}
@@ -164,20 +170,24 @@ export default function CombatPage() {
                 )}
             </ScreenShake>
 
-            {/* Combat Log */}
-            <CombatLog logs={combatLog} />
+            {/* Bottom/Overlay UI Layer */}
+            <div style={{ position: 'absolute', bottom: '2rem', left: '2rem', zIndex: 10 }}>
+                <CombatLog logs={combatLog} />
+            </div>
 
-            {/* Action Menu */}
+            {/* Action Menu (Centered Bottom) */}
             {phase === CombatPhase.PLAYER_INPUT && (
-                <CombatActionMenu
-                    onAction={(companionId: string) => {
-                        handleActionSelect(companionId);
-                    }}
-                    showInlineRecharge={showInlineRecharge}
-                    rechargeProblem={currentProblem}
-                    rechargeCompanionId={pendingRechargeCompanion}
-                    onRechargeSubmit={handleMathSubmit}
-                />
+                <div style={{ position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)', zIndex: 20 }}>
+                    <CombatActionMenu
+                        onAction={(companionId: string) => {
+                            handleActionSelect(companionId);
+                        }}
+                        showInlineRecharge={showInlineRecharge}
+                        rechargeProblem={currentProblem}
+                        rechargeCompanionId={pendingRechargeCompanion}
+                        onRechargeSubmit={handleMathSubmit}
+                    />
+                </div>
             )}
 
             {/* Victory Screen */}

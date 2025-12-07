@@ -1,14 +1,31 @@
 /* Combat Page Styles */
 
+
 .container {
     min-height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     transition: background-image 0.5s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 2rem;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    /* Header, Body, Footer/Action */
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    /* Prevent scrolling if possible */
+}
+
+.combatBody {
+    display: grid;
+    grid-template-columns: 1fr minmax(200px, auto) 1fr;
+    /* Player Area, VS/Effect Area, Enemy Area */
+    gap: 2rem;
+    padding: 0 4rem;
+    align-items: center;
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    height: 100%;
 }
 
 .trainingBackground {
@@ -56,15 +73,45 @@
     transform: translateY(-2px);
 }
 
+
 .arena {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 2rem 4rem;
-    max-width: 1400px;
-    margin: 0 auto;
+    display: contents;
+    /* Let grid handling the children positions */
+    /* If we want to keep the shake wrapper working, we might need to keep this as block 
+       but currently CombatArena is just a wrapper in the page. 
+       Let's actually make CombatArena component return a fragment or handle the grid placement itself.
+       or better yet, let CombatPage control the grid, and CombatArena just fills the slots.
+    */
     width: 100%;
+}
+
+.playerZone {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+    /* Align to left/center depending on taste */
+    justify-content: center;
+    height: 100%;
+    padding-left: 2rem;
+}
+
+.enemyZone {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-end;
+    /* Align to right */
+    justify-content: center;
+    height: 100%;
+    padding-right: 2rem;
+}
+
+.centerZone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .combatant {
@@ -93,11 +140,10 @@
     transition: transform 0.3s ease;
 }
 
+
 .vsContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+    /* Deprecated or kept for center area */
+    opacity: 0.5;
 }
 
 .vsText {

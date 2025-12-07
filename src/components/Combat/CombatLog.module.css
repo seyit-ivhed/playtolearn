@@ -1,18 +1,20 @@
 .container {
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    height: 200px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    height: 150px;
+    width: 300px;
+    /* Fixed width for corner placement */
     overflow-y: auto;
     font-family: monospace;
-    font-size: 1.2rem;
+    font-size: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin: 0 4rem;
-    backdrop-filter: blur(4px);
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    gap: 0.25rem;
+    backdrop-filter: blur(2px);
+    /* Position will be handled by parent or if absolute here */
+    pointer-events: auto;
 }
 
 .entry {

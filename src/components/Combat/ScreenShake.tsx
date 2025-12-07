@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 import styles from './ScreenShake.module.css';
 
+
 interface ScreenShakeProps {
     children: React.ReactNode;
     intensity?: 'light' | 'medium' | 'heavy';
     trigger?: number; // Timestamp to trigger shake
+    className?: string;
 }
 
 export const ScreenShake: React.FC<ScreenShakeProps> = ({
     children,
     intensity = 'medium',
     trigger = 0,
+    className = '',
 }) => {
     const [isShaking, setIsShaking] = useState(false);
 
@@ -25,7 +28,7 @@ export const ScreenShake: React.FC<ScreenShakeProps> = ({
 
     return (
         <div
-            className={`${styles.container} ${isShaking ? styles[`shake-${intensity}`] : ''}`}
+            className={`${styles.container} ${isShaking ? styles[`shake-${intensity}`] : ''} ${className}`}
         >
             {children}
         </div>
