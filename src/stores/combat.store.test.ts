@@ -10,23 +10,23 @@ describe('Combat Store', () => {
         currentHealth: 100,
         maxShield: 50,
         currentShield: 50,
-        equippedModules: [
+        equippedCompanions: [
             {
-                moduleId: 'weapon_laser_1',
-                slotId: 'slot_weapon_1',
+                companionId: 'companion_fire_knight',
+                slotId: 'slot_1',
                 currentEnergy: 3,
                 maxEnergy: 3,
                 combatAction: 'ATTACK'
             },
             {
-                moduleId: 'shield_basic_1',
-                slotId: 'slot_support_1',
+                companionId: 'companion_crystal_guardian',
+                slotId: 'slot_2',
                 currentEnergy: 2,
                 maxEnergy: 2,
                 combatAction: 'DEFEND'
             }
         ],
-        modules: {
+        companions: {
             attack: { currentEnergy: 3, maxEnergy: 3 },
             defend: { currentEnergy: 2, maxEnergy: 2 },
             special: { currentEnergy: 2, maxEnergy: 2 },
@@ -40,8 +40,8 @@ describe('Combat Store', () => {
         currentHealth: 50,
         maxShield: 0,
         currentShield: 0,
-        equippedModules: [],
-        modules: {
+        equippedCompanions: [],
+        companions: {
             attack: { currentEnergy: 0, maxEnergy: 0 },
             defend: { currentEnergy: 0, maxEnergy: 0 },
             special: { currentEnergy: 0, maxEnergy: 0 },
@@ -61,7 +61,7 @@ describe('Combat Store', () => {
     });
 
     it('should handle player attack', () => {
-        useCombatStore.getState().playerAction({ moduleId: 'weapon_laser_1', behavior: 'ATTACK', value: 20 });
+        useCombatStore.getState().playerAction({ companionId: 'companion_fire_knight', behavior: 'ATTACK', value: 20 });
         const state = useCombatStore.getState();
 
         expect(state.enemy.currentHealth).toBe(30);
@@ -75,7 +75,7 @@ describe('Combat Store', () => {
             player: { ...state.player, currentShield: 30 }
         }));
 
-        useCombatStore.getState().playerAction({ moduleId: 'shield_basic_1', behavior: 'DEFEND', value: 15 });
+        useCombatStore.getState().playerAction({ companionId: 'companion_crystal_guardian', behavior: 'DEFEND', value: 15 });
         const state = useCombatStore.getState();
 
         expect(state.player.currentShield).toBe(45);
@@ -84,7 +84,7 @@ describe('Combat Store', () => {
     });
 
     it('should handle enemy attack', () => {
-        useCombatStore.getState().enemyTurn({ moduleId: 'enemy_weapon', behavior: 'ATTACK', value: 10 });
+        useCombatStore.getState().enemyTurn({ companionId: 'enemy_weapon', behavior: 'ATTACK', value: 10 });
         const state = useCombatStore.getState();
 
         // Player has 50 shield, so damage should go to shield first
@@ -95,7 +95,7 @@ describe('Combat Store', () => {
     });
 
     it('should detect victory', () => {
-        useCombatStore.getState().playerAction({ moduleId: 'weapon_laser_1', behavior: 'ATTACK', value: 50 });
+        useCombatStore.getState().playerAction({ companionId: 'companion_fire_knight', behavior: 'ATTACK', value: 50 });
         const state = useCombatStore.getState();
 
         expect(state.enemy.currentHealth).toBe(0);
@@ -108,42 +108,42 @@ describe('Combat Store', () => {
             player: { ...mockPlayer, currentHealth: 5, currentShield: 0 }
         });
 
-        useCombatStore.getState().enemyTurn({ moduleId: 'enemy_weapon', behavior: 'ATTACK', value: 10 });
+        useCombatStore.getState().enemyTurn({ companionId: 'enemy_weapon', behavior: 'ATTACK', value: 10 });
         const state = useCombatStore.getState();
 
         expect(state.player.currentHealth).toBe(0);
         expect(state.phase).toBe(CombatPhase.DEFEAT);
     });
 
-    it('should consume module energy correctly', () => {
-        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
-        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(2);
+    it('should consume companion energy correctly', () => {
+        useCombatStore.getState().consumeCompanionEnergy('companion_fire_knight');
+        expect(useCombatStore.getState().player.equippedCompanions[0].currentEnergy).toBe(2);
 
-        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
-        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
-        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(0);
+        useCombatStore.getState().consumeCompanionEnergy('companion_fire_knight');
+        useCombatStore.getState().consumeCompanionEnergy('companion_fire_knight');
+        expect(useCombatStore.getState().player.equippedCompanions[0].currentEnergy).toBe(0);
 
         // Should not go below 0
-        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
-        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(0);
+        useCombatStore.getState().consumeCompanionEnergy('companion_fire_knight');
+        expect(useCombatStore.getState().player.equippedCompanions[0].currentEnergy).toBe(0);
     });
 
-    it('should recharge module energy', () => {
+    it('should recharge companion energy', () => {
         // First consume some energy
-        useCombatStore.getState().consumeModuleEnergy('weapon_laser_1');
-        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(2);
+        useCombatStore.getState().consumeCompanionEnergy('companion_fire_knight');
+        expect(useCombatStore.getState().player.equippedCompanions[0].currentEnergy).toBe(2);
 
-        useCombatStore.getState().rechargeModule('weapon_laser_1');
-        expect(useCombatStore.getState().player.equippedModules[0].currentEnergy).toBe(3);
+        useCombatStore.getState().rechargeCompanion('companion_fire_knight');
+        expect(useCombatStore.getState().player.equippedCompanions[0].currentEnergy).toBe(3);
     });
 
     it('should handle recharge flag', () => {
-        expect(useCombatStore.getState().rechargedModules).toEqual([]);
+        expect(useCombatStore.getState().rechargedCompanions).toEqual([]);
 
-        useCombatStore.getState().rechargeModule('weapon_laser_1');
-        expect(useCombatStore.getState().rechargedModules).toContain('weapon_laser_1');
+        useCombatStore.getState().rechargeCompanion('companion_fire_knight');
+        expect(useCombatStore.getState().rechargedCompanions).toContain('companion_fire_knight');
 
         useCombatStore.getState().resetRechargeFlag();
-        expect(useCombatStore.getState().rechargedModules).toEqual([]);
+        expect(useCombatStore.getState().rechargedCompanions).toEqual([]);
     });
 });

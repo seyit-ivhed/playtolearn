@@ -9,12 +9,12 @@ import { CombatPhase } from '../types/combat.types';
 vi.mock('../stores/combat.store');
 vi.mock('../stores/math.store');
 vi.mock('../utils/sound-manager');
-vi.mock('../data/modules.data', () => ({
-    getModuleById: vi.fn((id) => {
-        if (id === 'weapon_laser_1') {
+vi.mock('../data/companions.data', () => ({
+    getCompanionById: vi.fn((id) => {
+        if (id === 'companion_fire_knight') {
             return {
-                id: 'weapon_laser_1',
-                name: 'Basic Laser',
+                id: 'companion_fire_knight',
+                name: 'Fire Knight',
                 combatAction: 'ATTACK',
                 stats: { attack: 10, maxEnergy: 3 }
             };
@@ -40,10 +40,10 @@ describe('useCombatActions', () => {
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
             player: {
-                equippedModules: [
+                equippedCompanions: [
                     {
-                        moduleId: 'weapon_laser_1',
-                        slotId: 'slot_weapon_1',
+                        companionId: 'companion_fire_knight',
+                        slotId: 'slot_1',
                         currentEnergy: 3,
                         maxEnergy: 3,
                         combatAction: 'ATTACK'
@@ -52,9 +52,9 @@ describe('useCombatActions', () => {
             },
             setPhase: mockSetPhase,
             playerAction: mockPlayerAction,
-            consumeModuleEnergy: mockConsumeEnergy,
-            rechargeModule: mockFullRecharge,
-            rechargedModules: [],
+            consumeCompanionEnergy: mockConsumeEnergy,
+            rechargeCompanion: mockFullRecharge,
+            rechargedCompanions: [],
         });
 
         (useMathStore as any).mockReturnValue({
@@ -69,12 +69,12 @@ describe('useCombatActions', () => {
         const { result } = renderHook(() => useCombatActions());
 
         act(() => {
-            result.current.handleActionSelect('weapon_laser_1');
+            result.current.handleActionSelect('companion_fire_knight');
         });
 
-        expect(mockConsumeEnergy).toHaveBeenCalledWith('weapon_laser_1');
+        expect(mockConsumeEnergy).toHaveBeenCalledWith('companion_fire_knight');
         expect(mockPlayerAction).toHaveBeenCalledWith({
-            moduleId: 'weapon_laser_1',
+            companionId: 'companion_fire_knight',
             behavior: 'ATTACK',
             value: 10
         });
@@ -86,10 +86,10 @@ describe('useCombatActions', () => {
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
             player: {
-                equippedModules: [
+                equippedCompanions: [
                     {
-                        moduleId: 'weapon_laser_1',
-                        slotId: 'slot_weapon_1',
+                        companionId: 'companion_fire_knight',
+                        slotId: 'slot_1',
                         currentEnergy: 0,
                         maxEnergy: 3,
                         combatAction: 'ATTACK'
@@ -98,30 +98,30 @@ describe('useCombatActions', () => {
             },
             setPhase: mockSetPhase,
             playerAction: mockPlayerAction,
-            consumeModuleEnergy: mockConsumeEnergy,
-            rechargedModules: [],
+            consumeCompanionEnergy: mockConsumeEnergy,
+            rechargedCompanions: [],
         });
 
         const { result } = renderHook(() => useCombatActions());
 
         act(() => {
-            result.current.handleActionSelect('weapon_laser_1');
+            result.current.handleActionSelect('companion_fire_knight');
         });
 
         expect(mockSetPhase).not.toHaveBeenCalled();
         expect(result.current.showInlineRecharge).toBe(true);
-        expect(result.current.pendingRechargeModule).toBe('weapon_laser_1');
+        expect(result.current.pendingRechargeCompanion).toBe('companion_fire_knight');
         expect(mockConsumeEnergy).not.toHaveBeenCalled();
     });
 
-    it('should prevent recharge if already recharged this module', () => {
+    it('should prevent recharge if already recharged this companion', () => {
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
             player: {
-                equippedModules: [
+                equippedCompanions: [
                     {
-                        moduleId: 'weapon_laser_1',
-                        slotId: 'slot_weapon_1',
+                        companionId: 'companion_fire_knight',
+                        slotId: 'slot_1',
                         currentEnergy: 0,
                         maxEnergy: 3,
                         combatAction: 'ATTACK'
@@ -129,18 +129,18 @@ describe('useCombatActions', () => {
                 ]
             },
             setPhase: mockSetPhase,
-            rechargedModules: ['weapon_laser_1'], // Already recharged
+            rechargedCompanions: ['companion_fire_knight'], // Already recharged
         });
 
         const { result } = renderHook(() => useCombatActions());
 
         act(() => {
-            result.current.handleActionSelect('weapon_laser_1');
+            result.current.handleActionSelect('companion_fire_knight');
         });
 
         expect(mockSetPhase).not.toHaveBeenCalled();
         expect(result.current.showInlineRecharge).toBe(false);
-        expect(result.current.pendingRechargeModule).toBe(null);
+        expect(result.current.pendingRechargeCompanion).toBe(null);
     });
 
     it('should handle correct math answer for recharge', () => {
@@ -148,10 +148,10 @@ describe('useCombatActions', () => {
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
             player: {
-                equippedModules: [
+                equippedCompanions: [
                     {
-                        moduleId: 'weapon_laser_1',
-                        slotId: 'slot_weapon_1',
+                        companionId: 'companion_fire_knight',
+                        slotId: 'slot_1',
                         currentEnergy: 0,
                         maxEnergy: 3,
                         combatAction: 'ATTACK'
@@ -159,15 +159,15 @@ describe('useCombatActions', () => {
                 ]
             },
             setPhase: mockSetPhase,
-            rechargedModules: [],
-            rechargeModule: mockFullRecharge,
+            rechargedCompanions: [],
+            rechargeCompanion: mockFullRecharge,
         });
 
         const { result } = renderHook(() => useCombatActions());
 
         // Select action to trigger recharge state
         act(() => {
-            result.current.handleActionSelect('weapon_laser_1');
+            result.current.handleActionSelect('companion_fire_knight');
         });
 
         mockSubmitAnswer.mockReturnValue({ isCorrect: true });
@@ -176,9 +176,9 @@ describe('useCombatActions', () => {
             result.current.handleMathSubmit(2);
         });
 
-        expect(mockFullRecharge).toHaveBeenCalledWith('weapon_laser_1');
+        expect(mockFullRecharge).toHaveBeenCalledWith('companion_fire_knight');
         expect(result.current.showInlineRecharge).toBe(false);
-        expect(result.current.pendingRechargeModule).toBe(null);
+        expect(result.current.pendingRechargeCompanion).toBe(null);
     });
 
     it('should handle wrong math answer for recharge', () => {
@@ -186,10 +186,10 @@ describe('useCombatActions', () => {
         (useCombatStore as any).mockReturnValue({
             phase: CombatPhase.PLAYER_INPUT,
             player: {
-                equippedModules: [
+                equippedCompanions: [
                     {
-                        moduleId: 'weapon_laser_1',
-                        slotId: 'slot_weapon_1',
+                        companionId: 'companion_fire_knight',
+                        slotId: 'slot_1',
                         currentEnergy: 0,
                         maxEnergy: 3,
                         combatAction: 'ATTACK'
@@ -197,15 +197,15 @@ describe('useCombatActions', () => {
                 ]
             },
             setPhase: mockSetPhase,
-            rechargedModules: [],
-            rechargeModule: mockFullRecharge,
+            rechargedCompanions: [],
+            rechargeCompanion: mockFullRecharge,
         });
 
         const { result } = renderHook(() => useCombatActions());
 
         // Select action first
         act(() => {
-            result.current.handleActionSelect('weapon_laser_1');
+            result.current.handleActionSelect('companion_fire_knight');
         });
 
         mockSubmitAnswer.mockReturnValue({ isCorrect: false });
@@ -216,6 +216,6 @@ describe('useCombatActions', () => {
 
         expect(mockFullRecharge).not.toHaveBeenCalled();
         expect(result.current.showInlineRecharge).toBe(false);
-        expect(result.current.pendingRechargeModule).toBe(null);
+        expect(result.current.pendingRechargeCompanion).toBe(null);
     });
 });
