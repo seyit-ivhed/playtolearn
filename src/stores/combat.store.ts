@@ -1,238 +1,209 @@
 import { create } from 'zustand';
-import type { CombatState, CombatAction, CombatEntity } from '../types/combat.types';
-import { CombatPhase } from '../types/combat.types';
-
-interface DamageEvent {
-    target: 'player' | 'enemy';
-    amount: number;
-    timestamp: number;
-}
+import { CombatPhase, type CombatUnit, type CombatState } from '../types/combat.types';
+import { getCompanionById } from '../data/companions.data';
+import { createEnemy } from '../data/enemies.data';
 
 interface CombatStore extends CombatState {
-    lastDamageEvent: DamageEvent | null;
-    initializeCombat: (player: CombatEntity, enemy: CombatEntity) => void;
-    setPhase: (phase: CombatPhase) => void;
-    playerAction: (action: CombatAction) => void;
-    enemyTurn: (action: CombatAction) => void;
-    resolveDamage: (target: 'player' | 'enemy', amount: number) => void;
-    nextTurn: () => void;
-    // Energy handling for companions
-    rechargedCompanions: string[]; // Track which companion IDs were recharged this turn
-    // Actions
-    consumeCompanionEnergy: (companionId: string) => void;
-    rechargeCompanion: (companionId: string) => void;
-    getCompanionInstance: (companionId: string) => any | null;
-    resetRechargeFlag: () => void;
+    initializeCombat: (partyIds: string[], enemyTemplateIds: string[]) => void;
+    selectUnit: (unitId: string | null) => void;
+    performAction: (unitId: string) => void;
+    rechargeUnit: (unitId: string) => void;
+    endPlayerTurn: () => void;
+    processEnemyTurn: () => void;
 }
 
 export const useCombatStore = create<CombatStore>((set, get) => ({
-    phase: CombatPhase.PLAYER_INPUT,
-    turn: 1,
-    player: {
-        id: 'player',
-        name: 'Player',
-        maxHealth: 100,
-        currentHealth: 100,
-        maxShield: 50,
-        currentShield: 50,
-        equippedCompanions: [], // Will be populated on combat init
-        companions: {
-            attack: { currentEnergy: 3, maxEnergy: 3 },
-            defend: { currentEnergy: 2, maxEnergy: 2 },
-            special: { currentEnergy: 2, maxEnergy: 2 },
-        },
-    },
-    enemy: {
-        id: 'enemy',
-        name: 'Enemy',
-        maxHealth: 100,
-        currentHealth: 100,
-        maxShield: 0,
-        currentShield: 0,
-        equippedCompanions: [], // Will be populated on combat init
-        companions: {
-            attack: { currentEnergy: 0, maxEnergy: 0 },
-            defend: { currentEnergy: 0, maxEnergy: 0 },
-            special: { currentEnergy: 0, maxEnergy: 0 },
-        },
-    },
+    phase: CombatPhase.INIT,
+    turnCount: 0,
+    party: [],
+    enemies: [],
+    selectedUnitId: null,
     combatLog: [],
-    lastDamageEvent: null,
-    // New state flag
-    rechargedCompanions: [],
 
-    initializeCombat: (player, enemy) => set({
-        phase: CombatPhase.PLAYER_INPUT,
-        turn: 1,
-        player,
-        enemy,
-        combatLog: [`Combat started vs ${enemy.name}!`],
-        rechargedCompanions: [],
-    }),
-
-    // Helper to get companion instance by ID
-    getCompanionInstance: (companionId) => {
-        const state = get();
-        return state.player.equippedCompanions.find(c => c.companionId === companionId) || null;
-    },
-
-    // Energy handling actions - now works with companion IDs
-    consumeCompanionEnergy: (companionId) => set(state => {
-        const companionIndex = state.player.equippedCompanions.findIndex(c => c.companionId === companionId);
-        if (companionIndex === -1) return state;
-
-        const updatedCompanions = [...state.player.equippedCompanions];
-        updatedCompanions[companionIndex] = {
-            ...updatedCompanions[companionIndex],
-            currentEnergy: Math.max(0, updatedCompanions[companionIndex].currentEnergy - 1)
-        };
-
-        return {
-            player: {
-                ...state.player,
-                equippedCompanions: updatedCompanions
-            }
-        };
-    }),
-
-    rechargeCompanion: (companionId) => set(state => {
-        const companionIndex = state.player.equippedCompanions.findIndex(c => c.companionId === companionId);
-        if (companionIndex === -1) return state;
-
-        const updatedCompanions = [...state.player.equippedCompanions];
-        updatedCompanions[companionIndex] = {
-            ...updatedCompanions[companionIndex],
-            currentEnergy: updatedCompanions[companionIndex].maxEnergy
-        };
-
-        return {
-            player: {
-                ...state.player,
-                equippedCompanions: updatedCompanions
-            },
-            rechargedCompanions: [...state.rechargedCompanions, companionId]
-        };
-    }),
-
-    resetRechargeFlag: () => set({ rechargedCompanions: [] }),
-
-    setPhase: (phase) => set({ phase }),
-
-    playerAction: (action) => {
-        const { combatLog } = get();
-        let logEntry = '';
-
-        if (action.behavior === 'ATTACK') {
-            const damage = action.value || 10;
-            get().resolveDamage('enemy', damage);
-            logEntry = `Player attacks for ${damage} damage!`;
-        } else if (action.behavior === 'DEFEND') {
-            const shieldBoost = action.value || 15;
-            const { player } = get();
-            const newShield = Math.min(player.maxShield, player.currentShield + shieldBoost);
-
-            set((state) => ({
-                player: {
-                    ...state.player,
-                    currentShield: newShield
-                }
-            }));
-
-            logEntry = `Player defends! Shield increased by ${newShield - player.currentShield}.`;
-        } else if (action.behavior === 'HEAL') {
-            const healAmount = action.value || 20;
-            const { player } = get();
-            const newHealth = Math.min(player.maxHealth, player.currentHealth + healAmount);
-
-            set((state) => ({
-                player: {
-                    ...state.player,
-                    currentHealth: newHealth
-                }
-            }));
-
-            logEntry = `Player heals for ${newHealth - player.currentHealth} HP!`;
-        } else if (action.behavior === 'SPECIAL') {
-            // Implement special logic (placeholder)
-            logEntry = `Player uses special!`;
-        }
-
-        set({
-            phase: CombatPhase.ENEMY_ACTION,
-            combatLog: [...combatLog, logEntry],
+    initializeCombat: (partyIds, enemyTemplateIds) => {
+        const party: CombatUnit[] = partyIds.map((id, index) => {
+            const data = getCompanionById(id);
+            return {
+                id: `party_${id}_${index}`,
+                templateId: id,
+                name: data.name,
+                isPlayer: true,
+                maxHealth: data.maxHealth,
+                currentHealth: data.maxHealth,
+                maxEnergy: data.maxEnergy,
+                currentEnergy: data.maxEnergy,
+                maxShield: 0,
+                currentShield: 0,
+                icon: data.icon,
+                color: data.color,
+                isDead: false
+            };
         });
 
-        // Reset recharge flag at end of player's turn
-        get().resetRechargeFlag();
+        const enemies: CombatUnit[] = enemyTemplateIds.map((id, index) => {
+            const enemy = createEnemy(id, `enemy_${id}_${index}`);
+            return {
+                ...enemy,
+                isPlayer: false,
+                maxEnergy: 0,
+                currentEnergy: 0,
+                isDead: false
+            };
+        });
 
-        // Check win condition
-        if (get().enemy.currentHealth <= 0) {
+        set({
+            phase: CombatPhase.PLAYER_TURN,
+            turnCount: 1,
+            party,
+            enemies,
+            selectedUnitId: null,
+            combatLog: ['Combat Started!']
+        });
+    },
+
+    selectUnit: (unitId) => set({ selectedUnitId: unitId }),
+
+    performAction: (unitId) => {
+        const { party, enemies } = get();
+        const unitIndex = party.findIndex(u => u.id === unitId);
+        if (unitIndex === -1) return;
+
+        const unit = party[unitIndex];
+        if (unit.currentEnergy <= 0) return; // Should be blocked by UI
+
+        // Get Ability Data
+        const companionData = getCompanionById(unit.templateId);
+
+        // consume energy
+        const newParty = [...party];
+        newParty[unitIndex] = { ...unit, currentEnergy: unit.currentEnergy - 1 };
+
+        let logMsg = `${unit.name} used ${companionData.abilityName}!`;
+
+        // Apply Effects
+        // Simple logic for now: 
+        // Warrior -> Hit first living enemy
+        // Guardian -> Shield random ally
+        // Support -> Heal lowest HP ally
+
+        if (companionData.role === 'WARRIOR') {
+            const targetIndex = enemies.findIndex(e => !e.isDead);
+            if (targetIndex !== -1) {
+                const target = enemies[targetIndex];
+                const damage = companionData.abilityDamage || 10;
+                const newHealth = Math.max(0, target.currentHealth - damage);
+
+                const newEnemies = [...enemies];
+                newEnemies[targetIndex] = {
+                    ...target,
+                    currentHealth: newHealth,
+                    isDead: newHealth === 0
+                };
+
+                set({ party: newParty, enemies: newEnemies });
+                logMsg += ` Dealt ${damage} damage to ${target.name}.`;
+            }
+        } else if (companionData.role === 'GUARDIAN') {
+            // Shield random ally
+            const amount = companionData.abilityShield || 15;
+            const targetIndex = Math.floor(Math.random() * newParty.length);
+            newParty[targetIndex].currentShield += amount;
+            set({ party: newParty });
+            logMsg += ` Shielded ${newParty[targetIndex].name}.`;
+        } else if (companionData.role === 'SUPPORT') {
+            // Heal lowest HP
+            const amount = companionData.abilityHeal || 15;
+            let lowestIndex = 0;
+            let lowestHP = 9999;
+            newParty.forEach((p, idx) => {
+                if (!p.isDead && p.currentHealth < p.maxHealth && p.currentHealth < lowestHP) {
+                    lowestHP = p.currentHealth;
+                    lowestIndex = idx;
+                }
+            });
+            const target = newParty[lowestIndex];
+            const newHealth = Math.min(target.maxHealth, target.currentHealth + amount);
+            newParty[lowestIndex].currentHealth = newHealth;
+
+            set({ party: newParty });
+            logMsg += ` Healed ${target.name}.`;
+        } else {
+            set({ party: newParty });
+        }
+
+        set(state => ({ combatLog: [...state.combatLog, logMsg] }));
+
+        // Check Victory
+        if (get().enemies.every(e => e.isDead)) {
             set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
         }
     },
 
-    enemyTurn: (action) => {
-        const { combatLog } = get();
-        let logEntry = '';
+    rechargeUnit: (unitId) => {
+        const { party } = get();
+        const idx = party.findIndex(u => u.id === unitId);
+        if (idx === -1) return;
 
-        if (action.behavior === 'ATTACK') {
-            const damage = action.value || 5;
-            get().resolveDamage('player', damage);
-            logEntry = `Enemy attacks for ${damage} damage!`;
-        }
-
-        set({
-            phase: CombatPhase.PLAYER_INPUT,
-            turn: get().turn + 1,
-            combatLog: [...combatLog, logEntry],
-        });
-
-        // Reset recharge flag at start of new player turn
-        get().resetRechargeFlag();
-
-        // Check loss condition
-        if (get().player.currentHealth <= 0) {
-            set({ phase: CombatPhase.DEFEAT, combatLog: [...get().combatLog, 'Defeat!'] });
-        }
+        const newParty = [...party];
+        newParty[idx].currentEnergy = newParty[idx].maxEnergy;
+        set({ party: newParty, combatLog: [...get().combatLog, `${newParty[idx].name} recharged!`] });
     },
 
-    resolveDamage: (target, amount) => {
-        set((state) => {
-            const entity = target === 'player' ? state.player : state.enemy;
-            let damage = amount;
-            let newShield = entity.currentShield;
+    endPlayerTurn: () => {
+        set({ phase: CombatPhase.ENEMY_TURN });
+        setTimeout(() => get().processEnemyTurn(), 1000);
+    },
 
-            if (newShield > 0) {
-                if (newShield >= damage) {
-                    newShield -= damage;
+    processEnemyTurn: () => {
+        const { enemies, party } = get();
+        const activeEnemies = enemies.filter(e => !e.isDead);
+
+        if (activeEnemies.length === 0) return; // Should be victory already
+
+        // Simple AI: All enemies attack random party member
+        let newParty = [...party];
+        const logs: string[] = [];
+
+        activeEnemies.forEach(enemy => {
+            const livingTargets = newParty.filter(p => !p.isDead);
+            if (livingTargets.length === 0) return;
+
+            const targetIdx = Math.floor(Math.random() * livingTargets.length);
+            const actualTargetIndex = newParty.findIndex(p => p.id === livingTargets[targetIdx].id);
+            const target = newParty[actualTargetIndex];
+
+            // Calc Damage vs Shield
+            let damage = enemy.maxHealth > 0 ? 10 : 5; // Simplified damage based on generic
+            // Or fetch from data if we stored damage on instance. We didn't store damage on CombatUnit, oops.
+            // Let's assume generic damage for now or fetch from ENEMY_CV via templateId if needed.
+            // Actually I'll just use a constant for simplicity in this MVP step.
+            damage = 8;
+
+            if (target.currentShield > 0) {
+                if (target.currentShield >= damage) {
+                    target.currentShield -= damage;
                     damage = 0;
                 } else {
-                    damage -= newShield;
-                    newShield = 0;
+                    damage -= target.currentShield;
+                    target.currentShield = 0;
                 }
             }
 
-            const newHealth = Math.max(0, entity.currentHealth - damage);
+            target.currentHealth = Math.max(0, target.currentHealth - damage);
+            if (target.currentHealth === 0) target.isDead = true;
 
-            return {
-                [target]: {
-                    ...entity,
-                    currentShield: newShield,
-                    currentHealth: newHealth,
-                },
-                lastDamageEvent: {
-                    target,
-                    amount,
-                    timestamp: Date.now(),
-                },
-            };
+            logs.push(`${enemy.name} attacked ${target.name} for ${damage} damage!`);
         });
-    },
 
-    nextTurn: () => set((state) => ({ turn: state.turn + 1 })),
+        set(state => ({
+            party: newParty,
+            phase: CombatPhase.PLAYER_TURN,
+            turnCount: state.turnCount + 1,
+            combatLog: [...state.combatLog, ...logs]
+        }));
+
+        if (newParty.every(p => p.isDead)) {
+            set({ phase: CombatPhase.DEFEAT, combatLog: [...get().combatLog, 'Party Defeated...'] });
+        }
+    }
 }));
-
-// Expose store for testing
-if (typeof window !== 'undefined') {
-    (window as any).__COMBAT_STORE__ = useCombatStore;
-}

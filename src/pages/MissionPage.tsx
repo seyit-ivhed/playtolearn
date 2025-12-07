@@ -1,131 +1,107 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useMissionStore } from '../stores/mission.store';
-import { MISSIONS } from '../data/missions.data';
-import { MissionNode } from '../components/Mission/MissionNode';
-import { MissionInfoModal } from '../components/Mission/MissionInfoModal';
-import { useMissionNavigation } from '../hooks/useMissionNavigation';
-import type { Mission } from '../types/mission.types';
-import styles from './MissionPage.module.css';
+import { useNavigate } from 'react-router-dom';
+import { useGameStore } from '../stores/game.store';
+import { useCombatStore } from '../stores/combat.store';
 
-export default function MissionPage() {
-    const { t } = useTranslation();
-    const { getMissionStatus } = useMissionStore();
-    const { navigateToCombat } = useMissionNavigation();
-    const [selectedMission, setSelectedMission] = useState<Mission | null>(null);
+// We can put the Map SVG component here for now or separate it
+const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
+    const nodes = [
+        { id: 1, x: 100, y: 300, label: 'Start' },
+        { id: 2, x: 250, y: 150, label: 'Forest' },
+        { id: 3, x: 450, y: 200, label: 'River' },
+        { id: 4, x: 600, y: 100, label: 'Cave' },
+        { id: 5, x: 800, y: 250, label: 'Boss' }
+    ];
 
-    // Define positions for each mission on the map (relative to 1000x600 container)
-    const MISSION_POSITIONS: Record<string, { x: number; y: number }> = {
-        '1': { x: 150, y: 500 },
-        '2': { x: 350, y: 400 },
-        '3': { x: 550, y: 250 },
-        '4': { x: 750, y: 350 },
-        '5': { x: 900, y: 150 },
-    };
+    const navigate = useNavigate();
+    const { activeParty: party } = useGameStore();
+    const { initializeCombat } = useCombatStore();
 
-    const handleMissionClick = (mission: Mission) => {
-        const status = getMissionStatus(mission.id);
-        // Only allow clicking on available or completed missions (not locked)
-        if (status !== 'LOCKED') {
-            setSelectedMission(mission);
+    const handleNodeClick = (nodeId: number) => {
+        if (nodeId === currentNode) {
+            // Start Encounter
+            // Simple mock enemy selection based on node
+            const enemies = nodeId === 5 ? ['stone_golem'] : ['goblin_scout', 'goblin_scout'];
+            initializeCombat(party, enemies);
+            navigate('/encounter');
         }
     };
-
-    const handleStartMission = () => {
-        if (selectedMission) {
-            navigateToCombat(selectedMission.id);
-        }
-    };
-
-    const handleCloseModal = () => {
-        setSelectedMission(null);
-    };
-
-    // Calculate connections lines
-    const connections = MISSIONS.flatMap((mission) => {
-        if (!mission.requirements?.previousMissionId) return [];
-
-        const startPos = MISSION_POSITIONS[mission.requirements.previousMissionId];
-        const endPos = MISSION_POSITIONS[mission.id];
-
-        if (!startPos || !endPos) return [];
-
-        const status = getMissionStatus(mission.id);
-        const isLocked = status === 'LOCKED';
-
-        return [{
-            id: `${mission.requirements.previousMissionId}-${mission.id}`,
-            x1: startPos.x,
-            y1: startPos.y,
-            x2: endPos.x,
-            y2: endPos.y,
-            isLocked
-        }];
-    });
 
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <h2>{t('mission_select')}</h2>
-                <Link to="/party-camp" className={styles.partyCampButton} data-testid="party-camp-btn">
-                    <span className={styles.partyCampIcon}>🏕️</span>
-                    {t('party_camp')}
-                </Link>
-            </div>
+        <div className="relative w-full h-[500px] bg-[var(--color-bg-secondary)] rounded-3xl shadow-inner border-4 border-[var(--color-bg-tertiary)] overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute inset-0 opacity-10 bg-[url('/bg-map-pattern.png')]"></div>
 
-            <div className={styles.mapContainer}>
-                <div className={styles.mapContent}>
-                    <svg className={styles.connections}>
-                        <defs>
-                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stopColor="rgba(0, 217, 255, 0.2)" />
-                                <stop offset="100%" stopColor="rgba(0, 217, 255, 0.6)" />
-                            </linearGradient>
-                        </defs>
-                        {connections.map((conn) => (
-                            <line
-                                key={conn.id}
-                                x1={conn.x1}
-                                y1={conn.y1}
-                                x2={conn.x2}
-                                y2={conn.y2}
-                                stroke={conn.isLocked ? "rgba(255, 255, 255, 0.1)" : "url(#lineGradient)"}
-                                strokeWidth="2"
-                                strokeDasharray={conn.isLocked ? "5,5" : "none"}
-                            />
-                        ))}
-                    </svg>
-
-                    {MISSIONS.map((mission) => {
-                        const status = getMissionStatus(mission.id);
-                        const pos = MISSION_POSITIONS[mission.id] || { x: 0, y: 0 };
-
-                        return (
-                            <div
-                                key={mission.id}
-                                className={styles.missionNodeWrapper}
-                                style={{ left: pos.x, top: pos.y }}
-                            >
-                                <MissionNode
-                                    id={mission.id}
-                                    status={status}
-                                    title={mission.title}
-                                    onClick={() => handleMissionClick(mission)}
-                                />
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-
-            {selectedMission && (
-                <MissionInfoModal
-                    mission={selectedMission}
-                    onStart={handleStartMission}
-                    onClose={handleCloseModal}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                {/* Winding Path */}
+                <path
+                    d="M 100 300 C 150 200, 200 150, 250 150 S 350 250, 450 200 S 550 50, 600 100 S 700 300, 800 250"
+                    fill="none"
+                    stroke="rgba(0,0,0,0.1)"
+                    strokeWidth="12"
+                    strokeLinecap="round"
+                    strokeDasharray="10 15"
                 />
-            )}
+            </svg>
+
+            {nodes.map((node) => {
+                const isCompleted = node.id < currentNode;
+                const isCurrent = node.id === currentNode;
+                const isLocked = node.id > currentNode;
+
+                let statusClass = "bg-gray-400 cursor-not-allowed";
+                if (isCurrent) statusClass = "bg-[var(--color-brand-accent)] cursor-pointer animate-bounce";
+                if (isCompleted) statusClass = "bg-[var(--color-success)] cursor-pointer";
+
+                return (
+                    <div
+                        key={node.id}
+                        className={`absolute flex flex-col items-center justify-center transform -translate-x-1/2 -translate-y-1/2 transition-all hover:scale-110`}
+                        style={{ left: node.x, top: node.y }}
+                        onClick={() => !isLocked && handleNodeClick(node.id)}
+                    >
+                        {/* Node Circle */}
+                        <div className={`w-16 h-16 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-2xl font-bold text-white z-10 ${statusClass}`} data-testid={`map-node-${node.id}`}>
+                            {isCompleted ? '✓' : node.id}
+                        </div>
+
+                        {/* Label */}
+                        <div className="mt-2 bg-[var(--color-bg-primary)] px-3 py-1 rounded-full text-sm font-bold shadow-sm border border-[var(--color-bg-tertiary)]">
+                            {node.label}
+                        </div>
+                    </div>
+                );
+            })}
         </div>
     );
-}
+};
+
+const MapPage = () => {
+    const navigate = useNavigate();
+    const { currentMapNode } = useGameStore();
+
+    return (
+        <div className="flex flex-col h-full p-4 gap-4">
+            {/* Header */}
+            <header className="flex justify-between items-center bg-[var(--color-bg-primary)] p-4 rounded-xl shadow-sm border-b-4 border-[var(--color-bg-tertiary)]">
+                <div>
+                    <h1 className="text-3xl m-0" data-testid="map-title">Adventure Map</h1>
+                    <p className="text-[var(--color-text-secondary)]">Level {currentMapNode} - The Journey Begins</p>
+                </div>
+                <button
+                    onClick={() => navigate('/camp')}
+                    className="flex items-center gap-2 bg-[var(--color-brand-secondary)]"
+                    data-testid="nav-camp-btn"
+                >
+                    ⛺ Go to Camp
+                </button>
+            </header>
+
+            {/* Main Map Area */}
+            <main className="flex-1 flex items-center justify-center">
+                <FantasyMapPath currentNode={currentMapNode} />
+            </main>
+        </div>
+    );
+};
+
+export default MapPage;

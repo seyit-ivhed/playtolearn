@@ -1,56 +1,46 @@
 export const CombatPhase = {
-    PLAYER_INPUT: 'PLAYER_INPUT',
-    MATH_CHALLENGE: 'MATH_CHALLENGE',
-    PLAYER_ACTION: 'PLAYER_ACTION',
-    ENEMY_ACTION: 'ENEMY_ACTION',
+    INIT: 'INIT',
+    PLAYER_TURN: 'PLAYER_TURN',
+    ENEMY_TURN: 'ENEMY_TURN',
     VICTORY: 'VICTORY',
-    DEFEAT: 'DEFEAT',
+    DEFEAT: 'DEFEAT'
 } as const;
 
 export type CombatPhase = typeof CombatPhase[keyof typeof CombatPhase];
 
-export type CombatActionType = 'attack' | 'defend' | 'special';
-
-// Runtime instance of a companion in combat
-export interface CompanionInstance {
-    companionId: string; // Reference to Companion
-    slotId: string; // Which slot it's equipped in
-    currentEnergy: number;
-    maxEnergy: number;
-    combatAction: string; // Will be CombatActionBehavior value
-}
-
-export interface CombatAction {
-    companionId: string; // Which companion is performing the action
-    behavior: string; // CombatActionBehavior - what action this performs
-    value?: number; // e.g., damage amount, shield amount
-}
-
-export interface CompanionState {
-    currentEnergy: number;
-    maxEnergy: number;
-}
-
-export interface CombatEntity {
-    id: string;
+export interface CombatUnit {
+    id: string; // Unique Instance ID
+    templateId: string; // Reference to Companion/Enemy ID
     name: string;
+    isPlayer: boolean;
+
+    // Stats
     maxHealth: number;
     currentHealth: number;
+    maxEnergy: number; // 0 for enemies usually
+    currentEnergy: number;
     maxShield: number;
     currentShield: number;
-    equippedCompanions: CompanionInstance[]; // Dynamic array of equipped companions
-    companions: { // Legacy - kept for backward compatibility during migration
-        attack: CompanionState;
-        defend: CompanionState;
-        special: CompanionState;
-    };
-    sprite?: string; // Path to sprite image
+
+    // Visuals
+    icon: string;
+    color: string;
+
+    // State
+    isDead: boolean;
 }
 
 export interface CombatState {
     phase: CombatPhase;
-    turn: number;
-    player: CombatEntity;
-    enemy: CombatEntity;
+    turnCount: number;
+
+    // Units
+    party: CombatUnit[];
+    enemies: CombatUnit[];
+
+    // Selection
+    selectedUnitId: string | null;
+
+    // Logs
     combatLog: string[];
 }

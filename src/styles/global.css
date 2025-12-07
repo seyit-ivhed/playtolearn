@@ -1,77 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  /* Color Palette - Fantasy Realm (Math Quest Adventures) */
-  --color-bg-primary: #1a0b2e;
-  /* Deep Indigo Void */
-  --color-bg-secondary: #2d1b4e;
-  /* Dark Mystic Purple */
-  --color-bg-tertiary: #4a235a;
-  /* Magical Stone/Button Background */
+  /* Color Palette - Cartoon Fantasy */
+  --color-bg-primary: #fdf6e3;
+  /* Parchment / Light Cream */
+  --color-bg-secondary: #e6dac3;
+  /* Darker Parchment / Map BG */
+  --color-bg-tertiary: #d4c5a9;
+  /* Stone / Card BG */
+  --color-bg-overlay: rgba(0, 0, 0, 0.4);
 
-  /* Accent Colors */
-  --color-accent-primary: #ffa502;
-  /* Treasure Gold */
-  --color-accent-secondary: #ff4757;
-  /* Dragon Red (Attack) */
-  --color-accent-tertiary: #a55eea;
-  /* Wizard Purple (Magic) */
-  --color-accent-quaternary: #2ed573;
-  /* Emerald Guard (Defense/Success) */
+  /* Primary Brand Colors */
+  --color-brand-primary: #3498db;
+  /* Hero Blue */
+  --color-brand-secondary: #9b59b6;
+  /* Magic Purple */
+  --color-brand-accent: #f1c40f;
+  /* Gold / Highlight */
 
-  /* UI Colors */
-  --color-ui-success: #2ed573;
-  --color-ui-error: #ff4757;
-  --color-ui-warning: #ffa502;
-  --color-ui-info: #1e90ff;
-  /* Mana Blue */
-  --color-ui-neutral: #a4b0be;
-  /* Silver/Grey */
+  /* Functional Colors */
+  --color-success: #2ecc71;
+  /* Emerald Green */
+  --color-danger: #e74c3c;
+  /* Dragon Red */
+  --color-warning: #e67e22;
+  /* Carrot Orange */
+  --color-info: #34495e;
+  /* Slate */
 
   /* Text Colors */
-  --color-text-primary: #f1f2f6;
-  /* White Mist */
-  --color-text-secondary: #ced6e0;
-  /* Light Grey */
-  --color-text-disabled: #57606f;
-  /* Stone Grey */
-  --color-text-highlight: #ffa502;
-  /* Gold */
+  --color-text-primary: #2c3e50;
+  /* Dark Ink */
+  --color-text-secondary: #7f8c8d;
+  /* Grey Info */
+  --color-text-inverse: #ffffff;
+  /* White Text on Buttons */
+
+  /* UI Tokens */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
 
   /* Typography */
-  --font-primary: 'Fredoka', 'Cinzel', system-ui, sans-serif;
-  /* Friendly & Adventurous */
-  --font-secondary: 'Nunito', system-ui, sans-serif;
-  /* Readable Round */
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Fredoka', 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+  /* Playful Headings */
+  --font-body: 'Nunito', system-ui, sans-serif;
+  /* Readable Body */
 
-  font-family: var(--font-secondary);
-  line-height: 1.6;
+  font-family: var(--font-body);
+  line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
+  color-scheme: light;
+  /* Switched to light mode */
   color: var(--color-text-primary);
   background-color: var(--color-bg-primary);
-  background-image: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
-  min-height: 100vh;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* Font Imports would go here in a real setup, assuming they are loaded via HTML or @import */
-
-a {
-  font-weight: 500;
-  color: var(--color-accent-primary);
-  text-decoration: inherit;
-  transition: color 0.2s;
-}
-
-a:hover {
-  color: #535bf2;
-  /* Fallback/Mix */
-  filter: brightness(1.2);
 }
 
 body {
@@ -81,6 +82,16 @@ body {
   min-width: 320px;
   min-height: 100vh;
   flex-direction: column;
+  background-image: radial-gradient(circle at center, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+}
+
+#root {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -89,56 +100,78 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-primary);
-  line-height: 1.2;
+  font-family: var(--font-display);
+  color: var(--color-text-primary);
   margin-bottom: 0.5em;
+  font-weight: 700;
 }
 
 h1 {
-  font-size: 3.2em;
-  font-weight: 700;
+  font-size: 3rem;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 2.2rem;
+}
+
+h3 {
+  font-size: 1.8rem;
 }
 
 button {
-  border-radius: 12px;
-  border: 2px solid transparent;
-  padding: 0.8em 1.6em;
-  font-size: 1em;
-  font-weight: 700;
-  font-family: var(--font-primary);
-  background-color: var(--color-bg-tertiary);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.8em 1.5em;
+  border-radius: var(--radius-lg);
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  /* Chunky border */
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-inverse);
   cursor: pointer;
-  transition: all 0.25s;
-  color: var(--color-text-primary);
+  transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+  /* Cartoon 3D effect */
+  margin: 4px;
+  /* Space for the 3D effect */
 }
 
 button:hover {
-  border-color: var(--color-accent-primary);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+  filter: brightness(1.1);
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
 }
 
-/* Utility Classes */
-.text-accent {
-  color: var(--color-accent-primary);
+button:disabled {
+  background-color: var(--color-text-secondary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  border-color: transparent;
 }
 
-.text-error {
-  color: var(--color-ui-error);
+/* Card Style */
+.card {
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--color-bg-tertiary);
+  padding: var(--spacing-md);
 }
 
-.text-success {
-  color: var(--color-ui-success);
+/* Link Styles */
+a {
+  color: var(--color-brand-primary);
+  text-decoration: none;
+  font-weight: 700;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  width: 100%;
+a:hover {
+  text-decoration: underline;
 }

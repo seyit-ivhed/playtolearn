@@ -1,41 +1,98 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { PartyManager } from '../components/party/PartyManager';
-import { getAllCompanions } from '../data/companions.data';
-import { PARTY_SLOTS } from '../data/party-slots.data';
-import { usePartyStore } from '../stores/party.store';
-import { useInventoryStore } from '../stores/inventory.store';
-import styles from './PartyCampPage.module.css';
+import { useNavigate } from 'react-router-dom';
+import { useGameStore } from '../stores/game.store';
+import { getCompanionById } from '../data/companions.data';
 
-export default function PartyCampPage() {
-    const { t } = useTranslation();
+const MAX_PARTY_SIZE = 4;
 
-    // Store hooks
-    const { composition, addCompanion, removeCompanion } = usePartyStore();
-    const { unlockedCompanions } = useInventoryStore();
+const PartyCampPage = () => {
+    const navigate = useNavigate();
+    const { unlockedCompanions, activeParty, addToParty, removeFromParty } = useGameStore();
 
-    // Derived state
-    const slots = PARTY_SLOTS.map(slot => ({
-        ...slot,
-        equippedCompanionId: composition[slot.id] || null
-    }));
-
-    const availableCompanions = getAllCompanions();
+    // Helper to get remaining slots
+    const slots = Array(4).fill(null).map((_, i) => activeParty[i] || null);
 
     return (
-        <div className={styles.page}>
-            <div className={styles.header}>
-                <h1>{t('party_camp')}</h1>
-                <Link to="/" className={styles.backLink}>{t('mission_select')}</Link>
-            </div>
+        <div className="flex flex-col h-full p-4 gap-4 bg-[url('/camp-bg-pattern.png')] bg-cover">
+            {/* Header */}
+            <header className="flex justify-between items-center bg-[var(--color-bg-primary)] p-4 rounded-xl shadow-md border-b-4 border-[var(--color-bg-tertiary)]">
+                <div>
+                    <h1 className="text-3xl m-0" data-testid="camp-title">Fellowship Camp</h1>
+                    <p className="text-[var(--color-text-secondary)]">Gather your heroes around the fire</p>
+                </div>
+                <button
+                    onClick={() => navigate('/map')}
+                    className="flex items-center gap-2"
+                    data-testid="nav-map-btn"
+                >
+                    🗺️ Return to Map
+                </button>
+            </header>
 
-            <PartyManager
-                slots={slots}
-                availableCompanions={availableCompanions}
-                unlockedCompanions={unlockedCompanions}
-                onAddCompanion={addCompanion}
-                onRemoveCompanion={removeCompanion}
-            />
+            <div className="flex gap-4 flex-1 overflow-hidden">
+                {/* Left: Active Party (Campfire) */}
+                <section className="flex-[2] flex flex-col gap-4 bg-[var(--color-bg-primary)] p-6 rounded-2xl shadow-xl border-2 border-[var(--color-bg-tertiary)] bg-[url('/campfire-bg.png')] bg-no-repeat bg-bottom">
+                    <h2 className="text-2xl text-center mb-4">Your Party ({activeParty.length}/{MAX_PARTY_SIZE})</h2>
+
+                    <div className="grid grid-cols-2 gap-4 flex-1">
+                        {slots.map((companionId, idx) => {
+                            if (!companionId) {
+                                return (
+                                    <div key={`empty-${idx}`} className="border-4 border-dashed border-[var(--color-bg-tertiary)] rounded-xl flex items-center justify-center bg-[rgba(0,0,0,0.05)]" data-testid="empty-slot">
+                                        <div className="text-[var(--color-text-secondary)] font-bold">Empty Slot</div>
+                                    </div>
+                                );
+                            }
+
+                            const data = getCompanionById(companionId);
+                            return (
+                                <div key={companionId} className="relative group card flex flex-col items-center justify-center gap-2 hover:border-[var(--color-danger)] cursor-pointer transition-all" onClick={() => removeFromParty(companionId)} data-testid={`party-card-${companionId}`}>
+                                    <div className="text-4xl">{data.icon}</div>
+                                    <div className="font-bold text-lg">{data.name}</div>
+                                    <div className="text-xs px-2 py-1 rounded bg-gray-200">{data.role}</div>
+
+                                    <div className="absolute inset-0 bg-[var(--color-danger)] opacity-0 group-hover:opacity-20 rounded-xl transition-opacity" />
+                                    <div className="absolute top-2 right-2 text-[var(--color-danger)] opacity-0 group-hover:opacity-100 font-bold">✕ Remove</div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </section>
+
+                {/* Right: Roster (Guild Hall) */}
+                <section className="flex-1 flex flex-col gap-4 bg-[var(--color-bg-secondary)] p-6 rounded-2xl shadow-inner border-2 border-[var(--color-bg-tertiary)] overflow-y-auto">
+                    <h2 className="text-xl text-center sticky top-0 bg-[var(--color-bg-secondary)] pb-2 border-b-2 border-gray-300">Roster</h2>
+
+                    <div className="flex flex-col gap-3">
+                        {unlockedCompanions.map(id => {
+                            const inParty = activeParty.includes(id);
+                            const data = getCompanionById(id);
+
+                            return (
+                                <div
+                                    key={id}
+                                    className={`
+                                        flex items-center gap-3 p-3 rounded-xl border-2 transition-all select-none
+                                        ${inParty
+                                            ? 'opacity-50 border-transparent bg-gray-200 cursor-not-allowed'
+                                            : 'bg-white border-[var(--color-bg-tertiary)] hover:border-[var(--color-brand-primary)] cursor-pointer shadow-sm hover:translate-x-1'
+                                        }
+                                    `}
+                                    onClick={() => !inParty && addToParty(id)}
+                                >
+                                    <div className="text-3xl bg-gray-100 p-2 rounded-full">{data.icon}</div>
+                                    <div className="flex-1">
+                                        <div className="font-bold">{data.name}</div>
+                                        <div className="text-xs text-[var(--color-text-secondary)]">{data.role}</div>
+                                    </div>
+                                    {inParty && <div className="text-xs font-bold text-green-600">In Party</div>}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </section>
+            </div>
         </div>
     );
-}
+};
+
+export default PartyCampPage;
