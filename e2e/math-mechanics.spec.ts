@@ -36,14 +36,13 @@ test.describe('Math Mechanics Flow', () => {
             }
         });
 
-        // Verify Recharge Button Visible
-        const rechargeBtn = page.getByTestId('action-btn-recharge-test-unit-1');
-        await expect(rechargeBtn).toBeVisible();
-        await expect(rechargeBtn).toBeEnabled();
+        // Verify Recharge Button Visible (Now it's the card itself that is clickable)
+        const unitCard = page.getByTestId('unit-card-test-unit-1');
+        await expect(unitCard).toBeVisible();
 
         // FAIL FLOW
-        // 1. Click Recharge
-        await rechargeBtn.click();
+        // 1. Click Card (Triggers Recharge because Energy is 0)
+        await unitCard.click({ force: true });
 
         // 2. Click Wrong Answer (Math Modal)
         // Note: Modal uses inputs. We need to find a wrong answer.
@@ -85,9 +84,10 @@ test.describe('Math Mechanics Flow', () => {
             }
         });
 
-        // Verify Special Button Checks
-        const specialBtn = page.getByText(/UNLEASH ULTIMA/i);
-        await expect(specialBtn).toBeVisible();
+        // Verify Special Button Checks (Now Part of Party Spirit Meter)
+        // Only checking if text is present as the button is now the bar itself
+        const specialTrigger = page.getByText(/UNLEASH ULTIMATE/i);
+        await expect(specialTrigger).toBeVisible();
 
         // Note: We won't click it to avoid dealing with the modal logic again, just confirming the trigger works.
     });

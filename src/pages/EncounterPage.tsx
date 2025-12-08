@@ -2,140 +2,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCombatStore } from '../stores/combat.store';
 import { useGameStore } from '../stores/game.store';
-import { type CombatUnit, CombatPhase } from '../types/combat.types';
-import { getCompanionById } from '../data/companions.data';
+import { CombatPhase } from '../types/combat.types';
 import MathChallengeModal from '../components/MathChallengeModal';
 import { generateProblem } from '../utils/math-generator';
 import { MathOperation, type MathProblem } from '../types/math.types';
 import { useState } from 'react';
-
-const UnitCard = ({ unit, phase, onAct, onRecharge }: {
-    unit: CombatUnit,
-    phase: CombatPhase,
-    onAct?: () => void,
-    onRecharge?: () => void
-}) => {
-    const isMonster = !unit.isPlayer;
-    const healthPercent = (unit.currentHealth / unit.maxHealth) * 100;
-
-    // Companion Data
-    const companionData = !isMonster ? getCompanionById(unit.templateId) : null;
-    const canAct = !unit.hasActed && !unit.isDead && phase === CombatPhase.PLAYER_TURN;
-
-    return (
-        <div
-            className={`
-                relative w-56 p-4 rounded-2xl border-4 transition-all flex flex-col gap-2
-                ${unit.isDead ? 'opacity-50 grayscale' : 'opacity-100'}
-                ${unit.hasActed && !unit.isDead ? 'opacity-70 saturate-50 scale-95 border-gray-400' : 'border-[var(--color-bg-tertiary)] bg-white shadow-lg'}
-                ${!isMonster && !unit.hasActed ? 'hover:scale-105 hover:z-10' : ''}
-            `}
-            data-testid={`unit-card-${unit.templateId}`}
-        >
-            {/* Acted Status Overlay */}
-            {unit.hasActed && !unit.isDead && (
-                <div className="absolute top-2 right-2 z-20 bg-gray-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                    DONE
-                </div>
-            )}
-
-            {/* Health Bar */}
-            <div className="absolute -top-3 left-4 right-4 h-4 bg-gray-700 rounded-full overflow-hidden border-2 border-white shadow-sm z-20">
-                <div
-                    className={`h-full transition-all duration-500 ${isMonster ? 'bg-[var(--color-danger)]' : 'bg-[var(--color-success)]'}`}
-                    style={{ width: `${healthPercent}%` }}
-                />
-            </div>
-
-            {/* Shield Overlay */}
-            {unit.currentShield > 0 && (
-                <div className="absolute -top-5 -right-2 bg-blue-500 text-white font-bold text-xs px-2 py-0.5 rounded-full border border-white z-20">
-                    🛡️ {unit.currentShield}
-                </div>
-            )}
-
-            {/* Image / Icon */}
-            <div className="flex justify-center mt-2 mb-1">
-                {!isMonster && companionData ? (
-                    <img
-                        src={companionData.image}
-                        alt={unit.name}
-                        className="w-24 h-24 object-cover rounded-full border-4 border-white shadow-md"
-                    />
-                ) : (
-                    <div className="text-6xl my-4 text-center">{unit.icon}</div>
-                )}
-            </div>
-
-            {/* Content Container */}
-            <div className="flex flex-col items-center text-center gap-1">
-                <div className="font-black text-lg leading-tight text-[var(--color-text-primary)]">
-                    {unit.name}
-                </div>
-
-                {/* Description (Player Only) */}
-                {!isMonster && companionData && (
-                    <div className="text-xs text-[var(--color-text-secondary)] italic line-clamp-2 h-8 leading-tight">
-                        {companionData.description}
-                    </div>
-                )}
-            </div>
-
-            {/* Player Actions */}
-            {!isMonster && companionData && (
-                <div className="mt-2 flex flex-col gap-2">
-                    {/* Energy Pips */}
-                    <div className="flex justify-center gap-1 mb-1">
-                        {Array(unit.maxEnergy).fill(0).map((_, i) => (
-                            <div
-                                key={i}
-                                className={`w-3 h-3 rounded-full border border-gray-400 ${i < unit.currentEnergy ? 'bg-yellow-400 shadow-[0_0_5px_rgba(250,204,21,0.8)]' : 'bg-gray-200'}`}
-                            />
-                        ))}
-                    </div>
-
-                    {/* Action Button (Merged) */}
-                    <div className="flex justify-center">
-                        {unit.currentEnergy > 0 ? (
-                            // Ability Button
-                            <button
-                                onClick={(e) => { e.stopPropagation(); onAct?.(); }}
-                                disabled={!canAct}
-                                className={`
-                                    w-full flex flex-col items-center justify-center py-2 px-1 rounded-lg border-2 transition-all
-                                    ${canAct
-                                        ? 'bg-[var(--color-brand-primary)] border-[var(--color-brand-accent)] text-white cursor-pointer hover:brightness-110 active:scale-95'
-                                        : 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'}
-                                `}
-                                title={companionData.abilityDescription}
-                                data-testid={`action-btn-ability-${unit.id}`}
-                            >
-                                <span className="text-xs font-bold uppercase tracking-wider">{companionData.abilityName}</span>
-                                <span className="text-[10px] opacity-80">1 Energy</span>
-                            </button>
-                        ) : (
-                            // Recharge Button
-                            <button
-                                onClick={(e) => { e.stopPropagation(); onRecharge?.(); }}
-                                disabled={!canAct || unit.rechargeFailed}
-                                className={`
-                                    w-full flex flex-col items-center justify-center py-2 px-1 rounded-lg border-2 transition-all
-                                    ${canAct && !unit.rechargeFailed
-                                        ? 'bg-[var(--color-warning)] border-yellow-600 text-white cursor-pointer hover:brightness-110 active:scale-95 animate-pulse'
-                                        : 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'}
-                                `}
-                                data-testid={`action-btn-recharge-${unit.id}`}
-                            >
-                                <span className="text-xs font-bold uppercase tracking-wider">Recharge</span>
-                                <span className="text-[10px] opacity-80">Ends Turn</span>
-                            </button>
-                        )}
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-};
+import { UnitCard } from '../components/combat/UnitCard';
 
 const EncounterPage = () => {
     const navigate = useNavigate();
@@ -165,6 +37,8 @@ const EncounterPage = () => {
     };
 
     const startSpecialAttack = () => {
+        if (specialMeter < 100 || phase !== CombatPhase.PLAYER_TURN) return;
+
         // Generate a HARD problem
         const ops = [MathOperation.MULTIPLY, MathOperation.DIVIDE, MathOperation.ADD];
         const op = ops[Math.floor(Math.random() * ops.length)];
@@ -235,40 +109,12 @@ const EncounterPage = () => {
                     </div>
                 </div>
 
-                {/* Spacer for centering logic if needed, or maybe specific HUD element */}
+                {/* Empty Spacer */}
                 <div className="w-24"></div>
             </div>
 
-            {/* Special Meter HUD (Bottom Center) */}
-            <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center justify-center z-40 pointer-events-none">
-                <div className="relative w-96 h-8 bg-gray-900/80 rounded-full border-2 border-yellow-500/50 overflow-hidden backdrop-blur-sm pointer-events-auto">
-                    {/* Bar */}
-                    <div
-                        className={`h-full transition-all duration-700 ease-out bg-gradient-to-r from-yellow-600 via-yellow-400 to-white ${specialMeter >= 100 ? 'animate-pulse' : ''}`}
-                        style={{ width: `${specialMeter}%` }}
-                    />
-
-                    {/* Text Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center font-black text-white text-sm uppercase tracking-widest shadow-black drop-shadow-md">
-                        Party Spirit {Math.floor(specialMeter)}%
-                    </div>
-                </div>
-
-                {/* LIMIT BREAK BUTTON */}
-                <div className="h-16 mt-2 flex items-center justify-center pointer-events-auto">
-                    {specialMeter >= 100 && phase === CombatPhase.PLAYER_TURN && (
-                        <button
-                            onClick={startSpecialAttack}
-                            className="bg-gradient-to-t from-purple-700 to-purple-500 text-white font-black text-xl py-3 px-12 rounded-xl shadow-[0_0_20px_rgba(168,85,247,0.8)] border-4 border-purple-300 animate-bounce hover:scale-110 transition-transform"
-                        >
-                            🚀 UNLEASH ULTIMA! 🚀
-                        </button>
-                    )}
-                </div>
-            </div>
-
             {/* Battlefield */}
-            <div className="flex-1 flex items-center justify-center gap-16 px-12 z-0 pb-12">
+            <div className="flex-1 flex items-center justify-center gap-16 px-12 z-0 pb-24 pt-12">
                 {/* Party Grid */}
                 <div className="grid grid-cols-2 gap-8 items-center justify-items-center">
                     {party.map(unit => (
@@ -284,10 +130,10 @@ const EncounterPage = () => {
                 </div>
 
                 {/* VS Indicator */}
-                <div className="flex flex-col items-center justify-center opacity-80 mix-blend-overlay">
-                    <div className="h-32 w-1 bg-white/30 rounded-full mb-4"></div>
+                <div className="flex flex-col items-center justify-center opacity-40 mix-blend-overlay pointer-events-none">
+                    <div className="h-32 w-1 bg-white/50 rounded-full mb-4"></div>
                     <span className="text-4xl font-black text-white italic">VS</span>
-                    <div className="h-32 w-1 bg-white/30 rounded-full mt-4"></div>
+                    <div className="h-32 w-1 bg-white/50 rounded-full mt-4"></div>
                 </div>
 
                 {/* Monsters Grid */}
@@ -296,9 +142,43 @@ const EncounterPage = () => {
                         <UnitCard
                             key={unit.id}
                             unit={unit}
-                            phase={phase} // Pass phase to monster too, though functionality logic is restricted inside
+                            phase={phase}
                         />
                     ))}
+                </div>
+            </div>
+
+            {/* Bottom HUD: Party Spirit Meter (Now Interactive) */}
+            <div className="absolute bottom-6 left-0 right-0 flex justify-center z-40">
+                <div
+                    className={`
+                        relative w-[500px] h-14 bg-gray-900/90 rounded-full border-4 overflow-hidden backdrop-blur-md transition-all duration-300
+                        ${specialMeter >= 100 && phase === CombatPhase.PLAYER_TURN
+                            ? 'border-[var(--color-brand-secondary)] cursor-pointer hover:scale-105 shadow-[0_0_30px_rgba(168,85,247,0.6)] animate-pulse'
+                            : 'border-gray-600 cursor-default'}
+                    `}
+                    onClick={startSpecialAttack}
+                    title={specialMeter >= 100 ? "Click to Activate Ultimate!" : `${Math.floor(specialMeter)}% Spirit`}
+                >
+                    {/* Background Bar */}
+                    <div
+                        className={`h-full transition-all duration-700 ease-out flex items-center justify-start overflow-hidden
+                            ${specialMeter >= 100 ? 'bg-gradient-to-r from-purple-800 via-purple-600 to-fuchsia-500' : 'bg-gradient-to-r from-yellow-700 to-yellow-500'}
+                        `}
+                        style={{ width: `${specialMeter}%` }}
+                    >
+                        {/* Sparkle effect when full */}
+                        {specialMeter >= 100 && (
+                            <div className="w-full h-full animate-shimmer bg-white/20" />
+                        )}
+                    </div>
+
+                    {/* Text Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <span className={`text-xl font-black uppercase tracking-[0.2em] drop-shadow-lg ${specialMeter >= 100 ? 'text-white' : 'text-gray-200'}`}>
+                            {specialMeter >= 100 ? "✨ UNLEASH ULTIMATE ✨" : `Party Spirit ${Math.floor(specialMeter)}%`}
+                        </span>
+                    </div>
                 </div>
             </div>
 
