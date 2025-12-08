@@ -90,40 +90,42 @@ const UnitCard = ({ unit, phase, onAct, onRecharge }: {
                         ))}
                     </div>
 
-                    {/* Action Buttons */}
-                    <div className="grid grid-cols-2 gap-2">
-                        {/* Ability Button */}
-                        <button
-                            onClick={(e) => { e.stopPropagation(); onAct?.(); }}
-                            disabled={!canAct || unit.currentEnergy <= 0}
-                            className={`
-                                flex flex-col items-center justify-center py-2 px-1 rounded-lg border-2
-                                ${canAct && unit.currentEnergy > 0
-                                    ? 'bg-[var(--color-brand-primary)] border-[var(--color-brand-accent)] text-white cursor-pointer hover:brightness-110 active:scale-95'
-                                    : 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'}
-                            `}
-                            title={companionData.abilityDescription}
-                            data-testid={`action-btn-ability-${unit.id}`}
-                        >
-                            <span className="text-xs font-bold uppercase tracking-wider">{companionData.abilityName}</span>
-                            <span className="text-[10px] opacity-80">1 Energy</span>
-                        </button>
-
-                        {/* Recharge Button */}
-                        <button
-                            onClick={(e) => { e.stopPropagation(); onRecharge?.(); }}
-                            disabled={!canAct} // Can always recharge if it's their turn and they haven't acted? Or only if energy < max? Assuming always allowed if hasActed is false.
-                            className={`
-                                flex flex-col items-center justify-center py-2 px-1 rounded-lg border-2
-                                ${canAct
-                                    ? 'bg-[var(--color-warning)] border-yellow-600 text-white cursor-pointer hover:brightness-110 active:scale-95'
-                                    : 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'}
-                            `}
-                            data-testid={`action-btn-recharge-${unit.id}`}
-                        >
-                            <span className="text-xs font-bold uppercase tracking-wider">Recharge</span>
-                            <span className="text-[10px] opacity-80">Ends Turn</span>
-                        </button>
+                    {/* Action Button (Merged) */}
+                    <div className="flex justify-center">
+                        {unit.currentEnergy > 0 ? (
+                            // Ability Button
+                            <button
+                                onClick={(e) => { e.stopPropagation(); onAct?.(); }}
+                                disabled={!canAct}
+                                className={`
+                                    w-full flex flex-col items-center justify-center py-2 px-1 rounded-lg border-2 transition-all
+                                    ${canAct
+                                        ? 'bg-[var(--color-brand-primary)] border-[var(--color-brand-accent)] text-white cursor-pointer hover:brightness-110 active:scale-95'
+                                        : 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'}
+                                `}
+                                title={companionData.abilityDescription}
+                                data-testid={`action-btn-ability-${unit.id}`}
+                            >
+                                <span className="text-xs font-bold uppercase tracking-wider">{companionData.abilityName}</span>
+                                <span className="text-[10px] opacity-80">1 Energy</span>
+                            </button>
+                        ) : (
+                            // Recharge Button
+                            <button
+                                onClick={(e) => { e.stopPropagation(); onRecharge?.(); }}
+                                disabled={!canAct}
+                                className={`
+                                    w-full flex flex-col items-center justify-center py-2 px-1 rounded-lg border-2 transition-all
+                                    ${canAct
+                                        ? 'bg-[var(--color-warning)] border-yellow-600 text-white cursor-pointer hover:brightness-110 active:scale-95 animate-pulse'
+                                        : 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'}
+                                `}
+                                data-testid={`action-btn-recharge-${unit.id}`}
+                            >
+                                <span className="text-xs font-bold uppercase tracking-wider">Recharge</span>
+                                <span className="text-[10px] opacity-80">Ends Turn</span>
+                            </button>
+                        )}
                     </div>
                 </div>
             )}
