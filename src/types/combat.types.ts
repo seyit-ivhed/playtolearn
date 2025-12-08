@@ -28,6 +28,7 @@ export interface CombatUnit {
 
     // State
     isDead: boolean;
+    hasActed: boolean;
 }
 
 export interface CombatState {

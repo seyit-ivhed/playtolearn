@@ -5,31 +5,38 @@ import { useGameStore } from '../stores/game.store';
 import { type CombatUnit, CombatPhase } from '../types/combat.types';
 import { getCompanionById } from '../data/companions.data';
 
-const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
+const UnitCard = ({ unit, phase, onAct, onRecharge }: {
     unit: CombatUnit,
-    isActive: boolean,
-    onClick?: () => void,
+    phase: CombatPhase,
+    onAct?: () => void,
     onRecharge?: () => void
 }) => {
     const isMonster = !unit.isPlayer;
     const healthPercent = (unit.currentHealth / unit.maxHealth) * 100;
 
-    // Companion Specifics
-    // Base data lookup (if needed later)
-    // const companionData = unit.isPlayer ? getCompanionById(unit.templateId) : null;
+    // Companion Data
+    const companionData = !isMonster ? getCompanionById(unit.templateId) : null;
+    const canAct = !unit.hasActed && !unit.isDead && phase === CombatPhase.PLAYER_TURN;
 
     return (
         <div
             className={`
-                relative w-40 p-3 rounded-xl border-4 transition-all
+                relative w-56 p-4 rounded-2xl border-4 transition-all flex flex-col gap-2
                 ${unit.isDead ? 'opacity-50 grayscale' : 'opacity-100'}
-                ${isActive ? 'scale-110 border-[var(--color-brand-accent)] shadow-[0_0_20px_var(--color-brand-accent)] z-10' : 'border-[var(--color-bg-tertiary)] bg-white'}
-                ${!isMonster && isActive ? 'cursor-pointer' : ''}
+                ${unit.hasActed && !unit.isDead ? 'opacity-70 saturate-50 scale-95 border-gray-400' : 'border-[var(--color-bg-tertiary)] bg-white shadow-lg'}
+                ${!isMonster && !unit.hasActed ? 'hover:scale-105 hover:z-10' : ''}
             `}
-            onClick={() => !isMonster && !unit.isDead && onClick?.()}
+            data-testid={`unit-card-${unit.templateId}`}
         >
+            {/* Acted Status Overlay */}
+            {unit.hasActed && !unit.isDead && (
+                <div className="absolute top-2 right-2 z-20 bg-gray-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                    DONE
+                </div>
+            )}
+
             {/* Health Bar */}
-            <div className="absolute -top-4 left-2 right-2 h-4 bg-gray-700 rounded-full overflow-hidden border-2 border-white">
+            <div className="absolute -top-3 left-4 right-4 h-4 bg-gray-700 rounded-full overflow-hidden border-2 border-white shadow-sm z-20">
                 <div
                     className={`h-full transition-all duration-500 ${isMonster ? 'bg-[var(--color-danger)]' : 'bg-[var(--color-success)]'}`}
                     style={{ width: `${healthPercent}%` }}
@@ -38,44 +45,87 @@ const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
 
             {/* Shield Overlay */}
             {unit.currentShield > 0 && (
-                <div className="absolute -top-6 -right-2 bg-blue-500 text-white font-bold text-xs px-2 py-0.5 rounded-full border border-white">
+                <div className="absolute -top-5 -right-2 bg-blue-500 text-white font-bold text-xs px-2 py-0.5 rounded-full border border-white z-20">
                     🛡️ {unit.currentShield}
                 </div>
             )}
 
-            {/* Icon */}
-            {/* Icon/Portrait */}
-            <div className="flex justify-center my-2 h-20 items-center">
-                {!isMonster ? (
-                    <img src={getCompanionById(unit.templateId).image} alt={unit.name} className="w-20 h-20 object-cover rounded-full border-2 border-white shadow-sm" />
+            {/* Image / Icon */}
+            <div className="flex justify-center mt-2 mb-1">
+                {!isMonster && companionData ? (
+                    <img
+                        src={companionData.image}
+                        alt={unit.name}
+                        className="w-24 h-24 object-cover rounded-full border-4 border-white shadow-md"
+                    />
                 ) : (
-                    <div className="text-5xl">{unit.icon}</div>
+                    <div className="text-6xl my-4 text-center">{unit.icon}</div>
                 )}
             </div>
 
-            {/* Name */}
-            <div className="text-center font-bold text-sm truncate">{unit.name}</div>
-
-            {/* Energy (Player Only) */}
-            {!isMonster && (
-                <div className="flex justify-center gap-1 mt-2">
-                    {Array(unit.maxEnergy).fill(0).map((_, i) => (
-                        <div
-                            key={i}
-                            className={`w-3 h-3 rounded-full border border-gray-400 ${i < unit.currentEnergy ? 'bg-yellow-400' : 'bg-gray-200'}`}
-                        />
-                    ))}
+            {/* Content Container */}
+            <div className="flex flex-col items-center text-center gap-1">
+                <div className="font-black text-lg leading-tight text-[var(--color-text-primary)]">
+                    {unit.name}
                 </div>
-            )}
 
-            {/* Recharge Button Overlay */}
-            {!isMonster && unit.currentEnergy === 0 && !unit.isDead && (
-                <button
-                    onClick={(e) => { e.stopPropagation(); onRecharge?.(); }}
-                    className="absolute inset-0 bg-black/60 flex items-center justify-center text-white font-bold rounded-lg hover:bg-black/70 backdrop-blur-sm animate-pulse"
-                >
-                    ⚡ RECHARGE
-                </button>
+                {/* Description (Player Only) */}
+                {!isMonster && companionData && (
+                    <div className="text-xs text-[var(--color-text-secondary)] italic line-clamp-2 h-8 leading-tight">
+                        {companionData.description}
+                    </div>
+                )}
+            </div>
+
+            {/* Player Actions */}
+            {!isMonster && companionData && (
+                <div className="mt-2 flex flex-col gap-2">
+                    {/* Energy Pips */}
+                    <div className="flex justify-center gap-1 mb-1">
+                        {Array(unit.maxEnergy).fill(0).map((_, i) => (
+                            <div
+                                key={i}
+                                className={`w-3 h-3 rounded-full border border-gray-400 ${i < unit.currentEnergy ? 'bg-yellow-400 shadow-[0_0_5px_rgba(250,204,21,0.8)]' : 'bg-gray-200'}`}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="grid grid-cols-2 gap-2">
+                        {/* Ability Button */}
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onAct?.(); }}
+                            disabled={!canAct || unit.currentEnergy <= 0}
+                            className={`
+                                flex flex-col items-center justify-center py-2 px-1 rounded-lg border-2
+                                ${canAct && unit.currentEnergy > 0
+                                    ? 'bg-[var(--color-brand-primary)] border-[var(--color-brand-accent)] text-white cursor-pointer hover:brightness-110 active:scale-95'
+                                    : 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'}
+                            `}
+                            title={companionData.abilityDescription}
+                            data-testid={`action-btn-ability-${unit.id}`}
+                        >
+                            <span className="text-xs font-bold uppercase tracking-wider">{companionData.abilityName}</span>
+                            <span className="text-[10px] opacity-80">1 Energy</span>
+                        </button>
+
+                        {/* Recharge Button */}
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onRecharge?.(); }}
+                            disabled={!canAct} // Can always recharge if it's their turn and they haven't acted? Or only if energy < max? Assuming always allowed if hasActed is false.
+                            className={`
+                                flex flex-col items-center justify-center py-2 px-1 rounded-lg border-2
+                                ${canAct
+                                    ? 'bg-[var(--color-warning)] border-yellow-600 text-white cursor-pointer hover:brightness-110 active:scale-95'
+                                    : 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'}
+                            `}
+                            data-testid={`action-btn-recharge-${unit.id}`}
+                        >
+                            <span className="text-xs font-bold uppercase tracking-wider">Recharge</span>
+                            <span className="text-[10px] opacity-80">Ends Turn</span>
+                        </button>
+                    </div>
+                </div>
             )}
         </div>
     );
@@ -84,19 +134,9 @@ const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
 const EncounterPage = () => {
     const navigate = useNavigate();
     const {
-        phase, party, monsters, combatLog, selectedUnitId,
-        selectUnit, performAction, rechargeUnit, endPlayerTurn
+        phase, party, monsters,
+        performAction, rechargeUnit
     } = useCombatStore();
-
-    const selectedUnit = party.find(u => u.id === selectedUnitId);
-
-    // Auto-select first active unit if none selected
-    useEffect(() => {
-        if (phase === CombatPhase.PLAYER_TURN && !selectedUnitId) {
-            const firstActive = party.find(u => !u.isDead && u.currentEnergy > 0);
-            if (firstActive) selectUnit(firstActive.id);
-        }
-    }, [phase, party, selectedUnitId, selectUnit]);
 
     // Handle Victory/Defeat
     useEffect(() => {
@@ -124,110 +164,62 @@ const EncounterPage = () => {
     return (
         <div className="flex flex-col h-full bg-[url('/combat-bg-forest.png')] bg-cover relative overflow-hidden">
             {/* Top HUD */}
-            <div className="flex justify-between p-4 z-10">
-                <button onClick={handleRetreat} className="bg-gray-500 text-sm py-1 px-3" data-testid="encounter-retreat-btn">🏳️ Retreat</button>
-                <div className="bg-black/50 text-white px-4 py-1 rounded-full font-bold" data-testid="encounter-turn-indicator">
-                    {phase === CombatPhase.PLAYER_TURN ? "YOUR TURN" : (phase === CombatPhase.MONSTER_TURN ? "MONSTER TURN..." : phase)}
+            <div className="absolute top-4 w-full flex justify-between px-8 z-50 pointer-events-none">
+                {/* Retreat (Pointer events enabled) */}
+                <div className="pointer-events-auto">
+                    <button onClick={handleRetreat} className="bg-gray-500 text-white text-sm py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transistion-colors" data-testid="encounter-retreat-btn">
+                        🏳️ Retreat
+                    </button>
                 </div>
+
+                {/* Turn Indicator */}
+                <div className="pointer-events-auto">
+                    <div
+                        className={`
+                            px-8 py-2 rounded-full font-black text-xl shadow-lg border-2 border-white/20 backdrop-blur-md
+                            ${phase === CombatPhase.PLAYER_TURN ? 'bg-indigo-600 text-white animate-bounce-subtle' : 'bg-red-800 text-white'}
+                        `}
+                        data-testid="encounter-turn-indicator"
+                    >
+                        {phase === CombatPhase.PLAYER_TURN ? "YOUR TURN" : (phase === CombatPhase.MONSTER_TURN ? "MONSTER TURN..." : phase)}
+                    </div>
+                </div>
+
+                {/* Spacer for centering logic if needed, or maybe specific HUD element */}
+                <div className="w-24"></div>
             </div>
 
             {/* Battlefield */}
-            <div className="flex-1 flex items-center justify-between px-12 z-0">
-
-                {/* Left: Party */}
-                <div className="grid grid-cols-2 gap-8 items-center">
+            <div className="flex-1 flex items-center justify-center gap-16 px-12 z-0 pb-12">
+                {/* Party Grid */}
+                <div className="grid grid-cols-2 gap-8 items-center justify-items-center">
                     {party.map(unit => (
-                        <div key={unit.id} className={unit.id === selectedUnitId ? 'transform translate-x-4 transition-transform' : ''} data-testid={`unit-card-${unit.templateId}`}>
+                        <div key={unit.id} className="transition-transform duration-300">
                             <UnitCard
                                 unit={unit}
-                                isActive={unit.id === selectedUnitId || (phase === CombatPhase.MONSTER_TURN && !unit.isDead)} // Highlight target in monster turn if needed, but simplified for now
-                                onClick={() => selectUnit(unit.id)}
+                                phase={phase}
+                                onAct={() => performAction(unit.id)}
                                 onRecharge={() => rechargeUnit(unit.id)}
                             />
                         </div>
                     ))}
                 </div>
 
-                {/* VS */}
-                {phase === CombatPhase.MONSTER_TURN && (
-                    <div className="text-6xl font-black text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] animate-pulse">
-                        VS
-                    </div>
-                )}
+                {/* VS Indicator */}
+                <div className="flex flex-col items-center justify-center opacity-80 mix-blend-overlay">
+                    <div className="h-32 w-1 bg-white/30 rounded-full mb-4"></div>
+                    <span className="text-4xl font-black text-white italic">VS</span>
+                    <div className="h-32 w-1 bg-white/30 rounded-full mt-4"></div>
+                </div>
 
-                {/* Right: Monsters */}
-                <div className="flex flex-col gap-4 items-center">
+                {/* Monsters Grid */}
+                <div className="flex flex-col gap-6 items-center">
                     {monsters.map(unit => (
-                        <UnitCard key={unit.id} unit={unit} isActive={false} />
-                    ))}
-                </div>
-            </div>
-
-            {/* Bottom: Action Menu */}
-            <div className="h-48 bg-[var(--color-bg-primary)] border-t-4 border-[var(--color-bg-tertiary)] flex shadow-2xl z-20">
-                {/* Info Panel */}
-                <div className="w-1/3 p-4 border-r-2 border-[var(--color-bg-tertiary)] bg-[var(--color-bg-secondary)] relative">
-                    {selectedUnit ? (
-                        <>
-                            <div className="font-bold text-xl mb-1">{selectedUnit.name}</div>
-                            {(() => {
-                                const data = getCompanionById(selectedUnit.templateId);
-                                return (
-                                    <>
-                                        <div className="text-sm text-[var(--color-text-secondary)] mb-2 italic">"{data.description}"</div>
-                                        <div className="bg-white p-2 rounded-lg border border-gray-300">
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <img src={data.image} alt={data.name} className="w-12 h-12 object-cover rounded-full border border-gray-400" />
-                                                <span className="font-bold text-[var(--color-brand-primary)]">{data.abilityName}</span>
-                                            </div>
-                                            <div className="text-xs">{data.abilityDescription}</div>
-                                        </div>
-                                    </>
-                                );
-                            })()}
-                        </>
-                    ) : (
-                        <div className="flex items-center justify-center h-full text-gray-500 italic">Select a hero...</div>
-                    )}
-                </div>
-
-                {/* Controls */}
-                <div className="flex-1 p-4 flex flex-col items-center justify-center gap-4">
-                    {phase === CombatPhase.PLAYER_TURN ? (
-                        <div className="flex items-center gap-4">
-                            <button
-                                className="text-lg py-4 px-8 min-w-[200px] flex flex-col items-center gap-1 hover:scale-105"
-                                disabled={!selectedUnit || selectedUnit.currentEnergy <= 0}
-                                onClick={() => selectedUnit && performAction(selectedUnit.id)}
-                                data-testid="encounter-act-btn"
-                            >
-                                <span className="text-2xl">⚔️</span>
-                                <div>ACT</div>
-                                {selectedUnit && <div className="text-xs opacity-80 font-normal">Costs 1 Energy</div>}
-                            </button>
-
-                            <div className="w-px h-16 bg-gray-300 mx-4"></div>
-
-                            <button
-                                className="bg-[var(--color-warning)]"
-                                onClick={endPlayerTurn}
-                            >
-                                ⏳ End Turn
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="text-xl font-bold text-[var(--color-text-secondary)] animate-pulse">
-                            Monster is thinking...
-                        </div>
-                    )}
-                </div>
-
-                {/* Combat Log */}
-                <div className="w-1/4 p-4 bg-black/5 overflow-y-auto text-xs font-mono" data-testid="encounter-log">
-                    {combatLog.slice().reverse().map((log, i) => (
-                        <div key={i} className="mb-1 border-b border-black/5 pb-1 last:border-0">
-                            {log}
-                        </div>
+                        <UnitCard
+                            key={unit.id}
+                            unit={unit}
+                            phase={phase} // Pass phase to monster too, though functionality logic is restricted inside
+                        />
                     ))}
                 </div>
             </div>

@@ -36,7 +36,8 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 currentShield: 0,
                 icon: data.icon,
                 color: data.color,
-                isDead: false
+                isDead: false,
+                hasActed: false
             };
         });
 
@@ -47,7 +48,8 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 isPlayer: false,
                 maxEnergy: 0,
                 currentEnergy: 0,
-                isDead: false
+                isDead: false,
+                hasActed: false
             };
         });
 
@@ -74,9 +76,11 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         // Get Ability Data
         const companionData = getCompanionById(unit.templateId);
 
+        if (unit.hasActed) return;
+
         // consume energy
         const newParty = [...party];
-        newParty[unitIndex] = { ...unit, currentEnergy: unit.currentEnergy - 1 };
+        newParty[unitIndex] = { ...unit, currentEnergy: unit.currentEnergy - 1, hasActed: true };
 
         let logMsg = `${unit.name} used ${companionData.abilityName}!`;
 
@@ -136,6 +140,13 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         // Check Victory
         if (get().monsters.every(m => m.isDead)) {
             set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
+            return;
+        }
+
+        // Check End Turn Condition (All living party members acted)
+        const allActed = get().party.every(p => p.isDead || p.hasActed);
+        if (allActed) {
+            get().endPlayerTurn();
         }
     },
 
@@ -144,9 +155,19 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         const idx = party.findIndex(u => u.id === unitId);
         if (idx === -1) return;
 
+        if (party[idx].hasActed) return;
+
         const newParty = [...party];
         newParty[idx].currentEnergy = newParty[idx].maxEnergy;
+        newParty[idx].hasActed = true;
+
         set({ party: newParty, combatLog: [...get().combatLog, `${newParty[idx].name} recharged!`] });
+
+        // Check End Turn Condition
+        const allActed = get().party.every(p => p.isDead || p.hasActed);
+        if (allActed) {
+            get().endPlayerTurn();
+        }
     },
 
     endPlayerTurn: () => {
@@ -192,6 +213,9 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
 
             logs.push(`${monster.name} attacked ${target.name} for ${damage} damage!`);
         });
+
+        // Reset party actions for next turn
+        newParty = newParty.map(u => ({ ...u, hasActed: false }));
 
         set(state => ({
             party: newParty,
