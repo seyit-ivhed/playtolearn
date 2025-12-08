@@ -29,6 +29,7 @@ export interface CombatUnit {
     // State
     isDead: boolean;
     hasActed: boolean;
+    rechargeFailed: boolean;
 }
 
 export interface CombatState {
@@ -43,5 +44,9 @@ export interface CombatState {
     selectedUnitId: string | null;
 
     // Logs
+    // Logs
     combatLog: string[];
+
+    // Special Mechanic
+    specialMeter: number; // 0 to 100
 }

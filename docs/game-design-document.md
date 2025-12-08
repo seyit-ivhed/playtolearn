@@ -194,11 +194,18 @@ Example: Completing "Multiplication - Level 3" unlocks or upgrades a companion's
   - **Energy Cost**: Using a companion's ability consumes 1 energy point and ends the player's turn.
   - **Recharge Mechanic**:
     - If a companion has 0 energy, the player can choose to **Recharge** them.
-    - Recharging presents a contextual challenge relevant to the companion (math integrated into narrative).
-    - Example: "The Fire Knight needs to count monsters to aim properly: How many goblins are in the cave?"
-    - **Solve Correctly** → That companion fully recharges.
-    - **Turn Logic**: Recharging does **not** end the player's turn. The player can immediately use the recharged ability (or choose another action).
-    - **Limit**: Each companion can only be recharged once per turn.
+    - Recharging presents a contextual math challenge.
+    - **Solve Correctly**: Companion gains 1 Energy (or full charge) immediately.
+    - **Solve Incorrectly**: The recharge Fails. The companion remains at 0 energy. The player **cannot** try again this turn; they must wait until the next turn to attempt recharge again.
+    - Example: "The Fire Knight needs to calibrate his aim! Solve 12 - 4."
+
+  - **Special Attack Meter (The "Limit Break")**:
+    - A shared "Party Meter" fills up as companions successfully use abilities or defeat enemies.
+    - When the meter is **Full**, a "Special Attack" button becomes available.
+    - Clicking it triggers a **Helper/Boss Level Math Problem** (slightly harder challenge).
+    - **Solve Correctly**: Unleashes a powerful effect (e.g., Heal All, Massive Damage to All Enemies).
+    - **Solve Incorrectly**: The attack **Fails** and the **Meter Drains completely** to 0. The player must refill the meter to try again.
+    - This creates a high-stakes "moment of truth" rewarding mastery.
   
 - **Monster Turn**:
   - Monster attacks based on their stats

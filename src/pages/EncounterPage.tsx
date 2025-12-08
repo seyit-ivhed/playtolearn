@@ -4,6 +4,10 @@ import { useCombatStore } from '../stores/combat.store';
 import { useGameStore } from '../stores/game.store';
 import { type CombatUnit, CombatPhase } from '../types/combat.types';
 import { getCompanionById } from '../data/companions.data';
+import MathChallengeModal from '../components/MathChallengeModal';
+import { generateProblem } from '../utils/math-generator';
+import { MathOperation, type MathProblem } from '../types/math.types';
+import { useState } from 'react';
 
 const UnitCard = ({ unit, phase, onAct, onRecharge }: {
     unit: CombatUnit,
@@ -113,10 +117,10 @@ const UnitCard = ({ unit, phase, onAct, onRecharge }: {
                             // Recharge Button
                             <button
                                 onClick={(e) => { e.stopPropagation(); onRecharge?.(); }}
-                                disabled={!canAct}
+                                disabled={!canAct || unit.rechargeFailed}
                                 className={`
                                     w-full flex flex-col items-center justify-center py-2 px-1 rounded-lg border-2 transition-all
-                                    ${canAct
+                                    ${canAct && !unit.rechargeFailed
                                         ? 'bg-[var(--color-warning)] border-yellow-600 text-white cursor-pointer hover:brightness-110 active:scale-95 animate-pulse'
                                         : 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'}
                                 `}
@@ -137,8 +141,52 @@ const EncounterPage = () => {
     const navigate = useNavigate();
     const {
         phase, party, monsters,
-        performAction, rechargeUnit
+        performAction, resolveRecharge,
+        specialMeter, resolveSpecialAttack
     } = useCombatStore();
+
+    const [activeChallenge, setActiveChallenge] = useState<{
+        type: 'RECHARGE' | 'SPECIAL';
+        unitId?: string;
+        problem: MathProblem;
+    } | null>(null);
+
+    const startRecharge = (unitId: string) => {
+        // Generate a standard problem
+        const ops = [MathOperation.ADD, MathOperation.SUBTRACT];
+        const op = ops[Math.floor(Math.random() * ops.length)];
+        const problem = generateProblem(op, 1); // Difficulty 1
+
+        setActiveChallenge({
+            type: 'RECHARGE',
+            unitId,
+            problem
+        });
+    };
+
+    const startSpecialAttack = () => {
+        // Generate a HARD problem
+        const ops = [MathOperation.MULTIPLY, MathOperation.DIVIDE, MathOperation.ADD];
+        const op = ops[Math.floor(Math.random() * ops.length)];
+        const problem = generateProblem(op, 2); // Difficulty 2
+
+        setActiveChallenge({
+            type: 'SPECIAL',
+            problem
+        });
+    };
+
+    const handleChallengeComplete = (success: boolean) => {
+        if (!activeChallenge) return;
+
+        if (activeChallenge.type === 'RECHARGE' && activeChallenge.unitId) {
+            resolveRecharge(activeChallenge.unitId, success);
+        } else if (activeChallenge.type === 'SPECIAL') {
+            resolveSpecialAttack(success);
+        }
+
+        setActiveChallenge(null);
+    };
 
     // Handle Victory/Defeat
     useEffect(() => {
@@ -191,6 +239,34 @@ const EncounterPage = () => {
                 <div className="w-24"></div>
             </div>
 
+            {/* Special Meter HUD (Bottom Center) */}
+            <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center justify-center z-40 pointer-events-none">
+                <div className="relative w-96 h-8 bg-gray-900/80 rounded-full border-2 border-yellow-500/50 overflow-hidden backdrop-blur-sm pointer-events-auto">
+                    {/* Bar */}
+                    <div
+                        className={`h-full transition-all duration-700 ease-out bg-gradient-to-r from-yellow-600 via-yellow-400 to-white ${specialMeter >= 100 ? 'animate-pulse' : ''}`}
+                        style={{ width: `${specialMeter}%` }}
+                    />
+
+                    {/* Text Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center font-black text-white text-sm uppercase tracking-widest shadow-black drop-shadow-md">
+                        Party Spirit {Math.floor(specialMeter)}%
+                    </div>
+                </div>
+
+                {/* LIMIT BREAK BUTTON */}
+                <div className="h-16 mt-2 flex items-center justify-center pointer-events-auto">
+                    {specialMeter >= 100 && phase === CombatPhase.PLAYER_TURN && (
+                        <button
+                            onClick={startSpecialAttack}
+                            className="bg-gradient-to-t from-purple-700 to-purple-500 text-white font-black text-xl py-3 px-12 rounded-xl shadow-[0_0_20px_rgba(168,85,247,0.8)] border-4 border-purple-300 animate-bounce hover:scale-110 transition-transform"
+                        >
+                            🚀 UNLEASH ULTIMA! 🚀
+                        </button>
+                    )}
+                </div>
+            </div>
+
             {/* Battlefield */}
             <div className="flex-1 flex items-center justify-center gap-16 px-12 z-0 pb-12">
                 {/* Party Grid */}
@@ -201,7 +277,7 @@ const EncounterPage = () => {
                                 unit={unit}
                                 phase={phase}
                                 onAct={() => performAction(unit.id)}
-                                onRecharge={() => rechargeUnit(unit.id)}
+                                onRecharge={() => startRecharge(unit.id)}
                             />
                         </div>
                     ))}
@@ -225,7 +301,20 @@ const EncounterPage = () => {
                     ))}
                 </div>
             </div>
-        </div>
+
+            {/* Math Modal */}
+            {
+                activeChallenge && (
+                    <MathChallengeModal
+                        problem={activeChallenge.problem}
+                        title={activeChallenge.type === 'RECHARGE' ? "Recharge Focus!" : "ULTIMATE CASTING!"}
+                        description={activeChallenge.type === 'RECHARGE' ? "Solve this to regain energy!" : "Solve correctly to UNLEASH POWER!"}
+                        onComplete={handleChallengeComplete}
+                        onClose={() => setActiveChallenge(null)}
+                    />
+                )
+            }
+        </div >
     );
 };
 

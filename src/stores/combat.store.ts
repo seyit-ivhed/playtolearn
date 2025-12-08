@@ -7,7 +7,8 @@ interface CombatStore extends CombatState {
     initializeCombat: (partyIds: string[], monsterTemplateIds: string[]) => void;
     selectUnit: (unitId: string | null) => void;
     performAction: (unitId: string) => void;
-    rechargeUnit: (unitId: string) => void;
+    resolveRecharge: (unitId: string, success: boolean) => void;
+    resolveSpecialAttack: (success: boolean) => void;
     endPlayerTurn: () => void;
     processMonsterTurn: () => void;
 }
@@ -19,6 +20,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     monsters: [],
     selectedUnitId: null,
     combatLog: [],
+    specialMeter: 0,
 
     initializeCombat: (partyIds, monsterTemplateIds) => {
         const party: CombatUnit[] = partyIds.map((id, index) => {
@@ -37,7 +39,8 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 icon: data.icon,
                 color: data.color,
                 isDead: false,
-                hasActed: false
+                hasActed: false,
+                rechargeFailed: false
             };
         });
 
@@ -49,7 +52,8 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 maxEnergy: 0,
                 currentEnergy: 0,
                 isDead: false,
-                hasActed: false
+                hasActed: false,
+                rechargeFailed: false
             };
         });
 
@@ -135,7 +139,14 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             set({ party: newParty });
         }
 
-        set(state => ({ combatLog: [...state.combatLog, logMsg] }));
+        // Increase Special Meter on successful action
+        const currentMeter = get().specialMeter;
+        const newMeter = Math.min(100, currentMeter + 15); // +15 per action, ~7 actions to full
+
+        set(state => ({
+            combatLog: [...state.combatLog, logMsg],
+            specialMeter: newMeter
+        }));
 
         // Check Victory
         if (get().monsters.every(m => m.isDead)) {
@@ -150,23 +161,63 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         }
     },
 
-    rechargeUnit: (unitId) => {
+    resolveRecharge: (unitId, success) => {
         const { party } = get();
         const idx = party.findIndex(u => u.id === unitId);
         if (idx === -1) return;
 
-        if (party[idx].hasActed) return;
-
         const newParty = [...party];
-        newParty[idx].currentEnergy = newParty[idx].maxEnergy;
-        newParty[idx].hasActed = true;
+        const unit = newParty[idx];
 
-        set({ party: newParty, combatLog: [...get().combatLog, `${newParty[idx].name} recharged!`] });
+        if (success) {
+            // Success: Full Energy, NO Turn End (per GDD)
+            unit.currentEnergy = unit.maxEnergy;
+            // Mentioning GDD: "Recharging does not end the player's turn"
+            // unit.hasActed remains false (or whatever it was)
+            set({
+                party: newParty,
+                combatLog: [...get().combatLog, `${unit.name} recharged successfully!`]
+            });
+        } else {
+            // Fail: Mark as failed, cannot try again
+            unit.rechargeFailed = true;
+            // "If recharge fails, players can try it next turn" -> implied they cannot try again THIS turn.
+            set({
+                party: newParty,
+                combatLog: [...get().combatLog, `${unit.name} failed to recharge...`]
+            });
+        }
+    },
 
-        // Check End Turn Condition
-        const allActed = get().party.every(p => p.isDead || p.hasActed);
-        if (allActed) {
-            get().endPlayerTurn();
+    resolveSpecialAttack: (success) => {
+        const { monsters } = get();
+
+        if (success) {
+            // Deal massive damage to all monsters
+            const newMonsters = monsters.map(m => {
+                if (m.isDead) return m;
+                const damage = 20; // Big damage
+                const newHealth = Math.max(0, m.currentHealth - damage);
+                return { ...m, currentHealth: newHealth, isDead: newHealth === 0 };
+            });
+
+            set({
+                monsters: newMonsters,
+                specialMeter: 0, // Reset meter
+                combatLog: [...get().combatLog, `SPECIAL ATTACK! Dealt 20 damage to all enemies!`]
+            });
+
+            // Check Victory
+            if (newMonsters.every(m => m.isDead)) {
+                set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
+            }
+
+        } else {
+            // Fail: Drain meter
+            set({
+                specialMeter: 0,
+                combatLog: [...get().combatLog, `Special Attack fizzled out... Meter drained.`]
+            });
         }
     },
 
@@ -215,7 +266,8 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         });
 
         // Reset party actions for next turn
-        newParty = newParty.map(u => ({ ...u, hasActed: false }));
+        // Also reset rechargeFailed flag
+        newParty = newParty.map(u => ({ ...u, hasActed: false, rechargeFailed: false }));
 
         set(state => ({
             party: newParty,
