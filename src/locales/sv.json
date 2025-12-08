@@ -21,7 +21,7 @@
         },
         "victory": {
             "title": "Seger! 🎉",
-            "message": "Du besegrade {{enemyName}}!",
+            "message": "Du besegrade {{monsterName}}!",
             "collect_rewards": "Samla Belöningar"
         },
         "defeat": {
@@ -36,14 +36,14 @@
         }
     },
     "rewards": {
-        "title": "Uppdrag Slutfört!",
+        "title": "Äventyr Slutfört!",
         "subtitle": "Utmärkt arbete, Äventyrare. Här är dina belöningar:",
         "xp": "+{{amount}} XP",
         "credits": "+{{amount}} Guld",
-        "module_unlocked": "Ny Följeslagare Upplåst!",
-        "none": "Inga belöningar för detta uppdrag.",
-        "return_to_base": "Återvänd till Läger",
-        "next_mission": "Nästa Äventyr"
+        "companion_unlocked": "Ny Följeslagare Upplåst!",
+        "none": "Inga belöningar för detta äventyr.",
+        "return_to_camp": "Återvänd till Läger",
+        "next_adventure": "Nästa Äventyr"
     },
     "party": {
         "title": "Grupphantering",
@@ -65,10 +65,10 @@
         "add": "Lägg till",
         "remove": "Ta bort",
         "locked": "Låst",
-        "unlock_requirement": "Slutför uppdrag för att låsa upp",
+        "unlock_requirement": "Slutför äventyr för att låsa upp",
         "companion_fire_knight": {
             "name": "Eldknekten",
-            "description": "En modig knekt som svingar eldslågor. Slår fiender med brinnande attacker."
+            "description": "En modig knekt som svingar eldslågor. Slår monster med brinnande attacker."
         },
         "companion_shadow_archer": {
             "name": "Skuggskytten",
@@ -80,7 +80,7 @@
         },
         "companion_frost_ranger": {
             "name": "Frostjägaren",
-            "description": "Mästare av is och kyla. Fryser fiender med kylande pilar."
+            "description": "Mästare av is och kyla. Fryser monster med kylande pilar."
         },
         "companion_crystal_guardian": {
             "name": "Kristallväktaren",
@@ -99,9 +99,9 @@
             "description": "I harmoni med naturen. Ger gradvis läkning och skydd."
         }
     },
-    "mission": {
-        "target_enemy": "Målfende",
-        "rewards": "Uppdragsbelöningar",
+    "adventure": {
+        "target_monster": "Målmonster",
+        "rewards": "Äventyrsbelöningar",
         "no_rewards": "Inga belöningar listade",
         "cancel": "Avbryt",
         "start": "Starta Äventyr",
@@ -111,6 +111,29 @@
             "camp": "Läger",
             "cave": "Grotta",
             "boss": "Boss"
+        }
+    },
+    "monsters": {
+        "goblin_scout": "Goblinspanare",
+        "stone_golem": "Stengolem",
+        "dark_sorcerer": "Mörk Trollkarl"
+    },
+    "adventures": {
+        "1": {
+            "title": "Goblinskogen",
+            "description": "Spanare har rapporterat goblinaktivitet i den närliggande skogen. Undersök och rensa hotet."
+        },
+        "2": {
+            "title": "Stengolemens Grotta",
+            "description": "En massiv golem blockerar passet. Du måste besegra den för att fortsätta."
+        },
+        "3": {
+            "title": "Trollkarlens Torn",
+            "description": "Källan till korruptionen har hittats. Besegra den mörka trollkarlen!"
+        },
+        "4": {
+            "title": "Ett Annat Äventyr",
+            "description": "Platshållare för ett annat äventyr."
         }
     },
     "math": {
