@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import MathInput from './MathInput/MathInput';
 import { type MathProblem } from '../types/math.types';
 import { validateAnswer } from '../utils/math-generator';
@@ -36,7 +37,7 @@ export default function MathChallengeModal({
         }
     };
 
-    return (
+    return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
             <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full animate-in fade-in zoom-in duration-200">
                 {/* Header */}
@@ -81,11 +82,13 @@ export default function MathChallengeModal({
                     <button
                         onClick={onClose}
                         className="mt-6 w-full py-2 text-gray-400 font-bold hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                        data-testid="modal-cancel-btn"
                     >
                         Cancel
                     </button>
                 )}
             </div>
-        </div>
+        </div>,
+        document.body
     );
 }

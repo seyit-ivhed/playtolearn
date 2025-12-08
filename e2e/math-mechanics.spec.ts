@@ -59,7 +59,11 @@ test.describe('Math Mechanics Flow', () => {
         await expect(page.getByText(/Recharge Focus!/i)).toBeVisible();
 
         // Close modal (Cancel)
-        await page.getByRole('button', { name: 'Cancel' }).click({ force: true });
+        // Close modal (Cancel)
+        const cancelBtn = page.getByTestId('modal-cancel-btn');
+        await expect(cancelBtn).toBeVisible();
+        // Use evaluate to bypass strict viewport checks if force fails
+        await cancelBtn.evaluate((node) => (node as HTMLElement).click());
     });
 
     test('should enable special attack when meter is full', async ({ page }) => {
