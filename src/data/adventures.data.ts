@@ -1,6 +1,6 @@
-import { type Mission } from '../types/mission.types';
+import { type Adventure } from '../types/adventure.types';
 
-export const MISSIONS: Mission[] = [
+export const ADVENTURES: Adventure[] = [
     {
         id: '1',
         title: 'Village Defense',
@@ -35,12 +35,12 @@ export const MISSIONS: Mission[] = [
             speed: 12
         },
         rewards: {
-            unlocksModuleId: 'companion_shadow_archer',
+            unlocksCompanionId: 'companion_shadow_archer',
             xp: 200,
             currency: 100
         },
         requirements: {
-            previousMissionId: '1'
+            previousAdventureId: '1'
         }
     },
     {
@@ -59,12 +59,12 @@ export const MISSIONS: Mission[] = [
             speed: 10
         },
         rewards: {
-            unlocksModuleId: 'companion_lightning_mage',
+            unlocksCompanionId: 'companion_lightning_mage',
             xp: 350,
             currency: 150
         },
         requirements: {
-            previousMissionId: '2'
+            previousAdventureId: '2'
         }
     },
     {
@@ -83,12 +83,12 @@ export const MISSIONS: Mission[] = [
             speed: 15
         },
         rewards: {
-            unlocksModuleId: 'companion_earth_defender',
+            unlocksCompanionId: 'companion_earth_defender',
             xp: 500,
             currency: 200
         },
         requirements: {
-            previousMissionId: '3'
+            previousAdventureId: '3'
         }
     },
     {
@@ -107,16 +107,16 @@ export const MISSIONS: Mission[] = [
             speed: 5
         },
         rewards: {
-            unlocksModuleId: 'companion_light_healer',
+            unlocksCompanionId: 'companion_light_healer',
             xp: 1000,
             currency: 500
         },
         requirements: {
-            previousMissionId: '4'
+            previousAdventureId: '4'
         }
     }
 ];
 
-export const getMissionById = (id: string): Mission | undefined => {
-    return MISSIONS.find(m => m.id === id);
+export const getAdventureById = (id: string): Adventure | undefined => {
+    return ADVENTURES.find(m => m.id === id);
 };

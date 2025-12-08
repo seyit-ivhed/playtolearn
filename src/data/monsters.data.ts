@@ -1,4 +1,4 @@
-export interface Enemy {
+export interface Monster {
     id: string; // instance id
     templateId: string;
     name: string;
@@ -11,7 +11,7 @@ export interface Enemy {
     icon: string;
 }
 
-export const ENEMY_CV = {
+export const MONSTERS = {
     'goblin_scout': {
         name: 'Goblin Scout',
         maxHealth: 30,
@@ -35,8 +35,8 @@ export const ENEMY_CV = {
     }
 };
 
-export const createEnemy = (templateId: string, instanceId: string): Enemy => {
-    const template = ENEMY_CV[templateId as keyof typeof ENEMY_CV];
+export const createMonster = (templateId: string, instanceId: string): Monster => {
+    const template = MONSTERS[templateId as keyof typeof MONSTERS];
     return {
         id: instanceId,
         templateId,

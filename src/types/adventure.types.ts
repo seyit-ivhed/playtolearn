@@ -1,20 +1,20 @@
-export type MissionId = string;
+export type AdventureId = string;
 
-export const MissionStatus = {
+export const AdventureStatus = {
     LOCKED: 'LOCKED',
     AVAILABLE: 'AVAILABLE',
     COMPLETED: 'COMPLETED'
 } as const;
 
-export type MissionStatus = typeof MissionStatus[keyof typeof MissionStatus];
+export type AdventureStatus = typeof AdventureStatus[keyof typeof AdventureStatus];
 
-export interface MissionReward {
-    unlocksModuleId?: string;
+export interface AdventureReward {
+    unlocksCompanionId?: string;
     xp?: number;
     currency?: number;
 }
 
-export interface MissionEnemy {
+export interface AdventureMonster {
     id: string;
     name: string;
     maxHealth: number;
@@ -25,15 +25,15 @@ export interface MissionEnemy {
     sprite?: string; // Placeholder
 }
 
-export interface Mission {
-    id: MissionId;
+export interface Adventure {
+    id: AdventureId;
     title: string;
     description: string;
     difficulty: number; // 1-10 scale?
-    enemy: MissionEnemy;
-    rewards: MissionReward;
+    enemy: AdventureMonster;
+    rewards: AdventureReward;
     requirements?: {
         minLevel?: number;
-        previousMissionId?: MissionId;
+        previousAdventureId?: AdventureId;
     };
 }

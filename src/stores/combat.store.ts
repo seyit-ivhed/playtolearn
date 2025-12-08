@@ -1,26 +1,26 @@
 import { create } from 'zustand';
 import { CombatPhase, type CombatUnit, type CombatState } from '../types/combat.types';
 import { getCompanionById } from '../data/companions.data';
-import { createEnemy } from '../data/enemies.data';
+import { createMonster } from '../data/monsters.data';
 
 interface CombatStore extends CombatState {
-    initializeCombat: (partyIds: string[], enemyTemplateIds: string[]) => void;
+    initializeCombat: (partyIds: string[], monsterTemplateIds: string[]) => void;
     selectUnit: (unitId: string | null) => void;
     performAction: (unitId: string) => void;
     rechargeUnit: (unitId: string) => void;
     endPlayerTurn: () => void;
-    processEnemyTurn: () => void;
+    processMonsterTurn: () => void;
 }
 
 export const useCombatStore = create<CombatStore>((set, get) => ({
     phase: CombatPhase.INIT,
     turnCount: 0,
     party: [],
-    enemies: [],
+    monsters: [],
     selectedUnitId: null,
     combatLog: [],
 
-    initializeCombat: (partyIds, enemyTemplateIds) => {
+    initializeCombat: (partyIds, monsterTemplateIds) => {
         const party: CombatUnit[] = partyIds.map((id, index) => {
             const data = getCompanionById(id);
             return {
@@ -40,10 +40,10 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             };
         });
 
-        const enemies: CombatUnit[] = enemyTemplateIds.map((id, index) => {
-            const enemy = createEnemy(id, `enemy_${id}_${index}`);
+        const monsters: CombatUnit[] = monsterTemplateIds.map((id, index) => {
+            const monster = createMonster(id, `monster_${id}_${index}`);
             return {
-                ...enemy,
+                ...monster,
                 isPlayer: false,
                 maxEnergy: 0,
                 currentEnergy: 0,
@@ -55,7 +55,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             phase: CombatPhase.PLAYER_TURN,
             turnCount: 1,
             party,
-            enemies,
+            monsters,
             selectedUnitId: null,
             combatLog: ['Combat Started!']
         });
@@ -64,7 +64,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     selectUnit: (unitId) => set({ selectedUnitId: unitId }),
 
     performAction: (unitId) => {
-        const { party, enemies } = get();
+        const { party, monsters } = get();
         const unitIndex = party.findIndex(u => u.id === unitId);
         if (unitIndex === -1) return;
 
@@ -82,25 +82,25 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
 
         // Apply Effects
         // Simple logic for now: 
-        // Warrior -> Hit first living enemy
+        // Warrior -> Hit first living monster
         // Guardian -> Shield random ally
         // Support -> Heal lowest HP ally
 
         if (companionData.role === 'WARRIOR') {
-            const targetIndex = enemies.findIndex(e => !e.isDead);
+            const targetIndex = monsters.findIndex(m => !m.isDead);
             if (targetIndex !== -1) {
-                const target = enemies[targetIndex];
+                const target = monsters[targetIndex];
                 const damage = companionData.abilityDamage || 10;
                 const newHealth = Math.max(0, target.currentHealth - damage);
 
-                const newEnemies = [...enemies];
-                newEnemies[targetIndex] = {
+                const newMonsters = [...monsters];
+                newMonsters[targetIndex] = {
                     ...target,
                     currentHealth: newHealth,
                     isDead: newHealth === 0
                 };
 
-                set({ party: newParty, enemies: newEnemies });
+                set({ party: newParty, monsters: newMonsters });
                 logMsg += ` Dealt ${damage} damage to ${target.name}.`;
             }
         } else if (companionData.role === 'GUARDIAN') {
@@ -134,7 +134,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         set(state => ({ combatLog: [...state.combatLog, logMsg] }));
 
         // Check Victory
-        if (get().enemies.every(e => e.isDead)) {
+        if (get().monsters.every(m => m.isDead)) {
             set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
         }
     },
@@ -150,21 +150,21 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     },
 
     endPlayerTurn: () => {
-        set({ phase: CombatPhase.ENEMY_TURN });
-        setTimeout(() => get().processEnemyTurn(), 1000);
+        set({ phase: CombatPhase.MONSTER_TURN });
+        setTimeout(() => get().processMonsterTurn(), 1000);
     },
 
-    processEnemyTurn: () => {
-        const { enemies, party } = get();
-        const activeEnemies = enemies.filter(e => !e.isDead);
+    processMonsterTurn: () => {
+        const { monsters, party } = get();
+        const activeMonsters = monsters.filter(m => !m.isDead);
 
-        if (activeEnemies.length === 0) return; // Should be victory already
+        if (activeMonsters.length === 0) return; // Should be victory already
 
-        // Simple AI: All enemies attack random party member
+        // Simple AI: All monsters attack random party member
         let newParty = [...party];
         const logs: string[] = [];
 
-        activeEnemies.forEach(enemy => {
+        activeMonsters.forEach(monster => {
             const livingTargets = newParty.filter(p => !p.isDead);
             if (livingTargets.length === 0) return;
 
@@ -173,11 +173,9 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             const target = newParty[actualTargetIndex];
 
             // Calc Damage vs Shield
-            let damage = enemy.maxHealth > 0 ? 10 : 5; // Simplified damage based on generic
-            // Or fetch from data if we stored damage on instance. We didn't store damage on CombatUnit, oops.
-            // Let's assume generic damage for now or fetch from ENEMY_CV via templateId if needed.
-            // Actually I'll just use a constant for simplicity in this MVP step.
-            damage = 8;
+            // Using generic damage for now
+            let damage = 8;
+            // Ideally fetch from monster data using templateId
 
             if (target.currentShield > 0) {
                 if (target.currentShield >= damage) {
@@ -192,7 +190,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             target.currentHealth = Math.max(0, target.currentHealth - damage);
             if (target.currentHealth === 0) target.isDead = true;
 
-            logs.push(`${enemy.name} attacked ${target.name} for ${damage} damage!`);
+            logs.push(`${monster.name} attacked ${target.name} for ${damage} damage!`);
         });
 
         set(state => ({

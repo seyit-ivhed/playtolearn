@@ -10,19 +10,19 @@
 
 **Genre:** Educational Fantasy Adventure / RPG Lite
 
-**Core Concept:** Players become the leader of an adventuring party on an epic journey through magical realms. As they progress, new companions join their party and existing companions grow stronger. Players help their companions overcome challenges (which cleverly integrate math skills) to defeat monsters, complete quests, and unlock new regions. The party grows from a small band to a formidable force of heroes.
+**Core Concept:** Players become the leader of an adventuring party on an epic journey through magical realms. As they progress, new companions join their party and existing companions grow stronger. Players help their companions overcome challenges (which cleverly integrate math skills) to defeat monsters, complete adventures, and unlock new regions. The party grows from a small band to a formidable fellowship of heroes.
 
 ---
 
-## 1. Game Overview
+### 1. Game Overview
 
 ### 1.1 Vision Statement
-Math Quest Adventures transforms math learning into an exciting fantasy journey where every challenge overcome makes your party stronger. Players lead their own adventuring party, helping companions solve contextual challenges (naturally integrated math) to grow in power, defeat monsters, and unlock new regions of the realm.
+Math Quest Adventures transforms math learning into an exciting fantasy journey where every challenge overcome makes your party stronger. Players lead their own fellowship, helping companions solve contextual challenges (naturally integrated math) to grow in power, defeat monsters, and unlock new regions of the realm.
 
 ### 1.2 Core Gameplay Loop
 ```mermaid
 graph LR
-    A[Select Quest] --> B[Solve Math Challenges]
+    A[Select Adventure] --> B[Solve Math Challenges]
     B --> C[Earn Experience]
     C --> D[Upgrade Companions]
     D --> E[Choose Party of 4]
@@ -34,10 +34,10 @@ graph LR
 ### 1.3 Key Features
 - **Progressive Math Curriculum**: Adaptive difficulty that grows with player skill
 - **Companion Collection**: Recruit diverse heroes, each with unique abilities
-- **Party Customization**: Choose 4 companions to bring on each adventure
+- **Party Customization**: Choose 4 companions to take on encounters
 - **Upgrade System**: Direct companion upgrades - no equipment micromanagement
-- **Quest-Based Progression**: Structured challenges with clear objectives
-- **Monster Combat System**: Turn-based combat using companion abilities
+- **Adventure-Based Progression**: Structured challenges with clear objectives
+- **Monster Encounter System**: Turn-based battles using companion abilities
 - **Exploration**: Multiple realms with unique themes and challenges
 - **Reward System**: Immediate feedback and tangible progression
 
@@ -45,28 +45,28 @@ graph LR
 
 ## 2. Game Mechanics
 
-### 2.1 Quest System
+### 2.1 Adventure System
 
-#### Quest Types
-1. **Training Quests** (Tutorial)
+#### Adventure Types
+1. **Training Adventures** (Tutorial)
    - Introduction to basic controls
    - Simple math problems (addition, subtraction)
    - Rewards: First companions, basic upgrades
 
-2. **Exploration Quests**
+2. **Exploration Adventures**
    - Discover hidden locations
    - Solve math problems to find treasures
    - Rewards: Experience, companion unlocks, resources
 
-3. **Rescue Quests**
+3. **Rescue Adventures**
    - Save villagers by solving math challenges
    - Rewards: Companion unlocks, badges
 
-4. **Boss Quests**
+4. **Boss Adventures**
    - Multi-stage challenges requiring various math skills
    - Rewards: Realm unlocks, special badges for defeating bosses
 
-#### Quest Structure
+#### Adventure Structure
 - **Objective**: Story-driven goal (e.g., "Help villagers count their harvest" or "Divide treasure among the party")
 - **Difficulty Rating**: Stars (★☆☆ to ★★★★★)
 - **Skill Focus**: Hidden math skill practiced (addition, multiplication, fractions, etc.)
@@ -105,7 +105,7 @@ Example: Completing "Multiplication - Level 3" unlocks or upgrades a companion's
 - **Hints System**: Companion dialogue provides guidance (costs in-game currency)
 
 #### Player-Controlled Difficulty
-- Players choose both the math skill and difficulty level for each quest
+- Players choose both the math skill and difficulty level for each adventure
 - Game encourages players to increase difficulty when they perform well (e.g., "You got 9/10 correct! Ready to try Level 3?")
 - Game suggests trying easier difficulty or previous skills if player struggles (e.g., "That was tough! Want to practice Level 2 first?")
 - No forced adjustments - player always has final choice
@@ -116,7 +116,7 @@ Example: Completing "Multiplication - Level 3" unlocks or upgrades a companion's
 #### Core Design Philosophy
 - **Permanent Companions**: Once unlocked, companions are yours forever
 - **No Equipment**: Companions upgrade directly (simpler for children)
-- **Party Selection**: Choose which 4 companions to bring on each quest
+- **Party Selection**: Choose which 4 companions to bring on each adventure
 - **Diverse Heroes**: Each companion has unique personality, appearance, and role
 
 #### Companion Roles & Abilities
@@ -176,32 +176,32 @@ Example: Completing "Multiplication - Level 3" unlocks or upgrades a companion's
 
 #### Companion Collection
 - Start with 2 basic companions (e.g., Fire Knight + Light Healer)
-- Unlock new companions through quests and progression
+- Unlock new companions through adventures and progression
 - Initially can have up to 4 total companions, expand to 8+ as you progress
-- Benched companions "rest at the Guild Hall" (not abandoned!)
-- Strategic choice: Which 4 to bring for this specific quest?
+- Benched companions "rest at the Camp" (not abandoned!)
+- Strategic choice: Which 4 to bring for this specific adventure?
 
-### 2.4 Combat System
+### 2.4 Encounter System
 
-#### Combat Flow
-1. **Encounter**: Player meets monster or enemy group
-2. **Combat Phase**: Turn-based combat begins
+#### Encounter Flow
+1. **Meeting**: Player meets monster or monster group
+2. **Action Phase**: Turn-based encounter begins
 3. **Victory/Defeat**: Unlock new content or retry option
 
-#### Combat Mechanics (Turn-Based)
+#### Encounter Mechanics (Turn-Based)
 - **Player Turn**:
   - **Action Phase**: Player chooses one of their 4 companions to act (each companion has their single unique ability).
   - **Energy Cost**: Using a companion's ability consumes 1 energy point and ends the player's turn.
   - **Recharge Mechanic**:
     - If a companion has 0 energy, the player can choose to **Recharge** them.
     - Recharging presents a contextual challenge relevant to the companion (math integrated into narrative).
-    - Example: "The Fire Knight needs to count enemies to aim properly: How many goblins are in the cave?"
+    - Example: "The Fire Knight needs to count monsters to aim properly: How many goblins are in the cave?"
     - **Solve Correctly** → That companion fully recharges.
     - **Turn Logic**: Recharging does **not** end the player's turn. The player can immediately use the recharged ability (or choose another action).
     - **Limit**: Each companion can only be recharged once per turn.
   
-- **Enemy Turn**:
-  - Enemy attacks based on their stats
+- **Monster Turn**:
+  - Monster attacks based on their stats
   - Active shields block the attack
   - Armor reduces damage taken
   
@@ -209,7 +209,7 @@ Example: Completing "Multiplication - Level 3" unlocks or upgrades a companion's
   - Streaks of correct answers grant temporary bonuses (e.g., 3 correct in a row = bonus damage on next attack)
   - Powerful effects activate on longer streaks
 
-#### Enemy Types
+#### Monster Types
 - **Forest Goblins**: Balanced stats, common
 - **Stone Golems**: Low health, high numbers
 - **Shadow Spirits**: Fast, evasive
@@ -231,7 +231,7 @@ graph TD
 Each realm:
 - Unique visual theme
 - Specific math focus areas
-- New enemy types
+- New monster types
 - New companions to unlock
 - Boss encounter that must be defeated to unlock next realm
 - Special badge/achievement for defeating the realm boss
@@ -240,12 +240,12 @@ Each realm:
 
 ## 3. Reward System
 
-### 3.1 Quest Rewards
-- **Companion Unlocks**: Completing a quest unlocks a new companion
-  - Example: Complete "Addition - Level 1" quest → Unlock Fire Knight (Level 1)
-- **Companion Upgrades**: Completing quests upgrades existing companions
-  - Example: Complete "Addition - Level 3" quest → Upgrade Fire Knight to Level 3
-- **Content Unlocks**: Some quests unlock new realms, quest types, or enemy encounters
+### 3.1 Adventure Rewards
+- **Companion Unlocks**: Completing an adventure unlocks a new companion
+  - Example: Complete "Addition - Level 1" adventure → Unlock Fire Knight (Level 1)
+- **Companion Upgrades**: Completing adventures upgrades existing companions
+  - Example: Complete "Addition - Level 3" adventure → Upgrade Fire Knight to Level 3
+- **Content Unlocks**: Some adventures unlock new realms, adventure types, or monster encounters
 - **Boss Badges**: Defeating bosses grants special achievement badges
 
 ### 3.2 Progression Through Mastery
@@ -258,10 +258,10 @@ Each realm:
 
 ## 4. User Interface & Experience
 
-### 4.1 Main Hub (Campfire / Party Camp)
+### 4.1 Main Hub (Camp / Fellowship Camp)
 - **Party Circle**: View all unlocked companions gathered around the campfire
 - **Party Setup**: Choose which 4 companions to bring on next adventure
-- **Quest Map**: Select next adventure and see available paths
+- **Adventure Map**: Select next adventure and see available paths
 - **Realm Map**: Navigate between unlocked realms
 - **Journal**: Stats, badges, progress, companion stories
 

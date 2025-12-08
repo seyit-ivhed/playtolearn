@@ -1,21 +1,21 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './RewardSummary.module.css';
-import type { MissionReward } from '../../types/mission.types';
+import styles from './AdventureRewardSummary.module.css';
+import type { AdventureReward } from '../../types/adventure.types';
 
 interface RewardSummaryProps {
-    rewards: MissionReward;
+    rewards: AdventureReward;
     onNext: () => void;
     onReturn: () => void;
 }
 
-export const RewardSummary: React.FC<RewardSummaryProps> = ({
+export const AdventureRewardSummary: React.FC<RewardSummaryProps> = ({
     rewards,
     onNext,
     onReturn,
 }) => {
     const { t } = useTranslation();
-    const hasRewards = rewards.xp || rewards.currency || rewards.unlocksModuleId;
+    const hasRewards = rewards.xp || rewards.currency || rewards.unlocksCompanionId;
 
     return (
         <div className={styles.container} data-testid="reward-summary">
@@ -37,10 +37,10 @@ export const RewardSummary: React.FC<RewardSummaryProps> = ({
                     </div>
                 )}
 
-                {rewards.unlocksModuleId && (
+                {rewards.unlocksCompanionId && (
                     <div className={styles.rewardItem}>
                         <span className={styles.icon}>🎁</span>
-                        <span data-testid="new-module-unlocked">{t('rewards.module_unlocked')}</span>
+                        <span data-testid="new-companion-unlocked">{t('rewards.companion_unlocked')}</span>
                     </div>
                 )}
 
@@ -52,11 +52,11 @@ export const RewardSummary: React.FC<RewardSummaryProps> = ({
             </div>
 
             <div className={styles.actions}>
-                <button className={`${styles.button} ${styles.secondaryButton}`} onClick={onReturn} data-testid="return-to-base-button">
-                    {t('rewards.return_to_base')}
+                <button className={`${styles.button} ${styles.secondaryButton}`} onClick={onReturn} data-testid="return-to-camp-button">
+                    {t('rewards.return_to_camp')}
                 </button>
                 <button className={`${styles.button} ${styles.primaryButton}`} onClick={onNext}>
-                    {t('rewards.next_mission')}
+                    {t('rewards.next_adventure')}
                 </button>
             </div>
         </div>

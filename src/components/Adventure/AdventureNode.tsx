@@ -1,17 +1,17 @@
 import React from 'react';
-import styles from './MissionNode.module.css';
-import { MissionStatus } from '../../types/mission.types';
+import styles from './AdventureNode.module.css';
+import { AdventureStatus } from '../../types/adventure.types';
 
-interface MissionNodeProps {
+interface AdventureNodeProps {
     id: string;
-    status: MissionStatus;
+    status: AdventureStatus;
     title: string;
     onClick?: () => void;
     className?: string;
     style?: React.CSSProperties;
 }
 
-export const MissionNode: React.FC<MissionNodeProps> = ({
+export const AdventureNode: React.FC<AdventureNodeProps> = ({
     id,
     status,
     title,
@@ -19,8 +19,8 @@ export const MissionNode: React.FC<MissionNodeProps> = ({
     className = '',
     style,
 }) => {
-    const isLocked = status === MissionStatus.LOCKED;
-    const isCompleted = status === MissionStatus.COMPLETED;
+    const isLocked = status === AdventureStatus.LOCKED;
+    const isCompleted = status === AdventureStatus.COMPLETED;
 
     const handleClick = () => {
         if (!isLocked && onClick) {
@@ -30,11 +30,11 @@ export const MissionNode: React.FC<MissionNodeProps> = ({
 
     const getStatusClass = () => {
         switch (status) {
-            case MissionStatus.LOCKED:
+            case AdventureStatus.LOCKED:
                 return styles.locked;
-            case MissionStatus.AVAILABLE:
+            case AdventureStatus.AVAILABLE:
                 return styles.available;
-            case MissionStatus.COMPLETED:
+            case AdventureStatus.COMPLETED:
                 return styles.completed;
             default:
                 return '';
@@ -55,7 +55,7 @@ export const MissionNode: React.FC<MissionNodeProps> = ({
             role="button"
             aria-label={`${title} - ${status}`}
             aria-disabled={isLocked}
-            data-testid={`mission-node-${id}`}
+            data-testid={`adventure-node-${id}`}
         >
             <div className={styles.ring}></div>
             <div className={styles.nodeContent}>

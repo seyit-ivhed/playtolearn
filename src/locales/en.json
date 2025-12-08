@@ -21,7 +21,7 @@
         },
         "victory": {
             "title": "Victory! 🎉",
-            "message": "You defeated the {{enemyName}}!",
+            "message": "You defeated the {{monsterName}}!",
             "collect_rewards": "Collect Rewards"
         },
         "defeat": {
@@ -36,14 +36,14 @@
         }
     },
     "rewards": {
-        "title": "Quest Complete!",
+        "title": "Adventure Complete!",
         "subtitle": "Excellent work, Adventurer. Here are your rewards:",
         "xp": "+{{amount}} XP",
         "credits": "+{{amount}} Gold",
-        "module_unlocked": "New Companion Unlocked!",
-        "none": "No rewards for this quest.",
-        "return_to_base": "Return to Camp",
-        "next_mission": "Next Quest"
+        "companion_unlocked": "New Companion Unlocked!",
+        "none": "No rewards for this adventure.",
+        "return_to_camp": "Return to Camp",
+        "next_adventure": "Next Adventure"
     },
     "party": {
         "title": "Party Management",
@@ -51,7 +51,7 @@
         "available_companions": "Available Companions",
         "cancel_selection": "Cancel Selection",
         "empty_roster": "No unassigned companions available",
-        "empty_hint": "Complete quests to recruit new companions!",
+        "empty_hint": "Complete adventures to recruit new companions!",
         "select_companion_hint": "Select a companion",
         "stats": {
             "health": "Health",
@@ -65,10 +65,10 @@
         "add": "Add to Party",
         "remove": "Remove",
         "locked": "Locked",
-        "unlock_requirement": "Complete quests to unlock",
+        "unlock_requirement": "Complete adventures to unlock",
         "companion_fire_knight": {
             "name": "Fire Knight",
-            "description": "A brave knight wielding flames. Strikes enemies with burning attacks."
+            "description": "A brave knight wielding flames. Strikes monsters with burning attacks."
         },
         "companion_shadow_archer": {
             "name": "Shadow Archer",
@@ -80,7 +80,7 @@
         },
         "companion_frost_ranger": {
             "name": "Frost Ranger",
-            "description": "Master of ice and cold. Freezes enemies with chilling arrows."
+            "description": "Master of ice and cold. Freezes monsters with chilling arrows."
         },
         "companion_crystal_guardian": {
             "name": "Crystal Guardian",
@@ -99,18 +99,41 @@
             "description": "In harmony with nature. Provides gradual healing and protection."
         }
     },
-    "mission": {
-        "target_enemy": "Target Enemy",
-        "rewards": "Quest Rewards",
+    "adventure": {
+        "target_monster": "Target Monster",
+        "rewards": "Adventure Rewards",
         "no_rewards": "No rewards listed",
         "cancel": "Cancel",
-        "start": "Start Quest",
+        "start": "Start Adventure",
         "nodes": {
             "start": "Start",
             "forest": "Forest",
             "camp": "Camp",
             "cave": "Cave",
             "boss": "Boss"
+        }
+    },
+    "monsters": {
+        "goblin_scout": "Goblin Scout",
+        "stone_golem": "Stone Golem",
+        "dark_sorcerer": "Dark Sorcerer"
+    },
+    "adventures": {
+        "1": {
+            "title": "The Goblin Forest",
+            "description": "Scouts have reported goblin activity in the nearby woods. Investigate and clear the threat."
+        },
+        "2": {
+            "title": "Stone Golem Cave",
+            "description": "A massive golem is blocking the pass. You must defeat it to proceed."
+        },
+        "3": {
+            "title": "The Sorcerer's Tower",
+            "description": "The source of the corruption has been found. Defeat the dark sorcerer!"
+        },
+        "4": {
+            "title": "Another Adventure",
+            "description": "Placeholder for another adventure."
         }
     },
     "math": {

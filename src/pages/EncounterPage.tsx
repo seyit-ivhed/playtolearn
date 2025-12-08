@@ -11,7 +11,7 @@ const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
     onClick?: () => void,
     onRecharge?: () => void
 }) => {
-    const isEnemy = !unit.isPlayer;
+    const isMonster = !unit.isPlayer;
     const healthPercent = (unit.currentHealth / unit.maxHealth) * 100;
 
     // Companion Specifics
@@ -24,14 +24,14 @@ const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
                 relative w-40 p-3 rounded-xl border-4 transition-all
                 ${unit.isDead ? 'opacity-50 grayscale' : 'opacity-100'}
                 ${isActive ? 'scale-110 border-[var(--color-brand-accent)] shadow-[0_0_20px_var(--color-brand-accent)] z-10' : 'border-[var(--color-bg-tertiary)] bg-white'}
-                ${!isEnemy && isActive ? 'cursor-pointer' : ''}
+                ${!isMonster && isActive ? 'cursor-pointer' : ''}
             `}
-            onClick={() => !isEnemy && !unit.isDead && onClick?.()}
+            onClick={() => !isMonster && !unit.isDead && onClick?.()}
         >
             {/* Health Bar */}
             <div className="absolute -top-4 left-2 right-2 h-4 bg-gray-700 rounded-full overflow-hidden border-2 border-white">
                 <div
-                    className={`h-full transition-all duration-500 ${isEnemy ? 'bg-[var(--color-danger)]' : 'bg-[var(--color-success)]'}`}
+                    className={`h-full transition-all duration-500 ${isMonster ? 'bg-[var(--color-danger)]' : 'bg-[var(--color-success)]'}`}
                     style={{ width: `${healthPercent}%` }}
                 />
             </div>
@@ -46,7 +46,7 @@ const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
             {/* Icon */}
             {/* Icon/Portrait */}
             <div className="flex justify-center my-2 h-20 items-center">
-                {!isEnemy ? (
+                {!isMonster ? (
                     <img src={getCompanionById(unit.templateId).image} alt={unit.name} className="w-20 h-20 object-cover rounded-full border-2 border-white shadow-sm" />
                 ) : (
                     <div className="text-5xl">{unit.icon}</div>
@@ -57,7 +57,7 @@ const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
             <div className="text-center font-bold text-sm truncate">{unit.name}</div>
 
             {/* Energy (Player Only) */}
-            {!isEnemy && (
+            {!isMonster && (
                 <div className="flex justify-center gap-1 mt-2">
                     {Array(unit.maxEnergy).fill(0).map((_, i) => (
                         <div
@@ -69,7 +69,7 @@ const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
             )}
 
             {/* Recharge Button Overlay */}
-            {!isEnemy && unit.currentEnergy === 0 && !unit.isDead && (
+            {!isMonster && unit.currentEnergy === 0 && !unit.isDead && (
                 <button
                     onClick={(e) => { e.stopPropagation(); onRecharge?.(); }}
                     className="absolute inset-0 bg-black/60 flex items-center justify-center text-white font-bold rounded-lg hover:bg-black/70 backdrop-blur-sm animate-pulse"
@@ -81,10 +81,10 @@ const UnitCard = ({ unit, isActive, onClick, onRecharge }: {
     );
 };
 
-const CombatPage = () => {
+const EncounterPage = () => {
     const navigate = useNavigate();
     const {
-        phase, party, enemies, combatLog, selectedUnitId,
+        phase, party, monsters, combatLog, selectedUnitId,
         selectUnit, performAction, rechargeUnit, endPlayerTurn
     } = useCombatStore();
 
@@ -125,9 +125,9 @@ const CombatPage = () => {
         <div className="flex flex-col h-full bg-[url('/combat-bg-forest.png')] bg-cover relative overflow-hidden">
             {/* Top HUD */}
             <div className="flex justify-between p-4 z-10">
-                <button onClick={handleRetreat} className="bg-gray-500 text-sm py-1 px-3" data-testid="combat-retreat-btn">🏳️ Retreat</button>
-                <div className="bg-black/50 text-white px-4 py-1 rounded-full font-bold" data-testid="combat-turn-indicator">
-                    {phase === CombatPhase.PLAYER_TURN ? "YOUR TURN" : (phase === CombatPhase.ENEMY_TURN ? "ENEMY TURN..." : phase)}
+                <button onClick={handleRetreat} className="bg-gray-500 text-sm py-1 px-3" data-testid="encounter-retreat-btn">🏳️ Retreat</button>
+                <div className="bg-black/50 text-white px-4 py-1 rounded-full font-bold" data-testid="encounter-turn-indicator">
+                    {phase === CombatPhase.PLAYER_TURN ? "YOUR TURN" : (phase === CombatPhase.MONSTER_TURN ? "MONSTER TURN..." : phase)}
                 </div>
             </div>
 
@@ -140,7 +140,7 @@ const CombatPage = () => {
                         <div key={unit.id} className={unit.id === selectedUnitId ? 'transform translate-x-4 transition-transform' : ''} data-testid={`unit-card-${unit.templateId}`}>
                             <UnitCard
                                 unit={unit}
-                                isActive={unit.id === selectedUnitId || (phase === CombatPhase.ENEMY_TURN && !unit.isDead)} // Highlight target in enemy turn if needed, but simplified for now
+                                isActive={unit.id === selectedUnitId || (phase === CombatPhase.MONSTER_TURN && !unit.isDead)} // Highlight target in monster turn if needed, but simplified for now
                                 onClick={() => selectUnit(unit.id)}
                                 onRecharge={() => rechargeUnit(unit.id)}
                             />
@@ -149,15 +149,15 @@ const CombatPage = () => {
                 </div>
 
                 {/* VS */}
-                {phase === CombatPhase.ENEMY_TURN && (
+                {phase === CombatPhase.MONSTER_TURN && (
                     <div className="text-6xl font-black text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] animate-pulse">
                         VS
                     </div>
                 )}
 
-                {/* Right: Enemies */}
+                {/* Right: Monsters */}
                 <div className="flex flex-col gap-4 items-center">
-                    {enemies.map(unit => (
+                    {monsters.map(unit => (
                         <UnitCard key={unit.id} unit={unit} isActive={false} />
                     ))}
                 </div>
@@ -199,7 +199,7 @@ const CombatPage = () => {
                                 className="text-lg py-4 px-8 min-w-[200px] flex flex-col items-center gap-1 hover:scale-105"
                                 disabled={!selectedUnit || selectedUnit.currentEnergy <= 0}
                                 onClick={() => selectedUnit && performAction(selectedUnit.id)}
-                                data-testid="combat-act-btn"
+                                data-testid="encounter-act-btn"
                             >
                                 <span className="text-2xl">⚔️</span>
                                 <div>ACT</div>
@@ -217,13 +217,13 @@ const CombatPage = () => {
                         </div>
                     ) : (
                         <div className="text-xl font-bold text-[var(--color-text-secondary)] animate-pulse">
-                            Enemy is thinking...
+                            Monster is thinking...
                         </div>
                     )}
                 </div>
 
                 {/* Combat Log */}
-                <div className="w-1/4 p-4 bg-black/5 overflow-y-auto text-xs font-mono" data-testid="combat-log">
+                <div className="w-1/4 p-4 bg-black/5 overflow-y-auto text-xs font-mono" data-testid="encounter-log">
                     {combatLog.slice().reverse().map((log, i) => (
                         <div key={i} className="mb-1 border-b border-black/5 pb-1 last:border-0">
                             {log}
@@ -235,4 +235,4 @@ const CombatPage = () => {
     );
 };
 
-export default CombatPage;
+export default EncounterPage;

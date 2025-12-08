@@ -163,7 +163,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     );
 };
 
-const MapPage = () => {
+const AdventurePage = () => {
     const { currentMapNode } = useGameStore();
 
     return (
@@ -176,4 +176,4 @@ const MapPage = () => {
     );
 };
 
-export default MapPage;
+export default AdventurePage;

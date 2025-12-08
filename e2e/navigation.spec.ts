@@ -62,11 +62,11 @@ test.describe('Navigation Flow', () => {
         await expect(page).toHaveURL('/encounter');
 
         // Check for key combat elements
-        await expect(page.getByTestId('combat-retreat-btn')).toBeVisible();
-        await expect(page.getByTestId('combat-turn-indicator')).toBeVisible();
+        await expect(page.getByTestId('encounter-retreat-btn')).toBeVisible();
+        await expect(page.getByTestId('encounter-turn-indicator')).toBeVisible();
 
         // Click Retreat
-        await page.getByTestId('combat-retreat-btn').click();
+        await page.getByTestId('encounter-retreat-btn').click();
 
         // Dialog handling triggers automatically via the listener above
 

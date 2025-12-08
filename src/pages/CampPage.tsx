@@ -4,7 +4,7 @@ import { getCompanionById } from '../data/companions.data';
 
 const MAX_PARTY_SIZE = 4;
 
-const PartyCampPage = () => {
+const CampPage = () => {
     const navigate = useNavigate();
     const { unlockedCompanions, activeParty, addToParty, removeFromParty } = useGameStore();
 
@@ -100,4 +100,4 @@ const PartyCampPage = () => {
     );
 };
 
-export default PartyCampPage;
+export default CampPage;

@@ -3,12 +3,12 @@ import { persist } from 'zustand/middleware';
 
 export interface PlayerState {
     name: string;
-    currentMission: number;
-    unlockedMissions: number[];
+    currentAdventure: number;
+    unlockedAdventures: number[];
 
     // Actions
     setName: (name: string) => void;
-    unlockMission: (missionId: number) => void;
+    unlockAdventure: (adventureId: number) => void;
     resetProgress: () => void;
 }
 
@@ -16,22 +16,22 @@ export const usePlayerStore = create<PlayerState>()(
     persist(
         (set) => ({
             name: 'Cadet',
-            currentMission: 1,
-            unlockedMissions: [1],
+            currentAdventure: 1,
+            unlockedAdventures: [1],
 
             setName: (name) => set({ name }),
 
-            unlockMission: (missionId) =>
+            unlockAdventure: (adventureId) =>
                 set((state) => ({
-                    unlockedMissions: state.unlockedMissions.includes(missionId)
-                        ? state.unlockedMissions
-                        : [...state.unlockedMissions, missionId]
+                    unlockedAdventures: state.unlockedAdventures.includes(adventureId)
+                        ? state.unlockedAdventures
+                        : [...state.unlockedAdventures, adventureId]
                 })),
 
             resetProgress: () => set({
                 name: 'Cadet',
-                currentMission: 1,
-                unlockedMissions: [1],
+                currentAdventure: 1,
+                unlockedAdventures: [1],
             })
         }),
         {

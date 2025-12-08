@@ -1,26 +1,21 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import MissionPage from './pages/MissionPage';
-import PartyCampPage from './pages/PartyCampPage';
-import CombatPage from './pages/CombatPage';
-
-// Temporary aliases to match new flow until files are renamed
-const MapPage = MissionPage;
-const CampPage = PartyCampPage;
-const EncounterPage = CombatPage;
+import AdventurePage from './pages/AdventurePage';
+import CampPage from './pages/CampPage';
+import EncounterPage from './pages/EncounterPage';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/map" replace />} />
+        <Route path="/" element={<Navigate to="/camp" replace />} />
 
-        {/* 1. The Map */}
-        <Route path="/map" element={<MapPage />} />
-
-        {/* 2. The Camp */}
+        {/* 1. The Camp (Starting Hub) */}
         <Route path="/camp" element={<CampPage />} />
 
-        {/* 3. The Encounter (Combat) */}
+        {/* 2. The Adventure Map */}
+        <Route path="/map" element={<AdventurePage />} />
+
+        {/* 3. The Encounter */}
         <Route path="/encounter" element={<EncounterPage />} />
 
         {/* Legacy / Dev routes */}

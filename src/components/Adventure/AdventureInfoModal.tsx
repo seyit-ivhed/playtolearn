@@ -1,58 +1,58 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './MissionInfoModal.module.css';
-import type { Mission } from '../../types/mission.types';
+import styles from './AdventureInfoModal.module.css';
+import type { Adventure } from '../../types/adventure.types';
 
-interface MissionInfoModalProps {
-    mission: Mission;
+interface AdventureInfoModalProps {
+    adventure: Adventure;
     onStart: () => void;
     onClose: () => void;
 }
 
-export const MissionInfoModal: React.FC<MissionInfoModalProps> = ({
-    mission,
+export const AdventureInfoModal: React.FC<AdventureInfoModalProps> = ({
+    adventure,
     onStart,
     onClose,
 }) => {
     const { t } = useTranslation();
 
     return (
-        <div className={styles.overlay} onClick={onClose} data-testid="mission-info-modal">
+        <div className={styles.overlay} onClick={onClose} data-testid="adventure-info-modal">
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
-                    <h2 className={styles.title} data-testid="mission-title">{t(`missions.${mission.id}.title`)}</h2>
+                    <h2 className={styles.title} data-testid="adventure-title">{t(`adventures.${adventure.id}.title`)}</h2>
                     <button className={styles.closeButton} onClick={onClose} aria-label="Close">
                         &times;
                     </button>
                 </div>
 
                 <div className={styles.content}>
-                    <p className={styles.description}>{t(`missions.${mission.id}.description`)}</p>
+                    <p className={styles.description}>{t(`adventures.${adventure.id}.description`)}</p>
 
                     <div className={styles.grid}>
                         <div className={styles.section}>
-                            <span className={styles.sectionTitle}>{t('mission.target_enemy')}</span>
+                            <span className={styles.sectionTitle}>{t('adventure.target_monster')}</span>
                             <div className={styles.enemyInfo}>
                                 <span className={styles.enemyIcon}>👾</span>
                                 <div style={{ width: '100%' }}>
-                                    <strong>{t(`enemies.${mission.enemy.id}`)}</strong>
+                                    <strong>{t(`monsters.${adventure.enemy.id}`)}</strong>
                                     <div className={styles.statGrid}>
                                         <div className={styles.stat}>
                                             <span className={styles.statLabel}>ATK</span>
-                                            <span className={styles.statValue}>{mission.enemy.attack}</span>
+                                            <span className={styles.statValue}>{adventure.enemy.attack}</span>
                                         </div>
                                         <div className={styles.stat}>
                                             <span className={styles.statLabel}>DEF</span>
-                                            <span className={styles.statValue}>{mission.enemy.defense}</span>
+                                            <span className={styles.statValue}>{adventure.enemy.defense}</span>
                                         </div>
                                         <div className={styles.stat}>
                                             <span className={styles.statLabel}>HP</span>
-                                            <span className={styles.statValue}>{mission.enemy.maxHealth}</span>
+                                            <span className={styles.statValue}>{adventure.enemy.maxHealth}</span>
                                         </div>
-                                        {mission.enemy.maxShield && (
+                                        {adventure.enemy.maxShield && (
                                             <div className={styles.stat}>
                                                 <span className={styles.statLabel}>SHLD</span>
-                                                <span className={styles.statValue}>{mission.enemy.maxShield}</span>
+                                                <span className={styles.statValue}>{adventure.enemy.maxShield}</span>
                                             </div>
                                         )}
                                     </div>
@@ -61,26 +61,26 @@ export const MissionInfoModal: React.FC<MissionInfoModalProps> = ({
                         </div>
 
                         <div className={styles.section}>
-                            <span className={styles.sectionTitle}>{t('mission.rewards')}</span>
+                            <span className={styles.sectionTitle}>{t('adventure.rewards')}</span>
                             <ul className={styles.rewardsList}>
-                                {mission.rewards.xp && (
+                                {adventure.rewards.xp && (
                                     <li className={styles.rewardItem}>
-                                        <span>✨</span> {t('rewards.xp', { amount: mission.rewards.xp })}
+                                        <span>✨</span> {t('rewards.xp', { amount: adventure.rewards.xp })}
                                     </li>
                                 )}
-                                {mission.rewards.currency && (
+                                {adventure.rewards.currency && (
                                     <li className={styles.rewardItem}>
-                                        <span>💎</span> {t('rewards.credits', { amount: mission.rewards.currency })}
+                                        <span>💎</span> {t('rewards.credits', { amount: adventure.rewards.currency })}
                                     </li>
                                 )}
-                                {mission.rewards.unlocksModuleId && (
+                                {adventure.rewards.unlocksCompanionId && (
                                     <li className={styles.rewardItem}>
-                                        <span>🎁</span> {t('rewards.module_unlocked')}
+                                        <span>🎁</span> {t('rewards.companion_unlocked')}
                                     </li>
                                 )}
-                                {!mission.rewards.xp && !mission.rewards.currency && !mission.rewards.unlocksModuleId && (
+                                {!adventure.rewards.xp && !adventure.rewards.currency && !adventure.rewards.unlocksCompanionId && (
                                     <li className={styles.rewardItem} style={{ color: 'var(--color-text-disabled)' }}>
-                                        {t('mission.no_rewards')}
+                                        {t('adventure.no_rewards')}
                                     </li>
                                 )}
                             </ul>
@@ -90,10 +90,10 @@ export const MissionInfoModal: React.FC<MissionInfoModalProps> = ({
 
                 <div className={styles.footer}>
                     <button className={styles.cancelButton} onClick={onClose}>
-                        {t('mission.cancel')}
+                        {t('adventure.cancel')}
                     </button>
-                    <button className={styles.startButton} onClick={onStart} data-testid="start-mission-btn">
-                        {t('mission.start')}
+                    <button className={styles.startButton} onClick={onStart} data-testid="start-adventure-btn">
+                        {t('adventure.start')}
                     </button>
                 </div>
             </div>
