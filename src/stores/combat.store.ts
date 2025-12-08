@@ -229,6 +229,10 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     processMonsterTurn: () => {
         const { monsters, party } = get();
         const activeMonsters = monsters.filter(m => !m.isDead);
+        // Expose store for testing
+        if (typeof window !== 'undefined') {
+            (window as any).useCombatStore = useCombatStore;
+        }
 
         if (activeMonsters.length === 0) return; // Should be victory already
 
@@ -281,3 +285,8 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         }
     }
 }));
+
+// Expose store for testing
+if (typeof window !== 'undefined') {
+    (window as any).useCombatStore = useCombatStore;
+}
