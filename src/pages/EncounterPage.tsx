@@ -114,70 +114,72 @@ const EncounterPage = () => {
             </div>
 
             {/* Battlefield */}
-            <div className="flex-1 flex items-center justify-center gap-16 px-12 z-0 pb-24 pt-12">
-                {/* Party Grid */}
-                <div className="grid grid-cols-2 gap-8 items-center justify-items-center">
-                    {party.map(unit => (
-                        <div key={unit.id} className="transition-transform duration-300">
-                            <UnitCard
-                                unit={unit}
-                                phase={phase}
-                                onAct={() => performAction(unit.id)}
-                                onRecharge={() => startRecharge(unit.id)}
-                            />
-                        </div>
-                    ))}
-                </div>
-
-                {/* VS Indicator */}
-                <div className="flex flex-col items-center justify-center opacity-40 mix-blend-overlay pointer-events-none">
-                    <div className="h-32 w-1 bg-white/50 rounded-full mb-4"></div>
-                    <span className="text-4xl font-black text-white italic">VS</span>
-                    <div className="h-32 w-1 bg-white/50 rounded-full mt-4"></div>
-                </div>
-
-                {/* Monsters Grid */}
-                <div className="flex flex-col gap-6 items-center">
-                    {monsters.map(unit => (
-                        <UnitCard
-                            key={unit.id}
-                            unit={unit}
-                            phase={phase}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            {/* Bottom HUD: Party Spirit Meter (Now Interactive) */}
-            <div className="absolute bottom-6 left-0 right-0 flex justify-center z-40">
-                <div
-                    className={`
-                        relative w-[500px] h-14 bg-gray-900/90 rounded-full border-4 overflow-hidden backdrop-blur-md transition-all duration-300
-                        ${specialMeter >= 100 && phase === CombatPhase.PLAYER_TURN
-                            ? 'border-[var(--color-brand-secondary)] cursor-pointer hover:scale-105 shadow-[0_0_30px_rgba(168,85,247,0.6)] animate-pulse'
-                            : 'border-gray-600 cursor-default'}
-                    `}
-                    onClick={startSpecialAttack}
-                    title={specialMeter >= 100 ? "Click to Activate Ultimate!" : `${Math.floor(specialMeter)}% Spirit`}
-                >
-                    {/* Background Bar */}
-                    <div
-                        className={`h-full transition-all duration-700 ease-out flex items-center justify-start overflow-hidden
-                            ${specialMeter >= 100 ? 'bg-gradient-to-r from-purple-800 via-purple-600 to-fuchsia-500' : 'bg-gradient-to-r from-yellow-700 to-yellow-500'}
-                        `}
-                        style={{ width: `${specialMeter}%` }}
-                    >
-                        {/* Sparkle effect when full */}
-                        {specialMeter >= 100 && (
-                            <div className="w-full h-full animate-shimmer bg-white/20" />
-                        )}
+            <div className="flex-1 flex flex-col items-center justify-center gap-8 px-12 z-0 pb-12 pt-12 overflow-y-auto">
+                <div className="flex items-center gap-12 w-full justify-center">
+                    {/* Party Grid */}
+                    <div className="grid grid-cols-2 gap-8 items-center justify-items-center">
+                        {party.map(unit => (
+                            <div key={unit.id} className="transition-transform duration-300">
+                                <UnitCard
+                                    unit={unit}
+                                    phase={phase}
+                                    onAct={() => performAction(unit.id)}
+                                    onRecharge={() => startRecharge(unit.id)}
+                                />
+                            </div>
+                        ))}
                     </div>
 
-                    {/* Text Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <span className={`text-xl font-black uppercase tracking-[0.2em] drop-shadow-lg ${specialMeter >= 100 ? 'text-white' : 'text-gray-200'}`}>
-                            {specialMeter >= 100 ? "✨ UNLEASH ULTIMATE ✨" : `Party Spirit ${Math.floor(specialMeter)}%`}
-                        </span>
+                    {/* VS Indicator */}
+                    <div className="flex flex-col items-center justify-center opacity-40 mix-blend-overlay pointer-events-none">
+                        <div className="h-32 w-1 bg-white/50 rounded-full mb-4"></div>
+                        <span className="text-4xl font-black text-white italic">VS</span>
+                        <div className="h-32 w-1 bg-white/50 rounded-full mt-4"></div>
+                    </div>
+
+                    {/* Monsters Grid */}
+                    <div className="flex flex-col gap-6 items-center">
+                        {monsters.map(unit => (
+                            <UnitCard
+                                key={unit.id}
+                                unit={unit}
+                                phase={phase}
+                            />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Party Spirit Meter (Now Below Cards) */}
+                <div className="flex justify-center z-40 mt-4">
+                    <div
+                        className={`
+                            relative w-[600px] h-14 bg-gray-900/90 rounded-full border-4 overflow-hidden backdrop-blur-md transition-all duration-300
+                            ${specialMeter >= 100 && phase === CombatPhase.PLAYER_TURN
+                                ? 'border-[var(--color-brand-secondary)] cursor-pointer hover:scale-105 shadow-[0_0_30px_rgba(168,85,247,0.6)] animate-pulse'
+                                : 'border-gray-600 cursor-default'}
+                        `}
+                        onClick={startSpecialAttack}
+                        title={specialMeter >= 100 ? "Click to Activate Ultimate!" : `${Math.floor(specialMeter)}% Spirit`}
+                    >
+                        {/* Background Bar */}
+                        <div
+                            className={`h-full transition-all duration-700 ease-out flex items-center justify-start overflow-hidden
+                                ${specialMeter >= 100 ? 'bg-gradient-to-r from-purple-800 via-purple-600 to-fuchsia-500' : 'bg-gradient-to-r from-yellow-700 to-yellow-500'}
+                            `}
+                            style={{ width: `${specialMeter}%` }}
+                        >
+                            {/* Sparkle effect when full */}
+                            {specialMeter >= 100 && (
+                                <div className="w-full h-full animate-shimmer bg-white/20" />
+                            )}
+                        </div>
+
+                        {/* Text Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <span className={`text-xl font-black uppercase tracking-[0.2em] drop-shadow-lg ${specialMeter >= 100 ? 'text-white' : 'text-gray-200'}`}>
+                                {specialMeter >= 100 ? "✨ UNLEASH ULTIMATE ✨" : `Party Spirit ${Math.floor(specialMeter)}%`}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
