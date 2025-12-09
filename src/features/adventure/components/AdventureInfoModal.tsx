@@ -16,6 +16,8 @@ export const AdventureInfoModal: React.FC<AdventureInfoModalProps> = ({
 }) => {
     const { t } = useTranslation();
 
+    const targetMonster = adventure.encounters.find(e => e.type === 'BOSS')?.enemy;
+
     return (
         <div className={styles.overlay} onClick={onClose} data-testid="adventure-info-modal">
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
@@ -32,32 +34,38 @@ export const AdventureInfoModal: React.FC<AdventureInfoModalProps> = ({
                     <div className={styles.grid}>
                         <div className={styles.section}>
                             <span className={styles.sectionTitle}>{t('adventure.target_monster')}</span>
-                            <div className={styles.enemyInfo}>
-                                <span className={styles.enemyIcon}>👾</span>
-                                <div style={{ width: '100%' }}>
-                                    <strong>{t(`monsters.${adventure.enemy.id}`)}</strong>
-                                    <div className={styles.statGrid}>
-                                        <div className={styles.stat}>
-                                            <span className={styles.statLabel}>ATK</span>
-                                            <span className={styles.statValue}>{adventure.enemy.attack}</span>
-                                        </div>
-                                        <div className={styles.stat}>
-                                            <span className={styles.statLabel}>DEF</span>
-                                            <span className={styles.statValue}>{adventure.enemy.defense}</span>
-                                        </div>
-                                        <div className={styles.stat}>
-                                            <span className={styles.statLabel}>HP</span>
-                                            <span className={styles.statValue}>{adventure.enemy.maxHealth}</span>
-                                        </div>
-                                        {adventure.enemy.maxShield && (
+                            {targetMonster ? (
+                                <div className={styles.enemyInfo}>
+                                    <span className={styles.enemyIcon}>{targetMonster.icon || '👾'}</span>
+                                    <div style={{ width: '100%' }}>
+                                        <strong>{targetMonster.name}</strong>
+                                        <div className={styles.statGrid}>
                                             <div className={styles.stat}>
-                                                <span className={styles.statLabel}>SHLD</span>
-                                                <span className={styles.statValue}>{adventure.enemy.maxShield}</span>
+                                                <span className={styles.statLabel}>ATK</span>
+                                                <span className={styles.statValue}>{targetMonster.attack}</span>
                                             </div>
-                                        )}
+                                            <div className={styles.stat}>
+                                                <span className={styles.statLabel}>DEF</span>
+                                                <span className={styles.statValue}>{targetMonster.defense}</span>
+                                            </div>
+                                            <div className={styles.stat}>
+                                                <span className={styles.statLabel}>HP</span>
+                                                <span className={styles.statValue}>{targetMonster.maxHealth}</span>
+                                            </div>
+                                            {targetMonster.maxShield && (
+                                                <div className={styles.stat}>
+                                                    <span className={styles.statLabel}>SHLD</span>
+                                                    <span className={styles.statValue}>{targetMonster.maxShield}</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            ) : (
+                                <div className={styles.enemyInfo}>
+                                    <p>Multiple Encounters</p>
+                                </div>
+                            )}
                         </div>
 
                         <div className={styles.section}>

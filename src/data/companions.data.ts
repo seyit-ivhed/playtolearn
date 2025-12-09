@@ -33,6 +33,34 @@ import lightHealerImg from '../assets/images/companions/light_healer.png';
 import lightningMageImg from '../assets/images/companions/lightning_mage.png';
 
 export const COMPANIONS: Record<string, Companion> = {
+    'village_squire': {
+        id: 'village_squire',
+        name: 'Village Squire',
+        role: CompanionRole.WARRIOR,
+        description: 'A young hero with a rusty sword and a big heart.',
+        maxHealth: 30,
+        maxEnergy: 2,
+        abilityName: 'Clumsy Strike',
+        abilityDescription: 'Deals 8 damage to a single enemy.',
+        abilityDamage: 8,
+        color: '#e74c3c', // Red
+        icon: '🗡️',
+        image: fireKnightImg // Reusing for now
+    },
+    'novice_archer': {
+        id: 'novice_archer',
+        name: 'Novice Archer',
+        role: CompanionRole.WARRIOR,
+        description: 'Still learning to aim, but has keen eyes.',
+        maxHealth: 25,
+        maxEnergy: 2,
+        abilityName: 'Practice Shot',
+        abilityDescription: 'Deals 6 damage.',
+        abilityDamage: 6,
+        color: '#2c3e50', // Dark Blue
+        icon: '🏹',
+        image: shadowArcherImg // Reusing for now
+    },
     'fire_knight': {
         id: 'fire_knight',
         name: 'Fire Knight',
@@ -106,7 +134,7 @@ export const COMPANIONS: Record<string, Companion> = {
     }
 };
 
-export const INITIAL_FELLOWSHIP = ['fire_knight', 'crystal_guardian', 'light_healer', 'shadow_archer'];
+export const INITIAL_FELLOWSHIP = ['village_squire', 'novice_archer'];
 
 export const getAllCompanions = () => Object.values(COMPANIONS);
 export const getCompanionById = (id: string) => COMPANIONS[id];

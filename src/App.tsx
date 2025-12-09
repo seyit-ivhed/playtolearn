@@ -7,7 +7,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/camp" replace />} />
+        <Route path="/" element={<Navigate to="/map" replace />} />
 
         {/* 1. The Camp (Starting Hub) */}
         <Route path="/camp" element={<CampPage />} />
