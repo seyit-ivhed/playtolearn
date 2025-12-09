@@ -2,7 +2,7 @@ import type { PartySlot } from '../types/party.types';
 
 /**
  * Party slots - 4 generic slots for any companions
- * Player chooses which 4 companions to bring on each quest
+ * Player chooses which 4 companions to bring on each adventure
  */
 export const PARTY_SLOTS: PartySlot[] = [
     {

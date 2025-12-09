@@ -1,13 +1,13 @@
 {
     "app_title": "Math Quest Adventures",
-    "subtitle": "Master math to explored the realms!",
-    "start_mission": "Start Quest",
+    "subtitle": "Master math to explore the realms!",
+    "start_adventure": "Start Adventure",
     "party_camp": "Party Camp",
-    "quest_map": "Quest Map",
+    "adventure_map": "Adventure Map",
     "back_to_home": "Back to Home",
     "empty_slot": "Empty Slot",
     "combat_simulation": "Battle",
-    "abort_mission": "Retreat",
+    "retreat": "Retreat",
     "combat": {
         "action": {
             "attack": "Attack",
@@ -28,7 +28,7 @@
             "title": "Defeat 💥",
             "message": "Your party was defeated!",
             "retry": "Retry",
-            "return": "Return to Quests"
+            "return": "Return to Adventures"
         },
         "math": {
             "title": "Solve to Act!",
@@ -41,6 +41,8 @@
         "xp": "+{{amount}} XP",
         "credits": "+{{amount}} Gold",
         "companion_unlocked": "New Companion Unlocked!",
+        "companion_growth": "Companion Growth!",
+        "companion_grew": "{{companionName}} has grown stronger!",
         "none": "No rewards for this adventure.",
         "return_to_camp": "Return to Camp",
         "next_adventure": "Next Adventure"

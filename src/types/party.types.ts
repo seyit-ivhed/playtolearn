@@ -31,15 +31,15 @@ export interface Companion {
         maxEnergy?: number; // Max energy for this specific companion in combat
         cooldown?: number;
     };
-    /** Current upgrade level (1-5) */
+    /** Current growth level (1-5) - companions learn and gain experience */
     level: number;
-    /** Math skill that unlocks/upgrades this companion */
+    /** Math skill that unlocks this companion or grants companion growth */
     mathSkill: 'addition' | 'subtraction' | 'multiplication' | 'division' | 'fractions' | 'decimals' | 'mixed' | 'word-problems';
-    /** XP cost to unlock or upgrade to next level */
+    /** XP cost to unlock or achieve next growth level */
     cost: number;
     requirements?: {
         minLevel?: number;
-        questId?: number;
+        adventureId?: string; // Adventure that must be completed
     };
     icon?: string; // Placeholder for icon path/name
 }

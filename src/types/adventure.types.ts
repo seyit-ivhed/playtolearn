@@ -1,3 +1,4 @@
+// Adventure: A self-contained story arc with its own theme, map, and series of encounters
 export type AdventureId = string;
 
 export const AdventureStatus = {
@@ -8,12 +9,25 @@ export const AdventureStatus = {
 
 export type AdventureStatus = typeof AdventureStatus[keyof typeof AdventureStatus];
 
+// Rewards for completing an adventure (either new companion or companion growth)
 export interface AdventureReward {
-    unlocksCompanionId?: string;
+    unlocksCompanionId?: string; // New companion joins the party
+    companionGrowth?: string; // Existing companion ID that experiences growth
     xp?: number;
     currency?: number;
 }
 
+// Encounter Types (for future expansion)
+export const EncounterType = {
+    BATTLE: 'BATTLE',      // Turn-based combat against monsters
+    PUZZLE: 'PUZZLE',      // Logic and math puzzles (future feature)
+    BOSS: 'BOSS',          // Boss fight at the end of an adventure
+    CAMP: 'CAMP'           // Rest stop to adjust party
+} as const;
+
+export type EncounterType = typeof EncounterType[keyof typeof EncounterType];
+
+// Monster encountered in battle encounters
 export interface AdventureMonster {
     id: string;
     name: string;
@@ -22,15 +36,16 @@ export interface AdventureMonster {
     attack: number;
     defense: number;
     speed: number;
-    sprite?: string; // Placeholder
+    sprite?: string;
 }
 
+// Adventure: Contains a linear sequence of encounters culminating in a boss fight
 export interface Adventure {
     id: AdventureId;
     title: string;
     description: string;
-    difficulty: number; // 1-10 scale?
-    enemy: AdventureMonster;
+    difficulty: number; // 1-10 scale
+    enemy: AdventureMonster; // Boss fight enemy
     rewards: AdventureReward;
     requirements?: {
         minLevel?: number;

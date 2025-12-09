@@ -1,13 +1,13 @@
 {
     "app_title": "Matteäventyret",
     "subtitle": "Bemästra matte för att utforska rikena!",
-    "start_mission": "Starta Äventyr",
+    "start_adventure": "Starta Äventyr",
     "party_camp": "Läger",
-    "quest_map": "Äventyrskarta",
+    "adventure_map": "Äventyrskarta",
     "back_to_home": "Tillbaka Hem",
     "empty_slot": "Tom Plats",
     "combat_simulation": "Strid",
-    "abort_mission": "Reträtt",
+    "retreat": "Reträtt",
     "combat": {
         "action": {
             "attack": "Attackera",
@@ -28,7 +28,7 @@
             "title": "Nederlag 💥",
             "message": "Din grupp besegrades!",
             "retry": "Försök Igen",
-            "return": "Tillbaka till Kartan"
+            "return": "Tillbaka till Äventyren"
         },
         "math": {
             "title": "Lös för att Agera!",
@@ -41,6 +41,8 @@
         "xp": "+{{amount}} XP",
         "credits": "+{{amount}} Guld",
         "companion_unlocked": "Ny Följeslagare Upplåst!",
+        "companion_growth": "Följeslagare Växer!",
+        "companion_grew": "{{companionName}} har blivit starkare!",
         "none": "Inga belöningar för detta äventyr.",
         "return_to_camp": "Återvänd till Läger",
         "next_adventure": "Nästa Äventyr"

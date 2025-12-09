@@ -10,67 +10,81 @@
 
 **Genre:** Educational Fantasy Adventure / RPG Lite
 
-**Core Concept:** Players become the leader of an adventuring party on an epic journey through magical realms. As they progress, new companions join their party and existing companions grow stronger. Players help their companions overcome challenges (which cleverly integrate math skills) to defeat monsters, complete adventures, and unlock new regions. The party grows from a small band to a formidable fellowship of heroes.
+**Core Concept:** Players embark on an epic **Journey** through magical realms, leading an adventuring party. The Journey is divided into many **Adventures**, each with its own theme, story, and map featuring a linear set of **Encounters**. Some encounters involve battles against monsters, while others present puzzles to solve. Each adventure culminates in a **Boss Fight**. Completing an adventure rewards players with either a new companion or **Companion Growth** (existing companions learn new skills and gain experience). The party grows from a small band to a formidable fellowship of heroes.
 
 ---
 
 ### 1. Game Overview
 
 ### 1.1 Vision Statement
-Math Quest Adventures transforms math learning into an exciting fantasy journey where every challenge overcome makes your party stronger. Players lead their own fellowship, helping companions solve contextual challenges (naturally integrated math) to grow in power, defeat monsters, and unlock new regions of the realm.
+Math Quest Adventures transforms math learning into an exciting fantasy **Journey** where every challenge overcome makes your party stronger. Players lead their own fellowship through multiple **Adventures**, each containing a series of **Encounters** (battles and puzzles) that culminate in epic **Boss Fights**. Companions solve contextual math challenges to achieve **Companion Growth**, defeat monsters, and unlock new regions of the realm.
 
 ### 1.2 Core Gameplay Loop
 ```mermaid
 graph LR
-    A[Select Adventure] --> B[Solve Math Challenges]
-    B --> C[Earn Experience]
-    C --> D[Upgrade Companions]
-    D --> E[Choose Party of 4]
-    E --> F[Battle Monsters]
-    F --> G[Unlock New Regions]
+    A[Select Adventure] --> B[Face Encounters]
+    B --> C[Solve Math Challenges]
+    C --> D[Defeat Boss Fight]
+    D --> E[Companion Growth]
+    E --> F[Choose Party of 4]
+    F --> G[Next Adventure]
     G --> A
 ```
 
 ### 1.3 Key Features
+- **Epic Journey**: Progress through multiple themed adventures, each with unique stories and maps
 - **Progressive Math Curriculum**: Adaptive difficulty that grows with player skill
 - **Companion Collection**: Recruit diverse heroes, each with unique abilities
-- **Party Customization**: Choose 4 companions to take on encounters
-- **Upgrade System**: Direct companion upgrades - no equipment micromanagement
-- **Adventure-Based Progression**: Structured challenges with clear objectives
-- **Monster Encounter System**: Turn-based battles using companion abilities
-- **Exploration**: Multiple realms with unique themes and challenges
-- **Reward System**: Immediate feedback and tangible progression
+- **Party Customization**: Choose 4 companions to take on each adventure
+- **Companion Growth System**: Companions learn new skills and gain experience - no equipment micromanagement
+- **Linear Adventure Maps**: Each adventure features a sequence of encounters leading to a boss fight
+- **Encounter Variety**: Face monster battles and solve puzzles (future feature)
+- **Boss Fights**: Epic climactic battles at the end of each adventure
+- **Reward System**: Immediate feedback and tangible progression through companion growth
 
 ---
 
 ## 2. Game Mechanics
 
-### 2.1 Adventure System
+### 2.1 Journey & Adventure System
+
+#### Journey Structure
+The player's overall progression is called the **Journey**. The Journey is divided into multiple **Adventures**, each representing a self-contained story arc with its own theme, map, and challenges.
+
+#### Adventure Structure
+Each **Adventure** consists of:
+- **Theme & Story**: Unique narrative context (e.g., "The Goblin Forest", "Dragon's Lair")
+- **Linear Map**: A path of connected nodes representing encounters
+- **Encounters**: Individual challenges along the path (battles against monsters, or puzzles to solve)
+- **Boss Fight**: The final, climactic encounter that must be defeated to complete the adventure
+- **Completion Reward**: Either a new companion joins the party, or an existing companion experiences **Companion Growth**
 
 #### Adventure Types
 1. **Training Adventures** (Tutorial)
-   - Introduction to basic controls
-   - Simple math problems (addition, subtraction)
-   - Rewards: First companions, basic upgrades
+   - Introduction to basic controls and mechanics
+   - Simple math challenges (addition, subtraction)
+   - Rewards: First companions, initial companion growth
 
 2. **Exploration Adventures**
-   - Discover hidden locations
-   - Solve math problems to find treasures
-   - Rewards: Experience, companion unlocks, resources
+   - Discover hidden locations and secrets
+   - Varied encounters with different monster types
+   - Rewards: Companion unlocks, companion growth
 
-3. **Rescue Adventures**
-   - Save villagers by solving math challenges
-   - Rewards: Companion unlocks, badges
+3. **Story Adventures**
+   - Narrative-driven adventures with character development
+   - Mix of battle encounters and puzzle encounters (future)
+   - Rewards: Companion unlocks, companion growth, story progression
 
-4. **Boss Adventures**
-   - Multi-stage challenges requiring various math skills
-   - Rewards: Realm unlocks, special badges for defeating bosses
+4. **Challenge Adventures**
+   - High-difficulty adventures for advanced players
+   - Powerful boss fights requiring strategy
+   - Rewards: Rare companions, significant companion growth
 
-#### Adventure Structure
-- **Objective**: Story-driven goal (e.g., "Help villagers count their harvest" or "Divide treasure among the party")
-- **Difficulty Rating**: Stars (★☆☆ to ★★★★★)
-- **Skill Focus**: Hidden math skill practiced (addition, multiplication, fractions, etc.)
-- **Rewards Preview**: Shows what companions or upgrades player can unlock
+#### Encounter Types
+- **Battle Encounters**: Turn-based combat against monsters
+- **Puzzle Encounters**: Logic and math puzzles to solve (future feature)
+- **Boss Fights**: Epic battles against powerful enemies at the end of each adventure
+- **Camp Encounters**: Rest stops where players can adjust their party
 
 ### 2.2 Math Challenge System
 
@@ -85,14 +99,14 @@ graph LR
 - Decimals
 - Algebra basics
 
-**Dimension 2: Difficulty Level** (determines companion upgrade level)
+**Dimension 2: Difficulty Level** (determines companion growth level)
 - **Level 1**: Small numbers (e.g., single-digit)
 - **Level 2**: Medium numbers (e.g., double-digit)
 - **Level 3**: Large numbers (e.g., triple-digit or complex operations)
 - **Level 4**: Very large numbers or multi-step problems
 - **Level 5**: Expert level challenges
 
-Example: Completing "Multiplication - Level 3" unlocks or upgrades a companion's attack ability to Level 3
+Example: Completing "Multiplication - Level 3" adventure unlocks a companion or grants companion growth to Level 3
 
 #### Challenge Presentation
 - **Contextual Integration**: Math naturally woven into story scenarios (never explicit "math problems")
@@ -164,15 +178,15 @@ Example: Completing "Multiplication - Level 3" unlocks or upgrades a companion's
   - Personality: Wise and patient
   - Visual: Green robes, nature-themed staff
 
-#### Companion Upgrade System
-- Companions have **5 upgrade levels** (Level 1-5)
-- Upgrades increase ability strength directly
+#### Companion Growth System
+- Companions have **5 growth levels** (Level 1-5)
+- **Companion Growth** increases ability strength directly as companions learn and gain experience
   - Level 1 Fire Knight: Flame Strike deals 10 damage
   - Level 3 Fire Knight: Flame Strike deals 25 damage
   - Level 5 Fire Knight: Flame Strike deals 45 damage
-- Visual changes as companions level up (better armor, glowing effects)
-- Players earn upgrades by completing harder math challenges
-- Simple progression: "Your Fire Knight is now Level 3!"
+- Visual changes as companions grow (better armor, glowing effects, more confident poses)
+- Players achieve companion growth by completing adventures with harder math challenges
+- Simple, encouraging progression: "Your Fire Knight has grown to Level 3!"
 
 #### Companion Collection
 - Start with 2 basic companions (e.g., Fire Knight + Light Healer)
@@ -225,7 +239,7 @@ Example: Completing "Multiplication - Level 3" unlocks or upgrades a companion's
 
 ### 2.5 Progression System
 
-#### Realm Progression
+#### Journey Progression Through Realms
 ```mermaid
 graph TD
     A[Realm 1: Training Grounds] --> B[Realm 2: Enchanted Forest]
@@ -235,31 +249,31 @@ graph TD
     E --> F[Realm 6: Dragon's Lair]
 ```
 
-Each realm:
+Each realm contains multiple adventures:
 - Unique visual theme
 - Specific math focus areas
 - New monster types
-- New companions to unlock
-- Boss encounter that must be defeated to unlock next realm
+- New companions to unlock through adventure completion
+- Final adventure with a boss fight that must be defeated to unlock next realm
 - Special badge/achievement for defeating the realm boss
 
 ---
 
 ## 3. Reward System
 
-### 3.1 Adventure Rewards
-- **Companion Unlocks**: Completing an adventure unlocks a new companion
-  - Example: Complete "Addition - Level 1" adventure → Unlock Fire Knight (Level 1)
-- **Companion Upgrades**: Completing adventures upgrades existing companions
-  - Example: Complete "Addition - Level 3" adventure → Upgrade Fire Knight to Level 3
-- **Content Unlocks**: Some adventures unlock new realms, adventure types, or monster encounters
-- **Boss Badges**: Defeating bosses grants special achievement badges
+### 3.1 Adventure Completion Rewards
+- **Companion Unlocks**: Completing an adventure unlocks a new companion who joins your party
+  - Example: Complete "The Goblin Forest" adventure → Unlock Fire Knight (Level 1)
+- **Companion Growth**: Completing adventures grants existing companions growth (they learn new skills and gain experience)
+  - Example: Complete "Dragon's Lair" adventure → Fire Knight experiences growth to Level 3
+- **Content Unlocks**: Some adventures unlock new realms or adventure paths
+- **Boss Badges**: Defeating boss fights grants special achievement badges
 
 ### 3.2 Progression Through Mastery
-- Players progress by improving their math skills
-- Stronger companions come from completing harder challenges
-- No currency or resource grinding - pure skill-based progression
-- Defeating bosses unlocks new realms with new challenges
+- Players progress through their Journey by improving their math skills
+- Stronger companions come from completing harder adventures
+- Companion Growth is achieved through skill-based challenges - no currency or resource grinding
+- Defeating boss fights unlocks new adventures and realms with new challenges
 
 ---
 
@@ -272,14 +286,14 @@ Each realm:
 - **Realm Map**: Navigate between unlocked realms
 - **Journal**: Stats, badges, progress, companion stories
 
-### 4.2 Quest Interface
+### 4.2 Adventure Interface
 - **Problem Display**: Clear, large text
 - **Answer Input**: Number pad or multiple choice
-- **Progress Bar**: Shows quest completion (e.g., "5/10 problems solved")
+- **Progress Bar**: Shows encounter progress within the adventure
 - **Feedback**: Immediate visual feedback on correct/incorrect answers
 - **Pause Menu**: Exit, settings
 
-### 4.3 Combat Interface
+### 4.3 Encounter Interface (Combat)
 - **Your Party**: 4 companion portraits showing health and energy
 - **Enemy**: Health and shields
 - **Math Problem**: Center focus when recharging
@@ -374,7 +388,7 @@ Each realm:
 ### 6.3 Data Storage
 - **User Profile**: Username, current realm
 - **Companion Collection**: Unlocked companions and their levels
-- **Progress**: Completed quests, unlocked realms, earned badges
+- **Progress**: Completed adventures, unlocked realms, earned badges
 - **Statistics**: Problems solved by math skill and difficulty, accuracy rates
 - **Settings**: Audio, visual preferences
 
@@ -391,22 +405,22 @@ Each realm:
 
 ### 7.1 Initial Prototype
 - **1 realm** (Training Grounds)
-- **5 quests** covering different math skills:
-  - Quest 1: Addition (unlocks Fire Knight)
-  - Quest 2: Subtraction (unlocks Shadow Archer)
-  - Quest 3: Multiplication (unlocks Lightning Mage)
-  - Quest 4: Division (unlocks Frost Ranger)
-  - Quest 5: Boss Battle (unlocks Realm 2)
+- **5 adventures** covering different math skills:
+  - Adventure 1: "Village Defense" - Addition (unlocks Fire Knight)
+  - Adventure 2: "Forest Ambush" - Subtraction (unlocks Shadow Archer)
+  - Adventure 3: "Mountain Pass" - Multiplication (unlocks Lightning Mage)
+  - Adventure 4: "Ice Cavern" - Division (unlocks Frost Ranger)
+  - Adventure 5: "Dragon's Lair" - Boss Fight (unlocks Realm 2)
 - **6-8 companions**: Mix of warrior, guardian, and support classes
 - **2-3 enemy types**: Basic enemies + 1 boss
-- **Turn-based combat** with recharge mechanics
-- **Simple party selection**: Choose 4 companions before each quest
+- **Turn-based encounters** with recharge mechanics
+- **Simple party selection**: Choose 4 companions before each adventure
 
 ### 7.2 Version 1.0 (Full Release)
-- 4-5 realms with 40+ quests
+- 4-5 realms with 40+ adventures
 - 8-10 enemy types including bosses
 - 12+ companions across all classes
-- Full combat system with special abilities
+- Full encounter system with special abilities
 - Comprehensive math curriculum (grades 1-6)
 - Achievement system
 - Companion dialogue and personality
@@ -414,11 +428,12 @@ Each realm:
 ### 7.3 Future Expansions
 - **New Realms**: Additional regions with unique themes
 - **More Companions**: Exotic classes (ninja, pirate, dragon rider)
-- **Multiplayer**: Co-op quests, friendly competitions
-- **Science Expansion**: Science-based quests
+- **Multiplayer**: Co-op adventures, friendly competitions
+- **Science Expansion**: Science-based adventures
 - **Story Mode**: Narrative-driven campaign with companion backstories
-- **Custom Quests**: Parent/teacher created challenges
+- **Custom Adventures**: Parent/teacher created challenges
 - **Mobile App**: Native iOS/Android versions
+- **Puzzle Encounters**: Implement logic and math puzzle encounters
 
 ---
 
@@ -540,11 +555,14 @@ Each realm:
 ## 12. Appendix
 
 ### 12.1 Glossary
+- **Journey**: The player's overall progression through the game
+- **Adventure**: A self-contained story arc with its own theme, map, and series of encounters
+- **Encounter**: An individual challenge within an adventure (battle against monsters or puzzle to solve)
+- **Boss Fight**: The final, climactic encounter at the end of each adventure
 - **Companion**: Hero who joins your adventuring party, each with one unique ability
+- **Companion Growth**: When companions learn new skills and gain experience, increasing their power (Levels 1-5)
 - **Party Camp**: Main hub where companions gather and player prepares for adventures
-- **Realm**: Major region with multiple quests
-- **Quest/Adventure**: Story-driven challenge with contextual math integration
-- **Upgrade**: Improving a companion's level (1-5)
+- **Realm**: Major region containing multiple adventures
 - **Party**: The 4 companions chosen for a specific adventure
 - **Adventuring Party**: Your full collection of companions (only 4 active at a time)
 
