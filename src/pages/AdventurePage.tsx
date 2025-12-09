@@ -10,11 +10,11 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     // Vertical Layout Nodes - Shifted down by 150px to clear header
     // Added 'type' to distinguish between combat and camp nodes
     const nodes = [
-        { id: 1, x: '50%', y: 250, label: t('mission.nodes.start'), type: 'combat' },
-        { id: 2, x: '30%', y: 450, label: t('mission.nodes.forest'), type: 'combat' },
-        { id: 3, x: '70%', y: 650, label: t('mission.nodes.camp'), type: 'camp' }, // Camp Node
-        { id: 4, x: '40%', y: 850, label: t('mission.nodes.cave'), type: 'combat' },
-        { id: 5, x: '50%', y: 1050, label: t('mission.nodes.boss'), type: 'combat' }
+        { id: 1, x: '50%', y: 250, label: t('adventure.nodes.start'), type: 'combat' },
+        { id: 2, x: '30%', y: 450, label: t('adventure.nodes.forest'), type: 'combat' },
+        { id: 3, x: '70%', y: 650, label: t('adventure.nodes.camp'), type: 'camp' }, // Camp Node
+        { id: 4, x: '40%', y: 850, label: t('adventure.nodes.cave'), type: 'combat' },
+        { id: 5, x: '50%', y: 1050, label: t('adventure.nodes.boss'), type: 'combat' }
     ];
 
     const navigate = useNavigate();
