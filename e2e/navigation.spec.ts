@@ -50,9 +50,6 @@ test.describe('Navigation Flow', () => {
     });
 
     test('should navigate between Map and Encounter (Retreat)', async ({ page }) => {
-        // Setup dialog handler for retreat confirmation
-        page.on('dialog', dialog => dialog.accept());
-
         // Click on the current node (assuming node 1 is current/start)
         const startNode = page.getByTestId('map-node-1');
         await expect(startNode).toBeVisible();
@@ -61,14 +58,12 @@ test.describe('Navigation Flow', () => {
         // Should be in encounter
         await expect(page).toHaveURL('/encounter');
 
-        // Check for key combat elements
-        await expect(page.getByTestId('encounter-retreat-btn')).toBeVisible();
-        await expect(page.getByTestId('encounter-turn-indicator')).toBeVisible();
+        // Check for key combat elements (unit cards instead of removed header elements)
+        // Party members should be visible
+        await expect(page.locator('[data-testid^="unit-card-"]').first()).toBeVisible();
 
-        // Click Retreat
-        await page.getByTestId('encounter-retreat-btn').click();
-
-        // Dialog handling triggers automatically via the listener above
+        // Navigate back to map (retreat button was removed, so use browser back)
+        await page.goBack();
 
         // Should return to Map
         await expect(page).toHaveURL('/map');
