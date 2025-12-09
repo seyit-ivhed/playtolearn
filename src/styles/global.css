@@ -1,5 +1,4 @@
-/* Tailwind removed */
-
+/* Global Variables */
 :root {
   /* Color Palette - Cartoon Fantasy */
   --color-bg-primary: #fdf6e3;
@@ -58,12 +57,12 @@
   --font-body: 'Nunito', system-ui, sans-serif;
   /* Readable Body */
 
+  /* Global Defaults */
   font-family: var(--font-body);
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light;
-  /* Switched to light mode */
   color: var(--color-text-primary);
   background-color: var(--color-bg-primary);
 
@@ -73,10 +72,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* CSS Reset & Base Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   display: flex;
   place-items: center;
+  /* Centering might be specific to previous layout, keeping for safe regression */
   min-width: 320px;
   min-height: 100vh;
   flex-direction: column;
@@ -92,6 +101,7 @@ body {
   flex-direction: column;
 }
 
+/* Typography */
 h1,
 h2,
 h3,
@@ -117,6 +127,7 @@ h3 {
   font-size: 1.8rem;
 }
 
+/* Buttons */
 button {
   font-family: var(--font-display);
   font-weight: 600;
@@ -154,16 +165,12 @@ button:disabled {
   border-color: transparent;
 }
 
-/* Card Style */
-.card {
-  background: white;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
-  border: 2px solid var(--color-bg-tertiary);
-  padding: var(--spacing-md);
+/* Utilities (Replacement for some common Tailwind utility patterns if needed globally) */
+.hidden {
+  display: none;
 }
 
-/* Link Styles */
+/* Links */
 a {
   color: var(--color-brand-primary);
   text-decoration: none;

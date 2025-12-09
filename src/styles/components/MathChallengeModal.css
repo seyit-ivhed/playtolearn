@@ -1,0 +1,134 @@
+/* Modal Overlay */
+.math-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+/* Modal Content */
+.math-modal-content {
+    background-color: white;
+    border-radius: 1rem;
+    /* rounded-2xl */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    /* shadow-2xl */
+    padding: 2rem;
+    max-width: 28rem;
+    /* max-w-md */
+    width: 100%;
+    animation: modal-enter 0.2s ease-out;
+}
+
+@keyframes modal-enter {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Header */
+.math-modal-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.math-modal-title {
+    font-size: 1.875rem;
+    /* text-3xl */
+    font-weight: 900;
+    color: var(--color-brand-primary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.math-modal-description {
+    color: #4b5563;
+    /* text-gray-600 */
+    font-weight: 500;
+}
+
+/* Math Content Area */
+.math-modal-body {
+    border-radius: 0.75rem;
+    padding: 1rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    background-color: #f9fafb;
+    /* bg-gray-50 */
+}
+
+.math-modal-body.success {
+    background-color: #dcfce7;
+    /* bg-green-100 */
+    box-shadow: 0 0 0 4px #4ade80;
+    /* ring-4 ring-green-400 */
+}
+
+.math-modal-body.failure {
+    background-color: #fee2e2;
+    /* bg-red-100 */
+    box-shadow: 0 0 0 4px #f87171;
+    /* ring-4 ring-red-400 */
+}
+
+/* Feedback Overlay */
+.feedback-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.feedback-icon-success {
+    font-size: 3.75rem;
+    /* text-6xl */
+    animation: bounce 1s infinite;
+}
+
+.feedback-icon-failure {
+    font-size: 6rem;
+    /* text-8xl */
+    color: #ef4444;
+    /* text-red-500 */
+    font-weight: 900;
+    opacity: 0.5;
+    animation: pulse 2s infinite;
+}
+
+/* Cancel Button */
+.modal-cancel-btn {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0.5rem 0;
+    color: #9ca3af;
+    /* text-gray-400 */
+    font-weight: 700;
+    border-radius: 0.5rem;
+    transition: color 0.2s, background-color 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.modal-cancel-btn:hover {
+    color: #4b5563;
+    /* text-gray-600 */
+    background-color: #f3f4f6;
+    /* bg-gray-100 */
+    box-shadow: none;
+    transform: none;
+}

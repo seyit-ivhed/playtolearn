@@ -1,0 +1,252 @@
+/* Main Container */
+.encounter-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-image: url('/combat-bg-forest.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top HUD */
+.top-hud {
+    position: absolute;
+    top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 50;
+    pointer-events: none;
+}
+
+.top-hud>* {
+    pointer-events: auto;
+}
+
+.retreat-btn {
+    background-color: #6b7280;
+    /* bg-gray-500 */
+    color: white;
+    font-size: 0.875rem;
+    /* text-sm */
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow-md);
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.retreat-btn:hover {
+    background-color: #4b5563;
+    /* bg-gray-600 */
+}
+
+/* Turn Indicator */
+.turn-indicator {
+    padding: 0.5rem 2rem;
+    border-radius: 9999px;
+    font-weight: 900;
+    font-size: 1.25rem;
+    /* text-xl */
+    box-shadow: var(--shadow-lg);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.turn-indicator.player-turn {
+    background-color: #4f46e5;
+    /* bg-indigo-600 */
+    color: white;
+    animation: bounce-subtle 2s infinite;
+}
+
+.turn-indicator.enemy-turn {
+    background-color: #991b1b;
+    /* bg-red-800 */
+    color: white;
+}
+
+/* Battlefield */
+.battlefield {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 3rem;
+    z-index: 0;
+    overflow-y: auto;
+}
+
+.battle-layout {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Party Grid */
+.party-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    align-items: center;
+    justify-items: center;
+}
+
+.card-wrapper {
+    transition: transform 0.3s;
+}
+
+/* VS Indicator */
+.vs-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+.vs-line {
+    height: 8rem;
+    width: 4px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 9999px;
+    margin-bottom: 1rem;
+}
+
+.vs-line.bottom {
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.vs-text {
+    font-size: 2.25rem;
+    /* text-4xl */
+    font-weight: 900;
+    color: white;
+    font-style: italic;
+}
+
+/* Monster Grid */
+.monster-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+/* Spirit Meter */
+.spirit-meter-container {
+    display: flex;
+    justify-content: center;
+    z-index: 40;
+    margin-top: 1rem;
+}
+
+.spirit-meter {
+    position: relative;
+    width: 600px;
+    height: 3.5rem;
+    /* h-14 */
+    background-color: rgba(17, 24, 39, 0.9);
+    /* bg-gray-900/90 */
+    border-radius: 9999px;
+    border: 4px solid #4b5563;
+    /* border-gray-600 */
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s;
+    cursor: default;
+}
+
+.spirit-meter.ready {
+    border-color: var(--color-brand-secondary);
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+    animation: pulse 2s infinite;
+}
+
+.spirit-meter.ready:hover {
+    transform: scale(1.05);
+}
+
+.spirit-meter-bar {
+    height: 100%;
+    transition: width 0.7s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    background: linear-gradient(to right, #b45309, #eab308);
+    /* yellow gradient */
+}
+
+.spirit-meter.ready .spirit-meter-bar {
+    background: linear-gradient(to right, #6b21a8, #9333ea, #d946ef);
+    /* purple gradient */
+}
+
+.shimmer {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    animation: shimmer 2s infinite linear;
+}
+
+.spirit-meter-text-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.spirit-meter-text {
+    font-size: 1.25rem;
+    /* text-xl */
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+    color: #e5e7eb;
+    /* text-gray-200 */
+}
+
+.spirit-meter.ready .spirit-meter-text {
+    color: white;
+}
+
+/* Animations */
+@keyframes bounce-subtle {
+
+    0%,
+    100% {
+        transform: translateY(-5%);
+    }
+
+    50% {
+        transform: translateY(5%);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
