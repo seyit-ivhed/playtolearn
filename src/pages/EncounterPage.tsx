@@ -80,38 +80,14 @@ const EncounterPage = () => {
         }
     }, [phase, navigate]);
 
-    const handleRetreat = () => {
-        if (confirm("Run away?")) {
-            navigate('/map');
-        }
-    };
+
 
     const isSpecialReady = specialMeter >= 100 && phase === CombatPhase.PLAYER_TURN;
 
     return (
         <div className="encounter-page">
             {/* Top HUD */}
-            <div className="top-hud">
-                {/* Retreat (Pointer events enabled) */}
-                <div>
-                    <button onClick={handleRetreat} className="retreat-btn" data-testid="encounter-retreat-btn">
-                        🏳️ Retreat
-                    </button>
-                </div>
 
-                {/* Turn Indicator */}
-                <div>
-                    <div
-                        className={`turn-indicator ${phase === CombatPhase.PLAYER_TURN ? 'player-turn' : 'enemy-turn'}`}
-                        data-testid="encounter-turn-indicator"
-                    >
-                        {phase === CombatPhase.PLAYER_TURN ? "YOUR TURN" : (phase === CombatPhase.MONSTER_TURN ? "MONSTER TURN..." : phase)}
-                    </div>
-                </div>
-
-                {/* Empty Spacer */}
-                <div style={{ width: '6rem' }}></div>
-            </div>
 
             {/* Battlefield */}
             <div className="battlefield">

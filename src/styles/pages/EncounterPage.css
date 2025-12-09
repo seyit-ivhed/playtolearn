@@ -10,67 +10,7 @@
     overflow: hidden;
 }
 
-/* Top HUD */
-.top-hud {
-    position: absolute;
-    top: 1rem;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 2rem;
-    z-index: 50;
-    pointer-events: none;
-}
 
-.top-hud>* {
-    pointer-events: auto;
-}
-
-.retreat-btn {
-    background-color: #6b7280;
-    /* bg-gray-500 */
-    color: white;
-    font-size: 0.875rem;
-    /* text-sm */
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    box-shadow: var(--shadow-md);
-    transition: background-color 0.2s;
-    border: none;
-    cursor: pointer;
-}
-
-.retreat-btn:hover {
-    background-color: #4b5563;
-    /* bg-gray-600 */
-}
-
-/* Turn Indicator */
-.turn-indicator {
-    padding: 0.5rem 2rem;
-    border-radius: 9999px;
-    font-weight: 900;
-    font-size: 1.25rem;
-    /* text-xl */
-    box-shadow: var(--shadow-lg);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(12px);
-    text-align: center;
-    transition: background-color 0.3s;
-}
-
-.turn-indicator.player-turn {
-    background-color: #4f46e5;
-    /* bg-indigo-600 */
-    color: white;
-    animation: bounce-subtle 2s infinite;
-}
-
-.turn-indicator.enemy-turn {
-    background-color: #991b1b;
-    /* bg-red-800 */
-    color: white;
-}
 
 /* Battlefield */
 .battlefield {
@@ -229,17 +169,7 @@
 }
 
 /* Animations */
-@keyframes bounce-subtle {
 
-    0%,
-    100% {
-        transform: translateY(-5%);
-    }
-
-    50% {
-        transform: translateY(5%);
-    }
-}
 
 @keyframes shimmer {
     0% {
