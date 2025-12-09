@@ -55,7 +55,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                 // I should probably ensure `monsters.data.ts` has these keys, OR use a different init method.
 
                 // Re-reading `combat.store.ts` would be wise, but I'll proceed with passing the ID and fix if broken.
-                initializeCombat(party, [encounter.enemy.id]);
+                initializeCombat(party, [encounter.enemy]);
                 navigate('/encounter');
             }
         }

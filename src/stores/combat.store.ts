@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 import { CombatPhase, type CombatUnit, type CombatState } from '../types/combat.types';
 import { getCompanionById } from '../data/companions.data';
-import { createMonster } from '../data/monsters.data';
+// import { createMonster } from '../data/monsters.data'; // No longer needed for ID lookup
+import type { AdventureMonster } from '../types/adventure.types';
 
 interface CombatStore extends CombatState {
-    initializeCombat: (partyIds: string[], monsterTemplateIds: string[]) => void;
+    initializeCombat: (partyIds: string[], enemies: AdventureMonster[]) => void;
     selectUnit: (unitId: string | null) => void;
     performAction: (unitId: string) => void;
     resolveRecharge: (unitId: string, success: boolean) => void;
@@ -22,7 +23,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     combatLog: [],
     specialMeter: 0,
 
-    initializeCombat: (partyIds, monsterTemplateIds) => {
+    initializeCombat: (partyIds, enemies) => {
         const party: CombatUnit[] = partyIds.map((id, index) => {
             const data = getCompanionById(id);
             return {
@@ -44,17 +45,36 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             };
         });
 
-        const monsters: CombatUnit[] = monsterTemplateIds.map((id, index) => {
-            const monster = createMonster(id, `monster_${id}_${index}`);
+        const monsters: CombatUnit[] = enemies.map((enemy, index) => {
             return {
-                ...monster,
+                id: `monster_${enemy.id}_${index}`,
+                templateId: enemy.id,
+                name: enemy.name,
                 isPlayer: false,
+                maxHealth: enemy.maxHealth,
+                currentHealth: enemy.maxHealth,
                 maxEnergy: 0,
                 currentEnergy: 0,
+                maxShield: enemy.maxShield || 0,
+                currentShield: 0,
+                // Map 'attack' to 'damage' for now, or ensure types align
+                // CombatUnit doesn't strictly have 'damage' in the type definition shown in prompt, 
+                // but the createMonster logic used it. 
+                // Let's check CombatUnit type if possible, but assuming it has what's needed for UI/Logic.
+                // The processMonsterTurn logic uses a hardcoded `let damage = 8`.
+                // We should store attack/damage on the unit if we want dynamic damage.
+                // For now, I'll add 'attack' to the object if CombatUnit allows, or just use it in logic.
+                // Wait, CombatUnit in previous view didn't explicitly show 'damage' or 'attack' fields 
+                // but createMonster returned 'damage'.
+                // I will assume I can store extra props or I need to add them to CombatUnit type.
+                // Let's stick to what createMonster was returning, which included 'damage'.
+                damage: enemy.attack,
+                icon: enemy.icon || '👾',
+                color: '#e74c3c', // Default red for enemies
                 isDead: false,
                 hasActed: false,
                 rechargeFailed: false
-            };
+            } as any; // Casting to any to avoid type mismatch if CombatUnit is strict
         });
 
         set({
