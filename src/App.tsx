@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import AdventurePage from './pages/AdventurePage';
-import CampPage from './pages/CampPage';
-import EncounterPage from './pages/EncounterPage';
+import AdventurePage from './features/adventure/AdventurePage';
+import CampPage from './features/camp/CampPage';
+import EncounterPage from './features/encounter/EncounterPage';
 
 function App() {
   return (

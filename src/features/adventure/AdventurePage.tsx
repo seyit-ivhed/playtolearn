@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useGameStore } from '../stores/game.store';
-import { useCombatStore } from '../stores/combat.store';
-import '../styles/pages/AdventurePage.css';
+import { useGameStore } from '../../stores/game.store';
+import { useCombatStore } from '../../stores/combat.store';
+import '../../styles/pages/AdventurePage.css';
 
 const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     const { t } = useTranslation();

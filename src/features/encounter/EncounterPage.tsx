@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCombatStore } from '../stores/combat.store';
-import { useGameStore } from '../stores/game.store';
-import { CombatPhase } from '../types/combat.types';
-import MathChallengeModal from '../components/MathChallengeModal';
-import { generateProblem } from '../utils/math-generator';
-import { MathOperation, type MathProblem } from '../types/math.types';
+import { useCombatStore } from '../../stores/combat.store';
+import { useGameStore } from '../../stores/game.store';
+import { CombatPhase } from '../../types/combat.types';
+import MathChallengeModal from '../../components/MathChallengeModal';
+import { generateProblem } from '../../utils/math-generator';
+import { MathOperation, type MathProblem } from '../../types/math.types';
 import { useState } from 'react';
-import { UnitCard } from '../components/combat/UnitCard';
-import '../styles/pages/EncounterPage.css';
+import { UnitCard } from '../combat/components/UnitCard';
+import '../../styles/pages/EncounterPage.css';
 
 const EncounterPage = () => {
     const navigate = useNavigate();

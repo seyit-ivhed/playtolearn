@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './AdventureNode.module.css';
-import { AdventureStatus } from '../../types/adventure.types';
+import { AdventureStatus } from '../../../types/adventure.types';
 
 interface AdventureNodeProps {
     id: string;

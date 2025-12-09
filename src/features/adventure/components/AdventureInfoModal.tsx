@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './AdventureInfoModal.module.css';
-import type { Adventure } from '../../types/adventure.types';
+import type { Adventure } from '../../../types/adventure.types';
 
 interface AdventureInfoModalProps {
     adventure: Adventure;

@@ -1,6 +1,6 @@
-import { type CombatUnit, CombatPhase } from '../../types/combat.types';
-import { getCompanionById } from '../../data/companions.data';
-import '../../styles/components/UnitCard.css';
+import { type CombatUnit, CombatPhase } from '../../../types/combat.types';
+import { getCompanionById } from '../../../data/companions.data';
+import '../../../styles/components/UnitCard.css';
 
 interface UnitCardProps {
     unit: CombatUnit;

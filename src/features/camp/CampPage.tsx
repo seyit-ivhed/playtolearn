@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { useGameStore } from '../stores/game.store';
-import { getCompanionById } from '../data/companions.data';
+import { useGameStore } from '../../stores/game.store';
+import { getCompanionById } from '../../data/companions.data';
 import styles from './CampPage.module.css';
 
 const MAX_PARTY_SIZE = 4;

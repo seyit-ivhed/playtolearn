@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './AdventureRewardSummary.module.css';
-import type { AdventureReward } from '../../types/adventure.types';
+import type { AdventureReward } from '../../../types/adventure.types';
 
 interface RewardSummaryProps {
     rewards: AdventureReward;
