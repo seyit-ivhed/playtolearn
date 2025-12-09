@@ -1,26 +1,39 @@
 /* Global Variables */
 :root {
   /* Color Palette - Cartoon Fantasy */
-  --color-bg-primary: #fdf6e3;   /* Parchment / Light Cream */
-  --color-bg-secondary: #e6dac3; /* Darker Parchment / Map BG */
-  --color-bg-tertiary: #d4c5a9;  /* Stone / Card BG */
+  --color-bg-primary: #fdf6e3;
+  /* Parchment / Light Cream */
+  --color-bg-secondary: #e6dac3;
+  /* Darker Parchment / Map BG */
+  --color-bg-tertiary: #d4c5a9;
+  /* Stone / Card BG */
   --color-bg-overlay: rgba(0, 0, 0, 0.4);
 
   /* Primary Brand Colors */
-  --color-brand-primary: #3498db;   /* Hero Blue */
-  --color-brand-secondary: #9b59b6; /* Magic Purple */
-  --color-brand-accent: #f1c40f;    /* Gold / Highlight */
+  --color-brand-primary: #3498db;
+  /* Hero Blue */
+  --color-brand-secondary: #9b59b6;
+  /* Magic Purple */
+  --color-brand-accent: #f1c40f;
+  /* Gold / Highlight */
 
   /* Functional Colors */
-  --color-success: #2ecc71; /* Emerald Green */
-  --color-danger: #e74c3c;  /* Dragon Red */
-  --color-warning: #e67e22; /* Carrot Orange */
-  --color-info: #34495e;    /* Slate */
+  --color-success: #2ecc71;
+  /* Emerald Green */
+  --color-danger: #e74c3c;
+  /* Dragon Red */
+  --color-warning: #e67e22;
+  /* Carrot Orange */
+  --color-info: #34495e;
+  /* Slate */
 
   /* Text Colors */
-  --color-text-primary: #2c3e50;   /* Dark Ink */
-  --color-text-secondary: #7f8c8d; /* Grey Info */
-  --color-text-inverse: #ffffff;   /* White Text on Buttons */
+  --color-text-primary: #2c3e50;
+  /* Dark Ink */
+  --color-text-secondary: #7f8c8d;
+  /* Grey Info */
+  --color-text-inverse: #ffffff;
+  /* White Text on Buttons */
 
   /* UI Tokens */
   --radius-sm: 8px;
@@ -39,8 +52,10 @@
   --spacing-xl: 32px;
 
   /* Typography */
-  --font-display: 'Fredoka', 'Comic Sans MS', 'Chalkboard SE', sans-serif; /* Playful Headings */
-  --font-body: 'Nunito', system-ui, sans-serif; /* Readable Body */
+  --font-display: 'Fredoka', 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+  /* Playful Headings */
+  --font-body: 'Nunito', system-ui, sans-serif;
+  /* Readable Body */
 
   /* Global Defaults */
   font-family: var(--font-body);
@@ -58,7 +73,9 @@
 }
 
 /* CSS Reset & Base Styles */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -67,7 +84,8 @@
 body {
   margin: 0;
   display: flex;
-  place-items: center; /* Centering might be specific to previous layout, keeping for safe regression */
+  place-items: center;
+  /* Centering might be specific to previous layout, keeping for safe regression */
   min-width: 320px;
   min-height: 100vh;
   flex-direction: column;
@@ -76,7 +94,6 @@ body {
 
 #root {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
   height: 100vh;
   display: flex;
@@ -84,7 +101,12 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   color: var(--color-text-primary);
   margin-bottom: 0.5em;
@@ -111,13 +133,16 @@ button {
   font-size: 1.1rem;
   padding: 0.8em 1.5em;
   border-radius: var(--radius-lg);
-  border: 4px solid rgba(0, 0, 0, 0.1); /* Chunky border */
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  /* Chunky border */
   background-color: var(--color-brand-primary);
   color: var(--color-text-inverse);
   cursor: pointer;
   transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s;
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2); /* Cartoon 3D effect */
-  margin: 4px; /* Space for the 3D effect */
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+  /* Cartoon 3D effect */
+  margin: 4px;
+  /* Space for the 3D effect */
 }
 
 button:hover {
