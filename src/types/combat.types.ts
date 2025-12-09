@@ -24,6 +24,7 @@ export interface CombatUnit {
 
     // Visuals
     icon: string;
+    image?: string;
     color: string;
 
     // State

@@ -70,6 +70,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 // Let's stick to what createMonster was returning, which included 'damage'.
                 damage: enemy.attack,
                 icon: enemy.icon || '👾',
+                image: enemy.sprite,
                 color: '#e74c3c', // Default red for enemies
                 isDead: false,
                 hasActed: false,

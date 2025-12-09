@@ -1,4 +1,6 @@
 import { type Adventure, EncounterType } from '../types/adventure.types';
+import goblinImg from '../assets/images/enemies/goblin.png';
+import goblinBossImg from '../assets/images/enemies/goblin_boss.png';
 
 export const ADVENTURES: Adventure[] = [
     {
@@ -15,7 +17,7 @@ export const ADVENTURES: Adventure[] = [
                 enemy: {
                     id: 'goblin_scout_weak',
                     name: 'Goblin Scout',
-                    sprite: '/src/assets/images/enemies/goblin.png',
+                    sprite: goblinImg,
                     maxHealth: 20, // Reduced for juniors
                     attack: 4,     // Reduced for juniors
                     defense: 0,
@@ -30,7 +32,7 @@ export const ADVENTURES: Adventure[] = [
                 enemy: {
                     id: 'goblin_scout_normal',
                     name: 'Angry Goblin',
-                    sprite: '/src/assets/images/enemies/goblin.png',
+                    sprite: goblinImg,
                     maxHealth: 25,
                     attack: 5,
                     defense: 0,
@@ -45,7 +47,7 @@ export const ADVENTURES: Adventure[] = [
                 enemy: {
                     id: 'goblin_chief',
                     name: 'Goblin Chief',
-                    sprite: '/src/assets/images/enemies/goblin_boss.png', // Placeholder path
+                    sprite: goblinBossImg, // Placeholder path
                     maxHealth: 40,
                     maxShield: 10,
                     attack: 8,

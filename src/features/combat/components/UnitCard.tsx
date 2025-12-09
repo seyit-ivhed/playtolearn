@@ -78,9 +78,9 @@ export const UnitCard = ({ unit, phase, onAct, onRecharge }: UnitCardProps) => {
 
             {/* Background Image */}
             <div className="unit-card-bg">
-                {!isMonster && companionData ? (
+                {(!isMonster && companionData) || (isMonster && unit.image) ? (
                     <img
-                        src={companionData.image}
+                        src={!isMonster && companionData ? companionData.image : unit.image}
                         alt={unit.name}
                         className="unit-card-image"
                     />

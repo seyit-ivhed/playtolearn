@@ -31,6 +31,8 @@ import shadowArcherImg from '../assets/images/companions/shadow_archer.png';
 import crystalGuardianImg from '../assets/images/companions/crystal_guardian.png';
 import lightHealerImg from '../assets/images/companions/light_healer.png';
 import lightningMageImg from '../assets/images/companions/lightning_mage.png';
+import villageSquireImg from '../assets/images/companions/village_squire.png';
+import noviceArcherImg from '../assets/images/companions/novice_archer.png';
 
 export const COMPANIONS: Record<string, Companion> = {
     'village_squire': {
@@ -45,7 +47,7 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityDamage: 8,
         color: '#e74c3c', // Red
         icon: '🗡️',
-        image: fireKnightImg // Reusing for now
+        image: villageSquireImg
     },
     'novice_archer': {
         id: 'novice_archer',
@@ -59,7 +61,7 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityDamage: 6,
         color: '#2c3e50', // Dark Blue
         icon: '🏹',
-        image: shadowArcherImg // Reusing for now
+        image: noviceArcherImg
     },
     'fire_knight': {
         id: 'fire_knight',
