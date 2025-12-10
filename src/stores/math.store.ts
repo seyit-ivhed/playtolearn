@@ -6,6 +6,7 @@ import {
     MathOperation
 } from '../types/math.types';
 import { generateProblem, validateAnswer } from '../utils/math-generator';
+import { usePlayerStore } from './player.store';
 
 interface MathState {
     // State
@@ -40,7 +41,10 @@ export const useMathStore = create<MathState>((set, get) => ({
 
         // Small delay to simulate "thinking" or allow UI transitions
         // In a real app this might be async, but here it's synchronous logic
-        const { difficulty } = get();
+
+        // Use difficulty from Player Store (Persistence Source of Truth)
+        // Accessing the store directly via its getState method (zustand pattern)
+        const difficulty = usePlayerStore.getState().difficulty;
         const problem = generateProblem(operation, difficulty);
 
         set({

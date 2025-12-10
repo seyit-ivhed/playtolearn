@@ -17,11 +17,14 @@ export const MathOperation = {
 export type MathOperation = typeof MathOperation[keyof typeof MathOperation];
 
 /**
- * Difficulty levels for the prototype (targeting ages 6-10)
- * - Level 1: Ages 6-8, Grades 1-2
- * - Level 2: Ages 8-10, Grades 3-4
+ * Difficulty levels corresponds to Age 6-10
+ * - Level 1: Age 6 (Apprentice)
+ * - Level 2: Age 7 (Scout)
+ * - Level 3: Age 8 (Adventurer)
+ * - Level 4: Age 9 (Veteran)
+ * - Level 5: Age 10 (Master)
  */
-export type DifficultyLevel = 1 | 2;
+export type DifficultyLevel = 1 | 2 | 3 | 4 | 5;
 
 /**
  * Feedback state for answer validation
@@ -61,21 +64,23 @@ export interface MathProblem {
  * Configuration for math problem generation ranges
  */
 export interface MathEngineConfig {
-    /** Configuration for difficulty level 1 */
-    level1: {
-        addition: { min: number; max: number };
-        subtraction: { min: number; max: number };
-        multiplication: { min: number; max: number };
-        division: { divisorMax: number };
-    };
+    /** Configuration for Age 6 (Apprentice) */
+    level1: LevelConfig;
+    /** Configuration for Age 7 (Scout) */
+    level2: LevelConfig;
+    /** Configuration for Age 8 (Adventurer) */
+    level3: LevelConfig;
+    /** Configuration for Age 9 (Veteran) */
+    level4: LevelConfig;
+    /** Configuration for Age 10 (Master) */
+    level5: LevelConfig;
+}
 
-    /** Configuration for difficulty level 2 */
-    level2: {
-        addition: { min: number; max: number };
-        subtraction: { min: number; max: number };
-        multiplication: { min: number; max: number };
-        division: { divisorMax: number };
-    };
+interface LevelConfig {
+    addition: { min: number; max: number };
+    subtraction: { min: number; max: number };
+    multiplication: { min: number; max: number };
+    division: { divisorMax: number };
 }
 
 /**

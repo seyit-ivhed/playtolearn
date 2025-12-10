@@ -9,18 +9,45 @@ import {
 /**
  * Configuration for math problem generation ranges
  */
+/**
+ * Configuration for math problem generation ranges
+ * Values based on common curriculum standards for ages 6-10
+ */
 const CONFIG: MathEngineConfig = {
+    // Age 6 (Apprentice): Basics
     level1: {
-        addition: { min: 1, max: 10 },
-        subtraction: { min: 1, max: 10 },
-        multiplication: { min: 1, max: 5 },
-        division: { divisorMax: 5 }, // Dividends will be result of multiplication
+        addition: { min: 0, max: 10 },
+        subtraction: { min: 0, max: 10 },
+        multiplication: { min: 0, max: 0 }, // Disabled effectively
+        division: { divisorMax: 0 }, // Disabled
     },
+    // Age 7 (Scout): Basics + 20 + Intro Multiplication
     level2: {
-        addition: { min: 10, max: 50 },
-        subtraction: { min: 10, max: 50 },
+        addition: { min: 1, max: 20 },
+        subtraction: { min: 1, max: 20 },
+        multiplication: { min: 0, max: 4 }, // Per user request
+        division: { divisorMax: 0 }, // Disabled
+    },
+    // Age 8 (Adventurer): Larger numbers + More Multiplication
+    level3: {
+        addition: { min: 5, max: 50 },
+        subtraction: { min: 5, max: 50 },
         multiplication: { min: 1, max: 10 },
-        division: { divisorMax: 10 },
+        division: { divisorMax: 0 },
+    },
+    // Age 9 (Veteran): Hundreds + Solid Multiplication
+    level4: {
+        addition: { min: 10, max: 100 },
+        subtraction: { min: 10, max: 100 },
+        multiplication: { min: 2, max: 12 },
+        division: { divisorMax: 0 },
+    },
+    // Age 10 (Master): Full range + Division
+    level5: {
+        addition: { min: 10, max: 200 },
+        subtraction: { min: 10, max: 200 },
+        multiplication: { min: 2, max: 12 },
+        division: { divisorMax: 12 },
     },
 };
 
@@ -31,11 +58,22 @@ const getRandomInt = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+const getSettings = (difficulty: DifficultyLevel) => {
+    switch (difficulty) {
+        case 1: return CONFIG.level1;
+        case 2: return CONFIG.level2;
+        case 3: return CONFIG.level3;
+        case 4: return CONFIG.level4;
+        case 5: return CONFIG.level5;
+        default: return CONFIG.level1;
+    }
+}
+
 /**
  * Generates an addition problem
  */
 const generateAdditionProblem = (difficulty: DifficultyLevel): MathProblem => {
-    const settings = difficulty === 1 ? CONFIG.level1.addition : CONFIG.level2.addition;
+    const settings = getSettings(difficulty).addition;
     const operand1 = getRandomInt(settings.min, settings.max);
     const operand2 = getRandomInt(settings.min, settings.max);
 
@@ -53,14 +91,11 @@ const generateAdditionProblem = (difficulty: DifficultyLevel): MathProblem => {
  * Generates a subtraction problem (ensures non-negative result)
  */
 const generateSubtractionProblem = (difficulty: DifficultyLevel): MathProblem => {
-    const settings = difficulty === 1 ? CONFIG.level1.subtraction : CONFIG.level2.subtraction;
+    const settings = getSettings(difficulty).subtraction;
 
     // For subtraction, we want the first number to be larger or equal to ensure positive result
-    // We'll generate the answer and the second operand, then add them to get the first operand
-    // This ensures the numbers stay within reasonable bounds
-
     const operand2 = getRandomInt(settings.min, settings.max);
-    const answer = getRandomInt(1, settings.max); // Ensure answer is at least 1
+    const answer = getRandomInt(0, settings.max); // Can be 0
     const operand1 = operand2 + answer;
 
     return {
@@ -77,7 +112,7 @@ const generateSubtractionProblem = (difficulty: DifficultyLevel): MathProblem =>
  * Generates a multiplication problem
  */
 const generateMultiplicationProblem = (difficulty: DifficultyLevel): MathProblem => {
-    const settings = difficulty === 1 ? CONFIG.level1.multiplication : CONFIG.level2.multiplication;
+    const settings = getSettings(difficulty).multiplication;
     const operand1 = getRandomInt(settings.min, settings.max);
     const operand2 = getRandomInt(settings.min, settings.max);
 
@@ -95,7 +130,7 @@ const generateMultiplicationProblem = (difficulty: DifficultyLevel): MathProblem
  * Generates a division problem (ensures whole number result)
  */
 const generateDivisionProblem = (difficulty: DifficultyLevel): MathProblem => {
-    const settings = difficulty === 1 ? CONFIG.level1.division : CONFIG.level2.division;
+    const settings = getSettings(difficulty).division;
 
     // To ensure whole number division, we generate a multiplication problem in reverse
     const divisor = getRandomInt(2, settings.divisorMax); // Avoid division by 1 as it's too easy
