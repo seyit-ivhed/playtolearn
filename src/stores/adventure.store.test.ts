@@ -1,6 +1,17 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useAdventureStore } from './adventure.store';
 import { AdventureStatus } from '../types/adventure.types';
+
+// Mock the adventures data
+vi.mock('../data/adventures.data', () => ({
+    ADVENTURES: [
+        { id: '1', title: 'Adv 1', description: 'Desc 1', difficulty: 1, encounters: [], rewards: {} },
+        { id: '2', title: 'Adv 2', description: 'Desc 2', difficulty: 1, encounters: [], rewards: {} },
+        { id: '3', title: 'Adv 3', description: 'Desc 3', difficulty: 1, encounters: [], rewards: {} },
+        { id: '4', title: 'Adv 4', description: 'Desc 4', difficulty: 1, encounters: [], rewards: {} },
+        { id: '5', title: 'Adv 5', description: 'Desc 5', difficulty: 1, encounters: [], rewards: {} },
+    ]
+}));
 
 describe('AdventureStore', () => {
     beforeEach(() => {
@@ -29,7 +40,7 @@ describe('AdventureStore', () => {
     it('should not unlock anything if last adventure is completed', () => {
         const store = useAdventureStore.getState();
 
-        // Fast forward to last adventure (assuming 5 adventures)
+        // Unlock up to 5
         store.unlockAdventure('5');
         store.completeAdventure('5');
 
