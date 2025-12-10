@@ -17,8 +17,6 @@ export interface CombatUnit {
     // Stats
     maxHealth: number;
     currentHealth: number;
-    maxEnergy: number; // 0 for monsters usually
-    currentEnergy: number;
     maxShield: number;
     currentShield: number;
 
@@ -30,7 +28,6 @@ export interface CombatUnit {
     // State
     isDead: boolean;
     hasActed: boolean;
-    rechargeFailed: boolean;
 }
 
 export interface CombatState {

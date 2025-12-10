@@ -12,7 +12,6 @@ export interface Companion {
     role: CompanionRole;
     description: string;
     maxHealth: number;
-    maxEnergy: number;
     // Ability details
     abilityName: string;
     abilityDescription: string;
@@ -41,7 +40,6 @@ export const COMPANIONS: Record<string, Companion> = {
         role: CompanionRole.WARRIOR,
         description: 'A young hero with a rusty sword and a big heart.',
         maxHealth: 30,
-        maxEnergy: 2,
         abilityName: 'Clumsy Strike',
         abilityDescription: 'Deals 8 damage to a single enemy.',
         abilityDamage: 8,
@@ -55,7 +53,6 @@ export const COMPANIONS: Record<string, Companion> = {
         role: CompanionRole.WARRIOR,
         description: 'Still learning to aim, but has keen eyes.',
         maxHealth: 25,
-        maxEnergy: 2,
         abilityName: 'Practice Shot',
         abilityDescription: 'Deals 6 damage.',
         abilityDamage: 6,
@@ -69,7 +66,6 @@ export const COMPANIONS: Record<string, Companion> = {
         role: CompanionRole.WARRIOR,
         description: 'A brave warrior who wields a flaming sword.',
         maxHealth: 50,
-        maxEnergy: 3,
         abilityName: 'Flame Strike',
         abilityDescription: 'Deals 15 damage to a single enemy.',
         abilityDamage: 15,
@@ -83,7 +79,6 @@ export const COMPANIONS: Record<string, Companion> = {
         role: CompanionRole.WARRIOR,
         description: 'A precise archer who strikes from the shadows.',
         maxHealth: 40,
-        maxEnergy: 3,
         abilityName: 'Shadow Arrow',
         abilityDescription: 'Deals 12 damage that ignores armor.',
         abilityDamage: 12,
@@ -97,7 +92,6 @@ export const COMPANIONS: Record<string, Companion> = {
         role: CompanionRole.GUARDIAN,
         description: 'A gentle protector made of living crystal.',
         maxHealth: 80,
-        maxEnergy: 2,
         abilityName: 'Crystal Shield',
         abilityDescription: 'Grants 20 Shield to a friend.',
         abilityShield: 20,
@@ -111,7 +105,6 @@ export const COMPANIONS: Record<string, Companion> = {
         role: CompanionRole.SUPPORT,
         description: 'A kind spirit who mends wounds.',
         maxHealth: 35,
-        maxEnergy: 4,
         abilityName: 'Healing Light',
         abilityDescription: 'Heals a friend for 15 Health.',
         abilityHeal: 15,
@@ -126,7 +119,6 @@ export const COMPANIONS: Record<string, Companion> = {
         role: CompanionRole.WARRIOR,
         description: 'Crackling with unstable energy.',
         maxHealth: 40,
-        maxEnergy: 2,
         abilityName: 'Thunder Bolt',
         abilityDescription: 'Deals 25 massive damage, needs recharge often.',
         abilityDamage: 25,

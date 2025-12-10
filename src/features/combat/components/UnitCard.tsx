@@ -6,10 +6,9 @@ interface UnitCardProps {
     unit: CombatUnit;
     phase: CombatPhase;
     onAct?: () => void;
-    onRecharge?: () => void;
 }
 
-export const UnitCard = ({ unit, phase, onAct, onRecharge }: UnitCardProps) => {
+export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
     const isMonster = !unit.isPlayer;
     const healthPercent = (unit.currentHealth / unit.maxHealth) * 100;
 
@@ -22,13 +21,7 @@ export const UnitCard = ({ unit, phase, onAct, onRecharge }: UnitCardProps) => {
         e.stopPropagation();
         if (!canAct) return;
 
-        if (unit.rechargeFailed) return;
-
-        if (unit.currentEnergy > 0) {
-            onAct?.();
-        } else {
-            onRecharge?.();
-        }
+        onAct?.();
     };
 
     // Card Classes Construction
@@ -36,9 +29,7 @@ export const UnitCard = ({ unit, phase, onAct, onRecharge }: UnitCardProps) => {
         const classes = ['unit-card'];
 
         // Border Color
-        if (unit.currentEnergy === 0 && !isMonster && !unit.hasActed) {
-            classes.push('border-yellow');
-        } else if (isMonster) {
+        if (isMonster) {
             classes.push('border-red');
         } else {
             classes.push('border-brown');
@@ -56,9 +47,7 @@ export const UnitCard = ({ unit, phase, onAct, onRecharge }: UnitCardProps) => {
             }
         }
 
-        if (unit.currentEnergy === 0 && !unit.rechargeFailed && !unit.hasActed && !isMonster) {
-            classes.push('needs-recharge');
-        }
+
 
         return classes.join(' ');
     };
@@ -93,28 +82,13 @@ export const UnitCard = ({ unit, phase, onAct, onRecharge }: UnitCardProps) => {
                 <div className="unit-card-gradient" />
 
                 {/* Visual Recharge Warning Overlay */}
-                {unit.currentEnergy === 0 && !unit.hasActed && !isMonster && (
-                    <div className="recharge-warning">
-                        <div className="recharge-icon-container">
-                            <span className="recharge-icon">⚡️</span>
-                        </div>
-                    </div>
-                )}
+
             </div>
 
             {/* Top Stats */}
             <div className="unit-stats-top">
                 {/* Energy Pips */}
-                {!isMonster && (
-                    <div className="energy-pips-container">
-                        {Array(unit.maxEnergy).fill(0).map((_, i) => (
-                            <div
-                                key={i}
-                                className={`energy-pip ${i < unit.currentEnergy ? 'active' : 'inactive'}`}
-                            />
-                        ))}
-                    </div>
-                )}
+                {/* Energy Pips Removed */}
 
                 {/* Shield Indicator */}
                 {unit.currentShield > 0 && (

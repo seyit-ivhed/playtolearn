@@ -14,28 +14,17 @@ const EncounterPage = () => {
     const navigate = useNavigate();
     const {
         phase, party, monsters,
-        performAction, resolveRecharge,
+        performAction,
         specialMeter, resolveSpecialAttack
     } = useCombatStore();
 
     const [activeChallenge, setActiveChallenge] = useState<{
-        type: 'RECHARGE' | 'SPECIAL';
+        type: 'SPECIAL';
         unitId?: string;
         problem: MathProblem;
     } | null>(null);
 
-    const startRecharge = (unitId: string) => {
-        // Generate a standard problem
-        const ops = [MathOperation.ADD, MathOperation.SUBTRACT];
-        const op = ops[Math.floor(Math.random() * ops.length)];
-        const problem = generateProblem(op, 1); // Difficulty 1
 
-        setActiveChallenge({
-            type: 'RECHARGE',
-            unitId,
-            problem
-        });
-    };
 
     const startSpecialAttack = () => {
         if (specialMeter < 100 || phase !== CombatPhase.PLAYER_TURN) return;
@@ -54,9 +43,7 @@ const EncounterPage = () => {
     const handleChallengeComplete = (success: boolean) => {
         if (!activeChallenge) return;
 
-        if (activeChallenge.type === 'RECHARGE' && activeChallenge.unitId) {
-            resolveRecharge(activeChallenge.unitId, success);
-        } else if (activeChallenge.type === 'SPECIAL') {
+        if (activeChallenge.type === 'SPECIAL') {
             resolveSpecialAttack(success);
         }
 
@@ -100,7 +87,6 @@ const EncounterPage = () => {
                                     unit={unit}
                                     phase={phase}
                                     onAct={() => performAction(unit.id)}
-                                    onRecharge={() => startRecharge(unit.id)}
                                 />
                             </div>
                         ))}
@@ -158,8 +144,8 @@ const EncounterPage = () => {
                 activeChallenge && (
                     <MathChallengeModal
                         problem={activeChallenge.problem}
-                        title={activeChallenge.type === 'RECHARGE' ? "Recharge Focus!" : "ULTIMATE CASTING!"}
-                        description={activeChallenge.type === 'RECHARGE' ? "Solve this to regain energy!" : "Solve correctly to UNLEASH POWER!"}
+                        title="ULTIMATE CASTING!"
+                        description="Solve correctly to UNLEASH POWER!"
                         onComplete={handleChallengeComplete}
                         onClose={() => setActiveChallenge(null)}
                     />
