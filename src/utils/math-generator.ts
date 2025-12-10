@@ -14,40 +14,35 @@ import {
  * Values based on common curriculum standards for ages 6-10
  */
 const CONFIG: MathEngineConfig = {
-    // Age 6 (Apprentice): Basics
     level1: {
         addition: { min: 0, max: 10 },
-        subtraction: { min: 0, max: 10 },
+        subtraction: { min: 0, max: 0 }, // Disabled effectively
         multiplication: { min: 0, max: 0 }, // Disabled effectively
         division: { divisorMax: 0 }, // Disabled
     },
-    // Age 7 (Scout): Basics + 20 + Intro Multiplication
     level2: {
-        addition: { min: 1, max: 20 },
+        addition: { min: 5, max: 20 },
         subtraction: { min: 1, max: 20 },
         multiplication: { min: 0, max: 4 }, // Per user request
         division: { divisorMax: 0 }, // Disabled
     },
-    // Age 8 (Adventurer): Larger numbers + More Multiplication
     level3: {
-        addition: { min: 5, max: 50 },
-        subtraction: { min: 5, max: 50 },
-        multiplication: { min: 1, max: 10 },
-        division: { divisorMax: 0 },
+        addition: { min: 10, max: 40 },
+        subtraction: { min: 5, max: 40 },
+        multiplication: { min: 3, max: 10 },
+        division: { divisorMax: 3 },
     },
-    // Age 9 (Veteran): Hundreds + Solid Multiplication
     level4: {
-        addition: { min: 10, max: 100 },
-        subtraction: { min: 10, max: 100 },
-        multiplication: { min: 2, max: 12 },
-        division: { divisorMax: 0 },
+        addition: { min: 50, max: 100 },
+        subtraction: { min: 20, max: 100 },
+        multiplication: { min: 4, max: 12 },
+        division: { divisorMax: 5 },
     },
-    // Age 10 (Master): Full range + Division
     level5: {
-        addition: { min: 10, max: 200 },
-        subtraction: { min: 10, max: 200 },
-        multiplication: { min: 2, max: 12 },
-        division: { divisorMax: 12 },
+        addition: { min: 100, max: 600 },
+        subtraction: { min: 100, max: 600 },
+        multiplication: { min: 6, max: 12 },
+        division: { divisorMax: 6 },
     },
 };
 
