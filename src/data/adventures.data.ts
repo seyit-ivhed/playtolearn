@@ -54,6 +54,12 @@ export const ADVENTURES: Adventure[] = [
                     defense: 2,
                     speed: 4
                 }
+            },
+            {
+                id: '1_4',
+                type: EncounterType.CAMP,
+                label: 'Rest Site',
+                coordinates: { x: 250, y: 850 }
             }
         ],
         rewards: {
