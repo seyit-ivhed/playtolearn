@@ -2,14 +2,18 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { INITIAL_FELLOWSHIP } from '../data/companions.data';
 
+import { ADVENTURES } from '../data/adventures.data';
+
 interface GameState {
     // Progression
-    currentMapNode: number; // 1-5
+    currentMapNode: number; // 1-indexed, relative to current adventure
+    activeAdventureId: string;
     unlockedCompanions: string[]; // IDs
     activeParty: string[]; // IDs (Max 4)
 
     // Actions
     completeEncounter: () => void;
+    setActiveAdventure: (adventureId: string) => void;
     resetMap: () => void;
     addToParty: (companionId: string) => void;
     removeFromParty: (companionId: string) => void;
@@ -20,17 +24,29 @@ export const useGameStore = create<GameState>()(
     persist(
         (set, get) => ({
             currentMapNode: 1,
+            activeAdventureId: '1',
             unlockedCompanions: [...INITIAL_FELLOWSHIP],
             activeParty: [...INITIAL_FELLOWSHIP], // Default full party
 
             completeEncounter: () => {
-                const { currentMapNode } = get();
-                if (currentMapNode < 5) {
+                const { currentMapNode, activeAdventureId } = get();
+                const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
+
+                if (!adventure) return;
+
+                // Check if there are more encounters
+                if (currentMapNode < adventure.encounters.length) {
                     set({ currentMapNode: currentMapNode + 1 });
                 } else {
-                    // Loop or Finish? For now, reset to 1
+                    // Adventure Completed (Loop for now, or handle win state)
+                    // For prototype, just loop back to 1 or stay at end?
+                    // Let's reset to 1 for infinite play in prototype
                     set({ currentMapNode: 1 });
                 }
+            },
+
+            setActiveAdventure: (adventureId) => {
+                set({ activeAdventureId: adventureId, currentMapNode: 1 });
             },
 
             resetMap: () => set({ currentMapNode: 1 }),

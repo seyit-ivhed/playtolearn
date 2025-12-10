@@ -17,19 +17,17 @@ export interface CombatUnit {
     // Stats
     maxHealth: number;
     currentHealth: number;
-    maxEnergy: number; // 0 for monsters usually
-    currentEnergy: number;
     maxShield: number;
     currentShield: number;
 
     // Visuals
     icon: string;
+    image?: string;
     color: string;
 
     // State
     isDead: boolean;
     hasActed: boolean;
-    rechargeFailed: boolean;
 }
 
 export interface CombatState {

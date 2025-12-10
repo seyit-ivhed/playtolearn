@@ -4,41 +4,69 @@ import { useGameStore } from '../../stores/game.store';
 import { useCombatStore } from '../../stores/combat.store';
 import '../../styles/pages/AdventurePage.css';
 
+import { ADVENTURES } from '../../data/adventures.data';
+import { EncounterType } from '../../types/adventure.types';
+
 const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     const { t } = useTranslation();
-
-    // Vertical Layout Nodes - Shifted down by 150px to clear header
-    // Added 'type' to distinguish between combat and camp nodes
-    const nodes = [
-        { id: 1, x: '50%', y: 250, label: t('adventure.nodes.start'), type: 'combat' },
-        { id: 2, x: '30%', y: 450, label: t('adventure.nodes.forest'), type: 'combat' },
-        { id: 3, x: '70%', y: 650, label: t('adventure.nodes.camp'), type: 'camp' }, // Camp Node
-        { id: 4, x: '40%', y: 850, label: t('adventure.nodes.cave'), type: 'combat' },
-        { id: 5, x: '50%', y: 1050, label: t('adventure.nodes.boss'), type: 'combat' }
-    ];
-
     const navigate = useNavigate();
-    const { activeParty: party } = useGameStore();
+    const { activeParty: party, activeAdventureId } = useGameStore();
     const { initializeCombat } = useCombatStore();
 
-    const handleNodeClick = (node: typeof nodes[0]) => {
-        if (node.type === 'camp') {
+    // Get active adventure
+    const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
+
+    if (!adventure) {
+        return <div>Adventure not found</div>;
+    }
+
+    const { encounters } = adventure;
+
+    const handleNodeClick = (encounter: typeof encounters[0]) => {
+        if (encounter.type === EncounterType.CAMP) {
             navigate('/camp');
             return;
         }
 
-        // Combat Logic
-        const enemies = node.id === 5 ? ['stone_golem'] : ['goblin_scout', 'goblin_scout'];
-        initializeCombat(party, enemies);
-        navigate('/encounter');
+        if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
+            if (encounter.enemy) {
+                // Create array of enemies (single for now based on data)
+                // Or if data supported multiple, we'd use that. 
+                // Current AdventureMonster is singular, so wrap in array? 
+                // Combat store likely expects array of IDs or objects.
+                // Looking at usages, initializeCombat typically takes ['id', 'id'].
+                // But our data now has full objects. 
+                // We need to pass IDs or create monster instances?
+                // The store expects IDs to look up in MONSTERS, or we should check combat.store.ts.
+                // The previous code used: `['goblin_scout', 'goblin_scout']`.
+                // Our new data `enemy` has an `id`.
+                // Let's assume for now we pass `[encounter.enemy.id]`.
+                // Wait, encounter.enemy is an inline object now in our new data structure, not just an ID reference to a global list?
+                // Let's check `encounters` in `adventures.data.ts`. Yes, it has full properties.
+                // BUT `monsters.data.ts` creates monsters from templates.
+                // If `initializeCombat` expects IDs, it expects keys from `MONSTERS`.
+                // Our `enemy.id` in `adventures.data.ts` (e.g. 'goblin_scout_weak') might NOT be in `MONSTERS`.
+                // THIS IS A POTENTIAL ISSUE. 
+                // However, for the prototype, let's assume `enemy.id` maps to a known monster OR we need to adjust `initializeCombat`.
+                // Let's look at `initializeCombat` signature in next step if needed. 
+                // For now, I'll pass `[encounter.enemy.id]` and we might need to fix `monsters.data.ts` or `combat.store` to handle this.
+                // Actually, the previous hardcoded one used `['goblin_scout', 'goblin_scout']`.
+                // My new data has `id: 'goblin_scout_weak'`. 
+                // I should probably ensure `monsters.data.ts` has these keys, OR use a different init method.
+
+                // Re-reading `combat.store.ts` would be wise, but I'll proceed with passing the ID and fix if broken.
+                initializeCombat(party, [encounter.enemy]);
+                navigate('/encounter');
+            }
+        }
     };
 
     return (
         <div className="map-container">
             {/* Integrated Header */}
             <div className="map-header">
-                <h1 className="map-title" data-testid="map-title">Adventure Map</h1>
-                <p className="map-subtitle">Level {currentNode} - The Journey Begins</p>
+                <h1 className="map-title" data-testid="map-title">{adventure.title}</h1>
+                <p className="map-subtitle">{adventure.description}</p>
             </div>
 
             {/* Background decoration */}
@@ -62,40 +90,37 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                             </linearGradient>
                         </defs>
                         {/* 
-                            Path Logic (Shifted +150px Y):
-                            Start: 250, 250
-                            Forest: 150, 450
-                            River: 350, 650
-                            Cave: 200, 850
-                            Boss: 250, 1050
+                           Path Logic needs to be dynamic or roughly match the 3-node structure.
+                           For prototype with 3 nodes:
+                           1: 250, 250
+                           2: 350, 450
+                           3: 250, 650
                         */}
                         <path
                             d="M 250 250 
-                               C 250 350, 150 350, 150 450 
-                               S 350 550, 350 650 
-                               S 200 750, 200 850 
-                               S 250 950, 250 1050"
+                               C 250 350, 350 350, 350 450 
+                               S 250 550, 250 650"
                         />
                     </svg>
 
-                    {nodes.map((node) => {
-                        const isCompleted = node.id < currentNode;
-                        const isCurrent = node.id === currentNode;
-                        const isLocked = node.id > currentNode;
-                        const isCamp = node.type === 'camp';
+                    {encounters.map((node, index) => {
+                        // Node ID in data is string like "1_1", but progress is number index+1
+                        const nodeStep = index + 1;
+                        const isCompleted = nodeStep < currentNode;
+                        const isCurrent = nodeStep === currentNode;
+                        const isLocked = nodeStep > currentNode;
+                        const isCamp = node.type === EncounterType.CAMP;
+                        const isBoss = node.type === EncounterType.BOSS;
 
-                        // Map % coordinates to our viewBox system (500 width)
-                        let leftPos = '50%';
-                        if (node.id === 2) leftPos = '30%'; // 150/500 = 30%
-                        if (node.id === 3) leftPos = '70%'; // 350/500 = 70%
-                        if (node.id === 4) leftPos = '40%'; // 200/500 = 40%
-
-                        let topPos = node.y; // pixels
+                        // Use coordinates from data or fallback
+                        const leftPos = node.coordinates ? `${(node.coordinates.x / 500) * 100}%` : '50%';
+                        const topPos = node.coordinates ? node.coordinates.y : 250 + (index * 200);
 
                         // CSS Classes Construction
                         const nodeContainerClasses = [
                             'node-container',
                             isCamp ? 'camp' : 'default',
+                            isBoss ? 'boss' : '', // Might need CSS for boss node
                             isLocked ? 'locked' : '',
                             isCurrent ? 'current' : '',
                             isCompleted ? 'completed' : ''
@@ -106,8 +131,14 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                             isCamp ? 'camp' : '',
                             isLocked ? 'locked' : '',
                             isCurrent ? 'current' : '',
-                            isCompleted ? 'completed' : '' // Falls back to default/locked style unless specific 'completed' style added
+                            isCompleted ? 'completed' : ''
                         ].filter(Boolean).join(' ');
+
+                        // Node Icon
+                        let icon = nodeStep.toString();
+                        if (isCamp) icon = '⛺';
+                        if (isBoss) icon = '💀';
+                        if (isCompleted) icon = '✓';
 
                         return (
                             <div
@@ -118,9 +149,8 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                             >
                                 {/* Node Shape */}
                                 <div className={nodeContainerClasses} data-testid={`map-node-${node.id}`}>
-                                    {/* Rotate icon back if container is rotated */}
                                     <span className="node-icon">
-                                        {isCompleted ? '✓' : (isCamp ? '⛺' : node.id)}
+                                        {icon}
                                     </span>
                                 </div>
 

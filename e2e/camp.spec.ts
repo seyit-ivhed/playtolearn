@@ -31,10 +31,7 @@ test.describe('Camp Page', () => {
         // Since default state might have 1 hero?
 
         // We can just check that we don't crash and see some slots.
-        const emptySlots = page.getByTestId('empty-slot');
-        const partyCards = page.locator('[data-testid^="party-card-"]');
-
-        // Wait for at least one to be visible to ensure render
-        await expect(emptySlots.first().or(partyCards.first())).toBeVisible();
+        // Check for specific known party member from initial state
+        await expect(page.getByTestId('party-card-village_squire')).toBeVisible();
     });
 });

@@ -19,7 +19,7 @@ test.describe('Navigation Flow', () => {
 
             parsed.state = {
                 ...parsed.state,
-                currentMapNode: 3, // Unlock up to Node 3
+                currentMapNode: 4, // Unlock up to Node 4 (Camp)
                 // Ensure other required fields are present if needed, but partial update might work if hydration handles it
                 // Actually, let's just update currentMapNode, assuming other state is initialized
             };
@@ -31,8 +31,8 @@ test.describe('Navigation Flow', () => {
         // 2. Reload to apply state
         await page.reload();
 
-        // 3. Verify we are at Node 3 and it's a Camp
-        const campNode = page.getByTestId('map-node-3');
+        // 3. Verify we are at Node 4 and it's a Camp
+        const campNode = page.getByTestId('map-node-1_4');
         await expect(campNode).toBeVisible();
         await expect(campNode).toHaveText('⛺'); // Check for Camp Icon
 
@@ -51,7 +51,7 @@ test.describe('Navigation Flow', () => {
 
     test('should navigate between Map and Encounter (Retreat)', async ({ page }) => {
         // Click on the current node (assuming node 1 is current/start)
-        const startNode = page.getByTestId('map-node-1');
+        const startNode = page.getByTestId('map-node-1_1');
         await expect(startNode).toBeVisible();
         await startNode.click({ force: true });
 

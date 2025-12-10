@@ -37,6 +37,22 @@ export interface AdventureMonster {
     defense: number;
     speed: number;
     sprite?: string;
+    icon?: string;
+}
+
+// Map coordinates for placing nodes
+export interface MapCoordinates {
+    x: number;
+    y: number;
+}
+
+// Concept: An encounter is a single node on the map
+export interface Encounter {
+    id: string;
+    type: EncounterType;
+    label: string;
+    coordinates?: MapCoordinates;
+    enemy?: AdventureMonster; // If type is BATTLE or BOSS
 }
 
 // Adventure: Contains a linear sequence of encounters culminating in a boss fight
@@ -45,7 +61,7 @@ export interface Adventure {
     title: string;
     description: string;
     difficulty: number; // 1-10 scale
-    enemy: AdventureMonster; // Boss fight enemy
+    encounters: Encounter[]; // The sequence of nodes for this adventure
     rewards: AdventureReward;
     requirements?: {
         minLevel?: number;

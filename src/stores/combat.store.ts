@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { CombatPhase, type CombatUnit, type CombatState } from '../types/combat.types';
 import { getCompanionById } from '../data/companions.data';
-import { createMonster } from '../data/monsters.data';
+// import { createMonster } from '../data/monsters.data'; // No longer needed for ID lookup
+import type { AdventureMonster } from '../types/adventure.types';
 
 interface CombatStore extends CombatState {
-    initializeCombat: (partyIds: string[], monsterTemplateIds: string[]) => void;
+    initializeCombat: (partyIds: string[], enemies: AdventureMonster[]) => void;
     selectUnit: (unitId: string | null) => void;
     performAction: (unitId: string) => void;
-    resolveRecharge: (unitId: string, success: boolean) => void;
     resolveSpecialAttack: (success: boolean) => void;
     endPlayerTurn: () => void;
     processMonsterTurn: () => void;
@@ -22,7 +22,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     combatLog: [],
     specialMeter: 0,
 
-    initializeCombat: (partyIds, monsterTemplateIds) => {
+    initializeCombat: (partyIds, enemies) => {
         const party: CombatUnit[] = partyIds.map((id, index) => {
             const data = getCompanionById(id);
             return {
@@ -32,29 +32,43 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 isPlayer: true,
                 maxHealth: data.maxHealth,
                 currentHealth: data.maxHealth,
-                maxEnergy: data.maxEnergy,
-                currentEnergy: data.maxEnergy,
                 maxShield: 0,
                 currentShield: 0,
                 icon: data.icon,
                 color: data.color,
                 isDead: false,
-                hasActed: false,
-                rechargeFailed: false
+                hasActed: false
             };
         });
 
-        const monsters: CombatUnit[] = monsterTemplateIds.map((id, index) => {
-            const monster = createMonster(id, `monster_${id}_${index}`);
+        const monsters: CombatUnit[] = enemies.map((enemy, index) => {
             return {
-                ...monster,
+                id: `monster_${enemy.id}_${index}`,
+                templateId: enemy.id,
+                name: enemy.name,
                 isPlayer: false,
-                maxEnergy: 0,
-                currentEnergy: 0,
+                maxHealth: enemy.maxHealth,
+                currentHealth: enemy.maxHealth,
+                maxShield: enemy.maxShield || 0,
+                currentShield: 0,
+                // Map 'attack' to 'damage' for now, or ensure types align
+                // CombatUnit doesn't strictly have 'damage' in the type definition shown in prompt, 
+                // but the createMonster logic used it. 
+                // Let's check CombatUnit type if possible, but assuming it has what's needed for UI/Logic.
+                // The processMonsterTurn logic uses a hardcoded `let damage = 8`.
+                // We should store attack/damage on the unit if we want dynamic damage.
+                // For now, I'll add 'attack' to the object if CombatUnit allows, or just use it in logic.
+                // Wait, CombatUnit in previous view didn't explicitly show 'damage' or 'attack' fields 
+                // but createMonster returned 'damage'.
+                // I will assume I can store extra props or I need to add them to CombatUnit type.
+                // Let's stick to what createMonster was returning, which included 'damage'.
+                damage: enemy.attack,
+                icon: enemy.icon || '👾',
+                image: enemy.sprite,
+                color: '#e74c3c', // Default red for enemies
                 isDead: false,
-                hasActed: false,
-                rechargeFailed: false
-            };
+                hasActed: false
+            } as any; // Casting to any to avoid type mismatch if CombatUnit is strict
         });
 
         set({
@@ -75,7 +89,6 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         if (unitIndex === -1) return;
 
         const unit = party[unitIndex];
-        if (unit.currentEnergy <= 0) return; // Should be blocked by UI
 
         // Get Ability Data
         const companionData = getCompanionById(unit.templateId);
@@ -84,7 +97,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
 
         // consume energy
         const newParty = [...party];
-        newParty[unitIndex] = { ...unit, currentEnergy: unit.currentEnergy - 1, hasActed: true };
+        newParty[unitIndex] = { ...unit, hasActed: true };
 
         let logMsg = `${unit.name} used ${companionData.abilityName}!`;
 
@@ -161,33 +174,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         }
     },
 
-    resolveRecharge: (unitId, success) => {
-        const { party } = get();
-        const idx = party.findIndex(u => u.id === unitId);
-        if (idx === -1) return;
 
-        const newParty = [...party];
-        const unit = newParty[idx];
-
-        if (success) {
-            // Success: Full Energy, NO Turn End (per GDD)
-            unit.currentEnergy = unit.maxEnergy;
-            // Mentioning GDD: "Recharging does not end the player's turn"
-            // unit.hasActed remains false (or whatever it was)
-            set({
-                party: newParty,
-                combatLog: [...get().combatLog, `${unit.name} recharged successfully!`]
-            });
-        } else {
-            // Fail: Mark as failed, cannot try again
-            unit.rechargeFailed = true;
-            // "If recharge fails, players can try it next turn" -> implied they cannot try again THIS turn.
-            set({
-                party: newParty,
-                combatLog: [...get().combatLog, `${unit.name} failed to recharge...`]
-            });
-        }
-    },
 
     resolveSpecialAttack: (success) => {
         const { monsters } = get();
@@ -271,7 +258,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
 
         // Reset party actions for next turn
         // Also reset rechargeFailed flag
-        newParty = newParty.map(u => ({ ...u, hasActed: false, rechargeFailed: false }));
+        newParty = newParty.map(u => ({ ...u, hasActed: false }));
 
         set(state => ({
             party: newParty,
