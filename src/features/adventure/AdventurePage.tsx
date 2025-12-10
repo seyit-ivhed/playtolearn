@@ -8,7 +8,11 @@ import { ADVENTURES } from '../../data/adventures.data';
 import { EncounterType } from '../../types/adventure.types';
 
 const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
-    const { t } = useTranslation();
+    useTranslation(); // Hook run for side effects if needed, or remove completely if not used. 
+    // Actually, looking at the code, useTranslation is imported but 't' is unused. 
+    // If the component relies on language change re-renders, we might need to keep the hook.
+    // But usually 't' is used for strings. The strings here seem hardcoded or from data.
+    // I will just remove the 't' destructuring.
     const navigate = useNavigate();
     const { activeParty: party, activeAdventureId } = useGameStore();
     const { initializeCombat } = useCombatStore();

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
 import CampPage from './features/camp/CampPage';
 import EncounterPage from './features/encounter/EncounterPage';
+import MathTestPage from './features/math/MathTestPage';
 
 function App() {
   return (
@@ -18,8 +19,10 @@ function App() {
         {/* 3. The Encounter */}
         <Route path="/encounter" element={<EncounterPage />} />
 
+
         {/* Legacy / Dev routes */}
         <Route path="/combat-ui-test" element={<EncounterPage />} />
+        <Route path="/math-debug" element={<MathTestPage />} />
       </Routes>
     </BrowserRouter>
   );
