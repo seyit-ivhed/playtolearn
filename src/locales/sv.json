@@ -123,7 +123,21 @@
     "adventures": {
         "1": {
             "title": "Goblinskogen",
-            "description": "Spanare har rapporterat goblinaktivitet i den närliggande skogen. Undersök och rensa hotet."
+            "description": "Spanare har rapporterat goblinaktivitet i den närliggande skogen. Undersök och rensa hotet.",
+            "nodes": {
+                "1_1": {
+                    "label": "Spanare Siktad"
+                },
+                "1_2": {
+                    "label": "Bakhåll!"
+                },
+                "1_3": {
+                    "label": "Ledaren Hittad"
+                },
+                "1_4": {
+                    "label": "Viloplats"
+                }
+            }
         },
         "2": {
             "title": "Stengolemens Grotta",

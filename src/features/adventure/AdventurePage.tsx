@@ -8,11 +8,7 @@ import { ADVENTURES } from '../../data/adventures.data';
 import { EncounterType } from '../../types/adventure.types';
 
 const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
-    useTranslation(); // Hook run for side effects if needed, or remove completely if not used. 
-    // Actually, looking at the code, useTranslation is imported but 't' is unused. 
-    // If the component relies on language change re-renders, we might need to keep the hook.
-    // But usually 't' is used for strings. The strings here seem hardcoded or from data.
-    // I will just remove the 't' destructuring.
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { activeParty: party, activeAdventureId } = useGameStore();
     const { initializeCombat } = useCombatStore();
@@ -21,7 +17,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
 
     if (!adventure) {
-        return <div>Adventure not found</div>;
+        return <div>{t('adventure.not_found', 'Adventure not found')}</div>;
     }
 
     const { encounters } = adventure;
@@ -34,31 +30,6 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
 
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
             if (encounter.enemy) {
-                // Create array of enemies (single for now based on data)
-                // Or if data supported multiple, we'd use that. 
-                // Current AdventureMonster is singular, so wrap in array? 
-                // Combat store likely expects array of IDs or objects.
-                // Looking at usages, initializeCombat typically takes ['id', 'id'].
-                // But our data now has full objects. 
-                // We need to pass IDs or create monster instances?
-                // The store expects IDs to look up in MONSTERS, or we should check combat.store.ts.
-                // The previous code used: `['goblin_scout', 'goblin_scout']`.
-                // Our new data `enemy` has an `id`.
-                // Let's assume for now we pass `[encounter.enemy.id]`.
-                // Wait, encounter.enemy is an inline object now in our new data structure, not just an ID reference to a global list?
-                // Let's check `encounters` in `adventures.data.ts`. Yes, it has full properties.
-                // BUT `monsters.data.ts` creates monsters from templates.
-                // If `initializeCombat` expects IDs, it expects keys from `MONSTERS`.
-                // Our `enemy.id` in `adventures.data.ts` (e.g. 'goblin_scout_weak') might NOT be in `MONSTERS`.
-                // THIS IS A POTENTIAL ISSUE. 
-                // However, for the prototype, let's assume `enemy.id` maps to a known monster OR we need to adjust `initializeCombat`.
-                // Let's look at `initializeCombat` signature in next step if needed. 
-                // For now, I'll pass `[encounter.enemy.id]` and we might need to fix `monsters.data.ts` or `combat.store` to handle this.
-                // Actually, the previous hardcoded one used `['goblin_scout', 'goblin_scout']`.
-                // My new data has `id: 'goblin_scout_weak'`. 
-                // I should probably ensure `monsters.data.ts` has these keys, OR use a different init method.
-
-                // Re-reading `combat.store.ts` would be wise, but I'll proceed with passing the ID and fix if broken.
                 initializeCombat(party, [encounter.enemy]);
                 navigate('/encounter');
             }
@@ -69,8 +40,12 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
         <div className="map-container">
             {/* Integrated Header */}
             <div className="map-header">
-                <h1 className="map-title" data-testid="map-title">{adventure.title}</h1>
-                <p className="map-subtitle">{adventure.description}</p>
+                <h1 className="map-title" data-testid="map-title">
+                    {t(`adventures.${adventure.id}.title`, adventure.title)}
+                </h1>
+                <p className="map-subtitle">
+                    {t(`adventures.${adventure.id}.description`, adventure.description)}
+                </p>
             </div>
 
             {/* Background decoration */}
@@ -161,7 +136,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                                 {/* Label */}
                                 <div className={labelClasses}>
                                     {isCamp && <span className="mr-2">✨</span>}
-                                    {node.label}
+                                    {t(`adventures.${adventure.id}.nodes.${node.id}.label`, node.label)}
                                     {isCamp && <span className="ml-2">✨</span>}
                                 </div>
                             </div>

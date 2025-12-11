@@ -123,7 +123,21 @@
     "adventures": {
         "1": {
             "title": "The Goblin Forest",
-            "description": "Scouts have reported goblin activity in the nearby woods. Investigate and clear the threat."
+            "description": "Scouts have reported goblin activity in the nearby woods. Investigate and clear the threat.",
+            "nodes": {
+                "1_1": {
+                    "label": "Scout Sighting"
+                },
+                "1_2": {
+                    "label": "Ambush!"
+                },
+                "1_3": {
+                    "label": "Leader Found"
+                },
+                "1_4": {
+                    "label": "Rest Site"
+                }
+            }
         },
         "2": {
             "title": "Stone Golem Cave",

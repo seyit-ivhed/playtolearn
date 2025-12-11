@@ -3,10 +3,20 @@ import { usePlayerStore } from '../stores/player.store';
 import { resetGame } from '../utils/store-utils';
 import '../styles/settings.css';
 
+import { useTranslation } from 'react-i18next';
+
 const SettingsMenu: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { difficulty, setDifficulty, language, setLanguage } = usePlayerStore();
+    const { i18n } = useTranslation();
     const menuRef = useRef<HTMLDivElement>(null);
+
+    // Sync language on mount/change
+    useEffect(() => {
+        if (i18n.language !== language) {
+            i18n.changeLanguage(language);
+        }
+    }, [language, i18n]);
 
     // Close menu when clicking outside
     useEffect(() => {
@@ -28,8 +38,8 @@ const SettingsMenu: React.FC = () => {
     };
 
     const handleLanguageChange = (lang: 'en' | 'sv') => {
-        // Here we would also typically change i18n instance language
         setLanguage(lang);
+        i18n.changeLanguage(lang);
     };
 
     const handleReset = () => {
