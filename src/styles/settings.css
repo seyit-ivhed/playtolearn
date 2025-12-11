@@ -6,24 +6,25 @@
 }
 
 .settings-button {
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+    background: transparent;
+    border: none;
     width: 3rem;
     height: 3rem;
-    font-size: 1.5rem;
+    font-size: 2rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    backdrop-filter: blur(4px);
+    padding: 0;
+    color: rgba(255, 255, 255, 0.7);
 }
 
-.settings-button:hover, .settings-button.active {
-    background: rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 0.5);
+.settings-button:hover,
+.settings-button.active {
+    background: transparent;
     transform: rotate(45deg);
+    color: #fff;
 }
 
 .settings-dropdown {
@@ -117,6 +118,13 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
