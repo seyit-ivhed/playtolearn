@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCombatStore } from '../../stores/combat.store';
 import { useGameStore } from '../../stores/game.store';
+import { usePlayerStore } from '../../stores/player.store';
 import { CombatPhase } from '../../types/combat.types';
 import MathChallengeModal from '../../components/MathChallengeModal';
 import { generateProblem } from '../../utils/math-generator';
@@ -10,8 +11,11 @@ import { useState } from 'react';
 import { UnitCard } from '../combat/components/UnitCard';
 import '../../styles/pages/EncounterPage.css';
 
+
+
 const EncounterPage = () => {
     const navigate = useNavigate();
+    const { difficulty } = usePlayerStore();
     const {
         phase, party, monsters,
         performAction,
@@ -29,10 +33,10 @@ const EncounterPage = () => {
     const startSpecialAttack = () => {
         if (specialMeter < 100 || phase !== CombatPhase.PLAYER_TURN) return;
 
-        // Generate a HARD problem
+        // Generate a problem based on user difficulty
         const ops = [MathOperation.MULTIPLY, MathOperation.DIVIDE, MathOperation.ADD];
         const op = ops[Math.floor(Math.random() * ops.length)];
-        const problem = generateProblem(op, 2); // Difficulty 2
+        const problem = generateProblem(op, difficulty);
 
         setActiveChallenge({
             type: 'SPECIAL',
