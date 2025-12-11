@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useCombatStore } from '../../stores/combat.store';
 import { useGameStore } from '../../stores/game.store';
@@ -14,6 +15,7 @@ import '../../styles/pages/EncounterPage.css';
 
 
 const EncounterPage = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { difficulty } = usePlayerStore();
     const {
@@ -58,18 +60,18 @@ const EncounterPage = () => {
     useEffect(() => {
         if (phase === CombatPhase.VICTORY) {
             setTimeout(() => {
-                alert("Victoria! Returning to Map...");
+                alert(t('combat.encounter.victory_alert', "Victoria! Returning to Map..."));
                 // Ideally show a results screen
                 useGameStore.getState().completeEncounter();
                 navigate('/map');
             }, 1000);
         } else if (phase === CombatPhase.DEFEAT) {
             setTimeout(() => {
-                alert("Defeat! Retreating to Camp...");
+                alert(t('combat.encounter.defeat_alert', "Defeat! Retreating to Camp..."));
                 navigate('/camp');
             }, 1000);
         }
-    }, [phase, navigate]);
+    }, [phase, navigate, t]);
 
 
 
@@ -99,7 +101,7 @@ const EncounterPage = () => {
                     {/* VS Indicator */}
                     <div className="vs-indicator">
                         <div className="vs-line"></div>
-                        <span className="vs-text">VS</span>
+                        <span className="vs-text">{t('combat.encounter.vs', 'VS')}</span>
                         <div className="vs-line bottom"></div>
                     </div>
 
@@ -120,7 +122,7 @@ const EncounterPage = () => {
                     <div
                         className={`spirit-meter ${isSpecialReady ? 'ready' : ''}`}
                         onClick={startSpecialAttack}
-                        title={specialMeter >= 100 ? "Click to Activate Ultimate!" : `${Math.floor(specialMeter)}% Spirit`}
+                        title={specialMeter >= 100 ? t('combat.encounter.click_to_activate', "Click to Activate Ultimate!") : t('combat.encounter.spirit_tooltip', { amount: Math.floor(specialMeter), defaultValue: `${Math.floor(specialMeter)}% Spirit` })}
                     >
                         {/* Background Bar */}
                         <div
@@ -136,7 +138,7 @@ const EncounterPage = () => {
                         {/* Text Overlay */}
                         <div className="spirit-meter-text-overlay">
                             <span className="spirit-meter-text">
-                                {specialMeter >= 100 ? "✨ UNLEASH ULTIMATE ✨" : `Party Spirit ${Math.floor(specialMeter)}%`}
+                                {specialMeter >= 100 ? t('combat.encounter.unleash_ultimate', "✨ UNLEASH ULTIMATE ✨") : t('combat.encounter.spirit_meter', { amount: Math.floor(specialMeter), defaultValue: `Party Spirit ${Math.floor(specialMeter)}%` })}
                             </span>
                         </div>
                     </div>
@@ -148,8 +150,8 @@ const EncounterPage = () => {
                 activeChallenge && (
                     <MathChallengeModal
                         problem={activeChallenge.problem}
-                        title="ULTIMATE CASTING!"
-                        description="Solve correctly to UNLEASH POWER!"
+                        title={t('combat.encounter.ultimate_casting', "ULTIMATE CASTING!")}
+                        description={t('combat.encounter.solve_to_unleash', "Solve correctly to UNLEASH POWER!")}
                         onComplete={handleChallengeComplete}
                         onClose={() => setActiveChallenge(null)}
                     />

@@ -33,6 +33,17 @@
         "math": {
             "title": "Solve to Act!",
             "recharge_prompt": "Recharge"
+        },
+        "encounter": {
+            "victory_alert": "Victoria! Returning to Map...",
+            "defeat_alert": "Defeat! Retreating to Camp...",
+            "vs": "VS",
+            "spirit_meter": "Party Spirit {{amount}}%",
+            "unleash_ultimate": "✨ UNLEASH ULTIMATE ✨",
+            "click_to_activate": "Click to Activate Ultimate!",
+            "spirit_tooltip": "{{amount}}% Spirit",
+            "ultimate_casting": "ULTIMATE CASTING!",
+            "solve_to_unleash": "Solve correctly to UNLEASH POWER!"
         }
     },
     "rewards": {

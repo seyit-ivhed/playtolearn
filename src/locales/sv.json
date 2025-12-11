@@ -33,6 +33,17 @@
         "math": {
             "title": "Lös för att Agera!",
             "recharge_prompt": "Ladda"
+        },
+        "encounter": {
+            "victory_alert": "Seger! Återvänder till Kartan...",
+            "defeat_alert": "Nederlag! Reträtt till Lägret...",
+            "vs": "MOT",
+            "spirit_meter": "Gruppanda {{amount}}%",
+            "unleash_ultimate": "✨ UTBRIST ULTIMAT KRAFT ✨",
+            "click_to_activate": "Klicka för att Aktivera Ultimat Kraft!",
+            "spirit_tooltip": "{{amount}}% Anda",
+            "ultimate_casting": "ULTIMAT KASTNING!",
+            "solve_to_unleash": "Lös korrekt för att UTBRISTA KRAFT!"
         }
     },
     "rewards": {
