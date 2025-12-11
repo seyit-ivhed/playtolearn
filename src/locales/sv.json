@@ -45,6 +45,13 @@
             "ultimate_casting": "ULTIMAT KASTNING!",
             "solve_to_unleash": "Lös korrekt för att UTBRISTA KRAFT!"
         },
+        "completion": {
+            "victory_title": "SEGER!",
+            "victory_message": "Fienden har besegrats!",
+            "defeat_title": "FÖRLUST",
+            "defeat_message": "Ditt lag har fallit...",
+            "continue_button": "Fortsätt"
+        },
         "unit_card": {
             "hp": "HP",
             "ability": "Förmåga",

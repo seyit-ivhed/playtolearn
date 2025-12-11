@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useCombatStore } from '../../stores/combat.store';
@@ -10,6 +10,7 @@ import { generateProblem } from '../../utils/math-generator';
 import { MathOperation, type MathProblem } from '../../types/math.types';
 import { useState } from 'react';
 import { UnitCard } from '../combat/components/UnitCard';
+import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import '../../styles/pages/EncounterPage.css';
 
 
@@ -56,22 +57,15 @@ const EncounterPage = () => {
         setActiveChallenge(null);
     };
 
-    // Handle Victory/Defeat
-    useEffect(() => {
+    const handleCompletionContinue = () => {
         if (phase === CombatPhase.VICTORY) {
-            setTimeout(() => {
-                alert(t('combat.encounter.victory_alert', "Victoria! Returning to Map..."));
-                // Ideally show a results screen
-                useGameStore.getState().completeEncounter();
-                navigate('/map');
-            }, 1000);
+            useGameStore.getState().completeEncounter();
+            navigate('/map');
         } else if (phase === CombatPhase.DEFEAT) {
-            setTimeout(() => {
-                alert(t('combat.encounter.defeat_alert', "Defeat! Retreating to Camp..."));
-                navigate('/camp');
-            }, 1000);
+            navigate('/camp');
         }
-    }, [phase, navigate, t]);
+    };
+
 
 
 
@@ -157,6 +151,13 @@ const EncounterPage = () => {
                     />
                 )
             }
+            {/* Completion Modal */}
+            {(phase === CombatPhase.VICTORY || phase === CombatPhase.DEFEAT) && (
+                <EncounterCompletionModal
+                    result={phase === CombatPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
+                    onContinue={handleCompletionContinue}
+                />
+            )}
         </div >
     );
 };
