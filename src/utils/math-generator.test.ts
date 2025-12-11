@@ -23,10 +23,10 @@ describe('Math Generator', () => {
             const problem = generateProblem(MathOperation.ADD, 5);
 
             expect(problem.difficulty).toBe(5);
-            expect(problem.operand1).toBeGreaterThanOrEqual(10);
-            expect(problem.operand1).toBeLessThanOrEqual(200);
-            expect(problem.operand2).toBeGreaterThanOrEqual(10);
-            expect(problem.operand2).toBeLessThanOrEqual(200);
+            expect(problem.operand1).toBeGreaterThanOrEqual(100);
+            expect(problem.operand1).toBeLessThanOrEqual(600);
+            expect(problem.operand2).toBeGreaterThanOrEqual(100);
+            expect(problem.operand2).toBeLessThanOrEqual(600);
         });
     });
 
