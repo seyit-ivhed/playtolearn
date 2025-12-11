@@ -45,6 +45,13 @@
             "ultimate_casting": "ULTIMATE CASTING!",
             "solve_to_unleash": "Solve correctly to UNLEASH POWER!"
         },
+        "completion": {
+            "victory_title": "VICTORY!",
+            "victory_message": "The enemy has been defeated!",
+            "defeat_title": "DEFEAT",
+            "defeat_message": "Your party has fallen...",
+            "continue_button": "Continue"
+        },
         "unit_card": {
             "hp": "HP",
             "ability": "Ability",
