@@ -46,7 +46,7 @@
             "solve_to_unleash": "Lös korrekt för att UTBRISTA KRAFT!"
         },
         "unit_card": {
-            "hp": "HL",
+            "hp": "HP",
             "ability": "Förmåga",
             "shield": "Sköld"
         }
