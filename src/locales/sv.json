@@ -44,6 +44,11 @@
             "spirit_tooltip": "{{amount}}% Anda",
             "ultimate_casting": "ULTIMAT KASTNING!",
             "solve_to_unleash": "Lös korrekt för att UTBRISTA KRAFT!"
+        },
+        "unit_card": {
+            "hp": "HL",
+            "ability": "Förmåga",
+            "shield": "Sköld"
         }
     },
     "rewards": {
@@ -79,37 +84,65 @@
         "remove": "Ta bort",
         "locked": "Låst",
         "unlock_requirement": "Slutför äventyr för att låsa upp",
-        "companion_fire_knight": {
+        "village_squire": {
+            "name": "Byväpnare",
+            "description": "En ung hjälte med ett rostigt svärd och ett stort hjärta.",
+            "ability_name": "Klumpigt Slag",
+            "ability_description": "Gör 8 skada på en fiende."
+        },
+        "novice_archer": {
+            "name": "Nybörjarskytt",
+            "description": "Lär sig fortfarande att sikta, men har skarpa ögon.",
+            "ability_name": "Övningsskott",
+            "ability_description": "Gör 6 skada."
+        },
+        "fire_knight": {
             "name": "Eldknekten",
-            "description": "En modig knekt som svingar eldslågor. Slår monster med brinnande attacker."
+            "description": "En modig knekt som svingar eldslågor. Slår monster med brinnande attacker.",
+            "ability_name": "Eldslag",
+            "ability_description": "Gör 15 skada på en fiende."
         },
-        "companion_shadow_archer": {
+        "shadow_archer": {
             "name": "Skuggskytten",
-            "description": "Tyst och precis. Skjuter pilar från skuggorna."
+            "description": "Tyst och precis. Skjuter pilar från skuggorna.",
+            "ability_name": "Skuggpil",
+            "ability_description": "Gör 12 skada som ignorerar rustning."
         },
-        "companion_lightning_mage": {
+        "lightning_mage": {
             "name": "Blixtmagikern",
-            "description": "Kanaliserar stormens kraft. Kastar förödande blixtar."
+            "description": "Kanaliserar stormens kraft. Kastar förödande blixtar.",
+            "ability_name": "Åskvigg",
+            "ability_description": "Gör 25 massiv skada, behöver ofta laddas."
         },
-        "companion_frost_ranger": {
+        "frost_ranger": {
             "name": "Frostjägaren",
-            "description": "Mästare av is och kyla. Fryser monster med kylande pilar."
+            "description": "Mästare av is och kyla. Fryser monster med kylande pilar.",
+            "ability_name": "Isskott",
+            "ability_description": "Skadar och saktar ner fiender."
         },
-        "companion_crystal_guardian": {
+        "crystal_guardian": {
             "name": "Kristallväktaren",
-            "description": "Skyddad av kristallrustning. Skyddar gruppen från skada."
+            "description": "Skyddad av kristallrustning. Skyddar gruppen från skada.",
+            "ability_name": "Kristallsköld",
+            "ability_description": "Ger 20 Sköld till en vän."
         },
-        "companion_earth_defender": {
+        "earth_defender": {
             "name": "Jordförsvararen",
-            "description": "Stark som sten. Reser jordvallar för att blockera attacker."
+            "description": "Stark som sten. Reser jordvallar för att blockera attacker.",
+            "ability_name": "Stenmur",
+            "ability_description": "Ger sköld till sig själv."
         },
-        "companion_light_healer": {
+        "light_healer": {
             "name": "Ljushelaren",
-            "description": "Välsignad med helande magi. Återställer gruppen med strålande ljus."
+            "description": "Välsignad med helande magi. Återställer gruppen med strålande ljus.",
+            "ability_name": "Helande Ljus",
+            "ability_description": "Läker en vän för 15 Hälsa."
         },
-        "companion_nature_druid": {
+        "nature_druid": {
             "name": "Naturdruiden",
-            "description": "I harmoni med naturen. Ger gradvis läkning och skydd."
+            "description": "I harmoni med naturen. Ger gradvis läkning och skydd.",
+            "ability_name": "Återväxt",
+            "ability_description": "Läker över tid."
         }
     },
     "adventure": {

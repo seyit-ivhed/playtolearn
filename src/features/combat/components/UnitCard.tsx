@@ -1,6 +1,7 @@
 import { type CombatUnit, CombatPhase } from '../../../types/combat.types';
 import { getCompanionById } from '../../../data/companions.data';
 import '../../../styles/components/UnitCard.css';
+import { useTranslation } from 'react-i18next';
 
 interface UnitCardProps {
     unit: CombatUnit;
@@ -9,12 +10,18 @@ interface UnitCardProps {
 }
 
 export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
+    const { t } = useTranslation();
     const isMonster = !unit.isPlayer;
     const healthPercent = (unit.currentHealth / unit.maxHealth) * 100;
 
     // Companion Data
     const companionData = !isMonster ? getCompanionById(unit.templateId) : null;
     const canAct = !unit.hasActed && !unit.isDead && phase === CombatPhase.PLAYER_TURN;
+
+    // Localized Name
+    const displayName = isMonster
+        ? t(`monsters.${unit.templateId}.name`, unit.name)
+        : t(`companions.${unit.templateId}.name`, companionData?.name || unit.name);
 
     // Interaction Handler
     const handleCardClick = (e: React.MouseEvent) => {
@@ -61,7 +68,7 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
             {/* Name Badge */}
             <div className="unit-card-name-badge">
                 <h3 className="unit-card-name-text">
-                    {unit.name}
+                    {displayName}
                 </h3>
             </div>
 
@@ -70,7 +77,7 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
                 {(!isMonster && companionData) || (isMonster && unit.image) ? (
                     <img
                         src={!isMonster && companionData ? companionData.image : unit.image}
-                        alt={unit.name}
+                        alt={displayName}
                         className="unit-card-image"
                     />
                 ) : (
@@ -107,10 +114,10 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
                 {!isMonster && companionData && (
                     <div className="ability-card">
                         <div className="ability-tag">
-                            Ability
+                            {t('combat.unit_card.ability', 'Ability')}
                         </div>
                         <p className="ability-text">
-                            {companionData.abilityDescription}
+                            {t(`companions.${unit.templateId}.ability_description`, companionData.abilityDescription)}
                         </p>
                     </div>
                 )}
@@ -122,7 +129,7 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
                         style={{ width: `${healthPercent}%` }}
                     />
                     <div className="health-text">
-                        <span style={{ marginRight: '0.25rem' }}>HP</span> {unit.currentHealth} / {unit.maxHealth}
+                        <span style={{ marginRight: '0.25rem' }}>{t('combat.unit_card.hp', 'HP')}</span> {unit.currentHealth} / {unit.maxHealth}
                     </div>
                 </div>
             </div>

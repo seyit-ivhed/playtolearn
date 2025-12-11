@@ -44,6 +44,11 @@
             "spirit_tooltip": "{{amount}}% Spirit",
             "ultimate_casting": "ULTIMATE CASTING!",
             "solve_to_unleash": "Solve correctly to UNLEASH POWER!"
+        },
+        "unit_card": {
+            "hp": "HP",
+            "ability": "Ability",
+            "shield": "Shield"
         }
     },
     "rewards": {
@@ -79,37 +84,65 @@
         "remove": "Remove",
         "locked": "Locked",
         "unlock_requirement": "Complete adventures to unlock",
-        "companion_fire_knight": {
+        "village_squire": {
+            "name": "Village Squire",
+            "description": "A young hero with a rusty sword and a big heart.",
+            "ability_name": "Clumsy Strike",
+            "ability_description": "Deals 8 damage to a single enemy."
+        },
+        "novice_archer": {
+            "name": "Novice Archer",
+            "description": "Still learning to aim, but has keen eyes.",
+            "ability_name": "Practice Shot",
+            "ability_description": "Deals 6 damage."
+        },
+        "fire_knight": {
             "name": "Fire Knight",
-            "description": "A brave knight wielding flames. Strikes monsters with burning attacks."
+            "description": "A brave knight wielding flames. Strikes monsters with burning attacks.",
+            "ability_name": "Flame Strike",
+            "ability_description": "Deals 15 damage to a single enemy."
         },
-        "companion_shadow_archer": {
+        "shadow_archer": {
             "name": "Shadow Archer",
-            "description": "Silent and precise. Shoots arrows from the shadows."
+            "description": "Silent and precise. Shoots arrows from the shadows.",
+            "ability_name": "Shadow Arrow",
+            "ability_description": "Deals 12 damage that ignores armor."
         },
-        "companion_lightning_mage": {
+        "lightning_mage": {
             "name": "Lightning Mage",
-            "description": "Channels the power of storms. Casts devastating lightning bolts."
+            "description": "Channels the power of storms. Casts devastating lightning bolts.",
+            "ability_name": "Thunder Bolt",
+            "ability_description": "Deals 25 massive damage, needs recharge often."
         },
-        "companion_frost_ranger": {
+        "frost_ranger": {
             "name": "Frost Ranger",
-            "description": "Master of ice and cold. Freezes monsters with chilling arrows."
+            "description": "Master of ice and cold. Freezes monsters with chilling arrows.",
+            "ability_name": "Ice Shot",
+            "ability_description": "Deals damage and slows enemies."
         },
-        "companion_crystal_guardian": {
+        "crystal_guardian": {
             "name": "Crystal Guardian",
-            "description": "Protected by crystalline armor. Shields the party from harm."
+            "description": "Protected by crystalline armor. Shields the party from harm.",
+            "ability_name": "Crystal Shield",
+            "ability_description": "Grants 20 Shield to a friend."
         },
-        "companion_earth_defender": {
+        "earth_defender": {
             "name": "Earth Defender",
-            "description": "Strong as stone. Raises earthen barriers to block attacks."
+            "description": "Strong as stone. Raises earthen barriers to block attacks.",
+            "ability_name": "Stone Wall",
+            "ability_description": "Grants shield to self."
         },
-        "companion_light_healer": {
+        "light_healer": {
             "name": "Light Healer",
-            "description": "Blessed with healing magic. Restores the party with radiant light."
+            "description": "Blessed with healing magic. Restores the party with radiant light.",
+            "ability_name": "Healing Light",
+            "ability_description": "Heals a friend for 15 Health."
         },
-        "companion_nature_druid": {
+        "nature_druid": {
             "name": "Nature Druid",
-            "description": "In harmony with nature. Provides gradual healing and protection."
+            "description": "In harmony with nature. Provides gradual healing and protection.",
+            "ability_name": "Regrowth",
+            "ability_description": "Heals over time."
         }
     },
     "adventure": {
