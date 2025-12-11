@@ -4,25 +4,29 @@ import CampPage from './features/camp/CampPage';
 import EncounterPage from './features/encounter/EncounterPage';
 import MathTestPage from './features/math/MathTestPage';
 
+import Layout from './components/Layout';
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/map" replace />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Navigate to="/map" replace />} />
 
-        {/* 1. The Camp (Starting Hub) */}
-        <Route path="/camp" element={<CampPage />} />
+          {/* 1. The Camp (Starting Hub) */}
+          <Route path="/camp" element={<CampPage />} />
 
-        {/* 2. The Adventure Map */}
-        <Route path="/map" element={<AdventurePage />} />
+          {/* 2. The Adventure Map */}
+          <Route path="/map" element={<AdventurePage />} />
 
-        {/* 3. The Encounter */}
-        <Route path="/encounter" element={<EncounterPage />} />
+          {/* 3. The Encounter */}
+          <Route path="/encounter" element={<EncounterPage />} />
 
 
-        {/* Legacy / Dev routes */}
-        <Route path="/combat-ui-test" element={<EncounterPage />} />
-        <Route path="/math-debug" element={<MathTestPage />} />
+          {/* Legacy / Dev routes */}
+          <Route path="/combat-ui-test" element={<EncounterPage />} />
+          <Route path="/math-debug" element={<MathTestPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

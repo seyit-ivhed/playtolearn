@@ -18,6 +18,7 @@ interface GameState {
     addToParty: (companionId: string) => void;
     removeFromParty: (companionId: string) => void;
     unlockCompanion: (companionId: string) => void;
+    resetAll: () => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -70,6 +71,15 @@ export const useGameStore = create<GameState>()(
                 if (!unlockedCompanions.includes(companionId)) {
                     set({ unlockedCompanions: [...unlockedCompanions, companionId] });
                 }
+            },
+
+            resetAll: () => {
+                set({
+                    currentMapNode: 1,
+                    activeAdventureId: '1',
+                    unlockedCompanions: [...INITIAL_FELLOWSHIP],
+                    activeParty: [...INITIAL_FELLOWSHIP],
+                });
             }
         }),
         {
