@@ -7,7 +7,7 @@ import type { AdventureMonster } from '../types/adventure.types';
 interface CombatStore extends CombatState {
     initializeCombat: (partyIds: string[], enemies: AdventureMonster[]) => void;
     selectUnit: (unitId: string | null) => void;
-    performAction: (unitId: string) => void;
+    performAction: (unitId: string, options?: { isCritical?: boolean }) => void;
     resolveSpecialAttack: (success: boolean) => void;
     endPlayerTurn: () => void;
     processMonsterTurn: () => void;
@@ -52,23 +52,13 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 maxShield: enemy.maxShield || 0,
                 currentShield: 0,
                 // Map 'attack' to 'damage' for now, or ensure types align
-                // CombatUnit doesn't strictly have 'damage' in the type definition shown in prompt, 
-                // but the createMonster logic used it. 
-                // Let's check CombatUnit type if possible, but assuming it has what's needed for UI/Logic.
-                // The processMonsterTurn logic uses a hardcoded `let damage = 8`.
-                // We should store attack/damage on the unit if we want dynamic damage.
-                // For now, I'll add 'attack' to the object if CombatUnit allows, or just use it in logic.
-                // Wait, CombatUnit in previous view didn't explicitly show 'damage' or 'attack' fields 
-                // but createMonster returned 'damage'.
-                // I will assume I can store extra props or I need to add them to CombatUnit type.
-                // Let's stick to what createMonster was returning, which included 'damage'.
                 damage: enemy.attack,
                 icon: enemy.icon || '👾',
                 image: enemy.sprite,
                 color: '#e74c3c', // Default red for enemies
                 isDead: false,
                 hasActed: false
-            } as any; // Casting to any to avoid type mismatch if CombatUnit is strict
+            } as any;
         });
 
         set({
@@ -77,18 +67,20 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             party,
             monsters,
             selectedUnitId: null,
-            combatLog: ['Combat Started!']
+            combatLog: ['Combat Started!'],
+            specialMeter: 75 // Starting Morale
         });
     },
 
     selectUnit: (unitId) => set({ selectedUnitId: unitId }),
 
-    performAction: (unitId) => {
+    performAction: (unitId, options = {}) => {
         const { party, monsters } = get();
         const unitIndex = party.findIndex(u => u.id === unitId);
         if (unitIndex === -1) return;
 
         const unit = party[unitIndex];
+        const isCritical = options.isCritical || false;
 
         // Get Ability Data
         const companionData = getCompanionById(unit.templateId);
@@ -100,6 +92,11 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         newParty[unitIndex] = { ...unit, hasActed: true };
 
         let logMsg = `${unit.name} used ${companionData.abilityName}!`;
+        if (isCritical) {
+            logMsg = `CRITICAL! ${logMsg}`;
+        }
+
+        const multiplier = isCritical ? 2 : 1;
 
         // Apply Effects
         // Simple logic for now: 
@@ -111,7 +108,9 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             const targetIndex = monsters.findIndex(m => !m.isDead);
             if (targetIndex !== -1) {
                 const target = monsters[targetIndex];
-                const damage = companionData.abilityDamage || 10;
+                const baseDamage = companionData.abilityDamage || 10;
+                const damage = baseDamage * multiplier;
+
                 const newHealth = Math.max(0, target.currentHealth - damage);
 
                 const newMonsters = [...monsters];
@@ -126,14 +125,18 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             }
         } else if (companionData.role === 'GUARDIAN') {
             // Shield random ally
-            const amount = companionData.abilityShield || 15;
+            const baseAmount = companionData.abilityShield || 15;
+            const amount = baseAmount * multiplier;
+
             const targetIndex = Math.floor(Math.random() * newParty.length);
             newParty[targetIndex].currentShield += amount;
             set({ party: newParty });
-            logMsg += ` Shielded ${newParty[targetIndex].name}.`;
+            logMsg += ` Shielded ${newParty[targetIndex].name} for ${amount}.`;
         } else if (companionData.role === 'SUPPORT') {
             // Heal lowest HP
-            const amount = companionData.abilityHeal || 15;
+            const baseAmount = companionData.abilityHeal || 15;
+            const amount = baseAmount * multiplier;
+
             let lowestIndex = 0;
             let lowestHP = 9999;
             newParty.forEach((p, idx) => {
@@ -147,7 +150,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             newParty[lowestIndex].currentHealth = newHealth;
 
             set({ party: newParty });
-            logMsg += ` Healed ${target.name}.`;
+            logMsg += ` Healed ${target.name} for ${amount}.`;
         } else {
             set({ party: newParty });
         }

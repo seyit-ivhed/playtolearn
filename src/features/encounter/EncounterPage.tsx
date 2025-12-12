@@ -26,7 +26,7 @@ const EncounterPage = () => {
     } = useCombatStore();
 
     const [activeChallenge, setActiveChallenge] = useState<{
-        type: 'SPECIAL';
+        type: 'SPECIAL' | 'CRITICAL';
         unitId?: string;
         problem: MathProblem;
     } | null>(null);
@@ -47,11 +47,33 @@ const EncounterPage = () => {
         });
     };
 
+    const handleUnitAction = (unitId: string) => {
+        if (phase !== CombatPhase.PLAYER_TURN) return;
+
+        // 20% Chance for Critical Math Challenge
+        if (Math.random() < 0.2) {
+            const ops = [MathOperation.MULTIPLY, MathOperation.DIVIDE, MathOperation.ADD, MathOperation.SUBTRACT];
+            const op = ops[Math.floor(Math.random() * ops.length)];
+            const problem = generateProblem(op, difficulty);
+
+            setActiveChallenge({
+                type: 'CRITICAL',
+                unitId,
+                problem
+            });
+        } else {
+            performAction(unitId);
+        }
+    };
+
     const handleChallengeComplete = (success: boolean) => {
         if (!activeChallenge) return;
 
         if (activeChallenge.type === 'SPECIAL') {
             resolveSpecialAttack(success);
+        } else if (activeChallenge.type === 'CRITICAL' && activeChallenge.unitId) {
+            // If success, critical hit! If fail, normal hit.
+            performAction(activeChallenge.unitId, { isCritical: success });
         }
 
         setActiveChallenge(null);
@@ -86,7 +108,7 @@ const EncounterPage = () => {
                                 <UnitCard
                                     unit={unit}
                                     phase={phase}
-                                    onAct={() => performAction(unit.id)}
+                                    onAct={() => handleUnitAction(unit.id)}
                                 />
                             </div>
                         ))}
@@ -144,8 +166,12 @@ const EncounterPage = () => {
                 activeChallenge && (
                     <MathChallengeModal
                         problem={activeChallenge.problem}
-                        title={t('combat.encounter.ultimate_casting', "ULTIMATE CASTING!")}
-                        description={t('combat.encounter.solve_to_unleash', "Solve correctly to UNLEASH POWER!")}
+                        title={activeChallenge.type === 'SPECIAL'
+                            ? t('combat.encounter.ultimate_casting', "ULTIMATE CASTING!")
+                            : t('combat.encounter.critical_opportunity', "CRITICAL OPPORTUNITY!")}
+                        description={activeChallenge.type === 'SPECIAL'
+                            ? t('combat.encounter.solve_to_unleash', "Solve correctly to UNLEASH POWER!")
+                            : t('combat.encounter.solve_for_critical', "Solve correctly for DOUBLE EFFECT!")}
                         onComplete={handleChallengeComplete}
                         onClose={() => setActiveChallenge(null)}
                     />
