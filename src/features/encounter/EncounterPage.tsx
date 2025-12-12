@@ -55,20 +55,8 @@ const EncounterPage = () => {
             return;
         }
 
-        // 20% Chance for Critical Math Challenge
-        if (Math.random() < 0.2) {
-            const ops = [MathOperation.MULTIPLY, MathOperation.DIVIDE, MathOperation.ADD, MathOperation.SUBTRACT];
-            const op = ops[Math.floor(Math.random() * ops.length)];
-            const problem = generateProblem(op, difficulty);
-
-            setActiveChallenge({
-                type: 'CRITICAL',
-                unitId,
-                problem
-            });
-        } else {
-            performAction(unitId);
-        }
+        // Standard Action (No random math challenge)
+        performAction(unitId);
     };
 
     const handleChallengeComplete = (success: boolean) => {
