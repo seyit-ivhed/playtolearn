@@ -157,13 +157,6 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             set({ party: newParty });
         }
 
-        // REMOVED Spirit gain on action
-        // const newSpirit = Math.min(100, unit.currentSpirit + 20);
-        // newParty[unitIndex] = {
-        //     ...newParty[unitIndex],
-        //     currentSpirit: newSpirit
-        // };
-
         set(state => ({
             party: newParty,
             combatLog: [...state.combatLog, logMsg]
@@ -262,7 +255,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 logs.push(`Dealt ${ability.value} damage x${hits}!`);
             }
 
-            // Conssume Charge (Reset to 0)
+            // Consume Charge (Reset to 0)
             newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
 
             set({
@@ -354,10 +347,10 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         newParty = newParty.map(u => ({ ...u, hasActed: false }));
 
         // Passive Charge at start of Player Turn
-        // +25 Spirit to all living party members
+        // +35 Spirit to all living party members
         newParty = newParty.map(p => {
             if (p.isDead) return p;
-            return { ...p, currentSpirit: Math.min(100, p.currentSpirit + 25) };
+            return { ...p, currentSpirit: Math.min(100, p.currentSpirit + 35) };
         });
 
         set(state => ({
