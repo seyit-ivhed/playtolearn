@@ -66,12 +66,12 @@
 
     10% {
         opacity: 1;
-        transform: translate(-50%, -10px) scale(1.2);
+        transform: translate(-50%, -20px) scale(1.5);
     }
 
     100% {
         opacity: 0;
-        transform: translate(-50%, -60px) scale(1);
+        transform: translate(-50%, -100px) scale(1);
     }
 }
 
@@ -104,14 +104,23 @@
 .floating-number {
     position: absolute;
     left: 50%;
-    top: 30%;
+    top: -30%;
+    /* Start above the card content */
     color: #ef4444;
     /* Red-500 */
-    font-size: 2rem;
+    font-size: 3rem;
+    /* Larger font */
     font-weight: 900;
-    text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    /* Heavy stroke/shadow for readability */
+    text-shadow:
+        3px 3px 0 #000,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
     white-space: nowrap;
-    animation: float-up-fade 1s ease-out forwards;
+    animation: float-up-fade 1.5s ease-out forwards;
+    /* Slower animation */
 }
 
 .floating-number.heal {
