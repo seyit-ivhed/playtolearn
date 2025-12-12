@@ -37,7 +37,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 color: data.color,
                 isDead: false,
                 hasActed: false,
-                currentSpirit: 0,
+                currentSpirit: Math.floor(Math.random() * 41) + 20,
                 maxSpirit: 100
             };
         });

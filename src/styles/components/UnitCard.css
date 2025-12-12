@@ -343,9 +343,11 @@
 /* Spirit Bar */
 .spirit-bar-container {
     width: 100%;
-    height: 8px;
+    height: 12px;
+    /* Thicker */
     background-color: #111827;
-    border: 1px solid #4b5563;
+    border: 1px solid #78350f;
+    /* darker brown/orange border */
     border-radius: 9999px;
     margin-top: 0.5rem;
     position: relative;
@@ -356,9 +358,39 @@
 
 .spirit-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%);
-    box-shadow: 0 0 8px #06b6d4;
+    /* Warm gradient: Amber -> Orange -> Red */
+    background: linear-gradient(90deg, #fcd34d 0%, #f59e0b 50%, #dc2626 100%);
+    box-shadow: 0 0 10px #f59e0b;
+    /* Warm glow */
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Sparkle/Shimmer Effect */
+.spirit-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.4) 50%,
+            transparent 100%);
+    transform: translateX(-100%);
+    animation: spirit-shimmer 2s infinite linear;
+}
+
+@keyframes spirit-shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .ultimate-ready-overlay {
