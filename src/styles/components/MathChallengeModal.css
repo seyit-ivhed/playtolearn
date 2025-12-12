@@ -1,134 +1,148 @@
-/* Modal Overlay */
+/* Full Screen Overlay */
 .math-modal-overlay {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    background-color: rgba(0, 0, 0, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
+    z-index: 9999;
+    perspective: 1500px;
+    /* Essential for 3D effect */
+    animation: fadeIn 0.3s ease-out;
 }
 
-/* Modal Content */
-.math-modal-content {
-    background-color: white;
-    border-radius: 1rem;
-    /* rounded-2xl */
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    /* shadow-2xl */
-    padding: 2rem;
-    max-width: 28rem;
-    /* max-w-md */
+/* The Scene Container */
+.spotlight-card-scene {
+    width: 320px;
+    height: 480px;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+/* Initial State: Small and generic */
+.spotlight-card-scene {
+    transform: scale(0.5) translateY(100px);
+    opacity: 0;
+    animation: entrance 0.5s forwards;
+}
+
+@keyframes entrance {
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Flipped State: Rotated 180deg */
+.spotlight-card-scene.flipped .spotlight-card {
+    transform: rotateY(180deg);
+}
+
+/* Success Effect */
+.spotlight-card-scene.success {
+    box-shadow: 0 0 50px #ffd700;
+}
+
+/* The Card Itself */
+.spotlight-card {
     width: 100%;
-    animation: modal-enter 0.2s ease-out;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-@keyframes modal-enter {
+/* Common Face Styles */
+.spotlight-card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    /* Hides the back when flipped */
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Front Face (Initial view before flip) */
+.spotlight-card-front {
+    background: linear-gradient(135deg, #2c3e50, #000000);
+    border: 4px solid #f0ba4e;
+    transform: rotateY(0deg);
+    /* Default */
+}
+
+.card-back-pattern {
+    font-size: 5rem;
+    opacity: 0.2;
+    filter: blur(2px);
+}
+
+/* Back Face (Math Problem) */
+.spotlight-card-back {
+    background: linear-gradient(135deg, #1a1a1a, #2d1b4e);
+    border: 4px solid #a855f7;
+    transform: rotateY(180deg);
+    /* Starts flipped away */
+    padding: 2rem 1.5rem;
+    color: white;
+}
+
+/* Content Styling */
+.spotlight-title {
+    font-family: 'Cinzel', serif;
+    color: #f0ba4e;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.spotlight-desc {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.spotlight-math-body {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.spotlight-cancel-btn {
+    margin-top: auto;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.spotlight-cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: white;
+}
+
+@keyframes fadeIn {
     from {
         opacity: 0;
-        transform: scale(0.95);
     }
 
     to {
         opacity: 1;
-        transform: scale(1);
     }
-}
-
-/* Header */
-.math-modal-header {
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-
-.math-modal-title {
-    font-size: 1.875rem;
-    /* text-3xl */
-    font-weight: 900;
-    color: var(--color-brand-primary);
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-}
-
-.math-modal-description {
-    color: #4b5563;
-    /* text-gray-600 */
-    font-weight: 500;
-}
-
-/* Math Content Area */
-.math-modal-body {
-    border-radius: 0.75rem;
-    padding: 1rem;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    position: relative;
-    background-color: #f9fafb;
-    /* bg-gray-50 */
-}
-
-.math-modal-body.success {
-    background-color: #dcfce7;
-    /* bg-green-100 */
-    box-shadow: 0 0 0 4px #4ade80;
-    /* ring-4 ring-green-400 */
-}
-
-.math-modal-body.failure {
-    background-color: #fee2e2;
-    /* bg-red-100 */
-    box-shadow: 0 0 0 4px #f87171;
-    /* ring-4 ring-red-400 */
-}
-
-/* Feedback Overlay */
-.feedback-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-}
-
-.feedback-icon-success {
-    font-size: 3.75rem;
-    /* text-6xl */
-    animation: bounce 1s infinite;
-}
-
-.feedback-icon-failure {
-    font-size: 6rem;
-    /* text-8xl */
-    color: #ef4444;
-    /* text-red-500 */
-    font-weight: 900;
-    opacity: 0.5;
-    animation: pulse 2s infinite;
-}
-
-/* Cancel Button */
-.modal-cancel-btn {
-    margin-top: 1.5rem;
-    width: 100%;
-    padding: 0.5rem 0;
-    color: #9ca3af;
-    /* text-gray-400 */
-    font-weight: 700;
-    border-radius: 0.5rem;
-    transition: color 0.2s, background-color 0.2s;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    box-shadow: none;
-}
-
-.modal-cancel-btn:hover {
-    color: #4b5563;
-    /* text-gray-600 */
-    background-color: #f3f4f6;
-    /* bg-gray-100 */
-    box-shadow: none;
-    transform: none;
 }

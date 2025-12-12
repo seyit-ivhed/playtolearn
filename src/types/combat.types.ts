@@ -28,6 +28,8 @@ export interface CombatUnit {
     // State
     isDead: boolean;
     hasActed: boolean;
+    currentSpirit: number; // 0-100
+    maxSpirit: number;     // 100
 }
 
 export interface CombatState {
@@ -45,6 +47,5 @@ export interface CombatState {
     // Logs
     combatLog: string[];
 
-    // Special Mechanic
-    specialMeter: number; // 0 to 100
+    // Removed shared specialMeter in favor of per-unit spirit
 }

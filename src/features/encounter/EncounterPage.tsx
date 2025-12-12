@@ -22,7 +22,7 @@ const EncounterPage = () => {
     const {
         phase, party, monsters,
         performAction,
-        specialMeter, resolveSpecialAttack
+        resolveSpecialAttack
     } = useCombatStore();
 
     const [activeChallenge, setActiveChallenge] = useState<{
@@ -33,22 +33,27 @@ const EncounterPage = () => {
 
 
 
-    const startSpecialAttack = () => {
-        if (specialMeter < 100 || phase !== CombatPhase.PLAYER_TURN) return;
 
-        // Generate a problem based on user difficulty
-        const ops = [MathOperation.MULTIPLY, MathOperation.DIVIDE, MathOperation.ADD];
-        const op = ops[Math.floor(Math.random() * ops.length)];
-        const problem = generateProblem(op, difficulty);
-
-        setActiveChallenge({
-            type: 'SPECIAL',
-            problem
-        });
-    };
 
     const handleUnitAction = (unitId: string) => {
         if (phase !== CombatPhase.PLAYER_TURN) return;
+
+        const unit = party.find(u => u.id === unitId);
+        if (!unit) return;
+
+        // Check for Ultimate (Spirit >= 100)
+        if (unit.currentSpirit >= 100) {
+            const ops = [MathOperation.MULTIPLY, MathOperation.DIVIDE, MathOperation.ADD];
+            const op = ops[Math.floor(Math.random() * ops.length)];
+            const problem = generateProblem(op, difficulty);
+
+            setActiveChallenge({
+                type: 'SPECIAL',
+                unitId,
+                problem
+            });
+            return;
+        }
 
         // 20% Chance for Critical Math Challenge
         if (Math.random() < 0.2) {
@@ -69,8 +74,8 @@ const EncounterPage = () => {
     const handleChallengeComplete = (success: boolean) => {
         if (!activeChallenge) return;
 
-        if (activeChallenge.type === 'SPECIAL') {
-            resolveSpecialAttack(success);
+        if (activeChallenge.type === 'SPECIAL' && activeChallenge.unitId) {
+            resolveSpecialAttack(activeChallenge.unitId, success);
         } else if (activeChallenge.type === 'CRITICAL' && activeChallenge.unitId) {
             // If success, critical hit! If fail, normal hit.
             performAction(activeChallenge.unitId, { isCritical: success });
@@ -91,7 +96,7 @@ const EncounterPage = () => {
 
 
 
-    const isSpecialReady = specialMeter >= 100 && phase === CombatPhase.PLAYER_TURN;
+
 
     return (
         <div className="encounter-page">
@@ -133,32 +138,7 @@ const EncounterPage = () => {
                     </div>
                 </div>
 
-                {/* Party Spirit Meter */}
-                <div className="spirit-meter-container">
-                    <div
-                        className={`spirit-meter ${isSpecialReady ? 'ready' : ''}`}
-                        onClick={startSpecialAttack}
-                        title={specialMeter >= 100 ? t('combat.encounter.click_to_activate', "Click to Activate Ultimate!") : t('combat.encounter.spirit_tooltip', { amount: Math.floor(specialMeter), defaultValue: `${Math.floor(specialMeter)}% Spirit` })}
-                    >
-                        {/* Background Bar */}
-                        <div
-                            className="spirit-meter-bar"
-                            style={{ width: `${specialMeter}%` }}
-                        >
-                            {/* Sparkle effect when full */}
-                            {specialMeter >= 100 && (
-                                <div className="shimmer" />
-                            )}
-                        </div>
 
-                        {/* Text Overlay */}
-                        <div className="spirit-meter-text-overlay">
-                            <span className="spirit-meter-text">
-                                {specialMeter >= 100 ? t('combat.encounter.unleash_ultimate', "✨ UNLEASH ULTIMATE ✨") : t('combat.encounter.spirit_meter', { amount: Math.floor(specialMeter), defaultValue: `Party Spirit ${Math.floor(specialMeter)}%` })}
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             {/* Math Modal */}

@@ -8,7 +8,7 @@ interface CombatStore extends CombatState {
     initializeCombat: (partyIds: string[], enemies: AdventureMonster[]) => void;
     selectUnit: (unitId: string | null) => void;
     performAction: (unitId: string, options?: { isCritical?: boolean }) => void;
-    resolveSpecialAttack: (success: boolean) => void;
+    resolveSpecialAttack: (unitId: string, success: boolean) => void;
     endPlayerTurn: () => void;
     processMonsterTurn: () => void;
 }
@@ -20,7 +20,6 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     monsters: [],
     selectedUnitId: null,
     combatLog: [],
-    specialMeter: 0,
 
     initializeCombat: (partyIds, enemies) => {
         const party: CombatUnit[] = partyIds.map((id, index) => {
@@ -37,7 +36,9 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 icon: data.icon,
                 color: data.color,
                 isDead: false,
-                hasActed: false
+                hasActed: false,
+                currentSpirit: 0,
+                maxSpirit: 100
             };
         });
 
@@ -57,7 +58,9 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 image: enemy.sprite,
                 color: '#e74c3c', // Default red for enemies
                 isDead: false,
-                hasActed: false
+                hasActed: false,
+                currentSpirit: 0,
+                maxSpirit: 100
             } as any;
         });
 
@@ -67,8 +70,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             party,
             monsters,
             selectedUnitId: null,
-            combatLog: ['Combat Started!'],
-            specialMeter: 75 // Starting Morale
+            combatLog: ['Combat Started!']
         });
     },
 
@@ -155,13 +157,17 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             set({ party: newParty });
         }
 
-        // Increase Special Meter on successful action
-        const currentMeter = get().specialMeter;
-        const newMeter = Math.min(100, currentMeter + 15); // +15 per action, ~7 actions to full
+        // Increase Spirit on successful action
+        // +20 per action, 5 actions to full
+        const newSpirit = Math.min(100, unit.currentSpirit + 20);
+        newParty[unitIndex] = {
+            ...newParty[unitIndex],
+            currentSpirit: newSpirit
+        };
 
         set(state => ({
-            combatLog: [...state.combatLog, logMsg],
-            specialMeter: newMeter
+            party: newParty,
+            combatLog: [...state.combatLog, logMsg]
         }));
 
         // Check Victory
@@ -179,22 +185,29 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
 
 
 
-    resolveSpecialAttack: (success) => {
-        const { monsters } = get();
+    resolveSpecialAttack: (unitId, success) => {
+        const { monsters, party } = get();
+        const unitIndex = party.findIndex(u => u.id === unitId);
+        if (unitIndex === -1) return;
+
+        const newParty = [...party];
 
         if (success) {
             // Deal massive damage to all monsters
             const newMonsters = monsters.map(m => {
                 if (m.isDead) return m;
-                const damage = 20; // Big damage
+                const damage = 25; // Boosted damage for Ultimate
                 const newHealth = Math.max(0, m.currentHealth - damage);
                 return { ...m, currentHealth: newHealth, isDead: newHealth === 0 };
             });
 
+            // Reset Spirit ONLY for this unit
+            newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
+
             set({
                 monsters: newMonsters,
-                specialMeter: 0, // Reset meter
-                combatLog: [...get().combatLog, `SPECIAL ATTACK! Dealt 20 damage to all enemies!`]
+                party: newParty,
+                combatLog: [...get().combatLog, `${newParty[unitIndex].name} cast ULTIMATE!`]
             });
 
             // Check Victory
@@ -204,9 +217,10 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
 
         } else {
             // Fail: Drain meter
+            newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
             set({
-                specialMeter: 0,
-                combatLog: [...get().combatLog, `Special Attack fizzled out... Meter drained.`]
+                party: newParty,
+                combatLog: [...get().combatLog, `${newParty[unitIndex].name}'s Ultimate fizzled out...`]
             });
         }
     },

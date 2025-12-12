@@ -77,9 +77,14 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
         e.stopPropagation();
         if (!canAct) return;
 
-        // Trigger Attack Animation Lunge
-        setAnimationClass('anim-lunge-right');
-        setTimeout(() => setAnimationClass(''), 300);
+        // Visual distinction for Ultimate?
+        if (unit.currentSpirit >= 100) {
+            setAnimationClass('anim-pulse-ultimate'); // Hypothetical animation
+        } else {
+            // Normal Attack Animation
+            setAnimationClass('anim-lunge-right');
+        }
+        setTimeout(() => setAnimationClass(''), 500);
 
         onAct?.();
     };
@@ -194,7 +199,54 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
                         <span style={{ marginRight: '0.25rem' }}>{t('combat.unit_card.hp', 'HP')}</span> {unit.currentHealth} / {unit.maxHealth}
                     </div>
                 </div>
+
+                {/* Spirit Bar (Player Only) */}
+                {!isMonster && (
+                    <div className="spirit-bar-container" style={{ marginTop: '0.25rem', height: '6px', background: '#333', borderRadius: '3px', position: 'relative', overflow: 'hidden' }}>
+                        <div
+                            className="spirit-bar-fill"
+                            style={{
+                                width: `${unit.currentSpirit}%`,
+                                height: '100%',
+                                background: 'linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)',
+                                boxShadow: '0 0 5px #00f2fe',
+                                transition: 'width 0.3s ease-out'
+                            }}
+                        />
+                    </div>
+                )}
             </div>
+
+            {/* Ultimate Ready Overlay */}
+            {!isMonster && unit.currentSpirit >= 100 && !unit.isDead && phase === CombatPhase.PLAYER_TURN && (
+                <div
+                    className="ultimate-ready-overlay"
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'rgba(0, 0, 0, 0.4)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 10,
+                        pointerEvents: 'none' // Click passes through to card handler? No, we likely want a specific button.
+                    }}
+                >
+                    <div
+                        className="ultimate-text"
+                        style={{
+                            color: '#fff',
+                            textShadow: '0 0 10px #00f2fe',
+                            fontWeight: 'bold',
+                            fontSize: '1.2rem',
+                            animation: 'pulse 1s infinite'
+                        }}
+                    >
+                        ✨ {t('combat.unit_card.ultimate_ready', 'ULTIMATE READY!')} ✨
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import MathInput from './MathInput/MathInput';
 import { type MathProblem } from '../types/math.types';
@@ -21,68 +21,85 @@ export default function MathChallengeModal({
     onClose
 }: MathChallengeModalProps) {
     const [result, setResult] = useState<'success' | 'failure' | null>(null);
+    const [isFlipped, setIsFlipped] = useState(false);
+
+    // Initial Animation Trigger
+    useEffect(() => {
+        // Delay flip slightly to allow "Move to Center" feeling (simulated via CSS transition on mount)
+        const timer = setTimeout(() => setIsFlipped(true), 100);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleSubmit = (userAnswer: number) => {
         const validation = validateAnswer(userAnswer, problem.correctAnswer);
         if (validation.isCorrect) {
             setResult('success');
             setTimeout(() => {
-                onComplete(true);
+                // Flip back before closing
+                setIsFlipped(false);
+                setTimeout(() => onComplete(true), 600); // Wait for flip back
             }, 1000);
         } else {
             setResult('failure');
-            // Allow 1 second to see the "X" or error state before closing
             setTimeout(() => {
-                onComplete(false);
+                setIsFlipped(false);
+                setTimeout(() => onComplete(false), 600);
             }, 1500);
         }
     };
 
     return createPortal(
         <div className="math-modal-overlay">
-            <div className="math-modal-content">
-                {/* Header */}
-                <div className="math-modal-header">
-                    <h2 className="math-modal-title">
-                        {title}
-                    </h2>
-                    <p className="math-modal-description">
-                        {description}
-                    </p>
-                </div>
-
-                {/* Math Content */}
-                <div className={`math-modal-body ${result || ''}`}>
-                    <MathInput
-                        problem={problem}
-                        onSubmit={handleSubmit}
-                        inputMode="multiple-choice"
-                        disabled={result !== null}
-                    />
-
-                    {/* Result Feedback */}
-                    {result === 'success' && (
-                        <div className="feedback-overlay">
-                            <span className="feedback-icon-success">✨</span>
+            {/* 3D Scene Container */}
+            <div className={`spotlight-card-scene ${isFlipped ? 'flipped' : ''} ${result || ''}`}>
+                <div className="spotlight-card">
+                    {/* Front Face (Hero Portrait / Generic Back) */}
+                    <div className="spotlight-card-face spotlight-card-front">
+                        <div className="card-back-pattern">
+                            <span className="card-symbol">⚔️</span>
                         </div>
-                    )}
-                    {result === 'failure' && (
-                        <div className="feedback-overlay">
-                            <span className="feedback-icon-failure">❌</span>
-                        </div>
-                    )}
-                </div>
+                    </div>
 
-                {/* Cancel Button */}
-                {!result && (
-                    <button
-                        onClick={onClose}
-                        className="modal-cancel-btn"
-                        data-testid="modal-cancel-btn"
-                    >
-                        Cancel
-                    </button>
-                )}
+                    {/* Back Face (Math Problem) */}
+                    <div className="spotlight-card-face spotlight-card-back">
+                        <div className="math-content-container">
+                            <h2 className="spotlight-title">{title}</h2>
+                            <p className="spotlight-desc">{description}</p>
+
+                            <div className="spotlight-math-body">
+                                <MathInput
+                                    problem={problem}
+                                    onSubmit={handleSubmit}
+                                    inputMode="multiple-choice"
+                                    disabled={result !== null}
+                                />
+                            </div>
+
+                            {/* Result Feedback */}
+                            {result === 'success' && (
+                                <div className="feedback-overlay">
+                                    <span className="feedback-icon-success">✨</span>
+                                </div>
+                            )}
+                            {result === 'failure' && (
+                                <div className="feedback-overlay">
+                                    <span className="feedback-icon-failure">❌</span>
+                                </div>
+                            )}
+
+                            {/* Cancel Button */}
+                            {!result && (
+                                <button
+                                    onClick={onClose}
+                                    className="spotlight-cancel-btn"
+                                    data-testid="modal-cancel-btn"
+                                >
+                                    Retreat
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>,
         document.body
