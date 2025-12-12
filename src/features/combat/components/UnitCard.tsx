@@ -1,7 +1,9 @@
 import { type CombatUnit, CombatPhase } from '../../../types/combat.types';
 import { getCompanionById } from '../../../data/companions.data';
 import '../../../styles/components/UnitCard.css';
+import '../../encounter/styles/animations.css';
 import { useTranslation } from 'react-i18next';
+import { useState, useEffect, useRef } from 'react';
 
 interface UnitCardProps {
     unit: CombatUnit;
@@ -23,17 +25,56 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
         ? t(`monsters.${unit.templateId}.name`, unit.name)
         : t(`companions.${unit.templateId}.name`, companionData?.name || unit.name);
 
+    // Animation States
+    const [animationClass, setAnimationClass] = useState('');
+    const [floatingTexts, setFloatingTexts] = useState<{ id: number; text: string; type: 'damage' | 'heal' }[]>([]);
+    const prevHealth = useRef(unit.currentHealth);
+    const textIdCounter = useRef(0);
+
+    // Watch for health changes to trigger damage/heal effects
+    useEffect(() => {
+        const diff = unit.currentHealth - prevHealth.current;
+        if (diff !== 0) {
+            // Trigger Shake if damage
+            if (diff < 0) {
+                setAnimationClass('anim-shake-damage');
+            }
+
+            // Add Floating Text
+            const id = textIdCounter.current++;
+            const text = diff > 0 ? `+${diff}` : `${diff}`;
+            const type = diff > 0 ? 'heal' : 'damage';
+
+            setFloatingTexts((prev: { id: number; text: string; type: 'damage' | 'heal' }[]) => [...prev, { id, text, type }]);
+
+            // Cleanup floating text after animation
+            setTimeout(() => {
+                setFloatingTexts((prev: { id: number; text: string; type: 'damage' | 'heal' }[]) => prev.filter((ft: { id: number }) => ft.id !== id));
+            }, 1000);
+
+            // Cleanup shake class
+            if (diff < 0) {
+                setTimeout(() => setAnimationClass(''), 500);
+            }
+        }
+        prevHealth.current = unit.currentHealth;
+    }, [unit.currentHealth]);
+
     // Interaction Handler
     const handleCardClick = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (!canAct) return;
+
+        // Trigger Attack Animation Lunge
+        setAnimationClass('anim-lunge-right');
+        setTimeout(() => setAnimationClass(''), 300);
 
         onAct?.();
     };
 
     // Card Classes Construction
     const getCardClasses = () => {
-        const classes = ['unit-card'];
+        const classes = ['unit-card', animationClass];
 
         // Border Color
         if (isMonster) {
@@ -54,8 +95,6 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
             }
         }
 
-
-
         return classes.join(' ');
     };
 
@@ -65,6 +104,17 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
             onClick={handleCardClick}
             data-testid={`unit-card-${unit.id}`}
         >
+            {/* Floating Text Overlay */}
+            <div className="floating-text-container">
+                {floatingTexts.map(ft => (
+                    <div
+                        key={ft.id}
+                        className={`floating-number ${ft.type}`}
+                    >
+                        {ft.text}
+                    </div>
+                ))}
+            </div>
             {/* Name Badge */}
             <div className="unit-card-name-badge">
                 <h3 className="unit-card-name-text">
