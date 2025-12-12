@@ -29,8 +29,8 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
         }
 
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
-            if (encounter.enemy) {
-                initializeCombat(party, [encounter.enemy]);
+            if (encounter.enemies && encounter.enemies.length > 0) {
+                initializeCombat(party, encounter.enemies);
                 navigate('/encounter');
             }
         }

@@ -52,7 +52,7 @@ export interface Encounter {
     type: EncounterType;
     label: string;
     coordinates?: MapCoordinates;
-    enemy?: AdventureMonster; // If type is BATTLE or BOSS
+    enemies?: AdventureMonster[]; // If type is BATTLE or BOSS
 }
 
 // Adventure: Contains a linear sequence of encounters culminating in a boss fight

@@ -14,7 +14,7 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 label: 'Scout Sighting',
                 coordinates: { x: 250, y: 250 },
-                enemy: {
+                enemies: [{
                     id: 'goblin_scout_weak',
                     name: 'Goblin Scout',
                     sprite: goblinImg,
@@ -22,29 +22,40 @@ export const ADVENTURES: Adventure[] = [
                     attack: 4,     // Reduced for juniors
                     defense: 0,
                     speed: 5
-                }
+                }]
             },
             {
                 id: '1_2',
                 type: EncounterType.BATTLE,
                 label: 'Ambush!',
                 coordinates: { x: 350, y: 450 },
-                enemy: {
-                    id: 'goblin_scout_normal',
-                    name: 'Angry Goblin',
-                    sprite: goblinImg,
-                    maxHealth: 25,
-                    attack: 5,
-                    defense: 0,
-                    speed: 6
-                }
+                enemies: [
+                    {
+                        id: 'goblin_scout_normal_1',
+                        name: 'Angry Goblin',
+                        sprite: goblinImg,
+                        maxHealth: 25,
+                        attack: 5,
+                        defense: 0,
+                        speed: 6
+                    },
+                    {
+                        id: 'goblin_scout_normal_2',
+                        name: 'Sneaky Goblin',
+                        sprite: goblinImg,
+                        maxHealth: 20,
+                        attack: 4,
+                        defense: 0,
+                        speed: 7
+                    }
+                ]
             },
             {
                 id: '1_3',
                 type: EncounterType.BOSS,
                 label: 'Leader Found',
                 coordinates: { x: 250, y: 650 },
-                enemy: {
+                enemies: [{
                     id: 'goblin_chief',
                     name: 'Goblin Chief',
                     sprite: goblinBossImg, // Placeholder path
@@ -53,7 +64,7 @@ export const ADVENTURES: Adventure[] = [
                     attack: 8,
                     defense: 2,
                     speed: 4
-                }
+                }]
             },
             {
                 id: '1_4',
