@@ -4,10 +4,11 @@ import { useState } from 'react';
 
 interface MathCardFaceProps {
     problem: MathProblem;
+    abilityName: string;
     onAnswer: (correct: boolean) => void;
 }
 
-export const MathCardFace = ({ problem, onAnswer }: MathCardFaceProps) => {
+export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFaceProps) => {
     const { t } = useTranslation();
     const [selected, setSelected] = useState<number | null>(null);
 
@@ -38,7 +39,7 @@ export const MathCardFace = ({ problem, onAnswer }: MathCardFaceProps) => {
 
     return (
         <div className="unit-card-face back">
-            <h3 className="math-title">{t('common.solve', 'SOLVE!')}</h3>
+            <h3 className="math-title">{abilityName}</h3>
 
             <div className="math-problem-display">
                 <span className="operand">{problem.operand1}</span>
