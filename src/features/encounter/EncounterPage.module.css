@@ -190,10 +190,12 @@
 }
 
 .spotlightCardWrapper {
-    /* Initial scale will be handled by popIn, end state is scale(1.5) */
-    transform: scale(1.5);
-    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.3));
+    /* Initial scale will be handled by popIn, end state is scale(2.2) */
+    transform: scale(2.2);
+    filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.5));
     animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Enable pointer events for children */
+    pointer-events: auto;
 }
 
 @keyframes fadeIn {
@@ -213,7 +215,7 @@
     }
 
     to {
-        transform: scale(1.5);
+        transform: scale(2.2);
         opacity: 1;
     }
 }
