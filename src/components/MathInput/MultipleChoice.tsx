@@ -19,12 +19,8 @@ export default function MultipleChoice({
     const handleChoiceClick = (choice: number) => {
         if (disabled) return;
         setSelectedChoice(choice);
-    };
-
-    const handleSubmit = () => {
-        if (disabled || selectedChoice === null) return;
-        onSubmit(selectedChoice);
-        setSelectedChoice(null);
+        // Instant submit for better UX in combat
+        onSubmit(choice);
     };
 
     return (
@@ -45,15 +41,7 @@ export default function MultipleChoice({
                     </button>
                 ))}
             </div>
-
-            <button
-                className={styles.submitButton}
-                onClick={handleSubmit}
-                disabled={disabled || selectedChoice === null}
-                data-testid="submit-answer-btn"
-            >
-                {t('math.submit_answer')}
-            </button>
+            {/* Submit button removed for instant interaction */}
         </div>
     );
 }
