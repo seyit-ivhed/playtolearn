@@ -143,24 +143,28 @@ export const UnitCard = ({
             onClick={handleCardClick}
             data-testid={`unit-card-${unit.id}`}
         >
+            {/* Floating Text Overlay - Moved out to avoid clipping */}
+            <div className="floating-text-container">
+                {floatingTexts.map(ft => (
+                    <div
+                        key={ft.id}
+                        className={`floating-number ${ft.type}`}
+                    >
+                        {ft.text}
+                    </div>
+                ))}
+            </div>
+
+            {/* Name Badge - Moved out to avoid clipping */}
+            <div className="unit-card-name-badge">
+                <h3 className="unit-card-name-text">
+                    {displayName}
+                </h3>
+            </div>
+
             <div className="unit-card-front">
                 {/* Floating Text Overlay */}
-                <div className="floating-text-container">
-                    {floatingTexts.map(ft => (
-                        <div
-                            key={ft.id}
-                            className={`floating-number ${ft.type}`}
-                        >
-                            {ft.text}
-                        </div>
-                    ))}
-                </div>
-                {/* Name Badge */}
-                <div className="unit-card-name-badge">
-                    <h3 className="unit-card-name-text">
-                        {displayName}
-                    </h3>
-                </div>
+
 
                 {/* Background Image */}
                 <div className="unit-card-bg">
