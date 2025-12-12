@@ -68,7 +68,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             monsters,
             selectedUnitId: null,
             combatLog: ['Combat Started!'],
-            specialMeter: 40 // Starting Morale
+            specialMeter: 75 // Starting Morale
         });
     },
 
