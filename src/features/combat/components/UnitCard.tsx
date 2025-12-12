@@ -60,6 +60,18 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
         prevHealth.current = unit.currentHealth;
     }, [unit.currentHealth]);
 
+    // Watch for action to trigger attack animation (Monsters)
+    useEffect(() => {
+        if (isMonster && unit.hasActed && !unit.isDead) {
+            // We only want to trigger this on the transition, but unit.hasActed is state.
+            // Since this component re-renders, checking just true might re-trigger if other props change?
+            // Actually, usually store updates trigger re-render.
+            // A ref to track 'prevHasActed' would be safer to ensure we only trigger on transition.
+            setAnimationClass('anim-lunge-left');
+            setTimeout(() => setAnimationClass(''), 300);
+        }
+    }, [unit.hasActed, isMonster, unit.isDead]);
+
     // Interaction Handler
     const handleCardClick = (e: React.MouseEvent) => {
         e.stopPropagation();

@@ -209,7 +209,15 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
     },
 
     endPlayerTurn: () => {
-        set({ phase: CombatPhase.MONSTER_TURN });
+        // Reset monster acted state for the new turn sequence
+        const { monsters } = get();
+        const newMonsters = monsters.map(m => ({ ...m, hasActed: false }));
+
+        set({
+            phase: CombatPhase.MONSTER_TURN,
+            monsters: newMonsters
+        });
+
         setTimeout(() => get().processMonsterTurn(), 1000);
     },
 
@@ -225,11 +233,18 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
 
         // Simple AI: All monsters attack random party member
         let newParty = [...party];
+        const newMonsters = [...monsters];
         const logs: string[] = [];
 
         activeMonsters.forEach(monster => {
             const livingTargets = newParty.filter(p => !p.isDead);
             if (livingTargets.length === 0) return;
+
+            // Mark monster as acted
+            const monsterIndex = newMonsters.findIndex(m => m.id === monster.id);
+            if (monsterIndex !== -1) {
+                newMonsters[monsterIndex] = { ...newMonsters[monsterIndex], hasActed: true };
+            }
 
             const targetIdx = Math.floor(Math.random() * livingTargets.length);
             const actualTargetIndex = newParty.findIndex(p => p.id === livingTargets[targetIdx].id);
@@ -262,6 +277,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
 
         set(state => ({
             party: newParty,
+            monsters: newMonsters,
             phase: CombatPhase.PLAYER_TURN,
             turnCount: state.turnCount + 1,
             combatLog: [...state.combatLog, ...logs]
