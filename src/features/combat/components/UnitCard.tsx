@@ -11,7 +11,27 @@ interface UnitCardProps {
     onAct?: () => void;
 }
 
-export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
+import { MathCardFace } from './MathCardFace'; // New Import
+import type { MathProblem } from '../../../types/math.types'; // New Import
+
+interface UnitCardProps {
+    unit: CombatUnit;
+    phase: CombatPhase;
+    onAct?: () => void;
+    // New Props for Charged Ability UX
+    isFlipped?: boolean;
+    mathProblem?: MathProblem;
+    onMathAnswer?: (correct: boolean) => void;
+}
+
+export const UnitCard = ({
+    unit,
+    phase,
+    onAct,
+    isFlipped = false,
+    mathProblem,
+    onMathAnswer
+}: UnitCardProps) => {
     const { t } = useTranslation();
     const isMonster = !unit.isPlayer;
     const healthPercent = (unit.currentHealth / unit.maxHealth) * 100;
@@ -93,6 +113,8 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
     const getCardClasses = () => {
         const classes = ['unit-card', animationClass];
 
+        if (isFlipped) classes.push('is-flipped'); // Add flipped class
+
         // Border Color
         if (isMonster) {
             classes.push('border-red');
@@ -121,124 +143,134 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
             onClick={handleCardClick}
             data-testid={`unit-card-${unit.id}`}
         >
-            {/* Floating Text Overlay */}
-            <div className="floating-text-container">
-                {floatingTexts.map(ft => (
-                    <div
-                        key={ft.id}
-                        className={`floating-number ${ft.type}`}
-                    >
-                        {ft.text}
-                    </div>
-                ))}
-            </div>
-            {/* Name Badge */}
-            <div className="unit-card-name-badge">
-                <h3 className="unit-card-name-text">
-                    {displayName}
-                </h3>
-            </div>
-
-            {/* Background Image */}
-            <div className="unit-card-bg">
-                {(!isMonster && companionData) || (isMonster && unit.image) ? (
-                    <img
-                        src={!isMonster && companionData ? companionData.image : unit.image}
-                        alt={displayName}
-                        className="unit-card-image"
-                    />
-                ) : (
-                    <div className="unit-card-placeholder">
-                        {unit.icon}
-                    </div>
-                )}
-                {/* Gradient Overlay */}
-                <div className="unit-card-gradient" />
-
-                {/* Visual Recharge Warning Overlay */}
-
-            </div>
-
-            {/* Top Stats */}
-            <div className="unit-stats-top">
-                {/* Energy Pips */}
-                {/* Energy Pips Removed */}
-
-                {/* Shield Indicator */}
-                {unit.currentShield > 0 && (
-                    <div className="shield-badge">
-                        🛡️ {unit.currentShield}
-                    </div>
-                )}
-            </div>
-
-            {/* Spacer */}
-            <div className="card-spacer" />
-
-            {/* Bottom Info Panel */}
-            <div className="unit-info-bottom">
-                {/* Description Box */}
-                {!isMonster && companionData && (
-                    <div className="ability-card">
-                        <div className="ability-tag">
-                            {t('combat.unit_card.ability', 'Ability')}
+            <div className="unit-card-front">
+                {/* Floating Text Overlay */}
+                <div className="floating-text-container">
+                    {floatingTexts.map(ft => (
+                        <div
+                            key={ft.id}
+                            className={`floating-number ${ft.type}`}
+                        >
+                            {ft.text}
                         </div>
-                        <p className="ability-text">
-                            {t(`companions.${unit.templateId}.ability_description`, companionData.abilityDescription)}
-                        </p>
-                    </div>
-                )}
-
-                {/* Health Bar */}
-                <div className="health-bar-container">
-                    <div
-                        className={`health-bar-fill ${isMonster ? 'monster' : 'player'}`}
-                        style={{ width: `${healthPercent}%` }}
-                    />
-                    <div className="health-text">
-                        <span style={{ marginRight: '0.25rem' }}>{t('combat.unit_card.hp', 'HP')}</span> {unit.currentHealth} / {unit.maxHealth}
-                    </div>
+                    ))}
+                </div>
+                {/* Name Badge */}
+                <div className="unit-card-name-badge">
+                    <h3 className="unit-card-name-text">
+                        {displayName}
+                    </h3>
                 </div>
 
-                {/* Spirit Bar (Player Only) */}
-                {!isMonster && (
-                    <div className="spirit-bar-container">
-                        <div
-                            className="spirit-bar-fill"
-                            style={{ width: `${unit.currentSpirit}%` }}
+                {/* Background Image */}
+                <div className="unit-card-bg">
+                    {(!isMonster && companionData) || (isMonster && unit.image) ? (
+                        <img
+                            src={!isMonster && companionData ? companionData.image : unit.image}
+                            alt={displayName}
+                            className="unit-card-image"
                         />
-                    </div>
-                )}
-            </div>
+                    ) : (
+                        <div className="unit-card-placeholder">
+                            {unit.icon}
+                        </div>
+                    )}
+                    {/* Gradient Overlay */}
+                    <div className="unit-card-gradient" />
 
-            {/* Ultimate Ready Overlay */}
-            {!isMonster && unit.currentSpirit >= 100 && !unit.isDead && phase === CombatPhase.PLAYER_TURN && (
-                <div
-                    className="ultimate-ready-overlay"
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'rgba(0, 0, 0, 0.4)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 10,
-                        pointerEvents: 'none' // Click passes through to card handler? No, we likely want a specific button.
-                    }}
-                >
+                    {/* Visual Recharge Warning Overlay */}
+
+                </div>
+
+                {/* Top Stats */}
+                <div className="unit-stats-top">
+                    {/* Energy Pips */}
+                    {/* Energy Pips Removed */}
+
+                    {/* Shield Indicator */}
+                    {unit.currentShield > 0 && (
+                        <div className="shield-badge">
+                            🛡️ {unit.currentShield}
+                        </div>
+                    )}
+                </div>
+
+                {/* Spacer */}
+                <div className="card-spacer" />
+
+                {/* Bottom Info Panel */}
+                <div className="unit-info-bottom">
+                    {/* Description Box */}
+                    {!isMonster && companionData && (
+                        <div className="ability-card">
+                            <div className="ability-tag">
+                                {t('combat.unit_card.ability', 'Ability')}
+                            </div>
+                            <p className="ability-text">
+                                {t(`companions.${unit.templateId}.ability_description`, companionData.abilityDescription)}
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Health Bar */}
+                    <div className="health-bar-container">
+                        <div
+                            className={`health-bar-fill ${isMonster ? 'monster' : 'player'}`}
+                            style={{ width: `${healthPercent}%` }}
+                        />
+                        <div className="health-text">
+                            <span style={{ marginRight: '0.25rem' }}>{t('combat.unit_card.hp', 'HP')}</span> {unit.currentHealth} / {unit.maxHealth}
+                        </div>
+                    </div>
+
+                    {/* Spirit Bar (Player Only) */}
+                    {!isMonster && (
+                        <div className="spirit-bar-container">
+                            <div
+                                className="spirit-bar-fill"
+                                style={{ width: `${unit.currentSpirit}%` }}
+                            />
+                        </div>
+                    )}
+                </div>
+
+                {/* Ultimate Ready Overlay */}
+                {!isMonster && unit.currentSpirit >= 100 && !unit.isDead && phase === CombatPhase.PLAYER_TURN && (
                     <div
-                        className="ultimate-text"
+                        className="ultimate-ready-overlay"
                         style={{
-                            color: '#fff',
-                            textShadow: '0 0 10px #00f2fe',
-                            fontWeight: 'bold',
-                            fontSize: '1.2rem',
-                            animation: 'pulse 1s infinite'
+                            position: 'absolute',
+                            inset: 0,
+                            background: 'rgba(0, 0, 0, 0.4)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 10,
+                            pointerEvents: 'none' // Click passes through to card handler? No, we likely want a specific button.
                         }}
                     >
-                        ✨ {t('combat.unit_card.ultimate_ready', 'ULTIMATE READY!')} ✨
+                        <div
+                            className="ultimate-text"
+                            style={{
+                                color: '#fff',
+                                textShadow: '0 0 10px #00f2fe',
+                                fontWeight: 'bold',
+                                fontSize: '1.2rem',
+                                animation: 'pulse 1s infinite'
+                            }}
+                        >
+                            ✨ {t('combat.unit_card.ultimate_ready', 'ULTIMATE READY!')} ✨
+                        </div>
                     </div>
-                </div>
+                )}
+            </div>{/* End of unit-card-front */}
+
+            {/* Back Face (Math Challenge) */}
+            {mathProblem && onMathAnswer && (
+                <MathCardFace
+                    problem={mathProblem}
+                    onAnswer={onMathAnswer}
+                />
             )}
 
         </div>

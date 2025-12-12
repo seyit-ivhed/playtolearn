@@ -5,13 +5,14 @@ import { useCombatStore } from '../../stores/combat.store';
 import { useGameStore } from '../../stores/game.store';
 import { usePlayerStore } from '../../stores/player.store';
 import { CombatPhase } from '../../types/combat.types';
-import MathChallengeModal from '../../components/MathChallengeModal';
+// import MathChallengeModal from '../../components/MathChallengeModal'; // Removed
 import { generateProblem } from '../../utils/math-generator';
 import { MathOperation, type MathProblem } from '../../types/math.types';
 import { useState } from 'react';
 import { UnitCard } from '../combat/components/UnitCard';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
-import '../../styles/pages/EncounterPage.css';
+import styles from './EncounterPage.module.css'; // Use module
+import '../../styles/pages/EncounterPage.css'; // Keep legacy if needed
 
 
 
@@ -26,9 +27,11 @@ const EncounterPage = () => {
     } = useCombatStore();
 
     const [activeChallenge, setActiveChallenge] = useState<{
-        type: 'SPECIAL' | 'CRITICAL';
-        unitId?: string;
+        type: 'SPECIAL';
+        unitId: string;
         problem: MathProblem;
+        spotlightOpen: boolean;
+        isFlipped: boolean;
     } | null>(null);
 
 
@@ -50,8 +53,16 @@ const EncounterPage = () => {
             setActiveChallenge({
                 type: 'SPECIAL',
                 unitId,
-                problem
+                problem,
+                spotlightOpen: true,
+                isFlipped: false // Start front, then flip
             });
+
+            // Start flip animation shortly after open
+            setTimeout(() => {
+                setActiveChallenge(prev => prev ? { ...prev, isFlipped: true } : null);
+            }, 600);
+
             return;
         }
 
@@ -62,13 +73,9 @@ const EncounterPage = () => {
     const handleChallengeComplete = (success: boolean) => {
         if (!activeChallenge) return;
 
-        if (activeChallenge.type === 'SPECIAL' && activeChallenge.unitId) {
-            resolveSpecialAttack(activeChallenge.unitId, success);
-        } else if (activeChallenge.type === 'CRITICAL' && activeChallenge.unitId) {
-            // If success, critical hit! If fail, normal hit.
-            performAction(activeChallenge.unitId, { isCritical: success });
-        }
-
+        // Wait for UI feedback/flip back? 
+        // For now, immediate resolve.
+        resolveSpecialAttack(activeChallenge.unitId, success);
         setActiveChallenge(null);
     };
 
@@ -129,22 +136,26 @@ const EncounterPage = () => {
 
             </div>
 
-            {/* Math Modal */}
-            {
-                activeChallenge && (
-                    <MathChallengeModal
-                        problem={activeChallenge.problem}
-                        title={activeChallenge.type === 'SPECIAL'
-                            ? t('combat.encounter.ultimate_casting', "ULTIMATE CASTING!")
-                            : t('combat.encounter.critical_opportunity', "CRITICAL OPPORTUNITY!")}
-                        description={activeChallenge.type === 'SPECIAL'
-                            ? t('combat.encounter.solve_to_unleash', "Solve correctly to UNLEASH POWER!")
-                            : t('combat.encounter.solve_for_critical', "Solve correctly for DOUBLE EFFECT!")}
-                        onComplete={handleChallengeComplete}
-                        onClose={() => setActiveChallenge(null)}
-                    />
-                )
-            }
+            {/* Spotlight Overlay */}
+            {activeChallenge && activeChallenge.spotlightOpen && (
+                <div className={styles.spotlightContainer}>
+                    <div className={styles.spotlightCardWrapper}>
+                        {(() => {
+                            const unit = party.find(u => u.id === activeChallenge.unitId);
+                            if (!unit) return null;
+                            return (
+                                <UnitCard
+                                    unit={unit}
+                                    phase={phase}
+                                    isFlipped={activeChallenge.isFlipped}
+                                    mathProblem={activeChallenge.problem}
+                                    onMathAnswer={handleChallengeComplete}
+                                />
+                            );
+                        })()}
+                    </div>
+                </div>
+            )}
             {/* Completion Modal */}
             {(phase === CombatPhase.VICTORY || phase === CombatPhase.DEFEAT) && (
                 <EncounterCompletionModal

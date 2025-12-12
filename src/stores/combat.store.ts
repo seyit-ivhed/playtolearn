@@ -37,7 +37,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
                 color: data.color,
                 isDead: false,
                 hasActed: false,
-                currentSpirit: Math.floor(Math.random() * 41) + 20,
+                currentSpirit: Math.floor(Math.random() * 26) + 25, // 25-50 Initial
                 maxSpirit: 100
             };
         });
@@ -157,13 +157,12 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             set({ party: newParty });
         }
 
-        // Increase Spirit on successful action
-        // +20 per action, 5 actions to full
-        const newSpirit = Math.min(100, unit.currentSpirit + 20);
-        newParty[unitIndex] = {
-            ...newParty[unitIndex],
-            currentSpirit: newSpirit
-        };
+        // REMOVED Spirit gain on action
+        // const newSpirit = Math.min(100, unit.currentSpirit + 20);
+        // newParty[unitIndex] = {
+        //     ...newParty[unitIndex],
+        //     currentSpirit: newSpirit
+        // };
 
         set(state => ({
             party: newParty,
@@ -190,24 +189,86 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         const unitIndex = party.findIndex(u => u.id === unitId);
         if (unitIndex === -1) return;
 
-        const newParty = [...party];
+        const unit = party[unitIndex];
+        const companionData = getCompanionById(unit.templateId);
+        const ability = companionData.specialAbility;
+
+        let newParty = [...party];
+        let newMonsters = [...monsters];
+        let logs: string[] = [];
 
         if (success) {
-            // Deal massive damage to all monsters
-            const newMonsters = monsters.map(m => {
-                if (m.isDead) return m;
-                const damage = 25; // Boosted damage for Ultimate
-                const newHealth = Math.max(0, m.currentHealth - damage);
-                return { ...m, currentHealth: newHealth, isDead: newHealth === 0 };
-            });
+            logs.push(`${unit.name} cast ${ability.name}!`);
 
-            // Reset Spirit ONLY for this unit
+            // EXECUTE ABILITY LOGIC
+            if (ability.type === 'DAMAGE') {
+                if (ability.target === 'ALL_ENEMIES') {
+                    newMonsters = newMonsters.map(m => {
+                        if (m.isDead) return m;
+                        const newHealth = Math.max(0, m.currentHealth - ability.value);
+                        return { ...m, currentHealth: newHealth, isDead: newHealth === 0 };
+                    });
+                    logs.push(`Dealt ${ability.value} damage to ALL enemies!`);
+                } else if (ability.target === 'SINGLE_ENEMY') {
+                    // Hit first living
+                    const targetIndex = newMonsters.findIndex(m => !m.isDead);
+                    if (targetIndex !== -1) {
+                        const target = newMonsters[targetIndex];
+                        const newHealth = Math.max(0, target.currentHealth - ability.value);
+                        newMonsters[targetIndex] = { ...target, currentHealth: newHealth, isDead: newHealth === 0 };
+                        logs.push(`Dealt ${ability.value} damage to ${target.name}!`);
+                    }
+                }
+            } else if (ability.type === 'HEAL') {
+                if (ability.target === 'ALL_ALLIES') {
+                    newParty = newParty.map(p => {
+                        if (p.isDead) return p;
+                        return { ...p, currentHealth: Math.min(p.maxHealth, p.currentHealth + ability.value) };
+                    });
+                    logs.push(`Healed party for ${ability.value}!`);
+                } else if (ability.target === 'SELF') {
+                    // Logic for Squire (Heal Self + Max Shield)
+                    const newHealth = Math.min(unit.maxHealth, unit.currentHealth + ability.value);
+                    newParty[unitIndex] = {
+                        ...newParty[unitIndex],
+                        currentHealth: newHealth,
+                        currentShield: 999 // Max Shield effectively
+                    };
+                    logs.push(`Healed self and raised Shield Wall!`);
+                }
+            } else if (ability.type === 'SHIELD') {
+                if (ability.target === 'ALL_ALLIES') {
+                    newParty = newParty.map(p => {
+                        if (p.isDead) return p;
+                        return { ...p, currentShield: p.currentShield + ability.value };
+                    });
+                    logs.push(`Shielded party for ${ability.value}!`);
+                }
+            } else if (ability.type === 'MULTI_HIT') {
+                let hits = ability.count || 3;
+                for (let i = 0; i < hits; i++) {
+                    const livingMonsters = newMonsters.filter(m => !m.isDead);
+                    if (livingMonsters.length === 0) break;
+                    const randomIdx = Math.floor(Math.random() * livingMonsters.length);
+                    const targetId = livingMonsters[randomIdx].id;
+                    const monsterIdx = newMonsters.findIndex(m => m.id === targetId);
+
+                    if (monsterIdx !== -1) {
+                        const m = newMonsters[monsterIdx];
+                        const newHealth = Math.max(0, m.currentHealth - ability.value);
+                        newMonsters[monsterIdx] = { ...m, currentHealth: newHealth, isDead: newHealth === 0 };
+                    }
+                }
+                logs.push(`Dealt ${ability.value} damage x${hits}!`);
+            }
+
+            // Conssume Charge (Reset to 0)
             newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
 
             set({
                 monsters: newMonsters,
                 party: newParty,
-                combatLog: [...get().combatLog, `${newParty[unitIndex].name} cast ULTIMATE!`]
+                combatLog: [...get().combatLog, ...logs]
             });
 
             // Check Victory
@@ -220,7 +281,7 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
             newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
             set({
                 party: newParty,
-                combatLog: [...get().combatLog, `${newParty[unitIndex].name}'s Ultimate fizzled out...`]
+                combatLog: [...get().combatLog, `${unit.name}'s ability FAILED! Charge lost.`]
             });
         }
     },
@@ -291,6 +352,13 @@ export const useCombatStore = create<CombatStore>((set, get) => ({
         // Reset party actions for next turn
         // Also reset rechargeFailed flag
         newParty = newParty.map(u => ({ ...u, hasActed: false }));
+
+        // Passive Charge at start of Player Turn
+        // +25 Spirit to all living party members
+        newParty = newParty.map(p => {
+            if (p.isDead) return p;
+            return { ...p, currentSpirit: Math.min(100, p.currentSpirit + 25) };
+        });
 
         set(state => ({
             party: newParty,

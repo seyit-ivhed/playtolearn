@@ -6,6 +6,15 @@ export const CompanionRole = {
 
 export type CompanionRole = typeof CompanionRole[keyof typeof CompanionRole];
 
+export interface SpecialAbility {
+    name: string;
+    description: string;
+    type: 'DAMAGE' | 'HEAL' | 'SHIELD' | 'MULTI_HIT';
+    value: number;
+    target: 'SINGLE_ENEMY' | 'ALL_ENEMIES' | 'SINGLE_ALLY' | 'ALL_ALLIES' | 'SELF' | 'RANDOM_ENEMY';
+    count?: number; // For multi-hit
+}
+
 export interface Companion {
     id: string;
     name: string;
@@ -18,6 +27,8 @@ export interface Companion {
     abilityDamage?: number;
     abilityHeal?: number;
     abilityShield?: number;
+    // Special Ability
+    specialAbility: SpecialAbility;
     // Visuals (placeholders for now)
     color: string;
     icon: string;
@@ -43,6 +54,13 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityName: 'Clumsy Strike',
         abilityDescription: 'Deals 8 damage to a single enemy.',
         abilityDamage: 8,
+        specialAbility: {
+            name: 'Heroic Rally',
+            description: 'Heals self for 25 HP and gains max Shield.',
+            type: 'HEAL',
+            value: 25,
+            target: 'SELF' // Also adds shield in logic
+        },
         color: '#e74c3c', // Red
         icon: '🗡️',
         image: villageSquireImg
@@ -56,6 +74,13 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityName: 'Practice Shot',
         abilityDescription: 'Deals 6 damage.',
         abilityDamage: 6,
+        specialAbility: {
+            name: 'Piercing Shot',
+            description: 'Deals 20 damage ignoring armor.',
+            type: 'DAMAGE',
+            value: 20,
+            target: 'SINGLE_ENEMY'
+        },
         color: '#2c3e50', // Dark Blue
         icon: '🏹',
         image: noviceArcherImg
@@ -69,6 +94,13 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityName: 'Flame Strike',
         abilityDescription: 'Deals 15 damage to a single enemy.',
         abilityDamage: 15,
+        specialAbility: {
+            name: 'Inferno Blade',
+            description: 'Deals 35 heavy damage to a single target.',
+            type: 'DAMAGE',
+            value: 35,
+            target: 'SINGLE_ENEMY'
+        },
         color: '#e74c3c', // Red
         icon: '⚔️',
         image: fireKnightImg
@@ -82,6 +114,13 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityName: 'Shadow Arrow',
         abilityDescription: 'Deals 12 damage that ignores armor.',
         abilityDamage: 12,
+        specialAbility: {
+            name: 'Rain of Arrows',
+            description: 'Deals 10 damage to ALL enemies.',
+            type: 'DAMAGE',
+            value: 10,
+            target: 'ALL_ENEMIES'
+        },
         color: '#2c3e50', // Dark Blue
         icon: '🏹',
         image: shadowArcherImg
@@ -95,6 +134,13 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityName: 'Crystal Shield',
         abilityDescription: 'Grants 20 Shield to a friend.',
         abilityShield: 20,
+        specialAbility: {
+            name: 'Crystal Fortress',
+            description: 'Grants 30 Shield to ALL allies.',
+            type: 'SHIELD',
+            value: 30,
+            target: 'ALL_ALLIES'
+        },
         color: '#3498db', // Blue
         icon: '🛡️',
         image: crystalGuardianImg
@@ -108,6 +154,13 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityName: 'Healing Light',
         abilityDescription: 'Heals a friend for 15 Health.',
         abilityHeal: 15,
+        specialAbility: {
+            name: 'Divine Light',
+            description: 'Heals ALL allies for 20 HP.',
+            type: 'HEAL',
+            value: 20,
+            target: 'ALL_ALLIES'
+        },
         color: '#f1c40f', // Gold
         icon: '✨',
         image: lightHealerImg
@@ -122,6 +175,14 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityName: 'Thunder Bolt',
         abilityDescription: 'Deals 25 massive damage, needs recharge often.',
         abilityDamage: 25,
+        specialAbility: {
+            name: 'Thunderstorm',
+            description: 'Deals 15 damage to random enemies 3 times.',
+            type: 'MULTI_HIT',
+            value: 15,
+            count: 3,
+            target: 'RANDOM_ENEMY'
+        },
         color: '#9b59b6', // Purple
         icon: '⚡',
         image: lightningMageImg
@@ -132,3 +193,4 @@ export const INITIAL_FELLOWSHIP = ['village_squire', 'novice_archer'];
 
 export const getAllCompanions = () => Object.values(COMPANIONS);
 export const getCompanionById = (id: string) => COMPANIONS[id];
+
