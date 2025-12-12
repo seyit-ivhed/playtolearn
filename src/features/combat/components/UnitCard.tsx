@@ -202,16 +202,10 @@ export const UnitCard = ({ unit, phase, onAct }: UnitCardProps) => {
 
                 {/* Spirit Bar (Player Only) */}
                 {!isMonster && (
-                    <div className="spirit-bar-container" style={{ marginTop: '0.25rem', height: '6px', background: '#333', borderRadius: '3px', position: 'relative', overflow: 'hidden' }}>
+                    <div className="spirit-bar-container">
                         <div
                             className="spirit-bar-fill"
-                            style={{
-                                width: `${unit.currentSpirit}%`,
-                                height: '100%',
-                                background: 'linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)',
-                                boxShadow: '0 0 5px #00f2fe',
-                                transition: 'width 0.3s ease-out'
-                            }}
+                            style={{ width: `${unit.currentSpirit}%` }}
                         />
                     </div>
                 )}
