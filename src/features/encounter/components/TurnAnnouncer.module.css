@@ -1,0 +1,72 @@
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.banner {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px 60px;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    animation: slideIn 0.5s ease-out forwards, fadeOut 0.5s ease-in 1.5s forwards;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.text {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    background: linear-gradient(to bottom, #fff, #ddd);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.playerTurn .text {
+    background: linear-gradient(to bottom, #4ade80, #22c55e);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.enemyTurn .text {
+    background: linear-gradient(to bottom, #ef4444, #dc2626);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+}

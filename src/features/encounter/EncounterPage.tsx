@@ -11,6 +11,7 @@ import { MathOperation, type MathProblem } from '../../types/math.types';
 import { useState } from 'react';
 import { UnitCard } from '../combat/components/UnitCard';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
+import { TurnAnnouncer } from './components/TurnAnnouncer';
 import styles from './EncounterPage.module.css'; // Use module
 import '../../styles/pages/EncounterPage.css'; // Keep legacy if needed
 
@@ -97,6 +98,8 @@ const EncounterPage = () => {
         <div className="encounter-page">
             {/* Top HUD */}
 
+            {/* Turn Announcer */}
+            <TurnAnnouncer phase={phase} />
 
             {/* Battlefield */}
             <div className="battlefield">

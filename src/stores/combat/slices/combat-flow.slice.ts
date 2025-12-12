@@ -76,19 +76,54 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
 
         if (activeMonsters.length === 0) return; // Should be victory already
 
-        // Simple AI: All monsters attack random party member
         let newParty = [...party];
         const newMonsters = [...monsters];
         const logs: string[] = [];
 
-        activeMonsters.forEach(monster => {
+        // Process each monster attack sequentially with delays
+        const processMonsterAttack = (monsterIndex: number) => {
+            if (monsterIndex >= activeMonsters.length) {
+                // All monsters have attacked - prepare for next player turn
+                // Reset party actions for next turn
+                newParty = newParty.map(u => ({ ...u, hasActed: false }));
+
+                // Passive Charge at start of Player Turn
+                // +35 Spirit to all living party members
+                newParty = newParty.map(p => {
+                    if (p.isDead) return p;
+                    return { ...p, currentSpirit: Math.min(100, p.currentSpirit + 35) };
+                });
+
+                // Add a cooldown before returning to player turn
+                setTimeout(() => {
+                    set(state => ({
+                        party: newParty,
+                        monsters: newMonsters,
+                        phase: CombatPhase.PLAYER_TURN,
+                        turnCount: state.turnCount + 1,
+                        combatLog: [...state.combatLog, ...logs]
+                    }));
+
+                    if (newParty.every(p => p.isDead)) {
+                        set({ phase: CombatPhase.DEFEAT, combatLog: [...get().combatLog, 'Party Defeated...'] });
+                    }
+                }, 1000); // 1s cooldown before player turn
+                return;
+            }
+
+            const monster = activeMonsters[monsterIndex];
             const livingTargets = newParty.filter(p => !p.isDead);
-            if (livingTargets.length === 0) return;
+
+            if (livingTargets.length === 0) {
+                // All party members dead, end immediately
+                processMonsterAttack(activeMonsters.length);
+                return;
+            }
 
             // Mark monster as acted
-            const monsterIndex = newMonsters.findIndex(m => m.id === monster.id);
-            if (monsterIndex !== -1) {
-                newMonsters[monsterIndex] = { ...newMonsters[monsterIndex], hasActed: true };
+            const storeMonsterIndex = newMonsters.findIndex(m => m.id === monster.id);
+            if (storeMonsterIndex !== -1) {
+                newMonsters[storeMonsterIndex] = { ...newMonsters[storeMonsterIndex], hasActed: true };
             }
 
             const targetIdx = Math.floor(Math.random() * livingTargets.length);
@@ -96,9 +131,7 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
             const target = newParty[actualTargetIndex];
 
             // Calc Damage vs Shield
-            // Using generic damage for now
             let damage = 8;
-            // Ideally fetch from monster data using templateId
 
             if (target.currentShield > 0) {
                 if (target.currentShield >= damage) {
@@ -114,29 +147,21 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
             if (target.currentHealth === 0) target.isDead = true;
 
             logs.push(`${monster.name} attacked ${target.name} for ${damage} damage!`);
-        });
 
-        // Reset party actions for next turn
-        // Also reset rechargeFailed flag
-        newParty = newParty.map(u => ({ ...u, hasActed: false }));
+            // Update state immediately so the UI reflects this attack
+            set({
+                party: newParty,
+                monsters: newMonsters,
+                combatLog: [...get().combatLog, logs[logs.length - 1]]
+            });
 
-        // Passive Charge at start of Player Turn
-        // +35 Spirit to all living party members
-        newParty = newParty.map(p => {
-            if (p.isDead) return p;
-            return { ...p, currentSpirit: Math.min(100, p.currentSpirit + 35) };
-        });
+            // Wait 1s before the next monster attacks
+            setTimeout(() => {
+                processMonsterAttack(monsterIndex + 1);
+            }, 1000);
+        };
 
-        set(state => ({
-            party: newParty,
-            monsters: newMonsters,
-            phase: CombatPhase.PLAYER_TURN,
-            turnCount: state.turnCount + 1,
-            combatLog: [...state.combatLog, ...logs]
-        }));
-
-        if (newParty.every(p => p.isDead)) {
-            set({ phase: CombatPhase.DEFEAT, combatLog: [...get().combatLog, 'Party Defeated...'] });
-        }
+        // Start processing from the first monster
+        processMonsterAttack(0);
     }
 });
