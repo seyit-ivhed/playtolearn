@@ -33,6 +33,8 @@ export interface Companion {
     color: string;
     icon: string;
     image: string;
+    // Configuration
+    initialSpirit: number;
 }
 
 // Images
@@ -63,7 +65,8 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         color: '#e74c3c', // Red
         icon: '🗡️',
-        image: villageSquireImg
+        image: villageSquireImg,
+        initialSpirit: 70
     },
     'novice_archer': {
         id: 'novice_archer',
@@ -83,7 +86,8 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         color: '#2c3e50', // Dark Blue
         icon: '🏹',
-        image: noviceArcherImg
+        image: noviceArcherImg,
+        initialSpirit: 30
     },
     'fire_knight': {
         id: 'fire_knight',
@@ -103,7 +107,8 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         color: '#e74c3c', // Red
         icon: '⚔️',
-        image: fireKnightImg
+        image: fireKnightImg,
+        initialSpirit: 50
     },
     'shadow_archer': {
         id: 'shadow_archer',
@@ -123,7 +128,8 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         color: '#2c3e50', // Dark Blue
         icon: '🏹',
-        image: shadowArcherImg
+        image: shadowArcherImg,
+        initialSpirit: 50
     },
     'crystal_guardian': {
         id: 'crystal_guardian',
@@ -143,7 +149,8 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         color: '#3498db', // Blue
         icon: '🛡️',
-        image: crystalGuardianImg
+        image: crystalGuardianImg,
+        initialSpirit: 50
     },
     'light_healer': {
         id: 'light_healer',
@@ -163,7 +170,8 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         color: '#f1c40f', // Gold
         icon: '✨',
-        image: lightHealerImg
+        image: lightHealerImg,
+        initialSpirit: 50
     },
     // Extra for full party testing
     'lightning_mage': {
@@ -185,7 +193,8 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         color: '#9b59b6', // Purple
         icon: '⚡',
-        image: lightningMageImg
+        image: lightningMageImg,
+        initialSpirit: 50
     }
 };
 

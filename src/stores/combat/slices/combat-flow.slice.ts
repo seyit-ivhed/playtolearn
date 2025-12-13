@@ -20,7 +20,7 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
                 color: data.color,
                 isDead: false,
                 hasActed: false,
-                currentSpirit: Math.floor(Math.random() * 41) + 40,
+                currentSpirit: data.initialSpirit || 0,
                 maxSpirit: 100
             };
         });
