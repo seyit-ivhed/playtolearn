@@ -174,10 +174,17 @@ export const UnitCard = ({
                 {/* Bottom Info Panel */}
                 <div className="unit-info-bottom">
                     {!isMonster && companionData && (
-                        <AbilityCard
-                            templateId={unit.templateId}
-                            abilityDescription={companionData.abilityDescription}
-                        />
+                        <>
+                            <AbilityCard
+                                templateId={unit.templateId}
+                                abilityDescription={companionData.abilityDescription}
+                            />
+
+                            <SpiritBar
+                                currentSpirit={unit.currentSpirit}
+                                specialAbilityName={companionData.specialAbility.name}
+                            />
+                        </>
                     )}
 
                     <HealthBar
@@ -185,8 +192,6 @@ export const UnitCard = ({
                         maxHealth={unit.maxHealth}
                         isMonster={isMonster}
                     />
-
-                    {!isMonster && <SpiritBar currentSpirit={unit.currentSpirit} />}
                 </div>
 
                 {/* Ultimate Ready Overlay */}

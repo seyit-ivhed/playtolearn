@@ -10,9 +10,6 @@ export const AbilityCard = ({ templateId, abilityDescription }: AbilityCardProps
 
     return (
         <div className="ability-card">
-            <div className="ability-tag">
-                {t('combat.unit_card.ability', 'Ability')}
-            </div>
             <p className="ability-text">
                 {t(`companions.${templateId}.ability_description`, abilityDescription)}
             </p>

@@ -256,27 +256,10 @@
     border-radius: 0.75rem;
     padding: 0.5rem;
     box-shadow: var(--shadow-lg);
-    min-height: 50px;
+    min-height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-}
-
-.ability-tag {
-    position: absolute;
-    top: -0.75rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #855e42;
-    color: #e3dcd2;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 0.125rem 0.5rem;
-    border-radius: 9999px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: 1px solid #4a3425;
 }
 
 .ability-text {
@@ -355,13 +338,12 @@
 /* Spirit Bar */
 .spirit-bar-container {
     width: 100%;
-    height: 12px;
-    /* Thicker */
+    height: 20px;
+    /* Taller to accommodate text */
     background-color: #111827;
     border: 1px solid #78350f;
     /* darker brown/orange border */
     border-radius: 9999px;
-    margin-top: 0.5rem;
     position: relative;
     overflow: hidden;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -377,6 +359,26 @@
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+}
+
+.spirit-bar-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    z-index: 10;
+    font-family: var(--font-display, sans-serif);
 }
 
 /* Sparkle/Shimmer Effect */
