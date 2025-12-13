@@ -55,11 +55,11 @@ export const COMPANIONS: Record<string, Companion> = {
         abilityDescription: 'Deals 8 damage to a single enemy.',
         abilityDamage: 8,
         specialAbility: {
-            name: 'Heroic Rally',
-            description: 'Heals self for 25 HP and gains max Shield.',
-            type: 'HEAL',
-            value: 25,
-            target: 'SELF' // Also adds shield in logic
+            name: 'Protective Stance',
+            description: 'Grants 15 Shield to ALL allies.',
+            type: 'SHIELD',
+            value: 15,
+            target: 'ALL_ALLIES'
         },
         color: '#e74c3c', // Red
         icon: '🗡️',

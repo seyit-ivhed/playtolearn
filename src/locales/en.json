@@ -100,7 +100,9 @@
             "name": "Village Squire",
             "description": "A young hero with a rusty sword and a big heart.",
             "ability_name": "Clumsy Strike",
-            "ability_description": "Deals 8 damage to a single enemy."
+            "ability_description": "Deals 8 damage to a single enemy.",
+            "special_ability_name": "Protective Stance",
+            "special_ability_description": "Grants 15 Shield to ALL allies."
         },
         "novice_archer": {
             "name": "Novice Archer",

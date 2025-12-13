@@ -100,7 +100,9 @@
             "name": "Byväpnare",
             "description": "En ung hjälte med ett rostigt svärd och ett stort hjärta.",
             "ability_name": "Klumpigt Slag",
-            "ability_description": "Gör 8 skada på en fiende."
+            "ability_description": "Gör 8 skada på en fiende.",
+            "special_ability_name": "Skyddande Hållning",
+            "special_ability_description": "Ger 15 Sköld till alla allierade."
         },
         "novice_archer": {
             "name": "Nybörjarskytt",
