@@ -35,16 +35,11 @@ const EncounterPage = () => {
         isFlipped: boolean;
     } | null>(null);
 
+
     const [activeVFX, setActiveVFX] = useState<{
         type: string;
         unitId: string;
     } | null>(null);
-
-    const [isAnnouncementVisible, setIsAnnouncementVisible] = useState(false);
-
-
-
-
 
     const handleUnitAction = (unitId: string) => {
         if (phase !== CombatPhase.PLAYER_TURN) return;
@@ -132,7 +127,7 @@ const EncounterPage = () => {
     return (
         <div className="encounter-page">
             {/* Turn Announcer */}
-            <TurnAnnouncer phase={phase} onVisibilityChange={setIsAnnouncementVisible} />
+            <TurnAnnouncer phase={phase} />
 
             {/* VFX Overlay */}
             {
@@ -155,7 +150,6 @@ const EncounterPage = () => {
                                     unit={unit}
                                     phase={phase}
                                     onAct={() => handleUnitAction(unit.id)}
-                                    isAnnouncementVisible={isAnnouncementVisible}
                                 />
                             </div>
                         ))}
