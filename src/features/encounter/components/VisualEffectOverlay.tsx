@@ -25,12 +25,9 @@ export const VisualEffectOverlay = ({ effectType, onComplete }: VisualEffectOver
         const type = effectType.toLowerCase();
 
         if (type.includes('protective stance') || type.includes('village_squire')) {
-            return (
-                <div className="vfx-shield-container">
-                    <div className="vfx-shield-pulse" />
-                    <div className="vfx-shield-circle" />
-                </div>
-            );
+            // Updated: Return null to hide global overlay (handled by per-card VFX now)
+            // The useEffect timer still runs to trigger onComplete!
+            return null;
         }
 
         if (type.includes('piercing shot') || type.includes('novice_archer')) {

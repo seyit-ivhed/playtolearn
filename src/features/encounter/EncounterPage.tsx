@@ -129,15 +129,34 @@ const EncounterPage = () => {
             {/* Turn Announcer */}
             <TurnAnnouncer phase={phase} />
 
-            {/* VFX Overlay */}
+            {/* VFX Overlay - GLOBAL (Disable for Protective Stance as it's now per-card) */}
             {
-                activeVFX && (
+                activeVFX &&
+                !activeVFX.type.includes('Protective Stance') &&
+                !activeVFX.type.includes('Village Squire') && (
                     <VisualEffectOverlay
                         effectType={activeVFX.type}
                         onComplete={handleVFXComplete}
                     />
                 )
             }
+
+            {/* Logic for Per-Card VFX timer (since VisualEffectOverlay handles timer usually) */}
+            {/* We need a hidden timer or effect handler if the global overlay isn't rendered */}
+            {activeVFX && (activeVFX.type.includes('Protective Stance') || activeVFX.type.includes('Village Squire')) && (
+                <VisualEffectOverlay
+                    effectType="HIDDEN_TIMER_ONLY" // Hacky: Just use it to run the timer? Or better, implement a side-effect here.
+                    onComplete={handleVFXComplete}
+                />
+            )}
+            {/* Actually, VisualEffectOverlay renders nothing if type doesn't match? Let's check. 
+               If it returns null, the useEffect inside it still runs! 
+               So we can just render it with the original type, but css/logic inside might render DOM.
+               
+               Better Approach: Just render VisualEffectOverlay but update IT to return null for Protective Stance DOM.
+               
+               Let's do the prop pass first.
+            */}
 
             {/* Battlefield */}
             <div className="battlefield">
@@ -150,6 +169,7 @@ const EncounterPage = () => {
                                     unit={unit}
                                     phase={phase}
                                     onAct={() => handleUnitAction(unit.id)}
+                                    activeVisualEffect={activeVFX?.type}
                                 />
                             </div>
                         ))}

@@ -412,6 +412,52 @@
     /* Optical center adjustment due to pointed bottom */
 }
 
+/* --- Ultimate VFX: Protective Stance --- */
+.vfx-large-shield-container {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    animation: vfx-shield-sequence 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    transform-origin: center center;
+}
+
+.vfx-large-shield-svg {
+    width: 80%;
+    /* Start relative to card */
+    height: 80%;
+    filter: drop-shadow(0 0 15px rgba(30, 144, 255, 0.8));
+}
+
+@keyframes vfx-shield-sequence {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(20px);
+    }
+
+    15% {
+        opacity: 1;
+        transform: scale(1.1) translateY(0);
+        /* Pop in */
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(1.2);
+        /* Slow grow */
+        filter: brightness(1.5);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+        /* Dissipate outwards */
+    }
+}
+
 /* Animation Utility Classes */
 .anim-shake-damage {
     animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;

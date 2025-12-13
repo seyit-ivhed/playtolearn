@@ -20,6 +20,7 @@ interface UnitCardProps {
     isFlipped?: boolean;
     mathProblem?: MathProblem;
     onMathAnswer?: (correct: boolean) => void;
+    activeVisualEffect?: string | null;
 }
 
 export const UnitCard = ({
@@ -28,7 +29,8 @@ export const UnitCard = ({
     onAct,
     isFlipped = false,
     mathProblem,
-    onMathAnswer
+    onMathAnswer,
+    activeVisualEffect
 }: UnitCardProps) => {
     const { t } = useTranslation();
     const isMonster = !unit.isPlayer;
@@ -243,6 +245,33 @@ export const UnitCard = ({
                     />
                 )
             }
-        </div >
+
+            {/* Ultimate Visual Effects Overlays */}
+            {!isMonster && activeVisualEffect && (activeVisualEffect.includes('Protective Stance') || activeVisualEffect.includes('Village Squire')) && (
+                <div className="vfx-large-shield-container">
+                    <svg className="vfx-large-shield-svg" viewBox="0 0 24 34" preserveAspectRatio="none">
+                        {/* Reuse same geometry but with glowy styles */}
+                        <g transform="translate(12, 16) scale(1.1) translate(-12, -15)">
+                            <path
+                                d="M2,4 Q2,4 2,4 L2,12 Q2,24 12,29 Q22,24 22,12 L22,4 Q12,1 2,4 Z"
+                                fill="none"
+                                stroke="#ffd700" /* Gold Stroke */
+                                strokeWidth="1"
+                            />
+                            {/* Holographic Fill */}
+                            <path
+                                d="M2,4 Q2,4 2,4 L2,12 Q2,24 12,29 Q22,24 22,12 L22,4 Q12,1 2,4 Z"
+                                fill="rgba(30, 144, 255, 0.5)"
+                            />
+                            {/* Inner Light */}
+                            <path
+                                d="M12,29 Q2,24 2,12 L2,4 Q7,2.5 12,2 Z"
+                                fill="rgba(255, 255, 255, 0.2)"
+                            />
+                        </g>
+                    </svg>
+                </div>
+            )}
+        </div>
     );
 };
