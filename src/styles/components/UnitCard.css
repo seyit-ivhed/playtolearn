@@ -14,8 +14,7 @@
     align-items: center;
     background-color: #1f2937;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
-    /* Changed to hidden to clip the integrated badge */
+    /* overflow: hidden; REMOVED to restore 3D Transform Space */
     font-family: var(--font-body);
 }
 
@@ -70,6 +69,11 @@
     align-items: flex-start;
     justify-content: center;
     padding-top: 0.5rem;
+    border-top-left-radius: 1.3rem;
+    /* Clip manually */
+    border-top-right-radius: 1.3rem;
+    backface-visibility: hidden;
+    /* HIDDEN when flipped */
 }
 
 .unit-card-name-text {
@@ -355,6 +359,8 @@
     justify-content: center;
     z-index: 15;
     pointer-events: none;
+    backface-visibility: hidden;
+    /* HIDDEN when flipped */
 }
 
 .shield-badge {
