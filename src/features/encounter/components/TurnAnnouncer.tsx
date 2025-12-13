@@ -5,9 +5,10 @@ import styles from './TurnAnnouncer.module.css';
 
 interface TurnAnnouncerProps {
     phase: CombatPhase;
+    onVisibilityChange?: (isVisible: boolean) => void;
 }
 
-export const TurnAnnouncer = ({ phase }: TurnAnnouncerProps) => {
+export const TurnAnnouncer = ({ phase, onVisibilityChange }: TurnAnnouncerProps) => {
     const { t } = useTranslation();
     const [message, setMessage] = useState<string | null>(null);
     const [key, setKey] = useState(0); // Force re-render for animation
@@ -16,15 +17,27 @@ export const TurnAnnouncer = ({ phase }: TurnAnnouncerProps) => {
         if (phase === CombatPhase.PLAYER_TURN) {
             setMessage(t('combat.turn.player', 'Your Turn'));
             setKey(prev => prev + 1);
+            onVisibilityChange?.(true);
+
+            // Hide after 2 seconds (animation duration)
+            setTimeout(() => {
+                onVisibilityChange?.(false);
+            }, 2000);
         } else if (phase === CombatPhase.MONSTER_TURN) {
             setMessage(t('combat.turn.enemy', 'Enemy Turn'));
             setKey(prev => prev + 1);
+            onVisibilityChange?.(true);
+
+            // Hide after 2 seconds (animation duration)
+            setTimeout(() => {
+                onVisibilityChange?.(false);
+            }, 2000);
         } else {
             // Victory/Defeat or other phases - don't show turn banner
-            // or maybe we want to keep it empty so it unmounts naturally if we handled that
             setMessage(null);
+            onVisibilityChange?.(false);
         }
-    }, [phase, t]);
+    }, [phase, t, onVisibilityChange]);
 
     if (!message) return null;
 

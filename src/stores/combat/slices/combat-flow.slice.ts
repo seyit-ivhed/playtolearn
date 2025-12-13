@@ -67,7 +67,8 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
             monsters: newMonsters
         });
 
-        setTimeout(() => get().processMonsterTurn(), 1000);
+        // Wait for "Enemy Turn" banner to complete (2s animation) before starting attacks
+        setTimeout(() => get().processMonsterTurn(), 2500);
     },
 
     processMonsterTurn: () => {

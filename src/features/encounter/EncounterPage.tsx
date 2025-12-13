@@ -35,6 +35,8 @@ const EncounterPage = () => {
         isFlipped: boolean;
     } | null>(null);
 
+    const [isAnnouncementVisible, setIsAnnouncementVisible] = useState(false);
+
 
 
 
@@ -99,7 +101,7 @@ const EncounterPage = () => {
             {/* Top HUD */}
 
             {/* Turn Announcer */}
-            <TurnAnnouncer phase={phase} />
+            <TurnAnnouncer phase={phase} onVisibilityChange={setIsAnnouncementVisible} />
 
             {/* Battlefield */}
             <div className="battlefield">
@@ -112,6 +114,7 @@ const EncounterPage = () => {
                                     unit={unit}
                                     phase={phase}
                                     onAct={() => handleUnitAction(unit.id)}
+                                    isAnnouncementVisible={isAnnouncementVisible}
                                 />
                             </div>
                         ))}

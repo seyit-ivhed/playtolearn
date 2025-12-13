@@ -18,10 +18,10 @@ interface UnitCardProps {
     unit: CombatUnit;
     phase: CombatPhase;
     onAct?: () => void;
-    // New Props for Charged Ability UX
     isFlipped?: boolean;
     mathProblem?: MathProblem;
     onMathAnswer?: (correct: boolean) => void;
+    isAnnouncementVisible?: boolean;
 }
 
 export const UnitCard = ({
@@ -30,7 +30,8 @@ export const UnitCard = ({
     onAct,
     isFlipped = false,
     mathProblem,
-    onMathAnswer
+    onMathAnswer,
+    isAnnouncementVisible = false
 }: UnitCardProps) => {
     const { t } = useTranslation();
     const isMonster = !unit.isPlayer;
@@ -95,6 +96,13 @@ export const UnitCard = ({
     // Interaction Handler
     const handleCardClick = (e: React.MouseEvent) => {
         e.stopPropagation();
+
+        // Prevent interaction with monster cards
+        if (isMonster) return;
+
+        // Prevent interaction during announcement
+        if (isAnnouncementVisible) return;
+
         if (!canAct) return;
 
         // Visual distinction for Ultimate?
