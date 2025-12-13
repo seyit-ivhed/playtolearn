@@ -64,7 +64,7 @@ const EncounterPage = () => {
             // Start flip animation shortly after open
             setTimeout(() => {
                 setActiveChallenge(prev => prev ? { ...prev, isFlipped: true } : null);
-            }, 600);
+            }, 2000);
 
             return;
         }
