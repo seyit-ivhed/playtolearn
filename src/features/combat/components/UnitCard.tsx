@@ -158,14 +158,7 @@ export const UnitCard = ({
                 />
 
                 {/* Top Stats */}
-                <div className="unit-stats-top">
-                    {/* Shield Indicator */}
-                    {unit.currentShield > 0 && (
-                        <div className="shield-badge">
-                            🛡️ {unit.currentShield}
-                        </div>
-                    )}
-                </div>
+                {/* Shield Indicator Removed (Moved to bottom) */}
 
                 {/* Spacer */}
                 <div className="card-spacer" />
@@ -189,6 +182,9 @@ export const UnitCard = ({
                         />
                     )}
 
+                    {/* Shield Overlay (Centered on Health Bar) */}
+
+
                     <HealthBar
                         currentHealth={unit.currentHealth}
                         maxHealth={unit.maxHealth}
@@ -202,14 +198,25 @@ export const UnitCard = ({
                 )} */}
             </div>
 
-            {/* Back Face (Math Challenge) */}
-            {mathProblem && onMathAnswer && (
-                <MathCardFace
-                    problem={mathProblem}
-                    abilityName={companionData?.specialAbility?.name || 'MIGHTY BLOW'}
-                    onAnswer={onMathAnswer}
-                />
+            {/* Shield Overlay (Moved outside logic for overflow) */}
+            {unit.currentShield > 0 && (
+                <div className="shield-overlay-container">
+                    <div className="shield-icon-bg">
+                        <span className="shield-amount-text">{unit.currentShield}</span>
+                    </div>
+                </div>
             )}
-        </div>
+
+            {/* Back Face (Math Challenge) */}
+            {
+                mathProblem && onMathAnswer && (
+                    <MathCardFace
+                        problem={mathProblem}
+                        abilityName={companionData?.specialAbility?.name || 'MIGHTY BLOW'}
+                        onAnswer={onMathAnswer}
+                    />
+                )
+            }
+        </div >
     );
 };

@@ -364,15 +364,58 @@
 }
 
 .shield-badge {
-    background: #2563eb;
-    color: #fff;
-    padding: 0.25rem 0.5rem;
-    border-radius: 999px;
-    font-size: 0.7rem;
+    display: none;
+    /* Hide legacy if present */
+}
+
+/* Shield Overlay - Minimalist CSS Design */
+.shield-overlay-container {
+    position: absolute;
+    bottom: -8px;
+    /* Slightly overlapping the bottom of the card/health bar */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    /* Above health bar */
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+    backface-visibility: hidden;
+    /* Ensure it hides when card flips */
+    pointer-events: none;
+    /* Let clicks pass through to card */
+}
+
+.shield-icon-bg {
+    width: 2rem;
+    height: 2.4rem;
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    /* Dark blue to blue */
+    /* Shield shape */
+    clip-path: polygon(50% 0, 100% 20%, 100% 75%, 50% 100%, 0 75%, 0 20%);
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    border-top: 2px solid rgba(255, 255, 255, 0.5);
+    /* Faux border via shadow/top styling if needed, keeping simple */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 
+   Note: clip-path cuts off borders (border property won't follow the shape). 
+   To add a visible white border, we can use a wrapper or a pseudo-element. 
+   For now, the clean "vector" look without a thick stroke is closest to the prompt, 
+   but let's add a subtle inner highlight.
+*/
+
+.shield-amount-text {
+    color: #fff;
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);
+    position: relative;
+    top: -1px;
+    /* Optical adjustment */
+    z-index: 2;
 }
 
 /* Animation Utility Classes */
