@@ -108,25 +108,33 @@
             "name": "Novice Archer",
             "description": "Still learning to aim, but has keen eyes.",
             "ability_name": "Practice Shot",
-            "ability_description": "Deals 6 damage."
+            "ability_description": "Deals 6 damage.",
+            "special_ability_name": "Piercing Shot",
+            "special_ability_description": "Deals 20 damage ignoring armor."
         },
         "fire_knight": {
             "name": "Fire Knight",
             "description": "A brave knight wielding flames. Strikes monsters with burning attacks.",
             "ability_name": "Flame Strike",
-            "ability_description": "Deals 15 damage to a single enemy."
+            "ability_description": "Deals 15 damage to a single enemy.",
+            "special_ability_name": "Inferno Blade",
+            "special_ability_description": "Deals 35 heavy damage to a single target."
         },
         "shadow_archer": {
             "name": "Shadow Archer",
             "description": "Silent and precise. Shoots arrows from the shadows.",
             "ability_name": "Shadow Arrow",
-            "ability_description": "Deals 12 damage that ignores armor."
+            "ability_description": "Deals 12 damage that ignores armor.",
+            "special_ability_name": "Rain of Arrows",
+            "special_ability_description": "Deals 10 damage to ALL enemies."
         },
         "lightning_mage": {
             "name": "Lightning Mage",
             "description": "Channels the power of storms. Casts devastating lightning bolts.",
             "ability_name": "Thunder Bolt",
-            "ability_description": "Deals 25 massive damage, needs recharge often."
+            "ability_description": "Deals 25 massive damage, needs recharge often.",
+            "special_ability_name": "Thunderstorm",
+            "special_ability_description": "Deals 15 damage to random enemies 3 times."
         },
         "frost_ranger": {
             "name": "Frost Ranger",
@@ -138,7 +146,9 @@
             "name": "Crystal Guardian",
             "description": "Protected by crystalline armor. Shields the party from harm.",
             "ability_name": "Crystal Shield",
-            "ability_description": "Grants 20 Shield to a friend."
+            "ability_description": "Grants 20 Shield to a friend.",
+            "special_ability_name": "Crystal Fortress",
+            "special_ability_description": "Grants 30 Shield to ALL allies."
         },
         "earth_defender": {
             "name": "Earth Defender",
@@ -150,7 +160,9 @@
             "name": "Light Healer",
             "description": "Blessed with healing magic. Restores the party with radiant light.",
             "ability_name": "Healing Light",
-            "ability_description": "Heals a friend for 15 Health."
+            "ability_description": "Heals a friend for 15 Health.",
+            "special_ability_name": "Divine Light",
+            "special_ability_description": "Heals ALL allies for 20 HP."
         },
         "nature_druid": {
             "name": "Nature Druid",

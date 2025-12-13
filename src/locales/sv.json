@@ -108,25 +108,33 @@
             "name": "Nybörjarskytt",
             "description": "Lär sig fortfarande att sikta, men har skarpa ögon.",
             "ability_name": "Övningsskott",
-            "ability_description": "Gör 6 skada."
+            "ability_description": "Gör 6 skada.",
+            "special_ability_name": "Genomträngande Skott",
+            "special_ability_description": "Gör 20 skada som ignorerar rustning."
         },
         "fire_knight": {
             "name": "Eldknekten",
             "description": "En modig knekt som svingar eldslågor. Slår monster med brinnande attacker.",
             "ability_name": "Eldslag",
-            "ability_description": "Gör 15 skada på en fiende."
+            "ability_description": "Gör 15 skada på en fiende.",
+            "special_ability_name": "Infernosvärd",
+            "special_ability_description": "Gör 35 tung skada på ett enda mål."
         },
         "shadow_archer": {
             "name": "Skuggskytten",
             "description": "Tyst och precis. Skjuter pilar från skuggorna.",
             "ability_name": "Skuggpil",
-            "ability_description": "Gör 12 skada som ignorerar rustning."
+            "ability_description": "Gör 12 skada som ignorerar rustning.",
+            "special_ability_name": "Pilregn",
+            "special_ability_description": "Gör 10 skada på ALLA fiender."
         },
         "lightning_mage": {
             "name": "Blixtmagikern",
             "description": "Kanaliserar stormens kraft. Kastar förödande blixtar.",
             "ability_name": "Åskvigg",
-            "ability_description": "Gör 25 massiv skada, behöver ofta laddas."
+            "ability_description": "Gör 25 massiv skada, behöver ofta laddas.",
+            "special_ability_name": "Åskväder",
+            "special_ability_description": "Gör 15 skada på slumpmässiga fiender 3 gånger."
         },
         "frost_ranger": {
             "name": "Frostjägaren",
@@ -138,7 +146,9 @@
             "name": "Kristallväktaren",
             "description": "Skyddad av kristallrustning. Skyddar gruppen från skada.",
             "ability_name": "Kristallsköld",
-            "ability_description": "Ger 20 Sköld till en vän."
+            "ability_description": "Ger 20 Sköld till en vän.",
+            "special_ability_name": "Kristallfästning",
+            "special_ability_description": "Ger 30 Sköld till alla allierade."
         },
         "earth_defender": {
             "name": "Jordförsvararen",
@@ -150,7 +160,9 @@
             "name": "Ljushelaren",
             "description": "Välsignad med helande magi. Återställer gruppen med strålande ljus.",
             "ability_name": "Helande Ljus",
-            "ability_description": "Läker en vän för 15 Hälsa."
+            "ability_description": "Läker en vän för 15 Hälsa.",
+            "special_ability_name": "Gudomligt Ljus",
+            "special_ability_description": "Läker alla allierade med 20 HP."
         },
         "nature_druid": {
             "name": "Naturdruiden",

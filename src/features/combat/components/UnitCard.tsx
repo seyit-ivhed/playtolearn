@@ -181,11 +181,15 @@ export const UnitCard = ({
                     {!isMonster && companionData && (
                         <>
                             <AbilityCard
-                                templateId={unit.templateId}
+                                abilityName={
+                                    isUltimateReady && companionData.specialAbility
+                                        ? t(`companions.${unit.templateId}.special_ability_name`, companionData.specialAbility.name)
+                                        : t(`companions.${unit.templateId}.ability_name`, companionData.abilityName)
+                                }
                                 abilityDescription={
                                     isUltimateReady && companionData.specialAbility
                                         ? t(`companions.${unit.templateId}.special_ability_description`, companionData.specialAbility.description)
-                                        : companionData.abilityDescription
+                                        : t(`companions.${unit.templateId}.ability_description`, companionData.abilityDescription)
                                 }
                             />
 
