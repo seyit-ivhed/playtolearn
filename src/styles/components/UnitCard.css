@@ -597,3 +597,24 @@
         transform: translateX(5px);
     }
 }
+
+/* Ultimate Ready Glow */
+.unit-card.ultimate-ready-glow {
+    box-shadow: 0 0 20px #facc15, 0 0 40px rgba(250, 204, 21, 0.4);
+    border-color: #facc15;
+    animation: ultimate-pulse 2s infinite;
+}
+
+@keyframes ultimate-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px #facc15, 0 0 40px rgba(250, 204, 21, 0.4);
+        border-color: #facc15;
+    }
+
+    50% {
+        box-shadow: 0 0 30px #facc15, 0 0 60px rgba(250, 204, 21, 0.6);
+        border-color: #fde047;
+    }
+}

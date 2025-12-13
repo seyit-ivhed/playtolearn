@@ -12,7 +12,7 @@ import { UnitCardImage } from './UnitCardImage';
 import { AbilityCard } from './AbilityCard';
 import { HealthBar } from './HealthBar';
 import { SpiritBar } from './SpiritBar';
-import { UltimateReadyOverlay } from './UltimateReadyOverlay';
+// import { UltimateReadyOverlay } from './UltimateReadyOverlay'; // Removed per request
 
 interface UnitCardProps {
     unit: CombatUnit;
@@ -39,6 +39,9 @@ export const UnitCard = ({
     // Companion Data
     const companionData = !isMonster ? getCompanionById(unit.templateId) : null;
     const canAct = !unit.hasActed && !unit.isDead && phase === CombatPhase.PLAYER_TURN;
+
+    // Ultimate Ready State
+    const isUltimateReady = !isMonster && !unit.isDead && unit.currentSpirit >= 100;
 
     // Localized Name
     const displayName = isMonster
@@ -116,6 +119,8 @@ export const UnitCard = ({
     const getCardClasses = () => {
         const classes = ['unit-card', animationClass];
 
+        if (isUltimateReady) classes.push('ultimate-ready-glow');
+
         if (isFlipped) classes.push('is-flipped');
 
         // Border Color
@@ -177,13 +182,19 @@ export const UnitCard = ({
                         <>
                             <AbilityCard
                                 templateId={unit.templateId}
-                                abilityDescription={companionData.abilityDescription}
+                                abilityDescription={
+                                    isUltimateReady && companionData.specialAbility
+                                        ? t(`companions.${unit.templateId}.special_ability_description`, companionData.specialAbility.description)
+                                        : companionData.abilityDescription
+                                }
                             />
 
-                            <SpiritBar
-                                currentSpirit={unit.currentSpirit}
-                                specialAbilityName={companionData.specialAbility.name}
-                            />
+                            {!isUltimateReady && (
+                                <SpiritBar
+                                    currentSpirit={unit.currentSpirit}
+                                    specialAbilityName={companionData.specialAbility.name}
+                                />
+                            )}
                         </>
                     )}
 
@@ -194,10 +205,10 @@ export const UnitCard = ({
                     />
                 </div>
 
-                {/* Ultimate Ready Overlay */}
-                {!isMonster && unit.currentSpirit >= 100 && !unit.isDead && phase === CombatPhase.PLAYER_TURN && (
+                {/* Ultimate Ready Overlay Removed */}
+                {/* {!isMonster && unit.currentSpirit >= 100 && !unit.isDead && phase === CombatPhase.PLAYER_TURN && (
                     <UltimateReadyOverlay />
-                )}
+                )} */}
             </div>
 
             {/* Back Face (Math Challenge) */}
