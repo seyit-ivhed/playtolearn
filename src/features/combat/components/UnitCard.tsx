@@ -11,7 +11,6 @@ import { UnitNameBadge } from './UnitNameBadge';
 import { UnitCardImage } from './UnitCardImage';
 import { AbilityCard } from './AbilityCard';
 import { HealthBar } from './HealthBar';
-import { SpiritBar } from './SpiritBar';
 // import { UltimateReadyOverlay } from './UltimateReadyOverlay'; // Removed per request
 
 interface UnitCardProps {
@@ -179,27 +178,20 @@ export const UnitCard = ({
                 {/* Bottom Info Panel */}
                 <div className="unit-info-bottom">
                     {!isMonster && companionData && (
-                        <>
-                            <AbilityCard
-                                abilityName={
-                                    isUltimateReady && companionData.specialAbility
-                                        ? t(`companions.${unit.templateId}.special_ability_name`, companionData.specialAbility.name)
-                                        : t(`companions.${unit.templateId}.ability_name`, companionData.abilityName)
-                                }
-                                abilityDescription={
-                                    isUltimateReady && companionData.specialAbility
-                                        ? t(`companions.${unit.templateId}.special_ability_description`, companionData.specialAbility.description)
-                                        : t(`companions.${unit.templateId}.ability_description`, companionData.abilityDescription)
-                                }
-                            />
-
-                            {!isUltimateReady && (
-                                <SpiritBar
-                                    currentSpirit={unit.currentSpirit}
-                                    specialAbilityName={companionData.specialAbility.name}
-                                />
-                            )}
-                        </>
+                        <AbilityCard
+                            abilityName={
+                                isUltimateReady && companionData.specialAbility
+                                    ? t(`companions.${unit.templateId}.special_ability_name`, companionData.specialAbility.name)
+                                    : t(`companions.${unit.templateId}.ability_name`, companionData.abilityName)
+                            }
+                            abilityDescription={
+                                isUltimateReady && companionData.specialAbility
+                                    ? t(`companions.${unit.templateId}.special_ability_description`, companionData.specialAbility.description)
+                                    : t(`companions.${unit.templateId}.ability_description`, companionData.abilityDescription)
+                            }
+                            progress={unit.currentSpirit}
+                            isUltimateReady={isUltimateReady}
+                        />
                     )}
 
                     <HealthBar

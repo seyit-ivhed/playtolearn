@@ -1,24 +1,22 @@
 /* Unit Card Container */
 .unit-card {
     position: relative;
-    width: 11rem;
+    width: 12rem;
     /* w-64 */
-    height: 18rem;
-    /* h-96 -> increased for spirit bar */
+    height: 19rem;
+    /* Increased slightly for breathing room */
     border-radius: 1.5rem;
-    /* rounded-3xl */
-    border-width: 5px;
+    border-width: 4px;
     border-style: solid;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #1f2937;
-    /* bg-gray-800 */
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    /* shadow-2xl */
-    overflow: visible;
-    /* Default border color handled via dynamic class or variable if needed, but likely specific classes below */
+    overflow: hidden;
+    /* Changed to hidden to clip the integrated badge */
+    font-family: var(--font-body);
 }
 
 /* Interaction States */
@@ -28,32 +26,20 @@
 }
 
 .unit-card.has-acted {
-    /* Recede slightly but keep color to avoid looking dead */
     opacity: 0.9;
-    filter: brightness(0.5) contrast(1.1);
-    border-color: #4b3b2f;
-    /* Dark brown border */
-    transform: scale(0.95);
-    box-shadow: none;
+    filter: brightness(0.6) contrast(1.1);
+    transform: scale(0.98);
 }
 
 .unit-card.can-act:not(.is-flipped):hover {
-    transform: scale(1.05);
+    transform: translateY(-5px);
     z-index: 10;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .unit-card.cannot-act {
     cursor: not-allowed;
-}
-
-.unit-card.needs-recharge {
-    box-shadow: 0 0 0 4px #facc15;
-    /* ring-4 ring-yellow-400 */
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    border-color: #ca8a04;
-    /* border-yellow-600 */
 }
 
 /* Border Colors */
@@ -63,46 +49,39 @@
 
 .unit-card.border-red {
     border-color: #7f1d1d;
-    /* border-red-900 */
 }
 
 .unit-card.border-brown {
-    border-color: #2c1d11;
+    border-color: #3f2e22;
 }
 
-/* Name Badge */
+/* Integrated Name Header */
 .unit-card-name-badge {
-    position: absolute;
-    top: -1.25rem;
-    /* -top-5 */
-    z-index: 20;
-    background-color: #1a120b;
-    border: 2px solid #855e42;
-    padding: 0.375rem 1.5rem;
-    border-radius: 9999px;
-    box-shadow: var(--shadow-lg);
-    backface-visibility: hidden;
-}
-
-.floating-text-container {
-    position: absolute;
-    inset: 0;
     pointer-events: none;
-    z-index: 30;
-    backface-visibility: hidden;
-    overflow: visible;
+    /* Let clicks pass through */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3rem;
+    z-index: 20;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), transparent);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 0.5rem;
 }
 
 .unit-card-name-text {
-    color: white;
+    color: #e5e7eb;
+    /* Gray-200 */
     font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: 0.025em;
-    font-size: 0.85rem;
-    /* text-lg */
-    text-align: center;
-    line-height: 1;
-    white-space: nowrap;
+    font-size: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0;
 }
 
 /* Background Image Area */
@@ -111,323 +90,242 @@
     inset: 0;
     z-index: 0;
     background-color: #111827;
-    /* bg-gray-900 */
-    border-radius: 20px;
-    overflow: hidden;
 }
 
 .unit-card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.9;
     transition: transform 0.5s;
 }
 
 .unit-card:hover .unit-card-image {
-    transform: scale(1.1);
-}
-
-.unit-card-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #1f2937;
-    font-size: 3.5rem;
-    /* text-8xl */
-    color: #4b5563;
-}
-
-.unit-card-gradient {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent, rgba(0, 0, 0, 0.9));
-    pointer-events: none;
-}
-
-/* Recharge Warning */
-.recharge-warning {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(113, 63, 18, 0.3);
-    /* bg-yellow-900/30 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-}
-
-.recharge-icon-container {
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    padding: 1rem;
-    border-radius: 9999px;
-    border: 2px solid #facc15;
-    transform: rotate(12deg);
-    box-shadow: var(--shadow-2xl);
-}
-
-.recharge-icon {
-    font-size: 2.25rem;
-    /* text-4xl */
-    animation: bounce 1s infinite;
-}
-
-/* Top Stats */
-.unit-stats-top {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 0.5rem 0;
-    /* pt-6 px-3 */
-}
-
-.energy-pips-container {
-    display: flex;
-    gap: 0.375rem;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 0.375rem;
-    border-radius: 9999px;
-    backdrop-filter: blur(12px);
-    box-shadow: var(--shadow-md);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.energy-pip {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 9999px;
-    border: 1px solid #9ca3af;
-    /* border-gray-400 */
-}
-
-.energy-pip.active {
-    background-color: var(--color-brand-accent);
-    box-shadow: 0 0 8px var(--color-brand-accent);
-}
-
-.energy-pip.inactive {
-    background-color: #374151;
-    /* bg-gray-700 */
-}
-
-.shield-badge {
-    background-color: #2563eb;
-    /* bg-blue-600 */
-    border: 2px solid white;
-    color: white;
-    font-weight: 700;
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 9999px;
-    box-shadow: var(--shadow-lg);
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-/* Spacer */
-.card-spacer {
-    flex: 1;
+    transform: scale(1.05);
+    /* Subtle zoom */
 }
 
 /* Bottom Info Panel */
 .unit-info-bottom {
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    /* No gap, stacked tight */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 80%, transparent);
+    padding: 2rem 0.5rem 0.5rem;
+    /* Large top padding for gradient fade */
+}
+
+/* Unified Action Panel (Ability + Spirit) */
+.ability-card {
+    position: relative;
     width: 100%;
+    background-color: rgba(30, 25, 20, 0.95);
+    /* Very dark brown */
+    border: 1px solid #5d4632;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.5rem 0.75rem;
+    /* Extra bottom padding for progress bar */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.ability-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    gap: 0.5rem;
+    justify-content: center;
+    width: 100%;
+    z-index: 2;
 }
 
-.ability-card {
-    width: 100%;
-    background-color: rgba(227, 220, 210, 0.95);
-    border: 2px solid #855e42;
-    border-radius: 0.75rem;
-    padding: 0.5rem;
-    box-shadow: var(--shadow-lg);
-    min-height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.ability-name {
+    color: #ffd700;
+    /* Gold */
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+    text-align: center;
 }
 
 .ability-text {
-    color: #3c2f2f;
+    color: #e5e5e5;
     font-size: 0.65rem;
-    font-family: serif;
-    font-weight: 600;
+    font-family: var(--font-body);
+    font-weight: 400;
     text-align: center;
-    line-height: 1.25;
+    line-height: 1.3;
+    opacity: 0.9;
 }
 
-/* Health Bar */
+/* Integrated Progress Bar */
+.ability-progress-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: #1f2937;
+    z-index: 1;
+}
+
+.ability-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    /* Blue to Cyan */
+    width: 0%;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 5px rgba(6, 182, 212, 0.5);
+}
+
+/* Ultimate Ready State */
+.ability-card.ultimate-ready {
+    background: linear-gradient(135deg, #311b0e 0%, #4a2c10 100%);
+    border-color: #f59e0b;
+    /* Amber-500 */
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+    animation: pulse-border 2s infinite;
+}
+
+.ability-card.ultimate-ready .ability-name {
+    color: #fff;
+    text-shadow: 0 0 5px #f59e0b;
+}
+
+.ability-card.ultimate-ready .ability-progress-fill {
+    background: linear-gradient(90deg, #f59e0b, #ef4444);
+    /* Amber to Red */
+    box-shadow: 0 0 8px #f59e0b;
+}
+
+/* Health Bar - Base of Card */
 .health-bar-container {
     width: 100%;
-    height: 1.5rem;
+    height: 0.75rem;
+    /* Slimmer */
     background-color: #111827;
-    border-radius: 9999px;
-    border: 2px solid #6b7280;
+    border-radius: 999px;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
+    border: 1px solid #374151;
 }
 
 .health-bar-fill {
     position: absolute;
     inset: 0;
-    transition: width 0.5s ease;
-}
-
-.health-bar-fill.monster {
-    background-color: var(--color-danger);
+    transition: width 0.3s ease;
 }
 
 .health-bar-fill.player {
-    background-color: var(--color-success);
+    background-color: #10b981;
 }
 
-.health-text {
+/* Emerald */
+.health-bar-fill.monster {
+    background-color: #ef4444;
+}
+
+/* Red */
+
+/* Floating Text Overlay & Animations remain same */
+.floating-text-container {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 900;
-    color: white;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: .5;
-    }
-}
-
-@keyframes bounce {
-
-    0%,
-    100% {
-        transform: translateY(-25%);
-        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-    }
-
-    50% {
-        transform: none;
-        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-    }
-}
-
-/* Spirit Bar */
-.spirit-bar-container {
-    width: 100%;
-    height: 20px;
-    /* Taller to accommodate text */
-    background-color: #111827;
-    border: 1px solid #78350f;
-    /* darker brown/orange border */
-    border-radius: 9999px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-    z-index: 20;
-}
-
-.spirit-bar-fill {
-    height: 100%;
-    /* Warm gradient: Amber -> Orange -> Red */
-    background: linear-gradient(90deg, #fcd34d 0%, #f59e0b 50%, #dc2626 100%);
-    box-shadow: 0 0 10px #f59e0b;
-    /* Warm glow */
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.spirit-bar-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: 900;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    text-shadow: 0 0 8px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 0.8);
     pointer-events: none;
-    z-index: 10;
-    font-family: var(--font-display, sans-serif);
+    z-index: 50;
 }
 
-/* Sparkle/Shimmer Effect */
-.spirit-bar-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.4) 50%,
-            transparent 100%);
-    transform: translateX(-100%);
-    animation: spirit-shimmer 2s infinite linear;
-}
-
-@keyframes spirit-shimmer {
-    0% {
-        transform: translateX(-100%);
-    }
-
-    100% {
-        transform: translateX(100%);
-    }
-}
-
-.ultimate-ready-overlay {
-    animation: pulse-overlay 2s infinite;
-}
-
-@keyframes pulse-overlay {
+@keyframes pulse-border {
 
     0%,
     100% {
-        opacity: 1;
+        border-color: #f59e0b;
+        box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
     }
 
     50% {
-        opacity: 0.8;
+        border-color: #fbbf24;
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
     }
 }
 
-/* 3D Flip Logic */
+/* Math Card Face (Back) - Kept mostly same but ensured unified height */
+.unit-card-face.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 1.3rem;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 3px solid #334155;
+}
+
+/* Ensure math styling from previous file is preserved if needed, or simplifed here */
+.math-title {
+    color: #38bdf8;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+    width: 100%;
+    text-align: center;
+}
+
+.math-problem-display {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    font-family: monospace;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.math-choices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.math-choice-btn {
+    padding: 0.5rem;
+    background: #334155;
+    border: none;
+    border-radius: 0.25rem;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.math-choice-btn.correct {
+    background-color: #16a34a;
+}
+
+.math-choice-btn.wrong {
+    background-color: #dc2626;
+}
+
+/* Keep flip logic */
 .unit-card {
-    /* Existing Props: transition: all 0.3s ease; */
-    /* Update transition to handle transform smoothly for flip */
-    transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1), box-shadow 0.3s;
     transform-style: preserve-3d;
 }
 
@@ -435,186 +333,103 @@
     transform: rotateY(180deg);
 }
 
-.unit-card-front,
-.unit-card-face.back {
+.unit-card-front {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 1.2rem;
-    /* match card radius slightly smaller due to border */
-    overflow: hidden;
-}
-
-.unit-card-front {
-    /* Re-establish context for children */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #1f2937;
     z-index: 2;
+    border-radius: 1.3rem;
+    overflow: hidden;
+    background-color: #1f2937;
 }
 
-.unit-card-face.back {
-    transform: rotateY(180deg);
-
-    /* Math Card Styling */
-    /* Premium Dark Gradient */
-    background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+/* Top Stats - integrated into header area visually if needed, or kept floating */
+.unit-stats-top {
+    position: absolute;
+    top: 3.5rem;
+    /* Below the name header */
+    left: 0;
+    right: 0;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.shield-badge {
+    background: #2563eb;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    /* Better vertical filling */
-    padding: 1rem 0.75rem;
-    z-index: 1;
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
-    border: 3px solid #334155;
-    height: 100%;
-
-    .math-title {
-        color: #38bdf8;
-        /* Sky-400 */
-        font-size: 1.1rem;
-        font-weight: 800;
-        margin: 0;
-        text-transform: uppercase;
-        text-align: center;
-        text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-        font-family: var(--font-display, sans-serif);
-        letter-spacing: 0.05em;
-        width: 100%;
-        /* Add border bottom */
-        border-bottom: 2px solid rgba(56, 189, 248, 0.3);
-        padding-bottom: 0.5rem;
-    }
-
-    .math-problem-display {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        background-color: rgba(0, 0, 0, 0.6);
-        padding: 0.75rem 1rem;
-        border-radius: 1rem;
-        border: 1px solid #475569;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0.5rem 0;
-    }
-
-    .math-problem-display span {
-        font-size: 1.4rem;
-        font-weight: 900;
-        color: white;
-        font-family: monospace;
-    }
-
-    .operator,
-    .equals {
-        color: #facc15;
-    }
-
-    .question-mark {
-        color: #facc15;
-        animation: pulse 1s infinite;
-    }
-
-    .math-choices-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.75rem;
-        width: 100%;
-        flex: 1;
-        /* Allow grid to expand/center nicely if needed, but fixed height buttons are safer */
-        max-height: 140px;
-        /* Constrain grid height */
-    }
-
-    .math-choice-btn {
-        background-color: #1e293b;
-        border: 2px solid #475569;
-        color: #e2e8f0;
-        padding: 0;
-        font-size: 1.25rem;
-        font-weight: bold;
-        border-radius: 0.75rem;
-        cursor: pointer;
-        transition: all 0.2s;
-        box-shadow: 0 4px 0 #0f172a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .math-choice-btn:hover {
-        border-color: #38bdf8;
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 0 #0f172a;
-    }
-
-    .math-choice-btn:active {
-        transform: translateY(2px);
-        box-shadow: 0 0 0 transparent;
-    }
+    gap: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.math-choice-btn.correct {
-    background-color: #16a34a;
-    /* Green-600 */
-    border-color: #4ade80;
-    color: white;
-    box-shadow: 0 0 15px #4ade80;
+/* Animation Utility Classes */
+.anim-shake-damage {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
 }
 
-.math-choice-btn.wrong {
-    background-color: #dc2626;
-    /* Red-600 */
-    border-color: #fca5a5;
-    color: white;
-    animation: shake 0.3s;
+.anim-lunge-right {
+    animation: lunge-right 0.3s ease-out;
 }
 
-.math-choice-btn.dimmed {
-    opacity: 0.5;
-    cursor: default;
+.anim-lunge-left {
+    animation: lunge-left 0.3s ease-out;
 }
 
 @keyframes shake {
 
-    0%,
-    100% {
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@keyframes lunge-right {
+    0% {
         transform: translateX(0);
     }
 
-    25% {
-        transform: translateX(-5px);
+    50% {
+        transform: translateX(20px);
     }
 
-    75% {
-        transform: translateX(5px);
-    }
-}
-
-/* Ultimate Ready Glow */
-.unit-card.ultimate-ready-glow {
-    box-shadow: 0 0 20px #facc15, 0 0 40px rgba(250, 204, 21, 0.4);
-    border-color: #facc15;
-    animation: ultimate-pulse 2s infinite;
-}
-
-@keyframes ultimate-pulse {
-
-    0%,
     100% {
-        box-shadow: 0 0 20px #facc15, 0 0 40px rgba(250, 204, 21, 0.4);
-        border-color: #facc15;
+        transform: translateX(0);
+    }
+}
+
+@keyframes lunge-left {
+    0% {
+        transform: translateX(0);
     }
 
     50% {
-        box-shadow: 0 0 30px #facc15, 0 0 60px rgba(250, 204, 21, 0.6);
-        border-color: #fde047;
+        transform: translateX(-20px);
+    }
+
+    100% {
+        transform: translateX(0);
     }
 }
