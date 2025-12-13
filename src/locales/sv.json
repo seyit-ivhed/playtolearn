@@ -55,7 +55,12 @@
         "unit_card": {
             "hp": "HP",
             "ability": "Förmåga",
-            "shield": "Sköld"
+            "shield": "Sköld",
+            "ultimate_ready": "ULTIMAT REDO!"
+        },
+        "turn": {
+            "player": "Din Tur",
+            "enemy": "Fiendens Tur"
         }
     },
     "rewards": {
@@ -167,9 +172,27 @@
         }
     },
     "monsters": {
-        "goblin_scout": "Goblinspanare",
-        "stone_golem": "Stengolem",
-        "dark_sorcerer": "Mörk Trollkarl"
+        "goblin_scout": {
+            "name": "Goblinspanare"
+        },
+        "goblin_scout_weak": {
+            "name": "Goblinspanare"
+        },
+        "goblin_scout_normal_1": {
+            "name": "Arg Goblin"
+        },
+        "goblin_scout_normal_2": {
+            "name": "Lömsk Goblin"
+        },
+        "goblin_chief": {
+            "name": "Goblinhövding"
+        },
+        "stone_golem": {
+            "name": "Stengolem"
+        },
+        "dark_sorcerer": {
+            "name": "Mörk Trollkarl"
+        }
     },
     "adventures": {
         "1": {

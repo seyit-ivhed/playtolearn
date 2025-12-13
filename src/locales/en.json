@@ -55,7 +55,12 @@
         "unit_card": {
             "hp": "HP",
             "ability": "Ability",
-            "shield": "Shield"
+            "shield": "Shield",
+            "ultimate_ready": "ULTIMATE READY!"
+        },
+        "turn": {
+            "player": "Your Turn",
+            "enemy": "Enemy Turn"
         }
     },
     "rewards": {
@@ -167,9 +172,27 @@
         }
     },
     "monsters": {
-        "goblin_scout": "Goblin Scout",
-        "stone_golem": "Stone Golem",
-        "dark_sorcerer": "Dark Sorcerer"
+        "goblin_scout": {
+            "name": "Goblin Scout"
+        },
+        "goblin_scout_weak": {
+            "name": "Goblin Scout"
+        },
+        "goblin_scout_normal_1": {
+            "name": "Angry Goblin"
+        },
+        "goblin_scout_normal_2": {
+            "name": "Sneaky Goblin"
+        },
+        "goblin_chief": {
+            "name": "Goblin Chief"
+        },
+        "stone_golem": {
+            "name": "Stone Golem"
+        },
+        "dark_sorcerer": {
+            "name": "Dark Sorcerer"
+        }
     },
     "adventures": {
         "1": {
