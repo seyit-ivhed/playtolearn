@@ -1,0 +1,162 @@
+/* Full Screen Overlay Container */
+.vfx-overlay-container {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    /* Allow clicks to pass through if needed, though this blocks main UI visual */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* --- Village Squire: Protective Stance --- */
+.vfx-shield-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vfx-shield-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 10px solid #fcd34d;
+    /* Amber-300 */
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, rgba(245, 158, 11, 0.1) 70%, transparent 100%);
+    box-shadow: 0 0 50px #f59e0b, inset 0 0 30px #fcd34d;
+    opacity: 0;
+    transform: scale(0.1);
+    animation: shield-expand 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.vfx-shield-pulse {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(251, 191, 36, 0.2);
+    animation: shield-pulse-fade 1s ease-out forwards;
+}
+
+@keyframes shield-expand {
+    0% {
+        opacity: 0;
+        transform: scale(0.1);
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    60% {
+        transform: scale(1.5);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(3);
+        /* Expand off screen */
+        opacity: 0;
+    }
+}
+
+@keyframes shield-pulse-fade {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* --- Novice Archer: Piercing Shot --- */
+.vfx-arrow-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* A fast streak across the screen */
+.vfx-arrow-streak {
+    position: absolute;
+    top: 50%;
+    left: -100px;
+    width: 200px;
+    /* Length of tail */
+    height: 6px;
+    background: linear-gradient(90deg, transparent, #fff, #38bdf8);
+    box-shadow: 0 0 20px #bae6fd, 0 0 10px #fff;
+    transform: translateY(-50%) rotate(-5deg);
+    /* Slight angle */
+    animation: arrow-fly 0.6s cubic-bezier(0.1, 0.7, 1.0, 0.1) forwards;
+}
+
+.vfx-impact-flash {
+    position: absolute;
+    inset: 0;
+    background-color: white;
+    opacity: 0;
+    animation: flash-white 0.8s ease-out 0.4s forwards;
+    /* Trigger after arrow flies half way */
+}
+
+@keyframes arrow-fly {
+    0% {
+        left: -200px;
+        opacity: 1;
+    }
+
+    100% {
+        left: 120vw;
+        opacity: 0;
+    }
+}
+
+@keyframes flash-white {
+    0% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Shake Effect helper for the app container if needed, 
+   but we can also just shake the battlefield in JS/Css via class */
+.screen-shake-anim {
+    animation: screen-shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes screen-shake {
+
+    10%,
+    90% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(6px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-8px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(8px, 0, 0);
+    }
+}
