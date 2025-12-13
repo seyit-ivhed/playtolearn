@@ -382,40 +382,34 @@
     /* Ensure it hides when card flips */
     pointer-events: none;
     /* Let clicks pass through to card */
-}
-
-.shield-icon-bg {
-    width: 2rem;
-    height: 2.4rem;
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    /* Dark blue to blue */
-    /* Shield shape */
-    clip-path: polygon(50% 0, 100% 20%, 100% 75%, 50% 100%, 0 75%, 0 20%);
+    width: 1.65rem;
+    /* ~75% of 2.2rem */
+    height: 1.95rem;
+    /* ~75% of 2.6rem */
     display: flex;
     align-items: center;
     justify-content: center;
-    border-top: 2px solid rgba(255, 255, 255, 0.5);
-    /* Faux border via shadow/top styling if needed, keeping simple */
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* 
-   Note: clip-path cuts off borders (border property won't follow the shape). 
-   To add a visible white border, we can use a wrapper or a pseudo-element. 
-   For now, the clean "vector" look without a thick stroke is closest to the prompt, 
-   but let's add a subtle inner highlight.
-*/
+.shield-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4));
+}
 
 .shield-amount-text {
     color: #fff;
     font-family: var(--font-display, sans-serif);
     font-weight: 800;
-    font-size: 0.9rem;
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);
+    font-size: 0.7rem;
+    /* Reduced from 0.9rem */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
     position: relative;
-    top: -1px;
-    /* Optical adjustment */
     z-index: 2;
+    top: -2px;
+    /* Optical center adjustment due to pointed bottom */
 }
 
 /* Animation Utility Classes */
