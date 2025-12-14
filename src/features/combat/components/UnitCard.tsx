@@ -268,7 +268,7 @@ export const UnitCard = ({
                 mathProblem && onMathAnswer && (
                     <MathCardFace
                         problem={mathProblem}
-                        abilityName={companionData?.specialAbility?.name || 'MIGHTY BLOW'}
+                        abilityName={companionData?.specialAbility ? t(`companions.${unit.templateId}.special_ability_name`, companionData.specialAbility.name) : 'MIGHTY BLOW'}
                         onAnswer={onMathAnswer}
                     />
                 )

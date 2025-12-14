@@ -32,7 +32,8 @@
         },
         "math": {
             "title": "Lös för att Agera!",
-            "recharge_prompt": "Ladda"
+            "recharge_prompt": "Ladda",
+            "remainder": "rest"
         },
         "encounter": {
             "victory_alert": "Seger! Återvänder till Kartan...",

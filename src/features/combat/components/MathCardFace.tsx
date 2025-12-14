@@ -1,5 +1,5 @@
 import type { MathProblem } from '../../../types/math.types';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
 interface MathCardFaceProps {
@@ -9,7 +9,7 @@ interface MathCardFaceProps {
 }
 
 export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFaceProps) => {
-    // const { t } = useTranslation();
+    const { t } = useTranslation();
     const [selected, setSelected] = useState<number | string | null>(null);
 
     const handleAnswer = (choice: number | string) => {
@@ -46,7 +46,7 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
             return (
                 <span>
                     {match[1]}
-                    <span className="math-remainder-text">remainder</span>
+                    <span className="math-remainder-text">{t('math.remainder')}</span>
                     {match[2]}
                 </span>
             );

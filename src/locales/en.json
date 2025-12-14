@@ -32,7 +32,8 @@
         },
         "math": {
             "title": "Solve to Act!",
-            "recharge_prompt": "Recharge"
+            "recharge_prompt": "Recharge",
+            "remainder": "remainder"
         },
         "encounter": {
             "victory_alert": "Victoria! Returning to Map...",
