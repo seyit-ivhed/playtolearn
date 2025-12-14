@@ -37,6 +37,23 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
         'DIVIDE': '÷'
     } as const;
 
+    const formatAnswer = (answer: number | string) => {
+        if (typeof answer !== 'string') return answer;
+
+        // Parse "Q R r" format
+        const match = answer.match(/^(\d+)\s*R\s*(\d+)$/);
+        if (match) {
+            return (
+                <span>
+                    {match[1]}
+                    <span className="math-remainder-text">remainder</span>
+                    {match[2]}
+                </span>
+            );
+        }
+        return answer;
+    };
+
     return (
         <div className="unit-card-face back">
             <h3 className="math-title">{abilityName}</h3>
@@ -56,7 +73,7 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
                         className={getBtnClass(choice)}
                         onClick={(e) => { e.stopPropagation(); handleAnswer(choice); }}
                     >
-                        {choice}
+                        {formatAnswer(choice)}
                     </button>
                 ))}
             </div>
