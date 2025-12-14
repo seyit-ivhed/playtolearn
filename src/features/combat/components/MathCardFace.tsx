@@ -55,7 +55,10 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
     };
 
     return (
-        <div className="unit-card-face back">
+        <div
+            className="unit-card-face back"
+            onClick={(e) => e.stopPropagation()}
+        >
             <h3 className="math-title">{abilityName}</h3>
 
             <div className="math-problem-display">
