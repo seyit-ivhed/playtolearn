@@ -10,7 +10,7 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
             return {
                 id: `party_${id}_${index}`,
                 templateId: id,
-                name: data.name,
+                name: id,
                 isPlayer: true,
                 maxHealth: data.maxHealth,
                 currentHealth: data.maxHealth,

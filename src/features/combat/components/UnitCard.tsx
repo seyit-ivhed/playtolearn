@@ -47,7 +47,7 @@ export const UnitCard = ({
     // Localized Name
     const displayName = isMonster
         ? t(`monsters.${unit.templateId}.name`, unit.name)
-        : t(`companions.${unit.templateId}.name`, companionData?.name || unit.name);
+        : t(`companions.${unit.templateId}.name`, unit.name);
 
     // Animation States
     const [animationClass, setAnimationClass] = useState('');
@@ -199,13 +199,13 @@ export const UnitCard = ({
                         <AbilityCard
                             abilityName={
                                 isUltimateReady && companionData.specialAbility
-                                    ? t(`companions.${unit.templateId}.special_ability_name`, companionData.specialAbility.name)
-                                    : t(`companions.${unit.templateId}.ability_name`, companionData.abilityName)
+                                    ? t(`companions.${unit.templateId}.special_ability_name`)
+                                    : t(`companions.${unit.templateId}.ability_name`)
                             }
                             abilityDescription={
                                 isUltimateReady && companionData.specialAbility
-                                    ? t(`companions.${unit.templateId}.special_ability_description`, companionData.specialAbility.description)
-                                    : t(`companions.${unit.templateId}.ability_description`, companionData.abilityDescription)
+                                    ? t(`companions.${unit.templateId}.special_ability_description`)
+                                    : t(`companions.${unit.templateId}.ability_description`)
                             }
                             progress={unit.currentSpirit}
                             isUltimateReady={isUltimateReady}
@@ -268,14 +268,14 @@ export const UnitCard = ({
                 mathProblem && onMathAnswer && (
                     <MathCardFace
                         problem={mathProblem}
-                        abilityName={companionData?.specialAbility ? t(`companions.${unit.templateId}.special_ability_name`, companionData.specialAbility.name) : 'MIGHTY BLOW'}
+                        abilityName={companionData?.specialAbility ? t(`companions.${unit.templateId}.special_ability_name`) : 'MIGHTY BLOW'}
                         onAnswer={onMathAnswer}
                     />
                 )
             }
 
             {/* Ultimate Visual Effects Overlays */}
-            {!isMonster && activeVisualEffect && (activeVisualEffect.includes('Protective Stance') || activeVisualEffect.includes('Village Squire')) && (
+            {!isMonster && activeVisualEffect && (activeVisualEffect.includes('protective_stance') || activeVisualEffect.includes('village_squire')) && (
                 <div className="vfx-large-shield-container">
                     <svg className="vfx-large-shield-svg" viewBox="0 0 24 34" preserveAspectRatio="none">
                         {/* Reuse same geometry but with glowy styles */}

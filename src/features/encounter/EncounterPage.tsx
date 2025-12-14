@@ -87,7 +87,7 @@ const EncounterPage = () => {
             const companion = unit ? getCompanionById(unit.templateId) : null;
 
             // Determine Effect Type based on ability name or ID
-            const effectName = companion?.specialAbility?.name || 'Generic';
+            const effectName = companion?.specialAbility?.id || 'Generic';
 
             // Close spotlight/math modal immediately to show full screen VFX
             setActiveChallenge(null);
@@ -137,8 +137,8 @@ const EncounterPage = () => {
             {/* VFX Overlay - GLOBAL (Disable for Protective Stance as it's now per-card) */}
             {
                 activeVFX &&
-                !activeVFX.type.includes('Protective Stance') &&
-                !activeVFX.type.includes('Village Squire') && (
+                !activeVFX.type.includes('protective_stance') &&
+                !activeVFX.type.includes('village_squire') && (
                     <VisualEffectOverlay
                         effectType={activeVFX.type}
                         onComplete={handleVFXComplete}
@@ -148,7 +148,7 @@ const EncounterPage = () => {
 
             {/* Logic for Per-Card VFX timer (since VisualEffectOverlay handles timer usually) */}
             {/* We need a hidden timer or effect handler if the global overlay isn't rendered */}
-            {activeVFX && (activeVFX.type.includes('Protective Stance') || activeVFX.type.includes('Village Squire')) && (
+            {activeVFX && (activeVFX.type.includes('protective_stance') || activeVFX.type.includes('village_squire')) && (
                 <VisualEffectOverlay
                     effectType="HIDDEN_TIMER_ONLY" // Hacky: Just use it to run the timer? Or better, implement a side-effect here.
                     onComplete={handleVFXComplete}
