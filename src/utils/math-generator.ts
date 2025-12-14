@@ -23,7 +23,7 @@ const CONFIG: MathEngineConfig = {
     level2: {
         addition: { min: 5, max: 20 },
         subtraction: { min: 1, max: 20 },
-        multiplication: { min: 0, max: 4 }, // Per user request
+        multiplication: { min: 0, max: 4 },
         division: { divisorMax: 0 }, // Disabled
     },
     level3: {
@@ -35,7 +35,7 @@ const CONFIG: MathEngineConfig = {
     level4: {
         addition: { min: 50, max: 100 },
         subtraction: { min: 20, max: 100 },
-        multiplication: { min: 4, max: 12 },
+        multiplication: { min: 4, max: 10 },
         division: { divisorMax: 5 },
     },
     level5: {
