@@ -66,6 +66,8 @@ const EncounterPage = () => {
 
             // Start flip animation shortly after open
             setTimeout(() => {
+                // Reset Spirit Meter just before flip so user doesn't see it reset later
+                useCombatStore.getState().consumeSpirit(unitId);
                 setActiveChallenge(prev => prev ? { ...prev, isFlipped: true } : null);
             }, 2000);
 

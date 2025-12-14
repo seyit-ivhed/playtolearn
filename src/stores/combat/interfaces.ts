@@ -11,6 +11,7 @@ export interface PlayerActionsSlice {
     selectUnit: (unitId: string | null) => void;
     performAction: (unitId: string, options?: { isCritical?: boolean }) => void;
     resolveSpecialAttack: (unitId: string, success: boolean) => void;
+    consumeSpirit: (unitId: string) => void;
 }
 
 export interface CombatStore extends CombatState, CombatFlowSlice, PlayerActionsSlice { }

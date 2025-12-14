@@ -187,6 +187,7 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
             }
 
             // Consume Charge (Reset to 0) AND Mark as Acted
+            // Ensure spirit is 0 (it might have been reset earlier, but force it here too for consistency)
             newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0, hasActed: true };
 
             set({
@@ -218,5 +219,15 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
                 combatLog: [...get().combatLog, `${unit.name}'s ability FAILED! Charge lost.`]
             });
         }
+    },
+
+    consumeSpirit: (unitId) => {
+        const { party } = get();
+        const unitIndex = party.findIndex(u => u.id === unitId);
+        if (unitIndex === -1) return;
+
+        const newParty = [...party];
+        newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
+        set({ party: newParty });
     }
 });
