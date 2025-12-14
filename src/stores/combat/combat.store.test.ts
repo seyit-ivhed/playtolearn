@@ -142,4 +142,29 @@ describe('CombatStore', () => {
         // Charge reset
         expect(state.party[0].currentSpirit).toBe(0);
     });
+
+    it('should complete turn after special attack', () => {
+        const partyIds = ['warrior_1', 'guardian_1'];
+        const enemies: any[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 100, attack: 5 }];
+        useCombatStore.getState().initializeCombat(partyIds, enemies);
+
+        const warriorId = useCombatStore.getState().party[0].id;
+        const guardianId = useCombatStore.getState().party[1].id;
+
+        // Warrior uses Special Ability
+        useCombatStore.getState().resolveSpecialAttack(warriorId, true);
+
+        let state = useCombatStore.getState();
+        expect(state.party[0].hasActed).toBe(true);
+        expect(state.phase).toBe(CombatPhase.PLAYER_TURN); // Still player turn as Guardian hasn't acted
+
+        // Guardian uses Special Ability
+        useCombatStore.getState().resolveSpecialAttack(guardianId, true);
+
+        state = useCombatStore.getState();
+        expect(state.party[1].hasActed).toBe(true);
+        // Should have triggered endPlayerTurn, switching phase to MONSTER_TURN
+        expect(state.phase).toBe(CombatPhase.MONSTER_TURN);
+    });
 });
+

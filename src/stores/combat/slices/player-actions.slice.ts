@@ -186,8 +186,8 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
                 logs.push(`Dealt ${ability.value} damage x${hits}!`);
             }
 
-            // Consume Charge (Reset to 0)
-            newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
+            // Consume Charge (Reset to 0) AND Mark as Acted
+            newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0, hasActed: true };
 
             set({
                 monsters: newMonsters,
@@ -201,6 +201,13 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
                 setTimeout(() => {
                     set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
                 }, 1500);
+                return;
+            }
+
+            // Check End Turn Condition (All living party members acted)
+            const allActed = newParty.every(p => p.isDead || p.hasActed);
+            if (allActed) {
+                get().endPlayerTurn();
             }
 
         } else {
