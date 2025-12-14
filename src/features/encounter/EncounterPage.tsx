@@ -41,8 +41,11 @@ const EncounterPage = () => {
         unitId: string;
     } | null>(null);
 
+    // Check if combat is effectively over (all monsters dead)
+    const isCombatOver = monsters.every(m => m.isDead);
+
     const handleUnitAction = (unitId: string) => {
-        if (phase !== CombatPhase.PLAYER_TURN) return;
+        if (phase !== CombatPhase.PLAYER_TURN || isCombatOver) return;
 
         const unit = party.find(u => u.id === unitId);
         if (!unit) return;
@@ -170,6 +173,7 @@ const EncounterPage = () => {
                                     phase={phase}
                                     onAct={() => handleUnitAction(unit.id)}
                                     activeVisualEffect={activeVFX?.type}
+                                    disableInteraction={isCombatOver}
                                 />
                             </div>
                         ))}

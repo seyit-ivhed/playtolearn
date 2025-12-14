@@ -94,7 +94,10 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
 
         // Check Victory
         if (get().monsters.every(m => m.isDead)) {
-            set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
+            // Delay victory to allow animations to finish
+            setTimeout(() => {
+                set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
+            }, 1500);
             return;
         }
 
@@ -194,7 +197,10 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
 
             // Check Victory
             if (newMonsters.every(m => m.isDead)) {
-                set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
+                // Delay victory to allow animations to finish
+                setTimeout(() => {
+                    set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
+                }, 1500);
             }
 
         } else {
