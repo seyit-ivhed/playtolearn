@@ -59,7 +59,7 @@ describe('CombatStore', () => {
         expect(state.phase).toBe(CombatPhase.PLAYER_TURN);
         expect(state.party).toHaveLength(2);
         expect(state.monsters).toHaveLength(1);
-        expect(state.party[0].name).toBe('Warrior');
+        expect(state.party[0].name).toBe('warrior_1');
         expect(state.monsters[0].currentHealth).toBe(50);
     });
 
