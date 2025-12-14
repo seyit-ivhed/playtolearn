@@ -8,6 +8,7 @@
     "empty_slot": "Empty Slot",
     "combat_simulation": "Battle",
     "retreat": "Retreat",
+    "remainder_text": "remainder",
     "combat": {
         "action": {
             "attack": "Attack",
@@ -33,7 +34,7 @@
         "math": {
             "title": "Solve to Act!",
             "recharge_prompt": "Recharge",
-            "remainder": "remainder"
+            "submit_answer": "Cast Spell"
         },
         "encounter": {
             "victory_alert": "Victoria! Returning to Map...",
@@ -240,8 +241,5 @@
             "title": "Another Adventure",
             "description": "Placeholder for another adventure."
         }
-    },
-    "math": {
-        "submit_answer": "Cast Spell"
     }
 }

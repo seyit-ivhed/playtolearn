@@ -8,6 +8,7 @@
     "empty_slot": "Tom Plats",
     "combat_simulation": "Strid",
     "retreat": "Reträtt",
+    "remainder_text": "rest",
     "combat": {
         "action": {
             "attack": "Attackera",
@@ -33,7 +34,7 @@
         "math": {
             "title": "Lös för att Agera!",
             "recharge_prompt": "Ladda",
-            "remainder": "rest"
+            "submit_answer": "Kasta Förtrollning"
         },
         "encounter": {
             "victory_alert": "Seger! Återvänder till Kartan...",
@@ -240,8 +241,5 @@
             "title": "Ett Annat Äventyr",
             "description": "Platshållare för ett annat äventyr."
         }
-    },
-    "math": {
-        "submit_answer": "Kasta Förtrollning"
     }
 }

@@ -46,7 +46,7 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
             return (
                 <span>
                     {match[1]}
-                    <span className="math-remainder-text">{t('math.remainder')}</span>
+                    <span className="math-remainder-text">{t('remainder_text')}</span>
                     {match[2]}
                 </span>
             );
