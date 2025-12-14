@@ -49,38 +49,59 @@ export const UnitCard = ({
 
     // Animation States
     const [animationClass, setAnimationClass] = useState('');
-    const [floatingTexts, setFloatingTexts] = useState<{ id: number; text: string; type: 'damage' | 'heal' }[]>([]);
+    const [floatingTexts, setFloatingTexts] = useState<{ id: number; text: string; type: 'damage' | 'heal' | 'shield-damage' }[]>([]);
     const prevHealth = useRef(unit.currentHealth);
+    const prevShield = useRef(unit.currentShield);
     const textIdCounter = useRef(0);
 
-    // Watch for health changes to trigger damage/heal effects
+    // Watch for health and shield changes to trigger damage/heal effects
     useEffect(() => {
-        const diff = unit.currentHealth - prevHealth.current;
-        if (diff !== 0) {
+        // Health Changes
+        const healthDiff = unit.currentHealth - prevHealth.current;
+        if (healthDiff !== 0) {
             // Trigger Shake if damage
-            if (diff < 0) {
+            if (healthDiff < 0) {
                 setAnimationClass('anim-shake-damage');
             }
 
             // Add Floating Text
             const id = textIdCounter.current++;
-            const text = diff > 0 ? `+${diff}` : `${diff}`;
-            const type = diff > 0 ? 'heal' : 'damage';
+            const text = healthDiff > 0 ? `+${healthDiff}` : `${healthDiff}`;
+            const type = healthDiff > 0 ? 'heal' : 'damage';
 
-            setFloatingTexts((prev: { id: number; text: string; type: 'damage' | 'heal' }[]) => [...prev, { id, text, type }]);
+            setFloatingTexts(prev => [...prev, { id, text, type }]);
 
             // Cleanup floating text after animation
             setTimeout(() => {
-                setFloatingTexts((prev: { id: number; text: string; type: 'damage' | 'heal' }[]) => prev.filter((ft: { id: number }) => ft.id !== id));
+                setFloatingTexts((prev) => prev.filter((ft) => ft.id !== id));
             }, 1000);
 
             // Cleanup shake class
-            if (diff < 0) {
+            if (healthDiff < 0) {
                 setTimeout(() => setAnimationClass(''), 500);
             }
         }
         prevHealth.current = unit.currentHealth;
-    }, [unit.currentHealth]);
+
+        // Shield Changes
+        const shieldDiff = unit.currentShield - prevShield.current;
+        if (shieldDiff !== 0) {
+            // Only show if damage (negative diff) - unless we want to show shield gain too?
+            // Request said "if a monster damages the shield"
+            if (shieldDiff < 0) {
+                const id = textIdCounter.current++;
+                const text = `${shieldDiff}`;
+                const type = 'shield-damage';
+
+                setFloatingTexts(prev => [...prev, { id, text, type }]);
+
+                setTimeout(() => {
+                    setFloatingTexts((prev) => prev.filter((ft) => ft.id !== id));
+                }, 1000);
+            }
+        }
+        prevShield.current = unit.currentShield;
+    }, [unit.currentHealth, unit.currentShield]);
 
     // Watch for action to trigger attack animation (Monsters)
     useEffect(() => {

@@ -1,7 +1,7 @@
 interface FloatingText {
     id: number;
     text: string;
-    type: 'damage' | 'heal';
+    type: 'damage' | 'heal' | 'shield-damage';
 }
 
 interface FloatingTextOverlayProps {
