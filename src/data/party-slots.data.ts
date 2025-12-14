@@ -8,13 +8,13 @@ export const PARTY_SLOTS: PartySlot[] = [
     {
         id: 'slot_1',
         name: 'Slot 1',
-        equippedCompanionId: 'companion_fire_knight', // Default starter
+        equippedCompanionId: 'village_squire', // Default starter
         isCombatSlot: true
     },
     {
         id: 'slot_2',
         name: 'Slot 2',
-        equippedCompanionId: 'companion_crystal_guardian', // Default starter
+        equippedCompanionId: 'novice_archer', // Default starter
         isCombatSlot: true
     },
     {

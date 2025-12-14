@@ -15,7 +15,7 @@ export interface InventoryState {
 export const useInventoryStore = create<InventoryState>()(
     persist(
         (set, get) => ({
-            unlockedCompanions: ['companion_fire_knight', 'companion_crystal_guardian'], // Starting companions
+            unlockedCompanions: ['village_squire', 'novice_archer'], // Starting companions
             credits: 0,
 
             unlockCompanion: (companionId) =>
