@@ -173,7 +173,7 @@ const EncounterPage = () => {
                                     phase={phase}
                                     onAct={() => handleUnitAction(unit.id)}
                                     activeVisualEffect={activeVFX?.type}
-                                    disableInteraction={isCombatOver}
+                                    disableInteraction={isCombatOver || !!activeChallenge || !!activeVFX}
                                 />
                             </div>
                         ))}
