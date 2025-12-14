@@ -58,25 +58,37 @@ describe('Math Generator', () => {
     });
 
     describe('Division', () => {
-        it('should generate valid level 5 (Age 10) division problems', () => {
+        it('should generate valid level 5 (Age 10) division problems with remainder', () => {
             const problem = generateProblem(MathOperation.DIVIDE, 5);
 
             expect(problem.difficulty).toBe(5);
-            expect(problem.operand1 % problem.operand2).toBe(0); // No remainder
-            expect(problem.correctAnswer).toBe(problem.operand1 / problem.operand2);
+            // Remainder problems return a string "Q R r"
+            expect(typeof problem.correctAnswer).toBe('string');
+            if (typeof problem.correctAnswer === 'string') {
+                expect(problem.correctAnswer).toMatch(/^\d+\s*R\s*\d+$/);
+                // And dividend is not perfectly divisible by divisor (unless remainder is 0, which we configured to avoid for now but math permits)
+                // Actually our logic forces remainder >= 1
+                expect(problem.operand1 % problem.operand2).not.toBe(0);
+            }
         });
     });
 
     describe('Multiple Choice', () => {
-        it('should generate 4 choices including the correct answer', () => {
+        it('should generate 4 choices for numeric answers', () => {
             const choices = generateMultipleChoices(10);
             expect(choices).toHaveLength(4);
             expect(choices).toContain(10);
         });
 
+        it('should generate 3 choices for string answers', () => {
+            const choices = generateMultipleChoices("3 R 1", 3);
+            expect(choices).toHaveLength(3);
+            expect(choices).toContain("3 R 1");
+        });
+
         it('should generate choices sorted numerically', () => {
             const choices = generateMultipleChoices(10);
-            const sorted = [...choices].sort((a, b) => a - b);
+            const sorted = [...choices].sort((a, b) => (a as number) - (b as number));
             expect(choices).toEqual(sorted);
         });
     });
