@@ -21,6 +21,7 @@ interface UnitCardProps {
     mathProblem?: MathProblem;
     onMathAnswer?: (correct: boolean) => void;
     activeVisualEffect?: string | null;
+    disableInteraction?: boolean;
 }
 
 export const UnitCard = ({
@@ -30,14 +31,15 @@ export const UnitCard = ({
     isFlipped = false,
     mathProblem,
     onMathAnswer,
-    activeVisualEffect
+    activeVisualEffect,
+    disableInteraction = false
 }: UnitCardProps) => {
     const { t } = useTranslation();
     const isMonster = !unit.isPlayer;
 
     // Companion Data
     const companionData = !isMonster ? getCompanionById(unit.templateId) : null;
-    const canAct = !unit.hasActed && !unit.isDead && phase === CombatPhase.PLAYER_TURN;
+    const canAct = !unit.hasActed && !unit.isDead && phase === CombatPhase.PLAYER_TURN && !disableInteraction;
 
     // Ultimate Ready State
     const isUltimateReady = !isMonster && !unit.isDead && unit.currentSpirit >= 100;
