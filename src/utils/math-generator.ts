@@ -36,13 +36,25 @@ const CONFIG: MathEngineConfig = {
         addition: { min: 50, max: 100 },
         subtraction: { min: 20, max: 100 },
         multiplication: { min: 4, max: 10 },
-        division: { divisorMax: 5 },
+        division: {
+            divisorMax: 10,
+            divisorMin: 2,
+            quotientMin: 5,
+            quotientMax: 10,
+            allowRemainder: false
+        },
     },
     level5: {
         addition: { min: 100, max: 600 },
         subtraction: { min: 100, max: 600 },
         multiplication: { min: 6, max: 12 },
-        division: { divisorMax: 6 },
+        division: {
+            divisorMax: 10,
+            divisorMin: 2,
+            quotientMin: 3,
+            quotientMax: 10,
+            allowRemainder: true
+        },
     },
 };
 
@@ -127,6 +139,42 @@ const generateMultiplicationProblem = (difficulty: DifficultyLevel): MathProblem
 const generateDivisionProblem = (difficulty: DifficultyLevel): MathProblem => {
     const settings = getSettings(difficulty).division;
 
+    // Special handling for Division with Remainder if enabled
+    if (settings.allowRemainder) {
+        // Quotient: Anything between 3 to 10 (configurable)
+        const qMin = settings.quotientMin ?? 3;
+        const qMax = settings.quotientMax ?? 10;
+        const quotient = getRandomInt(qMin, qMax);
+
+        // Divisor: Anything between 2 to 10 (configurable)
+        const dMin = settings.divisorMin ?? 2;
+        const dMax = settings.divisorMax; // utilizing existing divisorMax as max
+        const divisor = getRandomInt(dMin, dMax);
+
+        // Remainder: Must be between 1 and divisor - 1
+        // If divisor is 2, remainder can only be 1.
+        // We ensure remainder is non-zero for these "remainder" specific problems.
+        const maxRemainder = divisor - 1;
+
+        // Safety check, though dMin=2 guarantees maxRemainder >= 1
+        let remainder = 1;
+        if (maxRemainder >= 1) {
+            remainder = getRandomInt(1, maxRemainder);
+        }
+
+        // Dividend: Derived
+        const dividend = (quotient * divisor) + remainder;
+
+        return {
+            operand1: dividend,
+            operand2: divisor,
+            operation: MathOperation.DIVIDE,
+            correctAnswer: `${quotient} R ${remainder}`,
+            difficulty,
+            createdAt: new Date(),
+        };
+    }
+
     // To ensure whole number division, we generate a multiplication problem in reverse
     const divisor = getRandomInt(2, settings.divisorMax); // Avoid division by 1 as it's too easy
     const quotient = getRandomInt(2, settings.divisorMax); // The answer
@@ -147,23 +195,66 @@ const generateDivisionProblem = (difficulty: DifficultyLevel): MathProblem => {
  * @param correctAnswer The correct answer to include
  * @param count Total number of choices (default 4)
  */
-export const generateMultipleChoices = (correctAnswer: number, count: number = 4): number[] => {
+/**
+ * Generates multiple choice options including the correct answer
+ * @param correctAnswer The correct answer to include
+ * @param count Total number of choices (default 4)
+ */
+export const generateMultipleChoices = (correctAnswer: number | string, count: number = 4): (number | string)[] => {
+    if (typeof correctAnswer === 'string') {
+        const choices = new Set<string>();
+        choices.add(correctAnswer);
+
+        // Expect format "Q R r"
+        const match = correctAnswer.match(/^(\d+)\s*R\s*(\d+)$/);
+        if (!match) {
+            // Fallback for unexpected string format
+            while (choices.size < count) {
+                choices.add(`${correctAnswer} ${choices.size}`);
+            }
+            return Array.from(choices);
+        }
+
+        const q = parseInt(match[1]);
+        const r = parseInt(match[2]);
+
+        while (choices.size < count) {
+            // Generate wrong answers by varying Q and R
+            const qVar = getRandomInt(-2, 2);
+            const rVar = getRandomInt(-2, 2);
+
+            // Skip no-op
+            if (qVar === 0 && rVar === 0) continue;
+
+            const newQ = Math.abs(q + qVar);
+            const newR = Math.abs(r + rVar); // Keep positive
+
+            const wrongAnswer = `${newQ} R ${newR}`;
+
+            choices.add(wrongAnswer);
+        }
+
+        // Sort strings naturally? or just random? 
+        // Let's sort to keep UI consistent
+        return Array.from(choices).sort();
+    }
+
     const choices = new Set<number>();
-    choices.add(correctAnswer);
+    choices.add(correctAnswer as number);
 
     // Generate plausible wrong answers
     // Strategy: +/- 1, +/- 2, +/- 10, random close numbers
     while (choices.size < count) {
         const variance = getRandomInt(1, 5);
         const direction = Math.random() > 0.5 ? 1 : -1;
-        let wrongAnswer = correctAnswer + (variance * direction);
+        let wrongAnswer = (correctAnswer as number) + (variance * direction);
 
         // Ensure positive answers for this age group (mostly)
         if (wrongAnswer < 0) wrongAnswer = Math.abs(wrongAnswer);
 
         // If we generated the correct answer or a duplicate, try a random offset
         if (choices.has(wrongAnswer)) {
-            wrongAnswer = correctAnswer + getRandomInt(-10, 10);
+            wrongAnswer = (correctAnswer as number) + getRandomInt(-10, 10);
             if (wrongAnswer < 0) wrongAnswer = 0;
         }
 
@@ -214,9 +305,12 @@ export const generateProblem = (
 /**
  * Validates a user's answer
  */
+/**
+ * Validates a user's answer
+ */
 export const validateAnswer = (
-    userAnswer: number,
-    correctAnswer: number
+    userAnswer: number | string,
+    correctAnswer: number | string
 ): ValidationResult => {
     const isCorrect = userAnswer === correctAnswer;
 

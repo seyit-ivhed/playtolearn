@@ -7,7 +7,7 @@ export type InputMode = 'numpad' | 'multiple-choice';
 
 interface MathInputProps {
     problem: MathProblem;
-    onSubmit: (answer: number) => void;
+    onSubmit: (answer: number | string) => void;
     inputMode?: InputMode;
     disabled?: boolean;
 }

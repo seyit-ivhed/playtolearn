@@ -30,7 +30,7 @@ export default function MathChallengeModal({
         return () => clearTimeout(timer);
     }, []);
 
-    const handleSubmit = (userAnswer: number) => {
+    const handleSubmit = (userAnswer: number | string) => {
         const validation = validateAnswer(userAnswer, problem.correctAnswer);
         if (validation.isCorrect) {
             setResult('success');

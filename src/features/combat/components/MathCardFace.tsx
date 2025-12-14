@@ -9,10 +9,10 @@ interface MathCardFaceProps {
 }
 
 export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFaceProps) => {
-    const { t } = useTranslation();
-    const [selected, setSelected] = useState<number | null>(null);
+    // const { t } = useTranslation();
+    const [selected, setSelected] = useState<number | string | null>(null);
 
-    const handleAnswer = (choice: number) => {
+    const handleAnswer = (choice: number | string) => {
         if (selected !== null) return; // Prevent double click
         setSelected(choice);
         const isCorrect = choice === problem.correctAnswer;
@@ -23,7 +23,7 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
         }, 800);
     };
 
-    const getBtnClass = (choice: number) => {
+    const getBtnClass = (choice: number | string) => {
         if (selected === null) return 'math-choice-btn';
         if (choice === problem.correctAnswer) return 'math-choice-btn correct';
         if (choice === selected && choice !== problem.correctAnswer) return 'math-choice-btn wrong';

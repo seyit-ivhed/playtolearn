@@ -19,7 +19,7 @@ interface MathState {
     // Actions
     setDifficulty: (level: DifficultyLevel) => void;
     generateNewProblem: (operation: MathOperation) => void;
-    submitAnswer: (answer: number) => ValidationResult;
+    submitAnswer: (answer: number | string) => ValidationResult;
     reset: () => void;
 }
 
@@ -53,7 +53,7 @@ export const useMathStore = create<MathState>((set, get) => ({
         });
     },
 
-    submitAnswer: (answer: number) => {
+    submitAnswer: (answer: number | string) => {
         const { currentProblem, streak } = get();
 
         if (!currentProblem) {

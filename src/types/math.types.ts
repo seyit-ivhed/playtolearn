@@ -45,10 +45,10 @@ export interface MathProblem {
     operation: MathOperation;
 
     /** The correct answer */
-    correctAnswer: number;
+    correctAnswer: number | string;
 
     /** Optional multiple choice answers (includes correct answer) */
-    choices?: number[];
+    choices?: (number | string)[];
 
     /** Difficulty level of this problem */
     difficulty: DifficultyLevel;
@@ -80,7 +80,17 @@ interface LevelConfig {
     addition: { min: number; max: number };
     subtraction: { min: number; max: number };
     multiplication: { min: number; max: number };
-    division: { divisorMax: number };
+    division: {
+        divisorMax: number;
+        /** Optional: Minimum divisor for remainder problems */
+        divisorMin?: number;
+        /** Optional: Minimum quotient for remainder problems */
+        quotientMin?: number;
+        /** Optional: Maximum quotient for remainder problems */
+        quotientMax?: number;
+        /** Optional: Whether to generate remainder problems */
+        allowRemainder?: boolean;
+    };
 }
 
 /**
@@ -91,10 +101,10 @@ export interface ValidationResult {
     isCorrect: boolean;
 
     /** The user's submitted answer */
-    userAnswer: number;
+    userAnswer: number | string;
 
     /** The correct answer */
-    correctAnswer: number;
+    correctAnswer: number | string;
 
     /** Feedback state */
     feedback: FeedbackState;
