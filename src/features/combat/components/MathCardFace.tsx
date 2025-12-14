@@ -1,5 +1,5 @@
 import type { MathProblem } from '../../../types/math.types';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
 interface MathCardFaceProps {
@@ -66,7 +66,7 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
                 <span className="question-mark">?</span>
             </div>
 
-            <div className="math-choices-grid">
+            <div className={`math-choices-grid ${typeof problem.correctAnswer === 'string' ? 'single-col' : ''}`}>
                 {problem.choices?.map((choice, idx) => (
                     <button
                         key={`${choice}-${idx}`}

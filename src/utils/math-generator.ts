@@ -297,7 +297,9 @@ export const generateProblem = (
     }
 
     // Add multiple choices
-    problem.choices = generateMultipleChoices(problem.correctAnswer);
+    // Reduce choices count to 3 for string answers (text is long, so we use 1-col layout)
+    const choiceCount = typeof problem.correctAnswer === 'string' ? 3 : 4;
+    problem.choices = generateMultipleChoices(problem.correctAnswer, choiceCount);
 
     return problem;
 };
