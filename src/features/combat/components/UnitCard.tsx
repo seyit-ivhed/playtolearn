@@ -49,6 +49,7 @@ export const UnitCard = ({
 
     // Animation States
     const [animationClass, setAnimationClass] = useState('');
+    const [shieldAnimClass, setShieldAnimClass] = useState('');
     const [floatingTexts, setFloatingTexts] = useState<{ id: number; text: string; type: 'damage' | 'heal' | 'shield-damage' }[]>([]);
     const prevHealth = useRef(unit.currentHealth);
     const prevShield = useRef(unit.currentShield);
@@ -94,6 +95,10 @@ export const UnitCard = ({
                 const type = 'shield-damage';
 
                 setFloatingTexts(prev => [...prev, { id, text, type }]);
+
+                // Trigger Shield Absorb Animation
+                setShieldAnimClass('shield-absorb-anim');
+                setTimeout(() => setShieldAnimClass(''), 500);
 
                 setTimeout(() => {
                     setFloatingTexts((prev) => prev.filter((ft) => ft.id !== id));
@@ -223,7 +228,7 @@ export const UnitCard = ({
 
             {/* Shield Overlay (Moved outside logic for overflow) */}
             {unit.currentShield > 0 && (
-                <div className="shield-overlay-container">
+                <div className={`shield-overlay-container ${shieldAnimClass}`}>
                     {/* Increased viewBox height to 34 to accommodate stroke and scale without clipping */}
                     <svg className="shield-svg" viewBox="0 0 24 34" preserveAspectRatio="none">
                         {/* 
