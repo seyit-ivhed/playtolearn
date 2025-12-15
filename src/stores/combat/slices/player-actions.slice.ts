@@ -212,12 +212,18 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
             }
 
         } else {
-            // Fail: Drain meter
-            newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
+            // Fail: Drain meter AND Mark as Acted
+            newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0, hasActed: true };
             set({
                 party: newParty,
                 combatLog: [...get().combatLog, `${unit.name}'s ability FAILED! Charge lost.`]
             });
+
+            // Check End Turn Condition (All living party members acted)
+            const allActed = newParty.every(p => p.isDead || p.hasActed);
+            if (allActed) {
+                get().endPlayerTurn();
+            }
         }
     },
 
