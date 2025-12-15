@@ -279,14 +279,29 @@ Each realm contains multiple adventures:
 
 ## 4. User Interface & Experience
 
-### 4.1 Main Hub (Camp / Fellowship Camp)
-- **Party Circle**: View all unlocked companions gathered around the campfire
-- **Party Setup**: Choose which 4 companions to bring on next adventure
-- **Adventure Map**: Select next adventure and see available paths
-- **Realm Map**: Navigate between unlocked realms
-- **Journal**: Stats, badges, progress, companion stories
+### 4.1 The Magical Canvas (Creative Hub)
+- **Concept**: A free-form sticker book/diorama creator where players can express themselves artistically.
+- **My Scenes**: Players can create and save multiple scenes (e.g., "My Epic Battle", "Peaceful Forest").
+- **Asset Collection**: 
+  - **Stickers**: Characters, Monsters, Props, Backgrounds, Effects.
+  - **Unlock Method**: Unlocked by playing Adventures, finding "Hidden Stickers" (loot), and leveling up Companions.
+- **Creative Tools**:
+  - **Free Placement**: Drag, drop, scale, rotate, and layer assets anywhere on the canvas.
+  - **No Gameplay Constraints**: Pure artistic expression (e.g., placing a Goblin on a cloud).
+- **Party Setup**: Accessed via a dedicated menu button, separating utility from creativity.
+- **Adventure Map**: Accessible via the "Portal" icon.
 
-### 4.2 Adventure Interface
+### 4.2 Party Management Interface (The Roster)
+- **Access**: Global button available from the Canvas and Map.
+- **Functionality**:
+  - **Team Selection**: Drag-and-drop interface to choose the 4 active companions.
+  - **Companion Details**: Click any companion to view their "Card" (Stats, Abilities, Lore).
+  - **Growth Visualization**: 
+    - XP bars and "Next Level" previews.
+    - "Evolution" animations play here when a companion levels up.
+  - **Equipment/Skins**: Manage cosmetic skins (e.g., "Winter Fire Knight") unlocked via DLC.
+
+### 4.3 Adventure Interface
 - **Problem Display**: Clear, large text
 - **Answer Input**: Number pad or multiple choice
 - **Progress Bar**: Shows encounter progress within the adventure
@@ -400,3 +415,25 @@ Each realm contains multiple adventures:
 - **Ability Effects**: Visual effects for attacks, shields, healing
 
 ---
+
+## 7. Business Model & Meta Game
+
+### 7.1 "The Chronicles of Realms" (Freemium + DLC)
+- **Core Philosophy**: Honest, high-value content purchases. No ads, no predatory microtransactions for consumables.
+- **Base Game (Free)**:
+    - Includes "The Training Grounds" and "Realm 1: The Whispering Woods".
+    - Full access to "The Magical Canvas" with a starter sticker set.
+    - Full access to core math curriculum (Grades 1-2).
+- **Realm Packs (Paid DLC)**:
+    - **Content**: Unlocks a new Realm (e.g., "The Steam Canyons", "The Crystal Peaks").
+    - **Value**: ~10-15 new Adventures, 2 new Unique Companions, new Monsters, and new Math Mechanics.
+    - **Bonus**: Exclusive themed Sticker Sets for the Magical Canvas.
+
+### 7.2 Engagement Loops
+- **Short Term**: Complete an Adventure -> Earn "Starlight Shards" & Find Hidden Stickers -> Create a new scene in the Canvas.
+- **Mid Term**: Level up Companions -> Unlock "Memory Fragments" (Story Comics) -> Deepen connection to characters.
+- **Long Term**: Complete a Realm -> Defeat Realm Boss -> Unlock next Realm option -> Collect "Boss Trophy" Sticker.
+
+### 7.3 Content Strategy
+- **AI-Assisted Production**: Leveraging AI to generate "filler" content (flavor text, math variations, basic balance curves) allows for a steady stream of content from a small team.
+- **Human-Crafted Quality**: Key art, boss mechanics, and companion personalities are hand-crafted to ensure soul and quality.
