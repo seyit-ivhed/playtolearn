@@ -89,8 +89,7 @@
             "health": "Hälsa",
             "energy": "Energi",
             "attack": "Attack",
-            "defense": "Försvar",
-            "speed": "Hastighet"
+            "defense": "Försvar"
         }
     },
     "companions": {

@@ -89,8 +89,7 @@
             "health": "Health",
             "energy": "Energy",
             "attack": "Attack",
-            "defense": "Defense",
-            "speed": "Speed"
+            "defense": "Defense"
         }
     },
     "companions": {

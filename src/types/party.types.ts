@@ -25,7 +25,7 @@ export interface Companion {
         attack?: number;
         defense?: number;
         health?: number;
-        speed?: number;
+
         energy?: number;
         energyCost?: number;
         maxEnergy?: number; // Max energy for this specific companion in combat
@@ -60,5 +60,5 @@ export interface PartyStats {
     maxEnergy: number;
     attack: number;
     defense: number;
-    speed: number;
+
 }

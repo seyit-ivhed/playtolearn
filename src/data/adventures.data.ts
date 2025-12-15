@@ -21,7 +21,6 @@ export const ADVENTURES: Adventure[] = [
                     maxHealth: 50,
                     attack: 4,
                     defense: 0,
-                    speed: 5
                 }]
             },
             {
@@ -37,7 +36,6 @@ export const ADVENTURES: Adventure[] = [
                         maxHealth: 40,
                         attack: 4,
                         defense: 0,
-                        speed: 6
                     },
                     {
                         id: 'goblin_scout_normal_2',
@@ -46,7 +44,6 @@ export const ADVENTURES: Adventure[] = [
                         maxHealth: 40,
                         attack: 4,
                         defense: 0,
-                        speed: 7
                     }
                 ]
             },
@@ -63,7 +60,6 @@ export const ADVENTURES: Adventure[] = [
                     maxShield: 10,
                     attack: 10,
                     defense: 2,
-                    speed: 4
                 }]
             },
             {

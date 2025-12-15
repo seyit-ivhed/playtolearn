@@ -35,7 +35,7 @@ export interface AdventureMonster {
     maxShield?: number;
     attack: number;
     defense: number;
-    speed: number;
+
     sprite?: string;
     icon?: string;
 }
