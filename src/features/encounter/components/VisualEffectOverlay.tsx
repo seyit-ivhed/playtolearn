@@ -24,13 +24,13 @@ export const VisualEffectOverlay = ({ effectType, onComplete }: VisualEffectOver
         // assuming passed exact special ability name
         const type = effectType.toLowerCase();
 
-        if (type.includes('protective stance') || type.includes('village_squire')) {
+        if (type.includes('protective_stance') || type.includes('protective stance') || type.includes('village_squire')) {
             // Updated: Return null to hide global overlay (handled by per-card VFX now)
             // The useEffect timer still runs to trigger onComplete!
             return null;
         }
 
-        if (type.includes('piercing shot') || type.includes('novice_archer')) {
+        if (type.includes('piercing_shot') || type.includes('piercing shot') || type.includes('novice_archer')) {
             return (
                 <div className="vfx-arrow-container">
                     <div className="vfx-impact-flash" />
