@@ -18,8 +18,8 @@ export const ADVENTURES: Adventure[] = [
                     id: 'goblin_scout_weak',
                     name: 'Goblin Scout',
                     sprite: goblinImg,
-                    maxHealth: 40, // Doubled for extended encounters
-                    attack: 4,     // Reduced for juniors
+                    maxHealth: 50,
+                    attack: 4,
                     defense: 0,
                     speed: 5
                 }]
@@ -32,10 +32,10 @@ export const ADVENTURES: Adventure[] = [
                 enemies: [
                     {
                         id: 'goblin_scout_normal_1',
-                        name: 'Angry Goblin',
+                        name: 'Sneaky Goblin',
                         sprite: goblinImg,
-                        maxHealth: 50,
-                        attack: 5,
+                        maxHealth: 40,
+                        attack: 4,
                         defense: 0,
                         speed: 6
                     },
@@ -58,10 +58,10 @@ export const ADVENTURES: Adventure[] = [
                 enemies: [{
                     id: 'goblin_chief',
                     name: 'Goblin Chief',
-                    sprite: goblinBossImg, // Placeholder path
-                    maxHealth: 80,
+                    sprite: goblinBossImg,
+                    maxHealth: 90,
                     maxShield: 10,
-                    attack: 8,
+                    attack: 10,
                     defense: 2,
                     speed: 4
                 }]
