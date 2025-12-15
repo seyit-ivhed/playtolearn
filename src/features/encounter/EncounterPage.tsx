@@ -134,23 +134,10 @@ const EncounterPage = () => {
             {/* Turn Announcer */}
             <TurnAnnouncer phase={phase} />
 
-            {/* VFX Overlay - GLOBAL (Disable for Protective Stance as it's now per-card) */}
-            {
-                activeVFX &&
-                !activeVFX.type.includes('protective_stance') &&
-                !activeVFX.type.includes('village_squire') && (
-                    <VisualEffectOverlay
-                        effectType={activeVFX.type}
-                        onComplete={handleVFXComplete}
-                    />
-                )
-            }
-
-            {/* Logic for Per-Card VFX timer (since VisualEffectOverlay handles timer usually) */}
-            {/* We need a hidden timer or effect handler if the global overlay isn't rendered */}
-            {activeVFX && (activeVFX.type.includes('protective_stance') || activeVFX.type.includes('village_squire')) && (
+            {/* VFX Overlay - GLOBAL */}
+            {activeVFX && (
                 <VisualEffectOverlay
-                    effectType="HIDDEN_TIMER_ONLY" // Hacky: Just use it to run the timer? Or better, implement a side-effect here.
+                    effectType={activeVFX.type}
                     onComplete={handleVFXComplete}
                 />
             )}
