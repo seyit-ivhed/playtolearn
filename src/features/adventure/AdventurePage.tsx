@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game.store';
 import { useEncounterStore } from '../../stores/encounter.store';
-import '../../styles/pages/AdventurePage.css';
+import './AdventurePage.css';
 
 import { ADVENTURES } from '../../data/adventures.data';
 import { EncounterType } from '../../types/adventure.types';

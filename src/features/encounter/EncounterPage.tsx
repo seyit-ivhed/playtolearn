@@ -15,7 +15,7 @@ import { VisualEffectOverlay } from './components/VisualEffectOverlay';
 import { getCompanionById } from '../../data/companions.data';
 import { TurnAnnouncer } from './components/TurnAnnouncer';
 import styles from './EncounterPage.module.css'; // Use module
-import '../../styles/pages/EncounterPage.css'; // Keep legacy if needed
+import './EncounterPage.css'; // Keep legacy if needed
 
 const EncounterPage = () => {
     const { t } = useTranslation();

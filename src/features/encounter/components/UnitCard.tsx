@@ -1,7 +1,7 @@
 import { type EncounterUnit, EncounterPhase } from '../../../types/encounter.types';
 import { getCompanionById } from '../../../data/companions.data';
-import '../../../styles/components/UnitCard.css';
-import '../../encounter/styles/animations.css';
+import './UnitCard.css';
+import '../encounter-animations.css';
 import { useTranslation } from 'react-i18next';
 import { MathCardFace } from './MathCardFace';
 import type { MathProblem } from '../../../types/math.types';

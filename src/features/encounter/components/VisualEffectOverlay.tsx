@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import './../styles/VisualEffectOverlay.css';
+import './VisualEffectOverlay.css';
 
 interface VisualEffectOverlayProps {
     effectType: string; // 'Protective Stance' | 'Piercing Shot' | etc. (matching updated names roughly or IDs)
