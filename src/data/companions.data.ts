@@ -8,10 +8,10 @@ export type CompanionRole = typeof CompanionRole[keyof typeof CompanionRole];
 
 export interface SpecialAbility {
     id: string; // Used for translation key and VFX lookup
-    type: 'DAMAGE' | 'HEAL' | 'SHIELD' | 'MULTI_HIT';
+    type: 'DAMAGE' | 'SHIELD';
     value: number;
     target: 'SINGLE_ENEMY' | 'ALL_ENEMIES' | 'SINGLE_ALLY' | 'ALL_ALLIES' | 'SELF' | 'RANDOM_ENEMY';
-    count?: number; // For multi-hit
+
 }
 
 export interface CompanionStats {

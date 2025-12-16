@@ -30,9 +30,10 @@ vi.mock('../../../data/companions.data', () => ({
                 name: 'Support',
                 role: 'SUPPORT',
                 stats: { abilityHeal: 15 },
-                specialAbility: { id: 'special_heal', type: 'HEAL', value: 20, target: 'ALL_ALLIES' }
+                specialAbility: { id: 'special_heal', type: 'SHIELD', value: 20, target: 'ALL_ALLIES' }
             };
         }
+
         if (id === 'aoe_dmg_id') {
             return {
                 id,
@@ -42,15 +43,7 @@ vi.mock('../../../data/companions.data', () => ({
                 specialAbility: { id: 'meteor', type: 'DAMAGE', value: 10, target: 'ALL_ENEMIES' }
             };
         }
-        if (id === 'multi_hit_id') {
-            return {
-                id,
-                name: 'Rogue',
-                role: 'WARRIOR',
-                stats: { abilityDamage: 10 },
-                specialAbility: { id: 'flurry', type: 'MULTI_HIT', value: 5, count: 3, target: 'RANDOM_ENEMY' }
-            };
-        }
+
         return {
             id,
             role: 'WARRIOR',
@@ -155,34 +148,9 @@ describe('Player Actions Slice', () => {
             expect(state.party[1].currentShield).toBe(25); // 10 + 15
         });
 
-        it('should apply AOE heal', () => {
-            const support = { id: 'u1', templateId: 'support_id', name: 'Support', hasActed: false, currentSpirit: 100, maxHealth: 100, currentHealth: 50, isDead: false };
-            const ally = { id: 'u2', templateId: 'warrior_id', name: 'Ally', hasActed: false, maxHealth: 100, currentHealth: 50, isDead: false };
 
-            useEncounterStore.setState({ party: [support, ally], monsters: [] });
 
-            useEncounterStore.getState().resolveSpecialAttack('u1', true);
 
-            const state = useEncounterStore.getState();
-            expect(state.party[0].currentHealth).toBe(70); // 50 + 20
-            expect(state.party[1].currentHealth).toBe(70); // 50 + 20
-        });
-
-        it('should perform multi-hit attack', () => {
-            const rogue = { id: 'u1', templateId: 'multi_hit_id', name: 'Rogue', hasActed: false, currentSpirit: 100, maxHealth: 100, currentHealth: 100, isDead: false };
-            const m1 = { id: 'm1', name: 'G1', currentHealth: 100, maxHealth: 100, isDead: false };
-
-            useEncounterStore.setState({ party: [rogue], monsters: [m1] });
-
-            // Mock random to always hit m1
-            vi.spyOn(Math, 'random').mockReturnValue(0);
-
-            useEncounterStore.getState().resolveSpecialAttack('u1', true);
-
-            const state = useEncounterStore.getState();
-            // 3 hits of 5 damage = 15 damage
-            expect(state.monsters[0].currentHealth).toBe(85);
-        });
 
         it('should handle failure (drain spirit, end turn)', () => {
             const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, currentSpirit: 100, maxHealth: 100, currentHealth: 100, isDead: false };

@@ -8,9 +8,7 @@ import { performGuardianAction } from '../actions/standard/guardian.action';
 import { performSupportAction } from '../actions/standard/support.action';
 
 import { executeDamageAbility } from '../actions/special/damage.ability';
-import { executeHealAbility } from '../actions/special/heal.ability';
 import { executeShieldAbility } from '../actions/special/shield.ability';
-import { executeMultiHitAbility } from '../actions/special/multi-hit.ability';
 
 export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => ({
     selectUnit: (unitId) => set({ selectedUnitId: unitId }),
@@ -89,12 +87,8 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
             let abilityLogs: string[] = [];
             if (ability.type === 'DAMAGE') {
                 abilityLogs = executeDamageAbility(get, set, unitId, ability);
-            } else if (ability.type === 'HEAL') {
-                abilityLogs = executeHealAbility(get, set, unitId, ability);
             } else if (ability.type === 'SHIELD') {
                 abilityLogs = executeShieldAbility(get, set, unitId, ability);
-            } else if (ability.type === 'MULTI_HIT') {
-                abilityLogs = executeMultiHitAbility(get, set, unitId, ability);
             }
             logs = [...logs, ...abilityLogs];
 
