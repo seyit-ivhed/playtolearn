@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useGameStore } from '../../stores/game.store';
-import { DifficultySelector } from '../../components/DifficultySelector';
+
 import { getCompanionById } from '../../data/companions.data';
 import styles from './CampPage.module.css';
 
@@ -95,9 +95,7 @@ const CampPage = () => {
                         })}
                     </div>
 
-                    <div style={{ marginTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-                        <DifficultySelector />
-                    </div>
+
                 </section>
             </div>
         </div>
