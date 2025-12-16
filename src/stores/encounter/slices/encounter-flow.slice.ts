@@ -1,16 +1,16 @@
 import type { StateCreator } from 'zustand';
-import type { CombatStore, CombatFlowSlice } from '../interfaces';
-import { CombatPhase, type CombatUnit } from '../../../types/combat.types';
+import type { EncounterStore, EncounterFlowSlice } from '../interfaces';
+import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.types';
 import { getCompanionById } from '../../../data/companions.data';
 
-export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlowSlice> = (set, get) => ({
-    initializeCombat: (partyIds, enemies) => {
-        const party: CombatUnit[] = partyIds.map((id, index) => {
+export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
+    initializeEncounter: (partyIds, enemies) => {
+        const party: EncounterUnit[] = partyIds.map((id, index) => {
             const data = getCompanionById(id);
             return {
                 id: `party_${id}_${index}`,
                 templateId: id,
-                name: id,
+                name: data.name,
                 isPlayer: true,
                 maxHealth: data.maxHealth,
                 currentHealth: data.maxHealth,
@@ -25,7 +25,7 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
             };
         });
 
-        const monsters: CombatUnit[] = enemies.map((enemy, index) => {
+        const monsters: EncounterUnit[] = enemies.map((enemy, index) => {
             return {
                 id: `monster_${enemy.id}_${index}`,
                 templateId: enemy.id,
@@ -48,12 +48,12 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
         });
 
         set({
-            phase: CombatPhase.PLAYER_TURN,
+            phase: EncounterPhase.PLAYER_TURN,
             turnCount: 1,
             party,
             monsters,
             selectedUnitId: null,
-            combatLog: ['Combat Started!']
+            encounterLog: ['Encounter Started!']
         });
     },
 
@@ -63,7 +63,7 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
         const newMonsters = monsters.map(m => ({ ...m, hasActed: false }));
 
         set({
-            phase: CombatPhase.MONSTER_TURN,
+            phase: EncounterPhase.MONSTER_TURN,
             monsters: newMonsters
         });
 
@@ -100,13 +100,13 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
                     set(state => ({
                         party: newParty,
                         monsters: newMonsters,
-                        phase: CombatPhase.PLAYER_TURN,
+                        phase: EncounterPhase.PLAYER_TURN,
                         turnCount: state.turnCount + 1,
-                        combatLog: [...state.combatLog, ...logs]
+                        encounterLog: [...state.encounterLog, ...logs]
                     }));
 
                     if (newParty.every(p => p.isDead)) {
-                        set({ phase: CombatPhase.DEFEAT, combatLog: [...get().combatLog, 'Party Defeated...'] });
+                        set({ phase: EncounterPhase.DEFEAT, encounterLog: [...get().encounterLog, 'Party Defeated...'] });
                     }
                 }, 1000); // 1s cooldown before player turn
                 return;
@@ -153,7 +153,7 @@ export const createCombatFlowSlice: StateCreator<CombatStore, [], [], CombatFlow
             set({
                 party: newParty,
                 monsters: newMonsters,
-                combatLog: [...get().combatLog, logs[logs.length - 1]]
+                encounterLog: [...get().encounterLog, logs[logs.length - 1]]
             });
 
             // Wait 1s before the next monster attacks

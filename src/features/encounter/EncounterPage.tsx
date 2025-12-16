@@ -1,15 +1,15 @@
 
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useCombatStore } from '../../stores/combat.store';
+import { useEncounterStore } from '../../stores/encounter.store';
 import { useGameStore } from '../../stores/game.store';
 import { usePlayerStore } from '../../stores/player.store';
-import { CombatPhase } from '../../types/combat.types';
+import { EncounterPhase } from '../../types/encounter.types';
 // import MathChallengeModal from '../../components/MathChallengeModal'; // Removed
 import { generateProblem } from '../../utils/math-generator';
 import { MathOperation, type MathProblem } from '../../types/math.types';
 import { useState } from 'react';
-import { UnitCard } from '../combat/components/UnitCard';
+import { UnitCard } from './components/UnitCard';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import { VisualEffectOverlay } from './components/VisualEffectOverlay';
 import { getCompanionById } from '../../data/companions.data';
@@ -25,7 +25,7 @@ const EncounterPage = () => {
         phase, party, monsters,
         performAction,
         resolveSpecialAttack
-    } = useCombatStore();
+    } = useEncounterStore();
 
     const [activeChallenge, setActiveChallenge] = useState<{
         type: 'SPECIAL';
@@ -41,11 +41,11 @@ const EncounterPage = () => {
         unitId: string;
     } | null>(null);
 
-    // Check if combat is effectively over (all monsters dead)
-    const isCombatOver = monsters.every(m => m.isDead);
+    // Check if encounter is effectively over (all monsters dead)
+    const isEncounterOver = monsters.every(m => m.isDead);
 
     const handleUnitAction = (unitId: string) => {
-        if (phase !== CombatPhase.PLAYER_TURN || isCombatOver) return;
+        if (phase !== EncounterPhase.PLAYER_TURN || isEncounterOver) return;
 
         const unit = party.find(u => u.id === unitId);
         if (!unit) return;
@@ -67,7 +67,7 @@ const EncounterPage = () => {
             // Start flip animation shortly after open
             setTimeout(() => {
                 // Reset Spirit Meter just before flip so user doesn't see it reset later
-                useCombatStore.getState().consumeSpirit(unitId);
+                useEncounterStore.getState().consumeSpirit(unitId);
                 setActiveChallenge(prev => prev ? { ...prev, isFlipped: true } : null);
             }, 2000);
 
@@ -114,13 +114,14 @@ const EncounterPage = () => {
     };
 
     const handleCompletionContinue = () => {
-        if (phase === CombatPhase.VICTORY) {
+        if (phase === EncounterPhase.VICTORY) {
             useGameStore.getState().completeEncounter();
             navigate('/map');
-        } else if (phase === CombatPhase.DEFEAT) {
+        } else if (phase === EncounterPhase.DEFEAT) {
             navigate('/camp');
         }
     };
+
 
 
 
@@ -162,7 +163,7 @@ const EncounterPage = () => {
                                     phase={phase}
                                     onAct={() => handleUnitAction(unit.id)}
                                     activeVisualEffect={activeVFX?.type}
-                                    disableInteraction={isCombatOver || !!activeChallenge || !!activeVFX}
+                                    disableInteraction={isEncounterOver || !!activeChallenge || !!activeVFX}
                                 />
                             </div>
                         ))}
@@ -171,7 +172,7 @@ const EncounterPage = () => {
                     {/* VS Indicator */}
                     <div className="vs-indicator">
                         <div className="vs-line"></div>
-                        <span className="vs-text">{t('combat.encounter.vs', 'VS')}</span>
+                        <span className="vs-text">{t('encounter.vs', 'VS')}</span>
                         <div className="vs-line bottom"></div>
                     </div>
 
@@ -214,9 +215,9 @@ const EncounterPage = () => {
             }
             {/* Completion Modal */}
             {
-                (phase === CombatPhase.VICTORY || phase === CombatPhase.DEFEAT) && (
+                (phase === EncounterPhase.VICTORY || phase === EncounterPhase.DEFEAT) && (
                     <EncounterCompletionModal
-                        result={phase === CombatPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
+                        result={phase === EncounterPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
                         onContinue={handleCompletionContinue}
                     />
                 )

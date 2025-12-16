@@ -6,21 +6,21 @@ export const CompanionRole = {
 
 export type CompanionRole = typeof CompanionRole[keyof typeof CompanionRole];
 
-export const CombatActionBehavior = {
+export const EncounterActionBehavior = {
     ATTACK: 'ATTACK',
     DEFEND: 'DEFEND',
     HEAL: 'HEAL',
     SPECIAL: 'SPECIAL'
 } as const;
 
-export type CombatActionBehavior = typeof CombatActionBehavior[keyof typeof CombatActionBehavior];
+export type EncounterActionBehavior = typeof EncounterActionBehavior[keyof typeof EncounterActionBehavior];
 
 export interface Companion {
     id: string;
     name: string;
     role: CompanionRole;
     description: string;
-    combatAction: CombatActionBehavior; // Each companion has ONE ability
+    encounterAction: EncounterActionBehavior; // Each companion has ONE ability
     stats: {
         attack?: number;
         defense?: number;
@@ -48,7 +48,7 @@ export interface PartySlot {
     id: string;
     name: string;
     equippedCompanionId: string | null;
-    isCombatSlot?: boolean; // Marks if this slot is active in combat
+    isEncounterSlot?: boolean; // Marks if this slot is active in encounter
 }
 
 export type PartyComposition = Record<string, string | null>;

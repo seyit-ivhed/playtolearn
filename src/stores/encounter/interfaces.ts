@@ -1,8 +1,8 @@
-import type { CombatState } from '../../types/combat.types';
+import type { EncounterState } from '../../types/encounter.types';
 import type { AdventureMonster } from '../../types/adventure.types';
 
-export interface CombatFlowSlice {
-    initializeCombat: (partyIds: string[], enemies: AdventureMonster[]) => void;
+export interface EncounterFlowSlice {
+    initializeEncounter: (partyIds: string[], enemies: AdventureMonster[]) => void;
     endPlayerTurn: () => void;
     processMonsterTurn: () => void;
 }
@@ -14,4 +14,4 @@ export interface PlayerActionsSlice {
     consumeSpirit: (unitId: string) => void;
 }
 
-export interface CombatStore extends CombatState, CombatFlowSlice, PlayerActionsSlice { }
+export interface EncounterStore extends EncounterState, EncounterFlowSlice, PlayerActionsSlice { }

@@ -1,9 +1,9 @@
 import type { StateCreator } from 'zustand';
-import type { CombatStore, PlayerActionsSlice } from '../interfaces';
-import { CombatPhase } from '../../../types/combat.types';
+import type { EncounterStore, PlayerActionsSlice } from '../interfaces';
+import { EncounterPhase } from '../../../types/encounter.types';
 import { getCompanionById } from '../../../data/companions.data';
 
-export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerActionsSlice> = (set, get) => ({
+export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => ({
     selectUnit: (unitId) => set({ selectedUnitId: unitId }),
 
     performAction: (unitId, options = {}) => {
@@ -23,7 +23,7 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
         const newParty = [...party];
         newParty[unitIndex] = { ...unit, hasActed: true };
 
-        let logMsg = `${unit.name} used ${companionData.abilityName}!`;
+        let logMsg = `${unit.name} used Ability!`;
         if (isCritical) {
             logMsg = `CRITICAL! ${logMsg}`;
         }
@@ -89,14 +89,14 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
 
         set(state => ({
             party: newParty,
-            combatLog: [...state.combatLog, logMsg]
+            encounterLog: [...state.encounterLog, logMsg]
         }));
 
         // Check Victory
         if (get().monsters.every(m => m.isDead)) {
             // Delay victory to allow animations to finish
             setTimeout(() => {
-                set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
+                set({ phase: EncounterPhase.VICTORY, encounterLog: [...get().encounterLog, 'Victory!'] });
             }, 1500);
             return;
         }
@@ -122,7 +122,7 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
         let logs: string[] = [];
 
         if (success) {
-            logs.push(`${unit.name} cast ${ability.name}!`);
+            logs.push(`${unit.name} cast ${ability.id}!`);
 
             // EXECUTE ABILITY LOGIC
             if (ability.type === 'DAMAGE') {
@@ -193,14 +193,14 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
             set({
                 monsters: newMonsters,
                 party: newParty,
-                combatLog: [...get().combatLog, ...logs]
+                encounterLog: [...get().encounterLog, ...logs]
             });
 
             // Check Victory
             if (newMonsters.every(m => m.isDead)) {
                 // Delay victory to allow animations to finish
                 setTimeout(() => {
-                    set({ phase: CombatPhase.VICTORY, combatLog: [...get().combatLog, 'Victory!'] });
+                    set({ phase: EncounterPhase.VICTORY, encounterLog: [...get().encounterLog, 'Victory!'] });
                 }, 1500);
                 return;
             }
@@ -216,7 +216,7 @@ export const createPlayerActionsSlice: StateCreator<CombatStore, [], [], PlayerA
             newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0, hasActed: true };
             set({
                 party: newParty,
-                combatLog: [...get().combatLog, `${unit.name}'s ability FAILED! Charge lost.`]
+                encounterLog: [...get().encounterLog, `${unit.name}'s ability FAILED! Charge lost.`]
             });
 
             // Check End Turn Condition (All living party members acted)

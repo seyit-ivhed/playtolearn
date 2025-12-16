@@ -14,7 +14,7 @@ const MathTestPage: React.FC = () => {
         setFeedback(''); // Reset feedback
     };
 
-    const handleChoiceClick = (choice: number) => {
+    const handleChoiceClick = (choice: number | string) => {
         if (!problem) return;
         const result = validateAnswer(choice, problem.correctAnswer);
         setFeedback(result.isCorrect ? 'Correct!' : `Incorrect. Expected: ${problem.correctAnswer}`);

@@ -81,9 +81,9 @@ Each **Adventure** consists of:
    - Rewards: Rare companions, significant companion growth
 
 #### Encounter Types
-- **Battle Encounters**: Turn-based combat against monsters
+- **Battle Encounters**: Turn-based battle against monsters
 - **Puzzle Encounters**: Logic and math puzzles to solve (future feature)
-- **Boss Fights**: Epic battles against powerful enemies at the end of each adventure
+- **Boss Fights**: Epic battle against powerful enemies at the end of each adventure
 - **Camp Encounters**: Rest stops where players can adjust their party
 
 ### 2.2 Math Challenge System
@@ -304,7 +304,7 @@ Each realm contains multiple adventures:
 - **Internationalization**: i18next (already in use)
 - **Testing**: Vitest for unit tests, Playwright for E2E (already in use)
 - **Build Tool**: Vite (already in use)
-- **Graphics**: CSS animations and SVG for companions/combat visuals
+- **Graphics**: CSS animations and SVG for companions/battle visuals
 - **AI Art**: Stable Diffusion or similar for companion portraits and backgrounds
 
 ### 6.3 Data Storage

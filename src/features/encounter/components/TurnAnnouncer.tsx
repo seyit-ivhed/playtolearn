@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CombatPhase } from '../../../types/combat.types';
+import { EncounterPhase } from '../../../types/encounter.types';
 import styles from './TurnAnnouncer.module.css';
 
 interface TurnAnnouncerProps {
-    phase: CombatPhase;
+    phase: EncounterPhase;
     onVisibilityChange?: (isVisible: boolean) => void;
 }
 
@@ -14,8 +14,8 @@ export const TurnAnnouncer = ({ phase, onVisibilityChange }: TurnAnnouncerProps)
     const [key, setKey] = useState(0); // Force re-render for animation
 
     useEffect(() => {
-        if (phase === CombatPhase.PLAYER_TURN) {
-            setMessage(t('combat.turn.player', 'Your Turn'));
+        if (phase === EncounterPhase.PLAYER_TURN) {
+            setMessage(t('encounter.turn.player', 'Your Turn'));
             setKey(prev => prev + 1);
             onVisibilityChange?.(true);
 
@@ -23,8 +23,8 @@ export const TurnAnnouncer = ({ phase, onVisibilityChange }: TurnAnnouncerProps)
             setTimeout(() => {
                 onVisibilityChange?.(false);
             }, 2000);
-        } else if (phase === CombatPhase.MONSTER_TURN) {
-            setMessage(t('combat.turn.enemy', 'Enemy Turn'));
+        } else if (phase === EncounterPhase.MONSTER_TURN) {
+            setMessage(t('encounter.turn.enemy', 'Enemy Turn'));
             setKey(prev => prev + 1);
             onVisibilityChange?.(true);
 
@@ -43,7 +43,7 @@ export const TurnAnnouncer = ({ phase, onVisibilityChange }: TurnAnnouncerProps)
 
     return (
         <div key={key} className={styles.container}>
-            <div className={`${styles.banner} ${phase === CombatPhase.PLAYER_TURN ? styles.playerTurn : styles.enemyTurn}`}>
+            <div className={`${styles.banner} ${phase === EncounterPhase.PLAYER_TURN ? styles.playerTurn : styles.enemyTurn}`}>
                 <h2 className={styles.text}>{message}</h2>
             </div>
         </div>

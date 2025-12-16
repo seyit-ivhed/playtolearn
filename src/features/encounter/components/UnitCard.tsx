@@ -1,4 +1,4 @@
-import { type CombatUnit, CombatPhase } from '../../../types/combat.types';
+import { type EncounterUnit, EncounterPhase } from '../../../types/encounter.types';
 import { getCompanionById } from '../../../data/companions.data';
 import '../../../styles/components/UnitCard.css';
 import '../../encounter/styles/animations.css';
@@ -15,8 +15,8 @@ import { useGameStore } from '../../../stores/game.store';
 // import { UltimateReadyOverlay } from './UltimateReadyOverlay'; // Removed per request
 
 interface UnitCardProps {
-    unit: CombatUnit;
-    phase: CombatPhase;
+    unit: EncounterUnit;
+    phase: EncounterPhase;
     onAct?: () => void;
     isFlipped?: boolean;
     mathProblem?: MathProblem;
@@ -40,7 +40,7 @@ export const UnitCard = ({
 
     // Companion Data
     const companionData = !isMonster ? getCompanionById(unit.templateId) : null;
-    const canAct = !unit.hasActed && !unit.isDead && phase === CombatPhase.PLAYER_TURN && !disableInteraction;
+    const canAct = !unit.hasActed && !unit.isDead && phase === EncounterPhase.PLAYER_TURN && !disableInteraction;
 
     // Ultimate Ready State
     const isUltimateReady = !isMonster && !unit.isDead && unit.currentSpirit >= 100;

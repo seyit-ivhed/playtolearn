@@ -1,4 +1,4 @@
-export const CombatPhase = {
+export const EncounterPhase = {
     INIT: 'INIT',
     PLAYER_TURN: 'PLAYER_TURN',
     MONSTER_TURN: 'MONSTER_TURN',
@@ -6,9 +6,9 @@ export const CombatPhase = {
     DEFEAT: 'DEFEAT'
 } as const;
 
-export type CombatPhase = typeof CombatPhase[keyof typeof CombatPhase];
+export type EncounterPhase = typeof EncounterPhase[keyof typeof EncounterPhase];
 
-export interface CombatUnit {
+export interface EncounterUnit {
     id: string; // Unique Instance ID
     templateId: string; // Reference to Companion/Monster ID
     name: string;
@@ -32,20 +32,20 @@ export interface CombatUnit {
     maxSpirit: number;     // 100
 }
 
-export interface CombatState {
-    phase: CombatPhase;
+export interface EncounterState {
+    phase: EncounterPhase;
     turnCount: number;
 
     // Units
-    party: CombatUnit[];
-    monsters: CombatUnit[];
+    party: EncounterUnit[];
+    monsters: EncounterUnit[];
 
     // Selection
     selectedUnitId: string | null;
 
     // Logs
     // Logs
-    combatLog: string[];
+    encounterLog: string[];
 
     // Removed shared specialMeter in favor of per-unit spirit
 }

@@ -9,38 +9,38 @@ export const PARTY_SLOTS: PartySlot[] = [
         id: 'slot_1',
         name: 'Slot 1',
         equippedCompanionId: 'village_squire', // Default starter
-        isCombatSlot: true
+        isEncounterSlot: true
     },
     {
         id: 'slot_2',
         name: 'Slot 2',
         equippedCompanionId: 'novice_archer', // Default starter
-        isCombatSlot: true
+        isEncounterSlot: true
     },
     {
         id: 'slot_3',
         name: 'Slot 3',
         equippedCompanionId: null,
-        isCombatSlot: true
+        isEncounterSlot: true
     },
     {
         id: 'slot_4',
         name: 'Slot 4',
         equippedCompanionId: null,
-        isCombatSlot: true
+        isEncounterSlot: true
     }
 ];
-
-/**
- * Get all combat-ready party slots (currently all 4)
- */
-export const getCombatSlots = (): PartySlot[] => {
-    return PARTY_SLOTS.filter(slot => slot.isCombatSlot);
-};
 
 /**
  * Get a specific slot by ID
  */
 export const getSlotById = (id: string): PartySlot | undefined => {
     return PARTY_SLOTS.find(slot => slot.id === id);
+};
+
+/**
+ * Get all encounter-ready party slots (currently all 4)
+ */
+export const getEncounterSlots = (): PartySlot[] => {
+    return PARTY_SLOTS.filter(slot => slot.isEncounterSlot);
 };

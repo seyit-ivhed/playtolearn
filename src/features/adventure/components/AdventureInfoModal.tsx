@@ -16,7 +16,7 @@ export const AdventureInfoModal: React.FC<AdventureInfoModalProps> = ({
 }) => {
     const { t } = useTranslation();
 
-    const targetMonster = adventure.encounters.find(e => e.type === 'BOSS')?.enemy;
+    const targetMonster = adventure.encounters.find(e => e.type === 'BOSS')?.enemies?.[0];
 
     return (
         <div className={styles.overlay} onClick={onClose} data-testid="adventure-info-modal">

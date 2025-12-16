@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game.store';
-import { useCombatStore } from '../../stores/combat.store';
+import { useEncounterStore } from '../../stores/encounter.store';
 import '../../styles/pages/AdventurePage.css';
 
 import { ADVENTURES } from '../../data/adventures.data';
@@ -11,7 +11,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { activeParty: party, activeAdventureId } = useGameStore();
-    const { initializeCombat } = useCombatStore();
+    const { initializeEncounter } = useEncounterStore();
 
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
@@ -30,7 +30,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
 
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
             if (encounter.enemies && encounter.enemies.length > 0) {
-                initializeCombat(party, encounter.enemies);
+                initializeEncounter(party, encounter.enemies);
                 navigate('/encounter');
             }
         }
