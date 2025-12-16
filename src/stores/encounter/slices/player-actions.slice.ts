@@ -3,11 +3,20 @@ import type { EncounterStore, PlayerActionsSlice } from '../interfaces';
 import { EncounterPhase } from '../../../types/encounter.types';
 import { getCompanionById } from '../../../data/companions.data';
 
+import { performWarriorAction } from '../actions/standard/warrior.action';
+import { performGuardianAction } from '../actions/standard/guardian.action';
+import { performSupportAction } from '../actions/standard/support.action';
+
+import { executeDamageAbility } from '../actions/special/damage.ability';
+import { executeHealAbility } from '../actions/special/heal.ability';
+import { executeShieldAbility } from '../actions/special/shield.ability';
+import { executeMultiHitAbility } from '../actions/special/multi-hit.ability';
+
 export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => ({
     selectUnit: (unitId) => set({ selectedUnitId: unitId }),
 
     performAction: (unitId, options = {}) => {
-        const { party, monsters } = get();
+        const { party } = get();
         const unitIndex = party.findIndex(u => u.id === unitId);
         if (unitIndex === -1) return;
 
@@ -19,9 +28,10 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
 
         if (unit.hasActed) return;
 
-        // consume energy
+        // consume energy & mark acted
         const newParty = [...party];
         newParty[unitIndex] = { ...unit, hasActed: true };
+        set({ party: newParty }); // Commit early state change for UI responsiveness if needed, but we mostly overwrite later or inside actions
 
         let logMsg = `${unit.name} used Ability!`;
         if (isCritical) {
@@ -29,72 +39,25 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         }
 
         const multiplier = isCritical ? 2 : 1;
+        let actionLog = '';
 
         // Apply Effects
-        // Simple logic for now: 
-        // Warrior -> Hit first living monster
-        // Guardian -> Shield random ally
-        // Support -> Heal lowest HP ally
-
         if (companionData.role === 'WARRIOR') {
-            const targetIndex = monsters.findIndex(m => !m.isDead);
-            if (targetIndex !== -1) {
-                const target = monsters[targetIndex];
-                const baseDamage = companionData.stats.abilityDamage || 10;
-                const damage = baseDamage * multiplier;
-
-                const newHealth = Math.max(0, target.currentHealth - damage);
-
-                const newMonsters = [...monsters];
-                newMonsters[targetIndex] = {
-                    ...target,
-                    currentHealth: newHealth,
-                    isDead: newHealth === 0
-                };
-
-                set({ party: newParty, monsters: newMonsters });
-                logMsg += ` Dealt ${damage} damage to ${target.name}.`;
-            }
+            actionLog = performWarriorAction(get, set, unitIndex, companionData, multiplier);
         } else if (companionData.role === 'GUARDIAN') {
-            // Shield random ally
-            const baseAmount = companionData.stats.abilityShield || 15;
-            const amount = baseAmount * multiplier;
-
-            const targetIndex = Math.floor(Math.random() * newParty.length);
-            newParty[targetIndex].currentShield += amount;
-            set({ party: newParty });
-            logMsg += ` Shielded ${newParty[targetIndex].name} for ${amount}.`;
+            actionLog = performGuardianAction(get, set, unitIndex, companionData, multiplier);
         } else if (companionData.role === 'SUPPORT') {
-            // Heal lowest HP
-            const baseAmount = companionData.stats.abilityHeal || 15;
-            const amount = baseAmount * multiplier;
-
-            let lowestIndex = 0;
-            let lowestHP = 9999;
-            newParty.forEach((p, idx) => {
-                if (!p.isDead && p.currentHealth < p.maxHealth && p.currentHealth < lowestHP) {
-                    lowestHP = p.currentHealth;
-                    lowestIndex = idx;
-                }
-            });
-            const target = newParty[lowestIndex];
-            const newHealth = Math.min(target.maxHealth, target.currentHealth + amount);
-            newParty[lowestIndex].currentHealth = newHealth;
-
-            set({ party: newParty });
-            logMsg += ` Healed ${target.name} for ${amount}.`;
-        } else {
-            set({ party: newParty });
+            actionLog = performSupportAction(get, set, unitIndex, companionData, multiplier);
         }
 
+        logMsg += actionLog;
+
         set(state => ({
-            party: newParty,
             encounterLog: [...state.encounterLog, logMsg]
         }));
 
         // Check Victory
         if (get().monsters.every(m => m.isDead)) {
-            // Delay victory to allow animations to finish
             setTimeout(() => {
                 set({ phase: EncounterPhase.VICTORY, encounterLog: [...get().encounterLog, 'Victory!'] });
             }, 1500);
@@ -109,7 +72,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
     },
 
     resolveSpecialAttack: (unitId, success) => {
-        const { monsters, party } = get();
+        const { party } = get();
         const unitIndex = party.findIndex(u => u.id === unitId);
         if (unitIndex === -1) return;
 
@@ -117,111 +80,67 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         const companionData = getCompanionById(unit.templateId);
         const ability = companionData.specialAbility;
 
-        let newParty = [...party];
-        let newMonsters = [...monsters];
         let logs: string[] = [];
 
         if (success) {
             logs.push(`${unit.name} cast ${ability.id}!`);
 
             // EXECUTE ABILITY LOGIC
+            let abilityLogs: string[] = [];
             if (ability.type === 'DAMAGE') {
-                if (ability.target === 'ALL_ENEMIES') {
-                    newMonsters = newMonsters.map(m => {
-                        if (m.isDead) return m;
-                        const newHealth = Math.max(0, m.currentHealth - ability.value);
-                        return { ...m, currentHealth: newHealth, isDead: newHealth === 0 };
-                    });
-                    logs.push(`Dealt ${ability.value} damage to ALL enemies!`);
-                } else if (ability.target === 'SINGLE_ENEMY') {
-                    // Hit first living
-                    const targetIndex = newMonsters.findIndex(m => !m.isDead);
-                    if (targetIndex !== -1) {
-                        const target = newMonsters[targetIndex];
-                        const newHealth = Math.max(0, target.currentHealth - ability.value);
-                        newMonsters[targetIndex] = { ...target, currentHealth: newHealth, isDead: newHealth === 0 };
-                        logs.push(`Dealt ${ability.value} damage to ${target.name}!`);
-                    }
-                }
+                abilityLogs = executeDamageAbility(get, set, unitId, ability);
             } else if (ability.type === 'HEAL') {
-                if (ability.target === 'ALL_ALLIES') {
-                    newParty = newParty.map(p => {
-                        if (p.isDead) return p;
-                        return { ...p, currentHealth: Math.min(p.maxHealth, p.currentHealth + ability.value) };
-                    });
-                    logs.push(`Healed party for ${ability.value}!`);
-                } else if (ability.target === 'SELF') {
-                    // Logic for Squire (Heal Self + Max Shield)
-                    const newHealth = Math.min(unit.maxHealth, unit.currentHealth + ability.value);
-                    newParty[unitIndex] = {
-                        ...newParty[unitIndex],
-                        currentHealth: newHealth,
-                        currentShield: 999 // Max Shield effectively
-                    };
-                    logs.push(`Healed self and raised Shield Wall!`);
-                }
+                abilityLogs = executeHealAbility(get, set, unitId, ability);
             } else if (ability.type === 'SHIELD') {
-                if (ability.target === 'ALL_ALLIES') {
-                    newParty = newParty.map(p => {
-                        if (p.isDead) return p;
-                        return { ...p, currentShield: p.currentShield + ability.value };
-                    });
-                    logs.push(`Shielded party for ${ability.value}!`);
-                }
+                abilityLogs = executeShieldAbility(get, set, unitId, ability);
             } else if (ability.type === 'MULTI_HIT') {
-                let hits = ability.count || 3;
-                for (let i = 0; i < hits; i++) {
-                    const livingMonsters = newMonsters.filter(m => !m.isDead);
-                    if (livingMonsters.length === 0) break;
-                    const randomIdx = Math.floor(Math.random() * livingMonsters.length);
-                    const targetId = livingMonsters[randomIdx].id;
-                    const monsterIdx = newMonsters.findIndex(m => m.id === targetId);
-
-                    if (monsterIdx !== -1) {
-                        const m = newMonsters[monsterIdx];
-                        const newHealth = Math.max(0, m.currentHealth - ability.value);
-                        newMonsters[monsterIdx] = { ...m, currentHealth: newHealth, isDead: newHealth === 0 };
-                    }
-                }
-                logs.push(`Dealt ${ability.value} damage x${hits}!`);
+                abilityLogs = executeMultiHitAbility(get, set, unitId, ability);
             }
+            logs = [...logs, ...abilityLogs];
 
             // Consume Charge (Reset to 0) AND Mark as Acted
-            // Ensure spirit is 0 (it might have been reset earlier, but force it here too for consistency)
-            newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0, hasActed: true };
+            // Need to re-fetch party in case it was modified by ability logic actions
+            const currentParty = get().party;
+            const currentUnitIndex = currentParty.findIndex(u => u.id === unitId);
+            if (currentUnitIndex !== -1) {
+                const newParty = [...currentParty];
+                newParty[currentUnitIndex] = { ...newParty[currentUnitIndex], currentSpirit: 0, hasActed: true };
+                set({ party: newParty });
+            }
 
-            set({
-                monsters: newMonsters,
-                party: newParty,
-                encounterLog: [...get().encounterLog, ...logs]
-            });
+            set(state => ({
+                encounterLog: [...state.encounterLog, ...logs]
+            }));
 
             // Check Victory
-            if (newMonsters.every(m => m.isDead)) {
-                // Delay victory to allow animations to finish
+            if (get().monsters.every(m => m.isDead)) {
                 setTimeout(() => {
                     set({ phase: EncounterPhase.VICTORY, encounterLog: [...get().encounterLog, 'Victory!'] });
                 }, 1500);
                 return;
             }
 
-            // Check End Turn Condition (All living party members acted)
-            const allActed = newParty.every(p => p.isDead || p.hasActed);
-            if (allActed) {
+            // Check End Turn Condition
+            if (get().party.every(p => p.isDead || p.hasActed)) {
                 get().endPlayerTurn();
             }
 
         } else {
             // Fail: Drain meter AND Mark as Acted
-            newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0, hasActed: true };
-            set({
-                party: newParty,
-                encounterLog: [...get().encounterLog, `${unit.name}'s ability FAILED! Charge lost.`]
-            });
+            const currentParty = get().party;
+            const currentUnitIndex = currentParty.findIndex(u => u.id === unitId);
 
-            // Check End Turn Condition (All living party members acted)
-            const allActed = newParty.every(p => p.isDead || p.hasActed);
-            if (allActed) {
+            if (currentUnitIndex !== -1) {
+                const newParty = [...currentParty];
+                newParty[currentUnitIndex] = { ...newParty[currentUnitIndex], currentSpirit: 0, hasActed: true };
+                set({
+                    party: newParty,
+                    encounterLog: [...get().encounterLog, `${unit.name}'s ability FAILED! Charge lost.`]
+                });
+            }
+
+            // Check End Turn Condition
+            if (get().party.every(p => p.isDead || p.hasActed)) {
                 get().endPlayerTurn();
             }
         }
