@@ -1,4 +1,4 @@
-import type { Companion } from '../../../data/companions.data';
+import type { Companion } from '../../../types/companion.types';
 
 interface UnitCardImageProps {
     isMonster: boolean;

@@ -1,4 +1,4 @@
-import type { Companion, CompanionStats } from '../data/companions.data';
+import type { Companion, CompanionStats } from '../types/companion.types';
 import { XP_PER_LEVEL } from '../data/companions.data';
 
 /**
