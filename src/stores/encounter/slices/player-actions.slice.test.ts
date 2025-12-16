@@ -15,22 +15,18 @@ vi.mock('../../../data/companions.data', () => ({
                 specialAbility: { id: 'special_dmg', type: 'DAMAGE', value: 20, target: 'SINGLE_ENEMY' }
             };
         }
-        if (id === 'guardian_id') {
+
+
+
+
+
+        if (id === 'guardian_id_revived') {
             return {
                 id,
                 name: 'Guardian',
-                role: 'GUARDIAN',
-                stats: { abilityShield: 15 },
+                role: 'WARRIOR',
+                stats: {},
                 specialAbility: { id: 'special_shield', type: 'SHIELD', value: 15, target: 'ALL_ALLIES' }
-            };
-        }
-        if (id === 'support_id') {
-            return {
-                id,
-                name: 'Support',
-                role: 'SUPPORT',
-                stats: { abilityHeal: 15 },
-                specialAbility: { id: 'special_heal', type: 'SHIELD', value: 20, target: 'ALL_ALLIES' }
             };
         }
 
@@ -77,33 +73,7 @@ describe('Player Actions Slice', () => {
             expect(state.party[0].hasActed).toBe(true);
         });
 
-        it('should shield random ally for GUARDIAN role', () => {
-            const guardian = { id: 'u1', templateId: 'guardian_id', name: 'Guardian', hasActed: false, currentShield: 0, maxHealth: 100, currentHealth: 100, isDead: false };
-            // Needs a target ally (self or other)
-            useEncounterStore.setState({ party: [guardian], monsters: [] });
 
-            // Mock Math.random to always return 0 (target self)
-            vi.spyOn(Math, 'random').mockReturnValue(0);
-
-            useEncounterStore.getState().performAction('u1');
-
-            const state = useEncounterStore.getState();
-            expect(state.party[0].currentShield).toBe(15);
-            expect(state.party[0].hasActed).toBe(true);
-        });
-
-        it('should heal lowest HP ally for SUPPORT role', () => {
-            const support = { id: 'u1', templateId: 'support_id', name: 'Support', hasActed: false, maxHealth: 100, currentHealth: 100, isDead: false };
-            const injured = { id: 'u2', templateId: 'warrior_id', name: 'Injured', hasActed: false, maxHealth: 100, currentHealth: 50, isDead: false };
-
-            useEncounterStore.setState({ party: [support, injured], monsters: [] });
-
-            useEncounterStore.getState().performAction('u1');
-
-            const state = useEncounterStore.getState();
-            expect(state.party[1].currentHealth).toBe(65); // 50 + 15
-            expect(state.party[0].hasActed).toBe(true);
-        });
     });
 
     describe('resolveSpecialAttack', () => {
@@ -136,7 +106,7 @@ describe('Player Actions Slice', () => {
         });
 
         it('should apply AOE shield', () => {
-            const guardian = { id: 'u1', templateId: 'guardian_id', name: 'Guardian', hasActed: false, currentShield: 0, currentSpirit: 100, maxHealth: 100, currentHealth: 100, isDead: false };
+            const guardian = { id: 'u1', templateId: 'guardian_id_revived', name: 'Guardian', hasActed: false, currentShield: 0, currentSpirit: 100, maxHealth: 100, currentHealth: 100, isDead: false };
             const ally = { id: 'u2', templateId: 'warrior_id', name: 'Ally', hasActed: false, currentShield: 10, maxHealth: 100, currentHealth: 100, isDead: false };
 
             useEncounterStore.setState({ party: [guardian, ally], monsters: [] });

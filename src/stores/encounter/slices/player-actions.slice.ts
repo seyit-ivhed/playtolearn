@@ -4,8 +4,7 @@ import { EncounterPhase } from '../../../types/encounter.types';
 import { getCompanionById } from '../../../data/companions.data';
 
 import { performWarriorAction } from '../actions/standard/warrior.action';
-import { performGuardianAction } from '../actions/standard/guardian.action';
-import { performSupportAction } from '../actions/standard/support.action';
+
 
 import { executeDamageAbility } from '../actions/special/damage.ability';
 import { executeShieldAbility } from '../actions/special/shield.ability';
@@ -42,10 +41,8 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         // Apply Effects
         if (companionData.role === 'WARRIOR') {
             actionLog = performWarriorAction(get, set, unitIndex, companionData, multiplier);
-        } else if (companionData.role === 'GUARDIAN') {
-            actionLog = performGuardianAction(get, set, unitIndex, companionData, multiplier);
-        } else if (companionData.role === 'SUPPORT') {
-            actionLog = performSupportAction(get, set, unitIndex, companionData, multiplier);
+
+
         }
 
         logMsg += actionLog;

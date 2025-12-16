@@ -1,7 +1,6 @@
 export const CompanionRole = {
     WARRIOR: 'WARRIOR',
-    GUARDIAN: 'GUARDIAN',
-    SUPPORT: 'SUPPORT'
+
 } as const;
 
 export type CompanionRole = typeof CompanionRole[keyof typeof CompanionRole];
@@ -17,8 +16,7 @@ export interface SpecialAbility {
 export interface CompanionStats {
     maxHealth: number;
     abilityDamage?: number;
-    abilityHeal?: number;
-    abilityShield?: number;
+
 }
 
 export interface CompanionEvolution {
