@@ -14,25 +14,19 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
     // Check for evolutions up to this level
     let evolutionBonus: CompanionStats = {
         maxHealth: 0,
-        abilityDamage: 0,
-        abilityHeal: 0,
-        abilityShield: 0
+        abilityDamage: 0
     };
 
     companion.evolutions.forEach(evo => {
         if (level >= evo.atLevel && evo.statsBonus) {
             if (evo.statsBonus.maxHealth) evolutionBonus.maxHealth = (evolutionBonus.maxHealth || 0) + evo.statsBonus.maxHealth;
             if (evo.statsBonus.abilityDamage) evolutionBonus.abilityDamage = (evolutionBonus.abilityDamage || 0) + evo.statsBonus.abilityDamage;
-            if (evo.statsBonus.abilityHeal) evolutionBonus.abilityHeal = (evolutionBonus.abilityHeal || 0) + evo.statsBonus.abilityHeal;
-            if (evo.statsBonus.abilityShield) evolutionBonus.abilityShield = (evolutionBonus.abilityShield || 0) + evo.statsBonus.abilityShield;
         }
     });
 
     return {
         maxHealth: Math.floor(companion.baseStats.maxHealth * scalingFactor) + (evolutionBonus.maxHealth || 0),
         abilityDamage: companion.baseStats.abilityDamage ? Math.floor(companion.baseStats.abilityDamage * scalingFactor) + (evolutionBonus.abilityDamage || 0) : undefined,
-        abilityHeal: companion.baseStats.abilityHeal ? Math.floor(companion.baseStats.abilityHeal * scalingFactor) + (evolutionBonus.abilityHeal || 0) : undefined,
-        abilityShield: companion.baseStats.abilityShield ? Math.floor(companion.baseStats.abilityShield * scalingFactor) + (evolutionBonus.abilityShield || 0) : undefined,
     };
 };
 

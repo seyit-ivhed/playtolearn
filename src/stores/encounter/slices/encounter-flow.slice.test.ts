@@ -26,7 +26,12 @@ describe('encounter-flow.slice', () => {
             phase: EncounterPhase.INIT,
             turnCount: 0,
             encounterLog: [],
-            selectedUnitId: null
+            selectedUnitId: null,
+            // Add stubs for missing methods from other slices
+            selectUnit: (unitId: string | null) => set({ selectedUnitId: unitId }),
+            performAction: () => { },
+            resolveSpecialAttack: () => { },
+            consumeSpirit: () => { }
         }));
 
         vi.useFakeTimers();
@@ -39,6 +44,8 @@ describe('encounter-flow.slice', () => {
     describe('initializeEncounter', () => {
         it('should initialize party and monsters correctly', () => {
             const { initializeEncounter } = useTestStore.getState();
+            // ... rest of test
+
             const partyIds = ['c1', 'c2'];
             const enemies = [
                 { id: 'm1', name: 'Monster 1', maxHealth: 50, attack: 10, sprite: 'm1.png', maxShield: 5 },
@@ -85,8 +92,7 @@ describe('encounter-flow.slice', () => {
             // Setup initial state
             initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 10, attack: 1, sprite: '' }]);
 
-            // Spy on processMonsterTurn
-            const processMonsterTurnSpy = vi.spyOn(useTestStore.getState(), 'processMonsterTurn');
+
             // We need to re-bind or just spy on the method if it's called via get().processMonsterTurn() which calls the implementation in the store.
             // However, since we are mocking the store creation slightly differently or using the real slice code,
             // let's see how `createEncounterFlowSlice` calls it. It calls `get().processMonsterTurn()`.

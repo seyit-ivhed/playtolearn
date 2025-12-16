@@ -1,8 +1,6 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useGameStore } from './game.store';
-import { INITIAL_FELLOWSHIP } from '../data/companions.data';
 import * as progressionUtils from '../utils/progression.utils';
-import { act } from 'react';
 
 // Mock dependencies
 vi.mock('../data/adventures.data', () => ({

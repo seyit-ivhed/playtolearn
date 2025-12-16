@@ -59,8 +59,7 @@ const CampPage = () => {
                                         <div className={styles.cardRole}>{data.role}</div>
                                     </div>
 
-                                    {/* Subtle background glow based on character color */}
-                                    <div className={styles.cardGlow} style={{ backgroundColor: data.color }}></div>
+
 
                                     <div className={styles.removeOverlay} />
                                     <div className={styles.removeText}>✕ Remove</div>

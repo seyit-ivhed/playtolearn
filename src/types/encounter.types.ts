@@ -19,6 +19,7 @@ export interface EncounterUnit {
     currentHealth: number;
     maxShield: number;
     currentShield: number;
+    damage?: number;
 
     // Visuals
     image?: string;
