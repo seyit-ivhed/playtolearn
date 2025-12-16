@@ -58,8 +58,6 @@ export interface Companion {
     specialAbility: SpecialAbility;
 
     // Visuals
-    color: string;
-    icon: string;
     image: string;
 
     // Configuration
@@ -96,8 +94,6 @@ export const COMPANIONS: Record<string, Companion> = {
             value: 15,
             target: 'ALL_ALLIES'
         },
-        color: '#e74c3c', // Red
-        icon: '🗡️',
         image: villageSquireImg,
         initialSpirit: 70,
         evolutions: [
@@ -135,8 +131,6 @@ export const COMPANIONS: Record<string, Companion> = {
             value: 20,
             target: 'SINGLE_ENEMY'
         },
-        color: '#2c3e50', // Dark Blue
-        icon: '🏹',
         image: noviceArcherImg,
         initialSpirit: 30,
         evolutions: [

@@ -16,8 +16,6 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 currentHealth: data.maxHealth,
                 maxShield: 0,
                 currentShield: 0,
-                icon: data.icon,
-                color: data.color,
                 isDead: false,
                 hasActed: false,
                 currentSpirit: data.initialSpirit || 0,
@@ -37,9 +35,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 currentShield: 0,
                 // Map 'attack' to 'damage' for now, or ensure types align
                 damage: enemy.attack,
-                icon: enemy.icon || '👾',
                 image: enemy.sprite,
-                color: '#e74c3c', // Default red for enemies
                 isDead: false,
                 hasActed: false,
                 currentSpirit: 0,

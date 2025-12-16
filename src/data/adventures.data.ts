@@ -74,14 +74,6 @@ export const ADVENTURES: Adventure[] = [
             currency: 50
         }
     }
-    // Future adventures commented out for prototype focus
-    /*
-    {
-        id: '2',
-        title: 'Forest Ambush',
-        ...
-    }
-    */
 ];
 
 export const getAdventureById = (id: string): Adventure | undefined => {

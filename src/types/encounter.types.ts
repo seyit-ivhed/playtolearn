@@ -21,9 +21,7 @@ export interface EncounterUnit {
     currentShield: number;
 
     // Visuals
-    icon: string;
     image?: string;
-    color: string;
 
     // State
     isDead: boolean;

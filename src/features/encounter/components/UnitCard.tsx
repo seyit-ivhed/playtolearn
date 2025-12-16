@@ -119,7 +119,6 @@ export const UnitCard = ({
                     isMonster={isMonster}
                     companionData={companionData}
                     image={unit.image}
-                    icon={unit.icon}
                     displayName={displayName}
                 />
 

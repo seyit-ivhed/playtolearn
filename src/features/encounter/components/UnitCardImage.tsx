@@ -4,7 +4,6 @@ interface UnitCardImageProps {
     isMonster: boolean;
     companionData: Companion | null;
     image?: string;
-    icon?: string;
     displayName: string;
 }
 
@@ -12,7 +11,6 @@ export const UnitCardImage = ({
     isMonster,
     companionData,
     image,
-    icon,
     displayName
 }: UnitCardImageProps) => {
     return (
@@ -24,9 +22,7 @@ export const UnitCardImage = ({
                     className="unit-card-image"
                 />
             ) : (
-                <div className="unit-card-placeholder">
-                    {icon}
-                </div>
+                <div className="unit-card-placeholder" />
             )}
             {/* Gradient Overlay */}
             <div className="unit-card-gradient" />
