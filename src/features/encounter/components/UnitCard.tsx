@@ -254,11 +254,6 @@ export const UnitCard = ({
                         isMonster={isMonster}
                     />
                 </div>
-
-                {/* Ultimate Ready Overlay Removed */}
-                {/* {!isMonster && unit.currentSpirit >= 100 && !unit.isDead && phase === CombatPhase.PLAYER_TURN && (
-                    <UltimateReadyOverlay />
-                )} */}
             </div>
 
             {/* Shield Overlay (Moved outside logic for overflow) */}

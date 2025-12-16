@@ -1,5 +1,4 @@
-/* Combat Page Styles */
-
+/* Encounter Page Styles */
 
 .container {
     min-height: 100vh;
@@ -15,7 +14,7 @@
     /* Prevent scrolling if possible */
 }
 
-.combatBody {
+.encounterBody {
     display: grid;
     grid-template-columns: 1fr minmax(200px, auto) 1fr;
     /* Player Area, VS/Effect Area, Enemy Area */
@@ -78,9 +77,9 @@
     display: contents;
     /* Let grid handling the children positions */
     /* If we want to keep the shake wrapper working, we might need to keep this as block 
-       but currently CombatArena is just a wrapper in the page. 
-       Let's actually make CombatArena component return a fragment or handle the grid placement itself.
-       or better yet, let CombatPage control the grid, and CombatArena just fills the slots.
+       but currently EncounterArena is just a wrapper in the page. 
+       Let's actually make EncounterArena component return a fragment or handle the grid placement itself.
+       or better yet, let EncounterPage control the grid, and EncounterArena just fills the slots.
     */
     width: 100%;
 }
@@ -114,7 +113,7 @@
     justify-content: center;
 }
 
-.combatant {
+.encounterParticipant {
     text-align: center;
     display: flex;
     flex-direction: column;
