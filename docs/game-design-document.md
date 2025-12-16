@@ -223,19 +223,8 @@ Example: Completing "Multiplication - Level 3" adventure unlocks a companion or 
   
 - **Monster Turn**:
   - Monster attacks based on their stats
-  - Active shields block the attack
-  - Armor reduces damage taken
-  
-- **Special Effects**:
-  - Streaks of correct answers grant temporary bonuses (e.g., 3 correct in a row = bonus damage on next attack)
-  - Powerful effects activate on longer streaks
+  - Shield take the damage value until it's consumed
 
-#### Monster Types
-- **Forest Goblins**: Balanced stats, common
-- **Stone Golems**: Low health, high numbers
-- **Shadow Spirits**: Fast, evasive
-- **Dragon Bosses**: High health, powerful attacks (boss-level)
-- **Magical Anomalies**: Unique mechanics, puzzle-like
 
 ### 2.5 Progression System
 
@@ -301,21 +290,7 @@ Each realm contains multiple adventures:
     - "Evolution" animations play here when a companion levels up.
   - **Equipment/Skins**: Manage cosmetic skins (e.g., "Winter Fire Knight") unlocked via DLC.
 
-### 4.3 Adventure Interface
-- **Problem Display**: Clear, large text
-- **Answer Input**: Number pad or multiple choice
-- **Progress Bar**: Shows encounter progress within the adventure
-- **Feedback**: Immediate visual feedback on correct/incorrect answers
-- **Pause Menu**: Exit, settings
-
-### 4.3 Encounter Interface (Combat)
-- **Your Party**: 4 companion portraits showing health and energy
-- **Enemy**: Health and shields
-- **Math Problem**: Center focus when recharging
-- **Action Buttons**: Choose which companion ability to use
-- **Combat Log**: Recent actions
-
-### 4.4 Visual Design Principles
+### 4.3 Visual Design Principles
 - **Child-Friendly**: Bright colors, clear icons, friendly characters
 - **Fantasy Theme**: Castles, forests, magical effects, heroes and monsters
 - **Feedback**: Animations for success/failure, level-ups
@@ -375,7 +350,6 @@ Each realm contains multiple adventures:
 **Intrinsic Motivation**
 - Progress is visible and meaningful
 - Rewards are immediately useful
-- Player agency in choosing quests
 - Emotional connection to companions
 
 ---
