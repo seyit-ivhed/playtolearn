@@ -128,7 +128,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             const target = newParty[actualTargetIndex];
 
             // Calc Damage vs Shield
-            let damage = 8;
+            let damage = monster.damage || 8;
 
             if (target.currentShield > 0) {
                 if (target.currentShield >= damage) {
