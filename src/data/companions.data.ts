@@ -46,13 +46,6 @@ export interface Companion {
     baseStats: CompanionStats;
     stats: CompanionStats; // Current calculated stats
 
-    // Ability details
-    // We keep these for backward compatibility or ease of access, 
-    // but they should mirror 'stats'
-    abilityDamage?: number;
-    abilityHeal?: number;
-    abilityShield?: number;
-    maxHealth: number;
 
     // Special Ability
     specialAbility: SpecialAbility;
@@ -86,8 +79,6 @@ export const COMPANIONS: Record<string, Companion> = {
             maxHealth: 90,
             abilityDamage: 8
         },
-        maxHealth: 90,
-        abilityDamage: 8,
         specialAbility: {
             id: 'protective_stance',
             type: 'SHIELD',
@@ -123,8 +114,6 @@ export const COMPANIONS: Record<string, Companion> = {
             maxHealth: 80,
             abilityDamage: 6
         },
-        maxHealth: 80,
-        abilityDamage: 6,
         specialAbility: {
             id: 'piercing_shot',
             type: 'DAMAGE',

@@ -40,7 +40,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
             const targetIndex = monsters.findIndex(m => !m.isDead);
             if (targetIndex !== -1) {
                 const target = monsters[targetIndex];
-                const baseDamage = companionData.abilityDamage || 10;
+                const baseDamage = companionData.stats.abilityDamage || 10;
                 const damage = baseDamage * multiplier;
 
                 const newHealth = Math.max(0, target.currentHealth - damage);
@@ -57,7 +57,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
             }
         } else if (companionData.role === 'GUARDIAN') {
             // Shield random ally
-            const baseAmount = companionData.abilityShield || 15;
+            const baseAmount = companionData.stats.abilityShield || 15;
             const amount = baseAmount * multiplier;
 
             const targetIndex = Math.floor(Math.random() * newParty.length);
@@ -66,7 +66,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
             logMsg += ` Shielded ${newParty[targetIndex].name} for ${amount}.`;
         } else if (companionData.role === 'SUPPORT') {
             // Heal lowest HP
-            const baseAmount = companionData.abilityHeal || 15;
+            const baseAmount = companionData.stats.abilityHeal || 15;
             const amount = baseAmount * multiplier;
 
             let lowestIndex = 0;
