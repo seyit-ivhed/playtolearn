@@ -14,22 +14,58 @@ export interface SpecialAbility {
     count?: number; // For multi-hit
 }
 
-export interface Companion {
-    id: string;
-    role: CompanionRole;
+export interface CompanionStats {
     maxHealth: number;
-    // Ability details
     abilityDamage?: number;
     abilityHeal?: number;
     abilityShield?: number;
+}
+
+export interface CompanionEvolution {
+    atLevel: number;
+    title: string;
+    image: string;
+    statsBonus?: Partial<CompanionStats>;
+    newSpecialAbility?: SpecialAbility;
+}
+
+export const XP_PER_LEVEL = 100; // Linear curve for now: Level * 100
+
+export interface Companion {
+    id: string;
+    // Identity
+    name: string;
+    title: string;
+    role: CompanionRole;
+
+    // Progression
+    level: number;
+    xp: number;
+
+    // Stats
+    baseStats: CompanionStats;
+    stats: CompanionStats; // Current calculated stats
+
+    // Ability details
+    // We keep these for backward compatibility or ease of access, 
+    // but they should mirror 'stats'
+    abilityDamage?: number;
+    abilityHeal?: number;
+    abilityShield?: number;
+    maxHealth: number;
+
     // Special Ability
     specialAbility: SpecialAbility;
-    // Visuals (placeholders for now)
+
+    // Visuals
     color: string;
     icon: string;
     image: string;
+
     // Configuration
     initialSpirit: number;
+
+    evolutions: CompanionEvolution[];
 }
 
 // Images
@@ -39,7 +75,19 @@ import noviceArcherImg from '../assets/images/companions/novice_archer.png';
 export const COMPANIONS: Record<string, Companion> = {
     'village_squire': {
         id: 'village_squire',
+        name: 'Garrick',
+        title: 'Village Squire',
         role: CompanionRole.WARRIOR,
+        level: 1,
+        xp: 0,
+        baseStats: {
+            maxHealth: 90,
+            abilityDamage: 8
+        },
+        stats: {
+            maxHealth: 90,
+            abilityDamage: 8
+        },
         maxHealth: 90,
         abilityDamage: 8,
         specialAbility: {
@@ -51,11 +99,34 @@ export const COMPANIONS: Record<string, Companion> = {
         color: '#e74c3c', // Red
         icon: '🗡️',
         image: villageSquireImg,
-        initialSpirit: 70
+        initialSpirit: 70,
+        evolutions: [
+            {
+                atLevel: 5,
+                title: 'Knight',
+                image: villageSquireImg, // Placeholder
+                statsBonus: {
+                    maxHealth: 20,
+                    abilityDamage: 4
+                }
+            }
+        ]
     },
     'novice_archer': {
         id: 'novice_archer',
+        name: 'Elara',
+        title: 'Novice Archer',
         role: CompanionRole.WARRIOR,
+        level: 1,
+        xp: 0,
+        baseStats: {
+            maxHealth: 80,
+            abilityDamage: 6
+        },
+        stats: {
+            maxHealth: 80,
+            abilityDamage: 6
+        },
         maxHealth: 80,
         abilityDamage: 6,
         specialAbility: {
@@ -67,7 +138,18 @@ export const COMPANIONS: Record<string, Companion> = {
         color: '#2c3e50', // Dark Blue
         icon: '🏹',
         image: noviceArcherImg,
-        initialSpirit: 30
+        initialSpirit: 30,
+        evolutions: [
+            {
+                atLevel: 5,
+                title: 'Ranger',
+                image: noviceArcherImg, // Placeholder
+                statsBonus: {
+                    maxHealth: 15,
+                    abilityDamage: 5
+                }
+            }
+        ]
     }
 };
 

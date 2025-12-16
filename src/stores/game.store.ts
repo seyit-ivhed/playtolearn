@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { INITIAL_FELLOWSHIP } from '../data/companions.data';
+import { INITIAL_FELLOWSHIP, COMPANIONS } from '../data/companions.data';
+import { getXpForNextLevel } from '../utils/progression.utils';
 
 import { ADVENTURES } from '../data/adventures.data';
 
@@ -11,6 +12,11 @@ interface GameState {
     unlockedCompanions: string[]; // IDs
     activeParty: string[]; // IDs (Max 4)
 
+    // Progression System
+    xpPool: number;
+    companionStats: Record<string, { level: number; xp: number }>;
+    restedCompanions: string[]; // IDs of companions who are rested
+
     // Actions
     completeEncounter: () => void;
     setActiveAdventure: (adventureId: string) => void;
@@ -18,6 +24,13 @@ interface GameState {
     addToParty: (companionId: string) => void;
     removeFromParty: (companionId: string) => void;
     unlockCompanion: (companionId: string) => void;
+
+    // Progression Actions
+    addXpToPool: (amount: number) => void;
+    assignXpToCompanion: (companionId: string, amount: number) => void;
+    markRestedCompanions: () => void; // Call when starting adventure
+    consumeRestedBonus: (companionId: string) => void; // Call when bonus used
+
     resetAll: () => void;
 }
 
@@ -28,6 +41,13 @@ export const useGameStore = create<GameState>()(
             activeAdventureId: '1',
             unlockedCompanions: [...INITIAL_FELLOWSHIP],
             activeParty: [...INITIAL_FELLOWSHIP], // Default full party
+
+            xpPool: 0,
+            companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
+                acc[id] = { level: 1, xp: 0 };
+                return acc;
+            }, {} as Record<string, { level: number; xp: number }>),
+            restedCompanions: [],
 
             completeEncounter: () => {
                 const { currentMapNode, activeAdventureId } = get();
@@ -67,9 +87,60 @@ export const useGameStore = create<GameState>()(
             },
 
             unlockCompanion: (companionId) => {
-                const { unlockedCompanions } = get();
+                const { unlockedCompanions, companionStats } = get();
                 if (!unlockedCompanions.includes(companionId)) {
-                    set({ unlockedCompanions: [...unlockedCompanions, companionId] });
+                    // New companion joins at (Max Party Level) to catch up
+                    const levels = Object.values(companionStats).map(s => s.level);
+                    const maxLevel = Math.max(...levels, 1);
+
+                    set({
+                        unlockedCompanions: [...unlockedCompanions, companionId],
+                        companionStats: {
+                            ...companionStats,
+                            [companionId]: { level: maxLevel, xp: 0 }
+                        }
+                    });
+                }
+            },
+
+            addXpToPool: (amount) => set((state) => ({ xpPool: state.xpPool + amount })),
+
+            assignXpToCompanion: (companionId, amount) => {
+                const state = get();
+                if (state.xpPool < amount) return;
+
+                const stats = state.companionStats[companionId] || { level: 1, xp: 0 };
+                let newXp = stats.xp + amount;
+                let newLevel = stats.level;
+
+                // Simple while loop for multi-lebel up (though unrealistic with small amounts)
+                let xpNeeded = getXpForNextLevel(newLevel);
+                while (newXp >= xpNeeded) {
+                    newXp -= xpNeeded;
+                    newLevel++;
+                    xpNeeded = getXpForNextLevel(newLevel);
+                }
+
+                set({
+                    xpPool: state.xpPool - amount,
+                    companionStats: {
+                        ...state.companionStats,
+                        [companionId]: { level: newLevel, xp: newXp }
+                    }
+                });
+            },
+
+            markRestedCompanions: () => {
+                const { activeParty, unlockedCompanions } = get();
+                // Everyone NOT in active party gets rested
+                const rested = unlockedCompanions.filter(id => !activeParty.includes(id));
+                set({ restedCompanions: rested });
+            },
+
+            consumeRestedBonus: (companionId) => {
+                const { restedCompanions } = get();
+                if (restedCompanions.includes(companionId)) {
+                    set({ restedCompanions: restedCompanions.filter(id => id !== companionId) });
                 }
             },
 
@@ -79,6 +150,12 @@ export const useGameStore = create<GameState>()(
                     activeAdventureId: '1',
                     unlockedCompanions: [...INITIAL_FELLOWSHIP],
                     activeParty: [...INITIAL_FELLOWSHIP],
+                    xpPool: 0,
+                    companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
+                        acc[id] = { level: 1, xp: 0 };
+                        return acc;
+                    }, {} as Record<string, { level: number; xp: number }>),
+                    restedCompanions: []
                 });
             }
         }),

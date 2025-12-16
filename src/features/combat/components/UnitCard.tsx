@@ -11,6 +11,7 @@ import { UnitNameBadge } from './UnitNameBadge';
 import { UnitCardImage } from './UnitCardImage';
 import { AbilityCard } from './AbilityCard';
 import { HealthBar } from './HealthBar';
+import { useGameStore } from '../../../stores/game.store';
 // import { UltimateReadyOverlay } from './UltimateReadyOverlay'; // Removed per request
 
 interface UnitCardProps {
@@ -169,6 +170,15 @@ export const UnitCard = ({
         return classes.join(' ');
     };
 
+    // Companion Dynamic Stats (Level / XP)
+    const activeCompanionStats = useGameStore(state =>
+        !isMonster ? state.companionStats[unit.templateId] : null
+    );
+
+    const level = activeCompanionStats?.level || companionData?.level || 1;
+    // const xp = activeCompanionStats?.xp || 0; 
+    // const xpNeeded = getXpForNextLevel(level);
+
     return (
         <div
             className={getCardClasses()}
@@ -177,6 +187,29 @@ export const UnitCard = ({
         >
             <FloatingTextOverlay floatingTexts={floatingTexts} />
             <UnitNameBadge displayName={displayName} />
+
+            {/* Level Badge (Top Left overlap) */}
+            {!isMonster && (
+                <div className="unit-level-badge" style={{
+                    position: 'absolute',
+                    top: '-10px',
+                    left: '-10px',
+                    width: '30px',
+                    height: '30px',
+                    backgroundColor: '#f39c12',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    border: '2px solid #fff',
+                    zIndex: 10,
+                    boxShadow: '0 2px 5px rgba(0,0,0,0.3)'
+                }}>
+                    {level}
+                </div>
+            )}
 
             <div className="unit-card-front">
                 <UnitCardImage
