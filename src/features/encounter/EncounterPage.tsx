@@ -5,7 +5,7 @@ import { useEncounterStore } from '../../stores/encounter.store';
 import { useGameStore } from '../../stores/game.store';
 import { usePlayerStore } from '../../stores/player.store';
 import { EncounterPhase } from '../../types/encounter.types';
-// import MathChallengeModal from '../../components/MathChallengeModal'; // Removed
+
 import { generateProblem } from '../../utils/math-generator';
 import { MathOperation, type MathProblem } from '../../types/math.types';
 import { useState } from 'react';
