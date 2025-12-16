@@ -57,7 +57,7 @@ Each **Adventure** consists of:
 - **Linear Map**: A path of connected nodes representing encounters
 - **Encounters**: Individual challenges along the path (battles against monsters, or puzzles to solve)
 - **Boss Fight**: The final, climactic encounter that must be defeated to complete the adventure
-- **Completion Reward**: Either a new companion joins the party, or an existing companion experiences **Companion Growth**
+- **Completion Reward**: A new companion can join the party or new styling options for Magical Canvas becomes available
 
 #### Adventure Types
 1. **Training Adventures** (Tutorial)
