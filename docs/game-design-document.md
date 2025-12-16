@@ -49,7 +49,7 @@ graph LR
 ### 2.1 Journey & Adventure System
 
 #### Journey Structure
-The player's overall progression is called the **Journey**. The Journey is divided into multiple **Adventures**, each representing a self-contained story arc with its own theme, map, and challenges.
+The player's overall progression is called the **Journey**. The Journey is divided into multiple **Adventures**, each representing a self-contained story arc with its own theme, map, and challenges. Additional **Journey**s can be purchased as DLCs. Progressing through new journeys unlocks new companions, and styling options for Magical Canvas
 
 #### Adventure Structure
 Each **Adventure** consists of:
@@ -142,26 +142,21 @@ Example: Completing "Multiplication - Level 3" adventure unlocks a companion or 
 
 #### Encounter Mechanics (Turn-Based)
 - **Player Turn**:
-  - **Action Phase**: Player chooses one of their 4 companions to act (each companion has their single unique ability).
-  - **Energy Cost**: Using a companion's ability consumes 1 energy point and ends the player's turn.
-  - **Recharge Mechanic**:
-    - If a companion has 0 energy, the player can choose to **Recharge** them.
-    - Recharging presents a contextual math challenge.
-    - **Solve Correctly**: Companion gains 1 Energy (or full charge) immediately.
-    - **Solve Incorrectly**: The recharge Fails. The companion remains at 0 energy. The player **cannot** try again this turn; they must wait until the next turn to attempt recharge again.
-    - Example: "The Fire Knight needs to calibrate his aim! Solve 12 - 4."
+  - **Action Phase**: The player commands their party members. Each companion must act once per turn.
+  - **Standard Abilities**: Companions use their class-based abilities (e.g., Warriors deal damage, Guardians provide shields, Supports heal).
+  - **Completion**: The Player Turn ends automatically when all conscious companions have acted.
 
-  - **Special Attack Meter (The "Limit Break")**:
-    - A shared "Party Meter" fills up as companions successfully use abilities or defeat enemies.
-    - When the meter is **Full**, a "Special Attack" button becomes available.
-    - Clicking it triggers a **Helper/Boss Level Math Problem** (slightly harder challenge).
-    - **Solve Correctly**: Unleashes a powerful effect (e.g., Heal All, Massive Damage to All Enemies).
-    - **Solve Incorrectly**: The attack **Fails** and the **Meter Drains completely** to 0. The player must refill the meter to try again.
-    - This creates a high-stakes "moment of truth" rewarding mastery.
-  
+- **Spirit System (Ultimate Abilities)**:
+  - **Spirit Accumulation**: Companions passively generate **Spirit** (e.g., +35) at the start of every Player Turn.
+  - **Ultimate Ready**: When a companion reaches **100 Spirit**, their Standard Ability is replaced by their unique **Ultimate Ability**.
+  - **High-Stakes Math Challenge**: Activating an Ultimate triggers a challenging math problem.
+    - **Solve Correctly**: The Ultimate activates with a powerful effect (e.g., "Protective Stance", "Piercing Shot").
+    - **Solve Incorrectly**: The ability **Fails**, consuming the Spirit and the turn without effect.
+    - **Reset**: Spirit always resets to 0 after an Ultimate attempt (success or failure).
+
 - **Monster Turn**:
-  - Monster attacks based on their stats
-  - Shield take the damage value until it's consumed
+  - **Sequential Attacks**: Monsters attack one by one with dramatic timing.
+  - **Shield Mechanics**: Shields provide a temporary health pool that absorbs damage before HP is touched.
 
 
 ### 2.5 Progression System
