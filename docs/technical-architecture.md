@@ -30,7 +30,6 @@ This document defines the technical architecture and directory structure for Mat
 ```
 src/
 ├── components/              # Shared, reusable components only
-│   ├── common/             # Generic UI components (Button, Card, Modal)
 │   ├── MathInput/          # Math-specific reusable components
 │   └── ui/                 # UI primitives (if needed)
 │
@@ -126,8 +125,8 @@ src/
 - Well-documented with clear prop interfaces
 
 **Examples**:
-- `common/Button` - Generic button component
-- `common/Modal` - Generic modal wrapper
+- `Button` - Generic button component
+- `Modal` - Generic modal wrapper
 - `MathInput/` - Math input components used across features
 
 **Anti-patterns**:

@@ -1,5 +1,5 @@
 import { Volume2, VolumeX } from 'lucide-react';
-import { useAudioStore } from '../../stores/audio.store';
+import { useAudioStore } from '../stores/audio.store';
 import styles from './AudioSettings.module.css';
 
 export const AudioSettings = () => {
