@@ -38,50 +38,73 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 
 ## 2. Content Scope
 
-### Free Tier (The Hook)
-**Realm: The World of Origins** (Themed around the diverse cast)
+### Progression System: Level Cap & Evolution
 
-- **Companions (The Base Party)**:
-    - **Starter (2)**:
-        - *Amara* (South American-inspired Ranger)
-        - *Tariq* (Middle-Eastern-inspired Alchemist)
-    - **Unlockable (1)**:
-        - *Zahara* (African-inspired Mage) - Unlocks at completion of Adventure 2.
-- **Adventures** (Themes matching companion origins):
+- **Free Tier Cap**: Companions are capped at **Level 5**.
+- **Premium Cap Increase**: Each Realm Pack purchased increases the cap by **+10 levels**.
+    - 1 Pack → Cap 15
+    - 2 Packs (Bundle) → Cap 25
+- **Evolution Milestones**: Companions evolve at levels **10, 20, 30, 40, 50** (5 evolutions total).
+    - Free Tier: No evolutions possible (capped at 5).
+    - 1 Pack: 1st evolution unlockable (can reach Lv 10).
+    - 2 Packs: 2nd evolution unlockable (can reach Lv 20).
+- **Future Packs**: Additional realm packs can raise the cap further to unlock evolutions 3-5.
+
+---
+
+### Free Tier (The Hook)
+**Realm: The World of Origins**
+
+- **Companions (2)**:
+    - *Amara* (South American-inspired Ranger) - Starter
+    - *Tariq* (Middle-Eastern-inspired Alchemist) - Starter
+- **Adventures (3)**:
     - **1. The Lost Temple (Tutorial)**:
         - Theme: South American Jungle/Ruins (Amara's Home).
-        - Scripted 10-step flow.
+        - Short scripted flow to teach core mechanics.
     - **2. The Hidden Oasis**:
         - Theme: Middle-Eastern Desert/City (Tariq's Home).
         - Length: 9 Encounters + 1 Boss.
-    - **3. The Baobab Plains**:
-        - Theme: African Savannah (Zahara's Home).
+    - **3. Amara's Expedition**:
+        - Theme: Deeper South American Jungle ruins.
         - Length: 9 Encounters + 1 Boss.
 - **Monsters**:
     - Jungle: Jaguars, Snakes, Stone Guardians.
     - Desert: Scorpions, Sand Spirits, Bandits.
-    - Savannah: Lions, Hyenas, Nature Spirits.
+
+---
 
 ### Paid Tier (The Value Test)
-**Realm Pack: The Sakura Highlands (Japanese Theme)**
 
-- **Content**:
-    - **5 New Adventures**:
-        - Theme: Cherry Blossom Forests, Misty Mountains.
-        - Structure: 9 Encounters + 1 Boss.
-        - Puzzles: New logic puzzles (untimed).
-- **Exclusive Rewards**:
-    - **New Companion (1)**:
-        - *Kenji* (Japanese-inspired Samurai) - Completes the 4-person party.
-    - **Companion Evolution**: Unlocks the ability for Max Level companions to Evolve.
-    - **New Monsters**: Oni, Kappa, Tengu, Kitsune Boss.
-    - **Magical Canvas Pack**: Japanese theme stickers/backgrounds.
+#### Realm Pack: The Baobab Plains (African Theme)
+- **New Companion**: *Zahara* (African-inspired Mage)
+- **Adventures (4)**:
+    - Theme: African Savannah, Ancient Kingdoms.
+    - Structure: 9 Encounters + 1 Boss each.
+- **New Monsters**: Lions, Hyenas, Nature Spirits, Ancient Guardians.
+- **Magical Canvas Pack**: African theme stickers/backgrounds.
+
+#### Realm Pack: The Sakura Highlands (Japanese Theme)
+- **New Companion**: *Kenji* (Japanese-inspired Samurai)
+- **Adventures (4)**:
+    - Theme: Cherry Blossom Forests, Misty Mountains.
+    - Structure: 9 Encounters + 1 Boss each.
+- **New Monsters**: Oni, Kappa, Tengu, Kitsune Boss.
+- **Magical Canvas Pack**: Japanese theme stickers/backgrounds.
+
+#### Bundle: Both Realms
+- Discounted price for purchasing both The Baobab Plains and The Sakura Highlands together.
+- Complete party of 4 companions (Amara, Tariq, Zahara, Kenji).
 
 ## 3. Development Priorities
 
 1.  **Content Pipeline & Free Tier Content** (Top Priority):
     -   Implement "9+1 Encounters" structure.
-    -   Create data for Amara, Tariq, Zahara and their themed monsters.
-2.  **Combat & Puzzle Loop**: Polishing gameplay.
-3.  **Canvas**: Basic drag-and-drop.
-4.  **Backend & Analytics**: Cloud save setup.
+    -   Create data for Amara, Tariq and their themed monsters.
+    -   Tutorial adventure (short scripted flow).
+2.  **Progression System**: Level cap and realm-based unlocks.
+3.  **Encounter & Puzzle Loop**: Polishing gameplay.
+4.  **Canvas**: Basic drag-and-drop.
+5.  **Backend & Analytics**: Cloud save setup.
+6.  **Premium Content (Post-MVP)**: Baobab Plains and Sakura Highlands realm packs.
+
