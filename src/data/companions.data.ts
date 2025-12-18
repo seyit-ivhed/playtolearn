@@ -31,7 +31,7 @@ export const COMPANIONS: Record<string, Companion> = {
             target: 'SINGLE_ENEMY'
         },
         image: amaraImg,
-        initialSpirit: 30,
+        initialSpirit: 65,
         evolutions: [
             {
                 atLevel: 10,
@@ -66,7 +66,7 @@ export const COMPANIONS: Record<string, Companion> = {
             target: 'ALL_ALLIES'
         },
         image: tariqImg,
-        initialSpirit: 50,
+        initialSpirit: 40,
         evolutions: [
             {
                 atLevel: 10,
