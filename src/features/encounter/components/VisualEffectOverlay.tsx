@@ -35,6 +35,31 @@ export const VisualEffectOverlay = ({ effectType, onComplete }: VisualEffectOver
             );
         }
 
+        if (effectType === 'jaguar_strike') {
+            return (
+                <div className="vfx-jaguar-container">
+                    <div className="vfx-jaguar-slash vfx-jaguar-slash-1" />
+                    <div className="vfx-jaguar-slash vfx-jaguar-slash-2" />
+                    <div className="vfx-jaguar-slash vfx-jaguar-slash-3" />
+                    <div className="vfx-jaguar-impact" />
+                </div>
+            );
+        }
+
+        if (effectType === 'elixir_of_life') {
+            return (
+                <div className="vfx-heal-container">
+                    <div className="vfx-heal-glow" />
+                    <div className="vfx-heal-particles">
+                        {[...Array(12)].map((_, i) => (
+                            <div key={i} className={`vfx-heal-particle vfx-heal-particle-${i + 1}`} />
+                        ))}
+                    </div>
+                    <div className="vfx-heal-ring" />
+                </div>
+            );
+        }
+
         return null;
     };
 

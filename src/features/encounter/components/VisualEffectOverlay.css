@@ -228,3 +228,223 @@
         transform: translate(0, 0);
     }
 }
+
+
+/* --- Amara: JAGUAR STRIKE --- */
+.vfx-jaguar-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Claw Slash Effects */
+.vfx-jaguar-slash {
+    position: absolute;
+    width: 400px;
+    height: 20px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #fbbf24 20%, 
+        #fff 50%, 
+        #fbbf24 80%, 
+        transparent 100%
+    );
+    box-shadow:
+        0 0 30px #f59e0b,
+        0 0 60px #d97706,
+        0 0 100px #fff;
+    transform-origin: center;
+    opacity: 0;
+    filter: blur(1px);
+}
+
+.vfx-jaguar-slash-1 {
+    transform: rotate(-30deg) translateX(-100%);
+    animation: jaguar-slash 0.3s ease-out 0.1s forwards;
+}
+
+.vfx-jaguar-slash-2 {
+    transform: rotate(0deg) translateX(-100%);
+    animation: jaguar-slash 0.3s ease-out 0.2s forwards;
+}
+
+.vfx-jaguar-slash-3 {
+    transform: rotate(30deg) translateX(-100%);
+    animation: jaguar-slash 0.3s ease-out 0.3s forwards;
+}
+
+.vfx-jaguar-impact {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(251, 191, 36, 0.6) 40%, 
+        transparent 70%
+    );
+    box-shadow: 0 0 100px #fbbf24, 0 0 200px #f59e0b;
+    opacity: 0;
+    transform: scale(0);
+    animation: jaguar-impact 0.4s ease-out 0.5s forwards;
+}
+
+@keyframes jaguar-slash {
+    0% {
+        opacity: 0;
+        transform: rotate(inherit) translateX(-150%);
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(inherit) translateX(150%);
+    }
+}
+
+@keyframes jaguar-impact {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1.5);
+        filter: brightness(2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(3);
+        filter: blur(10px);
+    }
+}
+
+
+/* --- Tariq: ELIXIR OF LIFE --- */
+.vfx-heal-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Central Glow */
+.vfx-heal-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+        rgba(74, 222, 128, 0.8) 0%, 
+        rgba(34, 197, 94, 0.4) 40%, 
+        transparent 70%
+    );
+    box-shadow: 
+        0 0 80px #4ade80,
+        0 0 150px #22c55e,
+        inset 0 0 50px rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transform: scale(0);
+    animation: heal-glow-expand 1s ease-out forwards;
+}
+
+/* Healing Ring */
+.vfx-heal-ring {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 6px solid #86efac;
+    box-shadow: 0 0 30px #4ade80, 0 0 60px #22c55e;
+    opacity: 0;
+    transform: scale(0);
+    animation: heal-ring-expand 1.2s ease-out 0.2s forwards;
+}
+
+/* Healing Particles */
+.vfx-heal-particles {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+}
+
+.vfx-heal-particle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 0%, #86efac 50%, transparent 100%);
+    box-shadow: 0 0 15px #4ade80, 0 0 30px #22c55e;
+    opacity: 0;
+    animation: heal-particle-float 1.2s ease-out forwards;
+}
+
+/* Position particles around the circle */
+.vfx-heal-particle-1 { left: 50%; top: 100%; animation-delay: 0.1s; }
+.vfx-heal-particle-2 { left: 75%; top: 93%; animation-delay: 0.15s; }
+.vfx-heal-particle-3 { left: 93%; top: 75%; animation-delay: 0.2s; }
+.vfx-heal-particle-4 { left: 100%; top: 50%; animation-delay: 0.25s; }
+.vfx-heal-particle-5 { left: 93%; top: 25%; animation-delay: 0.3s; }
+.vfx-heal-particle-6 { left: 75%; top: 7%; animation-delay: 0.35s; }
+.vfx-heal-particle-7 { left: 50%; top: 0%; animation-delay: 0.4s; }
+.vfx-heal-particle-8 { left: 25%; top: 7%; animation-delay: 0.45s; }
+.vfx-heal-particle-9 { left: 7%; top: 25%; animation-delay: 0.5s; }
+.vfx-heal-particle-10 { left: 0%; top: 50%; animation-delay: 0.55s; }
+.vfx-heal-particle-11 { left: 7%; top: 75%; animation-delay: 0.6s; }
+.vfx-heal-particle-12 { left: 25%; top: 93%; animation-delay: 0.65s; }
+
+@keyframes heal-glow-expand {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1);
+        filter: brightness(1.5);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+        filter: blur(5px);
+    }
+}
+
+@keyframes heal-ring-expand {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(4);
+        border-width: 2px;
+    }
+}
+
+@keyframes heal-particle-float {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(-50px) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-150px) scale(0.5);
+    }
+}
