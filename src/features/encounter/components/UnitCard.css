@@ -217,45 +217,18 @@
 .health-bar-container {
     width: 100%;
     height: 1.4rem;
-    /* Increased for text visibility */
     background-color: #0f172a;
-    border-radius: 999px;
     position: relative;
-    overflow: visible; /* Changed from hidden to allow ornate details if needed */
-    border: 2px solid #4b5563;
+    overflow: hidden;
+    border-radius: 999px;
+    border: 1px solid #4b5563;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 0 1px #1f2937;
     margin-top: 0.25rem;
-}
-
-/* Ornate "Bracket" Styles using pseudo-elements */
-.health-bar-container::before,
-.health-bar-container::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    bottom: -2px;
-    width: 12px;
-    border: 2px solid #94a3b8; /* Silver/Metallic */
-    border-radius: 4px;
-    pointer-events: none;
     z-index: 10;
 }
 
-.health-bar-container::before {
-    left: -4px;
-    border-right: none;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    box-shadow: -1px 0 2px rgba(0,0,0,0.5);
-}
-
-.health-bar-container::after {
-    right: -4px;
-    border-left: none;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    box-shadow: 1px 0 2px rgba(0,0,0,0.5);
-}
+/* Connect the SVG brackets seamlessly */
+/* The brackets are positioned by flexbox in the parent component */
 
 .health-text {
     position: absolute;
@@ -267,7 +240,7 @@
     font-size: 0.75rem;
     font-weight: 800;
     font-family: var(--font-display);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0,0,0,0.8);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.8);
     z-index: 5;
     letter-spacing: 0.05em;
     pointer-events: none;
@@ -276,21 +249,21 @@
 
 .health-bar-fill {
     position: absolute;
-    inset: 1px; /* Slight inset to show container inner shadow */
+    inset: 1px;
     border-radius: 999px;
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .health-bar-fill.player {
     background: linear-gradient(180deg, #34d399 0%, #059669 50%, #047857 100%);
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Emerald */
 .health-bar-fill.monster {
     background: linear-gradient(180deg, #f87171 0%, #dc2626 50%, #991b1b 100%);
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Red */

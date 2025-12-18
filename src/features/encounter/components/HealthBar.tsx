@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+
 interface HealthBarProps {
     currentHealth: number;
     maxHealth: number;
