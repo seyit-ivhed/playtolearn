@@ -606,3 +606,64 @@
         transform: translateX(0);
     }
 }
+
+/* Sleeping / Resting State Zzz Animation */
+.zzz-container {
+    position: absolute;
+    top: 20%;
+    right: 15%;
+    z-index: 60;
+    pointer-events: none;
+}
+
+.zzz-icon {
+    position: absolute;
+    color: #fff;
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    line-height: 1;
+    opacity: 0;
+    animation: float-zzz 2s infinite ease-in-out;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.zzz-1 {
+    font-size: 2rem;
+    animation-delay: 0s;
+    right: 0;
+    top: 0;
+}
+
+.zzz-2 {
+    font-size: 1.5rem;
+    animation-delay: 0.6s;
+    right: 1.5rem;
+    top: 1rem;
+}
+
+.zzz-3 {
+    font-size: 1rem;
+    animation-delay: 1.2s;
+    right: 0.5rem;
+    top: 2rem;
+}
+
+@keyframes float-zzz {
+    0% {
+        transform: translate(0, 0) rotate(-10deg);
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(15px, -40px) rotate(10deg);
+        opacity: 0;
+    }
+}
