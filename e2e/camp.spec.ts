@@ -32,6 +32,6 @@ test.describe('Camp Page', () => {
 
         // We can just check that we don't crash and see some slots.
         // Check for specific known party member from initial state
-        await expect(page.getByTestId('party-card-village_squire')).toBeVisible();
+        await expect(page.getByTestId('party-card-amara')).toBeVisible();
     });
 });
