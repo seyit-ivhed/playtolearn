@@ -72,8 +72,8 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             monsters: newMonsters
         });
 
-        // Wait for "Enemy Turn" banner to complete (2s animation) before starting attacks
-        setTimeout(() => get().processMonsterTurn(), 2500);
+        // Wait for "Enemy Turn" banner to complete (1.6s animation) before starting attacks
+        setTimeout(() => get().processMonsterTurn(), 1700);
     },
 
     processMonsterTurn: () => {
@@ -113,7 +113,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     if (newParty.every(p => p.isDead)) {
                         set({ phase: EncounterPhase.DEFEAT, encounterLog: [...get().encounterLog, 'Party Defeated...'] });
                     }
-                }, 1000); // 1s cooldown before player turn
+                }, 500); // 0.5s cooldown before player turn
                 return;
             }
 
@@ -164,7 +164,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             // Wait 1s before the next monster attacks
             setTimeout(() => {
                 processMonsterAttack(monsterIndex + 1);
-            }, 1000);
+            }, 600);
         };
 
         // Start processing from the first monster

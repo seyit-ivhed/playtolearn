@@ -22,7 +22,7 @@ export const TurnAnnouncer = ({ phase, onVisibilityChange }: TurnAnnouncerProps)
             // Hide after 2 seconds (animation duration)
             setTimeout(() => {
                 onVisibilityChange?.(false);
-            }, 2000);
+            }, 1600);
         } else if (phase === EncounterPhase.MONSTER_TURN) {
             setMessage(t('encounter.turn.enemy', 'Enemy Turn'));
             setKey(prev => prev + 1);
@@ -31,7 +31,7 @@ export const TurnAnnouncer = ({ phase, onVisibilityChange }: TurnAnnouncerProps)
             // Hide after 2 seconds (animation duration)
             setTimeout(() => {
                 onVisibilityChange?.(false);
-            }, 2000);
+            }, 1600);
         } else {
             // Victory/Defeat or other phases - don't show turn banner
             setMessage(null);
