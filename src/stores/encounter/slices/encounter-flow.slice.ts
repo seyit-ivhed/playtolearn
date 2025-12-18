@@ -5,23 +5,32 @@ import { getCompanionById } from '../../../data/companions.data';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
     initializeEncounter: (partyIds, enemies) => {
-        const party: EncounterUnit[] = partyIds.map((id, index) => {
-            const data = getCompanionById(id);
-            return {
-                id: `party_${id}_${index}`,
-                templateId: id,
-                name: data.name,
-                isPlayer: true,
-                maxHealth: data.stats.maxHealth,
-                currentHealth: data.stats.maxHealth,
-                maxShield: 0,
-                currentShield: 0,
-                isDead: false,
-                hasActed: false,
-                currentSpirit: data.initialSpirit || 0,
-                maxSpirit: 100
-            };
-        });
+        const party: EncounterUnit[] = partyIds
+            .filter(id => {
+                const data = getCompanionById(id);
+                if (!data) {
+                    console.warn(`Companion "${id}" not found in data, skipping...`);
+                    return false;
+                }
+                return true;
+            })
+            .map((id, index) => {
+                const data = getCompanionById(id);
+                return {
+                    id: `party_${id}_${index}`,
+                    templateId: id,
+                    name: data.name,
+                    isPlayer: true,
+                    maxHealth: data.stats.maxHealth,
+                    currentHealth: data.stats.maxHealth,
+                    maxShield: 0,
+                    currentShield: 0,
+                    isDead: false,
+                    hasActed: false,
+                    currentSpirit: data.initialSpirit || 0,
+                    maxSpirit: 100
+                };
+            });
 
         const monsters: EncounterUnit[] = enemies.map((enemy, index) => {
             return {

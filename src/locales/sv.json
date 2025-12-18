@@ -97,21 +97,21 @@
         "remove": "Ta bort",
         "locked": "Låst",
         "unlock_requirement": "Slutför äventyr för att låsa upp",
-        "village_squire": {
-            "name": "Byväpnare",
-            "description": "En ung hjälte med ett rostigt svärd och ett stort hjärta.",
-            "ability_name": "Klumpigt Slag",
-            "ability_description": "Gör 8 skada på en fiende.",
-            "special_ability_name": "Skyddande Hållning",
-            "special_ability_description": "Ger 15 Sköld till alla allierade."
+        "amara": {
+            "name": "Amara",
+            "description": "Snabb som jaguaren, tyst som vinden.",
+            "ability_name": "Attack",
+            "ability_description": "Gör 10 skada på en fiende.",
+            "special_ability_name": "Jaguarslag",
+            "special_ability_description": "Gör 25 skada på en fiende."
         },
-        "novice_archer": {
-            "name": "Nybörjarskytt",
-            "description": "Lär sig fortfarande att sikta, men har skarpa ögon.",
-            "ability_name": "Övningsskott",
-            "ability_description": "Gör 6 skada.",
-            "special_ability_name": "Genomträngande Skott",
-            "special_ability_description": "Gör 20 skada som ignorerar rustning."
+        "tariq": {
+            "name": "Tariq",
+            "description": "Varje problem har en dryck.",
+            "ability_name": "Attack",
+            "ability_description": "Gör 6 skada på en fiende.",
+            "special_ability_name": "Livets Elixir",
+            "special_ability_description": "Läker alla allierade med 15 hälsa."
         }
     },
     "adventure": {

@@ -97,21 +97,21 @@
         "remove": "Remove",
         "locked": "Locked",
         "unlock_requirement": "Complete adventures to unlock",
-        "village_squire": {
-            "name": "Village Squire",
-            "description": "A young hero with a rusty sword and a big heart.",
-            "ability_name": "Clumsy Strike",
-            "ability_description": "Deals 8 damage to a single enemy.",
-            "special_ability_name": "Protective Stance",
-            "special_ability_description": "Grants 15 Shield to ALL allies."
+        "amara": {
+            "name": "Amara",
+            "description": "Swift as the jaguar, silent as the wind.",
+            "ability_name": "Attack",
+            "ability_description": "Deals 10 damage to a single enemy.",
+            "special_ability_name": "Jaguar Strike",
+            "special_ability_description": "Deals 25 damage to a single enemy."
         },
-        "novice_archer": {
-            "name": "Novice Archer",
-            "description": "Still learning to aim, but has keen eyes.",
-            "ability_name": "Practice Shot",
-            "ability_description": "Deals 6 damage.",
-            "special_ability_name": "Piercing Shot",
-            "special_ability_description": "Deals 20 damage ignoring armor."
+        "tariq": {
+            "name": "Tariq",
+            "description": "Every problem has a potion.",
+            "ability_name": "Attack",
+            "ability_description": "Deals 6 damage to a single enemy.",
+            "special_ability_name": "Elixir of Life",
+            "special_ability_description": "Heals all allies for 15 health."
         }
     },
     "adventure": {

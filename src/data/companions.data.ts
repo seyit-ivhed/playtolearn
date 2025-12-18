@@ -5,84 +5,83 @@ export const XP_PER_LEVEL = 100; // Linear curve for now: Level * 100
 
 
 // Images
-import villageSquireImg from '../assets/images/companions/village_squire.png';
-import noviceArcherImg from '../assets/images/companions/novice_archer.png';
+import amaraImg from '../assets/images/companions/Amara/Amara-0.png';
+import tariqImg from '../assets/images/companions/Tariq/Tariq-0.png';
 
 export const COMPANIONS: Record<string, Companion> = {
-    'village_squire': {
-        id: 'village_squire',
-        name: 'Garrick',
-        title: 'Village Squire',
+    'amara': {
+        id: 'amara',
+        name: 'Amara',
+        title: 'The Jungle Ranger',
         role: CompanionRole.WARRIOR,
         level: 1,
         xp: 0,
         baseStats: {
-            maxHealth: 90,
-            abilityDamage: 8
+            maxHealth: 75,
+            abilityDamage: 10
         },
         stats: {
-            maxHealth: 90,
-            abilityDamage: 8
+            maxHealth: 75,
+            abilityDamage: 10
         },
         specialAbility: {
-            id: 'protective_stance',
-            type: 'SHIELD',
-            value: 15,
-            target: 'ALL_ALLIES'
+            id: 'jaguar_strike',
+            type: 'DAMAGE',
+            value: 25,
+            target: 'SINGLE_ENEMY'
         },
-        image: villageSquireImg,
-        initialSpirit: 70,
+        image: amaraImg,
+        initialSpirit: 30,
         evolutions: [
             {
-                atLevel: 5,
-                title: 'Knight',
-                image: villageSquireImg, // Placeholder
+                atLevel: 10,
+                title: 'Jungle Sentinel',
+                image: amaraImg, // Placeholder for evolution image
                 statsBonus: {
                     maxHealth: 20,
-                    abilityDamage: 4
+                    abilityDamage: 5
                 }
             }
         ]
     },
-    'novice_archer': {
-        id: 'novice_archer',
-        name: 'Elara',
-        title: 'Novice Archer',
+    'tariq': {
+        id: 'tariq',
+        name: 'Tariq',
+        title: 'The Desert Alchemist',
         role: CompanionRole.WARRIOR,
         level: 1,
         xp: 0,
         baseStats: {
-            maxHealth: 80,
+            maxHealth: 85,
             abilityDamage: 6
         },
         stats: {
-            maxHealth: 80,
+            maxHealth: 85,
             abilityDamage: 6
         },
         specialAbility: {
-            id: 'piercing_shot',
-            type: 'DAMAGE',
-            value: 20,
-            target: 'SINGLE_ENEMY'
+            id: 'elixir_of_life',
+            type: 'HEAL',
+            value: 15,
+            target: 'ALL_ALLIES'
         },
-        image: noviceArcherImg,
-        initialSpirit: 30,
+        image: tariqImg,
+        initialSpirit: 50,
         evolutions: [
             {
-                atLevel: 5,
-                title: 'Ranger',
-                image: noviceArcherImg, // Placeholder
+                atLevel: 10,
+                title: 'Master Alchemist',
+                image: tariqImg, // Placeholder for evolution image
                 statsBonus: {
-                    maxHealth: 15,
-                    abilityDamage: 5
+                    maxHealth: 25,
+                    abilityDamage: 3
                 }
             }
         ]
     }
 };
 
-export const INITIAL_FELLOWSHIP = ['village_squire', 'novice_archer'];
+export const INITIAL_FELLOWSHIP = ['amara', 'tariq'];
 
 export const getAllCompanions = () => Object.values(COMPANIONS);
 export const getCompanionById = (id: string) => COMPANIONS[id];
-

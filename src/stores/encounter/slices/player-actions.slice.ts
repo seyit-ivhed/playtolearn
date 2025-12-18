@@ -8,6 +8,7 @@ import { performWarriorAction } from '../actions/standard/warrior.action';
 
 import { executeDamageAbility } from '../actions/special/damage.ability';
 import { executeShieldAbility } from '../actions/special/shield.ability';
+import { executeHealAbility } from '../actions/special/heal.ability';
 
 export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => ({
     selectUnit: (unitId) => set({ selectedUnitId: unitId }),
@@ -86,6 +87,8 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
                 abilityLogs = executeDamageAbility(get, set, unitId, ability);
             } else if (ability.type === 'SHIELD') {
                 abilityLogs = executeShieldAbility(get, set, unitId, ability);
+            } else if (ability.type === 'HEAL') {
+                abilityLogs = executeHealAbility(get, set, unitId, ability);
             }
             logs = [...logs, ...abilityLogs];
 
