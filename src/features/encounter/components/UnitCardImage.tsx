@@ -20,6 +20,7 @@ export const UnitCardImage = ({
                     src={!isMonster && companionData ? companionData.image : image}
                     alt={displayName}
                     className="unit-card-image"
+                    draggable={false}
                 />
             ) : (
                 <div className="unit-card-placeholder" />
