@@ -39,6 +39,7 @@ const EncounterPage = () => {
     const [activeVFX, setActiveVFX] = useState<{
         type: string;
         unitId: string;
+        targetId?: string;
     } | null>(null);
 
     // Check if encounter is effectively over (all monsters dead)
@@ -89,13 +90,23 @@ const EncounterPage = () => {
             // Determine Effect Type based on ability name or ID
             const effectName = companion?.specialAbility?.id || 'Generic';
 
+            // Determine Target ID (for positioning VFX) - logic mirrors damage.ability.ts (first living enemy)
+            let targetId: string | undefined;
+            if (effectName === 'jaguar_strike' || companion?.specialAbility?.target === 'SINGLE_ENEMY') {
+                const target = monsters.find(m => !m.isDead);
+                if (target) {
+                    targetId = target.id;
+                }
+            }
+
             // Close spotlight/math modal immediately to show full screen VFX
             setActiveChallenge(null);
 
             // Start VFX
             setActiveVFX({
                 type: effectName,
-                unitId: activeChallenge.unitId
+                unitId: activeChallenge.unitId,
+                targetId
             });
         } else {
             // Failure case: No VFX, just close and resolve (miss) via store if needed
@@ -140,6 +151,7 @@ const EncounterPage = () => {
                 <VisualEffectOverlay
                     effectType={activeVFX.type}
                     onComplete={handleVFXComplete}
+                    targetId={activeVFX.targetId}
                 />
             )}
             {/* Actually, VisualEffectOverlay renders nothing if type doesn't match? Let's check. 

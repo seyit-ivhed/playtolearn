@@ -108,6 +108,7 @@ export const UnitCard = ({
             className={getCardClasses()}
             onClick={handleCardClick}
             data-testid={`unit-card-${unit.id}`}
+            data-unit-id={unit.id}
         >
             <FloatingTextOverlay floatingTexts={floatingTexts} />
             <UnitNameBadge displayName={displayName} />
