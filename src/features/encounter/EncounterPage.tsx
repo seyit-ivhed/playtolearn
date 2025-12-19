@@ -1,4 +1,5 @@
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useEncounterStore } from '../../stores/encounter.store';
@@ -190,13 +191,27 @@ const EncounterPage = () => {
 
                     {/* Monsters Grid */}
                     <div className="monster-grid">
-                        {monsters.map(unit => (
-                            <UnitCard
-                                key={unit.id}
-                                unit={unit}
-                                phase={phase}
-                            />
-                        ))}
+                        <AnimatePresence mode="popLayout">
+                            {monsters.filter(m => !m.isDead).map(unit => (
+                                <motion.div
+                                    key={unit.id}
+                                    layout
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{
+                                        opacity: 0,
+                                        scale: 0.5,
+                                        filter: "blur(10px)",
+                                        transition: { duration: 0.5 }
+                                    }}
+                                >
+                                    <UnitCard
+                                        unit={unit}
+                                        phase={phase}
+                                    />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
                     </div>
                 </div>
 
