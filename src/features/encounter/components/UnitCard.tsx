@@ -113,7 +113,7 @@ export const UnitCard = ({
             <FloatingTextOverlay floatingTexts={floatingTexts} />
             <UnitNameBadge displayName={displayName} />
 
-            {!isMonster && <UnitLevelBadge level={level} />}
+            {!isMonster && !isFlipped && <UnitLevelBadge level={level} />}
 
             <div className="unit-card-front">
                 <UnitCardImage
