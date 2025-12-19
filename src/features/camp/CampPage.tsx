@@ -18,7 +18,8 @@ const CampPage = () => {
         companionStats,
         assignXpToCompanion,
         activeAdventureId,
-        currentMapNode
+        currentMapNode,
+        completeEncounter
     } = useGameStore();
 
     // Get active adventure and current camp info
@@ -67,7 +68,10 @@ const CampPage = () => {
                             <div className={styles.fireEffect}>🔥</div>
 
                             <button
-                                onClick={() => navigate('/map')}
+                                onClick={() => {
+                                    completeEncounter();
+                                    navigate('/map');
+                                }}
                                 className={styles.backButton}
                                 data-testid="nav-map-btn"
                             >

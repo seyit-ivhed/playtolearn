@@ -66,7 +66,7 @@ export const COMPANIONS: Record<string, Companion> = {
             target: 'ALL_ALLIES'
         },
         image: tariqImg,
-        initialSpirit: 40,
+        initialSpirit: 0,
         evolutions: [
             {
                 atLevel: 10,

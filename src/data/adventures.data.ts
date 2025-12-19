@@ -36,7 +36,7 @@ export const ADVENTURES: Adventure[] = [
                         id: 'sand_spirit_1',
                         name: 'Sand Spirit',
                         sprite: goblinImg, // Placeholder
-                        maxHealth: 40,
+                        maxHealth: 30,
                         attack: 6,
                         defense: 1,
                     },
@@ -44,7 +44,7 @@ export const ADVENTURES: Adventure[] = [
                         id: 'sand_spirit_2',
                         name: 'Sand Spirit',
                         sprite: goblinImg, // Placeholder
-                        maxHealth: 40,
+                        maxHealth: 30,
                         attack: 6,
                         defense: 1,
                     }
@@ -87,7 +87,7 @@ export const ADVENTURES: Adventure[] = [
                     id: 'sand_colossus',
                     name: 'Sand Colossus',
                     sprite: goblinBossImg,
-                    maxHealth: 200,
+                    maxHealth: 120,
                     maxShield: 50,
                     attack: 15,
                     defense: 5,
