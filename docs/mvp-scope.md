@@ -40,14 +40,15 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 
 ### Progression System: Level Cap & Evolution
 
-- **Free Tier Cap**: Companions are capped at **Level 5**.
+- **Free Tier Cap**: Companions are capped at **Level 10**.
 - **Premium Cap Increase**: Each Realm Pack purchased increases the cap by **+10 levels**.
-    - 1 Pack → Cap 15
-    - 2 Packs (Bundle) → Cap 25
+    - 1 Pack → Cap 20
+    - 2 Packs (Bundle) → Cap 30
 - **Evolution Milestones**: Companions evolve at levels **10, 20, 30, 40, 50** (5 evolutions total).
-    - Free Tier: No evolutions possible (capped at 5).
-    - 1 Pack: 1st evolution unlockable (can reach Lv 10).
-    - 2 Packs: 2nd evolution unlockable (can reach Lv 20).
+    - Free Tier: **First evolution** (Evolution 1) is possible at Level 10.
+    - 1 Pack: 2nd evolution unlockable (can reach Lv 20).
+    - 2 Packs: 3rd evolution unlockable (can reach Lv 30).
+
 - **Future Packs**: Additional realm packs can raise the cap further to unlock evolutions 3-5.
 
 ---

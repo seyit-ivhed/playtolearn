@@ -58,7 +58,7 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 
 ---
 
-### Zahara — The Savannah Mage (Unlockable - Free Tier)
+### Zahara — The Savannah Mage (Paid Tier)
 
 > *"The spirits of the plains answer my call."*
 
