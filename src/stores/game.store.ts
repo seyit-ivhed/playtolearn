@@ -28,8 +28,13 @@ interface GameState {
     // Progression Actions
     addXpToPool: (amount: number) => void;
     assignXpToCompanion: (companionId: string, amount: number) => void;
-    markRestedCompanions: () => void; // Call when starting adventure
     consumeRestedBonus: (companionId: string) => void; // Call when bonus used
+    markRestedCompanions: () => void; // Call when starting adventure
+
+    // Debug Actions
+    debugSetMapNode: (node: number) => void;
+    debugUnlockAllCompanions: () => void;
+    debugAddXp: (amount: number) => void;
 
     resetAll: () => void;
 }
@@ -156,6 +161,16 @@ export const useGameStore = create<GameState>()(
                     set({ restedCompanions: restedCompanions.filter(id => id !== companionId) });
                 }
             },
+
+            // Debug Actions
+            debugSetMapNode: (node) => set({ currentMapNode: node }),
+
+            debugUnlockAllCompanions: () => {
+                const companionIds = Object.keys(COMPANIONS);
+                set({ unlockedCompanions: companionIds });
+            },
+
+            debugAddXp: (amount) => set((state) => ({ xpPool: state.xpPool + amount })),
 
             resetAll: () => {
                 set({

@@ -1,0 +1,87 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.modal {
+    width: 90%;
+    max-width: 600px;
+    background-color: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    color: #00ff00;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.history {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 300px;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: #000;
+    border-radius: 4px;
+}
+
+.logLine {
+    margin-bottom: 0.25rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.inputArea {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #000;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.prompt {
+    font-weight: bold;
+}
+
+.input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #00ff00;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+}
