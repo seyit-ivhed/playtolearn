@@ -36,7 +36,7 @@ export const ADVENTURES: Adventure[] = [
                         id: 'sand_spirit_1',
                         name: 'Sand Spirit',
                         sprite: goblinImg, // Placeholder
-                        maxHealth: 50,
+                        maxHealth: 40,
                         attack: 6,
                         defense: 1,
                     },
@@ -44,7 +44,7 @@ export const ADVENTURES: Adventure[] = [
                         id: 'sand_spirit_2',
                         name: 'Sand Spirit',
                         sprite: goblinImg, // Placeholder
-                        maxHealth: 50,
+                        maxHealth: 40,
                         attack: 6,
                         defense: 1,
                     }
@@ -72,7 +72,11 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_4',
                 type: EncounterType.CAMP,
                 label: 'Oasis Shade',
-                coordinates: { x: 450, y: 600 }
+                coordinates: { x: 450, y: 600 },
+                storyBeat: {
+                    speaker: 'Tariq',
+                    text: 'The sun is harsh, but this shade is cool. We should take a moment to reflect on our journey and share what we have learned.'
+                }
             },
             {
                 id: '1_10',

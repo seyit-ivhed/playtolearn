@@ -120,11 +120,18 @@ export const useGameStore = create<GameState>()(
                 let newLevel = stats.level;
 
                 // Simple while loop for multi-lebel up (though unrealistic with small amounts)
+                // Cap level at 10 for Free Tier MVP
                 let xpNeeded = getXpForNextLevel(newLevel);
-                while (newXp >= xpNeeded) {
+                const LEVEL_CAP = 10;
+                while (newXp >= xpNeeded && newLevel < LEVEL_CAP) {
                     newXp -= xpNeeded;
                     newLevel++;
                     xpNeeded = getXpForNextLevel(newLevel);
+                }
+
+                // If at cap, don't allow extra XP to accumulate (optional, but keep for now)
+                if (newLevel === LEVEL_CAP) {
+                    newXp = 0;
                 }
 
                 set({
