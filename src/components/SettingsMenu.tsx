@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { usePlayerStore } from '../stores/player.store';
-import { resetGame } from '../utils/store-utils';
 import { DebugConsole } from './DebugConsole';
 import '../styles/settings.css';
 
@@ -44,11 +43,6 @@ const SettingsMenu: React.FC = () => {
         i18n.changeLanguage(lang);
     };
 
-    const handleReset = () => {
-        if (window.confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
-            resetGame();
-        }
-    };
 
     const difficultyLabels = {
         1: 'Novice (Age 6)',
@@ -105,15 +99,6 @@ const SettingsMenu: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="settings-section">
-                        <button
-                            className="reset-button"
-                            onClick={handleReset}
-                            data-testid="reset-button"
-                        >
-                            Reset Progress
-                        </button>
-                    </div>
 
                     <div className="settings-section">
                         <button
