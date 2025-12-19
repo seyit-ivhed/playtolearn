@@ -115,6 +115,7 @@
         }
     },
     "adventure": {
+        "not_found": "Adventure not found",
         "target_monster": "Target Monster",
         "rewards": "Adventure Rewards",
         "no_rewards": "No rewards listed",
@@ -124,31 +125,23 @@
             "start": "Start",
             "forest": "Forest",
             "camp": "Camp",
+            "various": "Various Locations",
             "cave": "Cave",
             "boss": "Boss"
         }
     },
     "monsters": {
-        "goblin_scout": {
-            "name": "Goblin Scout"
+        "scorpion_1": {
+            "name": "Dune Scorpion"
         },
-        "goblin_scout_weak": {
-            "name": "Goblin Scout"
+        "sand_spirit_1": {
+            "name": "Sand Spirit"
         },
-        "goblin_scout_normal_1": {
-            "name": "Angry Goblin"
+        "puzzle_mock_1": {
+            "name": "Arithmetic Lock"
         },
-        "goblin_scout_normal_2": {
-            "name": "Sneaky Goblin"
-        },
-        "goblin_chief": {
-            "name": "Goblin Chief"
-        },
-        "stone_golem": {
-            "name": "Stone Golem"
-        },
-        "dark_sorcerer": {
-            "name": "Dark Sorcerer"
+        "sand_colossus": {
+            "name": "Sand Colossus"
         }
     },
     "adventures": {

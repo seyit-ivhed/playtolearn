@@ -115,6 +115,7 @@
         }
     },
     "adventure": {
+        "not_found": "Äventyr hittades inte",
         "target_monster": "Målmonster",
         "rewards": "Äventyrsbelöningar",
         "no_rewards": "Inga belöningar listade",
@@ -124,63 +125,54 @@
             "start": "Start",
             "forest": "Skog",
             "camp": "Läger",
+            "various": "Många platser",
             "cave": "Grotta",
             "boss": "Boss"
         }
     },
     "monsters": {
-        "goblin_scout": {
-            "name": "Goblinspanare"
+        "scorpion_1": {
+            "name": "Ökenskorpion"
         },
-        "goblin_scout_weak": {
-            "name": "Goblinspanare"
+        "sand_spirit_1": {
+            "name": "Sandande"
         },
-        "goblin_scout_normal_1": {
-            "name": "Arg Goblin"
+        "puzzle_mock_1": {
+            "name": "Aritmetiskt lås"
         },
-        "goblin_scout_normal_2": {
-            "name": "Lömsk Goblin"
-        },
-        "goblin_chief": {
-            "name": "Goblinhövding"
-        },
-        "stone_golem": {
-            "name": "Stengolem"
-        },
-        "dark_sorcerer": {
-            "name": "Mörk Trollkarl"
+        "sand_colossus": {
+            "name": "Sandkoloss"
         }
     },
     "adventures": {
         "1": {
-            "title": "Goblinskogen",
-            "description": "Spanare har rapporterat goblinaktivitet i den närliggande skogen. Undersök och rensa hotet.",
+            "title": "Oasis-uppdraget",
+            "description": "Res genom den självlysande öknen för att nå oasen och avslöja dess hemligheter.",
             "nodes": {
                 "1_1": {
-                    "label": "Spanare Siktad"
+                    "label": "Ökenstrid"
                 },
                 "1_2": {
-                    "label": "Bakhåll!"
+                    "label": "Hägringar"
                 },
                 "1_3": {
-                    "label": "Ledaren Hittad"
+                    "label": "Vattenflöde"
                 },
                 "1_4": {
-                    "label": "Viloplats"
+                    "label": "Oasens skugga"
+                },
+                "1_10": {
+                    "label": "Sandkolossen"
                 }
             }
         },
         "2": {
-            "title": "Stengolemens Grotta",
-            "description": "En massiv golem blockerar passet. Du måste besegra den för att fortsätta."
+            "title": "Djungelexpeditionen",
+            "description": "Utforska de gamla ruinerna djupt inne i djungeln."
         },
         "3": {
-            "title": "Trollkarlens Torn",
-            "description": "Källan till korruptionen har hittats. Besegra den mörka trollkarlen!"
-        },
-        "4": {
-            "title": "Ett Annat Äventyr",
-            "description": "Platshållare för ett annat äventyr."
+            "title": "Viddens hjärta",
+            "description": "Möt källan till mörkret."
         }
     }
 }
