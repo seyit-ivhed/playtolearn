@@ -50,6 +50,10 @@
         "completion": {
             "victory_title": "SEGER!",
             "victory_message": "Fienden har besegrats!",
+            "victory_message_1": "Fantastiskt arbete! Öknen tystnar i beundran inför din kraft.",
+            "victory_message_2": "Seger! Dina mattekunskaper är lika skarpa som en ökensol.",
+            "victory_message_3": "Spektakulärt! Fienden har besegrats. Vidare mot fler äventyr!",
+            "victory_message_4": "Otroligt! Du hanterade det med stil och visdom!",
             "defeat_title": "FÖRLUST",
             "defeat_message": "Ditt lag har fallit...",
             "continue_button": "Fortsätt"
@@ -69,6 +73,7 @@
         "title": "Äventyr Slutfört!",
         "subtitle": "Utmärkt arbete, Äventyrare. Här är dina belöningar:",
         "xp": "+{{amount}} XP",
+        "gained": "XP intjänat:",
         "credits": "+{{amount}} Guld",
         "companion_unlocked": "Ny Följeslagare Upplåst!",
         "companion_growth": "Följeslagare Växer!",
