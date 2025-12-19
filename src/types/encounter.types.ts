@@ -44,4 +44,7 @@ export interface EncounterState {
 
     // Logs
     encounterLog: string[];
+
+    // Rewards
+    xpReward: number;
 }

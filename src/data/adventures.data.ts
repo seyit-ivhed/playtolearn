@@ -19,19 +19,12 @@ export const ADVENTURES: Adventure[] = [
                         id: 'scorpion_1',
                         name: 'Dune Scorpion',
                         sprite: goblinImg, // Placeholder
-                        maxHealth: 40,
-                        attack: 5,
-                        defense: 0,
-                    },
-                    {
-                        id: 'scorpion_2',
-                        name: 'Dune Scorpion',
-                        sprite: goblinImg, // Placeholder
-                        maxHealth: 40,
+                        maxHealth: 30,
                         attack: 5,
                         defense: 0,
                     }
-                ]
+                ],
+                xpReward: 10
             },
             {
                 id: '1_2',
@@ -55,7 +48,8 @@ export const ADVENTURES: Adventure[] = [
                         attack: 6,
                         defense: 1,
                     }
-                ]
+                ],
+                xpReward: 10
             },
             {
                 id: '1_3',
@@ -71,7 +65,8 @@ export const ADVENTURES: Adventure[] = [
                         attack: 2,
                         defense: 5,
                     }
-                ]
+                ],
+                xpReward: 15
             },
             {
                 id: '1_4',
@@ -92,11 +87,12 @@ export const ADVENTURES: Adventure[] = [
                     maxShield: 50,
                     attack: 15,
                     defense: 5,
-                }]
+                }],
+                xpReward: 50
             }
         ],
         rewards: {
-            xp: 200,
+            xp: 150, // Reduced since we give per-encounter XP now
             currency: 100
         }
     }

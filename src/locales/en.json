@@ -50,6 +50,10 @@
         "completion": {
             "victory_title": "VICTORY!",
             "victory_message": "The enemy has been defeated!",
+            "victory_message_1": "Amazing work! The desert stands silent in awe of your power.",
+            "victory_message_2": "Victory! Your math skills are as sharp as a desert sun.",
+            "victory_message_3": "Spectacular! The enemy has been defeated. Onward to more adventures!",
+            "victory_message_4": "Incredible! You handled that with style and wisdom!",
             "defeat_title": "DEFEAT",
             "defeat_message": "Your party has fallen...",
             "continue_button": "Continue"
@@ -69,6 +73,7 @@
         "title": "Adventure Complete!",
         "subtitle": "Excellent work, Adventurer. Here are your rewards:",
         "xp": "+{{amount}} XP",
+        "gained": "XP Gained:",
         "credits": "+{{amount}} Gold",
         "companion_unlocked": "New Companion Unlocked!",
         "companion_growth": "Companion Growth!",

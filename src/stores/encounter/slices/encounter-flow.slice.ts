@@ -4,7 +4,7 @@ import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.typ
 import { getCompanionById } from '../../../data/companions.data';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
-    initializeEncounter: (partyIds, enemies) => {
+    initializeEncounter: (partyIds, enemies, xpReward) => {
         const party: EncounterUnit[] = partyIds
             .filter(id => {
                 const data = getCompanionById(id);
@@ -58,7 +58,8 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             party,
             monsters,
             selectedUnitId: null,
-            encounterLog: ['Encounter Started!']
+            encounterLog: ['Encounter Started!'],
+            xpReward
         });
     },
 

@@ -7,4 +7,5 @@ export const initialEncounterState: EncounterState = {
     monsters: [],
     selectedUnitId: null,
     encounterLog: [],
+    xpReward: 0,
 };

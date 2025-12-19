@@ -50,10 +50,16 @@ export const useGameStore = create<GameState>()(
             restedCompanions: [],
 
             completeEncounter: () => {
-                const { currentMapNode, activeAdventureId } = get();
+                const { currentMapNode, activeAdventureId, addXpToPool } = get();
                 const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
 
                 if (!adventure) return;
+
+                // Grant XP for the current encounter before moving to the next
+                const currentEncounter = adventure.encounters[currentMapNode - 1];
+                if (currentEncounter && currentEncounter.xpReward) {
+                    addXpToPool(currentEncounter.xpReward);
+                }
 
                 // Check if there are more encounters
                 if (currentMapNode < adventure.encounters.length) {

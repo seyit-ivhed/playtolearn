@@ -25,7 +25,8 @@ const EncounterPage = () => {
     const {
         phase, party, monsters,
         performAction,
-        resolveSpecialAttack
+        resolveSpecialAttack,
+        xpReward
     } = useEncounterStore();
 
     const [activeChallenge, setActiveChallenge] = useState<{
@@ -246,6 +247,7 @@ const EncounterPage = () => {
                     <EncounterCompletionModal
                         result={phase === EncounterPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
                         onContinue={handleCompletionContinue}
+                        xpReward={xpReward}
                     />
                 )
             }

@@ -53,6 +53,7 @@ export interface Encounter {
     label: string;
     coordinates?: MapCoordinates;
     enemies?: AdventureMonster[]; // If type is BATTLE or BOSS
+    xpReward?: number;
 }
 
 // Adventure: Contains a linear sequence of encounters culminating in a boss fight

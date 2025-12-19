@@ -30,7 +30,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
 
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
             if (encounter.enemies && encounter.enemies.length > 0) {
-                initializeEncounter(party, encounter.enemies);
+                initializeEncounter(party, encounter.enemies, encounter.xpReward || 0);
                 navigate('/encounter');
             }
         }

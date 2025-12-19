@@ -183,13 +183,14 @@ Each realm contains multiple adventures:
 
 ## 3. Reward System
 
-### 3.1 Adventure Completion Rewards
-- **Companion Unlocks**: Completing an adventure unlocks a new companion who joins your party
+### 3.1 Encounter & Adventure Rewards
+- **Encounter XP**: Completing each battle or puzzle encounter grants immediate XP rewards (e.g., 10 XP for battles, 15 XP for puzzles).
+- **Companion Unlocks**: Completing an entire adventure unlocks a new companion who joins your party.
   - Example: Complete "The Goblin Forest" adventure → Unlock Fire Knight (Level 1)
-- **Companion Growth**: Completing adventures grants existing companions growth (they learn new skills and gain experience)
-  - Example: Complete "Dragon's Lair" adventure → Fire Knight experiences growth to Level 3
-- **Content Unlocks**: Some adventures unlock new realms or adventure paths
-- **Boss Badges**: Defeating boss fights grants special achievement badges
+- **Adventure Completion Bonus**: Completing adventures may grant a significant XP bonus to all active party members.
+  - Example: Complete "Dragon's Lair" adventure → +150 XP Bonus.
+- **Content Unlocks**: Some adventures unlock new realms or adventure paths.
+- **Boss Badges**: Defeating boss fights grants special achievement badges.
 
 ### 3.2 Progression Through Mastery
 - Players progress through their Journey by improving their math skills
