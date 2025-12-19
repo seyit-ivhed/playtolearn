@@ -43,9 +43,6 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                 <h1 className="map-title" data-testid="map-title">
                     {t(`adventures.${adventure.id}.title`, adventure.title)}
                 </h1>
-                <p className="map-subtitle">
-                    {t(`adventures.${adventure.id}.description`, adventure.description)}
-                </p>
             </div>
 
             {/* Background decoration */}
