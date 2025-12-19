@@ -43,8 +43,5 @@ export interface EncounterState {
     selectedUnitId: string | null;
 
     // Logs
-    // Logs
     encounterLog: string[];
-
-    // Removed shared specialMeter in favor of per-unit spirit
 }

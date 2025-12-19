@@ -68,17 +68,18 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                                 <stop offset="100%" stopColor="#fbbf24" stopOpacity="0.8" />
                             </linearGradient>
                         </defs>
-                        {/* 
-                           Path Logic needs to be dynamic or roughly match the 3-node structure.
-                           For prototype with 3 nodes:
-                           1: 250, 250
-                           2: 350, 450
-                           3: 250, 650
-                        */}
+                        {/* Dynamic Path Logic based on encounter coordinates */}
                         <path
-                            d="M 250 250 
-                               C 250 350, 350 350, 350 450 
-                               S 250 550, 250 650"
+                            d={encounters.reduce((acc, node, i) => {
+                                const x = node.coordinates?.x ?? 250;
+                                const y = node.coordinates?.y ?? (250 + i * 200);
+                                if (i === 0) return `M ${x} ${y}`;
+                                const prev = encounters[i - 1];
+                                const px = prev.coordinates?.x ?? 250;
+                                const py = prev.coordinates?.y ?? (250 + (i - 1) * 200);
+                                const cy = (py + y) / 2;
+                                return `${acc} C ${px} ${cy}, ${x} ${cy}, ${x} ${y}`;
+                            }, "")}
                         />
                     </svg>
 

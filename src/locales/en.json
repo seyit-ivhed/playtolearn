@@ -153,34 +153,33 @@
     },
     "adventures": {
         "1": {
-            "title": "The Goblin Forest",
-            "description": "Scouts have reported goblin activity in the nearby woods. Investigate and clear the threat.",
+            "title": "The Oasis Quest",
+            "description": "Venture through the Luminescent Desert to reach the Oasis and uncover its secrets.",
             "nodes": {
                 "1_1": {
-                    "label": "Scout Sighting"
+                    "label": "Desert Dust-up"
                 },
                 "1_2": {
-                    "label": "Ambush!"
+                    "label": "Mirages"
                 },
                 "1_3": {
-                    "label": "Leader Found"
+                    "label": "Water Flow"
                 },
                 "1_4": {
-                    "label": "Rest Site"
+                    "label": "Oasis Shade"
+                },
+                "1_10": {
+                    "label": "The Sand Colossus"
                 }
             }
         },
         "2": {
-            "title": "Stone Golem Cave",
-            "description": "A massive golem is blocking the pass. You must defeat it to proceed."
+            "title": "The Jungle Expedition",
+            "description": "Explore the ancient ruins deep within the jungle."
         },
         "3": {
-            "title": "The Sorcerer's Tower",
-            "description": "The source of the corruption has been found. Defeat the dark sorcerer!"
-        },
-        "4": {
-            "title": "Another Adventure",
-            "description": "Placeholder for another adventure."
+            "title": "The Void's Heart",
+            "description": "Face the source of the darkness."
         }
     }
 }

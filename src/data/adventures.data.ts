@@ -5,73 +5,99 @@ import goblinBossImg from '../assets/images/enemies/goblin_boss.png';
 export const ADVENTURES: Adventure[] = [
     {
         id: '1',
-        title: 'Training Patrol',
-        description: 'The village elder has sent you to patrol the outskirts. Keep an eye out for trouble!',
+        title: 'The Oasis Quest',
+        description: 'Venture through the Luminescent Desert to reach the Oasis and uncover its secrets.',
         difficulty: 1,
         encounters: [
             {
                 id: '1_1',
                 type: EncounterType.BATTLE,
-                label: 'Scout Sighting',
-                coordinates: { x: 250, y: 250 },
-                enemies: [{
-                    id: 'goblin_scout_weak',
-                    name: 'Goblin Scout',
-                    sprite: goblinImg,
-                    maxHealth: 50,
-                    attack: 4,
-                    defense: 0,
-                }]
-            },
-            {
-                id: '1_2',
-                type: EncounterType.BATTLE,
-                label: 'Ambush!',
-                coordinates: { x: 350, y: 450 },
+                label: 'Desert Dust-up',
+                coordinates: { x: 250, y: 150 },
                 enemies: [
                     {
-                        id: 'goblin_scout_normal_1',
-                        name: 'Sneaky Goblin',
-                        sprite: goblinImg,
+                        id: 'scorpion_1',
+                        name: 'Dune Scorpion',
+                        sprite: goblinImg, // Placeholder
                         maxHealth: 40,
-                        attack: 4,
+                        attack: 5,
                         defense: 0,
                     },
                     {
-                        id: 'goblin_scout_normal_2',
-                        name: 'Sneaky Goblin',
-                        sprite: goblinImg,
+                        id: 'scorpion_2',
+                        name: 'Dune Scorpion',
+                        sprite: goblinImg, // Placeholder
                         maxHealth: 40,
-                        attack: 4,
+                        attack: 5,
                         defense: 0,
                     }
                 ]
             },
             {
+                id: '1_2',
+                type: EncounterType.BATTLE,
+                label: 'Mirages',
+                coordinates: { x: 350, y: 300 },
+                enemies: [
+                    {
+                        id: 'sand_spirit_1',
+                        name: 'Sand Spirit',
+                        sprite: goblinImg, // Placeholder
+                        maxHealth: 50,
+                        attack: 6,
+                        defense: 1,
+                    },
+                    {
+                        id: 'sand_spirit_2',
+                        name: 'Sand Spirit',
+                        sprite: goblinImg, // Placeholder
+                        maxHealth: 50,
+                        attack: 6,
+                        defense: 1,
+                    }
+                ]
+            },
+            {
                 id: '1_3',
-                type: EncounterType.BOSS,
-                label: 'Leader Found',
-                coordinates: { x: 250, y: 650 },
-                enemies: [{
-                    id: 'goblin_chief',
-                    name: 'Goblin Chief',
-                    sprite: goblinBossImg,
-                    maxHealth: 90,
-                    maxShield: 10,
-                    attack: 10,
-                    defense: 2,
-                }]
+                type: EncounterType.BATTLE, // Mocking Puzzle for now as requested
+                label: 'Water Flow',
+                coordinates: { x: 250, y: 450 },
+                enemies: [
+                    {
+                        id: 'puzzle_mock_1',
+                        name: 'Arithmetic Lock',
+                        sprite: goblinImg, // Placeholder
+                        maxHealth: 100,
+                        attack: 2,
+                        defense: 5,
+                    }
+                ]
             },
             {
                 id: '1_4',
                 type: EncounterType.CAMP,
-                label: 'Rest Site',
-                coordinates: { x: 250, y: 850 }
+                label: 'Oasis Shade',
+                coordinates: { x: 450, y: 600 }
+            },
+            {
+                id: '1_10',
+                type: EncounterType.BOSS,
+                label: 'The Sand Colossus',
+                coordinates: { x: 250, y: 900 },
+                enemies: [{
+                    id: 'sand_colossus',
+                    name: 'Sand Colossus',
+                    sprite: goblinBossImg,
+                    maxHealth: 200,
+                    maxShield: 50,
+                    attack: 15,
+                    defense: 5,
+                }]
             }
         ],
         rewards: {
-            xp: 100,
-            currency: 50
+            xp: 200,
+            currency: 100
         }
     }
 ];

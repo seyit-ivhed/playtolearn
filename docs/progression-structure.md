@@ -9,42 +9,25 @@ This document outlines the progression flow, story, and encounter details for th
 
 ## Story Arc: The Awakening of Heroes
 **From Curiosity to Courage:** 
-Amara and Tariq are two curious 8-year-old children living in separate corners of the World of Origins. While playing, they both discover a strange, fading portal leading to the "Magical Canvas"—the source of all life and color in their world. The Canvas is being drained of its vibrancy by the "Void Shadows." 
+Amara and Tariq are two curious 8-year-old children who have already joined forces after discovering a strange, fading portal leading to the "Magical Canvas"—the source of all life and color in their world. The Canvas is being drained of its vibrancy by the "Void Shadows." 
 
-As they journey through the Jungle and Desert, their experiences and the math challenges they solve cause them to grow—not just in power, but in age and wisdom. By the end of the MVP adventures, they have moved from "Curious Kids" to "Promising Apprentinces."
+As they journey through the Desert and Jungle, their experiences and the math challenges they solve cause them to grow—not just in power, but in age and wisdom. By the end of the MVP adventures, they have moved from "Curious Kids" to "Promising Apprentinces."
 
 ---
 
-## Adventure 1: The First Step (Tutorial)
-**Theme:** Amara's Village Outskirts (Lush Jungle)
-**Goal:** Reach the Canvas Portal and learn the basics of being a hero.
-
-### Tutorial Learning Objectives
+## Adventure 1: The Oasis Quest (Starting Adventure)
+**Theme:** Tariq's Home (The Luminescent Desert)
+**Character Focus:** Learning the basics while venturing through the desert.
+**Tutorial Learning Objectives (Integrated into Encounter 1):**
 1.  **Turn-Based Rhythm:** Understanding the "Player Turn" vs "Monster Turn" sequence.
 2.  **Health Management:** Monitoring HP and understanding damage.
 3.  **Spirit System:** Passively gaining Spirit and activating the Ultimate.
 4.  **The Math Bond:** Solving a math challenge to trigger an Ultimate Ability.
 
-### Encounter Flow (Scripted)
-1.  **Encounter 1 (Battle):** 1x Tiny Spiderling.
-    - *Focus:* Player clicks "Attack." Observe monster sequential turn.
-2.  **Encounter 2 (Battle):** 1x Jungle Slime.
-    - *Focus:* Health bar visualization. 
-3.  **Encounter 3 (Spirit):** 1x Stone Pebble (High HP).
-    - *Focus:* Wait for Spirit to reach 100. Activate "Jaguar Strike" (Math Challenge).
-    - *Note:* No manual targeting; Amara automatically hits the only enemy.
-4.  **Camp (Scripted):** Meeting Tariq at the Portal. They decide to venture together.
-
----
-
-## Adventure 2: The Oasis Quest
-**Theme:** Tariq's Home (The Luminescent Desert)
-**Character Focus:** Tariq (Support & Healing)
-
 ### Encounter Matrix (9+1)
 | # | Type | Name | Enemies/Challenge |
 |---|---|---|---|
-| 1 | Battle | Desert Dust-up | 2x Dune Scorpions |
+| 1 | Battle | Desert Dust-up | 2x Dune Scorpions (Tutorial) |
 | 2 | Battle | Mirages | 2x Sand Spirits |
 | 3 | Puzzle | Water Flow | Dynamic Arithmetic (Logic-based) |
 | 4 | **Camp** | Oasis Shade | Intro to Party Growth (Level Up) |
