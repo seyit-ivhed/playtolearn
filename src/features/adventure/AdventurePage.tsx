@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game.store';
@@ -12,6 +13,21 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     const navigate = useNavigate();
     const { activeParty: party, activeAdventureId } = useGameStore();
     const { initializeEncounter } = useEncounterStore();
+
+    const currentNodeRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        // Use a small timeout to ensure the DOM is fully ready and styles are applied
+        const timer = setTimeout(() => {
+            if (currentNodeRef.current) {
+                currentNodeRef.current.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }, 100);
+        return () => clearTimeout(timer);
+    }, [currentNode]);
 
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
@@ -122,6 +138,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                             return (
                                 <div
                                     key={node.id}
+                                    ref={isCurrent ? currentNodeRef : null}
                                     className="node-wrapper"
                                     style={{ left: leftPos, top: topPos }}
                                     onClick={() => !isLocked && handleNodeClick(node)}
