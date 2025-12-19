@@ -1,0 +1,185 @@
+/* radial Slot System */
+.companionSeat {
+    position: absolute;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 20;
+    transition: transform 0.3s ease-out;
+}
+
+.pos0 {
+    top: 12%;
+    left: 0%;
+    transform: translate(25%, 0);
+}
+
+.pos1 {
+    top: 12%;
+    right: 0%;
+    transform: translate(-25%, 0);
+}
+
+.pos2 {
+    bottom: 12%;
+    right: 0%;
+    transform: translate(-25%, 0);
+}
+
+.pos3 {
+    bottom: 12%;
+    left: 0%;
+    transform: translate(25%, 0);
+}
+
+/* Character Visuals */
+.companionFocus {
+    position: relative;
+}
+
+.largeAvatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.companionSeat:hover .largeAvatar {
+    transform: scale(1.1);
+    border-color: #fbbf24;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+}
+
+.companionBadge {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0.4rem 1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+.miniName {
+    font-weight: 800;
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.miniLevel {
+    font-size: 0.7rem;
+    color: #fbbf24;
+    font-weight: 700;
+}
+
+.leaveButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ef4444;
+    color: white;
+    border: 3px solid #0f172a;
+    font-weight: 900;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.companionSeat:hover .leaveButton {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* XP Control */
+.companionXpBar {
+    display: flex;
+    flex-direction: column;
+    width: 140px;
+    gap: 0.5rem;
+}
+
+.levelUpBtn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    font-weight: 800;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 0 #065f46;
+}
+
+.levelUpBtn:disabled {
+    background: #334155;
+    box-shadow: 0 4px 0 #1e293b;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.levelUpBtn:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #065f46;
+}
+
+.levelUpBtn:not(:disabled):active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #065f46;
+}
+
+.xpSmallBar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.xpSmallFill {
+    height: 100%;
+    background: #10b981;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 10px #10b981;
+}
+
+/* Empty Seat Visuals */
+.emptyAvatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+@media (max-width: 1200px) {
+    .largeAvatar {
+        width: 120px;
+        height: 120px;
+    }
+}

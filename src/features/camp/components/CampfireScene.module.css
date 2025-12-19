@@ -1,0 +1,23 @@
+.mainCampArea {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.campfireScene {
+    position: relative;
+    width: 700px;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1200px) {
+    .campfireScene {
+        width: 600px;
+        height: 600px;
+    }
+}

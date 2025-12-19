@@ -1,0 +1,89 @@
+.centralHub {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    z-index: 30;
+    background: radial-gradient(circle, rgba(234, 88, 12, 0.15) 0%, transparent 70%);
+}
+
+.fireEffect {
+    font-size: 6rem;
+    filter: drop-shadow(0 0 40px #f97316);
+    animation: fire-flicker 2s infinite alternate ease-in-out;
+    margin-top: -1rem;
+    user-select: none;
+}
+
+@keyframes fire-flicker {
+    0% {
+        transform: scale(1) rotate(-1deg);
+        filter: drop-shadow(0 0 30px #f97316);
+    }
+
+    50% {
+        transform: scale(1.1) rotate(1deg);
+        filter: drop-shadow(0 0 50px #fbbf24);
+    }
+
+    100% {
+        transform: scale(1.05) rotate(-2deg);
+        filter: drop-shadow(0 0 40px #ea580c);
+    }
+}
+
+.xpPoolDisplay {
+    background: rgba(15, 23, 42, 0.9);
+    padding: 0.6rem 1.75rem;
+    border-radius: 2.5rem;
+    border: 3px solid #fbbf24;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 40px rgba(251, 191, 36, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.xpLabel {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #fbbf24;
+    letter-spacing: 0.1em;
+}
+
+.xpValue {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+}
+
+.backButton {
+    background: #fbbf24;
+    color: #020617;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 0 #b45309;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.backButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #b45309;
+    background: #fcd34d;
+}
+
+.backButton:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #b45309;
+}
