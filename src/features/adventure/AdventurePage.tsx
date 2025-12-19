@@ -37,7 +37,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     };
 
     return (
-        <div className="map-container">
+        <>
             {/* Integrated Header */}
             <div className="map-header">
                 <h1 className="map-title" data-testid="map-title">
@@ -45,104 +45,107 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                 </h1>
             </div>
 
-            {/* Background decoration */}
-            <div className="map-bg-pattern"></div>
+            <div className="map-container">
 
-            <svg className="map-svg-full">
-                {/* Spacer for SVG layers if needed */}
-            </svg>
+                {/* Background decoration */}
+                <div className="map-bg-pattern"></div>
 
-            {/* 
+                <svg className="map-svg-full">
+                    {/* Spacer for SVG layers if needed */}
+                </svg>
+
+                {/* 
                 Re-implementing with a centered max-width container for reliable alignment 
                 between HTML nodes and SVG path.
             */}
-            <div className="map-center-col">
-                <div className="map-col-inner">
-                    <svg className="map-svg-path" viewBox="0 0 500 1300" preserveAspectRatio="xMidYMin slice">
-                        <defs>
-                            <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.2" />
-                                <stop offset="100%" stopColor="#fbbf24" stopOpacity="0.8" />
-                            </linearGradient>
-                        </defs>
-                        {/* Dynamic Path Logic based on encounter coordinates */}
-                        <path
-                            d={encounters.reduce((acc, node, i) => {
-                                const x = node.coordinates?.x ?? 250;
-                                const y = node.coordinates?.y ?? (250 + i * 200);
-                                if (i === 0) return `M ${x} ${y}`;
-                                const prev = encounters[i - 1];
-                                const px = prev.coordinates?.x ?? 250;
-                                const py = prev.coordinates?.y ?? (250 + (i - 1) * 200);
-                                const cy = (py + y) / 2;
-                                return `${acc} C ${px} ${cy}, ${x} ${cy}, ${x} ${y}`;
-                            }, "")}
-                        />
-                    </svg>
+                <div className="map-center-col">
+                    <div className="map-col-inner">
+                        <svg className="map-svg-path" viewBox="0 0 500 1300" preserveAspectRatio="xMidYMin slice">
+                            <defs>
+                                <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.2" />
+                                    <stop offset="100%" stopColor="#fbbf24" stopOpacity="0.8" />
+                                </linearGradient>
+                            </defs>
+                            {/* Dynamic Path Logic based on encounter coordinates */}
+                            <path
+                                d={encounters.reduce((acc, node, i) => {
+                                    const x = node.coordinates?.x ?? 250;
+                                    const y = node.coordinates?.y ?? (250 + i * 200);
+                                    if (i === 0) return `M ${x} ${y}`;
+                                    const prev = encounters[i - 1];
+                                    const px = prev.coordinates?.x ?? 250;
+                                    const py = prev.coordinates?.y ?? (250 + (i - 1) * 200);
+                                    const cy = (py + y) / 2;
+                                    return `${acc} C ${px} ${cy}, ${x} ${cy}, ${x} ${y}`;
+                                }, "")}
+                            />
+                        </svg>
 
-                    {encounters.map((node, index) => {
-                        // Node ID in data is string like "1_1", but progress is number index+1
-                        const nodeStep = index + 1;
-                        const isCompleted = nodeStep < currentNode;
-                        const isCurrent = nodeStep === currentNode;
-                        const isLocked = nodeStep > currentNode;
-                        const isCamp = node.type === EncounterType.CAMP;
-                        const isBoss = node.type === EncounterType.BOSS;
+                        {encounters.map((node, index) => {
+                            // Node ID in data is string like "1_1", but progress is number index+1
+                            const nodeStep = index + 1;
+                            const isCompleted = nodeStep < currentNode;
+                            const isCurrent = nodeStep === currentNode;
+                            const isLocked = nodeStep > currentNode;
+                            const isCamp = node.type === EncounterType.CAMP;
+                            const isBoss = node.type === EncounterType.BOSS;
 
-                        // Use coordinates from data or fallback
-                        const leftPos = node.coordinates ? `${(node.coordinates.x / 500) * 100}%` : '50%';
-                        const topPos = node.coordinates ? node.coordinates.y : 250 + (index * 200);
+                            // Use coordinates from data or fallback
+                            const leftPos = node.coordinates ? `${(node.coordinates.x / 500) * 100}%` : '50%';
+                            const topPos = node.coordinates ? node.coordinates.y : 250 + (index * 200);
 
-                        // CSS Classes Construction
-                        const nodeContainerClasses = [
-                            'node-container',
-                            isCamp ? 'camp' : 'default',
-                            isBoss ? 'boss' : '', // Might need CSS for boss node
-                            isLocked ? 'locked' : '',
-                            isCurrent ? 'current' : '',
-                            isCompleted ? 'completed' : ''
-                        ].filter(Boolean).join(' ');
+                            // CSS Classes Construction
+                            const nodeContainerClasses = [
+                                'node-container',
+                                isCamp ? 'camp' : 'default',
+                                isBoss ? 'boss' : '', // Might need CSS for boss node
+                                isLocked ? 'locked' : '',
+                                isCurrent ? 'current' : '',
+                                isCompleted ? 'completed' : ''
+                            ].filter(Boolean).join(' ');
 
-                        const labelClasses = [
-                            'node-label',
-                            isCamp ? 'camp' : '',
-                            isLocked ? 'locked' : '',
-                            isCurrent ? 'current' : '',
-                            isCompleted ? 'completed' : ''
-                        ].filter(Boolean).join(' ');
+                            const labelClasses = [
+                                'node-label',
+                                isCamp ? 'camp' : '',
+                                isLocked ? 'locked' : '',
+                                isCurrent ? 'current' : '',
+                                isCompleted ? 'completed' : ''
+                            ].filter(Boolean).join(' ');
 
-                        // Node Icon
-                        let icon = nodeStep.toString();
-                        if (isCamp) icon = '⛺';
-                        if (isBoss) icon = '💀';
-                        if (isCompleted) icon = '✓';
+                            // Node Icon
+                            let icon = nodeStep.toString();
+                            if (isCamp) icon = '⛺';
+                            if (isBoss) icon = '💀';
+                            if (isCompleted) icon = '✓';
 
-                        return (
-                            <div
-                                key={node.id}
-                                className="node-wrapper"
-                                style={{ left: leftPos, top: topPos }}
-                                onClick={() => !isLocked && handleNodeClick(node)}
-                            >
-                                {/* Node Shape */}
-                                <div className={nodeContainerClasses} data-testid={`map-node-${node.id}`}>
-                                    <span className="node-icon">
-                                        {icon}
-                                    </span>
+                            return (
+                                <div
+                                    key={node.id}
+                                    className="node-wrapper"
+                                    style={{ left: leftPos, top: topPos }}
+                                    onClick={() => !isLocked && handleNodeClick(node)}
+                                >
+                                    {/* Node Shape */}
+                                    <div className={nodeContainerClasses} data-testid={`map-node-${node.id}`}>
+                                        <span className="node-icon">
+                                            {icon}
+                                        </span>
+                                    </div>
+
+                                    {/* Label */}
+                                    <div className={labelClasses}>
+                                        {isCamp && <span className="mr-2">✨</span>}
+                                        {t(`adventures.${adventure.id}.nodes.${node.id}.label`, node.label)}
+                                        {isCamp && <span className="ml-2">✨</span>}
+                                    </div>
                                 </div>
-
-                                {/* Label */}
-                                <div className={labelClasses}>
-                                    {isCamp && <span className="mr-2">✨</span>}
-                                    {t(`adventures.${adventure.id}.nodes.${node.id}.label`, node.label)}
-                                    {isCamp && <span className="ml-2">✨</span>}
-                                </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
