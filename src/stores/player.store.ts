@@ -37,13 +37,13 @@ export const usePlayerStore = create<PlayerState>()(
                         : [...state.unlockedAdventures, adventureId]
                 })),
 
-            resetProgress: () => set({
+            resetProgress: () => set((state) => ({
                 name: 'Cadet',
-                difficulty: 3,
-                language: 'en',
+                difficulty: state.difficulty,
+                language: state.language,
                 currentAdventure: 1,
                 unlockedAdventures: [1],
-            })
+            }))
         }),
         {
             name: 'space-math-player-storage',

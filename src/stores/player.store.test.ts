@@ -1,0 +1,44 @@
+import { describe, it, expect, beforeEach } from 'vitest';
+import { usePlayerStore } from './player.store';
+
+describe('Player Store', () => {
+    beforeEach(() => {
+        usePlayerStore.setState({
+            name: 'Cadet',
+            difficulty: 3,
+            language: 'en',
+            currentAdventure: 1,
+            unlockedAdventures: [1],
+        });
+    });
+
+    it('should reset progress but keep settings', () => {
+        // Set up some non-default state
+        usePlayerStore.setState({
+            name: 'Veteran',
+            difficulty: 4, // Hero
+            language: 'sv', // Swedish
+            currentAdventure: 2,
+            unlockedAdventures: [1, 2],
+        });
+
+        const store = usePlayerStore.getState();
+        expect(store.currentAdventure).toBe(2);
+        expect(store.difficulty).toBe(4);
+        expect(store.language).toBe('sv');
+
+        // Reset
+        store.resetProgress();
+
+        const resetStore = usePlayerStore.getState();
+
+        // Progress should be reset
+        expect(resetStore.currentAdventure).toBe(1);
+        expect(resetStore.unlockedAdventures).toEqual([1]);
+        expect(resetStore.name).toBe('Cadet'); // Confirmed assumption
+
+        // Settings should be preserved
+        expect(resetStore.difficulty).toBe(4);
+        expect(resetStore.language).toBe('sv');
+    });
+});
