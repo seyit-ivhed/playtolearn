@@ -14,7 +14,8 @@ test.describe('Camp Page', () => {
 
     test('should display camp page title', async ({ page }) => {
         await expect(page.getByTestId('camp-title')).toBeVisible();
-        await expect(page.getByTestId('camp-title')).toHaveText('Fellowship Camp');
+        // The title now has a fire emoji and comes from the adventure data
+        await expect(page.getByTestId('camp-title')).toHaveText(/.*Camp|.*Dust-up/);
     });
 
     test('should display return to map button', async ({ page }) => {
@@ -22,16 +23,23 @@ test.describe('Camp Page', () => {
     });
 
     test('should display party slots', async ({ page }) => {
-        // There should be 4 slots total (empty or occupied)
-        // We can count them via logic, or just check at least one empty slot exists if we start fresh
-        // or checks for specific known IDs if we pre-seeded data.
-        // Let's check for presence of empty slots or party cards.
-
-        // Just checking we have the container or some slots.
-        // Since default state might have 1 hero?
-
-        // We can just check that we don't crash and see some slots.
-        // Check for specific known party member from initial state
         await expect(page.getByTestId('party-card-amara')).toBeVisible();
+    });
+
+    test('should distribute XP to companion', async ({ page }) => {
+        const xpValue = page.locator('span[class*="xpValue"]');
+        await expect(xpValue).toBeVisible();
+
+        const initialXpText = await xpValue.innerText();
+        const initialXp = parseInt(initialXpText);
+
+        if (initialXp >= 10) {
+            // Find level up button for Amara
+            const levelUpBtn = page.getByTestId('party-card-amara').getByRole('button', { name: /XP/ });
+            await levelUpBtn.click({ force: true });
+
+            // Verify shared XP decreased
+            await expect(xpValue).toHaveText((initialXp - 10).toString());
+        }
     });
 });
