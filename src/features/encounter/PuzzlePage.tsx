@@ -1,9 +1,11 @@
-
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 import { useGameStore } from '../../stores/game.store';
+import { usePlayerStore } from '../../stores/player.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
+import { generatePuzzleData } from '../../utils/math-generator';
 import { SumTargetPuzzle } from './puzzles/SumTargetPuzzle';
 import styles from './PuzzlePage.module.css';
 
@@ -12,6 +14,7 @@ const PuzzlePage = () => {
     const navigate = useNavigate();
     const { nodeId } = useParams<{ nodeId: string }>();
     const { activeAdventureId, currentMapNode, completeEncounter } = useGameStore();
+    const { difficulty } = usePlayerStore();
 
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
 
@@ -23,6 +26,12 @@ const PuzzlePage = () => {
     const encounterIndex = adventure?.encounters.findIndex(e => e.id === encounter?.id) ?? -1;
     const isLocked = encounterIndex + 1 > currentMapNode;
 
+    // Dynamically generate puzzle values based on difficulty
+    const puzzleData = useMemo(() => {
+        if (!encounter?.puzzleData) return null;
+        return generatePuzzleData(encounter.puzzleData.puzzleType, difficulty);
+    }, [encounter?.puzzleData?.puzzleType, difficulty]);
+
     console.log('[PuzzlePage] Debug Info:', {
         nodeId,
         activeAdventureId,
@@ -30,10 +39,11 @@ const PuzzlePage = () => {
         encounterIndex,
         isLocked,
         foundEncounter: encounter?.id,
-        hasPuzzleData: !!encounter?.puzzleData
+        difficulty,
+        hasPuzzleData: !!puzzleData
     });
 
-    if (!encounter || !encounter.puzzleData || isLocked) {
+    if (!encounter || !puzzleData || isLocked) {
         return (
             <div className={styles.errorContainer}>
                 <h2>{isLocked ? t('puzzle.locked', 'Puzzle Locked') : t('puzzle.not_found', 'Puzzle Not Found')}</h2>
@@ -52,7 +62,6 @@ const PuzzlePage = () => {
         );
     }
 
-    const { puzzleData } = encounter;
 
     const handleSolve = () => {
         completeEncounter(encounterIndex + 1);

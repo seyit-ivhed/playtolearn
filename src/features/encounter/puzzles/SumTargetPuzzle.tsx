@@ -12,7 +12,7 @@ interface SumTargetPuzzleProps {
 export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     const [currentSum, setCurrentSum] = useState(0);
     const [isSolved, setIsSolved] = useState(false);
-    const [lastAction, setLastAction] = useState<{ value: number; id: number } | null>(null);
+    const [lastAction, setLastAction] = useState<{ label: string; id: number } | null>(null);
 
     const target = data.targetValue;
     const progress = Math.min(100, Math.max(0, (currentSum / target) * 100));
@@ -26,10 +26,26 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
         }
     }, [currentSum, target, onSolve, isSolved]);
 
-    const handlePipeClick = (value: number) => {
+    const handlePipeClick = (option: number | any) => {
         if (isSolved) return;
-        setCurrentSum(prev => prev + value);
-        setLastAction({ value, id: Date.now() });
+
+        let nextSum = currentSum;
+        let actionLabel = '';
+
+        if (typeof option === 'number') {
+            nextSum += option;
+            actionLabel = option > 0 ? `+${option}` : `${option}`;
+        } else {
+            const { value, type, label } = option;
+            actionLabel = label || `${type} ${value}`;
+
+            if (type === 'MULTIPLY') nextSum *= value;
+            else if (type === 'DIVIDE') nextSum = Math.floor(nextSum / value);
+            else nextSum += value;
+        }
+
+        setCurrentSum(nextSum);
+        setLastAction({ label: actionLabel, id: Date.now() });
     };
 
     const handleReset = () => {
@@ -68,19 +84,25 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
 
                 {/* Pipes (Inputs) */}
                 <div className={styles.pipesGrid}>
-                    {data.options.map((val, idx) => (
-                        <motion.button
-                            key={`${val}-${idx}`}
-                            className={styles.pipe}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => handlePipeClick(val)}
-                            disabled={isSolved}
-                        >
-                            <div className={styles.pipeIcon}>💧</div>
-                            <div className={styles.pipeValue}>{val > 0 ? `+${val}` : val}</div>
-                        </motion.button>
-                    ))}
+                    {data.options.map((option, idx) => {
+                        const isObj = typeof option !== 'number';
+                        const label = isObj ? (option as any).label : (option > 0 ? `+${option}` : option);
+                        const icon = isObj ? ((option as any).type === 'MULTIPLY' ? '⚡' : '❄️') : '💧';
+
+                        return (
+                            <motion.button
+                                key={`${idx}`}
+                                className={styles.pipe}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => handlePipeClick(option)}
+                                disabled={isSolved}
+                            >
+                                <div className={styles.pipeIcon}>{icon}</div>
+                                <div className={styles.pipeValue}>{label}</div>
+                            </motion.button>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -109,7 +131,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                         className={styles.floatText}
                         style={{ left: '50%' }}
                     >
-                        {lastAction.value > 0 ? `+${lastAction.value}` : lastAction.value}
+                        {lastAction.label}
                     </motion.div>
                 )}
             </AnimatePresence>

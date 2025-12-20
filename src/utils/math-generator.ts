@@ -5,6 +5,7 @@ import {
     type ValidationResult,
     type MathEngineConfig
 } from '../types/math.types';
+import { PuzzleType, type PuzzleData, type PuzzleOption } from '../types/adventure.types';
 
 /**
  * Configuration for math problem generation ranges
@@ -321,5 +322,103 @@ export const validateAnswer = (
         userAnswer,
         correctAnswer,
         feedback: isCorrect ? 'correct' : 'incorrect',
+    };
+};
+
+/**
+ * Generates puzzle data based on puzzle type and difficulty
+ */
+export const generatePuzzleData = (
+    puzzleType: PuzzleType,
+    difficulty: DifficultyLevel
+): PuzzleData => {
+    switch (puzzleType) {
+        case PuzzleType.SUM_TARGET:
+            return generateSumTargetData(difficulty);
+        case PuzzleType.BALANCE:
+            return generateBalanceData(difficulty);
+        case PuzzleType.SEQUENCE:
+            return generateSequenceData(difficulty);
+        default:
+            return {
+                puzzleType: PuzzleType.SUM_TARGET,
+                targetValue: 10,
+                options: [2, 3, 5]
+            };
+    }
+};
+
+const generateSumTargetData = (difficulty: DifficultyLevel): PuzzleData => {
+    let targetValue: number;
+    let options: (number | PuzzleOption)[];
+
+    switch (difficulty) {
+        case 1:
+            targetValue = getRandomInt(8, 15);
+            options = [getRandomInt(2, 3), getRandomInt(3, 4), getRandomInt(4, 5)];
+            break;
+        case 2:
+            targetValue = getRandomInt(15, 25);
+            options = [getRandomInt(3, 5), getRandomInt(5, 7), getRandomInt(7, 9)];
+            break;
+        case 3:
+            targetValue = getRandomInt(25, 50);
+            options = [getRandomInt(5, 10), getRandomInt(10, 15), getRandomInt(5, 8), -5];
+            break;
+        case 4:
+            targetValue = getRandomInt(50, 100);
+            options = [
+                getRandomInt(10, 20),
+                getRandomInt(5, 15),
+                -10,
+                { value: 2, type: 'MULTIPLY', label: 'x2' },
+                { value: 2, type: 'DIVIDE', label: '÷2' }
+            ];
+            break;
+        case 5:
+            targetValue = getRandomInt(100, 300);
+            options = [
+                getRandomInt(20, 40),
+                getRandomInt(10, 25),
+                -20,
+                { value: 3, type: 'MULTIPLY', label: 'x3' },
+                { value: 2, type: 'MULTIPLY', label: 'x2' },
+                { value: 2, type: 'DIVIDE', label: '÷2' }
+            ];
+            break;
+        default:
+            targetValue = 10;
+            options = [2, 3, 5];
+    }
+
+    // Ensure options are unique and non-zero (except for intentional negatives)
+    const uniqueOptions = Array.from(new Set(options)).filter(o => o !== 0);
+
+    return {
+        puzzleType: PuzzleType.SUM_TARGET,
+        targetValue,
+        options: uniqueOptions
+    };
+};
+
+const generateBalanceData = (difficulty: DifficultyLevel): PuzzleData => {
+    // Placeholder logic for Balance puzzle (Weighing Rocks)
+    const targetValue = 5 * difficulty + getRandomInt(5, 10);
+    return {
+        puzzleType: PuzzleType.BALANCE,
+        targetValue,
+        options: [5, 10, 3, 7].map(o => o + (difficulty - 1) * 2)
+    };
+};
+
+const generateSequenceData = (difficulty: DifficultyLevel): PuzzleData => {
+    // Placeholder logic for Sequence puzzle (Star Map)
+    const step = difficulty + 1;
+    const targetValue = step * 10;
+    return {
+        puzzleType: PuzzleType.SEQUENCE,
+        targetValue,
+        options: Array.from({ length: 10 }).map((_, i) => (i + 1) * step),
+        rules: [`MULTIPLES_OF_${step}`]
     };
 };

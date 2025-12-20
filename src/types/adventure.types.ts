@@ -55,10 +55,16 @@ export const PuzzleType = {
 
 export type PuzzleType = typeof PuzzleType[keyof typeof PuzzleType];
 
+export interface PuzzleOption {
+    value: number;
+    type: 'ADD' | 'MULTIPLY' | 'DIVIDE';
+    label?: string; // e.g. "x2", "+5", "÷3"
+}
+
 export interface PuzzleData {
     puzzleType: PuzzleType;
     targetValue: number;
-    options: number[]; // Pipe values, weight values, etc.
+    options: (number | PuzzleOption)[]; // Support both old simple numbers and new complex options
     rules?: string[];
 }
 
