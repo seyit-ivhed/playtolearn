@@ -29,6 +29,17 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
     }, []);
 
     useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [onClose]);
+
+    useEffect(() => {
         if (historyRef.current) {
             historyRef.current.scrollTop = historyRef.current.scrollHeight;
         }
