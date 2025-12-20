@@ -28,6 +28,7 @@ interface GameState {
     // Progression Actions
     addXpToPool: (amount: number) => void;
     assignXpToCompanion: (companionId: string, amount: number) => void;
+    levelUpCompanion: (companionId: string) => void;
     consumeRestedBonus: (companionId: string) => void; // Call when bonus used
     markRestedCompanions: () => void; // Call when starting adventure
 
@@ -35,6 +36,7 @@ interface GameState {
     debugSetMapNode: (node: number) => void;
     debugUnlockAllCompanions: () => void;
     debugAddXp: (amount: number) => void;
+    debugResetXpPool: () => void;
 
     resetAll: () => void;
 }
@@ -146,6 +148,28 @@ export const useGameStore = create<GameState>()(
                 });
             },
 
+            levelUpCompanion: (companionId) => {
+                const state = get();
+                const stats = state.companionStats[companionId];
+                if (!stats) return;
+
+                const LEVEL_CAP = 10;
+                if (stats.level >= LEVEL_CAP) return;
+
+                const xpNeeded = getXpForNextLevel(stats.level);
+                const actualXpNeeded = Math.max(0, xpNeeded - stats.xp);
+
+                if (state.xpPool < actualXpNeeded) return;
+
+                set({
+                    xpPool: state.xpPool - actualXpNeeded,
+                    companionStats: {
+                        ...state.companionStats,
+                        [companionId]: { level: stats.level + 1, xp: 0 }
+                    }
+                });
+            },
+
             markRestedCompanions: () => {
                 const { activeParty, unlockedCompanions } = get();
                 // Everyone NOT in active party gets rested
@@ -169,6 +193,8 @@ export const useGameStore = create<GameState>()(
             },
 
             debugAddXp: (amount) => set((state) => ({ xpPool: state.xpPool + amount })),
+
+            debugResetXpPool: () => set({ xpPool: 0 }),
 
             resetAll: () => {
                 set({

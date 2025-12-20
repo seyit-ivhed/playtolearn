@@ -104,6 +104,12 @@ describe('useGameStore', () => {
             useGameStore.getState().resetMap();
             expect(useGameStore.getState().currentMapNode).toBe(1);
         });
+
+        it('should reset xp pool via debug action', () => {
+            useGameStore.setState({ xpPool: 100 });
+            useGameStore.getState().debugResetXpPool();
+            expect(useGameStore.getState().xpPool).toBe(0);
+        });
     });
 
     describe('Party Management', () => {
@@ -225,8 +231,59 @@ describe('useGameStore', () => {
             useGameStore.getState().assignXpToCompanion('c1', 100);
 
             const state = useGameStore.getState();
-            expect(state.xpPool).toBe(50);
             expect(state.companionStats['c1'].xp).toBe(0);
+        });
+
+        it('should level up companion and consume exact XP needed', () => {
+            // Level 1 -> 2 needs 15 XP
+            useGameStore.setState({
+                xpPool: 100,
+                companionStats: {
+                    c1: { level: 1, xp: 5 } // already has 5 xp
+                }
+            });
+
+            // Mock getXpForNextLevel(1) = 15
+            vi.spyOn(progressionUtils, 'getXpForNextLevel').mockReturnValue(15);
+
+            useGameStore.getState().levelUpCompanion('c1');
+
+            const state = useGameStore.getState();
+            expect(state.xpPool).toBe(100 - (15 - 5)); // 90
+            expect(state.companionStats['c1'].level).toBe(2);
+            expect(state.companionStats['c1'].xp).toBe(0);
+        });
+
+        it('should not level up if pool is insufficient', () => {
+            useGameStore.setState({
+                xpPool: 5,
+                companionStats: {
+                    c1: { level: 1, xp: 0 }
+                }
+            });
+
+            vi.spyOn(progressionUtils, 'getXpForNextLevel').mockReturnValue(15);
+
+            useGameStore.getState().levelUpCompanion('c1');
+
+            const state = useGameStore.getState();
+            expect(state.xpPool).toBe(5);
+            expect(state.companionStats['c1'].level).toBe(1);
+        });
+
+        it('should not level up beyond cap', () => {
+            useGameStore.setState({
+                xpPool: 1000,
+                companionStats: {
+                    c1: { level: 10, xp: 0 }
+                }
+            });
+
+            useGameStore.getState().levelUpCompanion('c1');
+
+            const state = useGameStore.getState();
+            expect(state.companionStats['c1'].level).toBe(10);
+            expect(state.xpPool).toBe(1000);
         });
     });
 

@@ -114,7 +114,7 @@
 .companionXpBar {
     display: flex;
     flex-direction: column;
-    width: 140px;
+    width: 180px;
     gap: 0.5rem;
 }
 

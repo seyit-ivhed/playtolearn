@@ -17,25 +17,25 @@ const CampPage = () => {
         removeFromParty,
         xpPool,
         companionStats,
-        assignXpToCompanion,
         activeAdventureId,
         currentMapNode,
-        completeEncounter
+        completeEncounter,
+        levelUpCompanion
     } = useGameStore();
 
     // Get active adventure and current camp info
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
     const currentEncounter = adventure?.encounters[currentMapNode - 1];
-    const storyBeat = currentEncounter?.storyBeat;
+    const storyBeat = currentEncounter?.storyBeat ? {
+        text: currentEncounter.storyBeat.text,
+        speaker: currentEncounter.storyBeat.speaker || 'Narrator'
+    } : undefined;
 
     // Helper to get remaining slots
     const slots = Array(MAX_PARTY_SIZE).fill(null).map((_, i) => activeParty[i] || null);
 
     const handleLevelUp = (companionId: string) => {
-        // Assign 10 XP at a time for simple UI
-        if (xpPool >= 10) {
-            assignXpToCompanion(companionId, 10);
-        }
+        levelUpCompanion(companionId);
     };
 
     const handlePackUp = () => {
