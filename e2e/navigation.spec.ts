@@ -38,7 +38,7 @@ test.describe('Navigation Flow', () => {
 
         // 4. Click Camp Node
         await campNode.click({ force: true });
-        await expect(page).toHaveURL('/camp');
+        await expect(page).toHaveURL(/\/camp\/1_4/);
 
         // Assert Camp ID
         await expect(page.getByTestId('camp-title')).toBeVisible();
