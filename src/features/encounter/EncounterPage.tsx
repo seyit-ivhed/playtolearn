@@ -173,6 +173,19 @@ const EncounterPage = () => {
 
     return (
         <div className="encounter-page">
+            {/* Header with Retreat Button */}
+            <header className={styles.header}>
+                <div className={styles.headerControls}>
+                    <button
+                        className={styles.abortLink}
+                        onClick={() => navigate('/map')}
+                        disabled={!!activeChallenge || !!activeVFX || isEncounterOver}
+                    >
+                        {t('retreat')}
+                    </button>
+                </div>
+            </header>
+
             {/* Turn Announcer */}
             <TurnAnnouncer phase={phase} />
 
