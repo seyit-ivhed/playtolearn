@@ -83,9 +83,11 @@
 /* Monster Grid */
 .monster-grid {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1.5rem;
     align-items: center;
+    justify-content: center;
 }
 
 /* Spirit Meter */
