@@ -156,7 +156,8 @@ const EncounterPage = () => {
 
     const handleCompletionContinue = () => {
         if (phase === EncounterPhase.VICTORY) {
-            useGameStore.getState().completeEncounter();
+            const { nodeIndex } = useEncounterStore.getState();
+            useGameStore.getState().completeEncounter(nodeIndex);
             navigate('/map');
         } else if (phase === EncounterPhase.DEFEAT) {
             navigate('/camp');

@@ -16,6 +16,7 @@ function App() {
 
           {/* 1. The Camp (Starting Hub) */}
           <Route path="/camp" element={<CampPage />} />
+          <Route path="/camp/:nodeId" element={<CampPage />} />
 
           {/* 2. The Adventure Map */}
           <Route path="/map" element={<AdventurePage />} />

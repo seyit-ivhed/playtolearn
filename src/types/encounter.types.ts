@@ -47,4 +47,7 @@ export interface EncounterState {
 
     // Rewards
     xpReward: number;
+
+    // Progression
+    nodeIndex?: number;
 }

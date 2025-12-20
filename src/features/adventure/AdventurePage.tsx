@@ -40,16 +40,17 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     const { encounters } = adventure;
 
     const handleNodeClick = (encounter: typeof encounters[0]) => {
+        const nodeStep = encounters.indexOf(encounter) + 1;
+
         if (encounter.type === EncounterType.CAMP) {
-            navigate('/camp');
+            navigate(`/camp/${encounter.id}`);
             return;
         }
 
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
             if (encounter.enemies && encounter.enemies.length > 0) {
-                const nodeIndex = encounters.indexOf(encounter) + 1;
-                const xpReward = calculateEncounterXp(activeAdventureId, nodeIndex);
-                initializeEncounter(party, encounter.enemies, xpReward);
+                const xpReward = calculateEncounterXp(activeAdventureId, nodeStep);
+                initializeEncounter(party, encounter.enemies, xpReward, nodeStep);
                 navigate('/encounter');
             }
         }

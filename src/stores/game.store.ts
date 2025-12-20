@@ -18,7 +18,7 @@ interface GameState {
     restedCompanions: string[]; // IDs of companions who are rested
 
     // Actions
-    completeEncounter: () => void;
+    completeEncounter: (nodeIndex?: number) => void;
     setActiveAdventure: (adventureId: string) => void;
     resetMap: () => void;
     addToParty: (companionId: string) => void;
@@ -56,24 +56,27 @@ export const useGameStore = create<GameState>()(
             }, {} as Record<string, { level: number; xp: number }>),
             restedCompanions: [],
 
-            completeEncounter: () => {
+            completeEncounter: (nodeIndex) => {
                 const { currentMapNode, activeAdventureId, addXpToPool } = get();
                 const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
 
                 if (!adventure) return;
 
-                // Grant dynamic XP based on global encounter index
-                const xpReward = calculateEncounterXp(activeAdventureId, currentMapNode);
+                // Use provided nodeIndex or fallback to current (for backward compat if needed)
+                const completedIndex = nodeIndex ?? currentMapNode;
+
+                // Grant dynamic XP based on the ACTUAL node completed
+                const xpReward = calculateEncounterXp(activeAdventureId, completedIndex);
                 addXpToPool(xpReward);
 
-                // Check if there are more encounters
-                if (currentMapNode < adventure.encounters.length) {
-                    set({ currentMapNode: currentMapNode + 1 });
-                } else {
-                    // Adventure Completed (Loop for now, or handle win state)
-                    // For prototype, just loop back to 1 or stay at end?
-                    // Let's reset to 1 for infinite play in prototype
-                    set({ currentMapNode: 1 });
+                // Only increment currentMapNode if we completed the latest unlocked node
+                if (completedIndex >= currentMapNode) {
+                    if (currentMapNode < adventure.encounters.length) {
+                        set({ currentMapNode: currentMapNode + 1 });
+                    } else {
+                        // Adventure Completed (Loop for now, or handle win state)
+                        set({ currentMapNode: 1 });
+                    }
                 }
             },
 

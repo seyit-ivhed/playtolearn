@@ -2,7 +2,7 @@ import type { EncounterState } from '../../types/encounter.types';
 import type { AdventureMonster } from '../../types/adventure.types';
 
 export interface EncounterFlowSlice {
-    initializeEncounter: (partyIds: string[], enemies: AdventureMonster[], xpReward: number) => void;
+    initializeEncounter: (partyIds: string[], enemies: AdventureMonster[], xpReward: number, nodeIndex: number) => void;
     endPlayerTurn: () => void;
     processMonsterTurn: () => void;
 }

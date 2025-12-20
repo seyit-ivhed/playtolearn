@@ -55,7 +55,7 @@ const PuzzlePage = () => {
     const { puzzleData } = encounter;
 
     const handleSolve = () => {
-        completeEncounter();
+        completeEncounter(encounterIndex + 1);
         navigate('/map');
     };
 

@@ -69,9 +69,21 @@ describe('useGameStore', () => {
     });
 
     describe('Adventure Flow', () => {
-        it('should advance map node on completeEncounter', () => {
+        it('should advance map node on completeEncounter if completing latest node', () => {
             useGameStore.setState({ currentMapNode: 1, activeAdventureId: '1' });
-            useGameStore.getState().completeEncounter();
+            useGameStore.getState().completeEncounter(1);
+            expect(useGameStore.getState().currentMapNode).toBe(2);
+        });
+
+        it('should NOT advance map node on completeEncounter if completing old node', () => {
+            useGameStore.setState({ currentMapNode: 2, activeAdventureId: '1' });
+            useGameStore.getState().completeEncounter(1); // Replay encounter 1
+            expect(useGameStore.getState().currentMapNode).toBe(2); // Stay at 2
+        });
+
+        it('should still advance if nodeIndex is not provided (backward compatibility)', () => {
+            useGameStore.setState({ currentMapNode: 1, activeAdventureId: '1' });
+            useGameStore.getState().completeEncounter(); // No index
             expect(useGameStore.getState().currentMapNode).toBe(2);
         });
 
