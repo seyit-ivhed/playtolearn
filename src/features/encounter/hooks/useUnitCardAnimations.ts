@@ -28,10 +28,10 @@ export const useUnitCardAnimations = (unit: EncounterUnit, isMonster: boolean) =
 
             setFloatingTexts(prev => [...prev, { id, text, type }]);
 
-            // Cleanup floating text after animation
+            // Cleanup floating text after animation (1.5s in CSS)
             setTimeout(() => {
                 setFloatingTexts((prev) => prev.filter((ft) => ft.id !== id));
-            }, 1000);
+            }, 1500);
 
             // Cleanup shake class
             if (healthDiff < 0) {

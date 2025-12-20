@@ -9,7 +9,7 @@ import { EncounterPhase } from '../../types/encounter.types';
 
 import { generateProblem } from '../../utils/math-generator';
 import { MathOperation, type MathProblem } from '../../types/math.types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UnitCard } from './components/UnitCard';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import { VisualEffectOverlay } from './components/VisualEffectOverlay';
@@ -37,6 +37,34 @@ const EncounterPage = () => {
         isFlipped: boolean;
     } | null>(null);
 
+    // TRACK VISIBLE MONSTERS (to delay removal after death)
+    const [aliveMonsterIds, setAliveMonsterIds] = useState<string[]>(
+        monsters.filter(m => !m.isDead).map(m => m.id)
+    );
+
+    // Sync alive monsters but delay removal of dead ones
+    useEffect(() => {
+        const storeAliveIds = monsters.filter(m => !m.isDead).map(m => m.id);
+
+        // Find monsters that are dead in store but still in our "alive" list
+        const justDiedIds = aliveMonsterIds.filter(id => !storeAliveIds.includes(id));
+
+        if (justDiedIds.length > 0) {
+            // Delay removal to allow UnitCard to play its "take damage/death" animations
+            const timer = setTimeout(() => {
+                setAliveMonsterIds(prev => prev.filter(id => !justDiedIds.includes(id)));
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+
+        // Also handle adding any new monsters if needed
+        const newlyAddedIds = storeAliveIds.filter(id => !aliveMonsterIds.includes(id));
+        if (newlyAddedIds.length > 0) {
+            setAliveMonsterIds(prev => [...prev, ...newlyAddedIds]);
+        }
+    }, [monsters, aliveMonsterIds]);
+
+    const visibleMonsters = monsters.filter(m => aliveMonsterIds.includes(m.id));
 
     const [activeVFX, setActiveVFX] = useState<{
         type: string;
@@ -95,7 +123,7 @@ const EncounterPage = () => {
             // Determine Target ID (for positioning VFX) - logic mirrors damage.ability.ts (first living enemy)
             let targetId: string | undefined;
             if (effectName === 'jaguar_strike' || companion?.specialAbility?.target === 'SINGLE_ENEMY') {
-                const target = monsters.find(m => !m.isDead);
+                const target = monsters.filter(m => !m.isDead)[0]; // Use first living
                 if (target) {
                     targetId = target.id;
                 }
@@ -193,7 +221,7 @@ const EncounterPage = () => {
                     {/* Monsters Grid */}
                     <div className="monster-grid">
                         <AnimatePresence mode="popLayout">
-                            {monsters.filter(m => !m.isDead).map(unit => (
+                            {visibleMonsters.map(unit => (
                                 <motion.div
                                     key={unit.id}
                                     layout
