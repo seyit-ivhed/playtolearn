@@ -4,7 +4,7 @@ A browser-based educational game designed to teach math concepts to children thr
 
 ## Tech Stack
 
-- **Frontend:** React, TypeScript, Vite, Tailwind CSS, Framer Motion, Zustand
+- **Frontend:** React, TypeScript, Vite, Framer Motion, Zustand
 - **Backend:** Node.js, Express, TypeScript
 - **Database:** PostgreSQL, Drizzle ORM
 - **Testing:** Vitest, Playwright

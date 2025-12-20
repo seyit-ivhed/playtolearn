@@ -13,7 +13,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_1',
                 type: EncounterType.BATTLE,
                 label: 'Desert Dust-up',
-                coordinates: { x: 250, y: 150 },
+                coordinates: { x: 250, y: 200 },
                 enemies: [
                     {
                         id: 'scorpion_1',
@@ -37,7 +37,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_2',
                 type: EncounterType.BATTLE,
                 label: 'Mirages',
-                coordinates: { x: 350, y: 300 },
+                coordinates: { x: 350, y: 500 },
                 enemies: [
                     {
                         id: 'sand_spirit_1',
@@ -61,7 +61,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_3',
                 type: EncounterType.BATTLE, // Puzzle mocked as Battle
                 label: 'Water Flow',
-                coordinates: { x: 150, y: 450 },
+                coordinates: { x: 150, y: 800 },
                 enemies: [
                     {
                         id: 'arithmetic_lock',
@@ -77,7 +77,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_4',
                 type: EncounterType.CAMP,
                 label: 'Oasis Shade',
-                coordinates: { x: 250, y: 600 },
+                coordinates: { x: 250, y: 1100 },
                 storyBeat: {
                     speaker: 'Tariq',
                     text: 'The sun is harsh, but this shade is cool. We should take a moment to reflect on our journey and share what we have learned.'
@@ -87,7 +87,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_5',
                 type: EncounterType.BATTLE,
                 label: 'Sand Raiders',
-                coordinates: { x: 350, y: 750 },
+                coordinates: { x: 350, y: 1400 },
                 enemies: [
                     {
                         id: 'scorpion_3',
@@ -119,7 +119,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_6',
                 type: EncounterType.BATTLE, // Puzzle mocked as Battle
                 label: 'Weighing Rocks',
-                coordinates: { x: 150, y: 900 },
+                coordinates: { x: 150, y: 1700 },
                 enemies: [
                     {
                         id: 'subtraction_balance',
@@ -135,7 +135,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_7',
                 type: EncounterType.CAMP,
                 label: 'Night Camp',
-                coordinates: { x: 250, y: 1050 },
+                coordinates: { x: 250, y: 2000 },
                 storyBeat: {
                     speaker: 'Amara',
                     text: 'The desert is beautiful at night. I can smell the Oasis nearby. We are getting closer to our goal!'
@@ -145,7 +145,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_8',
                 type: EncounterType.BATTLE,
                 label: 'Swarm Attack',
-                coordinates: { x: 350, y: 1200 },
+                coordinates: { x: 350, y: 2300 },
                 enemies: [
                     ...Array.from({ length: 4 }).map((_, i) => ({
                         id: `tiny_scorpion_${i}`,
@@ -161,7 +161,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_9',
                 type: EncounterType.BATTLE, // Puzzle mocked as Battle
                 label: 'Star Map',
-                coordinates: { x: 150, y: 1350 },
+                coordinates: { x: 150, y: 2600 },
                 enemies: [
                     {
                         id: 'multiplication_path',
@@ -177,7 +177,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_10',
                 type: EncounterType.BOSS,
                 label: 'The Sand Colossus',
-                coordinates: { x: 250, y: 1500 },
+                coordinates: { x: 250, y: 2900 },
                 enemies: [{
                     id: 'sand_colossus',
                     name: 'Sand Colossus',

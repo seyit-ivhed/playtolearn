@@ -4,7 +4,6 @@
     height: 100%;
     width: 100%;
     background: radial-gradient(ellipse at top, #0f172a, #0a0f1c, #000000);
-    /* gradient-stops from tailwind approx */
     overflow-y: auto;
 }
 
@@ -18,7 +17,7 @@
 .map-container {
     position: relative;
     width: 100%;
-    min-height: 1300px;
+    min-height: 3200px;
     overflow: hidden;
 }
 

@@ -79,7 +79,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
             */}
                 <div className="map-center-col">
                     <div className="map-col-inner">
-                        <svg className="map-svg-path" viewBox="0 0 500 1700" preserveAspectRatio="xMidYMin slice">
+                        <svg className="map-svg-path" viewBox="0 0 500 3200" preserveAspectRatio="xMidYMin slice">
                             <defs>
                                 <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                                     <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.2" />

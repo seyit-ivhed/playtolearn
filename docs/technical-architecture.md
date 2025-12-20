@@ -509,7 +509,7 @@ When moving files to the new structure:
 
 ### Styling
 - **CSS Modules** - Scoped CSS
-- **Vanilla CSS** - No framework (Tailwind avoided unless requested)
+- **Vanilla CSS** - No framework
 
 ### Internationalization
 - **i18next** - Translation management

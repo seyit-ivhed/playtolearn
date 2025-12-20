@@ -164,7 +164,6 @@ button:disabled {
   border-color: transparent;
 }
 
-/* Utilities (Replacement for some common Tailwind utility patterns if needed globally) */
 .hidden {
   display: none;
 }
