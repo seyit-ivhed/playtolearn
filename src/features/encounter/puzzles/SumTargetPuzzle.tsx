@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { PuzzleData } from '../../../types/adventure.types';
+import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
 import styles from './SumTargetPuzzle.module.css';
 
 interface SumTargetPuzzleProps {
@@ -19,7 +20,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     const progress = Math.min(100, Math.max(0, (currentSum / target) * 100));
 
     useEffect(() => {
-        if (currentSum === target && !isSolved) {
+        if (isPuzzleSolved(currentSum, target) && !isSolved) {
             setIsSolved(true);
             setTimeout(() => {
                 onSolve();
@@ -30,20 +31,8 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     const handlePipeClick = (option: number | any, index: number) => {
         if (isSolved || usedOptions.includes(index)) return;
 
-        let nextSum = currentSum;
-        let actionLabel = '';
-
-        if (typeof option === 'number') {
-            nextSum += option;
-            actionLabel = option > 0 ? `+${option}` : `${option}`;
-        } else {
-            const { value, type, label } = option;
-            actionLabel = label || `${type} ${value}`;
-
-            if (type === 'MULTIPLY') nextSum *= value;
-            else if (type === 'DIVIDE') nextSum = Math.floor(nextSum / value);
-            else nextSum += value;
-        }
+        const nextSum = calculateNextSum(currentSum, option);
+        const actionLabel = formatActionLabel(option);
 
         setCurrentSum(nextSum);
         setUsedOptions(prev => [...prev, index]);
