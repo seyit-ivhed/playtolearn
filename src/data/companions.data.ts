@@ -1,9 +1,6 @@
 import { CompanionRole } from '../types/companion.types';
 import type { Companion } from '../types/companion.types';
 
-export const XP_PER_LEVEL = 100; // Linear curve for now: Level * 100
-
-
 // Images
 import amaraImg from '../assets/images/companions/Amara/Amara-0.png';
 import tariqImg from '../assets/images/companions/Tariq/Tariq-0.png';

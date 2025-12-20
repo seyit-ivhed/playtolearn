@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { INITIAL_FELLOWSHIP, COMPANIONS } from '../data/companions.data';
-import { getXpForNextLevel } from '../utils/progression.utils';
+import { getXpForNextLevel, calculateEncounterXp } from '../utils/progression.utils';
 
 import { ADVENTURES } from '../data/adventures.data';
 
@@ -60,11 +60,9 @@ export const useGameStore = create<GameState>()(
 
                 if (!adventure) return;
 
-                // Grant XP for the current encounter before moving to the next
-                const currentEncounter = adventure.encounters[currentMapNode - 1];
-                if (currentEncounter && currentEncounter.xpReward) {
-                    addXpToPool(currentEncounter.xpReward);
-                }
+                // Grant dynamic XP based on global encounter index
+                const xpReward = calculateEncounterXp(activeAdventureId, currentMapNode);
+                addXpToPool(xpReward);
 
                 // Check if there are more encounters
                 if (currentMapNode < adventure.encounters.length) {

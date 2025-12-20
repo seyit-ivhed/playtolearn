@@ -40,7 +40,7 @@ As they journey through the Desert and Jungle, their experiences and the math ch
 
 ---
 
-## Adventure 3: The Jungle Expedition
+## Adventure 2: The Jungle Expedition
 **Theme:** Deeper Jungle (Ancient Ruins)
 **Focus:** Synergy between the two young heroes.
 
@@ -77,9 +77,15 @@ Puzzles adapt to the **Difficulty Level (1-5)** selected by the player:
 
 ### XP & Progression
 - **XP Scaling:** 
-    - Battle Victory: **10 XP**
-    - Puzzle Solved: **15 XP** (higher reward to encourage non-combat thinking)
-- **Growth Milestone:** At **Level 10** (Free Tier Cap), companions undergo their **First Evolution** (a physical and stat change). This gives players a "taste" of the long-term progression system.
+    - XP gain scales linearly with the encounter index $i$: $XP = 10 \times i$.
+    - **Encounter 1:** 10 XP
+    - **Encounter 2:** 20 XP
+    - **Encounter 3:** 30 XP
+    - ...
+    - **Encounter 10 (Boss):** 100 XP
+    - **Encounter 20 (Final Boss):** 200 XP
+- **Growth Milestone:** At **Level 10** (Free Tier Cap), companions undergo their **First Evolution**. Players will reach this milestone after completing both adventures (20 encounters).
+
 
 ### Death & Failure
 

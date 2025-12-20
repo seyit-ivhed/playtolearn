@@ -184,11 +184,11 @@ Each realm contains multiple adventures:
 ## 3. Reward System
 
 ### 3.1 Encounter & Adventure Rewards
-- **Encounter XP**: Completing each battle or puzzle encounter grants immediate XP rewards (e.g., 10 XP for battles, 15 XP for puzzles).
+- **Encounter XP**: Completing each encounter grants scaling XP rewards based on the encounter's position in the adventure (e.g., $10 \times i$ XP).
 - **Companion Unlocks**: Completing an entire adventure unlocks a new companion who joins your party.
-  - Example: Complete "The Goblin Forest" adventure → Unlock Fire Knight (Level 1)
+  - Example: Complete "The Oasis Quest" adventure → Unlock Tariq (Level 1)
 - **Adventure Completion Bonus**: Completing adventures may grant a significant XP bonus to all active party members.
-  - Example: Complete "Dragon's Lair" adventure → +150 XP Bonus.
+
 - **Content Unlocks**: Some adventures unlock new realms or adventure paths.
 - **Boss Badges**: Defeating boss fights grants special achievement badges.
 

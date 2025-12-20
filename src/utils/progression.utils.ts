@@ -1,5 +1,4 @@
 import type { Companion, CompanionStats } from '../types/companion.types';
-import { XP_PER_LEVEL } from '../data/companions.data';
 
 /**
  * Calculates the stats for a companion at a specific level.
@@ -31,7 +30,11 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
 };
 
 export const getXpForNextLevel = (currentLevel: number): number => {
-    return currentLevel * XP_PER_LEVEL;
+    // New curve: starts fast, takes longer over time
+    // Level 1 -> 2: 15 XP
+    // Level 9 -> 10: 235 XP
+    // Total for Level 10: ~1053 XP
+    return Math.floor(15 * Math.pow(currentLevel, 1.25));
 };
 
 export const getEvolutionAtLevel = (companion: Companion, level: number) => {
@@ -45,3 +48,16 @@ export const getCurrentEvolution = (companion: Companion, level: number) => {
     const sortedEvos = [...companion.evolutions].sort((a, b) => b.atLevel - a.atLevel);
     return sortedEvos.find(e => level >= e.atLevel);
 };
+
+/**
+ * Calculates XP reward for an encounter
+ * @param adventureId 1-indexed adventure ID
+ * @param nodeIndex 1-indexed node position in adventure
+ * @returns XP amount
+ */
+export const calculateEncounterXp = (adventureId: string, nodeIndex: number): number => {
+    const adventureIndex = parseInt(adventureId) - 1;
+    const globalIndex = (adventureIndex * 10) + nodeIndex;
+    return globalIndex * 10;
+};
+

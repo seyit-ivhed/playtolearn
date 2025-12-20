@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game.store';
 import { useEncounterStore } from '../../stores/encounter.store';
+import { calculateEncounterXp } from '../../utils/progression.utils';
 import './AdventurePage.css';
 
 import { ADVENTURES } from '../../data/adventures.data';
@@ -46,7 +47,9 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
 
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
             if (encounter.enemies && encounter.enemies.length > 0) {
-                initializeEncounter(party, encounter.enemies, encounter.xpReward || 0);
+                const nodeIndex = encounters.indexOf(encounter) + 1;
+                const xpReward = calculateEncounterXp(activeAdventureId, nodeIndex);
+                initializeEncounter(party, encounter.enemies, xpReward);
                 navigate('/encounter');
             }
         }

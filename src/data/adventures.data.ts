@@ -24,7 +24,6 @@ export const ADVENTURES: Adventure[] = [
                         defense: 0,
                     }
                 ],
-                xpReward: 10
             },
             {
                 id: '1_2',
@@ -49,7 +48,6 @@ export const ADVENTURES: Adventure[] = [
                         defense: 1,
                     }
                 ],
-                xpReward: 10
             },
             {
                 id: '1_3',
@@ -66,7 +64,6 @@ export const ADVENTURES: Adventure[] = [
                         defense: 5,
                     }
                 ],
-                xpReward: 15
             },
             {
                 id: '1_4',
@@ -92,7 +89,6 @@ export const ADVENTURES: Adventure[] = [
                     attack: 15,
                     defense: 5,
                 }],
-                xpReward: 50
             }
         ],
         rewards: {

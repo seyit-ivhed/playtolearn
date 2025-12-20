@@ -176,6 +176,23 @@ describe('useGameStore', () => {
             expect(useGameStore.getState().xpPool).toBe(100);
         });
 
+        it('should grant dynamic XP based on global encounter index', () => {
+            // Adventure 1, Encounter 1 -> (0 * 10 + 1) * 10 = 10 XP
+            useGameStore.setState({ currentMapNode: 1, activeAdventureId: '1', xpPool: 0 });
+            useGameStore.getState().completeEncounter();
+            expect(useGameStore.getState().xpPool).toBe(10);
+
+            // Adventure 1, Encounter 2 -> (0 * 10 + 2) * 10 = 20 XP
+            // currentMapNode is now 2 after previous call
+            useGameStore.getState().completeEncounter();
+            expect(useGameStore.getState().xpPool).toBe(10 + 20);
+
+            // Adventure 2, Encounter 1 -> (1 * 10 + 1) * 10 = 110 XP
+            useGameStore.setState({ currentMapNode: 1, activeAdventureId: '2', xpPool: 0 });
+            useGameStore.getState().completeEncounter();
+            expect(useGameStore.getState().xpPool).toBe(110);
+        });
+
         it('should assign xp to companion and level up', () => {
             useGameStore.setState({
                 xpPool: 200,

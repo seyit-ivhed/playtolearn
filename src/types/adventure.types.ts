@@ -53,7 +53,6 @@ export interface Encounter {
     label: string;
     coordinates?: MapCoordinates;
     enemies?: AdventureMonster[]; // If type is BATTLE or BOSS
-    xpReward?: number;
     storyBeat?: {
         text: string;
         speaker?: string;
