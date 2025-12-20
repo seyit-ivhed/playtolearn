@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { PuzzleData } from '../../../types/adventure.types';
 import styles from './SumTargetPuzzle.module.css';
@@ -12,6 +12,7 @@ interface SumTargetPuzzleProps {
 export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     const [currentSum, setCurrentSum] = useState(0);
     const [isSolved, setIsSolved] = useState(false);
+    const [usedOptions, setUsedOptions] = useState<number[]>([]); // Track indices of used options
     const [lastAction, setLastAction] = useState<{ label: string; id: number } | null>(null);
 
     const target = data.targetValue;
@@ -26,8 +27,8 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
         }
     }, [currentSum, target, onSolve, isSolved]);
 
-    const handlePipeClick = (option: number | any) => {
-        if (isSolved) return;
+    const handlePipeClick = (option: number | any, index: number) => {
+        if (isSolved || usedOptions.includes(index)) return;
 
         let nextSum = currentSum;
         let actionLabel = '';
@@ -45,12 +46,14 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
         }
 
         setCurrentSum(nextSum);
+        setUsedOptions(prev => [...prev, index]);
         setLastAction({ label: actionLabel, id: Date.now() });
     };
 
     const handleReset = () => {
         if (isSolved) return;
         setCurrentSum(0);
+        setUsedOptions([]);
     };
 
     return (
@@ -89,16 +92,18 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                         const label = isObj ? (option as any).label : (option > 0 ? `+${option}` : option);
                         const icon = isObj ? ((option as any).type === 'MULTIPLY' ? '⚡' : '❄️') : '💧';
 
+                        const isUsed = usedOptions.includes(idx);
+
                         return (
                             <motion.button
                                 key={`${idx}`}
-                                className={styles.pipe}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => handlePipeClick(option)}
-                                disabled={isSolved}
+                                className={`${styles.pipe} ${isUsed ? styles.used : ''}`}
+                                whileHover={isUsed ? {} : { scale: 1.05 }}
+                                whileTap={isUsed ? {} : { scale: 0.95 }}
+                                onClick={() => handlePipeClick(option, idx)}
+                                disabled={isSolved || isUsed}
                             >
-                                <div className={styles.pipeIcon}>{icon}</div>
+                                <div className={styles.pipeIcon}>{isUsed ? '✅' : icon}</div>
                                 <div className={styles.pipeValue}>{label}</div>
                             </motion.button>
                         );

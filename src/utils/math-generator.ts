@@ -349,55 +349,98 @@ export const generatePuzzleData = (
 };
 
 const generateSumTargetData = (difficulty: DifficultyLevel): PuzzleData => {
-    let targetValue: number;
-    let options: (number | PuzzleOption)[];
+    let current = 0;
+    const solutionPipes: (number | PuzzleOption)[] = [];
+    const decoyPipes: (number | PuzzleOption)[] = [];
 
-    switch (difficulty) {
-        case 1:
-            targetValue = getRandomInt(8, 15);
-            options = [getRandomInt(2, 3), getRandomInt(3, 4), getRandomInt(4, 5)];
-            break;
-        case 2:
-            targetValue = getRandomInt(15, 25);
-            options = [getRandomInt(3, 5), getRandomInt(5, 7), getRandomInt(7, 9)];
-            break;
-        case 3:
-            targetValue = getRandomInt(25, 50);
-            options = [getRandomInt(5, 10), getRandomInt(10, 15), getRandomInt(5, 8), -5];
-            break;
-        case 4:
-            targetValue = getRandomInt(50, 100);
-            options = [
-                getRandomInt(10, 20),
-                getRandomInt(5, 15),
-                -10,
-                { value: 2, type: 'MULTIPLY', label: 'x2' },
-                { value: 2, type: 'DIVIDE', label: '÷2' }
-            ];
-            break;
-        case 5:
-            targetValue = getRandomInt(100, 300);
-            options = [
-                getRandomInt(20, 40),
-                getRandomInt(10, 25),
-                -20,
-                { value: 3, type: 'MULTIPLY', label: 'x3' },
-                { value: 2, type: 'MULTIPLY', label: 'x2' },
-                { value: 2, type: 'DIVIDE', label: '÷2' }
-            ];
-            break;
-        default:
-            targetValue = 10;
-            options = [2, 3, 5];
+    // 1. Choose number of solution steps based on difficulty
+    let steps = 2;
+    if (difficulty === 2) steps = getRandomInt(2, 3);
+    else if (difficulty === 3) steps = 3;
+    else if (difficulty === 4) steps = getRandomInt(3, 4);
+    else if (difficulty === 5) steps = getRandomInt(4, 5);
+
+    // 2. Build the solution path
+    // Initial step: Always addition to get a base value
+    const firstVal = (difficulty <= 2) ? getRandomInt(5, 10) : getRandomInt(10, 25);
+    current = firstVal;
+    solutionPipes.push(firstVal);
+
+    for (let i = 1; i < steps; i++) {
+        const pool: ('ADD' | 'SUB' | 'MUL' | 'DIV')[] = ['ADD'];
+        if (difficulty >= 2) pool.push('SUB');
+        if (difficulty >= 4) {
+            pool.push('MUL');
+            if (current > 1 && current % 2 === 0) pool.push('DIV');
+        }
+
+        const opType = pool[getRandomInt(0, pool.length - 1)];
+
+        if (opType === 'ADD') {
+            const val = (difficulty <= 2) ? getRandomInt(2, 5) : getRandomInt(5, 20);
+            current += val;
+            solutionPipes.push(val);
+        } else if (opType === 'SUB') {
+            const val = (difficulty <= 2) ? getRandomInt(1, 3) : getRandomInt(5, 15);
+            // Non-destructive check to keep target positive and interesting
+            if (current - val >= 2) {
+                current -= val;
+                solutionPipes.push(-val);
+            } else {
+                const fallback = getRandomInt(2, 5);
+                current += fallback;
+                solutionPipes.push(fallback);
+            }
+        } else if (opType === 'MUL') {
+            const factor = difficulty === 4 ? 2 : getRandomInt(2, 3);
+            if (current * factor <= 300) {
+                current *= factor;
+                solutionPipes.push({ value: factor, type: 'MULTIPLY', label: `x${factor}` });
+            } else {
+                const subFallback = 10;
+                current -= subFallback;
+                solutionPipes.push(-subFallback);
+            }
+        } else if (opType === 'DIV') {
+            const divisor = 2;
+            if (current > 0 && current % divisor === 0) {
+                current /= divisor;
+                solutionPipes.push({ value: divisor, type: 'DIVIDE', label: `÷${divisor}` });
+            } else {
+                const addFallback = 4;
+                current += addFallback;
+                solutionPipes.push(addFallback);
+            }
+        }
     }
 
-    // Ensure options are unique and non-zero (except for intentional negatives)
-    const uniqueOptions = Array.from(new Set(options)).filter(o => o !== 0);
+    // 3. Add decoy pipes to increase challenge
+    const decoyCount = difficulty <= 2 ? 1 : 2;
+    for (let i = 0; i < decoyCount; i++) {
+        if (difficulty <= 2) {
+            decoyPipes.push(getRandomInt(1, 5));
+        } else {
+            const isObj = Math.random() > 0.7;
+            if (!isObj) {
+                decoyPipes.push(Math.random() > 0.5 ? getRandomInt(1, 10) : -getRandomInt(1, 5));
+            } else {
+                decoyPipes.push({ value: 2, type: 'MULTIPLY', label: 'x2' });
+            }
+        }
+    }
+
+    const allOptions = [...solutionPipes, ...decoyPipes];
+
+    // 4. Shuffle all options (Fisher-Yates)
+    for (let i = allOptions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [allOptions[i], allOptions[j]] = [allOptions[j], allOptions[i]];
+    }
 
     return {
         puzzleType: PuzzleType.SUM_TARGET,
-        targetValue,
-        options: uniqueOptions
+        targetValue: current,
+        options: allOptions.filter(o => typeof o === 'number' ? o !== 0 : o.value !== 0)
     };
 };
 
