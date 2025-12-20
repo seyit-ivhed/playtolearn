@@ -1,4 +1,4 @@
-import { type Adventure, EncounterType } from '../types/adventure.types';
+import { type Adventure, EncounterType, PuzzleType } from '../types/adventure.types';
 import goblinImg from '../assets/images/enemies/goblin.png';
 import goblinBossImg from '../assets/images/enemies/goblin_boss.png';
 
@@ -59,19 +59,14 @@ export const ADVENTURES: Adventure[] = [
             },
             {
                 id: '1_3',
-                type: EncounterType.BATTLE, // Puzzle mocked as Battle
+                type: EncounterType.PUZZLE,
                 label: 'Water Flow',
                 coordinates: { x: 150, y: 800 },
-                enemies: [
-                    {
-                        id: 'arithmetic_lock',
-                        name: 'Arithmetic Lock',
-                        sprite: goblinImg,
-                        maxHealth: 80,
-                        attack: 2,
-                        defense: 5,
-                    }
-                ],
+                puzzleData: {
+                    puzzleType: PuzzleType.SUM_TARGET,
+                    targetValue: 10,
+                    options: [2, 3, 5]
+                }
             },
             {
                 id: '1_4',
@@ -117,19 +112,14 @@ export const ADVENTURES: Adventure[] = [
             },
             {
                 id: '1_6',
-                type: EncounterType.BATTLE, // Puzzle mocked as Battle
+                type: EncounterType.PUZZLE,
                 label: 'Weighing Rocks',
                 coordinates: { x: 150, y: 1700 },
-                enemies: [
-                    {
-                        id: 'subtraction_balance',
-                        name: 'Subtraction Balance',
-                        sprite: goblinImg,
-                        maxHealth: 100,
-                        attack: 4,
-                        defense: 10,
-                    }
-                ],
+                puzzleData: {
+                    puzzleType: PuzzleType.BALANCE,
+                    targetValue: 15,
+                    options: [5, 10, 3, 7]
+                }
             },
             {
                 id: '1_7',
@@ -159,19 +149,15 @@ export const ADVENTURES: Adventure[] = [
             },
             {
                 id: '1_9',
-                type: EncounterType.BATTLE, // Puzzle mocked as Battle
+                type: EncounterType.PUZZLE,
                 label: 'Star Map',
                 coordinates: { x: 150, y: 2600 },
-                enemies: [
-                    {
-                        id: 'multiplication_path',
-                        name: 'Multiplication Path',
-                        sprite: goblinImg,
-                        maxHealth: 120,
-                        attack: 5,
-                        defense: 5,
-                    }
-                ],
+                puzzleData: {
+                    puzzleType: PuzzleType.SEQUENCE,
+                    targetValue: 20, // Sequence up to 20
+                    options: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20], // Multiples of 2
+                    rules: ['MULTIPLES_OF_2']
+                }
             },
             {
                 id: '1_10',

@@ -29,14 +29,33 @@ As they journey through the Desert and Jungle, their experiences and the math ch
 |---|---|---|---|
 | 1 | Battle | Desert Dust-up | 2x Dune Scorpions (Tutorial) |
 | 2 | Battle | Mirages | 2x Sand Spirits |
-| 3 | Puzzle | Water Flow | Dynamic Arithmetic (Logic-based) |
+| 3 | Puzzle | Water Flow | **Light Water Reservoir:** Fill to target sum using 3-4 pipes. (Addition/Subtraction) |
 | 4 | **Camp** | Oasis Shade | Intro to Party Growth (Level Up) |
 | 5 | Battle | Sand Raiders | 3x Scorpions |
-| 6 | Puzzle | Weighing Rocks | Subtraction Balance |
+| 6 | Puzzle | Weighing Rocks | **Stone Bridge Balance:** Balance the scale using discrete weights. (Pre-algebra/Subtraction) |
 | 7 | **Camp** | Night Camp | Story beat: Sharing dreams of growth |
 | 8 | Battle | Swarm Attack | 4x Tiny Scorpions (Low HP) |
-| 9 | Puzzle | Star Map | Multiplication Pathfinding |
+| 9 | Puzzle | Star Map | **Constellation Path:** Connect stars following multiplication/skip-counting rules. |
 | 10| **BOSS** | **The Sand Colossus** | Large HP pool. Focus on Tariq's Healing. |
+
+### Puzzle Mechanics & Age Scaling
+
+#### 1. Water Flow (Encounter 3)
+*   **Target:** Fill a glowing reservoir to an exact amount.
+*   **Age 6:** Target < 10. 3 Pipes with small values (e.g., +2, +3, +5).
+*   **Age 8:** Target < 50. 4 Pipes, including negative values (drains).
+*   **Age 10:** Target < 100. Multi-step target (e.g., "Fill to 20, then exactly 45").
+
+#### 2. Weighing Rocks (Encounter 6)
+*   **Target:** Balance a scale to cross a bridge.
+*   **Age 6:** One side has a weight, match it exactly from a pool of 3 rocks.
+*   **Age 8-10:** Balance two unequal sides using multiple rocks (Missing number problems).
+
+#### 3. Star Map (Encounter 9)
+*   **Target:** Create a path through the night sky.
+*   **Math Focus:** Skip counting and Multiplication.
+*   **Age 6:** Even numbers or counting by 5s.
+*   **Age 8-10:** Multiples of 3, 4, 7, etc.
 
 ---
 

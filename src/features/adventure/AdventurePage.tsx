@@ -53,6 +53,10 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                 navigate('/encounter');
             }
         }
+
+        if (encounter.type === EncounterType.PUZZLE) {
+            navigate(`/puzzle/${encounter.id}`);
+        }
     };
 
     return (

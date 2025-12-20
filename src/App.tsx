@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
 import CampPage from './features/camp/CampPage';
 import EncounterPage from './features/encounter/EncounterPage';
+import PuzzlePage from './features/encounter/PuzzlePage';
 import MathTestPage from './features/math/MathTestPage';
 
 import Layout from './components/Layout';
@@ -21,6 +22,9 @@ function App() {
 
           {/* 3. The Encounter */}
           <Route path="/encounter" element={<EncounterPage />} />
+
+          {/* 4. The Puzzle */}
+          <Route path="/puzzle/:nodeId" element={<PuzzlePage />} />
 
 
           {/* Legacy / Dev routes */}

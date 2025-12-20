@@ -1,0 +1,185 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    justify-content: center;
+}
+
+.gameBoard {
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 30px;
+    border: 1px solid rgba(251, 191, 36, 0.1);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.reservoirContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    padding-top: 40px;
+}
+
+.reservoir {
+    width: 120px;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 3px solid rgba(251, 191, 36, 0.4);
+    border-radius: 60px 60px 20px 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.liquid {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top, #3b82f6, #60a5fa);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+}
+
+.waves {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50% 50% 0 0;
+    animation: wave 2s infinite ease-in-out;
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(1.5);
+    }
+}
+
+.currentValueOverlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.targetMarker {
+    position: absolute;
+    width: 140px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.targetLabel {
+    background: #fbbf24;
+    color: #000;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+}
+
+.resetBtn {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.resetBtn:hover:not(:disabled) {
+    background: rgba(239, 68, 68, 0.4);
+    transform: translateY(-2px);
+}
+
+.pipesGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.pipe {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pipe:hover:not(:disabled) {
+    background: rgba(251, 191, 36, 0.1);
+    border-color: rgba(251, 191, 36, 0.4);
+}
+
+.pipeIcon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.pipeValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fbbf24;
+}
+
+.victoryOverlay {
+    position: absolute;
+    background: rgba(15, 23, 42, 0.9);
+    padding: 3rem 5rem;
+    border-radius: 30px;
+    border: 2px solid #fbbf24;
+    text-align: center;
+    z-index: 100;
+    box-shadow: 0 0 100px rgba(251, 191, 36, 0.3);
+}
+
+.victoryTitle {
+    font-size: 3rem;
+    color: #fbbf24;
+    margin-bottom: 1rem;
+}
+
+.victorySub {
+    font-size: 1.5rem;
+    color: #94a3b8;
+}
+
+.floatText {
+    position: absolute;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #60a5fa;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    z-index: 50;
+}

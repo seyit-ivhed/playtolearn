@@ -46,6 +46,22 @@ export interface MapCoordinates {
     y: number;
 }
 
+// Puzzle Types
+export const PuzzleType = {
+    SUM_TARGET: 'SUM_TARGET',     // Water Flow
+    BALANCE: 'BALANCE',           // Weighing Rocks
+    SEQUENCE: 'SEQUENCE'          // Star Map
+} as const;
+
+export type PuzzleType = typeof PuzzleType[keyof typeof PuzzleType];
+
+export interface PuzzleData {
+    puzzleType: PuzzleType;
+    targetValue: number;
+    options: number[]; // Pipe values, weight values, etc.
+    rules?: string[];
+}
+
 // Concept: An encounter is a single node on the map
 export interface Encounter {
     id: string;
@@ -53,6 +69,7 @@ export interface Encounter {
     label: string;
     coordinates?: MapCoordinates;
     enemies?: AdventureMonster[]; // If type is BATTLE or BOSS
+    puzzleData?: PuzzleData;       // If type is PUZZLE
     storyBeat?: {
         text: string;
         speaker?: string;
