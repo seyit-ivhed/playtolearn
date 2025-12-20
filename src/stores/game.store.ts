@@ -134,13 +134,12 @@ export const useGameStore = create<GameState>()(
                     xpNeeded = getXpForNextLevel(newLevel);
                 }
 
-                // If at cap, don't allow extra XP to accumulate (optional, but keep for now)
                 if (newLevel === LEVEL_CAP) {
                     newXp = 0;
                 }
 
                 set({
-                    xpPool: state.xpPool - amount,
+                    xpPool: Math.max(0, (state.xpPool || 0) - amount),
                     companionStats: {
                         ...state.companionStats,
                         [companionId]: { level: newLevel, xp: newXp }
@@ -150,22 +149,25 @@ export const useGameStore = create<GameState>()(
 
             levelUpCompanion: (companionId) => {
                 const state = get();
-                const stats = state.companionStats[companionId];
-                if (!stats) return;
+                const stats = state.companionStats[companionId] || { level: 1, xp: 0 };
+
+                const level = typeof stats.level === 'number' ? stats.level : 1;
+                const xp = typeof stats.xp === 'number' ? stats.xp : 0;
+                const pool = typeof state.xpPool === 'number' ? state.xpPool : 0;
 
                 const LEVEL_CAP = 10;
-                if (stats.level >= LEVEL_CAP) return;
+                if (level >= LEVEL_CAP) return;
 
-                const xpNeeded = getXpForNextLevel(stats.level);
-                const actualXpNeeded = Math.max(0, xpNeeded - stats.xp);
+                const xpNeeded = getXpForNextLevel(level);
+                const actualXpNeeded = Math.max(0, xpNeeded - xp);
 
-                if (state.xpPool < actualXpNeeded) return;
+                if (pool < actualXpNeeded) return;
 
                 set({
-                    xpPool: state.xpPool - actualXpNeeded,
+                    xpPool: Math.max(0, pool - actualXpNeeded),
                     companionStats: {
                         ...state.companionStats,
-                        [companionId]: { level: stats.level + 1, xp: 0 }
+                        [companionId]: { level: level + 1, xp: 0 }
                     }
                 });
             },

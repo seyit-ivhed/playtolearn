@@ -71,7 +71,11 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                 </div>
                 <button
                     className={styles.levelUpBtn}
-                    disabled={xpPool < (getXpForNextLevel(currentStats.level) - currentStats.xp) || currentStats.level >= 10}
+                    disabled={
+                        typeof xpPool !== 'number' ||
+                        xpPool < (getXpForNextLevel(currentStats.level) - currentStats.xp) ||
+                        currentStats.level >= 10
+                    }
                     onClick={() => onLevelUp?.(companionId)}
                 >
                     {currentStats.level >= 10 ? 'MAX LVL' : `LEVEL UP (+${getXpForNextLevel(currentStats.level) - currentStats.xp} XP)`}

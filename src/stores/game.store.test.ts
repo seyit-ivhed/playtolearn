@@ -285,6 +285,23 @@ describe('useGameStore', () => {
             expect(state.companionStats['c1'].level).toBe(10);
             expect(state.xpPool).toBe(1000);
         });
+
+        it('should strictly prevent level up if xpPool is 0 and companion has 0 xp', () => {
+            useGameStore.setState({
+                xpPool: 0,
+                companionStats: {
+                    c1: { level: 1, xp: 0 }
+                }
+            });
+
+            vi.spyOn(progressionUtils, 'getXpForNextLevel').mockReturnValue(15);
+
+            useGameStore.getState().levelUpCompanion('c1');
+
+            const state = useGameStore.getState();
+            expect(state.companionStats['c1'].level).toBe(1);
+            expect(state.xpPool).toBe(0);
+        });
     });
 
     describe('Rested System', () => {

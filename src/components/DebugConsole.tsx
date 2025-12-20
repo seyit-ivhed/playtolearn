@@ -18,6 +18,8 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
         debugAddXp,
         debugResetXpPool,
         debugUnlockAllCompanions,
+        xpPool,
+        companionStats,
         activeAdventureId,
         setActiveAdventure
     } = useGameStore();
@@ -55,7 +57,17 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                 log('  xp <amount>     - Add XP to pool');
                 log('  companions      - Unlock all companions');
                 log('  adv <id>        - Set active adventure by ID');
+                log('  status          - Show current game state');
                 log('  clear           - Clear console history');
+                break;
+
+            case 'status':
+                log(`Active Adventure: ${activeAdventureId}`);
+                log(`XP Pool: ${xpPool}`);
+                log('Companions:');
+                Object.entries(companionStats).forEach(([id, stats]) => {
+                    log(`  ${id}: Level ${stats.level} (${stats.xp} XP)`);
+                });
                 break;
 
             case 'unlock':
