@@ -26,11 +26,11 @@
 }
 
 .battle-layout {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 3rem;
     width: 100%;
-    justify-content: center;
     margin: 0 auto;
 }
 
@@ -41,6 +41,8 @@
     gap: 2rem;
     align-items: center;
     justify-items: center;
+    justify-self: end;
+    /* Push towards the center VS indicator */
 }
 
 .card-wrapper {
@@ -88,6 +90,8 @@
     gap: 1.5rem;
     align-items: center;
     justify-content: center;
+    justify-self: start;
+    /* Stay close to the VS indicator */
 }
 
 /* Spirit Meter */
