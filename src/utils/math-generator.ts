@@ -445,12 +445,46 @@ const generateSumTargetData = (difficulty: DifficultyLevel): PuzzleData => {
 };
 
 const generateBalanceData = (difficulty: DifficultyLevel): PuzzleData => {
-    // Placeholder logic for Balance puzzle (Weighing Rocks)
-    const targetValue = 5 * difficulty + getRandomInt(5, 10);
+    // For Balance puzzle, we want one side to have some weights and the other to be empty or less
+    // The player needs to add weights to make them equal.
+
+    const baseValue = difficulty * 5 + getRandomInt(5, 10);
+    const initialRightWeight = baseValue;
+    const initialLeftWeight = 0;
+
+    // Generate options that can sum up to baseValue
+    const options: number[] = [];
+    let remaining = baseValue;
+
+    // Create 2-3 weights that sum to baseValue
+    const numCorrectWeights = difficulty <= 2 ? 2 : 3;
+    for (let i = 0; i < numCorrectWeights - 1; i++) {
+        const w = getRandomInt(Math.floor(remaining / 3), Math.floor(remaining / 2));
+        if (w > 0) {
+            options.push(w);
+            remaining -= w;
+        }
+    }
+    if (remaining > 0) options.push(remaining);
+
+    // Add some decoy weights
+    const numDecoys = difficulty <= 2 ? 2 : 3;
+    for (let i = 0; i < numDecoys; i++) {
+        options.push(getRandomInt(1, 10) + (difficulty - 1) * 2);
+    }
+
+    // Shuffle options
+    for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+    }
+
     return {
         puzzleType: PuzzleType.BALANCE,
-        targetValue,
-        options: [5, 10, 3, 7].map(o => o + (difficulty - 1) * 2)
+        targetValue: baseValue,
+        options,
+        initialRightWeight,
+        initialLeftWeight
     };
 };
 

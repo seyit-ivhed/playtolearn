@@ -66,6 +66,8 @@ export interface PuzzleData {
     targetValue: number;
     options: (number | PuzzleOption)[]; // Support both old simple numbers and new complex options
     rules?: string[];
+    initialLeftWeight?: number;
+    initialRightWeight?: number;
 }
 
 // Concept: An encounter is a single node on the map

@@ -7,6 +7,7 @@ import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
 import { generatePuzzleData } from '../../utils/math-generator';
 import { SumTargetPuzzle } from './puzzles/SumTargetPuzzle';
+import { BalancePuzzle } from './puzzles/BalancePuzzle';
 import styles from './PuzzlePage.module.css';
 
 const PuzzlePage = () => {
@@ -92,10 +93,10 @@ const PuzzlePage = () => {
                 )}
 
                 {puzzleData.puzzleType === PuzzleType.BALANCE && (
-                    <div className={styles.placeholder}>
-                        <h3>{t('puzzle.coming_soon', 'Balance Puzzle Coming Soon!')}</h3>
-                        <button onClick={handleSolve}>[Debug: Win Puzzle]</button>
-                    </div>
+                    <BalancePuzzle
+                        data={puzzleData}
+                        onSolve={handleSolve}
+                    />
                 )}
 
                 {puzzleData.puzzleType === PuzzleType.SEQUENCE && (

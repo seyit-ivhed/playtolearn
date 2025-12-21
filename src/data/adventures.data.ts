@@ -118,7 +118,9 @@ export const ADVENTURES: Adventure[] = [
                 puzzleData: {
                     puzzleType: PuzzleType.BALANCE,
                     targetValue: 15,
-                    options: [5, 10, 3, 7]
+                    options: [5, 10, 3, 7],
+                    initialLeftWeight: 0,
+                    initialRightWeight: 15
                 }
             },
             {
