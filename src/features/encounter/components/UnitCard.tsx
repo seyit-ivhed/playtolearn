@@ -135,7 +135,7 @@ export const UnitCard = ({
                             }
                             abilityDescription={
                                 isUltimateReady && companionData.specialAbility
-                                    ? t(`companions.${unit.templateId}.special_ability_description`, { value: companionData.specialAbility.value })
+                                    ? t(`companions.${unit.templateId}.special_ability_description`, { value: unit.specialAbilityValue || companionData.specialAbility.value })
                                     : t(`companions.${unit.templateId}.ability_description`, { damage: unit.damage || 10 })
                             }
                             progress={unit.currentSpirit}

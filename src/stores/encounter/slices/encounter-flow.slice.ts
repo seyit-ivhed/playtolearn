@@ -30,6 +30,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     maxShield: 0,
                     currentShield: 0,
                     damage: calculatedStats.abilityDamage,
+                    specialAbilityValue: calculatedStats.specialAbilityValue,
                     isDead: false,
                     hasActed: false,
                     currentSpirit: data.initialSpirit || 0,

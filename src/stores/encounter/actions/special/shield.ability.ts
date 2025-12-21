@@ -11,12 +11,15 @@ export const executeShieldAbility = (
     let newParty = [...party];
     const logs: string[] = [];
 
+    const attacker = get().party.find(p => p.id === _unitId);
+    const actualValue = attacker?.specialAbilityValue || ability.value;
+
     if (ability.target === 'ALL_ALLIES') {
         newParty = newParty.map(p => {
             if (p.isDead) return p;
-            return { ...p, currentShield: p.currentShield + ability.value };
+            return { ...p, currentShield: p.currentShield + actualValue };
         });
-        logs.push(`Shielded party for ${ability.value}!`);
+        logs.push(`Shielded party for ${actualValue}!`);
         set({ party: newParty });
     }
     return logs;

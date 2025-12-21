@@ -90,7 +90,7 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                             <span>{t(`companions.${companionId}.special_ability_name`)}</span>
                         </div>
                         <p className={styles.abilityText}>
-                            {t(`companions.${companionId}.special_ability_description`, { value: data.specialAbility.value })}
+                            {t(`companions.${companionId}.special_ability_description`, { value: calculatedStats.specialAbilityValue || data.specialAbility.value })}
                         </p>
                     </div>
                 </div>

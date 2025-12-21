@@ -35,6 +35,19 @@ describe('damage.ability', () => {
         expect(newMonsters[2].currentHealth).toBe(0); // Dead one remains dead/ignored
     });
 
+    it('should use scaled damage from party member (specialAbilityValue)', () => {
+        const monsters = [{ id: 'm1', name: 'M1', currentHealth: 50, isDead: false }];
+        const party = [{ id: 'u1', specialAbilityValue: 35 }];
+        const get = () => ({ monsters, party } as any);
+        const ability = { target: 'SINGLE_ENEMY', value: 25 }; // Default value
+
+        const logs = executeDamageAbility(get, mockSet, 'u1', ability);
+
+        expect(logs).toEqual(['Dealt 35 damage to M1!']);
+        const newMonsters = mockSet.mock.lastCall![0].monsters;
+        expect(newMonsters[0].currentHealth).toBe(15); // 50 - 35
+    });
+
     it('should deal damage to SINGLE_ENEMY (first living)', () => {
         const monsters = [
             { id: 'm1-Dead', name: 'M1', currentHealth: 0, isDead: true },

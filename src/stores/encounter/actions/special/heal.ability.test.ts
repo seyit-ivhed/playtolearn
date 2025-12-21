@@ -31,6 +31,22 @@ describe('heal.ability', () => {
         expect(newParty[2].currentHealth).toBe(0); // Dead ignored
     });
 
+    it('should use scaled heal from party member (specialAbilityValue)', () => {
+        const party = [
+            { id: 'u1', name: 'U1', currentHealth: 40, maxHealth: 100, isDead: false, specialAbilityValue: 30 },
+            { id: 'u2', name: 'U2', currentHealth: 30, maxHealth: 100, isDead: false }
+        ];
+        const get = () => ({ party } as any);
+        const ability = { target: 'ALL_ALLIES', value: 15 };
+
+        const logs = executeHealAbility(get, mockSet, 'u1', ability);
+
+        expect(logs).toEqual(['Healed party for 30!']);
+        const newParty = mockSet.mock.lastCall![0].party;
+        expect(newParty[0].currentHealth).toBe(70); // 40 + 30
+        expect(newParty[1].currentHealth).toBe(60); // 30 + 30
+    });
+
     it('should not exceed maxHealth when healing', () => {
         const party = [
             { id: 'p1', name: 'P1', currentHealth: 95, maxHealth: 100, isDead: false }
