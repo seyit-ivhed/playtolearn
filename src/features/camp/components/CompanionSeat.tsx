@@ -1,6 +1,7 @@
-import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Heart, Swords, Zap, Star } from 'lucide-react';
 import { getCompanionById } from '../../../data/companions.data';
-import { getXpForNextLevel } from '../../../utils/progression.utils';
+import { getXpForNextLevel, getStatsForLevel } from '../../../utils/progression.utils';
 import styles from './CompanionSeat.module.css';
 
 interface CompanionSeatProps {
@@ -23,6 +24,7 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
     onRemove,
     onLevelUp
 }) => {
+    const { t } = useTranslation();
     const seatClass = `${styles.companionSeat} ${styles[`pos${index}`]}`;
 
     if (!companionId) {
@@ -40,6 +42,7 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
     if (!data) return null;
 
     const currentStats = stats || { level: 1, xp: 0 };
+    const calculatedStats = getStatsForLevel(data, currentStats.level);
 
     return (
         <div
@@ -52,6 +55,46 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                     <div className={styles.miniName}>{data.name}</div>
                     <div className={styles.miniLevel}>Lv {currentStats.level}</div>
                 </div>
+
+                {/* Stats Tooltip */}
+                <div className={styles.statsTooltip}>
+                    <div className={styles.tooltipHeader}>
+                        <div className={styles.heroName}>{data.name}</div>
+                        <div className={styles.heroTitle}>{data.title}</div>
+                    </div>
+
+                    <div className={styles.statGrid}>
+                        <div className={styles.statItem}>
+                            <Heart size={16} className={styles.iconHp} />
+                            <span>{calculatedStats.maxHealth}</span>
+                        </div>
+                        <div className={styles.statItem}>
+                            <Swords size={16} className={styles.iconAtk} />
+                            <span>{calculatedStats.abilityDamage}</span>
+                        </div>
+                    </div>
+
+                    <div className={styles.abilitySection}>
+                        <div className={styles.abilityHeader}>
+                            <Zap size={14} className={styles.iconAbility} />
+                            <span>{t(`companions.${companionId}.ability_name`)}</span>
+                        </div>
+                        <p className={styles.abilityText}>
+                            {t(`companions.${companionId}.ability_description`)}
+                        </p>
+                    </div>
+
+                    <div className={styles.abilitySection}>
+                        <div className={styles.abilityHeader}>
+                            <Star size={14} className={styles.iconUltimate} />
+                            <span>{t(`companions.${companionId}.special_ability_name`)}</span>
+                        </div>
+                        <p className={styles.abilityText}>
+                            {t(`companions.${companionId}.special_ability_description`)}
+                        </p>
+                    </div>
+                </div>
+
                 {onRemove && (
                     <button
                         className={styles.leaveButton}
