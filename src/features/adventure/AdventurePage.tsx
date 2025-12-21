@@ -137,11 +137,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                                 isCompleted ? 'completed' : ''
                             ].filter(Boolean).join(' ');
 
-                            // Node Icon
-                            let icon = nodeStep.toString();
-                            if (isCamp) icon = '⛺';
-                            if (isBoss) icon = '💀';
-                            if (isCompleted) icon = '✓';
+                            // Node Shape
 
                             return (
                                 <div
@@ -153,9 +149,6 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
                                 >
                                     {/* Node Shape */}
                                     <div className={nodeContainerClasses} data-testid={`map-node-${node.id}`}>
-                                        <span className="node-icon">
-                                            {icon}
-                                        </span>
                                     </div>
 
                                     {/* Label */}

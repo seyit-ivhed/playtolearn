@@ -131,20 +131,6 @@
     border: 4px dashed;
 }
 
-/* Icons */
-.node-icon {
-    font-weight: 900;
-    font-size: 2.25rem;
-    /* text-4xl */
-    line-height: 1;
-}
-
-.node-container.camp .node-icon {
-    transform: rotate(-45deg);
-    font-size: 3rem;
-    /* text-5xl */
-    filter: drop-shadow(0 4px 6px -1px rgb(0 0 0 / 0.1));
-}
 
 /* States */
 .node-container.locked {
