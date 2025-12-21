@@ -23,8 +23,19 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
         return generateStarPositions(numericOptions.length, 15);
     }, [numericOptions.length]);
 
-    // State
-    const [path, setPath] = useState<number[]>([]); // Array of INDICES in numericOptions
+    // Find the indices of the first 3 numbers in the valid sequence
+    // Sort options to find the smallest 3 values
+    const initialPath = useMemo(() => {
+        const sortedIndices = numericOptions
+            .map((value, index) => ({ value, index }))
+            .sort((a, b) => a.value - b.value)
+            .slice(0, 3)
+            .map(item => item.index);
+        return sortedIndices;
+    }, [numericOptions]);
+
+    // State - Initialize with first 3 numbers
+    const [path, setPath] = useState<number[]>(initialPath);
     const [wrongSelection, setWrongSelection] = useState<number | null>(null); // Index of wrongly clicked star
 
     // Reset wrong selection animation after a delay
@@ -64,7 +75,7 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
     };
 
     const handleReset = () => {
-        setPath([]);
+        setPath(initialPath);
         setWrongSelection(null);
     };
 
@@ -78,6 +89,21 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
             <div className={styles.skyMap}>
                 {/* SVG Layer for Drawing Lines */}
                 <svg className={styles.connectionsLayer}>
+                    {/* Define arrow marker for line direction */}
+                    <defs>
+                        <marker
+                            id="arrowhead"
+                            markerWidth="10"
+                            markerHeight="10"
+                            refX="9"
+                            refY="3"
+                            orient="auto"
+                            markerUnits="strokeWidth"
+                        >
+                            <polygon points="0 0, 10 3, 0 6" fill="#ffd700" />
+                        </marker>
+                    </defs>
+
                     {/* Draw lines between connected stars */}
                     {path.map((starIndex, i) => {
                         if (i === 0) return null;
@@ -93,6 +119,7 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
                                 x2={`${p2.x}%`}
                                 y2={`${p2.y}%`}
                                 className={`${styles.connectionLine} ${styles.active}`}
+                                markerEnd="url(#arrowhead)"
                             />
                         );
                     })}

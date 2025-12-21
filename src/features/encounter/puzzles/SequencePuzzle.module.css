@@ -67,9 +67,9 @@
 
 .connectionLine.active {
     stroke: #ffd700;
-    stroke-width: 3;
+    stroke-width: 4;
     stroke-dasharray: none;
-    filter: drop-shadow(0 0 4px gold);
+    filter: drop-shadow(0 0 6px gold) drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
 }
 
 @keyframes dash {
