@@ -179,5 +179,24 @@
             "title": "Viddens hjärta",
             "description": "Möt källan till mörkret."
         }
+    },
+    "puzzle": {
+        "sequence": {
+            "instruction": "Koppla ihop stjärnorna i ordning!"
+        },
+        "reset": "Återställ väg",
+        "rules": {
+            "ADD_1": "Räkna med 1:or",
+            "ADD_2": "Räkna med 2:or",
+            "ADD_3": "Räkna med 3:or",
+            "ADD_5": "Räkna med 5:or",
+            "ADD_7": "Räkna med 7:or",
+            "ADD_10": "Räkna med 10:or",
+            "MULTIPLY_2": "Dubbla varje gång (×2)",
+            "MULTIPLY_3": "Tredubbla varje gång (×3)",
+            "MULTIPLES_OF_2": "Multiplar av 2",
+            "MULTIPLES_OF_3": "Multiplar av 3",
+            "MULTIPLES_OF_5": "Multiplar av 5"
+        }
     }
 }
