@@ -34,7 +34,7 @@ test.describe('Navigation Flow', () => {
         // 3. Verify we are at Node 4 and it's a Camp
         const campNode = page.getByTestId('map-node-1_4');
         await expect(campNode).toBeVisible();
-        await expect(campNode).toHaveText('⛺'); // Check for Camp Icon
+        // Removed emoji check because node icons were removed per user request
 
         // 4. Click Camp Node
         await campNode.click({ force: true });
