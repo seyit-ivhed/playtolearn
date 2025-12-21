@@ -117,10 +117,16 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: 150, y: 1700 },
                 puzzleData: {
                     puzzleType: PuzzleType.BALANCE,
-                    targetValue: 15,
-                    options: [5, 10, 3, 7],
-                    initialLeftWeight: 0,
-                    initialRightWeight: 15
+                    targetValue: 25,
+                    options: [], // Legacy
+                    initialLeftWeight: 5,
+                    initialRightWeight: 10,
+
+                    // Left needs +20. Let's give [10, 10]
+                    leftOptions: [10, 10, 3], // 3 is decoy
+
+                    // Right needs +15. Let's give [10, 5]
+                    rightOptions: [10, 5, 2] // 2 is decoy
                 }
             },
             {
