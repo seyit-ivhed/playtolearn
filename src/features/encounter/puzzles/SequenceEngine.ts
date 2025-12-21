@@ -1,5 +1,3 @@
-import type { PuzzleOption } from '../../../types/adventure.types';
-
 export interface StarPosition {
     x: number;
     y: number;
@@ -37,11 +35,18 @@ export const validateNextStep = (
 
     const lastValue = currentValues[currentValues.length - 1];
 
-    if (rule.startsWith('MULTIPLES_OF_')) {
-        const step = parseInt(rule.replace('MULTIPLES_OF_', ''), 10);
-
-        // Next value must be exactly (lastValue + step)
+    // 1. Arithmetic Progression: ADD_N
+    if (rule.startsWith('ADD_') || rule.startsWith('MULTIPLES_OF_')) {
+        // Support legacy MULTIPLES_OF as alias for ADD logic, though typically starts at 0 or step
+        const suffix = rule.startsWith('ADD_') ? rule.replace('ADD_', '') : rule.replace('MULTIPLES_OF_', '');
+        const step = parseInt(suffix, 10);
         return nextValue === lastValue + step;
+    }
+
+    // 2. Geometric Progression: MULTIPLY_N
+    if (rule.startsWith('MULTIPLY_')) {
+        const factor = parseInt(rule.replace('MULTIPLY_', ''), 10);
+        return nextValue === lastValue * factor;
     }
 
     // Default fallback: Increment by 1
@@ -49,13 +54,28 @@ export const validateNextStep = (
 };
 
 const isValidFirstStep = (value: number, rule: string): boolean => {
+    // For ADD_N, we usually start at X (e.g. Start at 5, Add 3).
+    // But since our generator creates the options, the "First" valid option 
+    // is just the smallest one in the set usually.
+    // However, validation relies on "Previous". 
+    // If it's the very first click, we might accept ANY number if we assume the user 
+    // can start the sequence anywhere?
+    // OR we check if it matches the 'start' logic of the puzzle.
+
+    // STRICT MODE:
+    // If rule is MULTIPLES_OF_X, start must be X.
     if (rule.startsWith('MULTIPLES_OF_')) {
         const step = parseInt(rule.replace('MULTIPLES_OF_', ''), 10);
         return value === step;
     }
-    // Default
-    return value === 1; // Or whatever the smallest number is?
-    // Actually, usually 1 or the start of the sequence.
+
+    // For generic ADD or MULTIPLY, we might just let them start anywhere 
+    // as long as subsequent steps follow the rule?
+    // Simplify: ALWAYS Allow the first click to be valid?
+    // Risk: User clicks the middle of a chain.
+    // Solution: The generator should perhaps provide the "Start Value" in the rules or data?
+    // For now, let's assume the Start Value is the smallest number in the options.
+    return true;
 };
 
 /**

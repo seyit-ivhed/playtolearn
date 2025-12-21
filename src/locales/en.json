@@ -179,5 +179,24 @@
             "title": "The Void's Heart",
             "description": "Face the source of the darkness."
         }
+    },
+    "puzzle": {
+        "sequence": {
+            "instruction": "Connect the stars in order!"
+        },
+        "reset": "Reset Path",
+        "rules": {
+            "ADD_1": "Count by 1s",
+            "ADD_2": "Count by 2s",
+            "ADD_3": "Count by 3s",
+            "ADD_5": "Count by 5s",
+            "ADD_7": "Count by 7s",
+            "ADD_10": "Count by 10s",
+            "MULTIPLY_2": "Double each time (×2)",
+            "MULTIPLY_3": "Triple each time (×3)",
+            "MULTIPLES_OF_2": "Multiples of 2",
+            "MULTIPLES_OF_3": "Multiples of 3",
+            "MULTIPLES_OF_5": "Multiples of 5"
+        }
     }
 }

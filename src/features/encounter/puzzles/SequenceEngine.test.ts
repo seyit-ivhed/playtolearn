@@ -18,13 +18,28 @@ describe('SequenceEngine', () => {
             expect(validateNextStep([2], 3, MultiplesOf2)).toBe(false); // Not multiple
         });
 
-        it('should handle Multiples of 5', () => {
-            const rules = ['MULTIPLES_OF_5'];
-            expect(validateNextStep([], 5, rules)).toBe(true);
-            expect(validateNextStep([5], 10, rules)).toBe(true);
-            expect(validateNextStep([5, 10], 15, rules)).toBe(true);
+        it('should handle ADD_3', () => {
+            const rules = ['ADD_3'];
+            // First step logic: currently allows anything for generic ADD
+            expect(validateNextStep([], 1, rules)).toBe(true);
 
-            expect(validateNextStep([5], 11, rules)).toBe(false);
+            expect(validateNextStep([1], 4, rules)).toBe(true);
+            expect(validateNextStep([1, 4], 7, rules)).toBe(true);
+
+            expect(validateNextStep([1], 2, rules)).toBe(false); // +1 instead of +3
+            expect(validateNextStep([1], 3, rules)).toBe(false); // +2 instead of +3
+        });
+
+        it('should handle MULTIPLY_2 (Doubling)', () => {
+            const rules = ['MULTIPLY_2'];
+            expect(validateNextStep([], 2, rules)).toBe(true);
+
+            expect(validateNextStep([2], 4, rules)).toBe(true);
+            expect(validateNextStep([2, 4], 8, rules)).toBe(true);
+            expect(validateNextStep([2, 4, 8], 16, rules)).toBe(true);
+
+            expect(validateNextStep([2], 5, rules)).toBe(false);
+            expect(validateNextStep([2], 6, rules)).toBe(false); // x3 instead
         });
     });
 
