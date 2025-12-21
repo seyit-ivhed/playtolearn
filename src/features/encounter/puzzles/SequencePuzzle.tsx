@@ -83,7 +83,6 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
         <div className={styles.container}>
             <div className={styles.instruction}>
                 {t('puzzle.sequence.instruction', 'Connect the stars in order!')}
-                {rules && rules.length > 0 && ` (${t(`puzzle.rules.${rules[0]}`, rules[0])})`}
             </div>
 
             <div className={styles.skyMap}>
