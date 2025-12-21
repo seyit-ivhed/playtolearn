@@ -2,9 +2,10 @@ import type { StateCreator } from 'zustand';
 import type { EncounterStore, EncounterFlowSlice } from '../interfaces';
 import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.types';
 import { getCompanionById } from '../../../data/companions.data';
+import { getStatsForLevel } from '../../../utils/progression.utils';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
-    initializeEncounter: (partyIds, enemies, xpReward, nodeIndex) => {
+    initializeEncounter: (partyIds, enemies, xpReward, nodeIndex, companionStats) => {
         const party: EncounterUnit[] = partyIds
             .filter(id => {
                 const data = getCompanionById(id);
@@ -16,15 +17,19 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             })
             .map((id, index) => {
                 const data = getCompanionById(id);
+                const stats = companionStats[id] || { level: 1, xp: 0 };
+                const calculatedStats = getStatsForLevel(data, stats.level);
+
                 return {
                     id: `party_${id}_${index}`,
                     templateId: id,
                     name: data.name,
                     isPlayer: true,
-                    maxHealth: data.stats.maxHealth,
-                    currentHealth: data.stats.maxHealth,
+                    maxHealth: calculatedStats.maxHealth,
+                    currentHealth: calculatedStats.maxHealth,
                     maxShield: 0,
                     currentShield: 0,
+                    damage: calculatedStats.abilityDamage,
                     isDead: false,
                     hasActed: false,
                     currentSpirit: data.initialSpirit || 0,

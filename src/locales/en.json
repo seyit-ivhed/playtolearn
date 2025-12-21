@@ -106,17 +106,17 @@
             "name": "Amara",
             "description": "Swift as the jaguar, silent as the wind.",
             "ability_name": "Attack",
-            "ability_description": "Deals 10 damage to a single enemy.",
+            "ability_description": "Deals {{damage}} damage to a single enemy.",
             "special_ability_name": "Jaguar Strike",
-            "special_ability_description": "Deals 25 damage to a single enemy."
+            "special_ability_description": "Deals {{value}} damage to a single enemy."
         },
         "tariq": {
             "name": "Tariq",
             "description": "Every problem has a potion.",
             "ability_name": "Attack",
-            "ability_description": "Deals 6 damage to a single enemy.",
+            "ability_description": "Deals {{damage}} damage to a single enemy.",
             "special_ability_name": "Elixir of Life",
-            "special_ability_description": "Heals all allies for 15 health."
+            "special_ability_description": "Heals all allies for {{value}} health."
         }
     },
     "adventure": {

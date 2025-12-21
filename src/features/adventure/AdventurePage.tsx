@@ -12,7 +12,7 @@ import { EncounterType } from '../../types/adventure.types';
 const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { activeParty: party, activeAdventureId } = useGameStore();
+    const { activeParty: party, activeAdventureId, companionStats } = useGameStore();
     const { initializeEncounter } = useEncounterStore();
 
     const currentNodeRef = useRef<HTMLDivElement>(null);
@@ -50,7 +50,7 @@ const FantasyMapPath = ({ currentNode }: { currentNode: number }) => {
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
             if (encounter.enemies && encounter.enemies.length > 0) {
                 const xpReward = calculateEncounterXp(activeAdventureId, nodeStep);
-                initializeEncounter(party, encounter.enemies, xpReward, nodeStep);
+                initializeEncounter(party, encounter.enemies, xpReward, nodeStep, companionStats);
                 navigate('/encounter');
             }
         }

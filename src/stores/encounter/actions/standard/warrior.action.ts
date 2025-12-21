@@ -5,15 +5,15 @@ export const performWarriorAction = (
     get: () => EncounterStore,
     set: any, // Using any for store set for now, or proper StateCreator type
     _partyIndex: number,
-    companionData: any, // Using any to avoid circle deps for now or import Companion type
     multiplier: number
 ): string => {
-    const { monsters } = get();
+    const { monsters, party } = get();
+    const attacker = party[_partyIndex];
     // Hit first living monster
     const targetIndex = monsters.findIndex(m => !m.isDead);
-    if (targetIndex !== -1) {
+    if (targetIndex !== -1 && attacker) {
         const target = monsters[targetIndex];
-        const baseDamage = companionData.stats.abilityDamage || 10;
+        const baseDamage = attacker.damage || 10;
         const damage = baseDamage * multiplier;
 
         const newHealth = Math.max(0, target.currentHealth - damage);

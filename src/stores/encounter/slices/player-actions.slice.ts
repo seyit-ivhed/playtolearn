@@ -41,7 +41,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
 
         // Apply Effects
         if (companionData.role === 'WARRIOR') {
-            actionLog = performWarriorAction(get, set, unitIndex, companionData, multiplier);
+            actionLog = performWarriorAction(get, set, unitIndex, multiplier);
 
 
         }

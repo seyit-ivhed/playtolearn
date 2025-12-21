@@ -106,17 +106,17 @@
             "name": "Amara",
             "description": "Snabb som jaguaren, tyst som vinden.",
             "ability_name": "Attack",
-            "ability_description": "Gör 10 skada på en fiende.",
+            "ability_description": "Gör {{damage}} skada på en fiende.",
             "special_ability_name": "Jaguarslag",
-            "special_ability_description": "Gör 25 skada på en fiende."
+            "special_ability_description": "Gör {{value}} skada på en fiende."
         },
         "tariq": {
             "name": "Tariq",
             "description": "Varje problem har en dryck.",
             "ability_name": "Attack",
-            "ability_description": "Gör 6 skada på en fiende.",
+            "ability_description": "Gör {{damage}} skada på en fiende.",
             "special_ability_name": "Livets Elixir",
-            "special_ability_description": "Läker alla allierade med 15 hälsa."
+            "special_ability_description": "Läker alla allierade med {{value}} hälsa."
         }
     },
     "adventure": {
