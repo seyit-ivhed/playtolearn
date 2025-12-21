@@ -15,6 +15,11 @@ vi.mock('../../data/companions.data', () => ({
         stats: {
             maxHealth: 100
         },
+        baseStats: {
+            maxHealth: 100,
+            abilityDamage: 10
+        },
+        evolutions: [],
         // Adding properties to satisfy the slice usage, even if not in interface yet
         abilityName: 'Test Attack',
         abilityDamage: 10,
@@ -38,7 +43,7 @@ describe('EncounterStore', () => {
         const partyIds = ['warrior_1', 'guardian_1'];
         const enemies: any[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: 'goblin.png' }];
 
-        useEncounterStore.getState().initializeEncounter(partyIds, enemies);
+        useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, {});
         const state = useEncounterStore.getState();
 
         expect(state.phase).toBe(EncounterPhase.PLAYER_TURN);
@@ -50,7 +55,7 @@ describe('EncounterStore', () => {
     it('should perform warrior attack correctly', () => {
         const partyIds = ['warrior_1'];
         const enemies: any[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: 'goblin.png' }];
-        useEncounterStore.getState().initializeEncounter(partyIds, enemies);
+        useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, {});
 
         const warriorId = useEncounterStore.getState().party[0].id;
 
@@ -67,7 +72,7 @@ describe('EncounterStore', () => {
     it('should end player turn when all units acted', () => {
         const partyIds = ['warrior_1'];
         const enemies: any[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5 }];
-        useEncounterStore.getState().initializeEncounter(partyIds, enemies);
+        useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, {});
         const warriorId = useEncounterStore.getState().party[0].id;
 
         useEncounterStore.getState().performAction(warriorId);

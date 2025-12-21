@@ -3,9 +3,9 @@ import { performWarriorAction } from './warrior.action';
 
 describe('warrior.action', () => {
     const mockSet = vi.fn();
-    const createMockGet = (monsters: any[]) => () => ({
+    const createMockGet = (monsters: any[], damage: number = 10) => () => ({
         monsters,
-        party: [],
+        party: [{ id: 'p0', damage }],
     } as any);
 
     it('should deal damage to first living monster', () => {
@@ -15,9 +15,8 @@ describe('warrior.action', () => {
         ];
         const get = createMockGet(monsters);
         const multiplier = 1.5;
-        const companionData = { stats: { abilityDamage: 10 } }; // Base 10
 
-        const log = performWarriorAction(get, mockSet, 0, companionData, multiplier);
+        const log = performWarriorAction(get, mockSet, 0, multiplier);
 
         // Damage = 10 * 1.5 = 15
         expect(log).toBe(' Dealt 15 damage to Monster 1.');
@@ -30,9 +29,8 @@ describe('warrior.action', () => {
     it('should use default base damage if stats missing', () => {
         const monsters = [{ id: 'm1', name: 'M1', currentHealth: 20 }];
         const get = createMockGet(monsters);
-        const companionData = { stats: {} }; // No abilityDamage, defaults to 10
 
-        const log = performWarriorAction(get, mockSet, 0, companionData, 2);
+        const log = performWarriorAction(get, mockSet, 0, 2);
 
         // Damage = 10 * 2 = 20
         expect(log).toBe(' Dealt 20 damage to M1.');
@@ -46,7 +44,7 @@ describe('warrior.action', () => {
         const monsters = [{ id: 'm1', isDead: true }];
         const get = createMockGet(monsters);
 
-        const log = performWarriorAction(get, mockSet, 0, { stats: {} }, 1);
+        const log = performWarriorAction(get, mockSet, 0, 1);
 
         expect(log).toBe('');
     });
