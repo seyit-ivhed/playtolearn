@@ -452,8 +452,8 @@ const generateBalanceData = (difficulty: DifficultyLevel): PuzzleData => {
     const initialRightWeight = baseValue;
     const initialLeftWeight = 0;
 
-    // Generate options that can sum up to baseValue
-    const options: number[] = [];
+    // Generate valid weights that sum to baseValue
+    const validWeights: number[] = [];
     let remaining = baseValue;
 
     // Create 2-3 weights that sum to baseValue
@@ -461,30 +461,52 @@ const generateBalanceData = (difficulty: DifficultyLevel): PuzzleData => {
     for (let i = 0; i < numCorrectWeights - 1; i++) {
         const w = getRandomInt(Math.floor(remaining / 3), Math.floor(remaining / 2));
         if (w > 0) {
-            options.push(w);
+            validWeights.push(w);
             remaining -= w;
         }
     }
-    if (remaining > 0) options.push(remaining);
+    if (remaining > 0) validWeights.push(remaining);
 
-    // Add some decoy weights
+    // Generate some decoy weights
+    const decoyWeights: number[] = [];
     const numDecoys = difficulty <= 2 ? 2 : 3;
     for (let i = 0; i < numDecoys; i++) {
-        options.push(getRandomInt(1, 10) + (difficulty - 1) * 2);
+        decoyWeights.push(getRandomInt(1, 10) + (difficulty - 1) * 2);
     }
 
-    // Shuffle options
-    for (let i = options.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [options[i], options[j]] = [options[j], options[i]];
-    }
+    // Distribute weights between Left and Right inventories
+    // Since we start with 0 on Left and target on Right, 
+    // ALL the valid weights MUST be available to put on the LEFT side to balance it.
+    // So validWeights go to leftOptions.
+
+    const leftOptions: number[] = [...validWeights];
+    const rightOptions: number[] = [];
+
+    // Distribute decoys
+    decoyWeights.forEach(w => {
+        if (Math.random() > 0.5) leftOptions.push(w);
+        else rightOptions.push(w);
+    });
+
+    // Shuffle both
+    const shuffle = (arr: number[]) => {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    };
+
+    shuffle(leftOptions);
+    shuffle(rightOptions);
 
     return {
         puzzleType: PuzzleType.BALANCE,
         targetValue: baseValue,
-        options,
+        options: [], // Legacy / unused
         initialRightWeight,
-        initialLeftWeight
+        initialLeftWeight,
+        leftOptions,
+        rightOptions
     };
 };
 

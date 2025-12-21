@@ -11,17 +11,43 @@ interface BalancePuzzleProps {
 }
 
 export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
+    // Current state of weights on plates
     const [leftWeights, setLeftWeights] = useState<number[]>([]);
     const [rightWeights, setRightWeights] = useState<number[]>([]);
-    const [inventoryWeights, setInventoryWeights] = useState<number[]>([]);
-    const [usedInventoryIndices, setUsedInventoryIndices] = useState<number[]>([]);
+
+    // Inventory state (Left vs Right specific inventories)
+    const [leftInventory, setLeftInventory] = useState<number[]>([]);
+    const [rightInventory, setRightInventory] = useState<number[]>([]);
+
+    // Track used indices to disable buttons
+    const [usedLeftIndices, setUsedLeftIndices] = useState<number[]>([]);
+    const [usedRightIndices, setUsedRightIndices] = useState<number[]>([]);
+
     const [isSolved, setIsSolved] = useState(false);
 
     // Initialize inventory and initial weights
     useEffect(() => {
-        const initialInventory = data.options.map(opt => typeof opt === 'number' ? opt : opt.value);
-        setInventoryWeights(initialInventory);
+        // Handle new data structure (leftOptions/rightOptions)
+        if (data.leftOptions) {
+            setLeftInventory(data.leftOptions.map(opt => typeof opt === 'number' ? opt : opt.value));
+        }
+        if (data.rightOptions) {
+            setRightInventory(data.rightOptions.map(opt => typeof opt === 'number' ? opt : opt.value));
+        }
 
+        // Fallback for legacy behavior or manual data
+        if (!data.leftOptions && !data.rightOptions && data.options) {
+            const allOpts = data.options.map(opt => typeof opt === 'number' ? opt : opt.value);
+            // If no split is defined, put everything in RIGHT inventory for now? 
+            // Or maybe split them evenly?
+            // Let's put everything in "Shared" mode? 
+            // To simplify, if legacy, we put 50/50.
+            const midpoint = Math.ceil(allOpts.length / 2);
+            setLeftInventory(allOpts.slice(0, midpoint));
+            setRightInventory(allOpts.slice(midpoint));
+        }
+
+        // Set initial placed weights (usually one side has the target)
         if (data.initialLeftWeight) {
             setLeftWeights([data.initialLeftWeight]);
         }
@@ -44,22 +70,25 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
     }, [leftTotal, rightTotal, onSolve, isSolved]);
 
     const handleAddWeight = (weight: number, index: number, side: 'left' | 'right') => {
-        if (isSolved || usedInventoryIndices.includes(index)) return;
+        if (isSolved) return;
 
         if (side === 'left') {
+            if (usedLeftIndices.includes(index)) return;
             setLeftWeights(prev => [...prev, weight]);
+            setUsedLeftIndices(prev => [...prev, index]);
         } else {
+            if (usedRightIndices.includes(index)) return;
             setRightWeights(prev => [...prev, weight]);
+            setUsedRightIndices(prev => [...prev, index]);
         }
-
-        setUsedInventoryIndices(prev => [...prev, index]);
     };
 
     const handleReset = () => {
         if (isSolved) return;
         setLeftWeights(data.initialLeftWeight ? [data.initialLeftWeight] : []);
         setRightWeights(data.initialRightWeight ? [data.initialRightWeight] : []);
-        setUsedInventoryIndices([]);
+        setUsedLeftIndices([]);
+        setUsedRightIndices([]);
     };
 
     return (
@@ -112,38 +141,55 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                     </motion.div>
                 </div>
 
-                {/* Inventory */}
-                <div className={styles.inventory}>
-                    <p className={styles.inventoryTitle}>Available Weights (Click to add)</p>
-                    <div className={styles.weightsGrid}>
-                        {inventoryWeights.map((weight, idx) => {
-                            const isUsed = usedInventoryIndices.includes(idx);
-                            return (
-                                <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                {/* Split Inventory System */}
+                <div className={styles.splitInventoryContainer}>
+                    {/* Left Inventory */}
+                    <div className={styles.inventoryColumn}>
+                        <p className={styles.inventoryTitle}>Left Pile</p>
+                        <div className={styles.weightsGrid}>
+                            {leftInventory.map((weight, idx) => {
+                                const isUsed = usedLeftIndices.includes(idx);
+                                return (
                                     <motion.button
+                                        key={`left-inv-${idx}`}
                                         className={`${styles.weightItem} ${isUsed ? styles.used : ''}`}
                                         whileHover={isUsed ? {} : { scale: 1.1 }}
                                         whileTap={isUsed ? {} : { scale: 0.9 }}
                                         onClick={() => handleAddWeight(weight, idx, 'left')}
                                         disabled={isSolved || isUsed}
                                     >
-                                        <span className={styles.weightIcon}>⚖️</span>
-                                        <span className={styles.weightValue}>{weight} (L)</span>
+                                        <span className={styles.weightIcon}>🪨</span>
+                                        <span className={styles.weightValue}>{weight}</span>
                                     </motion.button>
+                                );
+                            })}
+                            {leftInventory.length === 0 && <div className={styles.emptySlot}>Empty</div>}
+                        </div>
+                    </div>
+
+                    {/* Right Inventory */}
+                    <div className={styles.inventoryColumn}>
+                        <p className={styles.inventoryTitle}>Right Pile</p>
+                        <div className={styles.weightsGrid}>
+                            {rightInventory.map((weight, idx) => {
+                                const isUsed = usedRightIndices.includes(idx);
+                                return (
                                     <motion.button
+                                        key={`right-inv-${idx}`}
                                         className={`${styles.weightItem} ${isUsed ? styles.used : ''}`}
                                         whileHover={isUsed ? {} : { scale: 1.1 }}
                                         whileTap={isUsed ? {} : { scale: 0.9 }}
                                         onClick={() => handleAddWeight(weight, idx, 'right')}
                                         disabled={isSolved || isUsed}
-                                        style={{ background: '#3e2723' }}
+                                        style={{ background: '#3e2723', borderColor: '#5d4037' }}
                                     >
-                                        <span className={styles.weightIcon}>⚖️</span>
-                                        <span className={styles.weightValue}>{weight} (R)</span>
+                                        <span className={styles.weightIcon}>🪨</span>
+                                        <span className={styles.weightValue}>{weight}</span>
                                     </motion.button>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
+                            {rightInventory.length === 0 && <div className={styles.emptySlot}>Empty</div>}
+                        </div>
                     </div>
                 </div>
 

@@ -65,6 +65,8 @@ export interface PuzzleData {
     puzzleType: PuzzleType;
     targetValue: number;
     options: (number | PuzzleOption)[]; // Support both old simple numbers and new complex options
+    leftOptions?: (number | PuzzleOption)[]; // Specific inventory for left side
+    rightOptions?: (number | PuzzleOption)[]; // Specific inventory for right side
     rules?: string[];
     initialLeftWeight?: number;
     initialRightWeight?: number;
