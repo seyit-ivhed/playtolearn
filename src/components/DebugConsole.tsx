@@ -64,6 +64,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
             case 'help':
                 log('Available commands:');
                 log('  unlock          - Unlock all encounters in current adventure');
+                log('  goto <index>    - Jump to a specific encounter (1-indexed)');
                 log('  reset           - Reset progress in current adventure');
                 log('  xp <amount>     - Add XP to pool');
                 log('  companions      - Unlock all companions');
@@ -86,6 +87,21 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                 if (adventure) {
                     debugSetMapNode(adventure.encounters.length + 1);
                     log('All encounters unlocked.');
+                }
+                break;
+
+            case 'goto':
+                const targetNode = parseInt(parts[1]);
+                const currentAdventure = ADVENTURES.find(a => a.id === activeAdventureId);
+                if (!isNaN(targetNode) && currentAdventure) {
+                    if (targetNode >= 1 && targetNode <= currentAdventure.encounters.length + 1) {
+                        debugSetMapNode(targetNode);
+                        log(`Jumped to encounter ${targetNode}.`);
+                    } else {
+                        log(`Error: Invalid encounter index. Must be between 1 and ${currentAdventure.encounters.length + 1}.`);
+                    }
+                } else {
+                    log('Error: Invalid usage. Usage: goto <index>');
                 }
                 break;
 
@@ -141,7 +157,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                         <div key={i} className={styles.logLine}>{line}</div>
                     ))}
                 </div>
-                <form onSubmit={handleCommand} className={styles.inputArea}>
+                <form onSubmit={handleCommand} className={styles.inputArea} aria-label="Debug command">
                     <span className={styles.prompt}>$</span>
                     <input
                         ref={inputRef}
