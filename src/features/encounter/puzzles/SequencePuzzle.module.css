@@ -1,0 +1,167 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    color: white;
+}
+
+.instruction {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+}
+
+.skyMap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    /* Keep a nice rectangular shape */
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(100, 200, 255, 0.1);
+    border: 2px solid #2a3b55;
+}
+
+/* Background twinkling stars effect (static for now but could be animated) */
+.skyMap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 3px),
+        radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 2px),
+        radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 3px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.connectionsLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Let clicks pass through to stars */
+    z-index: 1;
+}
+
+.connectionLine {
+    stroke: rgba(255, 255, 255, 0.4);
+    stroke-width: 2;
+    stroke-dasharray: 5;
+    animation: dash 30s linear infinite;
+}
+
+.connectionLine.active {
+    stroke: #ffd700;
+    stroke-width: 3;
+    stroke-dasharray: none;
+    filter: drop-shadow(0 0 4px gold);
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: 1000;
+    }
+}
+
+.star {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.starContent {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #fff 0%, #aae 40%, transparent 70%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #000;
+    /* Contrast against bright center */
+    font-size: 0.9rem;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    user-select: none;
+}
+
+.star.selected .starContent {
+    background: radial-gradient(circle, #fff 0%, #ffd700 40%, transparent 70%);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    transform: scale(1.2);
+}
+
+.star:hover:not(.selected) {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.star.wrong {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+.star.wrong .starContent {
+    background: radial-gradient(circle, #fff 0%, #ff4444 40%, transparent 70%);
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.8);
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate(-52%, -50%);
+    }
+
+    20%,
+    80% {
+        transform: translate(-48%, -50%);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate(-54%, -50%);
+    }
+
+    40%,
+    60% {
+        transform: translate(-46%, -50%);
+    }
+}
+
+.resetButton {
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.resetButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}

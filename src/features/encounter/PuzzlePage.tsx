@@ -8,6 +8,7 @@ import { PuzzleType } from '../../types/adventure.types';
 import { generatePuzzleData } from '../../utils/math-generator';
 import { SumTargetPuzzle } from './puzzles/SumTargetPuzzle';
 import { BalancePuzzle } from './puzzles/BalancePuzzle';
+import { SequencePuzzle } from './puzzles/SequencePuzzle';
 import styles from './PuzzlePage.module.css';
 
 const PuzzlePage = () => {
@@ -100,10 +101,10 @@ const PuzzlePage = () => {
                 )}
 
                 {puzzleData.puzzleType === PuzzleType.SEQUENCE && (
-                    <div className={styles.placeholder}>
-                        <h3>{t('puzzle.coming_soon', 'Sequence Puzzle Coming Soon!')}</h3>
-                        <button onClick={handleSolve}>[Debug: Win Puzzle]</button>
-                    </div>
+                    <SequencePuzzle
+                        data={puzzleData}
+                        onSolve={handleSolve}
+                    />
                 )}
             </main>
         </div>
