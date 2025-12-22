@@ -37,6 +37,7 @@ interface GameState {
     debugUnlockAllCompanions: () => void;
     debugAddXp: (amount: number) => void;
     debugResetXpPool: () => void;
+    debugResetCompanions: () => void;
 
     resetAll: () => void;
 }
@@ -200,6 +201,15 @@ export const useGameStore = create<GameState>()(
             debugAddXp: (amount) => set((state) => ({ xpPool: state.xpPool + amount })),
 
             debugResetXpPool: () => set({ xpPool: 0 }),
+
+            debugResetCompanions: () => {
+                set({
+                    companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
+                        acc[id] = { level: 1, xp: 0 };
+                        return acc;
+                    }, {} as Record<string, { level: number; xp: number }>)
+                });
+            },
 
             resetAll: () => {
                 set({

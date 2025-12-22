@@ -122,6 +122,19 @@ describe('useGameStore', () => {
             useGameStore.getState().debugResetXpPool();
             expect(useGameStore.getState().xpPool).toBe(0);
         });
+
+        it('should reset companion stats via debug action', () => {
+            useGameStore.setState({
+                companionStats: {
+                    c1: { level: 5, xp: 50 },
+                    c2: { level: 3, xp: 20 },
+                }
+            });
+            useGameStore.getState().debugResetCompanions();
+            const stats = useGameStore.getState().companionStats;
+            expect(stats['c1']).toEqual({ level: 1, xp: 0 });
+            expect(stats['c2']).toEqual({ level: 1, xp: 0 });
+        });
     });
 
     describe('Party Management', () => {

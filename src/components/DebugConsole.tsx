@@ -17,6 +17,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
         debugSetMapNode,
         debugAddXp,
         debugResetXpPool,
+        debugResetCompanions,
         debugUnlockAllCompanions,
         xpPool,
         companionStats,
@@ -108,7 +109,8 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
             case 'reset':
                 debugSetMapNode(1);
                 debugResetXpPool();
-                log('Adventure progress and XP pool reset to start.');
+                debugResetCompanions();
+                log('Adventure progress, XP pool, and companion levels reset to start.');
                 break;
 
             case 'xp':
