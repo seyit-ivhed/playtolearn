@@ -43,7 +43,7 @@ Use consistent art style across all evolutions:
 - "Semi-realistic stylized portrait"
 - "High quality digital painting, storybook illustration style"
 
-**Avoid:** Pixar, 3D render, cartoon, anime, chibi
+**Avoid:** 3D render, cartoon, anime, chibi
 
 ---
 
@@ -127,48 +127,47 @@ Portrait of an 18-year-old Middle-Eastern young man with warm olive-tan skin and
 
 ## Monster Design Guidelines
 
-Monsters should be **child-friendly**: playful, mischievous, or comically grumpy — never scary or violent.
+Monsters are **enemies** and should be depicted as **adversaries** to the players. They should be **mischievous, grumpy, or territorial** — while still being child-friendly (no blood or extreme violence). They should look like creatures the player *needs* to battle.
 
 ### Keywords to USE:
-- **Personality:** mischievous, playful, grumpy, silly, goofy, curious, bumbling
-- **Features:** rounded shapes, soft edges, big expressive eyes, stubby limbs
-- **Art style:** Pixar-style, chibi, cartoon, stylized, colorful
-- **Expression:** goofy grin, confused look, comical, pouty, miffed
+- **Personality:** adversarial, mischievous, grumpy, territorial, bumbling bandit, sneaky
+- **Features:** rounded shapes, expressive narrowed eyes, ready-to-snap pinchers, sturdy limbs
+- **Art style:** Stylized 3D digital illustration, cartoon, colorful
+- **Expression:** sneaky smirk, grumpy scowl, territorial glare, pouncing growl
 
 ### Keywords to AVOID:
-- ❌ fierce, menacing, terrifying, dangerous, aggressive
-- ❌ sharp teeth, claws, blood, dark shadows, skeletal features
-- ❌ realistic horror, grimdark, hyper-realistic
+- ❌ friendly, helpful, waving hello, giggling, smiling warmly
+- ❌ blood, extreme violence, realistic horror, grimdark
 
 ### Style Template for Monsters:
 ```
-Portrait of a [CREATURE TYPE], [PERSONALITY ADJECTIVE], [SIZE] creature with
-[ROUNDED FEATURES], [EYE DESCRIPTION], [BODY DESCRIPTION].
-[EXPRESSION]. Pixar-style 3D render, child-friendly, bright vibrant colors,
+Portrait of a [CREATURE TYPE], [ADVERSARIAL ADJECTIVE], [SIZE] creature with
+[STURDY FEATURES], [EXPRESSIVE EYES], [BODY DESCRIPTION].
+[ADVERSARIAL POSE/EXPRESSION]. Stylized 3D digital illustration, child-friendly, bright vibrant colors,
 soft lighting. Safe for children.
 ```
 
 ---
 
-## Monster Examples
+### Monster Examples
 
 ### Jungle Slime (Amara's Realm)
 ```
-Portrait of a green jungle slime, mischievous blob creature with big googly eyes, leaves and flowers stuck on its gooey body, stubby little arms. Cheeky grin showing no teeth. Pixar-style 3D render, child-friendly, bright vibrant colors, soft lighting. Safe for children.
+Portrait of a green jungle slime, mischievous blob creature with narrowed googly eyes, leaves and flowers stuck on its gooey body, stubby little arms. Sneaky smirk showing its intent to block the path. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
 ```
 
 ### Stone Golem (Generic)
 ```
-Portrait of a small stone golem, grumpy but harmless rock creature with mossy patches, big round yellow eyes, chunky rounded body, stubby legs. Pouty expression with crossed arms. Cartoon style, child-friendly, earthy colors, soft lighting. Safe for children.
+Portrait of a small stone golem, territorial rock creature with mossy patches, glowing yellow eyes, chunky rounded body, stubby legs. Grumpy scowl with crossed arms, guarding a stone bridge. Stylized 3D digital illustration, child-friendly, earthy colors, soft lighting. Safe for children.
 ```
 
 ### Shadow Sprite (Night/Magic themed)
 ```
-Portrait of a tiny shadow sprite, playful wisp creature made of purple smoke, big curious glowing eyes, wiggly tendrils instead of hands. Giggling expression. Pixar-style 3D render, child-friendly, magical purple and blue colors, soft glow lighting. Safe for children.
+Portrait of a tiny shadow sprite, mischievous wisp creature made of purple smoke, flickering glowing eyes, wiggly tendrils instead of hands. Sneaky expression as it waits to startle someone. Stylized 3D digital illustration, child-friendly, magical purple and blue colors, soft glow lighting. Safe for children.
 ```
 
 ### Jungle Jaguar Cub (Amara's Realm - Boss)
 ```
-Portrait of an animated jaguar cub spirit, magical jungle cat with glowing golden spots, oversized paws, fluffy appearance, big round amber eyes. Playfully fierce expression like a kitten pouncing. Stylized digital art, child-friendly, vibrant jungle greens and gold, warm lighting. Safe for children.
+Portrait of an animated jaguar cub spirit, territorial jungle cat with glowing golden spots, oversized paws, fluffy but ready to pounce, sharp amber eyes. Hissing expression like a kitten defending its territory. Stylized digital art, child-friendly, vibrant jungle greens and gold, warm lighting. Safe for children.
 ```
 

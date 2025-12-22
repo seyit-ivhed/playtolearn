@@ -1,6 +1,9 @@
 import { type Adventure, EncounterType, PuzzleType } from '../types/adventure.types';
-import goblinImg from '../assets/images/enemies/goblin.png';
-import goblinBossImg from '../assets/images/enemies/goblin_boss.png';
+import duneScorpionImg from '../assets/images/enemies/dune-scorpion.png';
+import sandSpiritImg from '../assets/images/enemies/sand-spirit.png';
+import scorpionRaiderImg from '../assets/images/enemies/scorpion-raider.jpg';
+import tinyScorpionImg from '../assets/images/enemies/tiny-scorpion.jpg';
+import sandColossusImg from '../assets/images/enemies/the-sand-colossus.jpg';
 
 export const ADVENTURES: Adventure[] = [
     {
@@ -18,7 +21,7 @@ export const ADVENTURES: Adventure[] = [
                     {
                         id: 'scorpion_1',
                         name: 'Dune Scorpion',
-                        sprite: goblinImg,
+                        sprite: duneScorpionImg,
                         maxHealth: 30,
                         attack: 5,
                         defense: 0,
@@ -26,7 +29,7 @@ export const ADVENTURES: Adventure[] = [
                     {
                         id: 'scorpion_2',
                         name: 'Dune Scorpion',
-                        sprite: goblinImg,
+                        sprite: duneScorpionImg,
                         maxHealth: 30,
                         attack: 5,
                         defense: 0,
@@ -42,7 +45,7 @@ export const ADVENTURES: Adventure[] = [
                     {
                         id: 'sand_spirit_1',
                         name: 'Sand Spirit',
-                        sprite: goblinImg,
+                        sprite: sandSpiritImg,
                         maxHealth: 35,
                         attack: 6,
                         defense: 1,
@@ -50,7 +53,7 @@ export const ADVENTURES: Adventure[] = [
                     {
                         id: 'sand_spirit_2',
                         name: 'Sand Spirit',
-                        sprite: goblinImg,
+                        sprite: sandSpiritImg,
                         maxHealth: 35,
                         attack: 6,
                         defense: 1,
@@ -85,7 +88,7 @@ export const ADVENTURES: Adventure[] = [
                     {
                         id: 'scorpion_3',
                         name: 'Scorpion Raider',
-                        sprite: goblinImg,
+                        sprite: scorpionRaiderImg,
                         maxHealth: 40,
                         attack: 8,
                         defense: 2,
@@ -93,7 +96,7 @@ export const ADVENTURES: Adventure[] = [
                     {
                         id: 'scorpion_4',
                         name: 'Scorpion Raider',
-                        sprite: goblinImg,
+                        sprite: scorpionRaiderImg,
                         maxHealth: 40,
                         attack: 8,
                         defense: 2,
@@ -101,7 +104,7 @@ export const ADVENTURES: Adventure[] = [
                     {
                         id: 'scorpion_5',
                         name: 'Scorpion Raider',
-                        sprite: goblinImg,
+                        sprite: scorpionRaiderImg,
                         maxHealth: 40,
                         attack: 8,
                         defense: 2,
@@ -136,7 +139,7 @@ export const ADVENTURES: Adventure[] = [
                     ...Array.from({ length: 4 }).map((_, i) => ({
                         id: `tiny_scorpion_${i}`,
                         name: 'Tiny Scorpion',
-                        sprite: goblinImg,
+                        sprite: tinyScorpionImg,
                         maxHealth: 15,
                         attack: 4,
                         defense: 0,
@@ -160,7 +163,7 @@ export const ADVENTURES: Adventure[] = [
                 enemies: [{
                     id: 'sand_colossus',
                     name: 'Sand Colossus',
-                    sprite: goblinBossImg,
+                    sprite: sandColossusImg,
                     maxHealth: 200,
                     maxShield: 50,
                     attack: 18,
