@@ -58,7 +58,20 @@ Use emoji until custom SVG assets are available.
 - **Magic/Special:** ✨ (Sparkles), ⚡ (Bolt), ❤️ (Heart)
 - **Currency:** 🪙 (Coin) or 💎 (Gem)
 
-## 5. CSS Variable Mapping
+## 5. Visual Effects & Particles
+
+### Particle System (`tsparticles`)
+We use `tsparticles` for rich visual effects like confetti, magical sparkles, and ambient backgrounds.
+
+**Guidelines:**
+- **Library:** `@tsparticles/react` with the full `tsparticles` bundle (for emitters).
+- **Component:** Use the reusable `GameParticles` component.
+- **Usage:**
+  - **High Intensity:** Level ups, boss defeats, major rewards (e.g., Confetti).
+  - **Low Intensity:** Ambient magic, background stars (e.g., Subtle floaters).
+- **Performance:** Ensure particles are destroyed after use or kept to a reasonable count (<200) for mobile performance.
+
+## 6. CSS Variable Mapping
 Use this reference when creating new components to ensure they inherit the theme.
 
 | CSS Variable | Fantasy Meaning | Hex Code |

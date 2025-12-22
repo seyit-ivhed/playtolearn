@@ -511,6 +511,9 @@ When moving files to the new structure:
 - **CSS Modules** - Scoped CSS
 - **Vanilla CSS** - No framework
 
+### Visual Effects
+- **tsparticles** - specialized particle engine for high-performance effects
+
 ### Internationalization
 - **i18next** - Translation management
 - **react-i18next** - React integration
