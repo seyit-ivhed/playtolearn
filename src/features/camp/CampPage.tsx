@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGameStore } from '../../stores/game.store';
 import { ADVENTURES } from '../../data/adventures.data';
@@ -5,12 +6,25 @@ import styles from './CampPage.module.css';
 import { CampHeader } from './components/CampHeader';
 import { CampfireScene } from './components/CampfireScene';
 import { FellowshipRoster } from './components/FellowshipRoster';
+import { LevelUpModal } from './components/LevelUpModal';
+import { getCompanionById } from '../../data/companions.data';
+import { getStatsForLevel } from '../../utils/progression.utils';
+import type { Companion, CompanionStats } from '../../types/companion.types';
 
 const MAX_PARTY_SIZE = 4;
 
 const CampPage = () => {
     const navigate = useNavigate();
     const { nodeId } = useParams<{ nodeId: string }>();
+
+    // Level Up Modal State
+    const [levelUpData, setLevelUpData] = React.useState<{
+        companion: Companion;
+        oldStats: CompanionStats;
+        newStats: CompanionStats;
+        oldLevel: number;
+        newLevel: number;
+    } | null>(null);
     const {
         unlockedCompanions,
         activeParty,
@@ -44,6 +58,26 @@ const CampPage = () => {
     const slots = Array(MAX_PARTY_SIZE).fill(null).map((_, i) => activeParty[i] || null);
 
     const handleLevelUp = (companionId: string) => {
+        const companion = getCompanionById(companionId);
+        // Find current stats
+        const currentStats = companionStats[companionId] || { level: 1, xp: 0 };
+
+        if (!companion) return;
+
+        const nextLevel = currentStats.level + 1;
+        const oldStatValues = getStatsForLevel(companion, currentStats.level);
+        const newStatValues = getStatsForLevel(companion, nextLevel);
+
+        // Set data for modal triggers
+        setLevelUpData({
+            companion,
+            oldStats: oldStatValues,
+            newStats: newStatValues,
+            oldLevel: currentStats.level,
+            newLevel: nextLevel
+        });
+
+        // Apply logic immediately
         levelUpCompanion(companionId);
     };
 
@@ -76,6 +110,17 @@ const CampPage = () => {
                     onAdd={addToParty}
                 />
             </div>
+
+            {levelUpData && (
+                <LevelUpModal
+                    companion={levelUpData.companion}
+                    oldStats={levelUpData.oldStats}
+                    newStats={levelUpData.newStats}
+                    oldLevel={levelUpData.oldLevel}
+                    newLevel={levelUpData.newLevel}
+                    onClose={() => setLevelUpData(null)}
+                />
+            )}
         </div>
     );
 };
