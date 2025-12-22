@@ -38,6 +38,7 @@ const CampPage = () => {
         levelUpCompanion
     } = useGameStore();
 
+
     // Get active adventure and current camp info
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
 

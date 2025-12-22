@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Heart, Swords, ArrowRight } from 'lucide-react';
 import type { Companion, CompanionStats } from '../../../types/companion.types';
+import { GameParticles, CONFETTI_OPTIONS } from '../../../components/ui/GameParticles';
 import styles from './LevelUpModal.module.css';
 
 interface LevelUpModalProps {
@@ -21,38 +22,14 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
     onClose
 }) => {
     const { t } = useTranslation();
-    const [confetti, setConfetti] = useState<Array<{ id: number; left: string; delay: string; color: string }>>([]);
 
-    useEffect(() => {
-        // Generate confetti on mount
-        const colors = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'];
-        const pieces = Array.from({ length: 50 }).map((_, i) => ({
-            id: i,
-            left: `${Math.random() * 100}%`,
-            delay: `${Math.random() * 0.5}s`,
-            color: colors[Math.floor(Math.random() * colors.length)]
-        }));
-        setConfetti(pieces);
-    }, []);
 
     const healthDiff = newStats.maxHealth - oldStats.maxHealth;
     const damageDiff = (newStats.abilityDamage || 0) - (oldStats.abilityDamage || 0);
 
     return (
         <div className={styles.overlay}>
-            {/* Confetti Container */}
-            {confetti.map((piece) => (
-                <div
-                    key={piece.id}
-                    className={styles.confetti}
-                    style={{
-                        left: piece.left,
-                        animationDelay: piece.delay,
-                        backgroundColor: piece.color,
-                        animationDuration: `${Math.random() * 2 + 1}s`
-                    }}
-                />
-            ))}
+            <GameParticles options={CONFETTI_OPTIONS} className={styles.particles} />
 
             <div className={styles.content}>
                 <div className={styles.header}>
