@@ -61,12 +61,24 @@ export interface PuzzleOption {
     label?: string; // e.g. "x2", "+5", "÷3"
 }
 
-export interface PuzzleData {
+
+export interface PuzzleConfig {
     puzzleType: PuzzleType;
+    // Optional overrides for static puzzles (tutorials, etc)
+    targetValue?: number;
+    options?: (number | PuzzleOption)[];
+    leftOptions?: (number | PuzzleOption)[];
+    rightOptions?: (number | PuzzleOption)[];
+    rules?: string[];
+    initialLeftWeight?: number;
+    initialRightWeight?: number;
+}
+
+export interface PuzzleData extends Required<Pick<PuzzleConfig, 'puzzleType'>> {
     targetValue: number;
-    options: (number | PuzzleOption)[]; // Support both old simple numbers and new complex options
-    leftOptions?: (number | PuzzleOption)[]; // Specific inventory for left side
-    rightOptions?: (number | PuzzleOption)[]; // Specific inventory for right side
+    options: (number | PuzzleOption)[];
+    leftOptions?: (number | PuzzleOption)[];
+    rightOptions?: (number | PuzzleOption)[];
     rules?: string[];
     initialLeftWeight?: number;
     initialRightWeight?: number;
@@ -79,7 +91,7 @@ export interface Encounter {
     label: string;
     coordinates?: MapCoordinates;
     enemies?: AdventureMonster[]; // If type is BATTLE or BOSS
-    puzzleData?: PuzzleData;       // If type is PUZZLE
+    puzzleData?: PuzzleConfig;       // If type is PUZZLE
     storyBeat?: {
         text: string;
         speaker?: string;

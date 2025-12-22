@@ -63,9 +63,7 @@ export const ADVENTURES: Adventure[] = [
                 label: 'Water Flow',
                 coordinates: { x: 150, y: 800 },
                 puzzleData: {
-                    puzzleType: PuzzleType.SUM_TARGET,
-                    targetValue: 10,
-                    options: [2, 3, 5]
+                    puzzleType: PuzzleType.SUM_TARGET
                 }
             },
             {
@@ -116,17 +114,7 @@ export const ADVENTURES: Adventure[] = [
                 label: 'Weighing Rocks',
                 coordinates: { x: 150, y: 1700 },
                 puzzleData: {
-                    puzzleType: PuzzleType.BALANCE,
-                    targetValue: 25,
-                    options: [], // Legacy
-                    initialLeftWeight: 5,
-                    initialRightWeight: 10,
-
-                    // Left needs +20. Let's give [10, 10]
-                    leftOptions: [10, 10, 3], // 3 is decoy
-
-                    // Right needs +15. Let's give [10, 5]
-                    rightOptions: [10, 5, 2] // 2 is decoy
+                    puzzleType: PuzzleType.BALANCE
                 }
             },
             {
@@ -161,10 +149,7 @@ export const ADVENTURES: Adventure[] = [
                 label: 'Star Map',
                 coordinates: { x: 150, y: 2600 },
                 puzzleData: {
-                    puzzleType: PuzzleType.SEQUENCE,
-                    targetValue: 20, // Sequence up to 20
-                    options: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20], // Multiples of 2
-                    rules: ['MULTIPLES_OF_2']
+                    puzzleType: PuzzleType.SEQUENCE
                 }
             },
             {
