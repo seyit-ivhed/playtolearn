@@ -23,6 +23,7 @@ describe('DebugConsole', () => {
     const mockDebugSetMapNode = vi.fn();
     const mockDebugAddXp = vi.fn();
     const mockDebugResetXpPool = vi.fn();
+    const mockDebugResetCompanions = vi.fn();
     const mockDebugUnlockAllCompanions = vi.fn();
     const mockSetActiveAdventure = vi.fn();
 
@@ -32,6 +33,7 @@ describe('DebugConsole', () => {
             debugSetMapNode: mockDebugSetMapNode,
             debugAddXp: mockDebugAddXp,
             debugResetXpPool: mockDebugResetXpPool,
+            debugResetCompanions: mockDebugResetCompanions,
             debugUnlockAllCompanions: mockDebugUnlockAllCompanions,
             xpPool: 0,
             companionStats: {},
@@ -90,6 +92,7 @@ describe('DebugConsole', () => {
         submitCommand('reset');
         expect(mockDebugSetMapNode).toHaveBeenCalledWith(1);
         expect(mockDebugResetXpPool).toHaveBeenCalled();
-        expect(screen.getByText('Adventure progress and XP pool reset to start.')).toBeDefined();
+        expect(mockDebugResetCompanions).toHaveBeenCalled();
+        expect(screen.getByText('Adventure progress, XP pool, and companion levels reset to start.')).toBeDefined();
     });
 });
