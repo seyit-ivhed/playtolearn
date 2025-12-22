@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import type { PuzzleData } from '../../../types/adventure.types';
 import { isBalanced, calculateScaleAngle, calculateTotalWeight } from './BalanceEngine';
 import styles from './BalancePuzzle.module.css';
@@ -63,9 +63,7 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
     useEffect(() => {
         if (isBalanced(leftTotal, rightTotal) && !isSolved) {
             setIsSolved(true);
-            setTimeout(() => {
-                onSolve();
-            }, 2000);
+            onSolve();
         }
     }, [leftTotal, rightTotal, onSolve, isSolved]);
 
@@ -199,20 +197,6 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                     </button>
                 </div>
             </div>
-
-            {/* Win Message */}
-            <AnimatePresence>
-                {isSolved && (
-                    <motion.div
-                        className={styles.victoryOverlay}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                    >
-                        <h2 className={styles.victoryTitle}>Scale Balanced!</h2>
-                        <div className={styles.victorySub}>The stone bridge is stable...</div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </div>
     );
 };

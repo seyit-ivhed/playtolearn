@@ -1,14 +1,16 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useGameStore } from '../../stores/game.store';
 import { usePlayerStore } from '../../stores/player.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
 import { generatePuzzleData } from '../../utils/math-generator';
+import { calculateEncounterXp } from '../../utils/progression.utils';
 import { SumTargetPuzzle } from './puzzles/SumTargetPuzzle';
 import { BalancePuzzle } from './puzzles/BalancePuzzle';
 import { SequencePuzzle } from './puzzles/SequencePuzzle';
+import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import styles from './PuzzlePage.module.css';
 
 const PuzzlePage = () => {
@@ -17,6 +19,8 @@ const PuzzlePage = () => {
     const { nodeId } = useParams<{ nodeId: string }>();
     const { activeAdventureId, currentMapNode, completeEncounter } = useGameStore();
     const { difficulty } = usePlayerStore();
+
+    const [isCompleted, setIsCompleted] = useState(false);
 
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
 
@@ -27,6 +31,12 @@ const PuzzlePage = () => {
 
     const encounterIndex = adventure?.encounters.findIndex(e => e.id === encounter?.id) ?? -1;
     const isLocked = encounterIndex + 1 > currentMapNode;
+
+    // Calculate XP reward for this puzzle
+    const xpReward = useMemo(() => {
+        if (!activeAdventureId || encounterIndex === -1) return 0;
+        return calculateEncounterXp(activeAdventureId, encounterIndex + 1);
+    }, [activeAdventureId, encounterIndex]);
 
     // Dynamically generate puzzle values based on difficulty
     const puzzleData = useMemo(() => {
@@ -42,7 +52,8 @@ const PuzzlePage = () => {
         isLocked,
         foundEncounter: encounter?.id,
         difficulty,
-        hasPuzzleData: !!puzzleData
+        hasPuzzleData: !!puzzleData,
+        xpReward
     });
 
     if (!encounter || !puzzleData || isLocked) {
@@ -66,6 +77,10 @@ const PuzzlePage = () => {
 
 
     const handleSolve = () => {
+        setIsCompleted(true);
+    };
+
+    const handleCompletionContinue = () => {
         completeEncounter(encounterIndex + 1);
         navigate('/map');
     };
@@ -107,6 +122,15 @@ const PuzzlePage = () => {
                     />
                 )}
             </main>
+
+            {/* Completion Modal */}
+            {isCompleted && (
+                <EncounterCompletionModal
+                    result="VICTORY"
+                    onContinue={handleCompletionContinue}
+                    xpReward={xpReward}
+                />
+            )}
         </div>
     );
 };

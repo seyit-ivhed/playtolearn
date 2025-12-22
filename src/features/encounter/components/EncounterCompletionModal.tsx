@@ -7,9 +7,10 @@ interface EncounterCompletionModalProps {
     result: 'VICTORY' | 'DEFEAT';
     onContinue: () => void;
     xpReward?: number;
+    customMessage?: string; // Optional custom victory message for puzzles
 }
 
-export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> = ({ result, onContinue, xpReward }) => {
+export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> = ({ result, onContinue, xpReward, customMessage }) => {
     const { t } = useTranslation();
 
     const isVictory = result === 'VICTORY';
@@ -22,8 +23,8 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
         t('combat.completion.victory_message_4', 'Incredible! You handled that with style and wisdom!')
     ];
 
-    // For now pick a random one or just use one
-    const victoryMessage = victoryMessages[Math.floor(Math.random() * victoryMessages.length)];
+    // Use custom message if provided, otherwise pick a random victory message
+    const victoryMessage = customMessage || victoryMessages[Math.floor(Math.random() * victoryMessages.length)];
 
     return (
         <div className="completion-overlay">

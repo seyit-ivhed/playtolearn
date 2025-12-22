@@ -22,9 +22,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     useEffect(() => {
         if (isPuzzleSolved(currentSum, target) && !isSolved) {
             setIsSolved(true);
-            setTimeout(() => {
-                onSolve();
-            }, 2000);
+            onSolve();
         }
     }, [currentSum, target, onSolve, isSolved]);
 
@@ -99,20 +97,6 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                     })}
                 </div>
             </div>
-
-            {/* Win Message */}
-            <AnimatePresence>
-                {isSolved && (
-                    <motion.div
-                        className={styles.victoryOverlay}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                    >
-                        <h2 className={styles.victoryTitle}>Reservoir Filled!</h2>
-                        <div className={styles.victorySub}>The path is open...</div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
 
             {/* Feedback Animations */}
             <AnimatePresence>

@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PuzzleData } from '../../../types/adventure.types';
-import { validateNextStep, isSequenceComplete, generateStarPositions, type StarPosition } from './SequenceEngine';
+import { validateNextStep, isSequenceComplete, generateStarPositions } from './SequenceEngine';
 import styles from './SequencePuzzle.module.css';
 
 interface SequencePuzzleProps {
@@ -63,10 +63,7 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
             // Check win condition
             const newValues = [...currentValues, selectedValue];
             if (isSequenceComplete(newValues, targetValue)) {
-                // Determine a slight delay for visual satisfaction?
-                setTimeout(() => {
-                    onSolve();
-                }, 500);
+                onSolve();
             }
         } else {
             // Trigger wrong animation
