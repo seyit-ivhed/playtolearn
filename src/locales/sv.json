@@ -185,6 +185,13 @@
                     "label": "Stjärnkarta"
                 },
                 "1_10": {
+                    "label": "Sista förberedelserna",
+                    "storyBeat": {
+                        "speaker": "Tariq",
+                        "text": "Sandkolossen väntar precis framför oss. Vi måste vara redo. Låt oss samla våra krafter en sista gång."
+                    }
+                },
+                "1_11": {
                     "label": "Sandkolossen"
                 }
             }

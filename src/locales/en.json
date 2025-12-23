@@ -185,6 +185,13 @@
                     "label": "Star Map"
                 },
                 "1_10": {
+                    "label": "Final Preparations",
+                    "storyBeat": {
+                        "speaker": "Tariq",
+                        "text": "The Sand Colossus lies just ahead. We must be prepared. Let us gather our strength one last time."
+                    }
+                },
+                "1_11": {
                     "label": "The Sand Colossus"
                 }
             }

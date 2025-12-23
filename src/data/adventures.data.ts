@@ -127,15 +127,22 @@ export const ADVENTURES: Adventure[] = [
             },
             {
                 id: '1_10',
-                type: EncounterType.BOSS,
+                type: EncounterType.CAMP,
                 coordinates: { x: 250, y: 2900 },
+                storyBeat: {},
+                xpReward: 95
+            },
+            {
+                id: '1_11',
+                type: EncounterType.BOSS,
+                coordinates: { x: 250, y: 3200 },
                 enemies: [{
                     id: 'sand_colossus',
                     sprite: sandColossusImg,
                     maxHealth: 200,
                     attack: 20,
                 }],
-                xpReward: 150, // Boss gives more
+                xpReward: 100
             }
         ]
     }
