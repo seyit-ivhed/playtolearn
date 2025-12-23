@@ -1,0 +1,65 @@
+{
+    "adventureId": "1",
+    "encounters": {
+        "1_1": {
+            "party": [
+                {
+                    "companionId": "amara",
+                    "level": 1
+                },
+                {
+                    "companionId": "tariq",
+                    "level": 1
+                }
+            ]
+        },
+        "1_2": {
+            "party": [
+                {
+                    "companionId": "amara",
+                    "level": 1
+                },
+                {
+                    "companionId": "tariq",
+                    "level": 1
+                }
+            ]
+        },
+        "1_5": {
+            "party": [
+                {
+                    "companionId": "amara",
+                    "level": 2
+                },
+                {
+                    "companionId": "tariq",
+                    "level": 2
+                }
+            ]
+        },
+        "1_8": {
+            "party": [
+                {
+                    "companionId": "amara",
+                    "level": 3
+                },
+                {
+                    "companionId": "tariq",
+                    "level": 3
+                }
+            ]
+        },
+        "1_11": {
+            "party": [
+                {
+                    "companionId": "amara",
+                    "level": 3
+                },
+                {
+                    "companionId": "tariq",
+                    "level": 3
+                }
+            ]
+        }
+    }
+}

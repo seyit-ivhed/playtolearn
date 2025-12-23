@@ -3,6 +3,7 @@ import type { EncounterStore, EncounterFlowSlice } from '../interfaces';
 import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.types';
 import { getCompanionById } from '../../../data/companions.data';
 import { getStatsForLevel } from '../../../utils/progression.utils';
+import { getMonsterSprite } from '../../../data/monster-sprites';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
     initializeEncounter: (partyIds, enemies, xpReward, nodeIndex, companionStats) => {
@@ -42,7 +43,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             return {
                 id: `monster_${enemy.id}_${index}`,
                 templateId: enemy.id,
-                name: enemy.name,
+                name: enemy.name || enemy.id,
                 isPlayer: false,
                 maxHealth: enemy.maxHealth,
                 currentHealth: enemy.maxHealth,
@@ -50,7 +51,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 currentShield: 0,
                 // Map 'attack' to 'damage' for now, or ensure types align
                 damage: enemy.attack,
-                image: enemy.sprite,
+                image: getMonsterSprite(enemy.id),
                 isDead: false,
                 hasActed: false,
                 currentSpirit: 0,

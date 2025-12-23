@@ -1,9 +1,4 @@
 import { type Adventure, EncounterType, PuzzleType } from '../types/adventure.types';
-import duneScorpionImg from '../assets/images/enemies/dune-scorpion.png';
-import sandSpiritImg from '../assets/images/enemies/sand-spirit.png';
-import scorpionRaiderImg from '../assets/images/enemies/scorpion-raider.jpg';
-import tinyScorpionImg from '../assets/images/enemies/tiny-scorpion.jpg';
-import sandColossusImg from '../assets/images/enemies/the-sand-colossus.jpg';
 
 export const ADVENTURES: Adventure[] = [
     {
@@ -17,7 +12,6 @@ export const ADVENTURES: Adventure[] = [
                 enemies: [
                     {
                         id: 'scorpion_1',
-                        sprite: duneScorpionImg,
                         maxHealth: 40,
                         attack: 8,
                     }
@@ -31,7 +25,6 @@ export const ADVENTURES: Adventure[] = [
                 enemies: [
                     ...Array.from({ length: 3 }).map(() => ({
                         id: `tiny_scorpion`,
-                        sprite: tinyScorpionImg,
                         maxHealth: 15,
                         attack: 4,
                     }))
@@ -61,19 +54,16 @@ export const ADVENTURES: Adventure[] = [
                 enemies: [
                     {
                         id: 'scorpion_raider',
-                        sprite: scorpionRaiderImg,
                         maxHealth: 40,
                         attack: 8,
                     },
                     {
                         id: 'scorpion_raider',
-                        sprite: scorpionRaiderImg,
                         maxHealth: 40,
                         attack: 8,
                     },
                     {
                         id: 'scorpion_raider',
-                        sprite: scorpionRaiderImg,
                         maxHealth: 40,
                         attack: 8,
                     }
@@ -103,13 +93,11 @@ export const ADVENTURES: Adventure[] = [
                 enemies: [
                     {
                         id: 'sand_spirit_1',
-                        sprite: sandSpiritImg,
                         maxHealth: 60,
                         attack: 15,
                     },
                     {
                         id: 'sand_spirit_1',
-                        sprite: sandSpiritImg,
                         maxHealth: 60,
                         attack: 15,
                     }
@@ -138,7 +126,6 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: 250, y: 3200 },
                 enemies: [{
                     id: 'sand_colossus',
-                    sprite: sandColossusImg,
                     maxHealth: 180,
                     attack: 25,
                 }],

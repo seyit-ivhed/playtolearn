@@ -22,7 +22,7 @@ export interface CompanionStats {
 export interface CompanionEvolution {
     atLevel: number;
     title: string;
-    image: string;
+    image?: string;
     statsBonus?: Partial<CompanionStats>;
     newSpecialAbility?: SpecialAbility;
 }
@@ -47,7 +47,7 @@ export interface Companion {
     specialAbility: SpecialAbility;
 
     // Visuals
-    image: string;
+    image?: string;
 
     // Configuration
     initialSpirit: number;

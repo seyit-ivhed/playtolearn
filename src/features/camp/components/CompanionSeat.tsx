@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Heart, Swords, Zap, Star } from 'lucide-react';
 import { getCompanionById } from '../../../data/companions.data';
+import { getCompanionSprite } from '../../../data/companion-sprites';
 import { getXpForNextLevel, getStatsForLevel } from '../../../utils/progression.utils';
 import styles from './CompanionSeat.module.css';
 
@@ -50,7 +51,7 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
             data-testid={`party-card-${companionId}`}
         >
             <div className={styles.companionFocus}>
-                <img src={data.image} alt={data.name} className={styles.largeAvatar} />
+                <img src={getCompanionSprite(companionId)} alt={data.name} className={styles.largeAvatar} />
                 <div className={styles.companionBadge}>
                     <div className={styles.miniName}>{data.name}</div>
                     <div className={styles.miniLevel}>Lv {currentStats.level}</div>

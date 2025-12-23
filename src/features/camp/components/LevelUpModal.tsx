@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Heart, Swords, ArrowRight } from 'lucide-react';
 import type { Companion, CompanionStats } from '../../../types/companion.types';
 import { GameParticles, CONFETTI_OPTIONS } from '../../../components/ui/GameParticles';
+import { getCompanionSprite } from '../../../data/companion-sprites';
 import styles from './LevelUpModal.module.css';
 
 interface LevelUpModalProps {
@@ -40,7 +41,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                 <div className={styles.characterSection}>
                     <div className={styles.portraitContainer}>
                         <img
-                            src={companion.image}
+                            src={getCompanionSprite(companion.id)}
                             alt={companion.name}
                             className={styles.portrait}
                         />

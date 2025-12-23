@@ -1,5 +1,6 @@
 import React from 'react';
 import { getCompanionById } from '../../../data/companions.data';
+import { getCompanionSprite } from '../../../data/companion-sprites';
 import styles from './FellowshipRoster.module.css';
 
 interface FellowshipRosterProps {
@@ -30,7 +31,7 @@ export const FellowshipRoster: React.FC<FellowshipRosterProps> = ({
                             className={`${styles.rosterCard} ${inParty ? styles.rosterCardInParty : ''}`}
                             onClick={() => !inParty && activeParty.length < maxPartySize && onAdd(id)}
                         >
-                            <img src={data.image} alt={data.name} className={styles.smallAvatar} />
+                            <img src={getCompanionSprite(id)} alt={data.name} className={styles.smallAvatar} />
                             {inParty && <div className={styles.inPartyIndicator}>In Camp</div>}
                         </div>
                     );

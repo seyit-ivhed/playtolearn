@@ -1,10 +1,6 @@
 import { CompanionRole } from '../types/companion.types';
 import type { Companion } from '../types/companion.types';
 
-// Images
-import amaraImg from '../assets/images/companions/Amara/Amara-0.png';
-import tariqImg from '../assets/images/companions/Tariq/Tariq-0.png';
-
 export const COMPANIONS: Record<string, Companion> = {
     'amara': {
         id: 'amara',
@@ -27,13 +23,11 @@ export const COMPANIONS: Record<string, Companion> = {
             value: 30,
             target: 'SINGLE_ENEMY'
         },
-        image: amaraImg,
         initialSpirit: 65,
         evolutions: [
             {
                 atLevel: 10,
                 title: 'Jungle Sentinel',
-                image: amaraImg, // Placeholder for evolution image
                 statsBonus: {
                     maxHealth: 20,
                     abilityDamage: 5
@@ -62,13 +56,11 @@ export const COMPANIONS: Record<string, Companion> = {
             value: 25,
             target: 'ALL_ALLIES'
         },
-        image: tariqImg,
         initialSpirit: 0,
         evolutions: [
             {
                 atLevel: 10,
                 title: 'Master Alchemist',
-                image: tariqImg, // Placeholder for evolution image
                 statsBonus: {
                     maxHealth: 25,
                     abilityDamage: 3
