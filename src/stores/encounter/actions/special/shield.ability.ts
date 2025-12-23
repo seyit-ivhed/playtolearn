@@ -1,26 +1,26 @@
-
 import type { EncounterStore } from '../../interfaces';
+import type { SpecialAbility } from '../../../../types/companion.types';
+import { executeShieldAbility as executeShieldUtil } from '../../../../utils/battle/ability.utils';
 
 export const executeShieldAbility = (
     get: () => EncounterStore,
     set: any,
     _unitId: string,
-    ability: any
+    ability: SpecialAbility
 ): string[] => {
     const { party } = get();
-    let newParty = [...party];
     const logs: string[] = [];
 
     const attacker = get().party.find(p => p.id === _unitId);
-    const actualValue = attacker?.specialAbilityValue || ability.value;
+    const shieldAmount = attacker?.specialAbilityValue || ability.value;
+
+    const newParty = executeShieldUtil(party, ability, shieldAmount);
+
+    set({ party: newParty });
 
     if (ability.target === 'ALL_ALLIES') {
-        newParty = newParty.map(p => {
-            if (p.isDead) return p;
-            return { ...p, currentShield: p.currentShield + actualValue };
-        });
-        logs.push(`Shielded party for ${actualValue}!`);
-        set({ party: newParty });
+        logs.push(`Granted ${shieldAmount} shield to all allies!`);
     }
     return logs;
 };
+

@@ -229,7 +229,7 @@ describe('encounter-flow.slice', () => {
             // Health 100 -> 95.
             expect(state.party[0].currentShield).toBe(0);
             expect(state.party[0].currentHealth).toBe(95);
-            expect(state.encounterLog).toContain('M1 attacked Companion c1 for 5 damage!');
+            expect(state.encounterLog).toContain('M1 attacked Companion c1 for 20 damage!');
         });
 
         it('should handle player death and defeat condition', () => {

@@ -19,7 +19,7 @@ describe('shield.ability', () => {
 
         const logs = executeShieldAbility(get, mockSet, 'u1', ability);
 
-        expect(logs).toEqual(['Shielded party for 15!']);
+        expect(logs).toEqual(['Granted 15 shield to all allies!']);
 
         const newParty = mockSet.mock.lastCall![0].party;
         expect(newParty[0].currentShield).toBe(15);
@@ -37,7 +37,7 @@ describe('shield.ability', () => {
 
         const logs = executeShieldAbility(get, mockSet, 'u1', ability);
 
-        expect(logs).toEqual(['Shielded party for 20!']);
+        expect(logs).toEqual(['Granted 20 shield to all allies!']);
         const newParty = mockSet.mock.lastCall![0].party;
         expect(newParty[0].currentShield).toBe(20); // 0 + 20
         expect(newParty[1].currentShield).toBe(25); // 5 + 20

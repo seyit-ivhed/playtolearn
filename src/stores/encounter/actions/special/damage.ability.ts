@@ -1,37 +1,32 @@
-
 import type { EncounterStore } from '../../interfaces';
+import type { SpecialAbility } from '../../../../types/companion.types';
+import { executeDamageAbility as executeDamageUtil } from '../../../../utils/battle/ability.utils';
 
 export const executeDamageAbility = (
     get: () => EncounterStore,
     set: any,
     _unitId: string,
-    ability: any
+    ability: SpecialAbility
 ): string[] => {
     const { monsters } = get();
-    let newMonsters = [...monsters];
     const logs: string[] = [];
 
     const attacker = get().party.find(p => p.id === _unitId);
     const actualValue = attacker?.specialAbilityValue || ability.value;
 
+    const newMonsters = executeDamageUtil(monsters, ability, actualValue);
+
+    set({ monsters: newMonsters });
+
     if (ability.target === 'ALL_ENEMIES') {
-        newMonsters = newMonsters.map(m => {
-            if (m.isDead) return m;
-            const newHealth = Math.max(0, m.currentHealth - actualValue);
-            return { ...m, currentHealth: newHealth, isDead: newHealth === 0 };
-        });
-        logs.push(`Dealt ${actualValue} damage to ALL enemies!`);
-        set({ monsters: newMonsters });
-    } else if (ability.target === 'SINGLE_ENEMY') {
-        // Hit first living
-        const targetIndex = newMonsters.findIndex(m => !m.isDead);
-        if (targetIndex !== -1) {
-            const target = newMonsters[targetIndex];
-            const newHealth = Math.max(0, target.currentHealth - actualValue);
-            newMonsters[targetIndex] = { ...target, currentHealth: newHealth, isDead: newHealth === 0 };
+        logs.push(`Dealt ${actualValue} damage to all enemies!`);
+    } else {
+        const target = monsters.find(m => !m.isDead);
+        if (target) {
             logs.push(`Dealt ${actualValue} damage to ${target.name}!`);
-            set({ monsters: newMonsters });
         }
     }
+
     return logs;
 };
+

@@ -1,5 +1,7 @@
 
 import type { EncounterStore } from '../../interfaces';
+import { applyDamage } from '../../../../utils/battle/damage.utils';
+import { findFirstLivingTarget } from '../../../../utils/battle/combat.utils';
 
 export const performWarriorAction = (
     get: () => EncounterStore,
@@ -9,21 +11,18 @@ export const performWarriorAction = (
 ): string => {
     const { monsters, party } = get();
     const attacker = party[_partyIndex];
+
     // Hit first living monster
-    const targetIndex = monsters.findIndex(m => !m.isDead);
+    const targetIndex = findFirstLivingTarget(monsters);
     if (targetIndex !== -1 && attacker) {
         const target = monsters[targetIndex];
         const baseDamage = attacker.damage || 10;
         const damage = baseDamage * multiplier;
 
-        const newHealth = Math.max(0, target.currentHealth - damage);
+        const result = applyDamage(target, damage);
 
         const newMonsters = [...monsters];
-        newMonsters[targetIndex] = {
-            ...target,
-            currentHealth: newHealth,
-            isDead: newHealth === 0
-        };
+        newMonsters[targetIndex] = result.unit;
 
         set({ monsters: newMonsters });
         return ` Dealt ${damage} damage to ${target.name}.`;

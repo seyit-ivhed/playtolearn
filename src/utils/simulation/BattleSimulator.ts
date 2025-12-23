@@ -2,6 +2,9 @@ import type { AdventureMonster } from '../../types/adventure.types';
 import type { SpecialAbility } from '../../types/companion.types';
 import { getCompanionById } from '../../data/companions.data';
 import { getStatsForLevel } from '../progression.utils';
+import { applyDamage } from '../battle/damage.utils';
+import { executeDamageAbility, executeHealAbility, executeShieldAbility } from '../battle/ability.utils';
+import { findFirstLivingTarget, selectRandomTarget } from '../battle/combat.utils';
 import type {
     SimulationUnit,
     BattleState,
@@ -190,14 +193,13 @@ export class BattleSimulator {
      * Execute standard attack
      */
     private executeStandardAttack(attacker: SimulationUnit): void {
-        const targetIndex = this.state.monsters.findIndex(m => !m.isDead);
+        const targetIndex = findFirstLivingTarget(this.state.monsters);
         if (targetIndex === -1) return;
 
         const target = this.state.monsters[targetIndex];
         const damage = attacker.damage;
 
-        this.applyDamage(target, damage);
-        this.state.monsters[targetIndex] = target;
+        this.state.monsters[targetIndex] = applyDamage(target, damage).unit;
     }
 
     /**
@@ -246,64 +248,39 @@ export class BattleSimulator {
      * Execute damage ability
      */
     private executeDamageAbility(target: string, value: number): void {
-        if (target === 'ALL_ENEMIES') {
-            this.state.monsters = this.state.monsters.map(m => {
-                if (m.isDead) return m;
-                this.applyDamage(m, value);
-                return m;
-            });
-        } else if (target === 'SINGLE_ENEMY') {
-            const targetIndex = this.state.monsters.findIndex(m => !m.isDead);
-            if (targetIndex !== -1) {
-                const monster = this.state.monsters[targetIndex];
-                this.applyDamage(monster, value);
-                this.state.monsters[targetIndex] = monster;
-            }
-        }
+        const ability: SpecialAbility = {
+            id: 'temp',
+            type: 'DAMAGE',
+            value,
+            target: target as any
+        };
+        this.state.monsters = executeDamageAbility(this.state.monsters, ability, value);
     }
 
     /**
      * Execute heal ability
      */
     private executeHealAbility(target: string, value: number): void {
-        if (target === 'ALL_ALLIES') {
-            this.state.party = this.state.party.map(p => {
-                if (p.isDead) return p;
-                return {
-                    ...p,
-                    currentHealth: Math.min(p.maxHealth, p.currentHealth + value)
-                };
-            });
-        } else if (target === 'SINGLE_ALLY') {
-            // Heal lowest health ally
-            const lowestHealthIndex = this.state.party
-                .map((p, i) => ({ p, i }))
-                .filter(({ p }) => !p.isDead)
-                .sort((a, b) => a.p.currentHealth - b.p.currentHealth)[0]?.i;
-
-            if (lowestHealthIndex !== undefined) {
-                const ally = this.state.party[lowestHealthIndex];
-                this.state.party[lowestHealthIndex] = {
-                    ...ally,
-                    currentHealth: Math.min(ally.maxHealth, ally.currentHealth + value)
-                };
-            }
-        }
+        const ability: SpecialAbility = {
+            id: 'temp',
+            type: 'HEAL',
+            value,
+            target: target as any
+        };
+        this.state.party = executeHealAbility(this.state.party, ability, value);
     }
 
     /**
      * Execute shield ability
      */
     private executeShieldAbility(target: string, value: number): void {
-        if (target === 'ALL_ALLIES') {
-            this.state.party = this.state.party.map(p => {
-                if (p.isDead) return p;
-                return {
-                    ...p,
-                    currentShield: p.currentShield + value
-                };
-            });
-        }
+        const ability: SpecialAbility = {
+            id: 'temp',
+            type: 'SHIELD',
+            value,
+            target: target as any
+        };
+        this.state.party = executeShieldAbility(this.state.party, ability, value);
     }
 
     /**
@@ -317,15 +294,11 @@ export class BattleSimulator {
 
         for (const monster of activeMonsters) {
             // Random target selection
-            const targetIdx = Math.floor(Math.random() * livingParty.length);
-            const targetId = livingParty[targetIdx].id;
-            const actualTargetIndex = this.state.party.findIndex(p => p.id === targetId);
+            const targetIdx = selectRandomTarget(this.state.party);
+            if (targetIdx === -1) return;
 
-            if (actualTargetIndex !== -1) {
-                const target = this.state.party[actualTargetIndex];
-                this.applyDamage(target, monster.damage);
-                this.state.party[actualTargetIndex] = target;
-            }
+            const target = this.state.party[targetIdx];
+            this.state.party[targetIdx] = applyDamage(target, monster.damage).unit;
 
             // Check defeat after each attack
             if (this.isDefeat()) {
@@ -334,29 +307,7 @@ export class BattleSimulator {
         }
     }
 
-    /**
-     * Apply damage to a unit (handles shield)
-     */
-    private applyDamage(target: SimulationUnit, damageAmount: number): void {
-        let remainingDamage = damageAmount;
 
-        // First reduce shield
-        if (target.currentShield > 0) {
-            if (target.currentShield >= remainingDamage) {
-                target.currentShield -= remainingDamage;
-                remainingDamage = 0;
-            } else {
-                remainingDamage -= target.currentShield;
-                target.currentShield = 0;
-            }
-        }
-
-        // Then reduce health
-        target.currentHealth = Math.max(0, target.currentHealth - remainingDamage);
-        if (target.currentHealth === 0) {
-            target.isDead = true;
-        }
-    }
 
     /**
      * Check for victory condition

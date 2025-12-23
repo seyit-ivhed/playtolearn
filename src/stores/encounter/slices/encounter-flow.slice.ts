@@ -4,6 +4,8 @@ import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.typ
 import { getCompanionById } from '../../../data/companions.data';
 import { getStatsForLevel } from '../../../utils/progression.utils';
 import { getMonsterSprite } from '../../../data/monster-sprites';
+import { applyDamage } from '../../../utils/battle/damage.utils';
+import { selectRandomTarget } from '../../../utils/battle/combat.utils';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
     initializeEncounter: (partyIds, enemies, xpReward, nodeIndex, companionStats) => {
@@ -141,27 +143,19 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 newMonsters[storeMonsterIndex] = { ...newMonsters[storeMonsterIndex], hasActed: true };
             }
 
-            const targetIdx = Math.floor(Math.random() * livingTargets.length);
-            const actualTargetIndex = newParty.findIndex(p => p.id === livingTargets[targetIdx].id);
-            const target = newParty[actualTargetIndex];
-
-            // Calc Damage vs Shield
-            let damage = monster.damage || 8;
-
-            if (target.currentShield > 0) {
-                if (target.currentShield >= damage) {
-                    target.currentShield -= damage;
-                    damage = 0;
-                } else {
-                    damage -= target.currentShield;
-                    target.currentShield = 0;
-                }
+            // Random target selection
+            const targetIdx = selectRandomTarget(newParty);
+            if (targetIdx === -1) {
+                // No valid targets, skip this monster's turn or end encounter if all party members are dead
+                processMonsterAttack(monsterIndex + 1);
+                return;
             }
 
-            target.currentHealth = Math.max(0, target.currentHealth - damage);
-            if (target.currentHealth === 0) target.isDead = true;
+            const target = newParty[targetIdx];
+            const result = applyDamage(target, monster.damage || 8);
+            newParty[targetIdx] = result.unit;
 
-            logs.push(`${monster.name} attacked ${target.name} for ${damage} damage!`);
+            logs.push(`${monster.name} attacked ${result.unit.name} for ${result.damageDealt} damage!`);
 
             // Update state immediately so the UI reflects this attack
             set({

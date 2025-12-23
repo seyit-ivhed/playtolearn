@@ -23,7 +23,7 @@ describe('damage.ability', () => {
 
         const logs = executeDamageAbility(get, mockSet, 'u1', ability);
 
-        expect(logs).toEqual(['Dealt 10 damage to ALL enemies!']);
+        expect(logs).toEqual(['Dealt 10 damage to all enemies!']);
 
         // Check if set was called with updated monsters
         const calls = mockSet.mock.calls;

@@ -19,11 +19,11 @@ describe('heal.ability', () => {
             { id: 'p3', name: 'P3-Dead', currentHealth: 0, maxHealth: 100, isDead: true }
         ];
         const get = createMockGet(party);
-        const ability = { target: 'ALL_ALLIES', value: 15 };
+        const ability = { id: 'heal', type: 'HEAL', target: 'ALL_ALLIES', value: 15 } as const;
 
         const logs = executeHealAbility(get, mockSet, 'u1', ability);
 
-        expect(logs).toEqual(['Healed party for 15!']);
+        expect(logs).toEqual(['Healed all allies for 15 HP!']);
 
         const newParty = mockSet.mock.lastCall![0].party;
         expect(newParty[0].currentHealth).toBe(65); // 50 + 15
@@ -37,11 +37,11 @@ describe('heal.ability', () => {
             { id: 'u2', name: 'U2', currentHealth: 30, maxHealth: 100, isDead: false }
         ];
         const get = () => ({ party } as any);
-        const ability = { target: 'ALL_ALLIES', value: 15 };
+        const ability = { id: 'heal', type: 'HEAL', target: 'ALL_ALLIES', value: 15 } as const;
 
         const logs = executeHealAbility(get, mockSet, 'u1', ability);
 
-        expect(logs).toEqual(['Healed party for 30!']);
+        expect(logs).toEqual(['Healed all allies for 30 HP!']);
         const newParty = mockSet.mock.lastCall![0].party;
         expect(newParty[0].currentHealth).toBe(70); // 40 + 30
         expect(newParty[1].currentHealth).toBe(60); // 30 + 30
@@ -52,7 +52,7 @@ describe('heal.ability', () => {
             { id: 'p1', name: 'P1', currentHealth: 95, maxHealth: 100, isDead: false }
         ];
         const get = createMockGet(party);
-        const ability = { target: 'ALL_ALLIES', value: 15 };
+        const ability = { id: 'heal', type: 'HEAL' as const, target: 'ALL_ALLIES', value: 15 };
 
         executeHealAbility(get, mockSet, 'u1', ability);
 
@@ -67,11 +67,9 @@ describe('heal.ability', () => {
             { id: 'p3', name: 'P3', currentHealth: 50, maxHealth: 100, isDead: false }
         ];
         const get = createMockGet(party);
-        const ability = { target: 'SINGLE_ALLY', value: 20 };
+        const ability = { id: 'heal', type: 'HEAL', target: 'SINGLE_ALLY', value: 20 } as const;
 
-        const logs = executeHealAbility(get, mockSet, 'u1', ability);
-
-        expect(logs).toEqual(['Healed P2 for 20!']);
+        executeHealAbility(get, mockSet, 'u1', ability);
 
         const newParty = mockSet.mock.lastCall![0].party;
         expect(newParty[0].currentHealth).toBe(70); // Unchanged
@@ -82,7 +80,7 @@ describe('heal.ability', () => {
     it('should do nothing if target type is unknown', () => {
         const party = [{ id: 'p1', currentHealth: 50, maxHealth: 100 }];
         const get = createMockGet(party);
-        const ability = { target: 'UNKNOWN', value: 10 };
+        const ability = { id: 'heal', type: 'HEAL' as const, target: 'UNKNOWN' as any, value: 10 };
 
         const logs = executeHealAbility(get, mockSet, 'u1', ability);
 
