@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game.store';
 import { useEncounterStore } from '../../stores/encounter.store';
-import { calculateEncounterXp } from '../../utils/progression.utils';
 import './AdventurePage.css';
 
 import { ADVENTURES } from '../../data/adventures.data';
@@ -34,7 +33,7 @@ const AdventurePage = () => {
 
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
             if (encounter.enemies && encounter.enemies.length > 0) {
-                const xpReward = calculateEncounterXp(activeAdventureId, nodeStep);
+                const xpReward = encounter.xpReward;
                 const localizedEnemies = encounter.enemies.map(enemy => ({
                     ...enemy,
                     name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)

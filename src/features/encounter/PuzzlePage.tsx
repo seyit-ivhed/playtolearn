@@ -6,7 +6,6 @@ import { usePlayerStore } from '../../stores/player.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
 import { generatePuzzleData } from '../../utils/math-generator';
-import { calculateEncounterXp } from '../../utils/progression.utils';
 import { SumTargetPuzzle } from './puzzles/SumTargetPuzzle';
 import { BalancePuzzle } from './puzzles/BalancePuzzle';
 import { SequencePuzzle } from './puzzles/SequencePuzzle';
@@ -32,11 +31,8 @@ const PuzzlePage = () => {
     const encounterIndex = adventure?.encounters.findIndex(e => e.id === encounter?.id) ?? -1;
     const isLocked = encounterIndex + 1 > currentMapNode;
 
-    // Calculate XP reward for this puzzle
-    const xpReward = useMemo(() => {
-        if (!activeAdventureId || encounterIndex === -1) return 0;
-        return calculateEncounterXp(activeAdventureId, encounterIndex + 1);
-    }, [activeAdventureId, encounterIndex]);
+    // Use XP reward from encounter data
+    const xpReward = encounter?.xpReward ?? 0;
 
     // Dynamically generate puzzle values based on difficulty
     const puzzleData = useMemo(() => {
@@ -96,7 +92,7 @@ const PuzzlePage = () => {
                     {t('retreat', 'Retreat')}
                 </button>
                 <h1 className={styles.title}>
-                    {t(`adventures.${activeAdventureId}.nodes.${encounter.id}.label`, encounter.label)}
+                    {t(`adventures.${activeAdventureId}.nodes.${encounter.id}.label`, encounter.label || '')}
                 </h1>
             </header>
 

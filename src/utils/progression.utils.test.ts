@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getXpForNextLevel, calculateEncounterXp, getStatsForLevel } from './progression.utils';
+import { getXpForNextLevel, getStatsForLevel } from './progression.utils';
 import { CompanionRole } from '../types/companion.types';
 
 describe('progression.utils', () => {
@@ -96,17 +96,4 @@ describe('progression.utils', () => {
         });
     });
 
-    describe('calculateEncounterXp', () => {
-        it('should calculate correct XP for first encounter', () => {
-            expect(calculateEncounterXp('1', 1)).toBe(10);
-        });
-
-        it('should calculate correct XP for third encounter', () => {
-            expect(calculateEncounterXp('1', 3)).toBe(30);
-        });
-
-        it('should calculate correct XP for second adventure first encounter', () => {
-            expect(calculateEncounterXp('2', 1)).toBe(110);
-        });
-    });
 });

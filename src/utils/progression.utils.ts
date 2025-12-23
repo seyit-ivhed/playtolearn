@@ -50,15 +50,5 @@ export const getCurrentEvolution = (companion: Companion, level: number) => {
     return sortedEvos.find(e => level >= e.atLevel);
 };
 
-/**
- * Calculates XP reward for an encounter
- * @param adventureId 1-indexed adventure ID
- * @param nodeIndex 1-indexed node position in adventure
- * @returns XP amount
- */
-export const calculateEncounterXp = (adventureId: string, nodeIndex: number): number => {
-    const adventureIndex = parseInt(adventureId) - 1;
-    const globalIndex = (adventureIndex * 10) + nodeIndex;
-    return globalIndex * 10;
-};
+
 

@@ -23,6 +23,7 @@ export const ADVENTURES: Adventure[] = [
                         defense: 0,
                     }
                 ],
+                xpReward: 10,
             },
             {
                 id: '1_2',
@@ -36,7 +37,8 @@ export const ADVENTURES: Adventure[] = [
                         attack: 4,
                         defense: 0,
                     }))
-                ]
+                ],
+                xpReward: 20
             },
             {
                 id: '1_3',
@@ -44,13 +46,15 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: 150, y: 800 },
                 puzzleData: {
                     puzzleType: PuzzleType.SUM_TARGET
-                }
+                },
+                xpReward: 30
             },
             {
                 id: '1_4',
                 type: EncounterType.CAMP,
                 coordinates: { x: 250, y: 1100 },
-                storyBeat: {}
+                storyBeat: {},
+                xpReward: 40
             },
             {
                 id: '1_5',
@@ -79,6 +83,7 @@ export const ADVENTURES: Adventure[] = [
                         defense: 2,
                     }
                 ],
+                xpReward: 50,
             },
             {
                 id: '1_6',
@@ -86,13 +91,15 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: 150, y: 1700 },
                 puzzleData: {
                     puzzleType: PuzzleType.BALANCE
-                }
+                },
+                xpReward: 60
             },
             {
                 id: '1_7',
                 type: EncounterType.CAMP,
                 coordinates: { x: 250, y: 2000 },
-                storyBeat: {}
+                storyBeat: {},
+                xpReward: 70
             },
             {
                 id: '1_8',
@@ -113,7 +120,8 @@ export const ADVENTURES: Adventure[] = [
                         attack: 6,
                         defense: 1,
                     }
-                ]
+                ],
+                xpReward: 80
             },
             {
                 id: '1_9',
@@ -121,7 +129,8 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: 150, y: 2600 },
                 puzzleData: {
                     puzzleType: PuzzleType.SEQUENCE
-                }
+                },
+                xpReward: 90
             },
             {
                 id: '1_10',
@@ -135,6 +144,7 @@ export const ADVENTURES: Adventure[] = [
                     attack: 18,
                     defense: 8,
                 }],
+                xpReward: 150, // Boss gives more
             }
         ]
     }
