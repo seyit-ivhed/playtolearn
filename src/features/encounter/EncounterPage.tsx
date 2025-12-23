@@ -163,14 +163,6 @@ const EncounterPage = () => {
         }
     };
 
-
-
-
-
-
-
-
-
     return (
         <div className="encounter-page">
             {/* Header with Retreat Button */}
