@@ -70,20 +70,20 @@ describe('progression.utils', () => {
     });
 
     describe('getXpForNextLevel', () => {
-        it('should return 15 XP for level 1', () => {
-            expect(getXpForNextLevel(1)).toBe(15);
+        it('should return 30 XP for level 1', () => {
+            expect(getXpForNextLevel(1)).toBe(30);
         });
 
-        it('should return 35 XP for level 2', () => {
-            expect(getXpForNextLevel(2)).toBe(35);
+        it('should return 71 XP for level 2', () => {
+            expect(getXpForNextLevel(2)).toBe(71);
         });
 
-        it('should return 59 XP for level 3', () => {
-            expect(getXpForNextLevel(3)).toBe(59);
+        it('should return 118 XP for level 3', () => {
+            expect(getXpForNextLevel(3)).toBe(118);
         });
 
-        it('should return 233 XP for level 9', () => {
-            expect(getXpForNextLevel(9)).toBe(233);
+        it('should return 467 XP for level 9', () => {
+            expect(getXpForNextLevel(9)).toBe(467);
         });
 
         it('should increase XP requirement as level increases', () => {
