@@ -5,11 +5,11 @@ import { AdventureStatus } from '../types/adventure.types';
 // Mock the adventures data
 vi.mock('../data/adventures.data', () => ({
     ADVENTURES: [
-        { id: '1', difficulty: 1, encounters: [], rewards: {} },
-        { id: '2', difficulty: 1, encounters: [], rewards: {} },
-        { id: '3', difficulty: 1, encounters: [], rewards: {} },
-        { id: '4', difficulty: 1, encounters: [], rewards: {} },
-        { id: '5', difficulty: 1, encounters: [], rewards: {} },
+        { id: '1', difficulty: 1, encounters: [] },
+        { id: '2', difficulty: 1, encounters: [] },
+        { id: '3', difficulty: 1, encounters: [] },
+        { id: '4', difficulty: 1, encounters: [] },
+        { id: '5', difficulty: 1, encounters: [] },
     ]
 }));
 

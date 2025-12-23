@@ -136,8 +136,7 @@ export const ADVENTURES: Adventure[] = [
                     defense: 8,
                 }],
             }
-        ],
-        rewards: {}
+        ]
     }
 ];
 

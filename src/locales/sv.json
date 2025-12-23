@@ -70,15 +70,7 @@
         }
     },
     "rewards": {
-        "title": "Äventyr Slutfört!",
-        "subtitle": "Utmärkt arbete, Äventyrare. Här är dina belöningar:",
-        "gained": "XP intjänat:",
-        "companion_unlocked": "Ny Följeslagare Upplåst!",
-        "companion_growth": "Följeslagare Växer!",
-        "companion_grew": "{{companionName}} har blivit starkare!",
-        "none": "Inga belöningar för detta äventyr.",
-        "return_to_camp": "Återvänd till Läger",
-        "next_adventure": "Nästa Äventyr"
+        "gained": "XP intjänat:"
     },
     "party": {
         "title": "Grupphantering",

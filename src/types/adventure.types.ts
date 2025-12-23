@@ -9,11 +9,7 @@ export const AdventureStatus = {
 
 export type AdventureStatus = typeof AdventureStatus[keyof typeof AdventureStatus];
 
-// Rewards for completing an adventure (either new companion or companion growth)
-export interface AdventureReward {
-    unlocksCompanionId?: string; // New companion joins the party
-    companionGrowth?: string; // Existing companion ID that experiences growth
-}
+
 
 // Encounter Types (for future expansion)
 export const EncounterType = {
@@ -103,7 +99,6 @@ export interface Adventure {
     description?: string;
     difficulty: number; // 1-10 scale
     encounters: Encounter[]; // The sequence of nodes for this adventure
-    rewards: AdventureReward;
     requirements?: {
         minLevel?: number;
         previousAdventureId?: AdventureId;
