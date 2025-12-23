@@ -72,9 +72,7 @@
     "rewards": {
         "title": "Adventure Complete!",
         "subtitle": "Excellent work, Adventurer. Here are your rewards:",
-        "xp": "+{{amount}} XP",
         "gained": "XP Gained:",
-        "credits": "+{{amount}} Gold",
         "companion_unlocked": "New Companion Unlocked!",
         "companion_growth": "Companion Growth!",
         "companion_grew": "{{companionName}} has grown stronger!",

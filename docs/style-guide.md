@@ -21,7 +21,6 @@ We use CSS variables for all coloring. Existing code uses these variable names, 
 - **Attack / Danger:** `#ff4757` (Dragon Red)
 - **Defense / Shield:** `#2ed573` (Emerald Guard) or `#1e90ff` (Mana Blue)
 - **Magic / Special:** `#a55eea` (Wizard Purple)
-- **Gold / Currency:** `#ffa502` (Treasure Gold)
 
 ### Text
 - **Primary (Light):** `#ffffff` (On dark backgrounds)
@@ -56,7 +55,6 @@ Use emoji until custom SVG assets are available.
 - **Attack:** ⚔️ (Swords)
 - **Defense:** 🛡️ (Shield)
 - **Magic/Special:** ✨ (Sparkles), ⚡ (Bolt), ❤️ (Heart)
-- **Currency:** 🪙 (Coin) or 💎 (Gem)
 
 ## 5. Visual Effects & Particles
 

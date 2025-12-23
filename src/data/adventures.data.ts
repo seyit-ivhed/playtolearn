@@ -137,10 +137,7 @@ export const ADVENTURES: Adventure[] = [
                 }],
             }
         ],
-        rewards: {
-            xp: 500,
-            currency: 250
-        }
+        rewards: {}
     }
 ];
 

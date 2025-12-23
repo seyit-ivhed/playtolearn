@@ -116,7 +116,6 @@ Example: Completing "Multiplication - Level 3" adventure unlocks a companion or 
   - "The bridge can hold 50 people. We have 32. How many more allies can cross?"
 - **Multiple Choice**: For younger players
 - **Free Input**: For older/advanced players  
-- **Hints System**: Companion dialogue provides guidance (costs in-game currency)
 
 #### Player-Controlled Difficulty
 - Players choose both the math skill and difficulty level for each adventure
@@ -191,12 +190,6 @@ Each realm contains multiple adventures:
 
 - **Content Unlocks**: Some adventures unlock new realms or adventure paths.
 - **Boss Badges**: Defeating boss fights grants special achievement badges.
-
-### 3.2 Progression Through Mastery
-- Players progress through their Journey by improving their math skills
-- Stronger companions come from completing harder adventures
-- Companion Growth is achieved through skill-based challenges - no currency or resource grinding
-- Defeating boss fights unlocks new adventures and realms with new challenges
 
 ---
 

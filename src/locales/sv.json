@@ -72,9 +72,7 @@
     "rewards": {
         "title": "Äventyr Slutfört!",
         "subtitle": "Utmärkt arbete, Äventyrare. Här är dina belöningar:",
-        "xp": "+{{amount}} XP",
         "gained": "XP intjänat:",
-        "credits": "+{{amount}} Guld",
         "companion_unlocked": "Ny Följeslagare Upplåst!",
         "companion_growth": "Följeslagare Växer!",
         "companion_grew": "{{companionName}} har blivit starkare!",

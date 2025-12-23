@@ -13,8 +13,6 @@ export type AdventureStatus = typeof AdventureStatus[keyof typeof AdventureStatu
 export interface AdventureReward {
     unlocksCompanionId?: string; // New companion joins the party
     companionGrowth?: string; // Existing companion ID that experiences growth
-    xp?: number;
-    currency?: number;
 }
 
 // Encounter Types (for future expansion)

@@ -8,12 +8,12 @@ vi.mock('../data/adventures.data', () => ({
         {
             id: '1',
             encounters: [{}, {}, {}], // 3 encounters
-            rewards: { xp: 100, currency: 50 },
+            rewards: {},
         },
         {
             id: '2',
             encounters: [{}],
-            rewards: { xp: 50, currency: 25 },
+            rewards: {},
         }
     ],
     getAdventureById: vi.fn(),
