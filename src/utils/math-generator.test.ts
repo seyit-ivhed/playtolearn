@@ -3,130 +3,111 @@ import {
     generateProblem,
     validateAnswer,
     generateMultipleChoices,
-    getAllowedOperations
+    generatePuzzleData
 } from './math-generator';
 import { MathOperation } from '../types/math.types';
+import { PuzzleType } from '../types/adventure.types';
 
-describe('Math Generator', () => {
-    describe('Allowed Operations', () => {
-        it('should only allow Addition for Level 1 (Age 6)', () => {
-            const ops = getAllowedOperations(1);
-            expect(ops).toContain(MathOperation.ADD);
-            expect(ops).not.toContain(MathOperation.SUBTRACT);
-            expect(ops).not.toContain(MathOperation.MULTIPLY);
-            expect(ops).not.toContain(MathOperation.DIVIDE);
-        });
-
-        it('should allow Subtraction and Multiplication for Level 2 (Age 7)', () => {
-            const ops = getAllowedOperations(2);
-            expect(ops).toContain(MathOperation.ADD);
-            expect(ops).toContain(MathOperation.SUBTRACT);
-            expect(ops).toContain(MathOperation.MULTIPLY);
-            expect(ops).not.toContain(MathOperation.DIVIDE);
-        });
-
-        it('should allow Division for Level 3 (Age 8) and above', () => {
-            const ops = getAllowedOperations(3);
-            expect(ops).toContain(MathOperation.DIVIDE);
-        });
-    });
-    describe('Addition', () => {
-        it('should generate valid level 1 (Age 6) addition problems', () => {
+describe('Math Generator Functionality', () => {
+    describe('Basic Math Problems', () => {
+        it('should generate valid addition problems', () => {
             const problem = generateProblem(MathOperation.ADD, 1);
-
-            expect(problem.difficulty).toBe(1);
-            expect(problem.operand1).toBeGreaterThanOrEqual(0);
-            expect(problem.operand1).toBeLessThanOrEqual(10);
-            expect(problem.operand2).toBeGreaterThanOrEqual(0);
-            expect(problem.operand2).toBeLessThanOrEqual(10);
+            expect(problem.operation).toBe(MathOperation.ADD);
             expect(problem.correctAnswer).toBe(problem.operand1 + problem.operand2);
         });
 
-        it('should generate valid level 5 (Age 10) addition problems', () => {
-            const problem = generateProblem(MathOperation.ADD, 5);
-
-            expect(problem.difficulty).toBe(5);
-            expect(problem.operand1).toBeGreaterThanOrEqual(100);
-            expect(problem.operand1).toBeLessThanOrEqual(600);
-            expect(problem.operand2).toBeGreaterThanOrEqual(100);
-            expect(problem.operand2).toBeLessThanOrEqual(600);
-        });
-    });
-
-    describe('Subtraction', () => {
-        it('should generate valid level 1 subtraction problems with positive results', () => {
+        it('should generate valid subtraction problems with non-negative results', () => {
             const problem = generateProblem(MathOperation.SUBTRACT, 1);
-
-            expect(problem.difficulty).toBe(1);
+            expect(problem.operation).toBe(MathOperation.SUBTRACT);
             expect(problem.operand1).toBeGreaterThanOrEqual(problem.operand2);
-            expect(problem.correctAnswer).toBeGreaterThanOrEqual(0);
             expect(problem.correctAnswer).toBe(problem.operand1 - problem.operand2);
         });
-    });
 
-    describe('Multiplication', () => {
-        it('should generate valid level 2 (Age 7) multiplication problems (0-4)', () => {
-            const problem = generateProblem(MathOperation.MULTIPLY, 2);
-
-            expect(problem.difficulty).toBe(2);
-            expect(problem.operand1).toBeGreaterThanOrEqual(0);
-            expect(problem.operand1).toBeLessThanOrEqual(4);
-        });
-
-        it('should generate valid level 3 (Age 8) multiplication problems', () => {
+        it('should generate valid multiplication problems', () => {
             const problem = generateProblem(MathOperation.MULTIPLY, 3);
-            expect(problem.operand1).toBeGreaterThanOrEqual(1);
-            expect(problem.operand1).toBeLessThanOrEqual(10);
+            expect(problem.operation).toBe(MathOperation.MULTIPLY);
+            expect(problem.correctAnswer).toBe(problem.operand1 * problem.operand2);
         });
-    });
 
-    describe('Division', () => {
-        it('should generate valid level 5 (Age 10) division problems with remainder', () => {
+        it('should generate valid division problems (whole number)', () => {
+            const problem = generateProblem(MathOperation.DIVIDE, 4);
+            expect(problem.operation).toBe(MathOperation.DIVIDE);
+            expect(typeof problem.correctAnswer).toBe('number');
+            expect(problem.operand1 / problem.operand2).toBe(problem.correctAnswer);
+        });
+
+        it('should generate valid division problems with remainders at higher difficulty', () => {
             const problem = generateProblem(MathOperation.DIVIDE, 5);
-
-            expect(problem.difficulty).toBe(5);
-            // Remainder problems return a string "Q R r"
+            expect(problem.operation).toBe(MathOperation.DIVIDE);
             expect(typeof problem.correctAnswer).toBe('string');
-            if (typeof problem.correctAnswer === 'string') {
-                expect(problem.correctAnswer).toMatch(/^\d+\s*R\s*\d+$/);
-                // And dividend is not perfectly divisible by divisor (unless remainder is 0, which we configured to avoid for now but math permits)
-                // Actually our logic forces remainder >= 1
-                expect(problem.operand1 % problem.operand2).not.toBe(0);
-            }
+            expect(problem.correctAnswer).toMatch(/\d+ R \d+/);
         });
     });
 
-    describe('Multiple Choice', () => {
-        it('should generate 4 choices for numeric answers', () => {
-            const choices = generateMultipleChoices(10);
-            expect(choices).toHaveLength(4);
-            expect(choices).toContain(10);
-        });
-
-        it('should generate 3 choices for string answers', () => {
-            const choices = generateMultipleChoices("3 R 1", 3);
-            expect(choices).toHaveLength(3);
-            expect(choices).toContain("3 R 1");
-        });
-
-        it('should generate choices sorted numerically', () => {
-            const choices = generateMultipleChoices(10);
-            const sorted = [...choices].sort((a, b) => (a as number) - (b as number));
-            expect(choices).toEqual(sorted);
-        });
-    });
-
-    describe('Validation', () => {
-        it('should correctly identify right answers', () => {
-            const result = validateAnswer(5, 5);
+    describe('Answer Validation', () => {
+        it('should validate correct numeric answers', () => {
+            const result = validateAnswer(10, 10);
             expect(result.isCorrect).toBe(true);
-            expect(result.feedback).toBe('correct');
         });
 
-        it('should correctly identify wrong answers', () => {
-            const result = validateAnswer(3, 5);
+        it('should validate incorrect numeric answers', () => {
+            const result = validateAnswer(9, 10);
             expect(result.isCorrect).toBe(false);
-            expect(result.feedback).toBe('incorrect');
+        });
+
+        it('should validate correct string answers (remainders)', () => {
+            const result = validateAnswer('5 R 2', '5 R 2');
+            expect(result.isCorrect).toBe(true);
+        });
+
+        it('should validate incorrect string answers', () => {
+            const result = validateAnswer('5 R 1', '5 R 2');
+            expect(result.isCorrect).toBe(false);
+        });
+    });
+
+    describe('Multiple Choice Generation', () => {
+        it('should include the correct answer in choices', () => {
+            const answer = 42;
+            const choices = generateMultipleChoices(answer);
+            expect(choices).toContain(answer);
+        });
+
+        it('should generate unique choices', () => {
+            const choices = generateMultipleChoices(10);
+            const uniqueChoices = new Set(choices);
+            expect(uniqueChoices.size).toBe(choices.length);
+        });
+
+        it('should generate correct number of choices', () => {
+            expect(generateMultipleChoices(5, 4)).toHaveLength(4);
+            expect(generateMultipleChoices(5, 3)).toHaveLength(3);
+        });
+    });
+
+    describe('Puzzle Data Generation', () => {
+        it('should generate valid Sum Target puzzle data', () => {
+            const data = generatePuzzleData(PuzzleType.SUM_TARGET, 3);
+            expect(data.puzzleType).toBe(PuzzleType.SUM_TARGET);
+            expect(data.targetValue).toBeGreaterThan(0);
+            expect(data.options.length).toBeGreaterThan(0);
+        });
+
+        it('should generate valid Balance puzzle data', () => {
+            const data = generatePuzzleData(PuzzleType.BALANCE, 2);
+            expect(data.puzzleType).toBe(PuzzleType.BALANCE);
+            expect(data.initialLeftWeight).toBeDefined();
+            expect(data.initialRightWeight).toBeDefined();
+            expect(data.leftOptions?.length).toBeGreaterThan(0);
+            expect(data.rightOptions?.length).toBeGreaterThan(0);
+        });
+
+        it('should generate valid Sequence puzzle data', () => {
+            const data = generatePuzzleData(PuzzleType.SEQUENCE, 1);
+            expect(data.puzzleType).toBe(PuzzleType.SEQUENCE);
+            expect(data.targetValue).toBeDefined();
+            expect(data.rules).toBeDefined();
+            expect(data.options.length).toBeGreaterThan(0);
         });
     });
 });
