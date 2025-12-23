@@ -104,14 +104,14 @@ export const ADVENTURES: Adventure[] = [
                     {
                         id: 'sand_spirit_1',
                         sprite: sandSpiritImg,
-                        maxHealth: 50,
-                        attack: 10,
+                        maxHealth: 60,
+                        attack: 15,
                     },
                     {
                         id: 'sand_spirit_1',
                         sprite: sandSpiritImg,
-                        maxHealth: 50,
-                        attack: 10,
+                        maxHealth: 60,
+                        attack: 15,
                     }
                 ],
                 xpReward: 80
