@@ -15,7 +15,7 @@ export const TurnAnnouncer = ({ phase, onVisibilityChange }: TurnAnnouncerProps)
 
     useEffect(() => {
         if (phase === EncounterPhase.PLAYER_TURN) {
-            setMessage(t('encounter.turn.player', 'Your Turn'));
+            setMessage(t('combat.turn.player', 'Your Turn'));
             setKey(prev => prev + 1);
             onVisibilityChange?.(true);
 
@@ -24,7 +24,7 @@ export const TurnAnnouncer = ({ phase, onVisibilityChange }: TurnAnnouncerProps)
                 onVisibilityChange?.(false);
             }, 1600);
         } else if (phase === EncounterPhase.MONSTER_TURN) {
-            setMessage(t('encounter.turn.enemy', 'Enemy Turn'));
+            setMessage(t('combat.turn.enemy', 'Enemy Turn'));
             setKey(prev => prev + 1);
             onVisibilityChange?.(true);
 
