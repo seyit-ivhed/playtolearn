@@ -22,16 +22,8 @@ export const ADVENTURES: Adventure[] = [
                         id: 'scorpion_1',
                         name: 'Dune Scorpion',
                         sprite: duneScorpionImg,
-                        maxHealth: 30,
-                        attack: 5,
-                        defense: 0,
-                    },
-                    {
-                        id: 'scorpion_2',
-                        name: 'Dune Scorpion',
-                        sprite: duneScorpionImg,
-                        maxHealth: 30,
-                        attack: 5,
+                        maxHealth: 40,
+                        attack: 8,
                         defense: 0,
                     }
                 ],
@@ -39,26 +31,18 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_2',
                 type: EncounterType.BATTLE,
-                label: 'Mirages',
+                label: 'Swarm Attack',
                 coordinates: { x: 350, y: 500 },
                 enemies: [
-                    {
-                        id: 'sand_spirit_1',
-                        name: 'Sand Spirit',
-                        sprite: sandSpiritImg,
-                        maxHealth: 35,
-                        attack: 6,
-                        defense: 1,
-                    },
-                    {
-                        id: 'sand_spirit_2',
-                        name: 'Sand Spirit',
-                        sprite: sandSpiritImg,
-                        maxHealth: 35,
-                        attack: 6,
-                        defense: 1,
-                    }
-                ],
+                    ...Array.from({ length: 3 }).map((_, i) => ({
+                        id: `tiny_scorpion_${i}`,
+                        name: 'Tiny Scorpion',
+                        sprite: tinyScorpionImg,
+                        maxHealth: 15,
+                        attack: 4,
+                        defense: 0,
+                    }))
+                ]
             },
             {
                 id: '1_3',
@@ -133,18 +117,26 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_8',
                 type: EncounterType.BATTLE,
-                label: 'Swarm Attack',
+                label: 'Mirages',
                 coordinates: { x: 350, y: 2300 },
                 enemies: [
-                    ...Array.from({ length: 4 }).map((_, i) => ({
-                        id: `tiny_scorpion_${i}`,
-                        name: 'Tiny Scorpion',
-                        sprite: tinyScorpionImg,
-                        maxHealth: 15,
-                        attack: 4,
-                        defense: 0,
-                    }))
-                ],
+                    {
+                        id: 'sand_spirit_1',
+                        name: 'Sand Spirit',
+                        sprite: sandSpiritImg,
+                        maxHealth: 35,
+                        attack: 6,
+                        defense: 1,
+                    },
+                    {
+                        id: 'sand_spirit_2',
+                        name: 'Sand Spirit',
+                        sprite: sandSpiritImg,
+                        maxHealth: 35,
+                        attack: 6,
+                        defense: 1,
+                    }
+                ]
             },
             {
                 id: '1_9',
