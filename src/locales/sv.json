@@ -139,6 +139,12 @@
         "scorpion_1": {
             "name": "Ökenskorpion"
         },
+        "tiny_scorpion": {
+            "name": "Liten skorpion"
+        },
+        "scorpion_raider": {
+            "name": "Skorpionrövare"
+        },
         "sand_spirit_1": {
             "name": "Sandande"
         },
@@ -158,13 +164,36 @@
                     "label": "Ökenstrid"
                 },
                 "1_2": {
-                    "label": "Hägringar"
+                    "label": "Skorpionattack"
                 },
                 "1_3": {
                     "label": "Vattenflöde"
                 },
                 "1_4": {
-                    "label": "Oasens skugga"
+                    "label": "Oasens skugga",
+                    "storyBeat": {
+                        "speaker": "Tariq",
+                        "text": "Solen är hård, men skuggan här är sval. Vi borde ta en stund att reflektera över vår resa och dela vad vi har lärt oss."
+                    }
+                },
+                "1_5": {
+                    "label": "Sandrövare"
+                },
+                "1_6": {
+                    "label": "Väga stenar"
+                },
+                "1_7": {
+                    "label": "Nattläger",
+                    "storyBeat": {
+                        "speaker": "Amara",
+                        "text": "Öknen är vacker på natten. Jag kan känna doften av oasen i närheten. Vi närmar oss vårt mål!"
+                    }
+                },
+                "1_8": {
+                    "label": "Hägringar"
+                },
+                "1_9": {
+                    "label": "Stjärnkarta"
                 },
                 "1_10": {
                     "label": "Sandkolossen"
@@ -181,9 +210,10 @@
         }
     },
     "puzzle": {
+        "target": "Mål",
+        "reset": "Återställ",
         "sequence": {
             "instruction": "Koppla ihop stjärnorna i ordning!"
-        },
-        "reset": "Återställ väg"
+        }
     }
 }

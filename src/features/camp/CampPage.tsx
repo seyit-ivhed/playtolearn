@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import styles from './CampPage.module.css';
@@ -38,6 +39,8 @@ const CampPage = () => {
         levelUpCompanion
     } = useGameStore();
 
+    const { t } = useTranslation();
+
 
     // Get active adventure and current camp info
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
@@ -50,9 +53,9 @@ const CampPage = () => {
     const currentEncounterIndex = adventure?.encounters.findIndex(e => e.id === encounter?.id) ?? -1;
     const nodeIndex = currentEncounterIndex + 1;
 
-    const storyBeat = encounter?.storyBeat ? {
-        text: encounter.storyBeat.text,
-        speaker: encounter.storyBeat.speaker || 'Narrator'
+    const storyBeat = encounter && activeAdventureId ? {
+        text: t(`adventures.${activeAdventureId}.nodes.${encounter.id}.storyBeat.text`),
+        speaker: t(`adventures.${activeAdventureId}.nodes.${encounter.id}.storyBeat.speaker`, 'Narrator')
     } : undefined;
 
     // Helper to get remaining slots
@@ -90,7 +93,7 @@ const CampPage = () => {
     return (
         <div className={styles.container}>
             <CampHeader
-                title={encounter?.label || 'Mountain Camp'}
+                title={encounter ? t(`adventures.${activeAdventureId}.nodes.${encounter.id}.label`) : t('party_camp')}
                 storyBeat={storyBeat}
             />
 

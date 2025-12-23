@@ -139,6 +139,12 @@
         "scorpion_1": {
             "name": "Dune Scorpion"
         },
+        "tiny_scorpion": {
+            "name": "Tiny Scorpion"
+        },
+        "scorpion_raider": {
+            "name": "Scorpion Raider"
+        },
         "sand_spirit_1": {
             "name": "Sand Spirit"
         },
@@ -158,13 +164,36 @@
                     "label": "Desert Dust-up"
                 },
                 "1_2": {
-                    "label": "Mirages"
+                    "label": "Swarm Attack"
                 },
                 "1_3": {
                     "label": "Water Flow"
                 },
                 "1_4": {
-                    "label": "Oasis Shade"
+                    "label": "Oasis Shade",
+                    "storyBeat": {
+                        "speaker": "Tariq",
+                        "text": "The sun is harsh, but this shade is cool. We should take a moment to reflect on our journey and share what we have learned."
+                    }
+                },
+                "1_5": {
+                    "label": "Sand Raiders"
+                },
+                "1_6": {
+                    "label": "Weighing Rocks"
+                },
+                "1_7": {
+                    "label": "Night Camp",
+                    "storyBeat": {
+                        "speaker": "Amara",
+                        "text": "The desert is beautiful at night. I can smell the Oasis nearby. We are getting closer to our goal!"
+                    }
+                },
+                "1_8": {
+                    "label": "Mirages"
+                },
+                "1_9": {
+                    "label": "Star Map"
                 },
                 "1_10": {
                     "label": "The Sand Colossus"
@@ -181,9 +210,10 @@
         }
     },
     "puzzle": {
+        "target": "Target",
+        "reset": "Reset",
         "sequence": {
             "instruction": "Connect the stars in order!"
-        },
-        "reset": "Reset Path"
+        }
     }
 }

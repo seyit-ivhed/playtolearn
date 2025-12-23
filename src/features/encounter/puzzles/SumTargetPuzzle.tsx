@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { PuzzleData } from '../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
@@ -15,6 +16,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     const [isSolved, setIsSolved] = useState(false);
     const [usedOptions, setUsedOptions] = useState<number[]>([]); // Track indices of used options
     const [lastAction, setLastAction] = useState<{ label: string; id: number } | null>(null);
+    const { t } = useTranslation();
 
     const target = data.targetValue;
     const progress = Math.min(100, Math.max(0, (currentSum / target) * 100));
@@ -49,7 +51,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                 {/* Reservoir Visual */}
                 <div className={styles.reservoirContainer}>
                     <div className={styles.targetMarker} style={{ bottom: '100%' }}>
-                        <span className={styles.targetLabel}>Target: {target}</span>
+                        <span className={styles.targetLabel}>{t('puzzle.target')}: {target}</span>
                     </div>
 
                     <div className={styles.reservoir}>
@@ -68,7 +70,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                     </div>
 
                     <button className={styles.resetBtn} onClick={handleReset} disabled={isSolved}>
-                        Reset
+                        {t('puzzle.reset')}
                     </button>
                 </div>
 

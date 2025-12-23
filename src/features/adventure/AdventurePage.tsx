@@ -35,7 +35,11 @@ const AdventurePage = () => {
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
             if (encounter.enemies && encounter.enemies.length > 0) {
                 const xpReward = calculateEncounterXp(activeAdventureId, nodeStep);
-                initializeEncounter(party, encounter.enemies, xpReward, nodeStep, companionStats);
+                const localizedEnemies = encounter.enemies.map(enemy => ({
+                    ...enemy,
+                    name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)
+                }));
+                initializeEncounter(party, localizedEnemies, xpReward, nodeStep, companionStats);
                 navigate('/encounter');
             }
         }

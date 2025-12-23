@@ -30,7 +30,7 @@ export type EncounterType = typeof EncounterType[keyof typeof EncounterType];
 // Monster encountered in battle encounters
 export interface AdventureMonster {
     id: string;
-    name: string;
+    name?: string;
     maxHealth: number;
     maxShield?: number;
     attack: number;
@@ -88,12 +88,12 @@ export interface PuzzleData extends Required<Pick<PuzzleConfig, 'puzzleType'>> {
 export interface Encounter {
     id: string;
     type: EncounterType;
-    label: string;
+    label?: string;
     coordinates?: MapCoordinates;
     enemies?: AdventureMonster[]; // If type is BATTLE or BOSS
     puzzleData?: PuzzleConfig;       // If type is PUZZLE
     storyBeat?: {
-        text: string;
+        text?: string;
         speaker?: string;
     };
 }
@@ -101,8 +101,8 @@ export interface Encounter {
 // Adventure: Contains a linear sequence of encounters culminating in a boss fight
 export interface Adventure {
     id: AdventureId;
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
     difficulty: number; // 1-10 scale
     encounters: Encounter[]; // The sequence of nodes for this adventure
     rewards: AdventureReward;
