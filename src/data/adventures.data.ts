@@ -133,7 +133,6 @@ export const ADVENTURES: Adventure[] = [
                     id: 'sand_colossus',
                     sprite: sandColossusImg,
                     maxHealth: 200,
-                    maxShield: 50,
                     attack: 20,
                 }],
                 xpReward: 150, // Boss gives more
