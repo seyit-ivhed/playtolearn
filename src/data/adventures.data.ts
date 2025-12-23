@@ -20,7 +20,6 @@ export const ADVENTURES: Adventure[] = [
                         sprite: duneScorpionImg,
                         maxHealth: 40,
                         attack: 8,
-                        defense: 0,
                     }
                 ],
                 xpReward: 10,
@@ -35,7 +34,6 @@ export const ADVENTURES: Adventure[] = [
                         sprite: tinyScorpionImg,
                         maxHealth: 15,
                         attack: 4,
-                        defense: 0,
                     }))
                 ],
                 xpReward: 20
@@ -66,21 +64,18 @@ export const ADVENTURES: Adventure[] = [
                         sprite: scorpionRaiderImg,
                         maxHealth: 40,
                         attack: 8,
-                        defense: 2,
                     },
                     {
                         id: 'scorpion_raider',
                         sprite: scorpionRaiderImg,
                         maxHealth: 40,
                         attack: 8,
-                        defense: 2,
                     },
                     {
                         id: 'scorpion_raider',
                         sprite: scorpionRaiderImg,
                         maxHealth: 40,
                         attack: 8,
-                        defense: 2,
                     }
                 ],
                 xpReward: 50,
@@ -111,14 +106,12 @@ export const ADVENTURES: Adventure[] = [
                         sprite: sandSpiritImg,
                         maxHealth: 50,
                         attack: 10,
-                        defense: 1,
                     },
                     {
                         id: 'sand_spirit_1',
                         sprite: sandSpiritImg,
                         maxHealth: 50,
                         attack: 10,
-                        defense: 1,
                     }
                 ],
                 xpReward: 80
@@ -142,7 +135,6 @@ export const ADVENTURES: Adventure[] = [
                     maxHealth: 200,
                     maxShield: 50,
                     attack: 20,
-                    defense: 8,
                 }],
                 xpReward: 150, // Boss gives more
             }

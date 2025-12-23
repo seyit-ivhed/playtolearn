@@ -83,8 +83,7 @@
         "stats": {
             "health": "Health",
             "energy": "Energy",
-            "attack": "Attack",
-            "defense": "Defense"
+            "attack": "Attack"
         }
     },
     "companions": {

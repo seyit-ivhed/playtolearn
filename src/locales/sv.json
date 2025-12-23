@@ -83,8 +83,7 @@
         "stats": {
             "health": "Hälsa",
             "energy": "Energi",
-            "attack": "Attack",
-            "defense": "Försvar"
+            "attack": "Attack"
         }
     },
     "companions": {
