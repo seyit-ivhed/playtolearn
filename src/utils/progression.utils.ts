@@ -31,11 +31,7 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
 };
 
 export const getXpForNextLevel = (currentLevel: number): number => {
-    // New curve: starts fast, takes longer over time
-    // Level 1 -> 2: 15 XP
-    // Level 9 -> 10: 235 XP
-    // Total for Level 10: ~1053 XP
-    return Math.floor(15 * Math.pow(currentLevel, 1.25));
+    return Math.floor(30 * Math.pow(currentLevel, 1.25));
 };
 
 export const getEvolutionAtLevel = (companion: Companion, level: number) => {
@@ -49,6 +45,3 @@ export const getCurrentEvolution = (companion: Companion, level: number) => {
     const sortedEvos = [...companion.evolutions].sort((a, b) => b.atLevel - a.atLevel);
     return sortedEvos.find(e => level >= e.atLevel);
 };
-
-
-
