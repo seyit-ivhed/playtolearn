@@ -59,7 +59,7 @@ export const COMPANIONS: Record<string, Companion> = {
         specialAbility: {
             id: 'elixir_of_life',
             type: 'HEAL',
-            value: 15,
+            value: 20,
             target: 'ALL_ALLIES'
         },
         image: tariqImg,
