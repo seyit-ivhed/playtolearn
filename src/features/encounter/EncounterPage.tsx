@@ -7,8 +7,8 @@ import { useGameStore } from '../../stores/game.store';
 import { usePlayerStore } from '../../stores/player.store';
 import { EncounterPhase } from '../../types/encounter.types';
 
-import { generateProblem } from '../../utils/math-generator';
-import { MathOperation, type MathProblem } from '../../types/math.types';
+import { generateProblem, getAllowedOperations } from '../../utils/math-generator';
+import { type MathProblem } from '../../types/math.types';
 import { useState, useEffect } from 'react';
 import { UnitCard } from './components/UnitCard';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
@@ -83,8 +83,8 @@ const EncounterPage = () => {
 
         // Check for Ultimate (Spirit >= 100)
         if (unit.currentSpirit >= 100) {
-            const ops = [MathOperation.MULTIPLY, MathOperation.DIVIDE, MathOperation.ADD];
-            const op = ops[Math.floor(Math.random() * ops.length)];
+            const allowedOps = getAllowedOperations(difficulty);
+            const op = allowedOps[Math.floor(Math.random() * allowedOps.length)];
             const problem = generateProblem(op, difficulty);
 
             setActiveChallenge({

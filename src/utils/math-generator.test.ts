@@ -2,11 +2,34 @@ import { describe, it, expect } from 'vitest';
 import {
     generateProblem,
     validateAnswer,
-    generateMultipleChoices
+    generateMultipleChoices,
+    getAllowedOperations
 } from './math-generator';
 import { MathOperation } from '../types/math.types';
 
 describe('Math Generator', () => {
+    describe('Allowed Operations', () => {
+        it('should only allow Addition for Level 1 (Age 6)', () => {
+            const ops = getAllowedOperations(1);
+            expect(ops).toContain(MathOperation.ADD);
+            expect(ops).not.toContain(MathOperation.SUBTRACT);
+            expect(ops).not.toContain(MathOperation.MULTIPLY);
+            expect(ops).not.toContain(MathOperation.DIVIDE);
+        });
+
+        it('should allow Subtraction and Multiplication for Level 2 (Age 7)', () => {
+            const ops = getAllowedOperations(2);
+            expect(ops).toContain(MathOperation.ADD);
+            expect(ops).toContain(MathOperation.SUBTRACT);
+            expect(ops).toContain(MathOperation.MULTIPLY);
+            expect(ops).not.toContain(MathOperation.DIVIDE);
+        });
+
+        it('should allow Division for Level 3 (Age 8) and above', () => {
+            const ops = getAllowedOperations(3);
+            expect(ops).toContain(MathOperation.DIVIDE);
+        });
+    });
     describe('Addition', () => {
         it('should generate valid level 1 (Age 6) addition problems', () => {
             const problem = generateProblem(MathOperation.ADD, 1);

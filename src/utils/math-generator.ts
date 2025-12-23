@@ -271,6 +271,30 @@ export const generateMultipleChoices = (correctAnswer: number | string, count: n
 };
 
 /**
+ * Returns a list of allowed operations for a given difficulty level
+ */
+export const getAllowedOperations = (difficulty: DifficultyLevel): MathOperation[] => {
+    const settings = getSettings(difficulty);
+    const ops: MathOperation[] = [];
+
+    if (settings.addition.max > 0 || settings.addition.min > 0) {
+        ops.push(MathOperation.ADD);
+    }
+    if (settings.subtraction.max > 0) {
+        ops.push(MathOperation.SUBTRACT);
+    }
+    if (settings.multiplication.max > 0) {
+        ops.push(MathOperation.MULTIPLY);
+    }
+    if (settings.division.divisorMax > 0) {
+        ops.push(MathOperation.DIVIDE);
+    }
+
+    // Default to ADD if no operations are found (safety fallback)
+    return ops.length > 0 ? ops : [MathOperation.ADD];
+};
+
+/**
  * Main function to generate a math problem
  */
 export const generateProblem = (
