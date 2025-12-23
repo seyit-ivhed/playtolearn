@@ -15,16 +15,16 @@ export const COMPANIONS: Record<string, Companion> = {
         xp: 0,
         baseStats: {
             maxHealth: 75,
-            abilityDamage: 10
+            abilityDamage: 8
         },
         stats: {
             maxHealth: 75,
-            abilityDamage: 10
+            abilityDamage: 8
         },
         specialAbility: {
             id: 'jaguar_strike',
             type: 'DAMAGE',
-            value: 25,
+            value: 30,
             target: 'SINGLE_ENEMY'
         },
         image: amaraImg,
@@ -50,16 +50,16 @@ export const COMPANIONS: Record<string, Companion> = {
         xp: 0,
         baseStats: {
             maxHealth: 85,
-            abilityDamage: 6
+            abilityDamage: 5
         },
         stats: {
             maxHealth: 85,
-            abilityDamage: 6
+            abilityDamage: 5
         },
         specialAbility: {
             id: 'elixir_of_life',
             type: 'HEAL',
-            value: 20,
+            value: 25,
             target: 'ALL_ALLIES'
         },
         image: tariqImg,

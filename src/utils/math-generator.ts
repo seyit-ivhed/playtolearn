@@ -17,21 +17,21 @@ import { PuzzleType, type PuzzleData, type PuzzleOption } from '../types/adventu
 const CONFIG: MathEngineConfig = {
     level1: {
         addition: { min: 0, max: 10 },
-        subtraction: { min: 0, max: 0 }, // Disabled effectively
-        multiplication: { min: 0, max: 0 }, // Disabled effectively
+        subtraction: { min: 0, max: 0 }, // Disabled
+        multiplication: { min: 0, max: 0 }, // Disabled
         division: { divisorMax: 0 }, // Disabled
     },
     level2: {
         addition: { min: 5, max: 20 },
-        subtraction: { min: 1, max: 20 },
-        multiplication: { min: 0, max: 4 },
+        subtraction: { min: 1, max: 10 },
+        multiplication: { min: 0, max: 0 }, // Disabled
         division: { divisorMax: 0 }, // Disabled
     },
     level3: {
         addition: { min: 10, max: 40 },
         subtraction: { min: 5, max: 40 },
-        multiplication: { min: 3, max: 10 },
-        division: { divisorMax: 3 },
+        multiplication: { min: 2, max: 10 },
+        division: { divisorMax: 0 }, // Disabled
     },
     level4: {
         addition: { min: 50, max: 100 },
