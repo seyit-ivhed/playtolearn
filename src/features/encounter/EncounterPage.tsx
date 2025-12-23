@@ -1,5 +1,5 @@
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useEncounterStore } from '../../stores/encounter.store';
@@ -8,14 +8,15 @@ import { usePlayerStore } from '../../stores/player.store';
 import { EncounterPhase } from '../../types/encounter.types';
 import { generateProblem, getAllowedOperations } from '../../utils/math-generator';
 import { type MathProblem } from '../../types/math.types';
-import { useState, useEffect } from 'react';
-import { UnitCard } from './components/UnitCard';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import { VisualEffectOverlay } from './components/VisualEffectOverlay';
-import { getCompanionById } from '../../data/companions.data';
 import { TurnAnnouncer } from './components/TurnAnnouncer';
-import styles from './EncounterPage.module.css'; // Use module
-import './EncounterPage.css'; // Keep legacy if needed
+import { Battlefield } from './components/Battlefield';
+import { SpecialChallengeOverlay } from './components/SpecialChallengeOverlay';
+import { useDelayedUnitRemoval } from './hooks/useDelayedUnitRemoval';
+import { getVFXDetails, checkIsEncounterOver } from './utils/encounter-logic';
+import styles from './EncounterPage.module.css';
+import './EncounterPage.css';
 
 const EncounterPage = () => {
     const { t } = useTranslation();
@@ -36,34 +37,8 @@ const EncounterPage = () => {
         isFlipped: boolean;
     } | null>(null);
 
-    // TRACK VISIBLE MONSTERS (to delay removal after death)
-    const [aliveMonsterIds, setAliveMonsterIds] = useState<string[]>(
-        monsters.filter(m => !m.isDead).map(m => m.id)
-    );
-
-    // Sync alive monsters but delay removal of dead ones
-    useEffect(() => {
-        const storeAliveIds = monsters.filter(m => !m.isDead).map(m => m.id);
-
-        // Find monsters that are dead in store but still in our "alive" list
-        const justDiedIds = aliveMonsterIds.filter(id => !storeAliveIds.includes(id));
-
-        if (justDiedIds.length > 0) {
-            // Delay removal to allow UnitCard to play its "take damage/death" animations
-            const timer = setTimeout(() => {
-                setAliveMonsterIds(prev => prev.filter(id => !justDiedIds.includes(id)));
-            }, 1000);
-            return () => clearTimeout(timer);
-        }
-
-        // Also handle adding any new monsters if needed
-        const newlyAddedIds = storeAliveIds.filter(id => !aliveMonsterIds.includes(id));
-        if (newlyAddedIds.length > 0) {
-            setAliveMonsterIds(prev => [...prev, ...newlyAddedIds]);
-        }
-    }, [monsters, aliveMonsterIds]);
-
-    const visibleMonsters = monsters.filter(m => aliveMonsterIds.includes(m.id));
+    // Sync alive monsters but delay removal of dead ones for animations
+    const visibleMonsterIds = useDelayedUnitRemoval(monsters);
 
     const [activeVFX, setActiveVFX] = useState<{
         type: string;
@@ -71,8 +46,7 @@ const EncounterPage = () => {
         targetId?: string;
     } | null>(null);
 
-    // Check if encounter is effectively over (all monsters dead)
-    const isEncounterOver = monsters.every(m => m.isDead);
+    const isEncounterOver = checkIsEncounterOver(monsters);
 
     const handleUnitAction = (unitId: string) => {
         if (phase !== EncounterPhase.PLAYER_TURN || isEncounterOver) return;
@@ -91,12 +65,11 @@ const EncounterPage = () => {
                 unitId,
                 problem,
                 spotlightOpen: true,
-                isFlipped: false // Start front, then flip
+                isFlipped: false
             });
 
             // Start flip animation shortly after open
             setTimeout(() => {
-                // Reset Spirit Meter just before flip so user doesn't see it reset later
                 useEncounterStore.getState().consumeSpirit(unitId);
                 setActiveChallenge(prev => prev ? { ...prev, isFlipped: true } : null);
             }, 2000);
@@ -104,7 +77,6 @@ const EncounterPage = () => {
             return;
         }
 
-        // Standard Action (No random math challenge)
         performAction(unitId);
     };
 
@@ -112,35 +84,14 @@ const EncounterPage = () => {
         if (!activeChallenge) return;
 
         if (success) {
-            // Trigger VFX instead of immediate resolve
-            const unit = party.find(u => u.id === activeChallenge.unitId);
-            const companion = unit ? getCompanionById(unit.templateId) : null;
-
-            // Determine Effect Type based on ability name or ID
-            const effectName = companion?.specialAbility?.id || 'Generic';
-
-            // Determine Target ID (for positioning VFX) - logic mirrors damage.ability.ts (first living enemy)
-            let targetId: string | undefined;
-            if (effectName === 'jaguar_strike' || companion?.specialAbility?.target === 'SINGLE_ENEMY') {
-                const target = monsters.filter(m => !m.isDead)[0]; // Use first living
-                if (target) {
-                    targetId = target.id;
-                }
-            }
-
-            // Close spotlight/math modal immediately to show full screen VFX
+            const { type, targetId } = getVFXDetails(activeChallenge.unitId, party, monsters);
             setActiveChallenge(null);
-
-            // Start VFX
             setActiveVFX({
-                type: effectName,
+                type,
                 unitId: activeChallenge.unitId,
                 targetId
             });
         } else {
-            // Failure case: No VFX, just close and resolve (miss) via store if needed
-            // For now, let's say failing cancels the attack or does weak attack?
-            // Existing logic was resolveSpecialAttack(..., success)
             resolveSpecialAttack(activeChallenge.unitId, success);
             setActiveChallenge(null);
         }
@@ -148,7 +99,7 @@ const EncounterPage = () => {
 
     const handleVFXComplete = () => {
         if (activeVFX) {
-            resolveSpecialAttack(activeVFX.unitId, true); // Success confirmed by getting here
+            resolveSpecialAttack(activeVFX.unitId, true);
             setActiveVFX(null);
         }
     };
@@ -165,7 +116,6 @@ const EncounterPage = () => {
 
     return (
         <div className="encounter-page">
-            {/* Header with Retreat Button */}
             <header className={styles.header}>
                 <div className={styles.headerControls}>
                     <button
@@ -178,10 +128,8 @@ const EncounterPage = () => {
                 </div>
             </header>
 
-            {/* Turn Announcer */}
             <TurnAnnouncer phase={phase} />
 
-            {/* VFX Overlay - GLOBAL */}
             {activeVFX && (
                 <VisualEffectOverlay
                     effectType={activeVFX.type}
@@ -189,102 +137,37 @@ const EncounterPage = () => {
                     targetId={activeVFX.targetId}
                 />
             )}
-            {/* Actually, VisualEffectOverlay renders nothing if type doesn't match? Let's check. 
-               If it returns null, the useEffect inside it still runs! 
-               So we can just render it with the original type, but css/logic inside might render DOM.
-               
-               Better Approach: Just render VisualEffectOverlay but update IT to return null for Protective Stance DOM.
-               
-               Let's do the prop pass first.
-            */}
 
-            {/* Battlefield */}
-            <div className="battlefield">
-                <div className="battle-layout">
-                    {/* Party Grid */}
-                    <div className="party-grid">
-                        {party.map(unit => (
-                            <div key={unit.id} className="card-wrapper">
-                                <UnitCard
-                                    unit={unit}
-                                    phase={phase}
-                                    onAct={() => handleUnitAction(unit.id)}
-                                    activeVisualEffect={activeVFX?.type}
-                                    disableInteraction={isEncounterOver || !!activeChallenge || !!activeVFX}
-                                />
-                            </div>
-                        ))}
-                    </div>
+            <Battlefield
+                party={party}
+                monsters={monsters}
+                visibleMonsterIds={visibleMonsterIds}
+                phase={phase}
+                isEncounterOver={isEncounterOver}
+                activeVFXType={activeVFX?.type}
+                activeChallengeUnitId={activeChallenge?.unitId}
+                isVFXActive={!!activeVFX}
+                onUnitAction={handleUnitAction}
+            />
 
-                    {/* VS Indicator */}
-                    <div className="vs-indicator">
-                        <div className="vs-line"></div>
-                        <span className="vs-text">{t('encounter.vs', 'VS')}</span>
-                        <div className="vs-line bottom"></div>
-                    </div>
+            {activeChallenge && (
+                <SpecialChallengeOverlay
+                    challenge={activeChallenge}
+                    party={party}
+                    phase={phase}
+                    isVFXActive={!!activeVFX}
+                    onComplete={handleChallengeComplete}
+                />
+            )}
 
-                    {/* Monsters Grid */}
-                    <div className="monster-grid">
-                        <AnimatePresence mode="popLayout">
-                            {visibleMonsters.map(unit => (
-                                <motion.div
-                                    key={unit.id}
-                                    layout
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{
-                                        opacity: 0,
-                                        scale: 0.5,
-                                        filter: "blur(10px)",
-                                        transition: { duration: 0.5 }
-                                    }}
-                                >
-                                    <UnitCard
-                                        unit={unit}
-                                        phase={phase}
-                                    />
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                    </div>
-                </div>
-
-
-            </div>
-
-            {/* Spotlight Overlay */}
-            {
-                activeChallenge && activeChallenge.spotlightOpen && !activeVFX && (
-                    <div className={styles.spotlightContainer}>
-                        <div className={styles.spotlightCardWrapper}>
-                            {(() => {
-                                const unit = party.find(u => u.id === activeChallenge.unitId);
-                                if (!unit) return null;
-                                return (
-                                    <UnitCard
-                                        unit={unit}
-                                        phase={phase}
-                                        isFlipped={activeChallenge.isFlipped}
-                                        mathProblem={activeChallenge.problem}
-                                        onMathAnswer={handleChallengeComplete}
-                                    />
-                                );
-                            })()}
-                        </div>
-                    </div>
-                )
-            }
-            {/* Completion Modal */}
-            {
-                (phase === EncounterPhase.VICTORY || phase === EncounterPhase.DEFEAT) && (
-                    <EncounterCompletionModal
-                        result={phase === EncounterPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
-                        onContinue={handleCompletionContinue}
-                        xpReward={xpReward}
-                    />
-                )
-            }
-        </div >
+            {(phase === EncounterPhase.VICTORY || phase === EncounterPhase.DEFEAT) && (
+                <EncounterCompletionModal
+                    result={phase === EncounterPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
+                    onContinue={handleCompletionContinue}
+                    xpReward={xpReward}
+                />
+            )}
+        </div>
     );
 };
 
