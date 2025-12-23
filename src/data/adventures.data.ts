@@ -109,15 +109,15 @@ export const ADVENTURES: Adventure[] = [
                     {
                         id: 'sand_spirit_1',
                         sprite: sandSpiritImg,
-                        maxHealth: 35,
-                        attack: 6,
+                        maxHealth: 50,
+                        attack: 10,
                         defense: 1,
                     },
                     {
                         id: 'sand_spirit_1',
                         sprite: sandSpiritImg,
-                        maxHealth: 35,
-                        attack: 6,
+                        maxHealth: 50,
+                        attack: 10,
                         defense: 1,
                     }
                 ],
@@ -141,7 +141,7 @@ export const ADVENTURES: Adventure[] = [
                     sprite: sandColossusImg,
                     maxHealth: 200,
                     maxShield: 50,
-                    attack: 18,
+                    attack: 20,
                     defense: 8,
                 }],
                 xpReward: 150, // Boss gives more
