@@ -6,7 +6,6 @@ import { useEncounterStore } from '../../stores/encounter.store';
 import { useGameStore } from '../../stores/game.store';
 import { usePlayerStore } from '../../stores/player.store';
 import { EncounterPhase } from '../../types/encounter.types';
-
 import { generateProblem, getAllowedOperations } from '../../utils/math-generator';
 import { type MathProblem } from '../../types/math.types';
 import { useState, useEffect } from 'react';
@@ -160,7 +159,7 @@ const EncounterPage = () => {
             useGameStore.getState().completeEncounter(nodeIndex);
             navigate('/map');
         } else if (phase === EncounterPhase.DEFEAT) {
-            navigate('/camp');
+            navigate('/map');
         }
     };
 
