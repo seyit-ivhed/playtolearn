@@ -45,7 +45,7 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.CAMP,
                 coordinates: { x: 250, y: 1100 },
                 storyBeat: {},
-                xpReward: 40
+                xpReward: 0
             },
             {
                 id: '1_5',
@@ -84,7 +84,7 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.CAMP,
                 coordinates: { x: 250, y: 2000 },
                 storyBeat: {},
-                xpReward: 70
+                xpReward: 0
             },
             {
                 id: '1_8',
@@ -118,7 +118,7 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.CAMP,
                 coordinates: { x: 250, y: 2900 },
                 storyBeat: {},
-                xpReward: 95
+                xpReward: 0
             },
             {
                 id: '1_11',
