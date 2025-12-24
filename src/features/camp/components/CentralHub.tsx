@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './CentralHub.module.css';
 
 interface CentralHubProps {
@@ -7,6 +8,8 @@ interface CentralHubProps {
 }
 
 export const CentralHub: React.FC<CentralHubProps> = ({ xpPool, onPackUp }) => {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.centralHub}>
             <div className={styles.xpPoolDisplay}>
@@ -21,7 +24,7 @@ export const CentralHub: React.FC<CentralHubProps> = ({ xpPool, onPackUp }) => {
                 className={styles.backButton}
                 data-testid="nav-map-btn"
             >
-                🗺️ Pack Up & Go
+                {t('common.continue')}
             </button>
         </div>
     );

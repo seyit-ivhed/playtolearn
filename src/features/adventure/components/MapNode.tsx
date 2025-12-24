@@ -63,7 +63,10 @@ export const MapNode: React.FC<MapNodeProps> = ({
             {/* Label */}
             <div className={labelClasses}>
                 {isCamp && <span className="mr-2">✨</span>}
-                {t(`adventures.${adventureId}.nodes.${node.id}.label`, node.label || '') as string}
+                {isCamp
+                    ? t('party_camp')
+                    : t(`adventures.${adventureId}.nodes.${node.id}.label`, node.label || '') as string
+                }
                 {isCamp && <span className="ml-2">✨</span>}
             </div>
         </div>

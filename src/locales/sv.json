@@ -1,4 +1,7 @@
 {
+    "common": {
+        "continue": "Fortsätt"
+    },
     "app_title": "Matteäventyret",
     "subtitle": "Bemästra matte för att utforska rikena!",
     "start_adventure": "Starta Äventyr",
@@ -154,13 +157,6 @@
                 "1_3": {
                     "label": "Vattenflöde"
                 },
-                "1_4": {
-                    "label": "Oasens skugga",
-                    "storyBeat": {
-                        "speaker": "Tariq",
-                        "text": "Solen är hård, men skuggan här är sval. Vi borde ta en stund att reflektera över vår resa och dela vad vi har lärt oss."
-                    }
-                },
                 "1_5": {
                     "label": "Sandrövare"
                 },
@@ -170,13 +166,6 @@
                 "1_7": {
                     "label": "Väga stenar"
                 },
-                "1_8": {
-                    "label": "Nattläger",
-                    "storyBeat": {
-                        "speaker": "Amara",
-                        "text": "Öknen är vacker på natten. Jag kan känna doften av oasen i närheten. Vi närmar oss vårt mål!"
-                    }
-                },
                 "1_9": {
                     "label": "Hägringar"
                 },
@@ -185,13 +174,6 @@
                 },
                 "1_11": {
                     "label": "Urgamla väktare"
-                },
-                "1_12": {
-                    "label": "Sista förberedelserna",
-                    "storyBeat": {
-                        "speaker": "Tariq",
-                        "text": "Sandkolossen väntar precis framför oss. Vi måste vara redo. Låt oss samla våra krafter en sista gång."
-                    }
                 },
                 "1_13": {
                     "label": "Sandkolossen"

@@ -1,8 +1,11 @@
 {
+    "common": {
+        "continue": "Continue"
+    },
     "app_title": "Math Quest Adventures",
     "subtitle": "Master math to explore the realms!",
     "start_adventure": "Start Adventure",
-    "party_camp": "Party Camp",
+    "party_camp": "Camp",
     "adventure_map": "Adventure Map",
     "back_to_home": "Back to Home",
     "empty_slot": "Empty Slot",
@@ -154,13 +157,6 @@
                 "1_3": {
                     "label": "Water Flow"
                 },
-                "1_4": {
-                    "label": "Oasis Shade",
-                    "storyBeat": {
-                        "speaker": "Tariq",
-                        "text": "The sun is harsh, but this shade is cool. We should take a moment to reflect on our journey and share what we have learned."
-                    }
-                },
                 "1_5": {
                     "label": "Sand Raiders"
                 },
@@ -170,13 +166,6 @@
                 "1_7": {
                     "label": "Weighing Rocks"
                 },
-                "1_8": {
-                    "label": "Night Camp",
-                    "storyBeat": {
-                        "speaker": "Amara",
-                        "text": "The desert is beautiful at night. I can smell the Oasis nearby. We are getting closer to our goal!"
-                    }
-                },
                 "1_9": {
                     "label": "Mirages"
                 },
@@ -185,13 +174,6 @@
                 },
                 "1_11": {
                     "label": "Ancient Guardians"
-                },
-                "1_12": {
-                    "label": "Final Preparations",
-                    "storyBeat": {
-                        "speaker": "Tariq",
-                        "text": "The Sand Colossus lies just ahead. We must be prepared. Let us gather our strength one last time."
-                    }
                 },
                 "1_13": {
                     "label": "The Sand Colossus"
