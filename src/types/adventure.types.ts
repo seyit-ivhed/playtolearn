@@ -31,6 +31,7 @@ export interface AdventureMonster {
 
     sprite?: string;
     icon?: string;
+    isBoss?: boolean;
 }
 
 // Map coordinates for placing nodes

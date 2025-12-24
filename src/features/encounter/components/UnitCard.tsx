@@ -74,11 +74,16 @@ export const UnitCard = ({
     const getCardClasses = () => {
         const classes = ['unit-card', animationClass];
 
+        if (unit.isBoss) classes.push('is-boss');
         if (isUltimateReady) classes.push('ultimate-ready-glow');
         if (isFlipped) classes.push('is-flipped');
 
         if (isMonster) {
-            classes.push('border-red');
+            if (unit.isBoss) {
+                classes.push('border-boss');
+            } else {
+                classes.push('border-red');
+            }
         } else {
             classes.push('border-brown');
         }

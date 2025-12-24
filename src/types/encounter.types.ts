@@ -31,6 +31,7 @@ export interface EncounterUnit {
     currentSpirit: number; // 0-100
     maxSpirit: number;     // 100
     spiritGain: number;
+    isBoss?: boolean;
 }
 
 export interface EncounterState {

@@ -32,13 +32,13 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     currentHealth: calculatedStats.maxHealth,
                     maxShield: 0,
                     currentShield: 0,
-                    damage: calculatedStats.abilityDamage,
-                    specialAbilityValue: calculatedStats.specialAbilityValue,
+                    damage: calculatedStats.abilityDamage || 0,
+                    specialAbilityValue: calculatedStats.specialAbilityValue || 0,
                     isDead: false,
                     hasActed: false,
                     currentSpirit: data.initialSpirit || 0,
                     maxSpirit: 100,
-                    spiritGain: calculatedStats.spiritGain
+                    spiritGain: calculatedStats.spiritGain || 0
                 };
             });
 
@@ -59,7 +59,8 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 hasActed: false,
                 currentSpirit: 0,
                 maxSpirit: 100,
-                spiritGain: 0
+                spiritGain: 0,
+                isBoss: enemy.isBoss
             } as any;
         });
 

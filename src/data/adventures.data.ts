@@ -174,6 +174,7 @@ export const ADVENTURES: Adventure[] = [
                     id: 'sand_colossus',
                     maxHealth: 180,
                     attack: 25,
+                    isBoss: true,
                 }],
                 xpReward: 100
             }
