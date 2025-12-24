@@ -6,7 +6,7 @@ interface MapPathSVGProps {
 
 export const MapPathSVG: React.FC<MapPathSVGProps> = ({ encounters }) => {
     return (
-        <svg className="map-svg-path" viewBox="0 0 500 3500" preserveAspectRatio="xMidYMin slice">
+        <svg className="map-svg-path" viewBox="0 0 500 4500" preserveAspectRatio="xMidYMin slice">
             <defs>
                 <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.2" />

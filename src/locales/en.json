@@ -169,29 +169,35 @@
                     "label": "Sand Raiders"
                 },
                 "1_6": {
-                    "label": "Weighing Rocks"
+                    "label": "Desert Ambush"
                 },
                 "1_7": {
+                    "label": "Weighing Rocks"
+                },
+                "1_8": {
                     "label": "Night Camp",
                     "storyBeat": {
                         "speaker": "Amara",
                         "text": "The desert is beautiful at night. I can smell the Oasis nearby. We are getting closer to our goal!"
                     }
                 },
-                "1_8": {
+                "1_9": {
                     "label": "Mirages"
                 },
-                "1_9": {
+                "1_10": {
                     "label": "Star Map"
                 },
-                "1_10": {
+                "1_11": {
+                    "label": "Ancient Guardians"
+                },
+                "1_12": {
                     "label": "Final Preparations",
                     "storyBeat": {
                         "speaker": "Tariq",
                         "text": "The Sand Colossus lies just ahead. We must be prepared. Let us gather our strength one last time."
                     }
                 },
-                "1_11": {
+                "1_13": {
                     "label": "The Sand Colossus"
                 }
             }
