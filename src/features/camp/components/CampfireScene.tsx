@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CentralHub } from './CentralHub';
 import { CompanionSeat } from './CompanionSeat';
+import { CompanionTooltip } from './CompanionTooltip';
 import styles from './CampfireScene.module.css';
 
 interface CampfireSceneProps {
@@ -20,6 +21,8 @@ export const CampfireScene: React.FC<CampfireSceneProps> = ({
     onLevelUp,
     onPackUp
 }) => {
+    const [hoveredCompanion, setHoveredCompanion] = useState<{ id: string; level: number } | null>(null);
+
     return (
         <section className={styles.mainCampArea}>
             <div className={styles.campfireScene}>
@@ -37,8 +40,16 @@ export const CampfireScene: React.FC<CampfireSceneProps> = ({
                         xpPool={xpPool}
                         onRemove={onRemove}
                         onLevelUp={onLevelUp}
+                        onHover={(id, level) => setHoveredCompanion(id ? { id, level } : null)}
                     />
                 ))}
+
+                {hoveredCompanion && (
+                    <CompanionTooltip
+                        companionId={hoveredCompanion.id}
+                        level={hoveredCompanion.level}
+                    />
+                )}
             </div>
         </section>
     );

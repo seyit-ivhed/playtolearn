@@ -1,8 +1,6 @@
-import { useTranslation } from 'react-i18next';
-import { Heart, Swords, Star } from 'lucide-react';
 import { getCompanionById } from '../../../data/companions.data';
 import { getCompanionSprite } from '../../../data/companion-sprites';
-import { getXpForNextLevel, getStatsForLevel } from '../../../utils/progression.utils';
+import { getXpForNextLevel } from '../../../utils/progression.utils';
 import styles from './CompanionSeat.module.css';
 
 interface CompanionSeatProps {
@@ -15,6 +13,7 @@ interface CompanionSeatProps {
     xpPool: number;
     onRemove?: (id: string) => void;
     onLevelUp?: (id: string) => void;
+    onHover?: (id: string | null, level: number) => void;
 }
 
 export const CompanionSeat: React.FC<CompanionSeatProps> = ({
@@ -23,9 +22,9 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
     stats,
     xpPool,
     onRemove,
-    onLevelUp
+    onLevelUp,
+    onHover
 }) => {
-    const { t } = useTranslation();
     const seatClass = `${styles.companionSeat} ${styles[`pos${index}`]}`;
 
     if (!companionId) {
@@ -43,7 +42,6 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
     if (!data) return null;
 
     const currentStats = stats || { level: 1, xp: 0 };
-    const calculatedStats = getStatsForLevel(data, currentStats.level);
 
     const canLevelUp = typeof xpPool === 'number' &&
         xpPool >= (getXpForNextLevel(currentStats.level) - currentStats.xp) &&
@@ -53,42 +51,14 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
         <div
             className={seatClass}
             data-testid={`party-card-${companionId}`}
+            onMouseEnter={() => onHover?.(companionId, currentStats.level)}
+            onMouseLeave={() => onHover?.(null, 0)}
         >
             <div className={styles.companionFocus}>
                 <img src={getCompanionSprite(companionId)} alt={data.name} className={styles.largeAvatar} />
                 <div className={styles.companionBadge}>
                     <div className={styles.miniName}>{data.name}</div>
                     <div className={styles.miniLevel}>Lv {currentStats.level}</div>
-                </div>
-
-                {/* Stats Tooltip */}
-                <div className={styles.statsTooltip}>
-                    <div className={styles.tooltipHeader}>
-                        <div className={styles.heroName}>{data.name}</div>
-                        <div className={styles.heroTitle}>{data.title}</div>
-                    </div>
-
-                    <div className={styles.statGrid}>
-                        <div className={styles.statItem}>
-                            <Heart size={16} className={styles.iconHp} />
-                            <span>{calculatedStats.maxHealth}</span>
-                        </div>
-                        <div className={styles.statItem}>
-                            <Swords size={16} className={styles.iconAtk} />
-                            <span>{calculatedStats.abilityDamage}</span>
-                        </div>
-                    </div>
-
-
-                    <div className={styles.abilitySection}>
-                        <div className={styles.abilityHeader}>
-                            <Star size={14} className={styles.iconUltimate} />
-                            <span>{t(`companions.${companionId}.special_ability_name`)}</span>
-                        </div>
-                        <p className={styles.abilityText}>
-                            {t(`companions.${companionId}.special_ability_description`, { value: calculatedStats.specialAbilityValue || data.specialAbility.value })}
-                        </p>
-                    </div>
                 </div>
 
                 {onRemove && (
