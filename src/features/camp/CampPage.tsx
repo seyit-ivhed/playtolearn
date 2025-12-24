@@ -97,14 +97,14 @@ const CampPage = () => {
                     onLevelUp={handleLevelUp}
                     onPackUp={handlePackUp}
                 />
-
-                <FellowshipRoster
-                    unlockedCompanions={unlockedCompanions}
-                    activeParty={activeParty}
-                    maxPartySize={MAX_PARTY_SIZE}
-                    onAdd={addToParty}
-                />
             </div>
+
+            <FellowshipRoster
+                unlockedCompanions={unlockedCompanions}
+                activeParty={activeParty}
+                maxPartySize={MAX_PARTY_SIZE}
+                onAdd={addToParty}
+            />
 
             {levelUpData && (
                 <LevelUpModal

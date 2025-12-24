@@ -8,8 +8,8 @@
 
 .campfireScene {
     position: relative;
-    width: 700px;
-    height: 700px;
+    width: 1000px;
+    height: 750px;
     display: flex;
     align-items: center;
     justify-content: center;

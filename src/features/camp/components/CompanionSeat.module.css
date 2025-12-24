@@ -11,27 +11,23 @@
 }
 
 .pos0 {
-    top: 12%;
-    left: 0%;
-    transform: translate(25%, 0);
+    top: 10%;
+    left: 4%;
 }
 
 .pos1 {
-    top: 12%;
-    right: 0%;
-    transform: translate(-25%, 0);
+    top: 10%;
+    right: 4%;
 }
 
 .pos2 {
-    bottom: 12%;
-    right: 0%;
-    transform: translate(-25%, 0);
+    bottom: 10%;
+    right: 4%;
 }
 
 .pos3 {
-    bottom: 12%;
-    left: 0%;
-    transform: translate(25%, 0);
+    bottom: 10%;
+    left: 4%;
 }
 
 /* Character Visuals */
