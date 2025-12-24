@@ -31,7 +31,7 @@ export const CONFIG: MathEngineConfig = {
             enabled: true,
             left: { min: 10, max: 50 },
             right: { min: 2, max: 10 },
-            allowRemainder: false
+            forceRemainder: false
         },
     },
     level5: {
@@ -42,7 +42,7 @@ export const CONFIG: MathEngineConfig = {
             enabled: true,
             left: { min: 20, max: 100 },
             right: { min: 5, max: 10 },
-            allowRemainder: true
+            forceRemainder: true
         },
     },
 };

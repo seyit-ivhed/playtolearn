@@ -88,7 +88,7 @@ export interface OperationConfig {
 }
 
 export interface DivisionConfig extends OperationConfig {
-    allowRemainder?: boolean;
+    forceRemainder?: boolean;
 }
 
 interface LevelConfig {

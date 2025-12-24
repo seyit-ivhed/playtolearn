@@ -24,18 +24,13 @@ describe('Math Operations Verification', () => {
 
     describe('Subtraction Range Control', () => {
         it('should respect left and right ranges for Level 2', () => {
-            // Level 2 Subtraction: left { min: 5, max: 15 }, right { min: 1, max: 6 }
+            // Level 2 Subtraction: left { min: 5, max: 10 }, right { min: 0, max: 3 }
             for (let i = 0; i < 50; i++) {
                 const problem = generateSubtractionProblem(2);
-                // Note: we might swap operands to ensure non-negative, but with these ranges left > right usually.
-                // Our implementation swaps if operand1 < operand2. 
-                // So we check if both are within the combined ranges OR if they are within their respective ranges.
-                // Actually, if we swap, then operand1 becomes the 'right' value and operand2 the 'left' value.
-                // But with 5-15 and 1-6 ranges, there is no overlap where left < right.
                 expect(problem.operand1).toBeGreaterThanOrEqual(5);
-                expect(problem.operand1).toBeLessThanOrEqual(15);
-                expect(problem.operand2).toBeGreaterThanOrEqual(1);
-                expect(problem.operand2).toBeLessThanOrEqual(6);
+                expect(problem.operand1).toBeLessThanOrEqual(10);
+                expect(problem.operand2).toBeGreaterThanOrEqual(0);
+                expect(problem.operand2).toBeLessThanOrEqual(3);
                 expect(problem.operand1).toBeGreaterThanOrEqual(problem.operand2);
             }
         });
@@ -43,28 +38,25 @@ describe('Math Operations Verification', () => {
 
     describe('Division Range Control', () => {
         it('should respect left (dividend) and right (divisor) ranges for Level 4', () => {
-            // Level 4 Division: left { min: 10, max: 50 }, right { min: 2, max: 5 }, allowRemainder: false
+            // Level 4 Division: left { min: 10, max: 50 }, right { min: 2, max: 10 }, forceRemainder: false
             for (let i = 0; i < 50; i++) {
                 const problem = generateDivisionProblem(4);
                 expect(problem.operand1).toBeGreaterThanOrEqual(10);
                 expect(problem.operand1).toBeLessThanOrEqual(50);
                 expect(problem.operand2).toBeGreaterThanOrEqual(2);
-                expect(problem.operand2).toBeLessThanOrEqual(5);
+                expect(problem.operand2).toBeLessThanOrEqual(10);
                 expect(Number(problem.operand1) % Number(problem.operand2)).toBe(0);
             }
         });
 
-        it('should generate remainders when allowed in Level 5', () => {
-            // Level 5 Division: allowRemainder: true
-            let foundRemainder = false;
+        it('should ALWAYS generate remainders for Level 5', () => {
+            // Level 5 Division: forceRemainder: true
             for (let i = 0; i < 100; i++) {
                 const problem = generateDivisionProblem(5);
-                if (typeof problem.correctAnswer === 'string' && problem.correctAnswer.includes('R')) {
-                    foundRemainder = true;
-                    break;
-                }
+                expect(typeof problem.correctAnswer).toBe('string');
+                // Regex matches "X R Y" where Y > 0
+                expect(problem.correctAnswer as string).toMatch(/^\d+ R [1-9]\d*$/);
             }
-            expect(foundRemainder).toBe(true);
         });
     });
 

@@ -71,31 +71,58 @@ export const generateMultiplicationProblem = (difficulty: DifficultyLevel): Math
 };
 
 /**
- * Generates a division problem (ensures whole number result)
+ * Generates a division problem (ensures whole number result or remainder as per settings)
  */
 export const generateDivisionProblem = (difficulty: DifficultyLevel): MathProblem => {
     const settings = getSettings(difficulty).division;
 
-    // Special handling for Division with Remainder if enabled
-    if (settings.allowRemainder) {
-        const divisor = getRandomInt(settings.right.min, settings.right.max);
+    // Force Remainder logic
+    if (settings.forceRemainder) {
+        let divisor = getRandomInt(settings.right.min, settings.right.max) || 1;
+        if (divisor === 1 && settings.right.max > 1) {
+            divisor = getRandomInt(2, settings.right.max);
+        }
 
         // Pick a dividend within the left range
-        const dividend = getRandomInt(settings.left.min, settings.left.max);
+        let dividend = getRandomInt(settings.left.min, settings.left.max);
+
+        // Ensure remainder is non-zero
+        // If dividend % divisor === 0, we adjust dividend by adding/subtracting 1
+        // as long as it stays within ranges.
+        if (dividend % divisor === 0) {
+            if (dividend + 1 <= settings.left.max) {
+                dividend += 1;
+            } else if (dividend - 1 >= settings.left.min) {
+                dividend -= 1;
+            } else if (divisor > 2) {
+                // If we can't change dividend, try shifting divisor
+                divisor -= 1;
+            }
+        }
 
         const quotient = Math.floor(dividend / divisor);
         const remainder = dividend % divisor;
 
-        // If we want to guarantee a remainder exists (non-zero), we might need to adjust
-        // But usually "allow remainder" just means it can have one.
-        // Let's ensure divisor is not 0 (should be covered by settings)
-        const safeDivisor = divisor === 0 ? 1 : divisor;
+        // If even after adjustments it's still 0 (very rare with good config), 
+        // fallback to a very simple remainder problem
+        if (remainder === 0) {
+            const fallbackDivisor = 3;
+            const fallbackDividend = 7;
+            return {
+                operand1: fallbackDividend,
+                operand2: fallbackDivisor,
+                operation: MathOperation.DIVIDE,
+                correctAnswer: `2 R 1`,
+                difficulty,
+                createdAt: new Date(),
+            };
+        }
 
         return {
             operand1: dividend,
-            operand2: safeDivisor,
+            operand2: divisor,
             operation: MathOperation.DIVIDE,
-            correctAnswer: remainder === 0 ? quotient : `${quotient} R ${remainder}`,
+            correctAnswer: `${quotient} R ${remainder}`,
             difficulty,
             createdAt: new Date(),
         };
