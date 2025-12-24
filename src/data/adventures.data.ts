@@ -1,4 +1,5 @@
 import { type Adventure, EncounterType, PuzzleType } from '../types/adventure.types';
+import { MONSTERS } from './monsters.data';
 
 export const ADVENTURES: Adventure[] = [
     {
@@ -9,13 +10,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_1',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 250, y: 200 },
-                enemies: [
-                    {
-                        id: 'scorpion_1',
-                        maxHealth: 40,
-                        attack: 8,
-                    }
-                ],
+                enemies: [MONSTERS.SCORPION_1],
                 xpReward: 10,
             },
             {
@@ -23,11 +18,7 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: 350, y: 500 },
                 enemies: [
-                    ...Array.from({ length: 3 }).map(() => ({
-                        id: `tiny_scorpion`,
-                        maxHealth: 15,
-                        attack: 4,
-                    }))
+                    ...Array.from({ length: 3 }).map(() => MONSTERS.TINY_SCORPION)
                 ],
                 xpReward: 20
             },
@@ -52,21 +43,9 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: 350, y: 1400 },
                 enemies: [
-                    {
-                        id: 'scorpion_1',
-                        maxHealth: 40,
-                        attack: 8,
-                    },
-                    {
-                        id: 'scorpion_1',
-                        maxHealth: 40,
-                        attack: 8,
-                    },
-                    {
-                        id: 'scorpion_1',
-                        maxHealth: 40,
-                        attack: 8,
-                    }
+                    MONSTERS.SCORPION_1,
+                    MONSTERS.SCORPION_1,
+                    MONSTERS.SCORPION_1
                 ],
                 xpReward: 50,
             },
@@ -75,21 +54,9 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: 150, y: 1700 },
                 enemies: [
-                    {
-                        id: 'scorpion_raider',
-                        maxHealth: 50,
-                        attack: 10,
-                    },
-                    {
-                        id: 'scorpion_raider',
-                        maxHealth: 50,
-                        attack: 10,
-                    },
-                    {
-                        id: 'scorpion_raider',
-                        maxHealth: 50,
-                        attack: 10
-                    }
+                    MONSTERS.SCORPION_RAIDER,
+                    MONSTERS.SCORPION_RAIDER,
+                    MONSTERS.SCORPION_RAIDER
                 ],
                 xpReward: 55,
             },
@@ -114,16 +81,8 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: 150, y: 2600 },
                 enemies: [
-                    {
-                        id: 'sand_spirit_1',
-                        maxHealth: 60,
-                        attack: 15,
-                    },
-                    {
-                        id: 'sand_spirit_1',
-                        maxHealth: 60,
-                        attack: 15,
-                    }
+                    MONSTERS.SAND_SPIRIT_1,
+                    MONSTERS.SAND_SPIRIT_1
                 ],
                 xpReward: 80
             },
@@ -141,21 +100,9 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: 350, y: 3200 },
                 enemies: [
-                    {
-                        id: 'sand_spirit_1',
-                        maxHealth: 60,
-                        attack: 15,
-                    },
-                    {
-                        id: 'sand_spirit_1',
-                        maxHealth: 60,
-                        attack: 15,
-                    },
-                    {
-                        id: 'scorpion_1',
-                        maxHealth: 40,
-                        attack: 8,
-                    }
+                    MONSTERS.SAND_SPIRIT_1,
+                    MONSTERS.SAND_SPIRIT_1,
+                    MONSTERS.SCORPION_1
                 ],
                 xpReward: 95
             },
@@ -170,12 +117,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_13',
                 type: EncounterType.BOSS,
                 coordinates: { x: 250, y: 3800 },
-                enemies: [{
-                    id: 'sand_colossus',
-                    maxHealth: 180,
-                    attack: 25,
-                    isBoss: true,
-                }],
+                enemies: [MONSTERS.SAND_COLOSSUS],
                 xpReward: 100
             }
         ]
