@@ -37,7 +37,8 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     isDead: false,
                     hasActed: false,
                     currentSpirit: data.initialSpirit || 0,
-                    maxSpirit: 100
+                    maxSpirit: 100,
+                    spiritGain: calculatedStats.spiritGain
                 };
             });
 
@@ -57,7 +58,8 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 isDead: false,
                 hasActed: false,
                 currentSpirit: 0,
-                maxSpirit: 100
+                maxSpirit: 100,
+                spiritGain: 0
             } as any;
         });
 
@@ -105,10 +107,10 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 newParty = newParty.map(u => ({ ...u, hasActed: false }));
 
                 // Passive Charge at start of Player Turn
-                // +35 Spirit to all living party members
+                // Spirit to all living party members based on their spiritGain stat
                 newParty = newParty.map(p => {
                     if (p.isDead) return p;
-                    return { ...p, currentSpirit: Math.min(100, p.currentSpirit + 35) };
+                    return { ...p, currentSpirit: Math.min(100, p.currentSpirit + p.spiritGain) };
                 });
 
                 // Add a cooldown before returning to player turn

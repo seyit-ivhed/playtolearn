@@ -27,6 +27,7 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
         maxHealth: Math.floor(companion.baseStats.maxHealth * scalingFactor) + (evolutionBonus.maxHealth || 0),
         abilityDamage: companion.baseStats.abilityDamage ? Math.floor(companion.baseStats.abilityDamage * scalingFactor) + (evolutionBonus.abilityDamage || 0) : undefined,
         specialAbilityValue: companion.specialAbility.value ? Math.floor(companion.specialAbility.value * scalingFactor) : undefined,
+        spiritGain: companion.baseStats.spiritGain,
     };
 };
 

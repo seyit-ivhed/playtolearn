@@ -11,11 +11,13 @@ export const COMPANIONS: Record<string, Companion> = {
         xp: 0,
         baseStats: {
             maxHealth: 75,
-            abilityDamage: 8
+            abilityDamage: 8,
+            spiritGain: 35
         },
         stats: {
             maxHealth: 75,
-            abilityDamage: 8
+            abilityDamage: 8,
+            spiritGain: 35
         },
         specialAbility: {
             id: 'jaguar_strike',
@@ -44,11 +46,13 @@ export const COMPANIONS: Record<string, Companion> = {
         xp: 0,
         baseStats: {
             maxHealth: 85,
-            abilityDamage: 5
+            abilityDamage: 5,
+            spiritGain: 35
         },
         stats: {
             maxHealth: 85,
-            abilityDamage: 5
+            abilityDamage: 5,
+            spiritGain: 35
         },
         specialAbility: {
             id: 'elixir_of_life',

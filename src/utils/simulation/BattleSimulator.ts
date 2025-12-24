@@ -59,7 +59,8 @@ export class BattleSimulator {
                     isDead: false,
                     hasActed: false,
                     currentSpirit: companionData.initialSpirit || 0,
-                    maxSpirit: 100
+                    maxSpirit: 100,
+                    spiritGain: stats.spiritGain
                 };
             })
             .filter((unit) => unit !== null) as SimulationUnit[];
@@ -78,7 +79,8 @@ export class BattleSimulator {
             isDead: false,
             hasActed: false,
             currentSpirit: 0,
-            maxSpirit: 100
+            maxSpirit: 100,
+            spiritGain: 0
         }));
 
         return {
@@ -145,7 +147,7 @@ export class BattleSimulator {
             if (unit.isDead) return unit;
             return {
                 ...unit,
-                currentSpirit: Math.min(unit.maxSpirit, unit.currentSpirit + 35)
+                currentSpirit: Math.min(unit.maxSpirit, unit.currentSpirit + unit.spiritGain)
             };
         });
     }
@@ -306,8 +308,6 @@ export class BattleSimulator {
             }
         }
     }
-
-
 
     /**
      * Check for victory condition

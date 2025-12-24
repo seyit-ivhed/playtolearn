@@ -29,6 +29,7 @@ export interface SimulationUnit {
     hasActed: boolean;
     currentSpirit: number;
     maxSpirit: number;
+    spiritGain: number;
 }
 
 export interface BattleState {

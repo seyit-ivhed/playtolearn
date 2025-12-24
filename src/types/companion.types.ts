@@ -17,6 +17,7 @@ export interface CompanionStats {
     maxHealth: number;
     abilityDamage?: number;
     specialAbilityValue?: number;
+    spiritGain?: number;
 }
 
 export interface CompanionEvolution {
