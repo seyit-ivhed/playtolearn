@@ -53,17 +53,17 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: 350, y: 1400 },
                 enemies: [
                     {
-                        id: 'scorpion_raider',
+                        id: 'scorpion_1',
                         maxHealth: 40,
                         attack: 8,
                     },
                     {
-                        id: 'scorpion_raider',
+                        id: 'scorpion_1',
                         maxHealth: 40,
                         attack: 8,
                     },
                     {
-                        id: 'scorpion_raider',
+                        id: 'scorpion_1',
                         maxHealth: 40,
                         attack: 8,
                     }
@@ -77,18 +77,18 @@ export const ADVENTURES: Adventure[] = [
                 enemies: [
                     {
                         id: 'scorpion_raider',
-                        maxHealth: 40,
-                        attack: 8,
+                        maxHealth: 50,
+                        attack: 10,
                     },
                     {
                         id: 'scorpion_raider',
-                        maxHealth: 40,
-                        attack: 8,
+                        maxHealth: 50,
+                        attack: 10,
                     },
                     {
-                        id: 'tiny_scorpion',
-                        maxHealth: 20,
-                        attack: 5,
+                        id: 'scorpion_raider',
+                        maxHealth: 50,
+                        attack: 10
                     }
                 ],
                 xpReward: 55,
@@ -152,9 +152,9 @@ export const ADVENTURES: Adventure[] = [
                         attack: 15,
                     },
                     {
-                        id: 'scorpion_raider',
+                        id: 'scorpion_1',
                         maxHealth: 40,
-                        attack: 10,
+                        attack: 8,
                     }
                 ],
                 xpReward: 95
