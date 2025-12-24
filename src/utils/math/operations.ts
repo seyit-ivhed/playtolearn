@@ -12,8 +12,8 @@ import { generateMultipleChoices } from './choices';
  */
 export const generateAdditionProblem = (difficulty: DifficultyLevel): MathProblem => {
     const settings = getSettings(difficulty).addition;
-    const operand1 = getRandomInt(settings.min, settings.max);
-    const operand2 = getRandomInt(settings.min, settings.max);
+    const operand1 = getRandomInt(settings.left.min, settings.left.max);
+    const operand2 = getRandomInt(settings.right.min, settings.right.max);
 
     return {
         operand1,
@@ -31,16 +31,22 @@ export const generateAdditionProblem = (difficulty: DifficultyLevel): MathProble
 export const generateSubtractionProblem = (difficulty: DifficultyLevel): MathProblem => {
     const settings = getSettings(difficulty).subtraction;
 
-    // For subtraction, we want the first number to be larger or equal to ensure positive result
-    const operand2 = getRandomInt(settings.min, settings.max);
-    const answer = getRandomInt(0, settings.max); // Can be 0
-    const operand1 = operand2 + answer;
+    let operand1 = getRandomInt(settings.left.min, settings.left.max);
+    let operand2 = getRandomInt(settings.right.min, settings.right.max);
+
+    // Ensure non-negative result for child-friendly math
+    // If operand1 < operand2, we try to Swap them if it makes sense, 
+    // or just regenerate/adjust within ranges.
+    // For now, we'll swap if they overlap and result is negative.
+    if (operand1 < operand2) {
+        [operand1, operand2] = [operand2, operand1];
+    }
 
     return {
         operand1,
         operand2,
         operation: MathOperation.SUBTRACT,
-        correctAnswer: answer,
+        correctAnswer: operand1 - operand2,
         difficulty,
         createdAt: new Date(),
     };
@@ -51,8 +57,8 @@ export const generateSubtractionProblem = (difficulty: DifficultyLevel): MathPro
  */
 export const generateMultiplicationProblem = (difficulty: DifficultyLevel): MathProblem => {
     const settings = getSettings(difficulty).multiplication;
-    const operand1 = getRandomInt(settings.min, settings.max);
-    const operand2 = getRandomInt(settings.min, settings.max);
+    const operand1 = getRandomInt(settings.left.min, settings.left.max);
+    const operand2 = getRandomInt(settings.right.min, settings.right.max);
 
     return {
         operand1,
@@ -72,43 +78,45 @@ export const generateDivisionProblem = (difficulty: DifficultyLevel): MathProble
 
     // Special handling for Division with Remainder if enabled
     if (settings.allowRemainder) {
-        // Quotient: Anything between 3 to 10 (configurable)
-        const qMin = settings.quotientMin ?? 3;
-        const qMax = settings.quotientMax ?? 10;
-        const quotient = getRandomInt(qMin, qMax);
+        const divisor = getRandomInt(settings.right.min, settings.right.max);
 
-        // Divisor: Anything between 2 to 10 (configurable)
-        const dMin = settings.divisorMin ?? 2;
-        const dMax = settings.divisorMax; // utilizing existing divisorMax as max
-        const divisor = getRandomInt(dMin, dMax);
+        // Pick a dividend within the left range
+        const dividend = getRandomInt(settings.left.min, settings.left.max);
 
-        // Remainder: Must be between 1 and divisor - 1
-        // If divisor is 2, remainder can only be 1.
-        // We ensure remainder is non-zero for these "remainder" specific problems.
-        const maxRemainder = divisor - 1;
+        const quotient = Math.floor(dividend / divisor);
+        const remainder = dividend % divisor;
 
-        // Safety check, though dMin=2 guarantees maxRemainder >= 1
-        let remainder = 1;
-        if (maxRemainder >= 1) {
-            remainder = getRandomInt(1, maxRemainder);
-        }
-
-        // Dividend: Derived
-        const dividend = (quotient * divisor) + remainder;
+        // If we want to guarantee a remainder exists (non-zero), we might need to adjust
+        // But usually "allow remainder" just means it can have one.
+        // Let's ensure divisor is not 0 (should be covered by settings)
+        const safeDivisor = divisor === 0 ? 1 : divisor;
 
         return {
             operand1: dividend,
-            operand2: divisor,
+            operand2: safeDivisor,
             operation: MathOperation.DIVIDE,
-            correctAnswer: `${quotient} R ${remainder}`,
+            correctAnswer: remainder === 0 ? quotient : `${quotient} R ${remainder}`,
             difficulty,
             createdAt: new Date(),
         };
     }
 
-    // To ensure whole number division, we generate a multiplication problem in reverse
-    const divisor = getRandomInt(2, settings.divisorMax); // Avoid division by 1 as it's too easy
-    const quotient = getRandomInt(2, settings.divisorMax); // The answer
+    // To ensure whole number division, we pick a divisor and a quotient
+    // and check if the resulting dividend is in the left range.
+    const divisor = getRandomInt(settings.right.min, settings.right.max) || 1;
+
+    // We want divisor * quotient to be within settings.left.min and settings.left.max
+    const minQuotient = Math.ceil(settings.left.min / divisor);
+    const maxQuotient = Math.floor(settings.left.max / divisor);
+
+    let quotient: number;
+    if (maxQuotient >= minQuotient) {
+        quotient = getRandomInt(minQuotient, maxQuotient);
+    } else {
+        // Fallback if ranges are impossible: just pick a small quotient
+        quotient = getRandomInt(2, 10);
+    }
+
     const dividend = divisor * quotient;
 
     return {
@@ -128,16 +136,16 @@ export const getAllowedOperations = (difficulty: DifficultyLevel): MathOperation
     const settings = getSettings(difficulty);
     const ops: MathOperation[] = [];
 
-    if (settings.addition.max > 0 || settings.addition.min > 0) {
+    if (settings.addition.enabled) {
         ops.push(MathOperation.ADD);
     }
-    if (settings.subtraction.max > 0) {
+    if (settings.subtraction.enabled) {
         ops.push(MathOperation.SUBTRACT);
     }
-    if (settings.multiplication.max > 0) {
+    if (settings.multiplication.enabled) {
         ops.push(MathOperation.MULTIPLY);
     }
-    if (settings.division.divisorMax > 0) {
+    if (settings.division.enabled) {
         ops.push(MathOperation.DIVIDE);
     }
 

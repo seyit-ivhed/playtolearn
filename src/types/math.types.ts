@@ -76,21 +76,26 @@ export interface MathEngineConfig {
     level5: LevelConfig;
 }
 
+export interface Range {
+    min: number;
+    max: number;
+}
+
+export interface OperationConfig {
+    enabled: boolean;
+    left: Range;
+    right: Range;
+}
+
+export interface DivisionConfig extends OperationConfig {
+    allowRemainder?: boolean;
+}
+
 interface LevelConfig {
-    addition: { min: number; max: number };
-    subtraction: { min: number; max: number };
-    multiplication: { min: number; max: number };
-    division: {
-        divisorMax: number;
-        /** Optional: Minimum divisor for remainder problems */
-        divisorMin?: number;
-        /** Optional: Minimum quotient for remainder problems */
-        quotientMin?: number;
-        /** Optional: Maximum quotient for remainder problems */
-        quotientMax?: number;
-        /** Optional: Whether to generate remainder problems */
-        allowRemainder?: boolean;
-    };
+    addition: OperationConfig;
+    subtraction: OperationConfig;
+    multiplication: OperationConfig;
+    division: DivisionConfig;
 }
 
 /**

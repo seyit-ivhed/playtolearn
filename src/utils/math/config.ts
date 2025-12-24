@@ -6,44 +6,42 @@ import { type MathEngineConfig, type DifficultyLevel } from '../../types/math.ty
  */
 export const CONFIG: MathEngineConfig = {
     level1: {
-        addition: { min: 0, max: 10 },
-        subtraction: { min: 0, max: 0 }, // Disabled
-        multiplication: { min: 0, max: 0 }, // Disabled
-        division: { divisorMax: 0 }, // Disabled
+        addition: { enabled: true, left: { min: 0, max: 10 }, right: { min: 0, max: 10 } },
+        subtraction: { enabled: false, left: { min: 0, max: 0 }, right: { min: 0, max: 0 } },
+        multiplication: { enabled: false, left: { min: 0, max: 0 }, right: { min: 0, max: 0 } },
+        division: { enabled: false, left: { min: 0, max: 0 }, right: { min: 0, max: 0 } },
     },
     level2: {
-        addition: { min: 5, max: 20 },
-        subtraction: { min: 1, max: 10 },
-        multiplication: { min: 0, max: 0 }, // Disabled
-        division: { divisorMax: 0 }, // Disabled
+        addition: { enabled: true, left: { min: 5, max: 20 }, right: { min: 1, max: 10 } },
+        subtraction: { enabled: true, left: { min: 5, max: 15 }, right: { min: 1, max: 6 } },
+        multiplication: { enabled: false, left: { min: 0, max: 0 }, right: { min: 0, max: 0 } },
+        division: { enabled: false, left: { min: 0, max: 0 }, right: { min: 0, max: 0 } },
     },
     level3: {
-        addition: { min: 10, max: 40 },
-        subtraction: { min: 5, max: 40 },
-        multiplication: { min: 2, max: 10 },
-        division: { divisorMax: 0 }, // Disabled
+        addition: { enabled: true, left: { min: 10, max: 40 }, right: { min: 10, max: 40 } },
+        subtraction: { enabled: true, left: { min: 10, max: 40 }, right: { min: 5, max: 40 } },
+        multiplication: { enabled: true, left: { min: 2, max: 10 }, right: { min: 2, max: 5 } },
+        division: { enabled: false, left: { min: 0, max: 0 }, right: { min: 0, max: 0 } },
     },
     level4: {
-        addition: { min: 50, max: 100 },
-        subtraction: { min: 20, max: 100 },
-        multiplication: { min: 4, max: 10 },
+        addition: { enabled: true, left: { min: 50, max: 100 }, right: { min: 20, max: 50 } },
+        subtraction: { enabled: true, left: { min: 50, max: 100 }, right: { min: 20, max: 50 } },
+        multiplication: { enabled: true, left: { min: 4, max: 10 }, right: { min: 2, max: 10 } },
         division: {
-            divisorMax: 10,
-            divisorMin: 2,
-            quotientMin: 5,
-            quotientMax: 10,
+            enabled: true,
+            left: { min: 10, max: 50 },
+            right: { min: 2, max: 5 },
             allowRemainder: false
         },
     },
     level5: {
-        addition: { min: 100, max: 600 },
-        subtraction: { min: 100, max: 600 },
-        multiplication: { min: 6, max: 12 },
+        addition: { enabled: true, left: { min: 100, max: 600 }, right: { min: 100, max: 600 } },
+        subtraction: { enabled: true, left: { min: 100, max: 600 }, right: { min: 50, max: 300 } },
+        multiplication: { enabled: true, left: { min: 6, max: 12 }, right: { min: 2, max: 10 } },
         division: {
-            divisorMax: 10,
-            divisorMin: 2,
-            quotientMin: 3,
-            quotientMax: 10,
+            enabled: true,
+            left: { min: 20, max: 100 },
+            right: { min: 2, max: 10 },
             allowRemainder: true
         },
     },
