@@ -181,6 +181,11 @@
     justify-content: center;
 }
 
+.ability-card.is-monster {
+    background-color: rgba(45, 20, 20, 0.95);
+    border-color: #7f1d1d;
+}
+
 .ability-content.simplified {
     flex-direction: row;
     justify-content: space-between;

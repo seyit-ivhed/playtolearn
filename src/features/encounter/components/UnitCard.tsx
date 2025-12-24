@@ -126,21 +126,22 @@ export const UnitCard = ({
                 <div className="card-spacer" />
 
                 <div className="unit-info-bottom">
-                    {!isMonster && companionData && (
+                    {(companionData || isMonster) && (
                         <AbilityCard
                             abilityName={
-                                isUltimateReady && companionData.specialAbility
+                                isUltimateReady && companionData?.specialAbility
                                     ? t(`companions.${unit.templateId}.special_ability_name`)
                                     : t('party.stats.attack')
                             }
                             abilityDescription={
-                                isUltimateReady && companionData.specialAbility
+                                isUltimateReady && companionData?.specialAbility
                                     ? t(`companions.${unit.templateId}.special_ability_description`, { value: unit.specialAbilityValue || companionData.specialAbility.value })
                                     : ''
                             }
                             progress={unit.currentSpirit}
                             isUltimateReady={isUltimateReady}
-                            isSimplified={!isUltimateReady}
+                            isSimplified={isMonster || !isUltimateReady}
+                            isMonster={isMonster}
                             power={unit.damage || 10}
                         />
                     )}
