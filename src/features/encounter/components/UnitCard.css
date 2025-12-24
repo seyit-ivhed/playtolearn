@@ -314,29 +314,63 @@
 
 /* Ensure math styling from previous file is preserved if needed, or simplifed here */
 .math-title {
-    color: #38bdf8;
+    color: #ffd700;
+    /* Gold */
     font-family: var(--font-display);
-    font-size: 1rem;
-    /* Reduced from 1.2rem */
-    margin-bottom: 0.25rem;
-    /* Reduced from 0.5rem */
-    border-bottom: 2px solid rgba(56, 189, 248, 0.3);
-    width: 100%;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+    /* Increased space */
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    width: 60%;
+    /* Narrower line for visual style */
     text-align: center;
-    padding-bottom: 0.25rem;
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
 }
 
 .math-problem-display {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 0.25rem 0.5rem;
-    /* Reduced padding */
-    margin-bottom: 0.5rem;
-    border-radius: 0.5rem;
-    font-family: monospace;
-    font-size: 1.25rem;
-    /* Reduced from 1.5rem */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    /* Reduced gap */
+    margin-bottom: 1.25rem;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    /* Reduced from 1.75rem */
     color: #fff;
-    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+    width: 100%;
+    /* Ensure it doesn't try to grow too much */
+}
+
+.math-problem-display .operator {
+    font-size: 1.8rem;
+    /* Reduced from 2.25rem but still prominent */
+    color: #f59e0b;
+    /* Amber */
+    margin: 0 0.25rem;
+    /* Reduced margin */
+    font-weight: 900;
+}
+
+.math-problem-display .operand {
+    font-weight: 800;
+}
+
+.math-problem-display .equals {
+    margin: 0 0.1rem;
+    /* Reduced margin */
+    opacity: 0.8;
+}
+
+.math-problem-display .question-mark {
+    color: #38bdf8;
+    /* Blue */
+    font-weight: 900;
 }
 
 .math-choices-grid {
