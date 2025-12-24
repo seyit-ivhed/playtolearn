@@ -131,12 +131,12 @@ export const UnitCard = ({
                             abilityName={
                                 isUltimateReady && companionData.specialAbility
                                     ? t(`companions.${unit.templateId}.special_ability_name`)
-                                    : t(`companions.${unit.templateId}.ability_name`)
+                                    : t('party.stats.attack')
                             }
                             abilityDescription={
                                 isUltimateReady && companionData.specialAbility
                                     ? t(`companions.${unit.templateId}.special_ability_description`, { value: unit.specialAbilityValue || companionData.specialAbility.value })
-                                    : t(`companions.${unit.templateId}.ability_description`, { damage: unit.damage || 10 })
+                                    : ''
                             }
                             progress={unit.currentSpirit}
                             isUltimateReady={isUltimateReady}

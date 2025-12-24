@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Heart, Swords, Zap, Star } from 'lucide-react';
+import { Heart, Swords, Star } from 'lucide-react';
 import { getCompanionById } from '../../../data/companions.data';
 import { getCompanionSprite } from '../../../data/companion-sprites';
 import { getXpForNextLevel, getStatsForLevel } from '../../../utils/progression.utils';
@@ -75,15 +75,6 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                         </div>
                     </div>
 
-                    <div className={styles.abilitySection}>
-                        <div className={styles.abilityHeader}>
-                            <Zap size={14} className={styles.iconAbility} />
-                            <span>{t(`companions.${companionId}.ability_name`)}</span>
-                        </div>
-                        <p className={styles.abilityText}>
-                            {t(`companions.${companionId}.ability_description`, { damage: calculatedStats.abilityDamage })}
-                        </p>
-                    </div>
 
                     <div className={styles.abilitySection}>
                         <div className={styles.abilityHeader}>
