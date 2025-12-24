@@ -13,13 +13,12 @@ import { executeHealAbility } from '../actions/special/heal.ability';
 export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => ({
     selectUnit: (unitId) => set({ selectedUnitId: unitId }),
 
-    performAction: (unitId, options = {}) => {
+    performAction: (unitId) => {
         const { party } = get();
         const unitIndex = party.findIndex(u => u.id === unitId);
         if (unitIndex === -1) return;
 
         const unit = party[unitIndex];
-        const isCritical = options.isCritical || false;
 
         // Get Ability Data
         const companionData = getCompanionById(unit.templateId);
@@ -31,26 +30,18 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         newParty[unitIndex] = { ...unit, hasActed: true };
         set({ party: newParty }); // Commit early state change for UI responsiveness if needed, but we mostly overwrite later or inside actions
 
-        let logMsg = `${unit.name} used Ability!`;
-        if (isCritical) {
-            logMsg = `CRITICAL! ${logMsg}`;
-        }
-
-        const multiplier = isCritical ? 2 : 1;
         let actionLog = '';
 
         // Apply Effects
         if (companionData.role === 'WARRIOR') {
-            actionLog = performWarriorAction(get, set, unitIndex, multiplier);
-
-
+            actionLog = performWarriorAction(get, set, unitIndex, 1);
         }
 
-        logMsg += actionLog;
-
-        set(state => ({
-            encounterLog: [...state.encounterLog, logMsg]
-        }));
+        if (actionLog) {
+            set(state => ({
+                encounterLog: [...state.encounterLog, `${unit.name} used Ability!${actionLog}`]
+            }));
+        }
 
         // Check Victory
         if (get().monsters.every(m => m.isDead)) {

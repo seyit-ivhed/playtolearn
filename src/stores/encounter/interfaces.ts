@@ -9,7 +9,7 @@ export interface EncounterFlowSlice {
 
 export interface PlayerActionsSlice {
     selectUnit: (unitId: string | null) => void;
-    performAction: (unitId: string, options?: { isCritical?: boolean }) => void;
+    performAction: (unitId: string) => void;
     resolveSpecialAttack: (unitId: string, success: boolean) => void;
     consumeSpirit: (unitId: string) => void;
 }
