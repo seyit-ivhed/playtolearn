@@ -140,6 +140,8 @@ export const UnitCard = ({
                             }
                             progress={unit.currentSpirit}
                             isUltimateReady={isUltimateReady}
+                            isSimplified={!isUltimateReady}
+                            power={unit.damage || 10}
                         />
                     )}
 

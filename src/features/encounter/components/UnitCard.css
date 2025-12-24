@@ -174,6 +174,36 @@
     opacity: 0.9;
 }
 
+/* Simplified Layout */
+.ability-card.simplified {
+    padding: 0.4rem 0.6rem 0.65rem;
+    min-height: 2rem;
+    justify-content: center;
+}
+
+.ability-content.simplified {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.1rem;
+}
+
+.ability-card.simplified .ability-name {
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    color: #e5e7eb;
+    /* Slightly muted white for the label */
+}
+
+.ability-power {
+    color: #ffd700;
+    /* Gold for power */
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 900;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
 /* Integrated Progress Bar */
 .ability-progress-container {
     position: absolute;

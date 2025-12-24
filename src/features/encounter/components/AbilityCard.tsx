@@ -3,26 +3,41 @@ interface AbilityCardProps {
     abilityDescription: string;
     progress?: number; // 0 to 100
     isUltimateReady?: boolean;
+    isSimplified?: boolean;
+    power?: number;
 }
 
 export const AbilityCard = ({
     abilityName,
     abilityDescription,
     progress = 0,
-    isUltimateReady = false
+    isUltimateReady = false,
+    isSimplified = false,
+    power
 }: AbilityCardProps) => {
     return (
-        <div className={`ability-card ${isUltimateReady ? 'ultimate-ready' : ''}`}>
+        <div className={`ability-card ${isUltimateReady ? 'ultimate-ready' : ''} ${isSimplified ? 'simplified' : ''}`}>
             {/* Content Container */}
-            <div className="ability-content">
-                {abilityName && (
-                    <span className="ability-name">
-                        {abilityName}
-                    </span>
+            <div className={`ability-content ${isSimplified ? 'simplified' : ''}`}>
+                {isSimplified ? (
+                    <>
+                        <span className="ability-name">{abilityName}</span>
+                        {power !== undefined && (
+                            <span className="ability-power">{power}</span>
+                        )}
+                    </>
+                ) : (
+                    <>
+                        {abilityName && (
+                            <span className="ability-name">
+                                {abilityName}
+                            </span>
+                        )}
+                        <p className="ability-text">
+                            {abilityDescription}
+                        </p>
+                    </>
                 )}
-                <p className="ability-text">
-                    {abilityDescription}
-                </p>
             </div>
 
             {/* Integrated Spirit Progress Bar */}
