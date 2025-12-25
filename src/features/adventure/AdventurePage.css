@@ -71,11 +71,17 @@
 }
 
 .map-svg-path {
+    position: absolute;
+    inset: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    pointer-events: none;
     fill: none;
-    stroke: #000000;
-    stroke-width: 8;
+    stroke: #ffa200;
+    stroke-width: 12;
     stroke-linecap: round;
-    stroke-dasharray: 40 40;
+    stroke-dasharray: 60 60;
 }
 
 /* Central Column for Nodes */
