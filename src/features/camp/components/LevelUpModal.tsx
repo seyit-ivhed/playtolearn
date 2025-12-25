@@ -2,7 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Heart, Swords, ArrowRight } from 'lucide-react';
 import type { Companion, CompanionStats } from '../../../types/companion.types';
-import { GameParticles, CONFETTI_OPTIONS } from '../../../components/ui/GameParticles';
+import { GameParticles } from '../../../components/ui/GameParticles';
+import { CONFETTI_OPTIONS } from '../../../components/ui/GameParticles.constants';
 import { getCompanionSprite } from '../../../data/companion-sprites';
 import styles from './LevelUpModal.module.css';
 

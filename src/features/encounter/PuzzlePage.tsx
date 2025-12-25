@@ -36,9 +36,10 @@ const PuzzlePage = () => {
 
     // Dynamically generate puzzle values based on difficulty
     const puzzleData = useMemo(() => {
-        if (!encounter?.puzzleData) return null;
-        return generatePuzzleData(encounter.puzzleData.puzzleType, difficulty);
-    }, [encounter?.puzzleData, difficulty]);
+        const pType = encounter?.puzzleData?.puzzleType;
+        if (!pType) return null;
+        return generatePuzzleData(pType, difficulty);
+    }, [encounter, difficulty]);
 
     console.log('[PuzzlePage] Debug Info:', {
         nodeId,

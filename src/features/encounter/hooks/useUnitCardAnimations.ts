@@ -6,49 +6,60 @@ export const useUnitCardAnimations = (unit: EncounterUnit, isMonster: boolean) =
     const [shieldAnimClass, setShieldAnimClass] = useState('');
     const [floatingTexts, setFloatingTexts] = useState<{ id: number; text: string; type: 'damage' | 'heal' | 'shield-damage' }[]>([]);
 
-    // Adjust state during render based on props to avoid cascading renders in useEffect
-    const [prevHealth, setPrevHealth] = useState(unit.currentHealth);
-    const [prevShield, setPrevShield] = useState(unit.currentShield);
+    // Track previous values in refs for effect-based change detection
+    const prevHealthRef = useRef(unit.currentHealth);
+    const prevShieldRef = useRef(unit.currentShield);
+    const prevHasActedRef = useRef(unit.hasActed);
     const textIdCounter = useRef(0);
 
-    if (unit.currentHealth !== prevHealth) {
-        const healthDiff = unit.currentHealth - prevHealth;
-        setPrevHealth(unit.currentHealth);
+    // Handle health and shield changes
+    useEffect(() => {
+        // Health changes
+        if (unit.currentHealth !== prevHealthRef.current) {
+            const healthDiff = unit.currentHealth - prevHealthRef.current;
+            prevHealthRef.current = unit.currentHealth;
 
-        if (healthDiff < 0) {
-            setAnimationClass('anim-shake-damage');
+            setTimeout(() => {
+                if (healthDiff < 0) {
+                    setAnimationClass('anim-shake-damage');
+                }
+
+                // Add Floating Text
+                const id = textIdCounter.current++;
+                const text = healthDiff > 0 ? `+${healthDiff}` : `${healthDiff}`;
+                const type = healthDiff > 0 ? 'heal' : 'damage';
+
+                setFloatingTexts(prev => [...prev, { id, text, type }]);
+            }, 0);
         }
 
-        // Add Floating Text
-        const id = textIdCounter.current++;
-        const text = healthDiff > 0 ? `+${healthDiff}` : `${healthDiff}`;
-        const type = healthDiff > 0 ? 'heal' : 'damage';
+        // Shield changes
+        if (unit.currentShield !== prevShieldRef.current) {
+            const shieldDiff = unit.currentShield - prevShieldRef.current;
+            prevShieldRef.current = unit.currentShield;
 
-        setFloatingTexts(prev => [...prev, { id, text, type }]);
-    }
+            if (shieldDiff < 0) {
+                setTimeout(() => {
+                    const id = textIdCounter.current++;
+                    const text = `${shieldDiff}`;
+                    const type = 'shield-damage';
 
-    if (unit.currentShield !== prevShield) {
-        const shieldDiff = unit.currentShield - prevShield;
-        setPrevShield(unit.currentShield);
-
-        if (shieldDiff < 0) {
-            const id = textIdCounter.current++;
-            const text = `${shieldDiff}`;
-            const type = 'shield-damage';
-
-            setFloatingTexts(prev => [...prev, { id, text, type }]);
-            setShieldAnimClass('shield-absorb-anim');
+                    setFloatingTexts(prev => [...prev, { id, text, type }]);
+                    setShieldAnimClass('shield-absorb-anim');
+                }, 0);
+            }
         }
-    }
 
-    // Handle monster attack lunge (adjust during render)
-    const [prevHasActed, setPrevHasActed] = useState(unit.hasActed);
-    if (isMonster && unit.hasActed !== prevHasActed) {
-        setPrevHasActed(unit.hasActed);
-        if (unit.hasActed && !unit.isDead) {
-            setAnimationClass('anim-lunge-left');
+        // Monster attack lunge
+        if (isMonster && unit.hasActed !== prevHasActedRef.current) {
+            prevHasActedRef.current = unit.hasActed;
+            if (unit.hasActed && !unit.isDead) {
+                setTimeout(() => {
+                    setAnimationClass('anim-lunge-left');
+                }, 0);
+            }
         }
-    }
+    }, [unit.currentHealth, unit.currentShield, unit.hasActed, unit.isDead, isMonster]);
 
     // Effect for cleanup and timeouts only
     useEffect(() => {
@@ -83,7 +94,7 @@ export const useUnitCardAnimations = (unit: EncounterUnit, isMonster: boolean) =
             });
             return () => timers.forEach(t => clearTimeout(t));
         }
-    }, [floatingTexts.length]); // Track length to avoid too many effect runs
+    }, [floatingTexts]); // Now correctly dependent on floatingTexts
 
     return {
         animationClass,

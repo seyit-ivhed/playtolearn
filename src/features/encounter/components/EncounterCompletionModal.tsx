@@ -15,19 +15,20 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
 
     const isVictory = result === 'VICTORY';
 
-    // Motivating victory messages
-    const victoryMessages = [
-        t('combat.completion.victory_message_1', 'Amazing work! The desert stands silent in awe of your power.'),
-        t('combat.completion.victory_message_2', 'Victory! Your math skills are as sharp as a desert sun.'),
-        t('combat.completion.victory_message_3', 'Spectacular! The enemy has been defeated. Onward to more adventures!'),
-        t('combat.completion.victory_message_4', 'Incredible! You handled that with style and wisdom!')
-    ];
+    const [randomIndex] = React.useState(() => Math.floor(Math.random() * 4));
 
     // Use custom message if provided, otherwise pick a random victory message
-    const victoryMessage = useMemo(() =>
-        customMessage || victoryMessages[Math.floor(Math.random() * victoryMessages.length)],
-        [customMessage, victoryMessages]
-    );
+    const victoryMessage = useMemo(() => {
+        if (customMessage) return customMessage;
+
+        const messages = [
+            t('combat.completion.victory_message_1', 'Amazing work! The desert stands silent in awe of your power.'),
+            t('combat.completion.victory_message_2', 'Victory! Your math skills are as sharp as a desert sun.'),
+            t('combat.completion.victory_message_3', 'Spectacular! The enemy has been defeated. Onward to more adventures!'),
+            t('combat.completion.victory_message_4', 'Incredible! You handled that with style and wisdom!')
+        ];
+        return messages[randomIndex];
+    }, [customMessage, t, randomIndex]);
 
     return (
         <div className="completion-overlay">
