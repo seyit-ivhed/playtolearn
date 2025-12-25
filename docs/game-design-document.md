@@ -10,14 +10,14 @@
 
 **Genre:** Educational Fantasy Adventure / RPG Lite
 
-**Core Concept:** Players embark on an epic **Journey** through magical realms, leading an adventuring party. The Journey is divided into many **Adventures**, each with its own theme, story, and map featuring a linear set of **Encounters**. Some encounters involve battles against monsters, while others present puzzles to solve. Each adventure culminates in a **Boss Fight**. Completing an adventure rewards players with either a new companion or **Companion Growth** (existing companions learn new skills and gain experience). The party grows from a small band to a formidable fellowship of heroes.
+**Core Concept:** Players embark on an epic **Journey** through magical realms, leading an adventuring party. The Journey is divided into many **Adventures**, each with its own theme, story, and map featuring a linear set of **Encounters**. Some encounters involve battles against monsters, while others present puzzles to solve. Each adventure culminates in a **Boss Fight**. Through the adventures players can unlock new companions, grow their existign companions and collect visual elements to create their own unique Magical Canvas. The party grows from a small band to a formidable fellowship of heroes.
 
 ---
 
 ### 1. Game Overview
 
 ### 1.1 Vision Statement
-Math Quest Adventures transforms math learning into an exciting fantasy **Journey** where every challenge overcome makes your party stronger. Players lead their own fellowship through multiple **Adventures**, each containing a series of **Encounters** (battles and puzzles) that culminate in epic **Boss Fights**. Companions solve contextual math challenges to achieve **Companion Growth**, defeat monsters, and unlock new regions of the realm.
+Math Quest Adventures transforms math practicing into an exciting fantasy **Journey** where every challenge overcome makes your party stronger. Players lead their own fellowship through multiple **Adventures**, each containing a series of **Encounters** (battles and puzzles) that culminate in epic **Boss Fights**. Companions solve contextual math challenges to achieve **Companion Growth**, defeat monsters, and unlock new regions of the realm.
 
 ### 1.2 Core Gameplay Loop
 ```mermaid
@@ -33,12 +33,12 @@ graph LR
 
 ### 1.3 Key Features
 - **Epic Journey**: Progress through multiple themed adventures, each with unique stories and maps
-- **Progressive Math Curriculum**: Adaptive difficulty that grows with player skill
+- **Selectable Math Curriculum**: Players can select which math curriculum to practice
 - **Companion Collection**: Recruit diverse heroes, each with unique abilities
 - **Party Customization**: Choose 4 companions to take on each adventure
-- **Companion Growth System**: Companions learn new skills and gain experience - no equipment micromanagement
+- **Companion Growth System**: Companions learn upgrade their unique skills as they gain experience
 - **Linear Adventure Maps**: Each adventure features a sequence of encounters leading to a boss fight
-- **Encounter Variety**: Face monster battles and solve puzzles (future feature)
+- **Encounter Variety**: Face monster battles and solve puzzles
 - **Boss Fights**: Epic climactic battles at the end of each adventure
 - **Reward System**: Immediate feedback and tangible progression through companion growth
 
@@ -55,30 +55,9 @@ The player's overall progression is called the **Journey**. The Journey is divid
 Each **Adventure** consists of:
 - **Theme & Story**: Unique narrative context (e.g., "The Goblin Forest", "Dragon's Lair")
 - **Linear Map**: A path of connected nodes representing encounters
-- **Encounters**: Individual challenges along the path (battles against monsters, or puzzles to solve)
+- **Encounters**: Individual challenges along the path (battles against monsters or puzzles to solve)
 - **Boss Fight**: The final, climactic encounter that must be defeated to complete the adventure
 - **Completion Reward**: A new companion can join the party or new styling options for Magical Canvas becomes available
-
-#### Adventure Types
-1. **Training Adventures** (Tutorial)
-   - Introduction to basic controls and mechanics
-   - Simple math challenges (addition, subtraction)
-   - Rewards: First companions, initial companion growth
-
-2. **Exploration Adventures**
-   - Discover hidden locations and secrets
-   - Varied encounters with different monster types
-   - Rewards: Companion unlocks, companion growth
-
-3. **Story Adventures**
-   - Narrative-driven adventures with character development
-   - Mix of battle encounters and puzzle encounters (future)
-   - Rewards: Companion unlocks, companion growth, story progression
-
-4. **Challenge Adventures**
-   - High-difficulty adventures for advanced players
-   - Powerful boss fights requiring strategy
-   - Rewards: Rare companions, significant companion growth
 
 #### Encounter Types
 - **Battle Encounters**: Turn-based battle against monsters
@@ -98,6 +77,7 @@ Each **Adventure** consists of:
 - Fractions
 - Decimals
 - Algebra basics
+- Geometry basics
 
 **Dimension 2: Difficulty Level** (determines companion growth level)
 - **Level 1**: Small numbers (e.g., single-digit)
@@ -106,10 +86,8 @@ Each **Adventure** consists of:
 - **Level 4**: Very large numbers or multi-step problems
 - **Level 5**: Expert level challenges
 
-Example: Completing "Multiplication - Level 3" adventure unlocks a companion or grants companion growth to Level 3
-
 #### Challenge Presentation
-- **Contextual Integration**: Math naturally woven into story scenarios (never explicit "math problems")
+- **Contextual Integration**: Math naturally woven into story scenarios or displayed as part of ultimate ability system
   - "The merchant needs 7 potions but only has 3. How many more should we buy?"
   - "There are goblins hiding behind rocks. Count them before they attack!"
   - "We found 24 gold coins. Split them fairly among your 4 companions."
@@ -129,7 +107,7 @@ Example: Completing "Multiplication - Level 3" adventure unlocks a companion or 
 #### Core Design Philosophy
 - **Permanent Companions**: Once unlocked, companions are yours forever
 - **No Equipment**: Companions upgrade directly (simpler for children)
-- **Party Selection**: Choose which 4 companions to bring on each adventure
+- **Party Selection**: Choose which 4 companions to bring on each encounter
 - **Diverse Heroes**: Each companion has unique personality, appearance, and role
 
 ### 2.4 Encounter System
@@ -142,55 +120,40 @@ Example: Completing "Multiplication - Level 3" adventure unlocks a companion or 
 #### Encounter Mechanics (Turn-Based)
 - **Player Turn**:
   - **Action Phase**: The player commands their party members. Each companion must act once per turn.
-  - **Standard Abilities**: Companions use their class-based abilities (e.g., Warriors deal damage, Guardians provide shields, Supports heal).
+  - **Standard Abilities**: Companions use their attack to do damage to the monster
   - **Completion**: The Player Turn ends automatically when all conscious companions have acted.
 
-- **Spirit System (Ultimate Abilities)**:
-  - **Spirit Accumulation**: Companions passively generate **Spirit** (e.g., +35) at the start of every Player Turn.
+- **Ultimate Ability System**:
+  - **Spirit Accumulation**: Companions passively generate **Spirit** at the start of every Player Turn.
   - **Ultimate Ready**: When a companion reaches **100 Spirit**, their Standard Ability is replaced by their unique **Ultimate Ability**.
-  - **High-Stakes Math Challenge**: Activating an Ultimate triggers a challenging math problem.
+  - **High-Stakes Math Challenge**: Activating an Ultimate triggers a math problem.
     - **Solve Correctly**: The Ultimate activates with a powerful effect (e.g., "Protective Stance", "Piercing Shot").
     - **Solve Incorrectly**: The ability **Fails**, consuming the Spirit and the turn without effect.
-    - **Reset**: Spirit always resets to 0 after an Ultimate attempt (success or failure).
+    - **Reset**: Spirit always resets to 0 after an Ultimate attempt.
 
 - **Monster Turn**:
-  - **Sequential Attacks**: Monsters attack one by one with dramatic timing.
+  - **Sequential Attacks**: Monsters attack one by one to a random companion.
   - **Shield Mechanics**: Shields provide a temporary health pool that absorbs damage before HP is touched.
 
 
 ### 2.5 Progression System
 
 #### Journey Progression Through Realms
-```mermaid
-graph TD
-    A[Realm 1: Training Grounds] --> B[Realm 2: Enchanted Forest]
-    B --> C[Realm 3: Frozen Mountains]
-    C --> D[Realm 4: Desert Kingdom]
-    D --> E[Realm 5: Shadow Lands]
-    E --> F[Realm 6: Dragon's Lair]
-```
-
 Each realm contains multiple adventures:
 - Unique visual theme
 - Specific math focus areas
 - New monster types
 - New companions to unlock through adventure completion
 - Final adventure with a boss fight that must be defeated to unlock next realm
-- Special badge/achievement for defeating the realm boss
 
 ---
 
 ## 3. Reward System
 
-### 3.1 Encounter & Adventure Rewards
+### 3.1 Encounter Rewards
 - **Encounter XP**: Completing each encounter grants scaling XP rewards based on the encounter's position in the adventure (e.g., $10 \times i$ XP).
 - **Companion Unlocks**: Completing an entire adventure unlocks a new companion who joins your party.
   - Example: Complete "The Oasis Quest" adventure → Unlock Tariq (Level 1)
-- **Adventure Completion Bonus**: Completing adventures may grant a significant XP bonus to all active party members.
-
-- **Content Unlocks**: Some adventures unlock new realms or adventure paths.
-- **Boss Badges**: Defeating boss fights grants special achievement badges.
-
 ---
 
 ## 4. User Interface & Experience
@@ -215,7 +178,6 @@ Each realm contains multiple adventures:
   - **Growth Visualization**: 
     - XP bars and "Next Level" previews.
     - "Evolution" animations play here when a companion levels up.
-  - **Equipment/Skins**: Manage cosmetic skins (e.g., "Winter Fire Knight") unlocked via DLC.
 
 ### 4.3 Visual Design Principles
 - **Child-Friendly**: Bright colors, clear icons, friendly characters
@@ -228,36 +190,7 @@ Each realm contains multiple adventures:
 
 ## 5. Educational Design
 
-### 5.1 Math Curriculum Mapping
-
-#### Grade 1-2 (Ages 6-7)
-- Counting to 100
-- Single-digit addition and subtraction
-- Number recognition and ordering
-- Basic shapes and patterns
-
-#### Grade 3-4 (Ages 8-9)
-- Multi-digit addition and subtraction
-- Multiplication tables (1-12)
-- Basic division
-- Fractions (halves, quarters)
-- Simple word problems
-
-#### Grade 5-6 (Ages 10-11)
-- Multi-digit multiplication and division
-- Decimals and percentages
-- Fraction operations
-- Basic algebra (solving for x)
-- Geometry (area, perimeter)
-
-#### Grade 7+ (Ages 12+)
-- Advanced algebra
-- Ratios and proportions
-- Negative numbers
-- Order of operations
-- Pre-algebra concepts
-
-### 5.2 Learning Principles
+### 5.1 Learning Principles
 
 **Spaced Repetition**
 - Previously mastered concepts appear periodically
@@ -299,7 +232,7 @@ Each realm contains multiple adventures:
 - **Testing**: Vitest for unit tests, Playwright for E2E (already in use)
 - **Build Tool**: Vite (already in use)
 - **Graphics**: CSS animations and SVG for companions/battle visuals
-- **AI Art**: Stable Diffusion or similar for companion portraits and backgrounds
+- **AI Art**: Google Nano Banana
 
 ### 6.3 Data Storage
 - **User Profile**: Username, current realm
@@ -307,13 +240,6 @@ Each realm contains multiple adventures:
 - **Progress**: Completed adventures, unlocked realms, earned badges
 - **Statistics**: Problems solved by math skill and difficulty, accuracy rates
 - **Settings**: Audio, visual preferences
-
-### 6.4 Art Asset Requirements (AI-Generated)
-- **Companion Portraits**: 8-12 unique character portraits (multiple levels each)
-- **Enemy Designs**: 6-10 enemy/monster designs
-- **Background Scenes**: 6 realm backgrounds (forest, mountains, desert, etc.)
-- **UI Elements**: Buttons, frames, decorative elements
-- **Ability Effects**: Visual effects for attacks, shields, healing
 
 ---
 
