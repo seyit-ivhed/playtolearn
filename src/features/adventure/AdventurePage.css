@@ -255,13 +255,7 @@
 
 .node-container.completed {
     cursor: pointer;
-}
-
-.node-container.completed {
     opacity: 0.8;
-    background: #1e293b !important;
-    /* Dark slate for completed */
-    border-color: #475569 !important;
 }
 
 /* Icon Styling */
