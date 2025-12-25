@@ -284,13 +284,8 @@
 }
 
 .node-label.camp {
-    font-size: 1.125rem;
-    /* text-lg */
-    letter-spacing: 0.1em;
-    /* tracking-widest */
-    padding: 0.75rem 2rem;
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
-    /* ring-2 ring-emerald-500/50 */
+    /* Removed specific size/spacing overrides to unify with other labels */
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
 }
 
 /* Label Colors */
