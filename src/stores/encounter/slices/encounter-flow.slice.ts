@@ -8,7 +8,7 @@ import { applyDamage } from '../../../utils/battle/damage.utils';
 import { selectRandomTarget } from '../../../utils/battle/combat.utils';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
-    initializeEncounter: (partyIds, enemies, xpReward, nodeIndex, companionStats) => {
+    initializeEncounter: (partyIds, enemies, xpReward, nodeIndex, difficulty, companionStats) => {
         const party: EncounterUnit[] = partyIds
             .filter(id => {
                 const data = getCompanionById(id);
@@ -72,7 +72,8 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             selectedUnitId: null,
             encounterLog: ['Encounter Started!'],
             xpReward,
-            nodeIndex
+            nodeIndex,
+            difficulty
         });
     },
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Swords, Tent, Puzzle } from 'lucide-react';
+import { Swords, Tent, Puzzle, Star } from 'lucide-react';
 import { EncounterType, type Encounter } from '../../../types/adventure.types';
+import { useGameStore } from '../../../stores/game.store';
 
 interface MapNodeProps {
     node: Encounter;
@@ -20,6 +21,9 @@ export const MapNode: React.FC<MapNodeProps> = ({
     onNodeClick,
     nodeRef
 }) => {
+    const { encounterResults } = useGameStore();
+    const encounterKey = `${adventureId}_${index + 1}`;
+    const stars = encounterResults[encounterKey]?.stars || 0;
     const { t } = useTranslation();
     const nodeStep = index + 1;
     const isCompleted = nodeStep < currentNode;
@@ -70,6 +74,21 @@ export const MapNode: React.FC<MapNodeProps> = ({
             style={{ left: leftPos, top: topPos }}
             onClick={() => !isLocked && onNodeClick(node)}
         >
+            {/* Stars Display */}
+            {!isCamp && !isLocked && (
+                <div className="node-stars">
+                    {[...Array(5)].map((_, i) => (
+                        <Star
+                            key={i}
+                            size={12}
+                            fill={i < stars ? "#FFD700" : "transparent"}
+                            color={i < stars ? "#FFD700" : "rgba(255,255,255,0.2)"}
+                            className="star-icon"
+                        />
+                    ))}
+                </div>
+            )}
+
             {/* Node Shape */}
             <div className={nodeContainerClasses} data-testid={`map-node-${node.id}`}>
                 {renderIcon()}

@@ -4,10 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useEncounterStore } from '../../stores/encounter.store';
 import { useGameStore } from '../../stores/game.store';
-import { usePlayerStore } from '../../stores/player.store';
 import { EncounterPhase } from '../../types/encounter.types';
 import { generateProblem, getAllowedOperations } from '../../utils/math-generator';
-import { type MathProblem } from '../../types/math.types';
+import { type MathProblem, type DifficultyLevel } from '../../types/math.types';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import { VisualEffectOverlay } from './components/VisualEffectOverlay';
 import { TurnAnnouncer } from './components/TurnAnnouncer';
@@ -21,12 +20,12 @@ import './EncounterPage.css';
 const EncounterPage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { difficulty } = usePlayerStore();
     const {
         phase, party, monsters,
         performAction,
         resolveSpecialAttack,
-        xpReward
+        xpReward,
+        difficulty
     } = useEncounterStore();
 
     const [activeChallenge, setActiveChallenge] = useState<{
@@ -56,9 +55,10 @@ const EncounterPage = () => {
 
         // Check for Ultimate (Spirit >= 100)
         if (unit.currentSpirit >= 100) {
-            const allowedOps = getAllowedOperations(difficulty);
+            const currentDifficulty = (difficulty || 1) as DifficultyLevel;
+            const allowedOps = getAllowedOperations(currentDifficulty);
             const op = allowedOps[Math.floor(Math.random() * allowedOps.length)];
-            const problem = generateProblem(op, difficulty);
+            const problem = generateProblem(op, currentDifficulty);
 
             setActiveChallenge({
                 type: 'SPECIAL',
@@ -165,6 +165,7 @@ const EncounterPage = () => {
                     result={phase === EncounterPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
                     onContinue={handleCompletionContinue}
                     xpReward={xpReward}
+                    difficulty={difficulty || 1}
                 />
             )}
         </div>

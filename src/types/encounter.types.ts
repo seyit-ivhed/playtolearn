@@ -53,4 +53,5 @@ export interface EncounterState {
 
     // Progression
     nodeIndex?: number;
+    difficulty?: number; // 1-5
 }

@@ -1,16 +1,18 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { Star } from 'lucide-react';
 import './EncounterCompletionModal.css';
 
 interface EncounterCompletionModalProps {
     result: 'VICTORY' | 'DEFEAT';
     onContinue: () => void;
+    difficulty: number;
     xpReward?: number;
-    customMessage?: string; // Optional custom victory message for puzzles
+    customMessage?: string;
 }
 
-export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> = ({ result, onContinue, xpReward, customMessage }) => {
+export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> = ({ result, onContinue, difficulty, xpReward, customMessage }) => {
     const { t } = useTranslation();
 
     const isVictory = result === 'VICTORY';
@@ -49,6 +51,31 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                     >
                         <h1>{isVictory ? t('combat.completion.victory_title', 'VICTORY!') : t('combat.completion.defeat_title', 'DEFEAT')}</h1>
                     </motion.div>
+
+                    {isVictory && (
+                        <div className="stars-earned">
+                            {[...Array(5)].map((_, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ scale: 0, rotate: -180 }}
+                                    animate={{ scale: 1, rotate: 0 }}
+                                    transition={{
+                                        delay: 0.5 + (i * 0.1),
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20
+                                    }}
+                                >
+                                    <Star
+                                        size={48}
+                                        fill={i < difficulty ? "#FFD700" : "transparent"}
+                                        color={i < difficulty ? "#FFD700" : "rgba(255,255,255,0.2)"}
+                                        className={i < difficulty ? "star-earned glow" : "star-earned"}
+                                    />
+                                </motion.div>
+                            ))}
+                        </div>
+                    )}
 
                     <motion.div
                         className="completion-message"

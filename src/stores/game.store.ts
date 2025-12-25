@@ -5,12 +5,22 @@ import { getXpForNextLevel } from '../utils/progression.utils';
 
 import { ADVENTURES } from '../data/adventures.data';
 
+export interface EncounterResult {
+    stars: number;
+    difficulty: number;
+    completedAt: number;
+}
+
 interface GameState {
     // Progression
     currentMapNode: number; // 1-indexed, relative to current adventure
     activeAdventureId: string;
     unlockedCompanions: string[]; // IDs
     activeParty: string[]; // IDs (Max 4)
+
+    // Per-Encounter Progression
+    encounterResults: Record<string, EncounterResult>; // Key: adventureId_nodeIndex
+    activeEncounterDifficulty: number;
 
     // Progression System
     xpPool: number;
@@ -19,6 +29,7 @@ interface GameState {
 
     // Actions
     completeEncounter: (nodeIndex?: number) => void;
+    setEncounterDifficulty: (difficulty: number) => void;
     setActiveAdventure: (adventureId: string) => void;
     resetMap: () => void;
     addToParty: (companionId: string) => void;
@@ -50,6 +61,9 @@ export const useGameStore = create<GameState>()(
             unlockedCompanions: [...INITIAL_FELLOWSHIP],
             activeParty: [...INITIAL_FELLOWSHIP], // Default full party
 
+            encounterResults: {},
+            activeEncounterDifficulty: 1,
+
             xpPool: 0,
             companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
                 acc[id] = { level: 1, xp: 0 };
@@ -58,18 +72,41 @@ export const useGameStore = create<GameState>()(
             restedCompanions: [],
 
             completeEncounter: (nodeIndex) => {
-                const { currentMapNode, activeAdventureId, addXpToPool } = get();
+                const { currentMapNode, activeAdventureId, addXpToPool, activeEncounterDifficulty, encounterResults } = get();
                 const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
 
                 if (!adventure) return;
 
-                // Use provided nodeIndex or fallback to current (for backward compat if needed)
+                // Use provided nodeIndex or fallback to current
                 const completedIndex = nodeIndex ?? currentMapNode;
 
-                // Grant dynamic XP based on the ACTUAL node completed
-                const encounter = adventure.encounters[completedIndex - 1];
-                const xpReward = encounter?.xpReward ?? 0;
-                addXpToPool(xpReward);
+                // Unique key for this encounter
+                const encounterKey = `${activeAdventureId}_${completedIndex}`;
+                const existingResult = encounterResults[encounterKey];
+
+                // Grant dynamic XP only if first time completion
+                if (!existingResult) {
+                    const encounter = adventure.encounters[completedIndex - 1];
+                    const xpReward = encounter?.xpReward ?? 0;
+                    addXpToPool(xpReward);
+                }
+
+                // Update encounter results
+                const newStars = activeEncounterDifficulty; // 1:1 ratio as requested
+                const shouldUpdateResult = !existingResult || newStars > existingResult.stars;
+
+                if (shouldUpdateResult) {
+                    set((state) => ({
+                        encounterResults: {
+                            ...state.encounterResults,
+                            [encounterKey]: {
+                                stars: newStars,
+                                difficulty: activeEncounterDifficulty,
+                                completedAt: Date.now(),
+                            }
+                        }
+                    }));
+                }
 
                 // Only increment currentMapNode if we completed the latest unlocked node
                 if (completedIndex >= currentMapNode) {
@@ -81,6 +118,8 @@ export const useGameStore = create<GameState>()(
                     }
                 }
             },
+
+            setEncounterDifficulty: (difficulty) => set({ activeEncounterDifficulty: difficulty }),
 
             setActiveAdventure: (adventureId) => {
                 set({ activeAdventureId: adventureId, currentMapNode: 1 });
@@ -218,6 +257,8 @@ export const useGameStore = create<GameState>()(
                     activeAdventureId: '1',
                     unlockedCompanions: [...INITIAL_FELLOWSHIP],
                     activeParty: [...INITIAL_FELLOWSHIP],
+                    encounterResults: {},
+                    activeEncounterDifficulty: 1,
                     xpPool: 0,
                     companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
                         acc[id] = { level: 1, xp: 0 };

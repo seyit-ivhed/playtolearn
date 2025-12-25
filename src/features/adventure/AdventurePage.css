@@ -112,6 +112,27 @@
     z-index: 10;
 }
 
+.node-stars {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 3px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 4px 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    z-index: 20;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.star-icon {
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.8));
+}
+
 .node-wrapper:hover {
     transform: translate(-50%, -50%) scale(1.1);
 }
