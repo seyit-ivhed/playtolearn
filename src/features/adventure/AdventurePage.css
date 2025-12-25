@@ -78,10 +78,10 @@
     height: 100%;
     pointer-events: none;
     fill: none;
-    stroke: #ffa200;
+    stroke: #ff5100;
     stroke-width: 12;
     stroke-linecap: round;
-    stroke-dasharray: 60 60;
+    stroke-dasharray: 60 100;
 }
 
 /* Central Column for Nodes */
@@ -140,6 +140,16 @@
     /* rounded-3xl */
     transform: rotate(45deg);
     border: 4px dashed;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.node-container.puzzle {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 1rem;
+    background: linear-gradient(to bottom right, #8b5cf6, #4c1d95);
+    /* violet-500 to violet-900 */
+    box-shadow: 0 0 0 4px #a78bfa, 0 0 30px rgba(139, 92, 246, 0.4);
 }
 
 
@@ -189,6 +199,56 @@
     box-shadow: 0 0 0 4px #065f46;
     /* ring-emerald-800 */
     opacity: 0.8;
+}
+
+/* Icon Styling */
+.node-icon {
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    transition: all 0.3s;
+}
+
+.camp .node-icon {
+    transform: rotate(-45deg);
+}
+
+.completed .node-icon {
+    opacity: 0.9;
+    color: #f1f5f9;
+}
+
+.current .node-icon {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    animation: icon-float 2s ease-in-out infinite;
+}
+
+@keyframes icon-float {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Adjusting the scale if it's already rotated */
+.current.camp .node-icon {
+    animation: icon-float-camp 2s ease-in-out infinite;
+}
+
+@keyframes icon-float-camp {
+
+    0%,
+    100% {
+        transform: rotate(-45deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(-45deg) scale(1.1);
+    }
 }
 
 /* Labels */
