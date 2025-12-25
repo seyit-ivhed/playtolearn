@@ -645,19 +645,6 @@
     animation: shield-absorb 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Animation Utility Classes */
-.anim-shake-damage {
-    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
-}
-
-.anim-lunge-right {
-    animation: lunge-right 0.3s ease-out;
-}
-
-.anim-lunge-left {
-    animation: lunge-left 0.3s ease-out;
-}
-
 @keyframes shake {
 
     10%,
