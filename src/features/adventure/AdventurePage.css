@@ -156,29 +156,89 @@
 }
 
 .node-container.boss {
-    background: linear-gradient(135deg, #dc2626, #7f1d1d);
-    /* Red */
+    background: radial-gradient(circle at center, #dc2626, #7f1d1d 120%);
+    /* Red Energy Core */
     border-color: #f87171;
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+    box-shadow:
+        0 0 30px rgba(239, 68, 68, 0.6),
+        0 0 60px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.6);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    /* Allow spectacular rings to spill out */
+}
+
+/* Abyssal Flare Rings */
+.node-container.boss::before,
+.node-container.boss::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 3px solid rgba(239, 68, 68, 0.4);
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .node-container.boss::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
-    animation: portal-spin 10s linear infinite;
+    border-top-color: #fca5a5;
+    border-bottom-color: #f87171;
+    animation: boss-rotate-cw 4s linear infinite;
 }
 
-@keyframes portal-spin {
+.node-container.boss::after {
+    inset: -16px;
+    border-left-color: #ef4444;
+    border-right-color: #b91c1c;
+    animation: boss-rotate-ccw 6s linear infinite;
+}
+
+@keyframes boss-rotate-cw {
     from {
-        transform: rotate(0deg);
+        transform: rotate(0deg) scale(1.05);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.1);
     }
 
     to {
-        transform: rotate(360deg);
+        transform: rotate(360deg) scale(1.05);
+    }
+}
+
+@keyframes boss-rotate-ccw {
+    from {
+        transform: rotate(360deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.15);
+    }
+
+    to {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* Pulsating Icon for Boss */
+.boss .node-icon {
+    animation: boss-icon-intensity 2s ease-in-out infinite;
+    color: #fee2e2;
+    filter: drop-shadow(0 0 12px #ef4444);
+}
+
+@keyframes boss-icon-intensity {
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: brightness(1) drop-shadow(0 0 10px #ef4444);
+    }
+
+    50% {
+        transform: scale(1.15);
+        filter: brightness(1.5) drop-shadow(0 0 20px #ef4444);
     }
 }
 
