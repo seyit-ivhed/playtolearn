@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import {
     generateAdditionProblem,
     generateSubtractionProblem,
-    generateMultiplicationProblem,
     generateDivisionProblem,
     getAllowedOperations
 } from './operations';

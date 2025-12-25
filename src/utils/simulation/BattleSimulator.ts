@@ -254,7 +254,7 @@ export class BattleSimulator {
             id: 'temp',
             type: 'DAMAGE',
             value,
-            target: target as any
+            target: target as 'SINGLE_ENEMY' | 'ALL_ENEMIES'
         };
         this.state.monsters = executeDamageAbility(this.state.monsters, ability, value);
     }
@@ -267,7 +267,7 @@ export class BattleSimulator {
             id: 'temp',
             type: 'HEAL',
             value,
-            target: target as any
+            target: target as 'SINGLE_ALLY' | 'ALL_ALLIES'
         };
         this.state.party = executeHealAbility(this.state.party, ability, value);
     }
@@ -280,7 +280,7 @@ export class BattleSimulator {
             id: 'temp',
             type: 'SHIELD',
             value,
-            target: target as any
+            target: target as 'SINGLE_ALLY' | 'ALL_ALLIES'
         };
         this.state.party = executeShieldAbility(this.state.party, ability, value);
     }

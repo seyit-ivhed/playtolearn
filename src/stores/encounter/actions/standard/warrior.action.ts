@@ -5,7 +5,7 @@ import { findFirstLivingTarget } from '../../../../utils/battle/combat.utils';
 
 export const performWarriorAction = (
     get: () => EncounterStore,
-    set: any, // Using any for store set for now, or proper StateCreator type
+    set: (state: Partial<EncounterStore>) => void,
     _partyIndex: number,
     multiplier: number
 ): string => {

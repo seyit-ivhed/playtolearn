@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import './EncounterCompletionModal.css';
@@ -24,7 +24,10 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
     ];
 
     // Use custom message if provided, otherwise pick a random victory message
-    const victoryMessage = customMessage || victoryMessages[Math.floor(Math.random() * victoryMessages.length)];
+    const victoryMessage = useMemo(() =>
+        customMessage || victoryMessages[Math.floor(Math.random() * victoryMessages.length)],
+        [customMessage, victoryMessages]
+    );
 
     return (
         <div className="completion-overlay">

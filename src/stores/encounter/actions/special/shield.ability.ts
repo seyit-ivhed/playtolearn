@@ -4,7 +4,7 @@ import { executeShieldAbility as executeShieldUtil } from '../../../../utils/bat
 
 export const executeShieldAbility = (
     get: () => EncounterStore,
-    set: any,
+    set: (state: Partial<EncounterStore>) => void,
     _unitId: string,
     ability: SpecialAbility
 ): string[] => {

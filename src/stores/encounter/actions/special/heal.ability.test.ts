@@ -1,12 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { executeHealAbility } from './heal.ability';
+import type { EncounterUnit } from '../../../../types/encounter.types';
+import type { EncounterStore } from '../../interfaces';
+import type { SpecialAbility } from '../../../../types/companion.types';
 
 describe('heal.ability', () => {
     const mockSet = vi.fn();
-    const createMockGet = (party: any[]) => () => ({
+    const createMockGet = (party: Partial<EncounterUnit>[]) => () => ({
         party,
         monsters: []
-    } as any);
+    } as unknown as EncounterStore);
 
     beforeEach(() => {
         mockSet.mockClear();
@@ -36,7 +39,7 @@ describe('heal.ability', () => {
             { id: 'u1', name: 'U1', currentHealth: 40, maxHealth: 100, isDead: false, specialAbilityValue: 30 },
             { id: 'u2', name: 'U2', currentHealth: 30, maxHealth: 100, isDead: false }
         ];
-        const get = () => ({ party } as any);
+        const get = () => ({ party } as unknown as EncounterStore);
         const ability = { id: 'heal', type: 'HEAL', target: 'ALL_ALLIES', value: 15 } as const;
 
         const logs = executeHealAbility(get, mockSet, 'u1', ability);
@@ -52,7 +55,7 @@ describe('heal.ability', () => {
             { id: 'p1', name: 'P1', currentHealth: 95, maxHealth: 100, isDead: false }
         ];
         const get = createMockGet(party);
-        const ability = { id: 'heal', type: 'HEAL' as const, target: 'ALL_ALLIES', value: 15 };
+        const ability = { id: 'heal', type: 'HEAL', target: 'ALL_ALLIES', value: 15 } as SpecialAbility;
 
         executeHealAbility(get, mockSet, 'u1', ability);
 
@@ -80,7 +83,7 @@ describe('heal.ability', () => {
     it('should do nothing if target type is unknown', () => {
         const party = [{ id: 'p1', currentHealth: 50, maxHealth: 100 }];
         const get = createMockGet(party);
-        const ability = { id: 'heal', type: 'HEAL' as const, target: 'UNKNOWN' as any, value: 10 };
+        const ability = { id: 'heal', type: 'HEAL', target: 'UNKNOWN' as unknown as SpecialAbility['target'], value: 10 } as SpecialAbility;
 
         const logs = executeHealAbility(get, mockSet, 'u1', ability);
 

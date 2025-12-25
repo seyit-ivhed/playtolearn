@@ -61,7 +61,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 maxSpirit: 100,
                 spiritGain: 0,
                 isBoss: enemy.isBoss
-            } as any;
+            };
         });
 
         set({

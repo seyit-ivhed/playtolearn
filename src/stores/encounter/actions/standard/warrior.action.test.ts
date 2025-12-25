@@ -1,12 +1,18 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { performWarriorAction } from './warrior.action';
+import type { EncounterUnit } from '../../../../types/encounter.types';
+import type { EncounterStore } from '../../interfaces';
 
 describe('warrior.action', () => {
     const mockSet = vi.fn();
-    const createMockGet = (monsters: any[], damage: number = 10) => () => ({
+    const createMockGet = (monsters: Partial<EncounterUnit>[], damage: number = 10) => () => ({
         monsters,
         party: [{ id: 'p0', damage }],
-    } as any);
+    } as unknown as EncounterStore);
+
+    beforeEach(() => {
+        mockSet.mockClear();
+    });
 
     it('should deal damage to first living monster', () => {
         const monsters = [

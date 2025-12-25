@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { getXpForNextLevel, getStatsForLevel } from './progression.utils';
-import { CompanionRole } from '../types/companion.types';
+import { CompanionRole, type Companion } from '../types/companion.types';
 
 describe('progression.utils', () => {
     describe('getStatsForLevel', () => {
-        const mockCompanion: any = {
+        const mockCompanion = {
             id: 'test',
             name: 'Test',
             role: CompanionRole.WARRIOR,
@@ -17,7 +17,7 @@ describe('progression.utils', () => {
                 value: 50
             },
             evolutions: []
-        };
+        } as unknown as Companion;
 
         it('should return base stats at level 1', () => {
             const stats = getStatsForLevel(mockCompanion, 1);
@@ -48,13 +48,14 @@ describe('progression.utils', () => {
                 evolutions: [
                     {
                         atLevel: 5,
+                        title: 'Evolved',
                         statsBonus: {
                             maxHealth: 20,
                             abilityDamage: 5
                         }
                     }
                 ]
-            };
+            } as unknown as Companion;
 
             const statsLvl4 = getStatsForLevel(companionWithEvo, 4);
             const statsLvl5 = getStatsForLevel(companionWithEvo, 5);

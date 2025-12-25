@@ -50,8 +50,8 @@ const mockAudioContext = {
 };
 
 describe('SoundManager', () => {
-    let soundManager: any;
-    let SoundType: any;
+    let soundManager: import('./sound-manager').SoundManager;
+    let SoundType: typeof import('./sound-manager').SoundType;
 
     beforeAll(async () => {
         // Mock window.AudioContext
@@ -59,7 +59,7 @@ describe('SoundManager', () => {
             console.log('Mock AudioContext constructor called');
             return mockAudioContext;
         }));
-        window.AudioContext = (globalThis as any).AudioContext;
+        window.AudioContext = (globalThis as unknown as { AudioContext: typeof AudioContext }).AudioContext;
 
         const module = await import('./sound-manager');
         SoundType = module.SoundType;

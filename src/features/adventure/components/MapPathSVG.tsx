@@ -1,7 +1,8 @@
 import React from 'react';
+import type { Encounter } from '../../../types/adventure.types';
 
 interface MapPathSVGProps {
-    encounters: any[];
+    encounters: Encounter[];
 }
 
 export const MapPathSVG: React.FC<MapPathSVGProps> = ({ encounters }) => {

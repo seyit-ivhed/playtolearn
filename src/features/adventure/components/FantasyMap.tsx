@@ -2,12 +2,12 @@ import { useRef, useEffect } from 'react';
 import { AdventureHeader } from './AdventureHeader';
 import { MapPathSVG } from './MapPathSVG';
 import { MapNode } from './MapNode';
-import type { Adventure } from '../../../types/adventure.types';
+import type { Adventure, Encounter } from '../../../types/adventure.types';
 
 interface FantasyMapProps {
     adventure: Adventure;
     currentNode: number;
-    onNodeClick: (node: any) => void;
+    onNodeClick: (node: Encounter) => void;
 }
 
 export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, onNodeClick }) => {
@@ -30,7 +30,7 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
 
     return (
         <>
-            <AdventureHeader adventureId={adventure.id} adventureTitle={adventure.title} />
+            <AdventureHeader adventureId={adventure.id} adventureTitle={adventure.title || 'Adventure'} />
 
             <div className="map-container">
                 {/* Background decoration */}

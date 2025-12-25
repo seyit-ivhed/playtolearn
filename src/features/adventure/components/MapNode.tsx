@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Swords, Tent, Puzzle } from 'lucide-react';
-import { EncounterType } from '../../../types/adventure.types';
+import { EncounterType, type Encounter } from '../../../types/adventure.types';
 
 interface MapNodeProps {
-    node: any; // Using any for now to match the local type from ADVENTURES
+    node: Encounter;
     index: number;
     currentNode: number;
     adventureId: string;
-    onNodeClick: (node: any) => void;
+    onNodeClick: (node: Encounter) => void;
     nodeRef?: React.Ref<HTMLDivElement>;
 }
 

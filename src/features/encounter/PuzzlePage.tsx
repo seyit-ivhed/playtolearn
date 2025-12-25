@@ -38,7 +38,7 @@ const PuzzlePage = () => {
     const puzzleData = useMemo(() => {
         if (!encounter?.puzzleData) return null;
         return generatePuzzleData(encounter.puzzleData.puzzleType, difficulty);
-    }, [encounter?.puzzleData?.puzzleType, difficulty]);
+    }, [encounter?.puzzleData, difficulty]);
 
     console.log('[PuzzlePage] Debug Info:', {
         nodeId,

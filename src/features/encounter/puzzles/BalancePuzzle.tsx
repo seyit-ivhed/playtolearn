@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { PuzzleData } from '../../../types/adventure.types';
 import { isBalanced, calculateScaleAngle, calculateTotalWeight } from './BalanceEngine';
@@ -12,12 +12,32 @@ interface BalancePuzzleProps {
 
 export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
     // Current state of weights on plates
-    const [leftWeights, setLeftWeights] = useState<number[]>([]);
-    const [rightWeights, setRightWeights] = useState<number[]>([]);
+    const [leftWeights, setLeftWeights] = useState<number[]>(() =>
+        data.initialLeftWeight ? [data.initialLeftWeight] : []
+    );
+    const [rightWeights, setRightWeights] = useState<number[]>(() =>
+        data.initialRightWeight ? [data.initialRightWeight] : []
+    );
 
     // Inventory state (Left vs Right specific inventories)
-    const [leftInventory, setLeftInventory] = useState<number[]>([]);
-    const [rightInventory, setRightInventory] = useState<number[]>([]);
+    const [leftInventory, setLeftInventory] = useState<number[]>(() => {
+        if (data.leftOptions) return data.leftOptions.map(opt => typeof opt === 'number' ? opt : opt.value);
+        if (!data.leftOptions && !data.rightOptions && data.options) {
+            const allOpts = data.options.map(opt => typeof opt === 'number' ? opt : opt.value);
+            const midpoint = Math.ceil(allOpts.length / 2);
+            return allOpts.slice(0, midpoint);
+        }
+        return [];
+    });
+    const [rightInventory, setRightInventory] = useState<number[]>(() => {
+        if (data.rightOptions) return data.rightOptions.map(opt => typeof opt === 'number' ? opt : opt.value);
+        if (!data.leftOptions && !data.rightOptions && data.options) {
+            const allOpts = data.options.map(opt => typeof opt === 'number' ? opt : opt.value);
+            const midpoint = Math.ceil(allOpts.length / 2);
+            return allOpts.slice(midpoint);
+        }
+        return [];
+    });
 
     // Track used indices to disable buttons
     const [usedLeftIndices, setUsedLeftIndices] = useState<number[]>([]);
@@ -25,59 +45,53 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
 
     const [isSolved, setIsSolved] = useState(false);
 
-    // Initialize inventory and initial weights
-    useEffect(() => {
-        // Handle new data structure (leftOptions/rightOptions)
-        if (data.leftOptions) {
-            setLeftInventory(data.leftOptions.map(opt => typeof opt === 'number' ? opt : opt.value));
-        }
-        if (data.rightOptions) {
-            setRightInventory(data.rightOptions.map(opt => typeof opt === 'number' ? opt : opt.value));
-        }
-
-        // Fallback for legacy behavior or manual data
-        if (!data.leftOptions && !data.rightOptions && data.options) {
-            const allOpts = data.options.map(opt => typeof opt === 'number' ? opt : opt.value);
-            // If no split is defined, put everything in RIGHT inventory for now? 
-            // Or maybe split them evenly?
-            // Let's put everything in "Shared" mode? 
-            // To simplify, if legacy, we put 50/50.
-            const midpoint = Math.ceil(allOpts.length / 2);
-            setLeftInventory(allOpts.slice(0, midpoint));
-            setRightInventory(allOpts.slice(midpoint));
-        }
-
-        // Set initial placed weights (usually one side has the target)
-        if (data.initialLeftWeight) {
-            setLeftWeights([data.initialLeftWeight]);
-        }
-        if (data.initialRightWeight) {
-            setRightWeights([data.initialRightWeight]);
-        }
-    }, [data]);
+    // Handle data changes - if data prop changes, we should reset state
+    // We use a simple key on the parent or handle it here if needed.
+    // For now, let's keep it simple as puzzles don't usually change mid-session.
+    // But to be safe, we can reset if data changed.
+    const [prevData, setPrevData] = useState(data);
+    if (data !== prevData) {
+        setPrevData(data);
+        setLeftWeights(data.initialLeftWeight ? [data.initialLeftWeight] : []);
+        setRightWeights(data.initialRightWeight ? [data.initialRightWeight] : []);
+        setLeftInventory(data.leftOptions
+            ? data.leftOptions.map(opt => typeof opt === 'number' ? opt : opt.value)
+            : (data.options ? data.options.slice(0, Math.ceil(data.options.length / 2)).map(opt => typeof opt === 'number' ? opt : opt.value) : [])
+        );
+        setRightInventory(data.rightOptions
+            ? data.rightOptions.map(opt => typeof opt === 'number' ? opt : opt.value)
+            : (data.options ? data.options.slice(Math.ceil(data.options.length / 2)).map(opt => typeof opt === 'number' ? opt : opt.value) : [])
+        );
+        setUsedLeftIndices([]);
+        setUsedRightIndices([]);
+        setIsSolved(false);
+    }
 
     const leftTotal = calculateTotalWeight(leftWeights);
     const rightTotal = calculateTotalWeight(rightWeights);
     const scaleAngle = calculateScaleAngle(leftTotal, rightTotal);
 
-    useEffect(() => {
-        if (isBalanced(leftTotal, rightTotal) && !isSolved) {
-            setIsSolved(true);
-            onSolve();
-        }
-    }, [leftTotal, rightTotal, onSolve, isSolved]);
-
     const handleAddWeight = (weight: number, index: number, side: 'left' | 'right') => {
         if (isSolved) return;
+
+        let nextLeftTotal = leftTotal;
+        let nextRightTotal = rightTotal;
 
         if (side === 'left') {
             if (usedLeftIndices.includes(index)) return;
             setLeftWeights(prev => [...prev, weight]);
             setUsedLeftIndices(prev => [...prev, index]);
+            nextLeftTotal += weight;
         } else {
             if (usedRightIndices.includes(index)) return;
             setRightWeights(prev => [...prev, weight]);
             setUsedRightIndices(prev => [...prev, index]);
+            nextRightTotal += weight;
+        }
+
+        if (isBalanced(nextLeftTotal, nextRightTotal) && !isSolved) {
+            setIsSolved(true);
+            onSolve();
         }
     };
 

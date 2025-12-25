@@ -1,4 +1,4 @@
-import type { Encounter } from '../../types/adventure.types';
+import type { Encounter, AdventureMonster } from '../../types/adventure.types';
 import { BattleSimulator } from './BattleSimulator';
 import type {
     EncounterSimulationResults,
@@ -74,7 +74,7 @@ export class DifficultyAnalyzer {
      */
     private static runBatchSimulations(
         partyConfig: PartyMemberConfig[],
-        enemies: any[],
+        enemies: AdventureMonster[],
         strategy: 'ALL_SUCCESS' | 'ALL_FAIL' | 'RANDOM',
         count: number
     ): SimulationResult[] {

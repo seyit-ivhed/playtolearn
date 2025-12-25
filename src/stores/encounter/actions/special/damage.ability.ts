@@ -4,7 +4,7 @@ import { executeDamageAbility as executeDamageUtil } from '../../../../utils/bat
 
 export const executeDamageAbility = (
     get: () => EncounterStore,
-    set: any,
+    set: (state: Partial<EncounterStore>) => void,
     _unitId: string,
     ability: SpecialAbility
 ): string[] => {

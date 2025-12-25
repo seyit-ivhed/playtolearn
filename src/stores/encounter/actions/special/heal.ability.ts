@@ -4,7 +4,7 @@ import { executeHealAbility as executeHealUtil } from '../../../../utils/battle/
 
 export const executeHealAbility = (
     get: () => EncounterStore,
-    set: any,
+    set: (state: Partial<EncounterStore>) => void,
     _unitId: string,
     ability: SpecialAbility
 ): string[] => {

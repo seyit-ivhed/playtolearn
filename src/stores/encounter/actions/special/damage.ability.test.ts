@@ -1,16 +1,21 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { executeDamageAbility } from './damage.ability';
+import type { EncounterUnit } from '../../../../types/encounter.types';
+import type { EncounterStore } from '../../interfaces';
+import type { SpecialAbility } from '../../../../types/companion.types';
 
 describe('damage.ability', () => {
     const mockSet = vi.fn();
 
+    beforeEach(() => {
+        mockSet.mockClear();
+    });
+
     // Helper to create mock store state
-    const createMockGet = (monsters: any[]) => () => ({
+    const createMockGet = (monsters: Partial<EncounterUnit>[]) => () => ({
         monsters,
-        party: [], // Not needed for this test
-        // Add other store properties as needed to satisfy type if strict, 
-        // but for this function only monsters is destructured.
-    } as any);
+        party: [],
+    } as unknown as EncounterStore);
 
     it('should deal damage to ALL_ENEMIES', () => {
         const monsters = [
@@ -19,7 +24,7 @@ describe('damage.ability', () => {
             { id: 'm3', name: 'M3-Dead', currentHealth: 0, isDead: true }
         ];
         const get = createMockGet(monsters);
-        const ability = { target: 'ALL_ENEMIES', value: 10 };
+        const ability = { target: 'ALL_ENEMIES', value: 10 } as SpecialAbility;
 
         const logs = executeDamageAbility(get, mockSet, 'u1', ability);
 
@@ -38,8 +43,8 @@ describe('damage.ability', () => {
     it('should use scaled damage from party member (specialAbilityValue)', () => {
         const monsters = [{ id: 'm1', name: 'M1', currentHealth: 50, isDead: false }];
         const party = [{ id: 'u1', specialAbilityValue: 35 }];
-        const get = () => ({ monsters, party } as any);
-        const ability = { target: 'SINGLE_ENEMY', value: 25 }; // Default value
+        const get = () => ({ monsters, party } as unknown as EncounterStore);
+        const ability = { target: 'SINGLE_ENEMY', value: 25 } as SpecialAbility; // Default value
 
         const logs = executeDamageAbility(get, mockSet, 'u1', ability);
 
@@ -55,7 +60,7 @@ describe('damage.ability', () => {
             { id: 'm3', name: 'M3', currentHealth: 50, isDead: false }
         ];
         const get = createMockGet(monsters);
-        const ability = { target: 'SINGLE_ENEMY', value: 20 };
+        const ability = { id: 'sa', type: 'DAMAGE', target: 'SINGLE_ENEMY', value: 20 } as SpecialAbility;
 
         const logs = executeDamageAbility(get, mockSet, 'u1', ability);
 
@@ -74,7 +79,7 @@ describe('damage.ability', () => {
             { id: 'm1', name: 'M1', currentHealth: 10, isDead: false }
         ];
         const get = createMockGet(monsters);
-        const ability = { target: 'SINGLE_ENEMY', value: 15 };
+        const ability = { id: 'sa', type: 'DAMAGE', target: 'SINGLE_ENEMY', value: 15 } as SpecialAbility;
 
         executeDamageAbility(get, mockSet, 'u1', ability);
 
@@ -88,7 +93,7 @@ describe('damage.ability', () => {
             { id: 'm1', isDead: true }
         ];
         const get = createMockGet(monsters);
-        const ability = { target: 'SINGLE_ENEMY', value: 10 };
+        const ability = { id: 'sa', type: 'DAMAGE', target: 'SINGLE_ENEMY', value: 10 } as SpecialAbility;
 
         const logs = executeDamageAbility(get, mockSet, 'u1', ability);
 

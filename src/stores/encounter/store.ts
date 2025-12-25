@@ -10,7 +10,13 @@ export const useEncounterStore = create<EncounterStore>((...a) => ({
     ...createPlayerActionsSlice(...a),
 }));
 
+declare global {
+    interface Window {
+        useEncounterStore: typeof useEncounterStore;
+    }
+}
+
 // Expose store for testing
 if (typeof window !== 'undefined') {
-    (window as any).useEncounterStore = useEncounterStore;
+    window.useEncounterStore = useEncounterStore;
 }

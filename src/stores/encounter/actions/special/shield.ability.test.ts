@@ -1,12 +1,19 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { executeShieldAbility } from './shield.ability';
+import type { EncounterUnit } from '../../../../types/encounter.types';
+import type { EncounterStore } from '../../interfaces';
+import type { SpecialAbility } from '../../../../types/companion.types';
 
 describe('shield.ability', () => {
     const mockSet = vi.fn();
-    const createMockGet = (party: any[]) => () => ({
+    const createMockGet = (party: Partial<EncounterUnit>[]) => () => ({
         party,
         monsters: []
-    } as any);
+    } as unknown as EncounterStore);
+
+    beforeEach(() => {
+        mockSet.mockClear();
+    });
 
     it('should apply shield to ALL_ALLIES', () => {
         const party = [
@@ -15,7 +22,7 @@ describe('shield.ability', () => {
             { id: 'p3', name: 'P3-Dead', currentShield: 0, isDead: true }
         ];
         const get = createMockGet(party);
-        const ability = { target: 'ALL_ALLIES', value: 15 };
+        const ability = { id: 'shield', type: 'SHIELD', target: 'ALL_ALLIES', value: 15 } as SpecialAbility;
 
         const logs = executeShieldAbility(get, mockSet, 'u1', ability);
 
@@ -32,8 +39,8 @@ describe('shield.ability', () => {
             { id: 'u1', name: 'U1', currentShield: 0, isDead: false, specialAbilityValue: 20 },
             { id: 'u2', name: 'U2', currentShield: 5, isDead: false }
         ];
-        const get = () => ({ party } as any);
-        const ability = { target: 'ALL_ALLIES', value: 10 };
+        const get = () => ({ party } as unknown as EncounterStore);
+        const ability = { id: 'shield', type: 'SHIELD', target: 'ALL_ALLIES', value: 10 } as SpecialAbility;
 
         const logs = executeShieldAbility(get, mockSet, 'u1', ability);
 
@@ -46,7 +53,7 @@ describe('shield.ability', () => {
     it('should do nothing if target type is unknown', () => {
         const party = [{ id: 'p1', currentShield: 0 }];
         const get = createMockGet(party);
-        const ability = { target: 'UNKNOWN', value: 10 };
+        const ability = { id: 'shield', type: 'SHIELD', target: 'UNKNOWN' as unknown as SpecialAbility['target'], value: 10 } as SpecialAbility;
 
         const logs = executeShieldAbility(get, mockSet, 'u1', ability);
 

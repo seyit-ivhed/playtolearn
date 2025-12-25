@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useEncounterStore } from './store';
 import { EncounterPhase } from '../../types/encounter.types';
 import { initialEncounterState } from './initial-state';
+import type { AdventureMonster } from '../../types/adventure.types';
 
 // Mock getCompanionById
 vi.mock('../../data/companions.data', () => ({
@@ -41,7 +42,7 @@ describe('EncounterStore', () => {
 
     it('should initialize encounter correctly', () => {
         const partyIds = ['warrior_1', 'guardian_1'];
-        const enemies: any[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: 'goblin.png' }];
+        const enemies: AdventureMonster[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: 'goblin.png' }];
 
         useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, {});
         const state = useEncounterStore.getState();
@@ -54,7 +55,7 @@ describe('EncounterStore', () => {
 
     it('should perform warrior attack correctly', () => {
         const partyIds = ['warrior_1'];
-        const enemies: any[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: 'goblin.png' }];
+        const enemies: AdventureMonster[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: 'goblin.png' }];
         useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, {});
 
         const warriorId = useEncounterStore.getState().party[0].id;
@@ -71,7 +72,7 @@ describe('EncounterStore', () => {
 
     it('should end player turn when all units acted', () => {
         const partyIds = ['warrior_1'];
-        const enemies: any[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5 }];
+        const enemies: AdventureMonster[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: '' }];
         useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, {});
         const warriorId = useEncounterStore.getState().party[0].id;
 

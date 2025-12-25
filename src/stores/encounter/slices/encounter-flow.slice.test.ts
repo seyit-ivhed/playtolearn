@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { createEncounterFlowSlice } from './encounter-flow.slice';
 import { EncounterPhase } from '../../../types/encounter.types';
-import { createStore } from 'zustand';
+import { createStore, type StoreApi } from 'zustand';
 import type { EncounterStore } from '../interfaces';
 
 // Mock dependencies
@@ -18,11 +18,11 @@ vi.mock('../../../data/companions.data', () => ({
 }));
 
 describe('encounter-flow.slice', () => {
-    let useTestStore: any;
+    let useTestStore: StoreApi<EncounterStore>;
 
     beforeEach(() => {
-        useTestStore = createStore<EncounterStore>((set: any, get: any) => ({
-            ...createEncounterFlowSlice(set, get, {} as any),
+        useTestStore = createStore<EncounterStore>((set, get) => ({
+            ...createEncounterFlowSlice(set, get, {} as unknown as StoreApi<EncounterStore>),
             // Mock other parts of the store if necessary
             party: [],
             monsters: [],
@@ -128,7 +128,7 @@ describe('encounter-flow.slice', () => {
             initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 10, attack: 1, sprite: '' }], 0, 0, {});
 
             // Manually set a monster to have acted
-            useTestStore.setState((state: any) => ({
+            useTestStore.setState((state) => ({
                 monsters: [{ ...state.monsters[0], hasActed: true }]
             }));
 
@@ -215,7 +215,7 @@ describe('encounter-flow.slice', () => {
             initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 50, attack: 20, sprite: '' }], 0, 0, {});
 
             // Give player some shield
-            useTestStore.setState((state: any) => {
+            useTestStore.setState((state) => {
                 const newParty = [...state.party];
                 newParty[0].currentShield = 15;
                 return { party: newParty };

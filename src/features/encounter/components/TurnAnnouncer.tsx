@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EncounterPhase } from '../../../types/encounter.types';
 import styles from './TurnAnnouncer.module.css';
@@ -10,39 +10,30 @@ interface TurnAnnouncerProps {
 
 export const TurnAnnouncer = ({ phase, onVisibilityChange }: TurnAnnouncerProps) => {
     const { t } = useTranslation();
-    const [message, setMessage] = useState<string | null>(null);
-    const [key, setKey] = useState(0); // Force re-render for animation
 
+    // Side effects for visibility
     useEffect(() => {
-        if (phase === EncounterPhase.PLAYER_TURN) {
-            setMessage(t('combat.turn.player', 'Your Turn'));
-            setKey(prev => prev + 1);
+        if (phase === EncounterPhase.PLAYER_TURN || phase === EncounterPhase.MONSTER_TURN) {
             onVisibilityChange?.(true);
-
-            // Hide after 2 seconds (animation duration)
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 onVisibilityChange?.(false);
             }, 1600);
-        } else if (phase === EncounterPhase.MONSTER_TURN) {
-            setMessage(t('combat.turn.enemy', 'Enemy Turn'));
-            setKey(prev => prev + 1);
-            onVisibilityChange?.(true);
-
-            // Hide after 2 seconds (animation duration)
-            setTimeout(() => {
-                onVisibilityChange?.(false);
-            }, 1600);
+            return () => clearTimeout(timer);
         } else {
-            // Victory/Defeat or other phases - don't show turn banner
-            setMessage(null);
             onVisibilityChange?.(false);
         }
-    }, [phase, t, onVisibilityChange]);
+    }, [phase, onVisibilityChange]);
+
+    const message = phase === EncounterPhase.PLAYER_TURN
+        ? t('combat.turn.player', 'Your Turn')
+        : phase === EncounterPhase.MONSTER_TURN
+            ? t('combat.turn.enemy', 'Enemy Turn')
+            : null;
 
     if (!message) return null;
 
     return (
-        <div key={key} className={styles.container}>
+        <div key={phase} className={styles.container}>
             <div className={`${styles.banner} ${phase === EncounterPhase.PLAYER_TURN ? styles.playerTurn : styles.enemyTurn}`}>
                 <h2 className={styles.text}>{message}</h2>
             </div>

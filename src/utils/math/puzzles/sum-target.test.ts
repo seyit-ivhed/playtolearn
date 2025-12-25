@@ -24,6 +24,7 @@ describe('sum-target puzzle generator', () => {
         // Since it's random, we might not always get an object, but at difficulty 5 it's highly likely.
         // We'll just verify it doesn't crash and returns valid options.
         expect(data.options.length).toBeGreaterThan(0);
+        expect(typeof hasOperations).toBe('boolean');
     });
 
     it('should not have 0 as an option value', () => {
@@ -41,7 +42,8 @@ describe('sum-target puzzle generator', () => {
 
     it('should produce a positive target value', () => {
         for (let i = 0; i < 20; i++) {
-            const data = generateSumTargetData(getRandomInt(1, 5));
+            const difficulty = getRandomInt(1, 5) as import('../../../types/math.types').DifficultyLevel;
+            const data = generateSumTargetData(difficulty);
             expect(data.targetValue).toBeGreaterThan(0);
         }
     });

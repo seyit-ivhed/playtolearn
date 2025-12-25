@@ -14,24 +14,22 @@ export const useDelayedUnitRemoval = (monsters: EncounterUnit[], delayMs: number
         monsters.filter(m => !m.isDead).map(m => m.id)
     );
 
-    useEffect(() => {
-        const storeAliveIds = monsters.filter(m => !m.isDead).map(m => m.id);
+    // Sync newly added monsters immediately during render
+    const storeAliveIds = monsters.filter(m => !m.isDead).map(m => m.id);
+    const missingIds = storeAliveIds.filter(id => !visibleMonsterIds.includes(id));
+    if (missingIds.length > 0) {
+        setVisibleMonsterIds(prev => [...prev, ...missingIds]);
+    }
 
-        // Find monsters that are dead in store but still in our "visible" list
-        const justDiedIds = visibleMonsterIds.filter(id => !storeAliveIds.includes(id));
+    useEffect(() => {
+        const aliveIds = monsters.filter(m => !m.isDead).map(m => m.id);
+        const justDiedIds = visibleMonsterIds.filter(id => !aliveIds.includes(id));
 
         if (justDiedIds.length > 0) {
-            // Delay removal to allow UnitCard to play its "take damage/death" animations
             const timer = setTimeout(() => {
                 setVisibleMonsterIds(prev => prev.filter(id => !justDiedIds.includes(id)));
             }, delayMs);
             return () => clearTimeout(timer);
-        }
-
-        // Also handle adding any new monsters if needed
-        const newlyAddedIds = storeAliveIds.filter(id => !visibleMonsterIds.includes(id));
-        if (newlyAddedIds.length > 0) {
-            setVisibleMonsterIds(prev => [...prev, ...newlyAddedIds]);
         }
     }, [monsters, visibleMonsterIds, delayMs]);
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadFull } from 'tsparticles';
-import type { Container, ISourceOptions } from '@tsparticles/engine';
+import type { ISourceOptions } from '@tsparticles/engine';
 
 interface GameParticlesProps {
     id?: string;
@@ -20,7 +20,7 @@ export const GameParticles = ({ id = "tsparticles", options, className }: GamePa
         });
     }, []);
 
-    const particlesLoaded = async (_container?: Container): Promise<void> => {
+    const particlesLoaded = async (): Promise<void> => {
         // console.log(container);
     };
 

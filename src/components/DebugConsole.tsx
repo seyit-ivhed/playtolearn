@@ -83,15 +83,16 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                 });
                 break;
 
-            case 'unlock':
+            case 'unlock': {
                 const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
                 if (adventure) {
                     debugSetMapNode(adventure.encounters.length + 1);
                     log('All encounters unlocked.');
                 }
                 break;
+            }
 
-            case 'goto':
+            case 'goto': {
                 const targetNode = parseInt(parts[1]);
                 const currentAdventure = ADVENTURES.find(a => a.id === activeAdventureId);
                 if (!isNaN(targetNode) && currentAdventure) {
@@ -105,6 +106,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                     log('Error: Invalid usage. Usage: goto <index>');
                 }
                 break;
+            }
 
             case 'reset':
                 debugSetMapNode(1);
@@ -113,7 +115,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                 log('Adventure progress, XP pool, and companion levels reset to start.');
                 break;
 
-            case 'xp':
+            case 'xp': {
                 const amount = parseInt(parts[1]);
                 if (!isNaN(amount)) {
                     debugAddXp(amount);
@@ -122,13 +124,14 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                     log('Error: Invalid amount. Usage: xp <amount>');
                 }
                 break;
+            }
 
             case 'companions':
                 debugUnlockAllCompanions();
                 log('All companions unlocked.');
                 break;
 
-            case 'adv':
+            case 'adv': {
                 const advId = parts[1];
                 if (advId) {
                     setActiveAdventure(advId);
@@ -137,6 +140,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                     log('Error: Missing ID. Usage: adv <id>');
                 }
                 break;
+            }
 
             case 'clear':
                 setHistory([]);

@@ -1,8 +1,8 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { PuzzleData } from '../../../types/adventure.types';
+import type { PuzzleData, PuzzleOption } from '../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
 import styles from './SumTargetPuzzle.module.css';
 
@@ -16,19 +16,13 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     const [isSolved, setIsSolved] = useState(false);
     const [usedOptions, setUsedOptions] = useState<number[]>([]); // Track indices of used options
     const [lastAction, setLastAction] = useState<{ label: string; id: number } | null>(null);
+    const actionIdCounter = useRef(0);
     const { t } = useTranslation();
 
     const target = data.targetValue;
     const progress = Math.min(100, Math.max(0, (currentSum / target) * 100));
 
-    useEffect(() => {
-        if (isPuzzleSolved(currentSum, target) && !isSolved) {
-            setIsSolved(true);
-            onSolve();
-        }
-    }, [currentSum, target, onSolve, isSolved]);
-
-    const handlePipeClick = (option: number | any, index: number) => {
+    const handlePipeClick = (option: number | PuzzleOption, index: number) => {
         if (isSolved || usedOptions.includes(index)) return;
 
         const nextSum = calculateNextSum(currentSum, option);
@@ -36,7 +30,12 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
 
         setCurrentSum(nextSum);
         setUsedOptions(prev => [...prev, index]);
-        setLastAction({ label: actionLabel, id: Date.now() });
+        setLastAction({ label: actionLabel, id: actionIdCounter.current++ });
+
+        if (isPuzzleSolved(nextSum, target) && !isSolved) {
+            setIsSolved(true);
+            onSolve();
+        }
     };
 
     const handleReset = () => {
@@ -78,8 +77,9 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                 <div className={styles.pipesGrid}>
                     {data.options.map((option, idx) => {
                         const isObj = typeof option !== 'number';
-                        const label = isObj ? (option as any).label : (option > 0 ? `+${option}` : option);
-                        const icon = isObj ? ((option as any).type === 'MULTIPLY' ? '⚡' : '❄️') : '💧';
+                        const puzzleOption = isObj ? (option as PuzzleOption) : null;
+                        const label = formatActionLabel(option);
+                        const icon = puzzleOption ? (puzzleOption.type === 'MULTIPLY' ? '⚡' : '❄️') : '💧';
 
                         const isUsed = usedOptions.includes(idx);
 

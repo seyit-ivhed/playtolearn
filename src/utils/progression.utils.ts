@@ -11,7 +11,7 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
     const scalingFactor = 1 + (level - 1) * 0.1;
 
     // Check for evolutions up to this level
-    let evolutionBonus: CompanionStats = {
+    const evolutionBonus: CompanionStats = {
         maxHealth: 0,
         abilityDamage: 0
     };
