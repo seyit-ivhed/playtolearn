@@ -36,9 +36,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
     // CSS Classes Construction
     const nodeContainerClasses = [
         'node-container',
-        isCamp ? 'camp' : 'default',
-        isBoss ? 'boss' : '',
-        isPuzzle ? 'puzzle' : '',
+        isCamp ? 'camp' : isBoss ? 'boss' : isPuzzle ? 'puzzle' : 'default',
         isLocked ? 'locked' : '',
         isCurrent ? 'current' : '',
         isCompleted ? 'completed' : ''
@@ -79,12 +77,10 @@ export const MapNode: React.FC<MapNodeProps> = ({
 
             {/* Label */}
             <div className={labelClasses}>
-                {isCamp && <span className="mr-2">✨</span>}
                 {isCamp
                     ? t('party_camp')
                     : t(`adventures.${adventureId}.nodes.${node.id}.label`, node.label || '') as string
                 }
-                {isCamp && <span className="ml-2">✨</span>}
             </div>
         </div>
     );
