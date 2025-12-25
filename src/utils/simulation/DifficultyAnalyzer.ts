@@ -35,7 +35,7 @@ export class DifficultyAnalyzer {
             partyConfig,
             encounter.enemies,
             'ALL_FAIL',
-            10
+            20
         );
 
         // Run simulations with random ultimate success (20 times)
@@ -43,7 +43,7 @@ export class DifficultyAnalyzer {
             partyConfig,
             encounter.enemies,
             'RANDOM',
-            50
+            200
         );
 
         return {
