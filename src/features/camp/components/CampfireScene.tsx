@@ -10,7 +10,6 @@ interface CampfireSceneProps {
     companionStats: Record<string, { level: number; xp: number }>;
     onRemove: (id: string) => void;
     onLevelUp: (id: string) => void;
-    onPackUp: () => void;
 }
 
 export const CampfireScene: React.FC<CampfireSceneProps> = ({
@@ -18,18 +17,14 @@ export const CampfireScene: React.FC<CampfireSceneProps> = ({
     xpPool,
     companionStats,
     onRemove,
-    onLevelUp,
-    onPackUp
+    onLevelUp
 }) => {
     const [hoveredCompanion, setHoveredCompanion] = useState<{ id: string; level: number } | null>(null);
 
     return (
         <section className={styles.mainCampArea}>
             <div className={styles.campfireScene}>
-                <CentralHub
-                    xpPool={xpPool}
-                    onPackUp={onPackUp}
-                />
+                <CentralHub />
 
                 {slots.map((companionId, idx) => (
                     <CompanionSeat

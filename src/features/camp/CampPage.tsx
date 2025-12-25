@@ -8,7 +8,7 @@ import { CampfireScene } from './components/CampfireScene';
 import { FellowshipRoster } from './components/FellowshipRoster';
 import { LevelUpModal } from './components/LevelUpModal';
 import { getCompanionById } from '../../data/companions.data';
-import { getStatsForLevel } from '../../utils/progression.utils';
+import { getXpForNextLevel, getStatsForLevel } from '../../utils/progression.utils';
 import type { Companion, CompanionStats } from '../../types/companion.types';
 
 const MAX_PARTY_SIZE = 4;
@@ -84,9 +84,26 @@ const CampPage = () => {
         navigate('/map');
     };
 
+    // New logic: check if ANY companion can level up
+    const canLevelAny = slots.some(compId => {
+        if (!compId) return false;
+        const stats = companionStats[compId] || { level: 1, xp: 0 };
+        const data = getCompanionById(compId);
+        if (!data) return false;
+        return typeof xpPool === 'number' &&
+            xpPool >= (getXpForNextLevel(stats.level) - stats.xp) &&
+            stats.level < 10;
+    });
+
     return (
         <div className={styles.container}>
-            <h1 className={styles.simpleTitle}>{t('party_camp')}</h1>
+            <div className={styles.headerSection}>
+                <h1 className={styles.simpleTitle}>{t('party_camp')}</h1>
+                <div className={styles.xpPoolDisplay}>
+                    <span className={styles.xpLabel}>Shared XP</span>
+                    <span className={styles.xpValue}>{xpPool}</span>
+                </div>
+            </div>
 
             <div className={styles.content}>
                 <CampfireScene
@@ -95,8 +112,17 @@ const CampPage = () => {
                     companionStats={companionStats}
                     onRemove={removeFromParty}
                     onLevelUp={handleLevelUp}
-                    onPackUp={handlePackUp}
                 />
+            </div>
+
+            <div className={styles.footerSection}>
+                <button
+                    onClick={handlePackUp}
+                    className={`${styles.backButton} ${!canLevelAny ? styles.glowButton : ''}`}
+                    data-testid="nav-map-btn"
+                >
+                    {t('common.continue')}
+                </button>
             </div>
 
             <FellowshipRoster
