@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Swords, Skull, Tent, Puzzle } from 'lucide-react';
+import { Swords, Tent, Puzzle } from 'lucide-react';
 import { EncounterType } from '../../../types/adventure.types';
 
 interface MapNodeProps {
@@ -59,7 +59,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
             className: 'node-icon'
         };
 
-        if (isBoss) return <Skull {...iconProps} />;
+        if (isBoss) return <Swords {...iconProps} />;
         if (isCamp) return <Tent {...iconProps} />;
         if (isPuzzle) return <Puzzle {...iconProps} />;
         return <Swords {...iconProps} />;

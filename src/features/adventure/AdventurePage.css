@@ -153,6 +153,68 @@
 }
 
 
+.node-container.boss {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 2rem;
+    background: linear-gradient(135deg, #b45309, #78350f, #451a03);
+    /* amber-700 to amber-950 */
+    border: 4px double #fbbf24;
+    /* yellow-400 */
+    box-shadow:
+        0 0 40px rgba(180, 83, 9, 0.4),
+        0 0 15px rgba(251, 191, 36, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.node-container.boss::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
+    animation: portal-spin 10s linear infinite;
+}
+
+@keyframes portal-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.node-container.boss.current {
+    box-shadow:
+        0 0 60px rgba(251, 191, 36, 0.6),
+        0 0 20px rgba(251, 191, 36, 0.4),
+        inset 0 0 30px rgba(251, 191, 36, 0.2);
+    animation: boss-pulse 2s ease-in-out infinite;
+}
+
+@keyframes boss-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+    }
+}
+
+.node-container.boss.completed {
+    background: linear-gradient(135deg, #064e3b, #022c22);
+    border-color: #059669;
+    opacity: 0.9;
+}
+
 /* States */
 .node-container.locked {
     background-color: #334155;
