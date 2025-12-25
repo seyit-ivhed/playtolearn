@@ -27,7 +27,7 @@ test.describe('Camp Page', () => {
     });
 
     test('should distribute XP to companion', async ({ page }) => {
-        const xpValue = page.locator('span[class*="xpValue"]');
+        const xpValue = page.getByTestId('xp-value');
         await expect(xpValue).toBeVisible();
 
         const initialXpText = await xpValue.innerText();

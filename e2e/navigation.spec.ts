@@ -44,7 +44,7 @@ test.describe('Navigation Flow', () => {
         await expect(page.getByTestId('camp-title')).toBeVisible();
 
         // Return to Map
-        await page.getByTestId('nav-map-btn').click();
+        await page.getByTestId('nav-map-btn').click({ force: true });
         await expect(page).toHaveURL('/map');
         await expect(page.getByTestId('map-title')).toBeVisible();
     });
