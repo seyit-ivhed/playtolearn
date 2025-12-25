@@ -552,8 +552,3 @@ When moving files to the new structure:
 - [Vite Documentation](https://vitejs.dev/)
 
 ---
-
-**Document Version**: 1.0  
-**Last Updated**: 2025-12-09  
-**Author**: Seyit Ivhed  
-**Status**: Active
