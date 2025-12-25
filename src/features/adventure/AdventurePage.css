@@ -3,7 +3,7 @@
     position: relative;
     height: 100%;
     width: 100%;
-    background: radial-gradient(ellipse at top, #0f172a, #0a0f1c, #000000);
+    background: #000000;
     overflow-y: auto;
 }
 
@@ -16,9 +16,13 @@
 /* Map Container */
 .map-container {
     position: relative;
-    width: 100%;
+    width: 96%;
+    margin: 2rem auto;
     min-height: 4500px;
     overflow: hidden;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Header */
