@@ -321,6 +321,15 @@
     /* text-emerald-100 */
 }
 
+.node-label.completed {
+    background-color: rgba(15, 23, 42, 0.95);
+    /* bg-slate-900/95 */
+    border-color: #475569;
+    /* border-slate-600 */
+    color: #e2e8f0;
+    /* text-slate-200 */
+}
+
 @keyframes bounce {
 
     0%,
