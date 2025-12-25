@@ -9,14 +9,14 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_1',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 250, y: 200 },
+                coordinates: { x: 0, y: 600 },
                 enemies: [MONSTERS.SCORPION_1],
                 xpReward: 10,
             },
             {
                 id: '1_2',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 350, y: 500 },
+                coordinates: { x: -200, y: 900 },
                 enemies: [
                     ...Array.from({ length: 3 }).map(() => MONSTERS.TINY_SCORPION)
                 ],
@@ -25,7 +25,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_3',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 150, y: 800 },
+                coordinates: { x: 0, y: 1200 },
                 puzzleData: {
                     puzzleType: PuzzleType.SUM_TARGET
                 },
@@ -34,13 +34,13 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_4',
                 type: EncounterType.CAMP,
-                coordinates: { x: 250, y: 1100 },
+                coordinates: { x: 250, y: 1300 },
                 xpReward: 0
             },
             {
                 id: '1_5',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 350, y: 1400 },
+                coordinates: { x: 0, y: 1600 },
                 enemies: [
                     MONSTERS.SCORPION_1,
                     MONSTERS.SCORPION_1,
@@ -51,7 +51,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_6',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 150, y: 1700 },
+                coordinates: { x: 200, y: 1800 },
                 enemies: [
                     MONSTERS.SCORPION_RAIDER,
                     MONSTERS.SCORPION_RAIDER,
@@ -62,7 +62,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_7',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 250, y: 2000 },
+                coordinates: { x: 550, y: 2000 },
                 puzzleData: {
                     puzzleType: PuzzleType.BALANCE
                 },
@@ -71,13 +71,13 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_8',
                 type: EncounterType.CAMP,
-                coordinates: { x: 350, y: 2300 },
+                coordinates: { x: 400, y: 2300 },
                 xpReward: 0
             },
             {
                 id: '1_9',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 150, y: 2600 },
+                coordinates: { x: 200, y: 2700 },
                 enemies: [
                     MONSTERS.SAND_SPIRIT_1,
                     MONSTERS.SAND_SPIRIT_1
@@ -87,7 +87,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_10',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 250, y: 2900 },
+                coordinates: { x: 250, y: 2950 },
                 puzzleData: {
                     puzzleType: PuzzleType.SEQUENCE
                 },
@@ -96,7 +96,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_11',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 350, y: 3200 },
+                coordinates: { x: 600, y: 3200 },
                 enemies: [
                     MONSTERS.SAND_SPIRIT_1,
                     MONSTERS.SAND_SPIRIT_1,
@@ -107,13 +107,13 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_12',
                 type: EncounterType.CAMP,
-                coordinates: { x: 150, y: 3500 },
+                coordinates: { x: 400, y: 3500 },
                 xpReward: 0
             },
             {
                 id: '1_13',
                 type: EncounterType.BOSS,
-                coordinates: { x: 250, y: 3800 },
+                coordinates: { x: -100, y: 3900 },
                 enemies: [MONSTERS.SAND_COLOSSUS],
                 xpReward: 100
             }
