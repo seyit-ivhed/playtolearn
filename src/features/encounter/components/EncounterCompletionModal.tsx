@@ -8,11 +8,19 @@ interface EncounterCompletionModalProps {
     result: 'VICTORY' | 'DEFEAT';
     onContinue: () => void;
     difficulty: number;
+    isFirstTime: boolean;
     xpReward?: number;
     customMessage?: string;
 }
 
-export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> = ({ result, onContinue, difficulty, xpReward, customMessage }) => {
+export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> = ({
+    result,
+    onContinue,
+    difficulty,
+    isFirstTime,
+    xpReward,
+    customMessage
+}) => {
     const { t } = useTranslation();
 
     const isVictory = result === 'VICTORY';
@@ -53,26 +61,28 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                     </motion.div>
 
                     {isVictory && (
-                        <div className="stars-earned">
+                        <div className="stars-earned arc">
                             {[...Array(5)].map((_, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ scale: 0, rotate: -180 }}
-                                    animate={{ scale: 1, rotate: 0 }}
-                                    transition={{
-                                        delay: 0.5 + (i * 0.1),
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 20
-                                    }}
-                                >
-                                    <Star
-                                        size={48}
-                                        fill={i < difficulty ? "#FFD700" : "transparent"}
-                                        color={i < difficulty ? "#FFD700" : "rgba(255,255,255,0.2)"}
-                                        className={i < difficulty ? "star-earned glow" : "star-earned"}
-                                    />
-                                </motion.div>
+                                <div key={i} className="star-wrapper">
+                                    <motion.div
+                                        initial={{ scale: 0, rotate: -180 }}
+                                        animate={{ scale: 1, rotate: 0 }}
+                                        transition={{
+                                            delay: 0.5 + (i * 0.1),
+                                            type: "spring",
+                                            stiffness: 260,
+                                            damping: 20
+                                        }}
+                                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                    >
+                                        <Star
+                                            size={54}
+                                            fill={i < difficulty ? "#FFD700" : "transparent"}
+                                            color={i < difficulty ? "#FFD700" : "rgba(255,255,255,0.2)"}
+                                            className={i < difficulty ? "star-earned glow" : "star-earned"}
+                                        />
+                                    </motion.div>
+                                </div>
                             ))}
                         </div>
                     )}
@@ -90,7 +100,7 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                         </p>
                     </motion.div>
 
-                    {isVictory && xpReward !== undefined && (
+                    {isVictory && isFirstTime && xpReward !== undefined && (
                         <motion.div
                             className="reward-section"
                             initial={{ y: 20, opacity: 0 }}

@@ -25,8 +25,13 @@ const EncounterPage = () => {
         performAction,
         resolveSpecialAttack,
         xpReward,
-        difficulty
+        difficulty,
+        nodeIndex
     } = useEncounterStore();
+
+    const { activeAdventureId, encounterResults } = useGameStore();
+    const encounterKey = `${activeAdventureId}_${nodeIndex}`;
+    const isFirstTime = !encounterResults[encounterKey];
 
     const [activeChallenge, setActiveChallenge] = useState<{
         type: 'SPECIAL';
@@ -166,6 +171,7 @@ const EncounterPage = () => {
                     onContinue={handleCompletionContinue}
                     xpReward={xpReward}
                     difficulty={difficulty || 1}
+                    isFirstTime={isFirstTime}
                 />
             )}
         </div>
