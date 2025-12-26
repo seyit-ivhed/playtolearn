@@ -55,6 +55,12 @@ test.describe('Navigation Flow', () => {
         await expect(startNode).toBeVisible();
         await startNode.click({ force: true });
 
+        // Wait for the difficulty selection modal to appear
+        await expect(page.getByTestId('difficulty-modal')).toBeVisible();
+
+        // Click the start button in the modal
+        await page.getByTestId('difficulty-start-btn').click({ force: true });
+
         // Should be in encounter
         await expect(page).toHaveURL('/encounter');
 
