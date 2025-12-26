@@ -65,8 +65,8 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
     return (
         <div className="difficulty-modal-overlay">
             <div className="difficulty-modal-content">
-                <button className="close-button" onClick={onClose}>
-                    <X size={24} />
+                <button className="close-button" onClick={onClose} aria-label="Close">
+                    <X size={24} color="#e5c05b" />
                 </button>
 
                 <h2 className="modal-title">{title}</h2>
@@ -130,7 +130,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
 
                 <div className="modal-footer">
                     <button className="start-button" onClick={() => onStart(selectedDifficulty)}>
-                        {t('difficulty.start_encounter', 'Start Encounter')}
+                        {t('difficulty.start', 'Start')}
                     </button>
                 </div>
             </div>

@@ -195,5 +195,19 @@
         "sequence": {
             "instruction": "Connect the stars in order!"
         }
+    },
+    "difficulty": {
+        "apprentice": "Apprentice",
+        "scout": "Scout",
+        "adventurer": "Adventurer",
+        "veteran": "Veteran",
+        "master": "Master",
+        "desc_1": "Basic addition (0-10)",
+        "desc_2": "Addition and basic subtraction",
+        "desc_3": "Multiplication and harder arithmetic",
+        "desc_4": "Division and multi-digit numbers",
+        "desc_5": "Complex challenges and remainders",
+        "start": "Start",
+        "select_title": "Select Math Difficulty"
     }
 }

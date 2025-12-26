@@ -195,5 +195,19 @@
         "sequence": {
             "instruction": "Koppla ihop stjärnorna i ordning!"
         }
+    },
+    "difficulty": {
+        "apprentice": "Lärling",
+        "scout": "Spejare",
+        "adventurer": "Äventyrare",
+        "veteran": "Veteran",
+        "master": "Mästare",
+        "desc_1": "Grundläggande addition (0-10)",
+        "desc_2": "Addition och enkel subtraktion",
+        "desc_3": "Multiplikation och svårare aritmetik",
+        "desc_4": "Division och flersiffriga tal",
+        "desc_5": "Komplexa utmaningar och rester",
+        "start": "Starta",
+        "select_title": "Välj Matte-svårighetsgrad"
     }
 }
