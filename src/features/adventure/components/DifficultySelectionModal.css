@@ -132,7 +132,7 @@
 
 .difficulty-name {
     font-family: 'Cinzel', serif;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     /* Increased font size */
     color: #ffd700;
     font-weight: 700;
@@ -140,7 +140,7 @@
 
 .stars-mini {
     display: flex;
-    gap: 4px;
+    gap: 8px;
 }
 
 .arrow {
@@ -180,7 +180,7 @@
 }
 
 .dropdown-item {
-    padding: 16px 20px;
+    padding: 8px 20px;
     cursor: pointer;
     transition: all 0.2s;
     border-bottom: 1px solid rgba(179, 155, 86, 0.1);
@@ -206,7 +206,7 @@
 
 .item-label {
     font-family: 'Cinzel', serif;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     /* Increased font size */
     color: #ccc;
     font-weight: 600;
@@ -218,23 +218,18 @@
 
 .item-stars {
     display: flex;
-    gap: 3px;
+    gap: 6px;
 }
 
 /* Explanation Box Styles */
 .difficulty-explanation-box {
     background: rgba(0, 0, 0, 0.4);
-    border-left: 4px solid #ffd700;
     border-radius: 12px;
     padding: 24px;
     text-align: left;
     min-height: 80px;
     display: flex;
     align-items: center;
-    /* Center text vertically */
-    box-shadow:
-        inset 0 0 20px rgba(0, 0, 0, 0.3),
-        0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .explanation-text {

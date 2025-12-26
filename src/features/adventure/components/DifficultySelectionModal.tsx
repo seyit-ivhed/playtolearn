@@ -86,7 +86,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                                 <span className="difficulty-name">{getDifficultyLabel(selectedDifficulty)}</span>
                                 <div className="stars-mini">
                                     {[...Array(selectedDifficulty)].map((_, i) => (
-                                        <Star key={i} size={12} fill="#FFD700" color="#FFD700" />
+                                        <Star key={i} size={24} fill="#FFD700" color="#FFD700" />
                                     ))}
                                 </div>
                             </div>
@@ -111,7 +111,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                                             <span className="item-label">{getDifficultyLabel(level)}</span>
                                             <div className="item-stars">
                                                 {[...Array(level)].map((_, i) => (
-                                                    <Star key={i} size={10} fill="#FFD700" color="#FFD700" />
+                                                    <Star key={i} size={20} fill="#FFD700" color="#FFD700" />
                                                 ))}
                                             </div>
                                         </div>
