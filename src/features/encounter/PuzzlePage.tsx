@@ -5,6 +5,7 @@ import { useGameStore } from '../../stores/game.store';
 import { usePlayerStore } from '../../stores/player.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
+import { type DifficultyLevel } from '../../types/math.types';
 import { generatePuzzleData } from '../../utils/math-generator';
 import { SumTargetPuzzle } from './puzzles/SumTargetPuzzle';
 import { BalancePuzzle } from './puzzles/BalancePuzzle';
@@ -16,7 +17,7 @@ const PuzzlePage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { nodeId } = useParams<{ nodeId: string }>();
-    const { activeAdventureId, currentMapNode, completeEncounter } = useGameStore();
+    const { activeAdventureId, currentMapNode, completeEncounter, activeEncounterDifficulty, encounterResults } = useGameStore();
     const { difficulty } = usePlayerStore();
 
     const [isCompleted, setIsCompleted] = useState(false);
@@ -34,12 +35,18 @@ const PuzzlePage = () => {
     // Use XP reward from encounter data
     const xpReward = encounter?.xpReward ?? 0;
 
+    // Check if this is the first time completing this node
+    const encounterKey = `${activeAdventureId}_${encounterIndex + 1}`;
+    const isFirstTime = !encounterResults[encounterKey];
+
     // Dynamically generate puzzle values based on difficulty
     const puzzleData = useMemo(() => {
         const pType = encounter?.puzzleData?.puzzleType;
         if (!pType) return null;
-        return generatePuzzleData(pType, difficulty);
-    }, [encounter, difficulty]);
+        // Prefer explicit encounter difficulty if set, fallback to player preference
+        const currentDifficulty = (activeEncounterDifficulty || difficulty) as DifficultyLevel;
+        return generatePuzzleData(pType, currentDifficulty);
+    }, [encounter, difficulty, activeEncounterDifficulty]);
 
     console.log('[PuzzlePage] Debug Info:', {
         nodeId,
@@ -126,6 +133,8 @@ const PuzzlePage = () => {
                     result="VICTORY"
                     onContinue={handleCompletionContinue}
                     xpReward={xpReward}
+                    difficulty={(activeEncounterDifficulty || difficulty) as number}
+                    isFirstTime={isFirstTime}
                 />
             )}
         </div>
