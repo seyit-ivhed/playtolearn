@@ -49,6 +49,7 @@ interface GameState {
     debugAddXp: (amount: number) => void;
     debugResetXpPool: () => void;
     debugResetCompanions: () => void;
+    debugResetEncounterResults: () => void;
 
     resetAll: () => void;
 }
@@ -250,6 +251,8 @@ export const useGameStore = create<GameState>()(
                     }, {} as Record<string, { level: number; xp: number }>)
                 });
             },
+
+            debugResetEncounterResults: () => set({ encounterResults: {} }),
 
             resetAll: () => {
                 set({
