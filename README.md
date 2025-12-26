@@ -81,6 +81,11 @@ We use **Vitest** for unit testing.
   npm run test:coverage
   ```
 
+- **Check test coverage for a specific directory:**
+  ```bash
+  npm run test:coverage -- src/stores/game
+  ``` 
+
 ### End-to-End Tests (Playwright)
 
 We use **Playwright** for end-to-end testing.
