@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useGameStore } from '../../stores/game.store';
+import { useGameStore } from '../../stores/game/store';
 import { ADVENTURES } from '../../data/adventures.data';
 import styles from './CampPage.module.css';
 import { CampfireScene } from './components/CampfireScene';

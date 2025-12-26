@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Swords, Tent, Puzzle, Star } from 'lucide-react';
 import { EncounterType, type Encounter } from '../../../types/adventure.types';
-import { useGameStore } from '../../../stores/game.store';
+import { useGameStore } from '../../../stores/game/store';
 
 interface MapNodeProps {
     node: Encounter;

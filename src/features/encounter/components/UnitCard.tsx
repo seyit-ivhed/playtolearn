@@ -10,7 +10,7 @@ import { UnitNameBadge } from './UnitNameBadge';
 import { UnitCardImage } from './UnitCardImage';
 import { AbilityCard } from './AbilityCard';
 import { HealthBar } from './HealthBar';
-import { useGameStore } from '../../../stores/game.store';
+import { useGameStore } from '../../../stores/game/store';
 import { UnitCardShield } from './UnitCardShield';
 import { UnitCardVFX } from './UnitCardVFX';
 import { UnitLevelBadge } from './UnitLevelBadge';

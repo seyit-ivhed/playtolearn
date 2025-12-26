@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useGameStore } from '../stores/game.store';
+import { useGameStore } from '../stores/game/store';
 import { ADVENTURES } from '../data/adventures.data';
 import styles from './DebugConsole.module.css';
 

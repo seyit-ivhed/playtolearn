@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useMemo, useState } from 'react';
-import { useGameStore } from '../../stores/game.store';
+import { useGameStore } from '../../stores/game/store';
 import { usePlayerStore } from '../../stores/player.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useGameStore } from '../../stores/game.store';
+import { useGameStore } from '../../stores/game/store';
 import { usePlayerStore } from '../../stores/player.store';
 import { useEncounterStore } from '../../stores/encounter.store';
 import { DifficultySelectionModal } from './components/DifficultySelectionModal';

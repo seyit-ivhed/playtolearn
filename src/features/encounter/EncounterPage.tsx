@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useEncounterStore } from '../../stores/encounter.store';
-import { useGameStore } from '../../stores/game.store';
+import { useGameStore } from '../../stores/game/store';
 import { EncounterPhase } from '../../types/encounter.types';
 import { generateProblem, getAllowedOperations } from '../../utils/math-generator';
 import { type MathProblem, type DifficultyLevel } from '../../types/math.types';

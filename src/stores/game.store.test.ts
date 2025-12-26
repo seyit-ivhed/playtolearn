@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { useGameStore } from './game.store';
+import { useGameStore } from './game/store';
 import * as progressionUtils from '../utils/progression.utils';
 
 // Mock dependencies
