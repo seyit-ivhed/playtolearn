@@ -114,7 +114,7 @@
 
 .node-stars {
     position: absolute;
-    top: -24px;
+    top: -32px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;

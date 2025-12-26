@@ -80,7 +80,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
                     {[...Array(5)].map((_, i) => (
                         <Star
                             key={i}
-                            size={12}
+                            size={18}
                             fill={i < stars ? "#FFD700" : "transparent"}
                             color={i < stars ? "#FFD700" : "rgba(255,255,255,0.2)"}
                             className="star-icon"
