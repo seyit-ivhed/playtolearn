@@ -55,6 +55,14 @@ Use emoji until custom SVG assets are available.
 - **Attack:** ⚔️ (Swords)
 - **Defense:** 🛡️ (Shield)
 - **Magic/Special:** ✨ (Sparkles), ⚡ (Bolt), ❤️ (Heart)
+- **Close/Cancel:** ✖️ (Simple X icon)
+
+### Modal Close Buttons
+To maintain a clean, immersive look, modal close buttons in the top-right should be:
+- **Icon:** Simple `X` or `X` icon (e.g., Lucide `X`).
+- **Style:** Transparent background, no border.
+- **Color:** Accent color (Gold) with partial opacity (e.g., 0.7).
+- **Hover:** Full opacity, slight scale up (1.1x), and/or color shift.
 
 ## 5. Visual Effects & Particles
 
