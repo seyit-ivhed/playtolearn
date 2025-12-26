@@ -56,6 +56,7 @@ describe('useGameStore', () => {
                 c5: { level: 1, xp: 0 },
             },
             restedCompanions: [],
+            encounterResults: {},
         });
         vi.clearAllMocks();
     });
