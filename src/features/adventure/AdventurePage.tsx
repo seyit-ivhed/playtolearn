@@ -8,7 +8,7 @@ import { DifficultySelectionModal } from './components/DifficultySelectionModal'
 import './AdventurePage.css';
 
 import { ADVENTURES } from '../../data/adventures.data';
-import { EncounterType } from '../../types/adventure.types';
+import { EncounterType, type Encounter, type AdventureMonster } from '../../types/adventure.types';
 import { FantasyMap } from './components/FantasyMap';
 
 const AdventurePage = () => {
@@ -27,7 +27,7 @@ const AdventurePage = () => {
     const { difficulty: playerDifficulty } = usePlayerStore();
 
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
-    const [selectedEncounter, setSelectedEncounter] = useState<any>(null);
+    const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
 
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
@@ -59,7 +59,7 @@ const AdventurePage = () => {
         if (selectedEncounter.type === EncounterType.BATTLE || selectedEncounter.type === EncounterType.BOSS) {
             if (selectedEncounter.enemies && selectedEncounter.enemies.length > 0) {
                 const xpReward = selectedEncounter.xpReward;
-                const localizedEnemies = selectedEncounter.enemies.map((enemy: any) => ({
+                const localizedEnemies = selectedEncounter.enemies.map((enemy: AdventureMonster) => ({
                     ...enemy,
                     name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)
                 }));
@@ -87,7 +87,7 @@ const AdventurePage = () => {
         return activeEncounterDifficulty;
     };
 
-    const getCurrentStars = (encounter: any) => {
+    const getCurrentStars = (encounter: Encounter | null) => {
         if (!encounter) return 0;
         const nodeStep = encounters.indexOf(encounter) + 1;
         const encounterKey = `${activeAdventureId}_${nodeStep}`;

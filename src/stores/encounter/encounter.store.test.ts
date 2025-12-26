@@ -44,7 +44,7 @@ describe('EncounterStore', () => {
         const partyIds = ['warrior_1', 'guardian_1'];
         const enemies: AdventureMonster[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: 'goblin.png' }];
 
-        useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, {});
+        useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, 0, {});
         const state = useEncounterStore.getState();
 
         expect(state.phase).toBe(EncounterPhase.PLAYER_TURN);
@@ -56,7 +56,7 @@ describe('EncounterStore', () => {
     it('should perform warrior attack correctly', () => {
         const partyIds = ['warrior_1'];
         const enemies: AdventureMonster[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: 'goblin.png' }];
-        useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, {});
+        useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, 0, {});
 
         const warriorId = useEncounterStore.getState().party[0].id;
 
@@ -73,7 +73,7 @@ describe('EncounterStore', () => {
     it('should end player turn when all units acted', () => {
         const partyIds = ['warrior_1'];
         const enemies: AdventureMonster[] = [{ id: 'goblin', name: 'Goblin', maxHealth: 50, attack: 5, sprite: '' }];
-        useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, {});
+        useEncounterStore.getState().initializeEncounter(partyIds, enemies, 0, 0, 0, {});
         const warriorId = useEncounterStore.getState().party[0].id;
 
         useEncounterStore.getState().performAction(warriorId);
