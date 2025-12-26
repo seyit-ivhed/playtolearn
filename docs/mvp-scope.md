@@ -60,15 +60,12 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
     - *Amara* (South American-inspired Ranger) - Starter
     - *Tariq* (Middle-Eastern-inspired Alchemist) - Starter
 - **Adventures (3)**:
-    - **1. The Lost Temple (Tutorial)**:
-        - Theme: South American Jungle/Ruins (Amara's Home).
-        - Short scripted flow to teach core mechanics.
-    - **2. The Hidden Oasis**:
+    - **1. The Hidden Oasis**:
         - Theme: Middle-Eastern Desert/City (Tariq's Home).
-        - Length: 9 Encounters + 1 Boss.
-    - **3. Amara's Expedition**:
+        - Length: 12 Encounters + 3 camp sites + 1 Boss.
+    - **2. Amara's Expedition**:
         - Theme: Deeper South American Jungle ruins.
-        - Length: 9 Encounters + 1 Boss.
+        - Length: 12 Encounters + 3 camp sites + 1 Boss.
 - **Monsters**:
     - Jungle: Jaguars, Snakes, Stone Guardians.
     - Desert: Scorpions, Sand Spirits, Bandits.
@@ -81,7 +78,7 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 - **New Companion**: *Zahara* (African-inspired Mage)
 - **Adventures (4)**:
     - Theme: African Savannah, Ancient Kingdoms.
-    - Structure: 9 Encounters + 1 Boss each.
+    - Structure: 12 Encounters + 3 camp sites + 1 Boss each.
 - **New Monsters**: Lions, Hyenas, Nature Spirits, Ancient Guardians.
 - **Magical Canvas Pack**: African theme stickers/backgrounds.
 
@@ -89,7 +86,7 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 - **New Companion**: *Kenji* (Japanese-inspired Samurai)
 - **Adventures (4)**:
     - Theme: Cherry Blossom Forests, Misty Mountains.
-    - Structure: 9 Encounters + 1 Boss each.
+    - Structure: 12 Encounters + 3 camp sites + 1 Boss each.
 - **New Monsters**: Oni, Kappa, Tengu, Kitsune Boss.
 - **Magical Canvas Pack**: Japanese theme stickers/backgrounds.
 
