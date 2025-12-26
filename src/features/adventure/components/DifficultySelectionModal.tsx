@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Star, X } from 'lucide-react';
+import { Star, X, ChevronDown } from 'lucide-react';
 import './DifficultySelectionModal.css';
 
 interface DifficultySelectionModalProps {
@@ -9,7 +9,6 @@ interface DifficultySelectionModalProps {
     onStart: (difficulty: number) => void;
     title: string;
     initialDifficulty: number;
-    currentStars?: number;
 }
 
 export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> = ({
@@ -17,11 +16,23 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
     onClose,
     onStart,
     title,
-    initialDifficulty,
-    currentStars = 0
+    initialDifficulty
 }) => {
     const { t } = useTranslation();
     const [selectedDifficulty, setSelectedDifficulty] = useState(initialDifficulty);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [hoveredDifficulty, setHoveredDifficulty] = useState<number | null>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     if (!isOpen) return null;
 
@@ -49,6 +60,8 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
         }
     };
 
+    const displayDifficulty = hoveredDifficulty ?? selectedDifficulty;
+
     return (
         <div className="difficulty-modal-overlay">
             <div className="difficulty-modal-content">
@@ -56,50 +69,66 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                     <X size={24} />
                 </button>
 
-                <h2>{title}</h2>
+                <h2 className="modal-title">{title}</h2>
 
-                {currentStars > 0 && (
-                    <div className="current-progress">
-                        <span>{t('difficulty.best_rank', 'Best Rank')}:</span>
-                        <div className="stars-container">
-                            {[...Array(5)].map((_, i) => (
-                                <Star
-                                    key={i}
-                                    size={16}
-                                    fill={i < currentStars ? "#FFD700" : "transparent"}
-                                    color={i < currentStars ? "#FFD700" : "#666"}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                <div className="difficulty-selector">
-                    <p>{t('difficulty.select_title', 'Select Math Difficulty')}</p>
-                    <div className="difficulty-options">
-                        {difficulties.map((level) => (
-                            <button
-                                key={level}
-                                className={`difficulty-option ${selectedDifficulty === level ? 'selected' : ''}`}
-                                onClick={() => setSelectedDifficulty(level)}
-                            >
-                                <div className="stars">
-                                    {[...Array(level)].map((_, i) => (
-                                        <Star key={i} size={14} fill="#FFD700" color="#FFD700" />
+                <div className="difficulty-selection-container">
+                    <div
+                        className="custom-dropdown"
+                        ref={dropdownRef}
+                        onMouseEnter={() => !isDropdownOpen && setHoveredDifficulty(selectedDifficulty)}
+                        onMouseLeave={() => !isDropdownOpen && setHoveredDifficulty(null)}
+                    >
+                        <div
+                            className={`dropdown-header ${isDropdownOpen ? 'open' : ''}`}
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        >
+                            <div className="selected-value">
+                                <span className="difficulty-name">{getDifficultyLabel(selectedDifficulty)}</span>
+                                <div className="stars-mini">
+                                    {[...Array(selectedDifficulty)].map((_, i) => (
+                                        <Star key={i} size={12} fill="#FFD700" color="#FFD700" />
                                     ))}
                                 </div>
-                                <span className="level-label">{getDifficultyLabel(level)}</span>
-                            </button>
-                        ))}
+                            </div>
+                            <ChevronDown size={20} className={`arrow ${isDropdownOpen ? 'rotated' : ''}`} />
+                        </div>
+
+                        {isDropdownOpen && (
+                            <div className="dropdown-list">
+                                {difficulties.map((level) => (
+                                    <div
+                                        key={level}
+                                        className={`dropdown-item ${selectedDifficulty === level ? 'selected' : ''}`}
+                                        onClick={() => {
+                                            setSelectedDifficulty(level);
+                                            setIsDropdownOpen(false);
+                                            setHoveredDifficulty(null);
+                                        }}
+                                        onMouseEnter={() => setHoveredDifficulty(level)}
+                                        onMouseLeave={() => setHoveredDifficulty(null)}
+                                    >
+                                        <div className="item-content">
+                                            <span className="item-label">{getDifficultyLabel(level)}</span>
+                                            <div className="item-stars">
+                                                {[...Array(level)].map((_, i) => (
+                                                    <Star key={i} size={10} fill="#FFD700" color="#FFD700" />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="difficulty-explanation-box">
+                        <p className="explanation-text">
+                            {getDifficultyDescription(displayDifficulty)}
+                        </p>
                     </div>
                 </div>
 
-                <div className="difficulty-info">
-                    <h3>{getDifficultyLabel(selectedDifficulty)}</h3>
-                    <p>{getDifficultyDescription(selectedDifficulty)}</p>
-                </div>
-
-                <div className="modal-actions">
+                <div className="modal-footer">
                     <button className="start-button" onClick={() => onStart(selectedDifficulty)}>
                         {t('difficulty.start_encounter', 'Start Encounter')}
                     </button>
