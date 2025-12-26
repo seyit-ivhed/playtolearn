@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game.store';
+import { usePlayerStore } from '../../stores/player.store';
 import { useEncounterStore } from '../../stores/encounter.store';
 import { DifficultySelectionModal } from './components/DifficultySelectionModal';
 import './AdventurePage.css';
@@ -19,9 +20,11 @@ const AdventurePage = () => {
         companionStats,
         currentMapNode,
         encounterResults,
-        setEncounterDifficulty
+        setEncounterDifficulty,
+        activeEncounterDifficulty
     } = useGameStore();
     const { initializeEncounter } = useEncounterStore();
+    const { difficulty: playerDifficulty } = usePlayerStore();
 
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
     const [selectedEncounter, setSelectedEncounter] = useState<any>(null);
@@ -70,11 +73,18 @@ const AdventurePage = () => {
         setIsDifficultyModalOpen(false);
     };
 
-    const getInitialDifficulty = (encounter: any) => {
-        if (!encounter) return 1;
-        const nodeStep = encounters.indexOf(encounter) + 1;
-        const encounterKey = `${activeAdventureId}_${nodeStep}`;
-        return encounterResults[encounterKey]?.difficulty || 1;
+    const getInitialDifficulty = () => {
+        // Per user request: Always stick to previously selected difficulty ("sticky").
+        // activeEncounterDifficulty tracks the last difficulty used to START an encounter.
+
+        // Edge case: If this is a fresh session (default 1) and we haven't completed anything,
+        // respect the player's profile setting.
+        const hasCompletedAny = Object.keys(encounterResults).length > 0;
+        if (!hasCompletedAny && activeEncounterDifficulty === 1) {
+            return playerDifficulty;
+        }
+
+        return activeEncounterDifficulty;
     };
 
     const getCurrentStars = (encounter: any) => {
@@ -99,7 +109,7 @@ const AdventurePage = () => {
                 onClose={() => setIsDifficultyModalOpen(false)}
                 onStart={handleStartEncounter}
                 title={(selectedEncounter ? t(`adventures.${activeAdventureId}.nodes.${selectedEncounter.id}.label`, selectedEncounter.label || '') : '') as string}
-                initialDifficulty={getInitialDifficulty(selectedEncounter)}
+                initialDifficulty={getInitialDifficulty()}
                 currentStars={getCurrentStars(selectedEncounter)}
             />
         </div>

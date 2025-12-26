@@ -9,6 +9,7 @@ interface DifficultySelectionModalProps {
     onStart: (difficulty: number) => void;
     title: string;
     initialDifficulty: number;
+    currentStars?: number;
 }
 
 export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> = ({
@@ -16,7 +17,8 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
     onClose,
     onStart,
     title,
-    initialDifficulty
+    initialDifficulty,
+    currentStars
 }) => {
     const { t } = useTranslation();
     const [selectedDifficulty, setSelectedDifficulty] = useState(initialDifficulty);
@@ -69,7 +71,16 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                     <X size={24} color="#e5c05b" />
                 </button>
 
-                <h2 className="modal-title">{title}</h2>
+                <h2 className="modal-title">
+                    {title}
+                    {currentStars !== undefined && currentStars > 0 && (
+                        <div className="current-stars-display" style={{ display: 'inline-flex', marginLeft: '10px', verticalAlign: 'middle' }}>
+                            {[...Array(currentStars)].map((_, i) => (
+                                <Star key={`current-${i}`} size={20} fill="#FFD700" color="#FFD700" />
+                            ))}
+                        </div>
+                    )}
+                </h2>
 
                 <div className="difficulty-selection-container">
                     <div
