@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 const SettingsMenu: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDebugOpen, setIsDebugOpen] = useState(false);
-    const { difficulty, setDifficulty, language, setLanguage } = usePlayerStore();
+    const { language, setLanguage } = usePlayerStore();
     const { i18n } = useTranslation();
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -34,9 +34,7 @@ const SettingsMenu: React.FC = () => {
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
-    const handleDifficultyChange = (level: number) => {
-        setDifficulty(level as 1 | 2 | 3 | 4 | 5);
-    };
+
 
     const handleLanguageChange = (lang: 'en' | 'sv') => {
         setLanguage(lang);
@@ -44,13 +42,7 @@ const SettingsMenu: React.FC = () => {
     };
 
 
-    const difficultyLabels = {
-        1: 'Novice (Age 6)',
-        2: 'Apprentice (Age 7)',
-        3: 'Adventurer (Age 8)',
-        4: 'Hero (Age 9)',
-        5: 'Master (Age 10)',
-    };
+
 
     return (
         <div className="settings-container" ref={menuRef}>
@@ -65,21 +57,7 @@ const SettingsMenu: React.FC = () => {
 
             {isOpen && (
                 <div className="settings-dropdown" data-testid="settings-menu">
-                    <div className="settings-section">
-                        <h4>Difficulty</h4>
-                        <select
-                            value={difficulty}
-                            onChange={(e) => handleDifficultyChange(Number(e.target.value))}
-                            className="settings-select"
-                            data-testid="difficulty-select"
-                        >
-                            {Object.entries(difficultyLabels).map(([level, label]) => (
-                                <option key={level} value={level}>
-                                    {label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+
 
                     <div className="settings-section">
                         <h4>Language</h4>
