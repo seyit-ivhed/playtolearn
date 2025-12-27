@@ -26,6 +26,7 @@
   },
   "include": [
     "vite.config.ts",
-    "src/utils/simulation/**/*.ts"
+    "src/utils/simulation/**/*.ts",
+    "src/vite-env.d.ts"
   ]
 }
