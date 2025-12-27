@@ -10,6 +10,7 @@ import './AdventurePage.css';
 import { ADVENTURES } from '../../data/adventures.data';
 import { EncounterType, type Encounter, type AdventureMonster } from '../../types/adventure.types';
 import { FantasyMap } from './components/FantasyMap';
+import { AdventureHeader } from './components/AdventureHeader';
 
 const AdventurePage = () => {
     const { t } = useTranslation();
@@ -100,6 +101,7 @@ const AdventurePage = () => {
                 📖
             </button>
             <main className="adventure-content">
+                <AdventureHeader adventureId={adventure.id} adventureTitle={adventure.title || 'Adventure'} />
 
                 <FantasyMap
                     adventure={adventure}

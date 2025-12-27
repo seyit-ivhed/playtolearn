@@ -1,5 +1,4 @@
 import { useRef, useEffect } from 'react';
-import { AdventureHeader } from './AdventureHeader';
 import { MapPathSVG } from './MapPathSVG';
 import { MapNode } from './MapNode';
 import type { Adventure, Encounter } from '../../../types/adventure.types';
@@ -35,41 +34,37 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
     const { encounters } = adventure;
 
     return (
-        <>
-            <AdventureHeader adventureId={adventure.id} adventureTitle={adventure.title || 'Adventure'} />
+        <div className="map-container">
+            {/* Background image defines the container scale */}
+            <div className="map-bg-pattern">
+                {adventure.mapImage && (
+                    <img
+                        src={adventure.mapImage}
+                        alt="Map Background"
+                        className="map-bg-image"
+                        ref={mapImageRef}
+                    />
+                )}
+            </div>
 
-            <div className="map-container">
-                {/* Background image defines the container scale */}
-                <div className="map-bg-pattern">
-                    {adventure.mapImage && (
-                        <img
-                            src={adventure.mapImage}
-                            alt="Map Background"
-                            className="map-bg-image"
-                            ref={mapImageRef}
+            <div className="map-center-col">
+                <div className="map-col-inner">
+                    <MapPathSVG encounters={encounters} referenceHeight={referenceHeight} />
+
+                    {encounters.map((node, index) => (
+                        <MapNode
+                            key={node.id}
+                            node={node}
+                            index={index}
+                            currentNode={currentNode}
+                            adventureId={adventure.id}
+                            onNodeClick={onNodeClick}
+                            nodeRef={(index + 1) === currentNode ? currentNodeRef : null}
+                            referenceHeight={referenceHeight}
                         />
-                    )}
-                </div>
-
-                <div className="map-center-col">
-                    <div className="map-col-inner">
-                        <MapPathSVG encounters={encounters} referenceHeight={referenceHeight} />
-
-                        {encounters.map((node, index) => (
-                            <MapNode
-                                key={node.id}
-                                node={node}
-                                index={index}
-                                currentNode={currentNode}
-                                adventureId={adventure.id}
-                                onNodeClick={onNodeClick}
-                                nodeRef={(index + 1) === currentNode ? currentNodeRef : null}
-                                referenceHeight={referenceHeight}
-                            />
-                        ))}
-                    </div>
+                    ))}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
