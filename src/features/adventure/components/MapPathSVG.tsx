@@ -8,7 +8,7 @@ interface MapPathSVGProps {
 
 export const MapPathSVG: React.FC<MapPathSVGProps> = ({ encounters, referenceHeight }) => {
     return (
-        <svg className="map-svg-path" viewBox={`-500 0 1500 ${referenceHeight}`} preserveAspectRatio="none">
+        <svg className="map-svg-path" viewBox={`-500 0 1000 ${referenceHeight}`} preserveAspectRatio="none">
             {/* Dynamic Path Logic based on encounter coordinates */}
             <path
                 d={encounters.reduce((acc, node, i) => {

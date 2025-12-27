@@ -36,7 +36,8 @@ export const MapNode: React.FC<MapNodeProps> = ({
     const isPuzzle = node.type === EncounterType.PUZZLE;
 
     // Use coordinates from data or fallback
-    const leftPos = node.coordinates ? `${(node.coordinates.x / 500) * 100}%` : '50%';
+    // Horizontal range is -500 to 500 (total width 1000)
+    const leftPos = node.coordinates ? `${((node.coordinates.x + 500) / 1000) * 100}%` : '50%';
     const topPos = node.coordinates
         ? `${(node.coordinates.y / referenceHeight) * 100}%`
         : `${((250 + (index * 200)) / referenceHeight) * 100}%`;
