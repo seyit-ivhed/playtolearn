@@ -1,5 +1,7 @@
 import { type Adventure, EncounterType, PuzzleType } from '../types/adventure.types';
 import { MONSTERS } from './monsters.data';
+import chapter1Illustration from '../assets/images/chapters/chapter-1.png';
+import chapter2Illustration from '../assets/images/chapters/chapter-2.png';
 
 export const ADVENTURES: Adventure[] = [
     {
@@ -7,7 +9,7 @@ export const ADVENTURES: Adventure[] = [
         title: 'The Hidden Entrance',
         storyHook: "Tariq's homeland is plagued by strange sightings near the great stone archway in the southwest. An ancient cave entrance, long buried by sand, has been revealed.",
         completionSummary: "The Sand Colossus is defeated at the mouth of the massive cave. As the dust settles, the dark tunnel beckons you forward. Scavengers are already slipping into the shadows ahead.",
-        illustration: '/assets/illustrations/oasis.webp',
+        illustration: chapter1Illustration,
         volumeId: 'origins',
         difficulty: 1,
         encounters: [
@@ -129,7 +131,7 @@ export const ADVENTURES: Adventure[] = [
         title: 'The Ruins of Ashur',
         storyHook: "Leaving the desert sun behind, you descend into the cool depths of the canyon cave. The tunnel opens into a vast subterranean city—Ashur. But scavengers have turned the ruins into a bandit camp, and the stones themselves are starting to move.",
         completionSummary: "With the Stone Emperor silenced, the heart of Ashur is yours. But the inscriptions on the canyon walls speak of a 'High King' in the distant mountains who still holds the keys to the world's origins...",
-        illustration: '/assets/illustrations/oasis.webp', // Using existing for now
+        illustration: chapter2Illustration, // Using existing for now
         volumeId: 'origins',
         difficulty: 2,
         encounters: [
