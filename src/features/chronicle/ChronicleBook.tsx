@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -39,19 +39,19 @@ export const ChronicleBook: React.FC = () => {
     const currentAdventure = volumeAdventures[currentAdventureIndex];
 
     // Navigation Handlers
-    const handleNext = () => {
+    const handleNext = useCallback(() => {
         if (currentAdventureIndex < volumeAdventures.length - 1) {
             const nextAdj = volumeAdventures[currentAdventureIndex + 1];
             updateChroniclePosition(currentVolume.id, nextAdj.id);
         }
-    };
+    }, [currentAdventureIndex, volumeAdventures, currentVolume.id, updateChroniclePosition]);
 
-    const handlePrev = () => {
+    const handlePrev = useCallback(() => {
         if (currentAdventureIndex > 0) {
             const prevAdj = volumeAdventures[currentAdventureIndex - 1];
             updateChroniclePosition(currentVolume.id, prevAdj.id);
         }
-    };
+    }, [currentAdventureIndex, volumeAdventures, currentVolume.id, updateChroniclePosition]);
 
     const handleJumpToChapter = (volumeId: string, adventureId: string) => {
         updateChroniclePosition(volumeId, adventureId);
@@ -79,7 +79,7 @@ export const ChronicleBook: React.FC = () => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [currentAdventureIndex, volumeAdventures, isTocOpen]);
+    }, [handleNext, handlePrev, isTocOpen]);
 
     const adventureTitles = useMemo(() =>
         ADVENTURES.reduce((acc, a) => {
