@@ -60,10 +60,10 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 - **Adventures (3)**:
     - **1. The Hidden Entrance**:
         - Theme: Middle-Eastern Desert entry to an ancient Assyrian ruins.
-        - Length: 12 Encounters + 3 camp sites + 1 Boss.
+        - Length: 6 Combat Encounters + 3 Puzzle Encounters + 3 camp sites + 1 Boss.
     - **2. Assyrian Ruins**:
         - Theme: Ruins of an ancient Assyrian city.
-        - Length: 12 Encounters + 3 camp sites + 1 Boss.
+        - Length: 6 Combat Encounters + 3 Puzzle Encounters + 3 camp sites + 1 Boss.
 - **Monsters**:
     - Desert: Scorpions, Sand Spirits, Bandits, Stone Guardians, Assyrian Guardians, Assyrian Boss.
 
@@ -75,7 +75,7 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 - **New Companion**: *Zahara* (African-inspired Mage)
 - **Adventures (4)**:
     - Theme: African Savannah, Ancient Kingdoms.
-    - Structure: 12 Encounters + 3 camp sites + 1 Boss each.
+    - Structure: 6 Combat Encounters + 3 Puzzle Encounters + 3 camp sites + 1 Boss each.
 - **New Monsters**: Lions, Hyenas, Nature Spirits, Ancient Guardians.
 - **Magical Canvas Pack**: African theme stickers/backgrounds.
 
@@ -83,7 +83,7 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 - **New Companion**: *Kenji* (Japanese-inspired Samurai)
 - **Adventures (4)**:
     - Theme: Cherry Blossom Forests, Misty Mountains.
-    - Structure: 12 Encounters + 3 camp sites + 1 Boss each.
+    - Structure: 6 Combat Encounters + 3 Puzzle Encounters + 3 camp sites + 1 Boss each.
 - **New Monsters**: Oni, Kappa, Tengu, Kitsune Boss.
 - **Magical Canvas Pack**: Japanese theme stickers/backgrounds.
 
