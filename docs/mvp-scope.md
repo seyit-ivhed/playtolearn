@@ -64,8 +64,6 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
     - **2. Assyrian Ruins**:
         - Theme: Ruins of an ancient Assyrian city.
         - Length: 6 Combat Encounters + 3 Puzzle Encounters + 3 camp sites + 1 Boss.
-- **Monsters**:
-    - Desert: Scorpions, Sand Spirits, Bandits, Stone Guardians, Assyrian Guardians, Assyrian Boss.
 
 ---
 
