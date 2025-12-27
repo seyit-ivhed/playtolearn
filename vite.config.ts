@@ -14,6 +14,14 @@ export default defineConfig({
   customLogger: logger,
   build: {
     rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-utils': ['framer-motion', 'zustand', 'i18next', 'react-i18next'],
+          'vendor-ui': ['lucide-react'],
+          'vendor-particles': ['tsparticles', '@tsparticles/react', '@tsparticles/slim'],
+        },
+      },
       onwarn(warning) {
         // Fail the build on any rollup warnings
         throw new Error(warning.message);
