@@ -12,7 +12,12 @@ export const AdventureHeader: React.FC<AdventureHeaderProps> = ({ adventureId, a
 
     return (
         <div className="map-header">
-            <button className="header-back-button" onClick={onBack} title="Back to Chronicle">
+            <button
+                className="header-back-button"
+                onClick={onBack}
+                title="Back to Chronicle"
+                data-testid="back-to-chronicle"
+            >
                 📖
             </button>
             <h1 className="map-title" data-testid="map-title">

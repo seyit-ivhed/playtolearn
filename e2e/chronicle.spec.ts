@@ -44,7 +44,7 @@ test.describe('Chronicle Storybook Flow', () => {
         await expect(page.getByTestId('map-title')).toBeVisible();
 
         // 4. Test Back to Chronicle
-        const backBtn = page.locator('.back-to-chronicle');
+        const backBtn = page.getByTestId('back-to-chronicle');
         await expect(backBtn).toBeVisible();
         await backBtn.click({ force: true });
         await expect(page).toHaveURL('/chronicle');
