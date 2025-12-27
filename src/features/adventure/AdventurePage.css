@@ -45,7 +45,6 @@
     position: relative;
     width: 96%;
     margin: 2rem auto;
-    min-height: 4500px;
     overflow: hidden;
     border-radius: 1.5rem;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.4);
@@ -78,13 +77,15 @@
 
 /* Backgrounds */
 .map-bg-pattern {
-    position: absolute;
-    inset: 0;
-    opacity: 1;
-    background-image: url('../../assets/images/maps/adventure-1.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top center;
+    position: relative;
+    width: 100%;
+    line-height: 0;
+}
+
+.map-bg-image {
+    width: 100%;
+    height: auto;
+    display: block;
     pointer-events: none;
 }
 

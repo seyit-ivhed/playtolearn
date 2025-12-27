@@ -2,6 +2,7 @@ import { type Adventure, EncounterType, PuzzleType } from '../types/adventure.ty
 import { MONSTERS } from './monsters.data';
 import chapter1Illustration from '../assets/images/chapters/chapter-1.png';
 import chapter2Illustration from '../assets/images/chapters/chapter-2.png';
+import adventure1Map from '../assets/images/maps/adventure-1.png';
 
 export const ADVENTURES: Adventure[] = [
     {
@@ -10,6 +11,7 @@ export const ADVENTURES: Adventure[] = [
         storyHook: "Tariq's homeland is plagued by strange sightings near the great stone archway in the southwest. An ancient cave entrance, long buried by sand, has been revealed.",
         completionSummary: "The Sand Colossus is defeated at the mouth of the massive cave. As the dust settles, the dark tunnel beckons you forward. Scavengers are already slipping into the shadows ahead.",
         illustration: chapter1Illustration,
+        mapImage: adventure1Map,
         volumeId: 'origins',
         difficulty: 1,
         encounters: [

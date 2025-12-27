@@ -101,6 +101,7 @@ export interface Adventure {
     storyHook?: string;   // Narrative hook for the storybook page
     completionSummary?: string; // Summary shown after completion
     illustration?: string; // Thumbnail/Illustration for the storybook page
+    mapImage?: string;     // The background image for the adventure map
     volumeId?: string;    // The volume (realm) this adventure belongs to
     difficulty: number; // 1-10 scale
     encounters: Encounter[]; // The sequence of nodes for this adventure

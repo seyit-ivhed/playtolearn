@@ -12,6 +12,12 @@ interface FantasyMapProps {
 
 export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, onNodeClick }) => {
     const currentNodeRef = useRef<HTMLDivElement>(null);
+    const mapImageRef = useRef<HTMLImageElement>(null);
+
+    // Reference height based on original design (where nodes were placed)
+    // Looking at current data, nodes go up to y: 3900.
+    // The previous min-height was 4500px.
+    const referenceHeight = 4500;
 
     useEffect(() => {
         // Use a small timeout to ensure the DOM is fully ready and styles are applied
@@ -33,16 +39,21 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
             <AdventureHeader adventureId={adventure.id} adventureTitle={adventure.title || 'Adventure'} />
 
             <div className="map-container">
-                {/* Background decoration */}
-                <div className="map-bg-pattern"></div>
-
-                <svg className="map-svg-full">
-                    {/* Spacer for SVG layers if needed */}
-                </svg>
+                {/* Background image defines the container scale */}
+                <div className="map-bg-pattern">
+                    {adventure.mapImage && (
+                        <img
+                            src={adventure.mapImage}
+                            alt="Map Background"
+                            className="map-bg-image"
+                            ref={mapImageRef}
+                        />
+                    )}
+                </div>
 
                 <div className="map-center-col">
                     <div className="map-col-inner">
-                        <MapPathSVG encounters={encounters} />
+                        <MapPathSVG encounters={encounters} referenceHeight={referenceHeight} />
 
                         {encounters.map((node, index) => (
                             <MapNode
@@ -53,6 +64,7 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
                                 adventureId={adventure.id}
                                 onNodeClick={onNodeClick}
                                 nodeRef={(index + 1) === currentNode ? currentNodeRef : null}
+                                referenceHeight={referenceHeight}
                             />
                         ))}
                     </div>

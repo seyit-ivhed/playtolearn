@@ -11,6 +11,7 @@ interface MapNodeProps {
     adventureId: string;
     onNodeClick: (node: Encounter) => void;
     nodeRef?: React.Ref<HTMLDivElement>;
+    referenceHeight: number;
 }
 
 export const MapNode: React.FC<MapNodeProps> = ({
@@ -19,7 +20,8 @@ export const MapNode: React.FC<MapNodeProps> = ({
     currentNode,
     adventureId,
     onNodeClick,
-    nodeRef
+    nodeRef,
+    referenceHeight
 }) => {
     const { encounterResults } = useGameStore();
     const encounterKey = `${adventureId}_${index + 1}`;
@@ -35,7 +37,9 @@ export const MapNode: React.FC<MapNodeProps> = ({
 
     // Use coordinates from data or fallback
     const leftPos = node.coordinates ? `${(node.coordinates.x / 500) * 100}%` : '50%';
-    const topPos = node.coordinates ? node.coordinates.y : 250 + (index * 200);
+    const topPos = node.coordinates
+        ? `${(node.coordinates.y / referenceHeight) * 100}%`
+        : `${((250 + (index * 200)) / referenceHeight) * 100}%`;
 
     // CSS Classes Construction
     const nodeContainerClasses = [

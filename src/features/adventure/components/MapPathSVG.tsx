@@ -3,11 +3,12 @@ import type { Encounter } from '../../../types/adventure.types';
 
 interface MapPathSVGProps {
     encounters: Encounter[];
+    referenceHeight: number;
 }
 
-export const MapPathSVG: React.FC<MapPathSVGProps> = ({ encounters }) => {
+export const MapPathSVG: React.FC<MapPathSVGProps> = ({ encounters, referenceHeight }) => {
     return (
-        <svg className="map-svg-path" viewBox="-500 0 1500 4500" preserveAspectRatio="xMidYMin slice">
+        <svg className="map-svg-path" viewBox={`-500 0 1500 ${referenceHeight}`} preserveAspectRatio="none">
             {/* Dynamic Path Logic based on encounter coordinates */}
             <path
                 d={encounters.reduce((acc, node, i) => {
