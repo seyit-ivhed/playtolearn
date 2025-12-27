@@ -13,4 +13,4 @@
 >
 > The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 >
-> --ar 9:16 --no text, symbols, grid, icons
+> Try to make it as long as possible.
