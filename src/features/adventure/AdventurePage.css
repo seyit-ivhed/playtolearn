@@ -1,29 +1,4 @@
 /* Main Page Layout */
-.back-to-chronicle {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid #4a3721;
-    color: #4a3721;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 4px-10px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease;
-}
-
-.back-to-chronicle:hover {
-    transform: scale(1.1);
-    background: #4a3721;
-    color: #e9dcc9;
-}
 
 .adventure-page {
 
@@ -58,24 +33,53 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1.5rem 1.5rem 2rem;
-    text-align: center;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     z-index: 90;
-    pointer-events: none;
-    /* Background removed by user, but title needs to be readable */
+    background: rgba(0, 0, 0, 0.65);
+    /* Slate-900 with transparency */
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.header-back-button {
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    z-index: 100;
+}
+
+.header-back-button:hover {
+    transform: scale(1.2);
+}
+
+.header-right-spacer {
+    width: 3rem;
+    /* Same width as button area for centering */
 }
 
 .map-title {
-    font-size: 3rem;
+    font-size: 2.25rem;
+    /* Slightly smaller to fit better in bar */
     font-weight: 900;
     background: linear-gradient(to bottom, #fde047, #ca8a04);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8)) drop-shadow(0 4px 4px rgba(0, 0, 0, 1));
-    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    margin: 0;
     font-family: var(--font-display);
     pointer-events: auto;
+    text-align: center;
+    flex: 1;
 }
 
 

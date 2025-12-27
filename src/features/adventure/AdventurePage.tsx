@@ -97,11 +97,12 @@ const AdventurePage = () => {
 
     return (
         <div className="adventure-page custom-scrollbar">
-            <button className="back-to-chronicle" onClick={() => navigate('/chronicle')} title="Back to Chronicle">
-                📖
-            </button>
             <main className="adventure-content">
-                <AdventureHeader adventureId={adventure.id} adventureTitle={adventure.title || 'Adventure'} />
+                <AdventureHeader
+                    adventureId={adventure.id}
+                    adventureTitle={adventure.title || 'Adventure'}
+                    onBack={() => navigate('/chronicle')}
+                />
 
                 <FantasyMap
                     adventure={adventure}
