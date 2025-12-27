@@ -16,14 +16,12 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
     - Operations: Add, Subtract, Multiply, **Division, Division with Remainder**.
     - **Difficulty**: Levels 1-5 (User selects difficulty based on child's skill level).
 - **Adventure Map**:
-    - **Structure**: Linear path of **9 Encounters** + **1 Boss Fight** per Adventure.
-    - **Camps**: Interaction points after Encounter #3, #6, and #9.
-    - **Encounter Variety**: Mix of Battle Encounters and Untimed Puzzle Encounters.
+    - **Structure**: Linear path of encounters for each Adventure.
+    - **Camps**: Experience distribution points between Encounters
+    - **Encounter Variety**: Mix of Battle and Puzzle Encounters.
 - **Companion Growth**:
     - XP gain and Leveling up.
     - **Evolution**: Companions change form/stats after max level (Paid Tier feature).
-- **The Magical Canvas (Creative Mode)**:
-    - **Free-Form Sticker Book**: Simple drag-and-drop interface.
 
 ### Systems & UI
 - **Party Management**:
@@ -60,15 +58,14 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
     - *Amara* (South American-inspired Ranger) - Starter
     - *Tariq* (Middle-Eastern-inspired Alchemist) - Starter
 - **Adventures (3)**:
-    - **1. The Hidden Oasis**:
-        - Theme: Middle-Eastern Desert/City (Tariq's Home).
+    - **1. The Hidden Entrance**:
+        - Theme: Middle-Eastern Desert entry to an ancient Assyrian ruins.
         - Length: 12 Encounters + 3 camp sites + 1 Boss.
-    - **2. Amara's Expedition**:
-        - Theme: Deeper South American Jungle ruins.
+    - **2. Assyrian Ruins**:
+        - Theme: Ruins of an ancient Assyrian city.
         - Length: 12 Encounters + 3 camp sites + 1 Boss.
 - **Monsters**:
-    - Jungle: Jaguars, Snakes, Stone Guardians.
-    - Desert: Scorpions, Sand Spirits, Bandits.
+    - Desert: Scorpions, Sand Spirits, Bandits, Stone Guardians, Assyrian Guardians, Assyrian Boss.
 
 ---
 
@@ -93,16 +90,3 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 #### Bundle: Both Realms
 - Discounted price for purchasing both The Baobab Plains and The Sakura Highlands together.
 - Complete party of 4 companions (Amara, Tariq, Zahara, Kenji).
-
-## 3. Development Priorities
-
-1.  **Content Pipeline & Free Tier Content** (Top Priority):
-    -   Implement "9+1 Encounters" structure.
-    -   Create data for Amara, Tariq and their themed monsters.
-    -   Tutorial adventure (short scripted flow).
-2.  **Progression System**: Level cap and realm-based unlocks.
-3.  **Encounter & Puzzle Loop**: Polishing gameplay.
-4.  **Canvas**: Basic drag-and-drop.
-5.  **Backend & Analytics**: Cloud save setup.
-6.  **Premium Content (Post-MVP)**: Baobab Plains and Sakura Highlands realm packs.
-
