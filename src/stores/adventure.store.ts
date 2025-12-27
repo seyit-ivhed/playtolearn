@@ -9,6 +9,7 @@ interface AdventureState {
     // Actions
     completeAdventure: (id: AdventureId) => void;
     unlockAdventure: (id: AdventureId) => void;
+    debugUnlockAllAdventures: () => void;
     resetProgress: () => void;
 
     // Computed
@@ -55,6 +56,14 @@ export const useAdventureStore = create<AdventureState>()(
                         [id]: AdventureStatus.AVAILABLE
                     }
                 })),
+
+            debugUnlockAllAdventures: () => {
+                const newStatuses: Record<AdventureId, AdventureStatus> = {};
+                ADVENTURES.forEach(adv => {
+                    newStatuses[adv.id] = AdventureStatus.AVAILABLE;
+                });
+                set({ adventureStatuses: newStatuses });
+            },
 
             resetProgress: () => set({ adventureStatuses: INITIAL_STATUSES }),
 

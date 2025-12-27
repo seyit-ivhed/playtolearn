@@ -57,6 +57,7 @@ export interface ProgressionSlice {
 export interface DebugSlice {
     debugSetMapNode: (node: number) => void;
     debugUnlockAllCompanions: () => void;
+    debugUnlockAllEncounters: () => void;
     debugAddXp: (amount: number) => void;
     debugResetXpPool: () => void;
     debugResetCompanions: () => void;

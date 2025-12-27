@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useGameStore } from '../stores/game/store';
+import { useAdventureStore } from '../stores/adventure.store';
 import { ADVENTURES } from '../data/adventures.data';
 import styles from './DebugConsole.module.css';
 
@@ -20,6 +21,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
         debugResetCompanions,
         debugResetEncounterResults,
         debugUnlockAllCompanions,
+        debugUnlockAllEncounters,
         xpPool,
         companionStats,
         activeAdventureId,
@@ -65,9 +67,10 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
         switch (baseCmd) {
             case 'help':
                 log('Available commands:');
-                log('  unlock          - Unlock all encounters in current adventure');
-                log('  goto <index>    - Jump to a specific encounter (1-indexed)');
-                log('  reset           - Reset progress in current adventure');
+                log('  unlock              - Unlock all adventures and encounters');
+                log('  goto <index>        - Jump to encounter in current adventure');
+                log('  goto <advId> <idx>  - Jump to encounter in specific adventure');
+                log('  reset               - Reset progress in current adventure');
                 log('  xp <amount>     - Add XP to pool');
                 log('  companions      - Unlock all companions');
                 log('  adv <id>        - Set active adventure by ID');
@@ -85,26 +88,51 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                 break;
 
             case 'unlock': {
-                const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
-                if (adventure) {
-                    debugSetMapNode(adventure.encounters.length + 1);
-                    log('All encounters unlocked.');
-                }
+                useAdventureStore.getState().debugUnlockAllAdventures();
+                debugUnlockAllEncounters();
+                log('All adventures and encounters unlocked.');
                 break;
             }
 
             case 'goto': {
-                const targetNode = parseInt(parts[1]);
-                const currentAdventure = ADVENTURES.find(a => a.id === activeAdventureId);
-                if (!isNaN(targetNode) && currentAdventure) {
-                    if (targetNode >= 1 && targetNode <= currentAdventure.encounters.length + 1) {
-                        debugSetMapNode(targetNode);
-                        log(`Jumped to encounter ${targetNode}.`);
+                const arg1 = parts[1];
+                const arg2 = parts[2];
+
+                if (arg2) {
+                    // Usage: goto <adventureId> <encounterIndex>
+                    const advId = arg1;
+                    const targetNode = parseInt(arg2);
+                    const adventure = ADVENTURES.find(a => a.id === advId);
+
+                    if (adventure && !isNaN(targetNode)) {
+                        if (targetNode >= 1 && targetNode <= adventure.encounters.length + 1) {
+                            // Ensure adventure is unlocked
+                            useAdventureStore.getState().unlockAdventure(advId);
+                            setActiveAdventure(advId);
+                            debugSetMapNode(targetNode);
+                            log(`Switched to adventure ${advId} and jumped to encounter ${targetNode}.`);
+                        } else {
+                            log(`Error: Invalid encounter index for adventure ${advId}.`);
+                        }
                     } else {
-                        log(`Error: Invalid encounter index. Must be between 1 and ${currentAdventure.encounters.length + 1}.`);
+                        log(`Error: Adventure ${advId} not found or invalid node.`);
+                    }
+                } else if (arg1) {
+                    // Usage: goto <encounterIndex> (current adventure)
+                    const targetNode = parseInt(arg1);
+                    const currentAdventure = ADVENTURES.find(a => a.id === activeAdventureId);
+                    if (!isNaN(targetNode) && currentAdventure) {
+                        if (targetNode >= 1 && targetNode <= currentAdventure.encounters.length + 1) {
+                            debugSetMapNode(targetNode);
+                            log(`Jumped to encounter ${targetNode} in current adventure.`);
+                        } else {
+                            log(`Error: Invalid encounter index. Must be between 1 and ${currentAdventure.encounters.length + 1}.`);
+                        }
+                    } else {
+                        log('Error: Invalid usage. Usage: goto <index> OR goto <advId> <index>');
                     }
                 } else {
-                    log('Error: Invalid usage. Usage: goto <index>');
+                    log('Error: Missing arguments. Usage: goto <index> OR goto <advId> <index>');
                 }
                 break;
             }

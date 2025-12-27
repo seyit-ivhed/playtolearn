@@ -28,6 +28,14 @@ describe('AdventureStore', () => {
         expect(status).toBe(AdventureStatus.LOCKED);
     });
 
+    it('should unlock all adventures via debug action', () => {
+        useAdventureStore.getState().debugUnlockAllAdventures();
+        const statuses = useAdventureStore.getState().adventureStatuses;
+        ['1', '2', '3', '4', '5'].forEach(id => {
+            expect(statuses[id]).toBe(AdventureStatus.AVAILABLE);
+        });
+    });
+
     it('should complete an adventure and unlock the next one', () => {
         const store = useAdventureStore.getState();
 

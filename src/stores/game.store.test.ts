@@ -140,6 +140,17 @@ describe('useGameStore', () => {
             expect(stats['c1']).toEqual({ level: 1, xp: 0 });
             expect(stats['c2']).toEqual({ level: 1, xp: 0 });
         });
+
+        it('should unlock all encounters via debug action', () => {
+            useGameStore.getState().debugUnlockAllEncounters();
+            const results = useGameStore.getState().encounterResults;
+            // Adventure 1 (3 encounters) + Adventure 2 (1 encounter) = 4 total in mock
+            expect(Object.keys(results).length).toBe(4);
+            expect(results['1_1']).toBeDefined();
+            expect(results['1_1'].stars).toBe(3);
+            expect(results['2_1']).toBeDefined();
+            expect(results['2_1'].stars).toBe(3);
+        });
     });
 
     describe('Party Management', () => {
