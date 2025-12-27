@@ -34,12 +34,13 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    align-items: center;
+    align-items: stretch;
+    /* Change from center to stretch to ensure 100% width */
+    width: 100%;
 }
 
 .illustration-container {
     width: 100%;
-    max-width: 400px;
     height: 250px;
     background: #e9dcc9;
     border-radius: 12px;
@@ -71,7 +72,6 @@
 
 .chapter-details {
     width: 100%;
-    text-align: left;
 }
 
 .story-hook {
@@ -79,6 +79,9 @@
     line-height: 1.6;
     margin-bottom: 1.5rem;
     font-style: italic;
+    text-align: justify !important;
+    /* Force justify */
+    hyphens: auto;
 }
 
 /* Removed .chapter-meta styles */
@@ -151,29 +154,40 @@
     flex: 1;
 }
 
-.nav-btn.circular {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #4a3721;
-    background: transparent;
-    color: #4a3721;
+.nav-btn {
+    width: 48px;
+    height: 48px;
+    border: none !important;
+    /* Override global button border */
+    background: transparent !important;
+    /* Override global button background */
+    box-shadow: none !important;
+    /* Override global button shadow */
+    color: #4a3721 !important;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 1.2rem;
     transition: all 0.2s ease;
+    opacity: 0.8;
+    padding: 0 !important;
+    /* Override global button padding */
+    margin: 0 !important;
+    /* Override global button margin */
 }
 
-.nav-btn.circular:disabled {
-    opacity: 0.2;
+.nav-btn:disabled {
+    opacity: 0.2 !important;
     cursor: default;
+    transform: none !important;
 }
 
-.nav-btn.circular:not(:disabled):hover {
-    background: #4a3721;
-    color: #e9dcc9;
+.nav-btn:not(:disabled):hover {
+    color: #ffa502 !important;
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+    filter: none !important;
+    /* Remove global hover brightness */
 }
 
 .book-btn {

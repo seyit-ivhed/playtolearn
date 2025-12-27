@@ -44,6 +44,11 @@ Buttons should look like physical magical stones or wooden planks.
 - **Shadow:** Deep shadow to give 3D "pushable" feel.
 - **Hover:** Glow effect (Inner shadow or text glow).
 
+#### Navigation Buttons (Chronicle)
+For page navigation in the Chronicle, use clean, icon-only buttons (e.g., Lucide Chevrons) without circular borders or backgrounds to maintain an elegant, book-like feel.
+- **Color:** Inherit theme brown (`#4a3721`) or accent gold (`#ffa502`) on hover.
+- **Interaction:** Subtle scaling and color shift on hover/tap.
+
 ### Cards ("Spell Cards")
 Containers for Companions or Missions.
 - **Background:** Dark semi-transparent purple or Parchment texture.

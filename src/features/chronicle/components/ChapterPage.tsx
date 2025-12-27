@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Adventure } from '../../../types/adventure.types';
 import { AdventureStatus } from '../../../types/adventure.types';
 import './ChapterPage.css';
@@ -92,14 +93,15 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
 
                 <div className="footer-controls">
                     <motion.button
-                        className="nav-btn circular"
+                        className="nav-btn"
                         onClick={onPrev}
                         disabled={!canPrev}
                         whileHover={canPrev ? { scale: 1.1 } : {}}
                         whileTap={canPrev ? { scale: 0.9 } : {}}
                         data-testid="prev-page-btn"
+                        aria-label="Previous Page"
                     >
-                        ◀
+                        <ChevronLeft size={24} />
                     </motion.button>
 
                     <div className="main-action">
@@ -131,14 +133,15 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     </div>
 
                     <motion.button
-                        className="nav-btn circular"
+                        className="nav-btn"
                         onClick={onNext}
                         disabled={!canNext}
                         whileHover={canNext ? { scale: 1.1 } : {}}
                         whileTap={canNext ? { scale: 0.9 } : {}}
                         data-testid="next-page-btn"
+                        aria-label="Next Page"
                     >
-                        ▶
+                        <ChevronRight size={24} />
                     </motion.button>
                 </div>
             </div>
