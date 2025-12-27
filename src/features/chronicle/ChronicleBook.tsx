@@ -7,7 +7,6 @@ import { useAdventureStore } from '../../stores/adventure.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { VOLUMES } from '../../data/volumes.data';
 import { ChapterPage } from './components/ChapterPage';
-import { PageNavigation } from './components/PageNavigation';
 import { TableOfContents } from './components/TableOfContents';
 import './ChronicleBook.css';
 
@@ -109,10 +108,18 @@ export const ChronicleBook: React.FC = () => {
                                 stars={0} // TODO: Get stars from encounterResults
                                 onBegin={handleBegin}
                                 onReplay={handleBegin}
+                                onNext={handleNext}
+                                onPrev={handlePrev}
+                                canNext={currentAdventureIndex < volumeAdventures.length - 1}
+                                canPrev={currentAdventureIndex > 0}
+                                currentPage={currentAdventureIndex + 1}
+                                totalPages={volumeAdventures.length}
                             />
+
                         </motion.div>
                     </AnimatePresence>
                 </div>
+
 
                 {/* TOC Button Overlay */}
                 <button
@@ -123,15 +130,6 @@ export const ChronicleBook: React.FC = () => {
                     {t('chronicle.contents')}
                 </button>
             </div>
-
-            <PageNavigation
-                currentPage={currentAdventureIndex + 1}
-                totalPages={volumeAdventures.length}
-                onPrev={handlePrev}
-                onNext={handleNext}
-                canPrev={currentAdventureIndex > 0}
-                canNext={currentAdventureIndex < volumeAdventures.length - 1}
-            />
 
             {isTocOpen && (
                 <TableOfContents

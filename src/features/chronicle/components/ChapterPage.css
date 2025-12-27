@@ -81,27 +81,7 @@
     font-style: italic;
 }
 
-.chapter-meta {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.meta-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.meta-item .label {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    opacity: 0.6;
-}
-
-.meta-item .value {
-    font-size: 1.2rem;
-    font-weight: 600;
-}
+/* Removed .chapter-meta styles */
 
 .completion-stats {
     display: flex;
@@ -144,14 +124,62 @@
 
 .chapter-footer {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
     margin-top: 2rem;
+    width: 100%;
+}
+
+.page-indicator-small {
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+}
+
+.footer-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.main-action {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.nav-btn.circular {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #4a3721;
+    background: transparent;
+    color: #4a3721;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.nav-btn.circular:disabled {
+    opacity: 0.2;
+    cursor: default;
+}
+
+.nav-btn.circular:not(:disabled):hover {
+    background: #4a3721;
+    color: #e9dcc9;
 }
 
 .book-btn {
-    padding: 1rem 3rem;
+    padding: 0.8rem 2rem;
     font-family: 'Outfit', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     border: none;
     border-radius: 50px;

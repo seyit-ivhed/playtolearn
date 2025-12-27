@@ -11,6 +11,12 @@ interface ChapterPageProps {
     stars: number;
     onBegin: (id: string) => void;
     onReplay: (id: string) => void;
+    onNext: () => void;
+    onPrev: () => void;
+    canNext: boolean;
+    canPrev: boolean;
+    currentPage: number;
+    totalPages: number;
 }
 
 export const ChapterPage: React.FC<ChapterPageProps> = ({
@@ -18,7 +24,13 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     status,
     stars,
     onBegin,
-    onReplay
+    onReplay,
+    onNext,
+    onPrev,
+    canNext,
+    canPrev,
+    currentPage,
+    totalPages
 }) => {
     const { t } = useTranslation();
     const isLocked = status === AdventureStatus.LOCKED;
@@ -59,18 +71,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                         }
                     </p>
 
-                    {!isLocked && (
-                        <div className="chapter-meta">
-                            <div className="meta-item">
-                                <span className="label">{t('chronicle.difficulty')}:</span>
-                                <span className="value">{'⭐'.repeat(adventure.difficulty)}</span>
-                            </div>
-                            <div className="meta-item">
-                                <span className="label">{t('chronicle.encounters')}:</span>
-                                <span className="value">{adventure.encounters.length}</span>
-                            </div>
-                        </div>
-                    )}
 
                     {isCompleted && (
                         <div className="completion-stats">
@@ -86,31 +86,61 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
             </div>
 
             <div className="chapter-footer">
-                {!isLocked ? (
-                    isCompleted ? (
-                        <motion.button
-                            className="book-btn replay-btn"
-                            onClick={() => onReplay(adventure.id)}
-                            data-testid="replay-chapter-btn"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            {t('chronicle.replay_chapter')}
-                        </motion.button>
-                    ) : (
-                        <motion.button
-                            className="book-btn begin-btn"
-                            onClick={() => onBegin(adventure.id)}
-                            data-testid="begin-chapter-btn"
-                            whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            {t('chronicle.begin_chapter')}
-                        </motion.button>
-                    )
-                ) : (
-                    <div className="locked-msg" data-testid="chapter-locked-msg">{t('chronicle.locked')}</div>
-                )}
+                <div className="page-indicator-small" data-testid="page-indicator">
+                    {t('chronicle.page_x_of_y', { current: currentPage, total: totalPages })}
+                </div>
+
+                <div className="footer-controls">
+                    <motion.button
+                        className="nav-btn circular"
+                        onClick={onPrev}
+                        disabled={!canPrev}
+                        whileHover={canPrev ? { scale: 1.1 } : {}}
+                        whileTap={canPrev ? { scale: 0.9 } : {}}
+                        data-testid="prev-page-btn"
+                    >
+                        ◀
+                    </motion.button>
+
+                    <div className="main-action">
+                        {!isLocked ? (
+                            isCompleted ? (
+                                <motion.button
+                                    className="book-btn replay-btn"
+                                    onClick={() => onReplay(adventure.id)}
+                                    data-testid="replay-chapter-btn"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    {t('chronicle.replay_chapter')}
+                                </motion.button>
+                            ) : (
+                                <motion.button
+                                    className="book-btn begin-btn"
+                                    onClick={() => onBegin(adventure.id)}
+                                    data-testid="begin-chapter-btn"
+                                    whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    {t('chronicle.begin_chapter')}
+                                </motion.button>
+                            )
+                        ) : (
+                            <div className="locked-msg" data-testid="chapter-locked-msg">{t('chronicle.locked')}</div>
+                        )}
+                    </div>
+
+                    <motion.button
+                        className="nav-btn circular"
+                        onClick={onNext}
+                        disabled={!canNext}
+                        whileHover={canNext ? { scale: 1.1 } : {}}
+                        whileTap={canNext ? { scale: 0.9 } : {}}
+                        data-testid="next-page-btn"
+                    >
+                        ▶
+                    </motion.button>
+                </div>
             </div>
 
 
