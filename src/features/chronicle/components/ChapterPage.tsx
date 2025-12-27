@@ -87,11 +87,8 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
             </div>
 
             <div className="chapter-footer">
-                <div className="page-indicator-small" data-testid="page-indicator">
-                    {t('chronicle.page_x_of_y', { current: currentPage, total: totalPages })}
-                </div>
-
                 <div className="footer-controls">
+
                     <motion.button
                         className="nav-btn"
                         onClick={onPrev}
@@ -101,7 +98,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                         data-testid="prev-page-btn"
                         aria-label="Previous Page"
                     >
-                        <ChevronLeft size={48} />
+                        <ChevronLeft size={64} />
                     </motion.button>
 
                     <div className="main-action">
@@ -141,8 +138,12 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                         data-testid="next-page-btn"
                         aria-label="Next Page"
                     >
-                        <ChevronRight size={48} />
+                        <ChevronRight size={64} />
                     </motion.button>
+                </div>
+
+                <div className="page-indicator-bottom" data-testid="page-indicator">
+                    {t('chronicle.page_x_of_y', { current: currentPage, total: totalPages })}
                 </div>
             </div>
 
