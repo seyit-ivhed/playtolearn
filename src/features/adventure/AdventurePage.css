@@ -100,8 +100,8 @@
     pointer-events: none;
 }
 
-.map-svg-full,
-.map-svg-path {
+
+.map-svg-full {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -112,8 +112,8 @@
 .map-svg-path {
     position: absolute;
     inset: 0;
-    left: -100%;
-    width: 300%;
+    left: 0;
+    width: 100%;
     height: 100%;
     pointer-events: none;
     fill: none;
@@ -121,6 +121,7 @@
     stroke-width: 8;
     stroke-linecap: round;
     stroke-dasharray: 30 30;
+    z-index: 5;
 }
 
 /* Central Column for Nodes */
