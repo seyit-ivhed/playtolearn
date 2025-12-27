@@ -101,7 +101,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                         data-testid="prev-page-btn"
                         aria-label="Previous Page"
                     >
-                        <ChevronLeft size={24} />
+                        <ChevronLeft size={48} />
                     </motion.button>
 
                     <div className="main-action">
@@ -141,7 +141,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                         data-testid="next-page-btn"
                         aria-label="Next Page"
                     >
-                        <ChevronRight size={24} />
+                        <ChevronRight size={48} />
                     </motion.button>
                 </div>
             </div>
