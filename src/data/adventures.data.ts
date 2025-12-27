@@ -4,6 +4,11 @@ import { MONSTERS } from './monsters.data';
 export const ADVENTURES: Adventure[] = [
     {
         id: '1',
+        title: 'The Hidden Oasis',
+        storyHook: "Tariq's homeland is threatened by mysterious scorpions emerging from the ancient oasis. Help him discover the source of the disturbance and restore peace to the desert.",
+        completionSummary: "You helped Tariq defeat the Sand Colossus and saved the Hidden Oasis! The desert is safe once more, but new adventures await...",
+        illustration: '/assets/illustrations/oasis.webp',
+        volumeId: 'origins',
         difficulty: 1,
         encounters: [
             {

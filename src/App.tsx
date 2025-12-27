@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
+import { ChronicleBook } from './features/chronicle/ChronicleBook';
+
 import CampPage from './features/camp/CampPage';
 import EncounterPage from './features/encounter/EncounterPage';
 import PuzzlePage from './features/encounter/PuzzlePage';
@@ -12,9 +14,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Navigate to="/map" replace />} />
+          <Route path="/" element={<Navigate to="/chronicle" replace />} />
+
+          {/* 0. The Chronicle (Adventure Selection) */}
+          <Route path="/chronicle" element={<ChronicleBook />} />
 
           {/* 1. The Camp (Starting Hub) */}
+
           <Route path="/camp" element={<CampPage />} />
           <Route path="/camp/:nodeId" element={<CampPage />} />
 

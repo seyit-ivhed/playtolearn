@@ -97,7 +97,11 @@ export interface Encounter {
 export interface Adventure {
     id: AdventureId;
     title?: string;
-    description?: string;
+    description?: string; // Short description
+    storyHook?: string;   // Narrative hook for the storybook page
+    completionSummary?: string; // Summary shown after completion
+    illustration?: string; // Thumbnail/Illustration for the storybook page
+    volumeId?: string;    // The volume (realm) this adventure belongs to
     difficulty: number; // 1-10 scale
     encounters: Encounter[]; // The sequence of nodes for this adventure
     requirements?: {
@@ -105,3 +109,16 @@ export interface Adventure {
         previousAdventureId?: AdventureId;
     };
 }
+
+export type VolumeId = string;
+
+export interface Volume {
+    id: VolumeId;
+    title: string;
+    description: string;
+    coverImage?: string;
+    isLocked: boolean;
+    price?: number;
+    adventureIds: AdventureId[];
+}
+

@@ -197,17 +197,23 @@
         }
     },
     "difficulty": {
-        "apprentice": "Apprentice",
-        "scout": "Scout",
-        "adventurer": "Adventurer",
-        "veteran": "Veteran",
-        "master": "Master",
-        "desc_1": "Basic addition (0-10)",
-        "desc_2": "Addition and basic subtraction",
-        "desc_3": "Multiplication and harder arithmetic",
-        "desc_4": "Division and multi-digit numbers",
-        "desc_5": "Complex challenges and remainders",
         "start": "Start",
         "select_title": "Select Math Difficulty"
+    },
+    "chronicle": {
+        "title": "The Chronicle",
+        "subtitle": "Table of Contents",
+        "chapter_prefix": "Chapter",
+        "page_x_of_y": "Page {{current}} of {{total}}",
+        "prev": "◀ Previous",
+        "next": "Next ▶",
+        "contents": "📖 Contents",
+        "begin_chapter": "Begin Chapter",
+        "replay_chapter": "Replay Chapter",
+        "locked": "Locked",
+        "mystery_path": "The path ahead is shrouded in mystery...",
+        "difficulty": "Difficulty",
+        "encounters": "Encounters",
+        "completed": "COMPLETED"
     }
 }

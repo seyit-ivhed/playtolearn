@@ -20,6 +20,11 @@ export interface GameState {
     xpPool: number;
     companionStats: Record<string, { level: number; xp: number }>;
     restedCompanions: string[]; // IDs of companions who are rested
+    // Chronicle (Storybook Navigation)
+    chronicle: {
+        lastViewedVolumeId: string;
+        lastViewedAdventureId: string;
+    };
 }
 
 // Adventure & Encounter Management
@@ -28,7 +33,9 @@ export interface AdventureProgressSlice {
     setEncounterDifficulty: (difficulty: number) => void;
     setActiveAdventure: (adventureId: string) => void;
     resetMap: () => void;
+    updateChroniclePosition: (volumeId: string, adventureId: string) => void;
 }
+
 
 // Party & Companion Management
 export interface PartyManagementSlice {

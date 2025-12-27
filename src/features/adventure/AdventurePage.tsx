@@ -96,7 +96,11 @@ const AdventurePage = () => {
 
     return (
         <div className="adventure-page custom-scrollbar">
+            <button className="back-to-chronicle" onClick={() => navigate('/chronicle')} title="Back to Chronicle">
+                📖
+            </button>
             <main className="adventure-content">
+
                 <FantasyMap
                     adventure={adventure}
                     currentNode={currentMapNode}

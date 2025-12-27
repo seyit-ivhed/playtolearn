@@ -58,4 +58,15 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
     },
 
     resetMap: () => set({ currentMapNode: 1 }),
+
+    updateChroniclePosition: (volumeId, adventureId) => {
+        set((state) => ({
+            chronicle: {
+                ...state.chronicle,
+                lastViewedVolumeId: volumeId,
+                lastViewedAdventureId: adventureId,
+            }
+        }));
+    },
 });
+

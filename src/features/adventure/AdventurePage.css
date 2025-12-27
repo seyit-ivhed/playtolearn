@@ -1,5 +1,32 @@
 /* Main Page Layout */
+.back-to-chronicle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #4a3721;
+    color: #4a3721;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px-10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.back-to-chronicle:hover {
+    transform: scale(1.1);
+    background: #4a3721;
+    color: #e9dcc9;
+}
+
 .adventure-page {
+
     position: relative;
     height: 100%;
     width: 100%;

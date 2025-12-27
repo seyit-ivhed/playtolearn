@@ -209,5 +209,21 @@
         "desc_5": "Komplexa utmaningar och rester",
         "start": "Starta",
         "select_title": "Välj Matte-svårighetsgrad"
+    },
+    "chronicle": {
+        "title": "Krönikan",
+        "subtitle": "Innehållsförteckning",
+        "chapter_prefix": "Kapitel",
+        "page_x_of_y": "Sida {{current}} av {{total}}",
+        "prev": "◀ Föregående",
+        "next": "Nästa ▶",
+        "contents": "📖 Innehåll",
+        "begin_chapter": "Börja Kapitel",
+        "replay_chapter": "Spela om Kapitel",
+        "locked": "Låst",
+        "mystery_path": "Vägen framåt är höljd i dunkel...",
+        "difficulty": "Svårighetsgrad",
+        "encounters": "Utmaningar",
+        "completed": "SLUTFÖRD"
     }
 }
