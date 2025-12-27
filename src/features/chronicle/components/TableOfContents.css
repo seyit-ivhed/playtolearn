@@ -18,14 +18,25 @@
     background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
     width: 100%;
     max-width: 600px;
-    max-height: 80vh;
-    padding: 3rem;
-    border-radius: 4px;
+    max-height: 85vh;
+    border-radius: 8px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 100px rgba(74, 55, 33, 0.1);
     position: relative;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Contain scroll within volumes-list */
     border: 1px solid #d4c4a8;
     color: #4a3721;
+}
+
+.toc-header {
+    padding: 3rem 3rem 1.5rem 3rem;
+    background: #fdf5e6;
+    background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
+    border-bottom: 2px solid rgba(74, 55, 33, 0.1);
+    position: relative;
+    z-index: 20;
 }
 
 .close-toc {
@@ -65,13 +76,16 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     opacity: 0.6;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
 }
 
 .volumes-list {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+    padding: 2rem 3rem 3rem 3rem;
+    overflow-y: auto;
+    flex: 1;
 }
 
 .volume-title {

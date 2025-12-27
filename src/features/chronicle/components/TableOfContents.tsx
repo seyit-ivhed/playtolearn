@@ -25,13 +25,13 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
     return (
         <div className="toc-overlay" data-testid="toc-overlay">
             <div className="toc-container" data-testid="toc-container">
-                <button className="close-toc" onClick={onClose} aria-label="Close Table of Contents" data-testid="close-toc-btn">
-                    <X size={32} />
-                </button>
-                <h1 className="toc-title">{t('chronicle.title')}</h1>
-                <h2 className="toc-subtitle">{t('chronicle.subtitle')}</h2>
-
-
+                <div className="toc-header">
+                    <button className="close-toc" onClick={onClose} aria-label="Close Table of Contents" data-testid="close-toc-btn">
+                        <X size={32} />
+                    </button>
+                    <h1 className="toc-title">{t('chronicle.title')}</h1>
+                    <h2 className="toc-subtitle">{t('chronicle.subtitle')}</h2>
+                </div>
 
                 <div className="volumes-list">
                     {volumes.map(volume => (
