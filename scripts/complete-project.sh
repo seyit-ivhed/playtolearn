@@ -43,7 +43,7 @@ echo -e "${GREEN}Translation keys are synchronized.${NC}\n"
 echo -e "${YELLOW}Step 2: Running full lint check (ESLint + Type Check)...${NC}"
 npm run lint && npm run build
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Lint check or Type check failed. Please fix the errors before proceeding.${NC}"
+    echo -e "${RED}Lint check, Type check or Build failed (errors or warnings found). Please fix them before proceeding.${NC}"
     exit 1
 fi
 
