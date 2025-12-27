@@ -141,12 +141,27 @@
         },
         "sand_colossus": {
             "name": "Sandkoloss"
+        },
+        "scavenger": {
+            "name": "Plundrare"
+        },
+        "bandit_raider": {
+            "name": "Bandit-rövare"
+        },
+        "stone_guardian": {
+            "name": "Stenväktare"
+        },
+        "assyrian_guardian": {
+            "name": "Assyrisk Väktare"
+        },
+        "the_stone_emperor": {
+            "name": "Stenkejsaren"
         }
     },
     "adventures": {
         "1": {
-            "title": "Oasis-uppdraget",
-            "description": "Res genom den självlysande öknen för att nå oasen och avslöja dess hemligheter.",
+            "title": "Den Dolda Ingången",
+            "description": "Tariqs hemby är plågad av märkliga syner nära den stora stenvalvsporten. Djupt i sanden har en uråldrig grottingång avslöjats.",
             "nodes": {
                 "1_1": {
                     "label": "Ökenstrid"
@@ -181,8 +196,40 @@
             }
         },
         "2": {
-            "title": "Djungelexpeditionen",
-            "description": "Utforska de gamla ruinerna djupt inne i djungeln."
+            "title": "Ashurs Ruiner",
+            "description": "Lämna öknens sol bakom dig och stig ner i grottan där den underjordiska staden Ashur väntar.",
+            "nodes": {
+                "2_1": {
+                    "label": "Grottingången"
+                },
+                "2_2": {
+                    "label": "Banditläger"
+                },
+                "2_3": {
+                    "label": "Minnesstenar"
+                },
+                "2_5": {
+                    "label": "Ruinernas Torg"
+                },
+                "2_6": {
+                    "label": "Golemens Pass"
+                },
+                "2_7": {
+                    "label": "Balanserade Pelare"
+                },
+                "2_9": {
+                    "label": "Urgammal Gård"
+                },
+                "2_10": {
+                    "label": "Stjärnkammaren"
+                },
+                "2_11": {
+                    "label": "Tronsalens Portar"
+                },
+                "2_13": {
+                    "label": "Stenkejsaren"
+                }
+            }
         },
         "3": {
             "title": "Viddens hjärta",

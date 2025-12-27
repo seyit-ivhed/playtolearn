@@ -141,12 +141,27 @@
         },
         "sand_colossus": {
             "name": "Sand Colossus"
+        },
+        "scavenger": {
+            "name": "Scavenger"
+        },
+        "bandit_raider": {
+            "name": "Bandit Raider"
+        },
+        "stone_guardian": {
+            "name": "Stone Guardian"
+        },
+        "assyrian_guardian": {
+            "name": "Assyrian Guardian"
+        },
+        "the_stone_emperor": {
+            "name": "The Stone Emperor"
         }
     },
     "adventures": {
         "1": {
-            "title": "The Oasis Quest",
-            "description": "Venture through the Luminescent Desert to reach the Oasis and uncover its secrets.",
+            "title": "The Hidden Entrance",
+            "description": "Tariq's homeland is plagued by strange sightings near the great stone archway. Deep in the sands, an ancient cave entrance has been revealed.",
             "nodes": {
                 "1_1": {
                     "label": "Desert Dust-up"
@@ -181,8 +196,40 @@
             }
         },
         "2": {
-            "title": "The Jungle Expedition",
-            "description": "Explore the ancient ruins deep within the jungle."
+            "title": "The Ruins of Ashur",
+            "description": "Leaving the desert sun behind, you descend into the canyon cave where the vast subterranean city of Ashur awaits.",
+            "nodes": {
+                "2_1": {
+                    "label": "Cave Entrance"
+                },
+                "2_2": {
+                    "label": "Bandit Camp"
+                },
+                "2_3": {
+                    "label": "Memory Stones"
+                },
+                "2_5": {
+                    "label": "Ruined Plaza"
+                },
+                "2_6": {
+                    "label": "The Golem's Pass"
+                },
+                "2_7": {
+                    "label": "Balanced Pillars"
+                },
+                "2_9": {
+                    "label": "Ancient Courtyard"
+                },
+                "2_10": {
+                    "label": "Star Chamber"
+                },
+                "2_11": {
+                    "label": "Throne Room Gates"
+                },
+                "2_13": {
+                    "label": "The Stone Emperor"
+                }
+            }
         },
         "3": {
             "title": "The Void's Heart",
