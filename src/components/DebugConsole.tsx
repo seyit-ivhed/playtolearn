@@ -21,7 +21,6 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
         debugResetCompanions,
         debugResetEncounterResults,
         debugUnlockAllCompanions,
-        debugUnlockAllEncounters,
         xpPool,
         companionStats,
         activeAdventureId,
@@ -67,7 +66,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
         switch (baseCmd) {
             case 'help':
                 log('Available commands:');
-                log('  unlock              - Unlock all adventures and encounters');
+                log('  unlock              - Unlock all adventures');
                 log('  goto <index>        - Jump to encounter in current adventure');
                 log('  goto <advId> <idx>  - Jump to encounter in specific adventure');
                 log('  reset               - Reset progress in current adventure');
@@ -89,8 +88,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
 
             case 'unlock': {
                 useAdventureStore.getState().debugUnlockAllAdventures();
-                debugUnlockAllEncounters();
-                log('All adventures and encounters unlocked.');
+                log('All adventures unlocked.');
                 break;
             }
 
