@@ -79,6 +79,9 @@ export interface PuzzleData extends Required<Pick<PuzzleConfig, 'puzzleType'>> {
     rules?: string[];
     initialLeftWeight?: number;
     initialRightWeight?: number;
+    // Guardian Tribute specific fields
+    guardians?: unknown[]; // Actual type defined in guardian-tribute.ts to avoid circular dependency
+    totalGems?: number;
 }
 
 // Concept: An encounter is a single node on the map

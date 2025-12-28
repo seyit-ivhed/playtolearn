@@ -241,6 +241,22 @@
         "reset": "Återställ",
         "sequence": {
             "instruction": "Koppla ihop stjärnorna i ordning!"
+        },
+        "guardian_tribute": {
+            "title": "Väktarnas Tribut",
+            "desc": "Fördela ädelstenar bland de uråldriga väktarna enligt deras krav.",
+            "total_gems": "Totalt Ädelstenar: {{total}}",
+            "remaining_gems": "Återstår: {{remaining}}",
+            "guardian_number": "Väktare {{number}}",
+            "success": "Väktarna är nöjda! ✨",
+            "constraint": {
+                "exact": "Behöver exakt {{value}} ädelstenar",
+                "multiplier": "Behöver {{multiplier}}× Väktare {{target}}",
+                "addition": "Behöver {{value}} Väktare {{target}}",
+                "range": "Behöver {{min}}-{{max}} ädelstenar",
+                "divisibility": "Behöver multipel av {{value}}",
+                "comparison": "Behöver {{op}} Väktare {{target}}"
+            }
         }
     },
     "difficulty": {

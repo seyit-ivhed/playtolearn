@@ -3,42 +3,244 @@ import { PuzzleType, type PuzzleData } from '../../../types/adventure.types';
 import { getRandomInt } from '../helpers';
 
 /**
- * Generates data for the Guardian Tribute puzzle (Division/Distribution)
- * Players must divide a total amount among a number of guardians.
+ * Constraint types for Guardian Tribute puzzle
  */
-export const generateGuardianTributeData = (difficulty: DifficultyLevel): PuzzleData => {
-    const divisor = 3; // Default to 3 guardians for the theme
-    let quotient = 0;
+export const GuardianConstraintType = {
+    EXACT: 'EXACT',                 // Requires exactly X gems
+    MULTIPLIER: 'MULTIPLIER',       // Requires N× as many gems as another guardian
+    ADDITION: 'ADDITION',           // Requires X more/less gems than another guardian
+    RANGE: 'RANGE',                 // Requires between X and Y gems
+    DIVISIBILITY: 'DIVISIBILITY',   // Requires a multiple of X
+    COMPARISON: 'COMPARISON'        // Requires more/less than another guardian
+} as const;
 
-    // Choose quotient based on difficulty
-    if (difficulty === 1) quotient = getRandomInt(2, 5);
-    else if (difficulty === 2) quotient = getRandomInt(5, 10);
-    else if (difficulty === 3) quotient = getRandomInt(10, 15);
-    else if (difficulty === 4) quotient = getRandomInt(12, 20);
-    else quotient = getRandomInt(15, 30);
+export type GuardianConstraintType = typeof GuardianConstraintType[keyof typeof GuardianConstraintType];
 
-    const targetValue = divisor * quotient;
+export interface GuardianConstraint {
+    type: GuardianConstraintType;
+    value?: number;                 // For EXACT, ADDITION, DIVISIBILITY
+    multiplier?: number;            // For MULTIPLIER (2, 3, etc.)
+    targetGuardian?: number;        // Index of guardian to compare to (0-based)
+    min?: number;                   // For RANGE
+    max?: number;                   // For RANGE
+    operator?: 'greater' | 'less';  // For COMPARISON
+}
 
-    // Generate options including the correct answer and decoys
-    const options: number[] = [quotient];
+export interface GuardianData {
+    constraint: GuardianConstraint;
+    solution: number;
+}
 
-    const decoyCount = 3;
-    while (options.length <= decoyCount) {
-        const decoy = quotient + getRandomInt(-5, 5);
-        if (decoy > 0 && !options.includes(decoy)) {
-            options.push(decoy);
-        }
-    }
+export interface GuardianTributePuzzleData extends PuzzleData {
+    guardians: GuardianData[];
+    totalGems: number;
+}
 
-    // Shuffle options
-    for (let i = options.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [options[i], options[j]] = [options[j], options[i]];
+/**
+ * Generates constraint-based Guardian Tribute puzzle data
+ */
+export const generateGuardianTributeData = (difficulty: DifficultyLevel): GuardianTributePuzzleData => {
+    let guardians: GuardianData[] = [];
+    let totalGems = 0;
+
+    // Determine number of guardians and constraints based on difficulty
+    if (difficulty === 1) {
+        // Difficulty 1: 2 guardians, simple constraints
+        const g1Value = getRandomInt(5, 10);
+        const additionValue = getRandomInt(3, 5);
+        const g2Value = g1Value + additionValue;
+
+        guardians = [
+            {
+                constraint: { type: GuardianConstraintType.EXACT, value: g1Value },
+                solution: g1Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
+                solution: g2Value
+            }
+        ];
+        totalGems = g1Value + g2Value;
+    } else if (difficulty === 2) {
+        // Difficulty 2: 3 guardians, exact + multiplier + addition
+        const g1Value = getRandomInt(6, 10);
+        const g2Value = g1Value * 2;
+        const additionValue = getRandomInt(5, 8);
+        const g3Value = g1Value + additionValue;
+
+        guardians = [
+            {
+                constraint: { type: GuardianConstraintType.EXACT, value: g1Value },
+                solution: g1Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 0 },
+                solution: g2Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
+                solution: g3Value
+            }
+        ];
+        totalGems = g1Value + g2Value + g3Value;
+    } else if (difficulty === 3) {
+        // Difficulty 3: 3 guardians, multiplier + addition + divisibility
+        const divisor = [3, 5][getRandomInt(0, 1)];
+        const g1Value = divisor * getRandomInt(2, 4); // Multiple of divisor
+        const g2Value = g1Value * 3;
+        const additionValue = getRandomInt(10, 15);
+        const g3Value = g1Value + additionValue;
+
+        guardians = [
+            {
+                constraint: { type: GuardianConstraintType.DIVISIBILITY, value: divisor },
+                solution: g1Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 3, targetGuardian: 0 },
+                solution: g2Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
+                solution: g3Value
+            }
+        ];
+        totalGems = g1Value + g2Value + g3Value;
+    } else if (difficulty === 4) {
+        // Difficulty 4: 4 guardians, chained multipliers + addition + comparison
+        const g1Value = getRandomInt(4, 8);
+        const g2Value = g1Value * 2;
+        const g3Value = g2Value * 2;
+        const additionValue = getRandomInt(6, 10);
+        const g4Value = g1Value + additionValue;
+
+        guardians = [
+            {
+                constraint: { type: GuardianConstraintType.COMPARISON, operator: 'less', targetGuardian: 1 },
+                solution: g1Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 0 },
+                solution: g2Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 1 },
+                solution: g3Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
+                solution: g4Value
+            }
+        ];
+        totalGems = g1Value + g2Value + g3Value + g4Value;
+    } else {
+        // Difficulty 5: 4-5 guardians, complex constraints
+        const g1Min = 15;
+        const g1Max = 20;
+        const g1Value = getRandomInt(g1Min, g1Max);
+        const g2Value = g1Value * 3;
+        const divisor = 7;
+        const g3Value = divisor * getRandomInt(3, 5);
+        const additionValue = 15;
+        const g4Value = g3Value + additionValue;
+        const g5Value = Math.floor(g2Value / 2);
+
+        guardians = [
+            {
+                constraint: { type: GuardianConstraintType.RANGE, min: g1Min, max: g1Max },
+                solution: g1Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 3, targetGuardian: 0 },
+                solution: g2Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.DIVISIBILITY, value: divisor },
+                solution: g3Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 2 },
+                solution: g4Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.EXACT, value: g5Value },
+                solution: g5Value
+            }
+        ];
+        totalGems = g1Value + g2Value + g3Value + g4Value + g5Value;
     }
 
     return {
         puzzleType: PuzzleType.GUARDIAN_TRIBUTE,
-        targetValue: targetValue,
-        options: options
+        targetValue: totalGems,
+        options: [], // Not used in new constraint-based system
+        guardians,
+        totalGems
+    };
+};
+
+/**
+ * Validates if a guardian's value satisfies its constraint
+ */
+export const validateGuardianConstraint = (
+    value: number,
+    constraint: GuardianConstraint,
+    guardianValues: number[]
+): boolean => {
+    switch (constraint.type) {
+        case GuardianConstraintType.EXACT:
+            return value === constraint.value;
+
+        case GuardianConstraintType.MULTIPLIER:
+            if (constraint.targetGuardian === undefined || constraint.multiplier === undefined) return false;
+            const targetValue = guardianValues[constraint.targetGuardian];
+            return value === targetValue * constraint.multiplier;
+
+        case GuardianConstraintType.ADDITION:
+            if (constraint.targetGuardian === undefined || constraint.value === undefined) return false;
+            const baseValue = guardianValues[constraint.targetGuardian];
+            return value === baseValue + constraint.value;
+
+        case GuardianConstraintType.RANGE:
+            if (constraint.min === undefined || constraint.max === undefined) return false;
+            return value >= constraint.min && value <= constraint.max;
+
+        case GuardianConstraintType.DIVISIBILITY:
+            if (constraint.value === undefined) return false;
+            return value > 0 && value % constraint.value === 0;
+
+        case GuardianConstraintType.COMPARISON:
+            if (constraint.targetGuardian === undefined || constraint.operator === undefined) return false;
+            const compareValue = guardianValues[constraint.targetGuardian];
+            return constraint.operator === 'greater' ? value > compareValue : value < compareValue;
+
+        default:
+            return false;
+    }
+};
+
+/**
+ * Validates if all constraints are satisfied and all gems are distributed
+ */
+export const validateGuardianTributeSolution = (
+    guardianValues: number[],
+    puzzleData: GuardianTributePuzzleData
+): { isValid: boolean; allConstraintsSatisfied: boolean; allGemsDistributed: boolean } => {
+    // Check if all constraints are satisfied
+    const allConstraintsSatisfied = puzzleData.guardians.every((guardian, index) =>
+        validateGuardianConstraint(guardianValues[index], guardian.constraint, guardianValues)
+    );
+
+    // Check if all gems are distributed
+    const totalDistributed = guardianValues.reduce((sum, val) => sum + val, 0);
+    const allGemsDistributed = totalDistributed === puzzleData.totalGems;
+
+    // Check no negative values
+    const noNegatives = guardianValues.every(val => val >= 0);
+
+    return {
+        isValid: allConstraintsSatisfied && allGemsDistributed && noNegatives,
+        allConstraintsSatisfied,
+        allGemsDistributed
     };
 };

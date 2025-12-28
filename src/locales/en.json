@@ -241,6 +241,22 @@
         "reset": "Reset",
         "sequence": {
             "instruction": "Connect the stars in order!"
+        },
+        "guardian_tribute": {
+            "title": "The Guardian's Tribute",
+            "desc": "Distribute gems among the ancient guardians according to their demands.",
+            "total_gems": "Total Gems: {{total}}",
+            "remaining_gems": "Remaining: {{remaining}}",
+            "guardian_number": "Guardian {{number}}",
+            "success": "The guardians are satisfied! ✨",
+            "constraint": {
+                "exact": "Needs exactly {{value}} gems",
+                "multiplier": "Needs {{multiplier}}× Guardian {{target}}",
+                "addition": "Needs {{value}} Guardian {{target}}",
+                "range": "Needs {{min}}-{{max}} gems",
+                "divisibility": "Needs multiple of {{value}}",
+                "comparison": "Needs {{op}} Guardian {{target}}"
+            }
         }
     },
     "difficulty": {
