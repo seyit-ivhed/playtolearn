@@ -214,8 +214,9 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '0.5rem',
-                    marginBottom: '2rem',
-                    textShadow: '0 0 20px rgba(0,0,0,0.5)'
+                    marginBottom: '3rem', // Increased margin to accommodate absolute message
+                    textShadow: '0 0 20px rgba(0,0,0,0.5)',
+                    position: 'relative' // Anchor for absolute child
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         <span>💎</span>
@@ -223,12 +224,16 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                     </div>
                     {showFeedback && !isSolved && remainingGems > 0 && (
                         <motion.div
-                            initial={{ opacity: 0, y: -10 }}
+                            initial={{ opacity: 0, y: -5 }}
                             animate={{ opacity: 1, y: 0 }}
                             style={{
                                 fontSize: '1.2rem',
                                 color: '#ef4444',
-                                fontWeight: '500'
+                                fontWeight: '500',
+                                position: 'absolute',
+                                bottom: '-2rem', // Place it in the margin space
+                                width: '100%',
+                                textAlign: 'center'
                             }}
                         >
                             {t('encounter.puzzles.guardian_tribute.gems_remaining', 'You still have gems to distribute.')}
