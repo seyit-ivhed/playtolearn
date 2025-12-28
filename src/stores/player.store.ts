@@ -14,6 +14,7 @@ export interface PlayerState {
     setDifficulty: (difficulty: DifficultyLevel) => void;
     setLanguage: (lang: 'en' | 'sv') => void;
     unlockAdventure: (adventureId: number) => void;
+    setCurrentAdventure: (adventureId: number) => void;
     resetProgress: () => void;
 }
 
@@ -36,6 +37,8 @@ export const usePlayerStore = create<PlayerState>()(
                         ? state.unlockedAdventures
                         : [...state.unlockedAdventures, adventureId]
                 })),
+
+            setCurrentAdventure: (currentAdventure) => set({ currentAdventure }),
 
             resetProgress: () => set((state) => ({
                 name: 'Cadet',

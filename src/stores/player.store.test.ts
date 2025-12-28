@@ -12,6 +12,42 @@ describe('Player Store', () => {
         });
     });
 
+    it('should update player name', () => {
+        const store = usePlayerStore.getState();
+        store.setName('New Hero');
+        expect(usePlayerStore.getState().name).toBe('New Hero');
+    });
+
+    it('should update difficulty', () => {
+        const store = usePlayerStore.getState();
+        store.setDifficulty(5);
+        expect(usePlayerStore.getState().difficulty).toBe(5);
+    });
+
+    it('should update language', () => {
+        const store = usePlayerStore.getState();
+        store.setLanguage('sv');
+        expect(usePlayerStore.getState().language).toBe('sv');
+    });
+
+    it('should unlock a new adventure', () => {
+        const store = usePlayerStore.getState();
+        store.unlockAdventure(2);
+        expect(usePlayerStore.getState().unlockedAdventures).toEqual([1, 2]);
+    });
+
+    it('should not duplicate unlocked adventures', () => {
+        const store = usePlayerStore.getState();
+        store.unlockAdventure(1); // Already unlocked in beforeEach
+        expect(usePlayerStore.getState().unlockedAdventures).toEqual([1]);
+    });
+
+    it('should update current adventure', () => {
+        const store = usePlayerStore.getState();
+        store.setCurrentAdventure(3);
+        expect(usePlayerStore.getState().currentAdventure).toBe(3);
+    });
+
     it('should reset progress but keep settings', () => {
         // Set up some non-default state
         usePlayerStore.setState({
