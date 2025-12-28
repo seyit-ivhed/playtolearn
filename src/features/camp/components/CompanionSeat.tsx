@@ -65,6 +65,7 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                     <button
                         className={styles.leaveButton}
                         onClick={() => onRemove(companionId)}
+                        data-testid={`remove-companion-${companionId}`}
                     >
                         ✕
                     </button>
@@ -82,6 +83,7 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                     className={`${styles.levelUpBtn} ${canLevelUp ? styles.canLevelUp : ''}`}
                     disabled={!canLevelUp && (currentStats.level >= 10 || xpPool < (getXpForNextLevel(currentStats.level) - currentStats.xp))}
                     onClick={() => onLevelUp?.(companionId)}
+                    data-testid={`level-up-btn-${companionId}`}
                 >
                     {currentStats.level >= 10 ? 'MAX LVL' : `LEVEL UP (${getXpForNextLevel(currentStats.level) - currentStats.xp} XP)`}
                 </button>
