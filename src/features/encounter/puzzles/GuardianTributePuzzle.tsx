@@ -372,30 +372,30 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
             {/* Offer Button */}
             {!isSolved && (
                 <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: totalDistributed > 0 ? 1.05 : 1 }}
+                    whileTap={{ scale: totalDistributed > 0 ? 0.95 : 1 }}
                     onClick={handleOffer}
-                    disabled={remainingGems > 0}
+                    disabled={totalDistributed === 0}
                     style={{
                         marginTop: '1rem',
                         padding: '1rem 3rem',
                         fontSize: '1.8rem',
                         fontWeight: 'bold',
-                        color: remainingGems > 0 ? '#64748b' : '#fff',
-                        background: remainingGems > 0
+                        color: totalDistributed === 0 ? '#64748b' : '#fff',
+                        background: totalDistributed === 0
                             ? 'rgba(71, 85, 105, 0.4)'
                             : 'linear-gradient(to bottom, #d4af37 0%, #926239 100%)',
                         border: '2px solid rgba(212, 175, 55, 0.5)',
                         borderRadius: '12px',
-                        cursor: remainingGems > 0 ? 'not-allowed' : 'pointer',
-                        boxShadow: remainingGems > 0 ? 'none' : '0 4px 15px rgba(212, 175, 55, 0.3)',
+                        cursor: totalDistributed === 0 ? 'not-allowed' : 'pointer',
+                        boxShadow: totalDistributed === 0 ? 'none' : '0 4px 15px rgba(212, 175, 55, 0.3)',
                         textTransform: 'uppercase',
                         letterSpacing: '0.1em',
                         fontFamily: 'serif',
                         transition: 'all 0.3s'
                     }}
                 >
-                    {t('puzzle.guardian_tribute.offer', 'Offer Tribute')}
+                    {t('encounter.puzzles.guardian_tribute.offer', 'Offer Tribute')}
                 </motion.button>
             )}
 
