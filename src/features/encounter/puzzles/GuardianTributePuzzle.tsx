@@ -150,115 +150,135 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                             animate={isSolved && isSatisfied ? { scale: [1, 1.05, 1], y: [0, -5, 0] } : {}}
                             transition={{ repeat: isSolved ? Infinity : 0, duration: 1.5 }}
                             style={{
-                                background: 'rgba(139, 92, 46, 0.1)',
+                                position: 'relative',
+                                background: `url(${guardianImage})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
                                 border: `3px solid ${isSatisfied ? '#22c55e' : 'rgba(212, 175, 55, 0.3)'}`,
-                                borderRadius: '15px',
-                                padding: '0 1.5rem 1.5rem 1.5rem',
+                                borderRadius: '20px',
+                                overflow: 'hidden',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                alignItems: 'center',
-                                gap: '1rem',
-                                boxShadow: isSatisfied ? '0 0 20px rgba(34, 197, 94, 0.3)' : 'none',
+                                height: '400px',
+                                boxShadow: isSatisfied ? '0 0 30px rgba(34, 197, 94, 0.4)' : '0 10px 30px rgba(0,0,0,0.5)',
                                 transition: 'all 0.3s'
                             }}
                         >
-                            {/* Guardian Icon */}
+                            {/* Overlay for Readability */}
                             <div style={{
-                                width: '100%',
-                                height: '180px',
+                                position: 'absolute',
+                                inset: 0,
+                                background: 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%)',
+                                zIndex: 1
+                            }} />
+
+                            {/* Content Container */}
+                            <div style={{
+                                position: 'relative',
+                                zIndex: 2,
                                 display: 'flex',
+                                flexDirection: 'column',
                                 alignItems: 'center',
-                                justifyContent: 'center',
-                                overflow: 'hidden',
-                                borderRadius: '15px 15px 0 0'
+                                justifyContent: 'space-between',
+                                height: '100%',
+                                padding: '1.5rem',
+                                textAlign: 'center'
                             }}>
-                                <img
-                                    src={guardianImage}
-                                    alt="Guardian Statue"
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover'
-                                    }}
-                                />
-                            </div>
+                                {/* Guardian Number */}
+                                <div style={{
+                                    fontSize: '1.2rem',
+                                    color: '#d4af37',
+                                    fontWeight: 'bold',
+                                    fontFamily: 'serif',
+                                    textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+                                    background: 'rgba(0,0,0,0.4)',
+                                    padding: '0.2rem 1rem',
+                                    borderRadius: '20px',
+                                    border: '1px solid rgba(212, 175, 55, 0.3)'
+                                }}>
+                                    {t('puzzle.guardian_tribute.guardian_number', 'Guardian {{number}}', { number: index + 1 })}
+                                </div>
 
-                            {/* Guardian Number */}
-                            <div style={{
-                                fontSize: '1rem',
-                                color: '#d4af37',
-                                fontWeight: 'bold',
-                                fontFamily: 'serif'
-                            }}>
-                                {t('puzzle.guardian_tribute.guardian_number', 'Guardian {{number}}', { number: index + 1 })}
-                            </div>
-
-                            {/* Constraint Description */}
-                            <div style={{
-                                fontSize: '0.9rem',
-                                color: '#94a3b8',
-                                textAlign: 'center',
-                                minHeight: '2.5rem'
-                            }}>
-                                {getConstraintDescription(guardian.constraint)}
-                            </div>
-
-                            {/* Value Display */}
-                            <div style={{
-                                fontSize: '2.5rem',
-                                fontWeight: 'bold',
-                                color: isSatisfied ? '#22c55e' : '#fbbf24',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0.5rem'
-                            }}>
-                                {value}
-                                {isSatisfied && <span style={{ fontSize: '1.5rem' }}>✓</span>}
-                                {!isSatisfied && value > 0 && <span style={{ fontSize: '1.5rem', color: '#ef4444' }}>✗</span>}
-                            </div>
-
-                            {/* Controls */}
-                            <div style={{
-                                display: 'flex',
-                                gap: '0.5rem',
-                                alignItems: 'center'
-                            }}>
-                                <button
-                                    onClick={() => adjustGuardianValue(index, -1)}
-                                    disabled={isSolved || value === 0}
-                                    style={{
-                                        padding: '0.75rem 1.25rem',
-                                        fontSize: '1.25rem',
+                                <div style={{ width: '100%' }}>
+                                    {/* Constraint Description */}
+                                    <div style={{
+                                        fontSize: '1rem',
+                                        color: '#fff',
+                                        fontWeight: '500',
+                                        marginBottom: '1rem',
+                                        textShadow: '0 2px 4px rgba(0,0,0,1)',
+                                        background: 'rgba(0,0,0,0.6)',
+                                        padding: '0.75rem',
                                         borderRadius: '10px',
-                                        border: '2px solid rgba(212, 175, 55, 0.5)',
-                                        background: 'rgba(139, 92, 46, 0.2)',
-                                        color: '#d4af37',
-                                        cursor: value === 0 || isSolved ? 'not-allowed' : 'pointer',
-                                        opacity: value === 0 || isSolved ? 0.5 : 1,
-                                        transition: 'all 0.2s',
-                                        fontWeight: 'bold'
-                                    }}
-                                >
-                                    -1
-                                </button>
-                                <button
-                                    onClick={() => adjustGuardianValue(index, 1)}
-                                    disabled={isSolved || remainingGems === 0}
-                                    style={{
-                                        padding: '0.75rem 1.25rem',
-                                        fontSize: '1.25rem',
-                                        borderRadius: '10px',
-                                        border: '2px solid rgba(212, 175, 55, 0.5)',
-                                        background: 'rgba(139, 92, 46, 0.2)',
-                                        color: '#d4af37',
-                                        cursor: remainingGems === 0 || isSolved ? 'not-allowed' : 'pointer',
-                                        opacity: remainingGems === 0 || isSolved ? 0.5 : 1,
-                                        transition: 'all 0.2s',
-                                        fontWeight: 'bold'
-                                    }}
-                                >
-                                    +1
-                                </button>
+                                        borderLeft: `4px solid ${isSatisfied ? '#22c55e' : '#d4af37'}`
+                                    }}>
+                                        {getConstraintDescription(guardian.constraint)}
+                                    </div>
+
+                                    {/* Value Display */}
+                                    <div style={{
+                                        fontSize: '3rem',
+                                        fontWeight: 'bold',
+                                        color: isSatisfied ? '#22c55e' : '#fbbf24',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: '0.5rem',
+                                        textShadow: '0 0 20px rgba(0,0,0,0.9)',
+                                        marginBottom: '1rem'
+                                    }}>
+                                        {value}
+                                        {isSatisfied && <span style={{ fontSize: '2rem' }}>✓</span>}
+                                        {!isSatisfied && value > 0 && <span style={{ fontSize: '2rem', color: '#ef4444' }}>✗</span>}
+                                    </div>
+
+                                    {/* Controls */}
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '1rem',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                        <button
+                                            onClick={() => adjustGuardianValue(index, -1)}
+                                            disabled={isSolved || value === 0}
+                                            style={{
+                                                padding: '0.5rem 1.5rem',
+                                                fontSize: '1.5rem',
+                                                borderRadius: '12px',
+                                                border: '2px solid rgba(212, 175, 55, 0.6)',
+                                                background: 'rgba(0, 0, 0, 0.7)',
+                                                color: '#d4af37',
+                                                cursor: value === 0 || isSolved ? 'not-allowed' : 'pointer',
+                                                opacity: value === 0 || isSolved ? 0.5 : 1,
+                                                transition: 'all 0.2s',
+                                                fontWeight: 'bold',
+                                                boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
+                                            }}
+                                        >
+                                            -1
+                                        </button>
+                                        <button
+                                            onClick={() => adjustGuardianValue(index, 1)}
+                                            disabled={isSolved || remainingGems === 0}
+                                            style={{
+                                                padding: '0.5rem 1.5rem',
+                                                fontSize: '1.5rem',
+                                                borderRadius: '12px',
+                                                border: '2px solid rgba(212, 175, 55, 0.6)',
+                                                background: 'rgba(0, 0, 0, 0.7)',
+                                                color: '#d4af37',
+                                                cursor: (remainingGems === 0 || isSolved) ? 'not-allowed' : 'pointer',
+                                                opacity: (remainingGems === 0 || isSolved) ? 0.5 : 1,
+                                                transition: 'all 0.2s',
+                                                fontWeight: 'bold',
+                                                boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
+                                            }}
+                                        >
+                                            +1
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </motion.div>
                     );
