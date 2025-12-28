@@ -248,6 +248,7 @@
             "total_gems": "Totalt Ädelstenar: {{total}}",
             "remaining_gems": "Återstår: {{remaining}}",
             "guardian_number": "Väktare {{number}}",
+            "offer": "Erbjud Tribut",
             "success": "Väktarna är nöjda! ✨",
             "constraint": {
                 "exact": "{{value}}",

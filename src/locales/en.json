@@ -248,6 +248,7 @@
             "total_gems": "Total Gems: {{total}}",
             "remaining_gems": "Remaining: {{remaining}}",
             "guardian_number": "Guardian {{number}}",
+            "offer": "Offer Tribute",
             "success": "The guardians are satisfied! ✨",
             "constraint": {
                 "exact": "{{value}}",

@@ -55,6 +55,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
         new Array(puzzleData.guardians.length).fill(0)
     );
     const [isSolved, setIsSolved] = useState(false);
+    const [showFeedback, setShowFeedback] = useState(false);
 
     // Calculate remaining gems
     const totalDistributed = guardianValues.reduce((sum, val) => sum + val, 0);
@@ -63,6 +64,9 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
     // Handle increment/decrement
     const adjustGuardianValue = (guardianIndex: number, delta: number) => {
         if (isSolved) return;
+
+        // Clear feedback when user starts adjusting again
+        setShowFeedback(false);
 
         setGuardianValues(prev => {
             const newValues = [...prev];
@@ -76,16 +80,20 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
             if (newTotal > puzzleData.totalGems) return prev;
 
             newValues[guardianIndex] = newValue;
-
-            // Check if puzzle is solved
-            const validation = validateGuardianTributeSolution(newValues, puzzleData);
-            if (validation.isValid) {
-                setIsSolved(true);
-                setTimeout(() => onSolve(), 1500);
-            }
-
             return newValues;
         });
+    };
+
+    const handleOffer = () => {
+        if (isSolved) return;
+
+        const validation = validateGuardianTributeSolution(guardianValues, puzzleData);
+        setShowFeedback(true);
+
+        if (validation.isValid) {
+            setIsSolved(true);
+            setTimeout(() => onSolve(), 1500);
+        }
     };
 
     // Format constraint description
@@ -220,6 +228,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 {puzzleData.guardians.map((guardian, index) => {
                     const isSatisfied = isConstraintSatisfied(index);
                     const value = guardianValues[index];
+                    const displayFeedback = showFeedback || isSolved;
 
                     return (
                         <motion.div
@@ -231,13 +240,13 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                 background: `url(${guardianImage})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
-                                border: `3px solid ${isSatisfied ? '#22c55e' : 'rgba(212, 175, 55, 0.3)'}`,
+                                border: `3px solid ${displayFeedback ? (isSatisfied ? '#22c55e' : '#ef4444') : 'rgba(212, 175, 55, 0.3)'}`,
                                 borderRadius: '20px',
                                 overflow: 'hidden',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 height: '400px',
-                                boxShadow: isSatisfied ? '0 0 30px rgba(34, 197, 94, 0.4)' : '0 10px 30px rgba(0,0,0,0.5)',
+                                boxShadow: displayFeedback && isSatisfied ? '0 0 30px rgba(34, 197, 94, 0.4)' : '0 10px 30px rgba(0,0,0,0.5)',
                                 transition: 'all 0.3s'
                             }}
                         >
@@ -278,7 +287,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                         background: 'rgba(0,0,0,0.6)',
                                         padding: '0.75rem',
                                         borderRadius: '10px',
-                                        borderLeft: `4px solid ${isSatisfied ? '#22c55e' : '#d4af37'}`
+                                        borderLeft: `4px solid ${displayFeedback ? (isSatisfied ? '#22c55e' : '#ef4444') : '#d4af37'}`
                                     }}>
                                         {renderConstraint(guardian.constraint)}
                                     </div>
@@ -287,7 +296,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                     <div style={{
                                         fontSize: '3rem',
                                         fontWeight: 'bold',
-                                        color: isSatisfied ? '#22c55e' : '#fbbf24',
+                                        color: displayFeedback ? (isSatisfied ? '#22c55e' : '#ef4444') : '#fbbf24',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
@@ -297,8 +306,8 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                     }}>
                                         <span>💎</span>
                                         {value}
-                                        {isSatisfied && <span style={{ fontSize: '2rem' }}>✓</span>}
-                                        {!isSatisfied && value > 0 && <span style={{ fontSize: '2rem', color: '#ef4444' }}>✗</span>}
+                                        {displayFeedback && isSatisfied && <span style={{ fontSize: '2rem' }}>✓</span>}
+                                        {displayFeedback && !isSatisfied && value > 0 && <span style={{ fontSize: '2rem', color: '#ef4444' }}>✗</span>}
                                     </div>
 
                                     {/* Controls */}
@@ -353,6 +362,36 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                     );
                 })}
             </div>
+
+            {/* Offer Button */}
+            {!isSolved && (
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleOffer}
+                    disabled={remainingGems > 0}
+                    style={{
+                        marginTop: '1rem',
+                        padding: '1rem 3rem',
+                        fontSize: '1.8rem',
+                        fontWeight: 'bold',
+                        color: remainingGems > 0 ? '#64748b' : '#fff',
+                        background: remainingGems > 0
+                            ? 'rgba(71, 85, 105, 0.4)'
+                            : 'linear-gradient(to bottom, #d4af37 0%, #926239 100%)',
+                        border: '2px solid rgba(212, 175, 55, 0.5)',
+                        borderRadius: '12px',
+                        cursor: remainingGems > 0 ? 'not-allowed' : 'pointer',
+                        boxShadow: remainingGems > 0 ? 'none' : '0 4px 15px rgba(212, 175, 55, 0.3)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.1em',
+                        fontFamily: 'serif',
+                        transition: 'all 0.3s'
+                    }}
+                >
+                    {t('puzzle.guardian_tribute.offer', 'Offer Tribute')}
+                </motion.button>
+            )}
 
             {/* Success Message */}
             {isSolved && (
