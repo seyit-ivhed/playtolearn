@@ -37,7 +37,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                     {volumes.map(volume => (
                         <div key={volume.id} className={`volume-section ${volume.isLocked ? 'locked' : ''}`}>
                             <h3 className="volume-title">
-                                {volume.title}
+                                {t(`volumes.${volume.id}.title`, volume.title)}
                                 {volume.isLocked && <span className="lock-tag">🔒 ${volume.price}</span>}
                             </h3>
 

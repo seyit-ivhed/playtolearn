@@ -100,7 +100,7 @@ const CampPage = () => {
             <div className={styles.headerSection}>
                 <h1 className={styles.simpleTitle} data-testid="camp-title">{t('party_camp')}</h1>
                 <div className={styles.xpPoolDisplay}>
-                    <span className={styles.xpLabel}>Shared XP</span>
+                    <span className={styles.xpLabel}>{t('shared_xp')}</span>
                     <span className={styles.xpValue} data-testid="xp-value">{xpPool}</span>
                 </div>
             </div>

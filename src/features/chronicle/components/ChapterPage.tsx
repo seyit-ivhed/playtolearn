@@ -41,7 +41,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
         <div className={`chapter-page ${isLocked ? 'locked' : ''}`} data-testid="chapter-page">
             <div className="chapter-header">
                 <span className="chapter-number">{t('chronicle.chapter_prefix')} {adventure.id}</span>
-                <h2 className="chapter-title" data-testid="chapter-title">{adventure.title || '???'}</h2>
+                <h2 className="chapter-title" data-testid="chapter-title">{t(`adventures.${adventure.id}.title`, adventure.title || '???')}</h2>
             </div>
 
 
@@ -68,7 +68,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     <p className="story-hook">
                         {isLocked
                             ? t('chronicle.mystery_path')
-                            : (adventure.storyHook || adventure.description)
+                            : t(`adventures.${adventure.id}.story_hook`, adventure.storyHook || adventure.description || '')
                         }
                     </p>
 

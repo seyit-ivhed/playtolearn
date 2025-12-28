@@ -10,12 +10,149 @@
         "locked": "Locked",
         "completed": "Completed",
         "rewards": "Rewards",
+        "not_found": "Adventure not found",
         "nodes": {
             "battle": "Battle",
             "puzzle": "Puzzle",
             "camp": "Camp",
             "boss": "Boss"
         }
+    },
+    "adventures": {
+        "1": {
+            "title": "The Hidden Entrance",
+            "description": "An ancient cave revealed by the shifting sands.",
+            "story_hook": "Tariq's homeland is plagued by strange sightings near the great stone archway in the southwest. An ancient cave entrance, long buried by sand, has been revealed.",
+            "completion_summary": "The Sand Colossus is defeated at the mouth of the massive cave. As the dust settles, the dark tunnel beckons you forward. Scavengers are already slipping into the shadows ahead.",
+            "mystery_path": "A mysterious path into the unknown...",
+            "nodes": {
+                "1_1": {
+                    "label": "Scorpion Ambush"
+                },
+                "1_2": {
+                    "label": "Desert Scavengers"
+                },
+                "1_3": {
+                    "label": "Water Flow Puzzle"
+                },
+                "1_5": {
+                    "label": "Scorpion Nest"
+                },
+                "1_6": {
+                    "label": "Bandit Scouts"
+                },
+                "1_7": {
+                    "label": "Weighing Rocks"
+                },
+                "1_9": {
+                    "label": "Echoes of the Sand"
+                },
+                "1_10": {
+                    "label": "Star Map"
+                },
+                "1_11": {
+                    "label": "Guardian Specters"
+                },
+                "1_13": {
+                    "label": "The Sand Colossus"
+                }
+            }
+        },
+        "2": {
+            "title": "The Ruins of Ashur",
+            "description": "A subterranean city overrun by bandits and stone guardians.",
+            "story_hook": "Leaving the desert sun behind, you descend into the cool depths of the canyon cave. The tunnel opens into a vast subterranean city—Ashur. But scavengers have turned the ruins into a bandit camp, and the stones themselves are starting to move.",
+            "completion_summary": "With the Stone Emperor silenced, the heart of Ashur is yours. But the inscriptions on the canyon walls speak of a 'High King' in the distant mountains who still holds the keys to the world's origins...",
+            "mystery_path": "Deep within the ruins, a new shadow grows...",
+            "nodes": {
+                "2_1": {
+                    "label": "Bandit Guards"
+                },
+                "2_2": {
+                    "label": "Ruined Outpost"
+                },
+                "2_3": {
+                    "label": "Water Network"
+                },
+                "2_5": {
+                    "label": "Patrolling Bandits"
+                },
+                "2_6": {
+                    "label": "Awakened Guardian"
+                },
+                "2_7": {
+                    "label": "Symbol Algebra"
+                },
+                "2_9": {
+                    "label": "Guardians of the Hall"
+                },
+                "2_10": {
+                    "label": "The Statues' Tribute"
+                },
+                "2_11": {
+                    "label": "Inner Sanctum Guards"
+                },
+                "2_13": {
+                    "label": "The Stone Emperor"
+                }
+            }
+        }
+    },
+    "chronicle": {
+        "title": "The Chronicle",
+        "contents": "Table of Contents",
+        "chapter_prefix": "Chapter",
+        "mystery_path": "This path remains shrouded in mystery...",
+        "completed": "Completed",
+        "replay_chapter": "Replay Chapter",
+        "begin_chapter": "Begin Adventure",
+        "locked": "Locked",
+        "page_x_of_y": "Adventure {{current}} of {{total}}",
+        "subtitle": "Your Journey Through the Ages"
+    },
+    "volumes": {
+        "origins": {
+            "title": "The World of Origins",
+            "description": "Where the journey begins. Join Amara and Tariq as they face the first challenges of their quest."
+        },
+        "baobab": {
+            "title": "The Baobab Plains",
+            "description": "Explore the vast savannah and ancient kingdoms with Zahara."
+        },
+        "sakura": {
+            "title": "The Sakura Highlands",
+            "description": "Climb the misty mountains and cherry blossom forests with Kenji."
+        }
+    },
+    "shared_xp": "Shared XP",
+    "retreat": "Retreat",
+    "combat": {
+        "completion": {
+            "victory_title": "VICTORY!",
+            "victory_message_1": "Amazing work! The desert stands silent in awe of your power.",
+            "victory_message_2": "Victory! Your math skills are as sharp as a desert sun.",
+            "victory_message_3": "Spectacular! The enemy has been defeated. Onward to more adventures!",
+            "victory_message_4": "Incredible! You handled that with style and wisdom!",
+            "defeat_title": "DEFEAT",
+            "defeat_message": "Your party has fallen...",
+            "continue_button": "Continue"
+        }
+    },
+    "rewards": {
+        "gained": "XP Gained:"
+    },
+    "difficulty": {
+        "start": "Start",
+        "apprentice": "Apprentice",
+        "scout": "Scout",
+        "adventurer": "Adventurer",
+        "veteran": "Veteran",
+        "master": "Master",
+        "desc_1": "Basic addition (0-10)",
+        "desc_2": "Addition and basic subtraction",
+        "desc_3": "Multiplication and harder arithmetic",
+        "desc_4": "Division and multi-digit numbers",
+        "desc_5": "Complex challenges and remainders"
     },
     "encounter": {
         "victory": "Victory!",
@@ -50,6 +187,35 @@
             "spirit": "Spirit",
             "attack": "Attack",
             "shield": "Shield"
+        }
+    },
+    "monsters": {
+        "scorpion_1": {
+            "name": "Desert Scorpion"
+        },
+        "tiny_scorpion": {
+            "name": "Tiny Scorpion"
+        },
+        "scavenger": {
+            "name": "Wasteland Scavenger"
+        },
+        "sand_spirit_1": {
+            "name": "Sand Spirit"
+        },
+        "sand_colossus": {
+            "name": "The Sand Colossus"
+        },
+        "bandit_raider": {
+            "name": "Bandit Raider"
+        },
+        "stone_guardian": {
+            "name": "Stone Guardian"
+        },
+        "assyrian_guardian": {
+            "name": "Assyrian Guardian"
+        },
+        "the_stone_emperor": {
+            "name": "The Stone Emperor"
         }
     }
 }

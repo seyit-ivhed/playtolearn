@@ -2,14 +2,15 @@
     "common": {
         "continue": "Fortsätt"
     },
-    "party_camp": "Partyläger",
+    "party_camp": "Lägerplats",
     "adventure": {
         "title": "Äventyr",
-        "start": "Starta Äventyr",
-        "back": "Tillbaka till Resan",
+        "start": "Starta äventyr",
+        "back": "Tillbaka till resan",
         "locked": "Låst",
-        "completed": "Slutförd",
+        "completed": "Slutfört",
         "rewards": "Belöningar",
+        "not_found": "Äventyr hittades inte",
         "nodes": {
             "battle": "Strid",
             "puzzle": "Pussel",
@@ -17,18 +18,154 @@
             "boss": "Boss"
         }
     },
+    "adventures": {
+        "1": {
+            "title": "Den gömda ingången",
+            "description": "En uråldrig grotta avslöjad av de skiftande sanddynerna.",
+            "story_hook": "Tariqs hemland plågas av märkliga syner nära den stora stenporten i sydväst. En uråldrig grottöppning, länge begravd i sand, har blottats.",
+            "completion_summary": "Sandkolossen är besegrad vid mynningen av den massiva grottan. När dammet lägger sig lockar den mörka tunneln dig framåt.",
+            "mystery_path": "En mystisk väg in i det okända...",
+            "nodes": {
+                "1_1": {
+                    "label": "Skorpionbakhåll"
+                },
+                "1_2": {
+                    "label": "Ökenskräphämtare"
+                },
+                "1_3": {
+                    "label": "Vattenflödespussel"
+                },
+                "1_5": {
+                    "label": "Skorpionernas näste"
+                },
+                "1_6": {
+                    "label": "Banditspanare"
+                },
+                "1_7": {
+                    "label": "Stenvågen"
+                },
+                "1_9": {
+                    "label": "Sandens ekon"
+                },
+                "1_10": {
+                    "label": "Stjärnkarta"
+                },
+                "1_11": {
+                    "label": "Väktarspeglar"
+                },
+                "1_13": {
+                    "label": "Sandkolossen"
+                }
+            }
+        },
+        "2": {
+            "title": "Ashurs ruiner",
+            "description": "En underjordisk stad övertagen av banditer och stenväktare.",
+            "story_hook": "När du lämnar ökensolen bakom dig stiger du ner i de svala djupen av kanjongrottan. Tunneln öppnar sig mot en enorm underjordisk stad — Ashur.",
+            "completion_summary": "Med Stenkejsaren tystad är Ashurs hjärta ditt. Men inskriptionerna på kanjonväggarna talar om en 'Högkonung' i de avlägsna bergen...",
+            "mystery_path": "Djupt inne i ruinerna växer en ny skugga...",
+            "nodes": {
+                "2_1": {
+                    "label": "Banditvakter"
+                },
+                "2_2": {
+                    "label": "Ruinutpost"
+                },
+                "2_3": {
+                    "label": "Vattennätverk"
+                },
+                "2_5": {
+                    "label": "Patrullerande banditer"
+                },
+                "2_6": {
+                    "label": "Uppvaknad väktare"
+                },
+                "2_7": {
+                    "label": "Symbolalgebra"
+                },
+                "2_9": {
+                    "label": "Salens väktare"
+                },
+                "2_10": {
+                    "label": "Statyernas hyllning"
+                },
+                "2_11": {
+                    "label": "Inre helgedomsvakter"
+                },
+                "2_13": {
+                    "label": "Stenkejsaren"
+                }
+            }
+        }
+    },
+    "chronicle": {
+        "title": "Krönikan",
+        "contents": "Innehållsförteckning",
+        "chapter_prefix": "Kapitel",
+        "mystery_path": "Denna väg förblir höljd i dunkel...",
+        "completed": "Slutfört",
+        "replay_chapter": "Spela om kapitel",
+        "begin_chapter": "Börja äventyr",
+        "locked": "Låst",
+        "page_x_of_y": "Äventyr {{current}} av {{total}}",
+        "subtitle": "Din resa genom tidsåldrarna"
+    },
+    "volumes": {
+        "origins": {
+            "title": "Ursprungets värld",
+            "description": "Där resan börjar. Följ med Amara och Tariq när de möter sina första utmaningar."
+        },
+        "baobab": {
+            "title": "Baobabslätterna",
+            "description": "Utforska den vidsträckta savannen och forntida kungadömen med Zahara."
+        },
+        "sakura": {
+            "title": "Sakurahöglandet",
+            "description": "Klättra i dimmiga berg och körsbärsblomsskogar med Kenji."
+        }
+    },
+    "shared_xp": "Delad XP",
+    "retreat": "Retirera",
+    "combat": {
+        "completion": {
+            "victory_title": "SEGER!",
+            "victory_message_1": "Fantastiskt arbete! Öknen tystnar i vördnad för din kraft.",
+            "victory_message_2": "Seger! Dina matematikkunskaper är lika skarpa som ökensolen.",
+            "victory_message_3": "Spektakulärt! Fienden är besegrad. Vidare till fler äventyr!",
+            "victory_message_4": "Otroligt! Du hanterade detta med stil och visdom!",
+            "defeat_title": "NEDERLAG",
+            "defeat_message": "Din grupp har fallit...",
+            "continue_button": "Fortsätt"
+        }
+    },
+    "rewards": {
+        "gained": "XP erhållen:"
+    },
+    "difficulty": {
+        "start": "Börja",
+        "apprentice": "Lärling",
+        "scout": "Spanare",
+        "adventurer": "Äventyrare",
+        "veteran": "Veteran",
+        "master": "Mästare",
+        "desc_1": "Grundläggande addition (0-10)",
+        "desc_2": "Addition och grundläggande subtraktion",
+        "desc_3": "Multiplikation och svårare aritmetik",
+        "desc_4": "Division och flersiffriga tal",
+        "desc_5": "Komplexa utmaningar och rester"
+    },
     "encounter": {
-        "victory": "Sextre!",
+        "victory": "Seger!",
         "defeat": "Nederlag",
-        "rewards": "Stridbelöningar",
-        "xp": "XP Erhållen",
-        "gold": "Guld Hittat",
+        "rewards": "Stridsbelöningar",
+        "xp": "XP vunnet",
+        "gold": "Guld funnet",
         "continue": "Fortsätt",
-        "retry": "Försök Igen",
+        "retry": "Försök igen",
         "puzzles": {
             "guardian_tribute": {
-                "description": "Fördela ädelstenarna bland statyerna",
-                "offer": "Erbjud Tribut",
+                "description": "Fördela ädelstenarna mellan statyerna",
+                "offer": "Ge gåva",
                 "success": "Väktarna är nöjda! ✨",
                 "gems_remaining": "Du har fortfarande ädelstenar att fördela.",
                 "constraint": {
@@ -43,13 +180,42 @@
         }
     },
     "companions": {
-        "unlock": "Ny Följeslagare Upplåst!",
-        "level_up": "Nivå Upp!",
+        "unlock": "Ny följeslagare upplåst!",
+        "level_up": "Nivå upp!",
         "stats": {
             "hp": "HP",
             "spirit": "Ande",
             "attack": "Attack",
             "shield": "Sköld"
+        }
+    },
+    "monsters": {
+        "scorpion_1": {
+            "name": "Ökenskorpion"
+        },
+        "tiny_scorpion": {
+            "name": "Liten skorpion"
+        },
+        "scavenger": {
+            "name": "Ödemarksplundrare"
+        },
+        "sand_spirit_1": {
+            "name": "Sandande"
+        },
+        "sand_colossus": {
+            "name": "Sandkolossen"
+        },
+        "bandit_raider": {
+            "name": "Banditplundrare"
+        },
+        "stone_guardian": {
+            "name": "Stenväktare"
+        },
+        "assyrian_guardian": {
+            "name": "Assyrisk väktare"
+        },
+        "the_stone_emperor": {
+            "name": "Stenkejsaren"
         }
     }
 }

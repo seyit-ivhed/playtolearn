@@ -83,10 +83,10 @@ export const ChronicleBook: React.FC = () => {
 
     const adventureTitles = useMemo(() =>
         ADVENTURES.reduce((acc, a) => {
-            acc[a.id] = a.title || `Adventure ${a.id}`;
+            acc[a.id] = t(`adventures.${a.id}.title`, a.title || `Adventure ${a.id}`);
             return acc;
         }, {} as Record<string, string>)
-        , []);
+        , [t]);
 
     return (
         <div className="chronicle-wrapper" data-testid="chronicle-page">
