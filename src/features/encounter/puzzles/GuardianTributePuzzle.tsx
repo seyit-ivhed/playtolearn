@@ -291,10 +291,11 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        gap: '0.5rem',
+                                        gap: '0.75rem',
                                         textShadow: '0 0 20px rgba(0,0,0,0.9)',
                                         marginBottom: '1rem'
                                     }}>
+                                        <span>💎</span>
                                         {value}
                                         {isSatisfied && <span style={{ fontSize: '2rem' }}>✓</span>}
                                         {!isSatisfied && value > 0 && <span style={{ fontSize: '2rem', color: '#ef4444' }}>✗</span>}
