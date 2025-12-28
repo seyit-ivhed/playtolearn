@@ -6,7 +6,6 @@ import {
     type GuardianTributePuzzleData,
     type GuardianConstraint,
     GuardianConstraintType,
-    validateGuardianConstraint,
     validateGuardianTributeSolution
 } from '../../../utils/math/puzzles/guardian-tribute';
 import guardianImage from '../../../assets/images/puzzles/guardian-statue.png';
@@ -160,13 +159,9 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
         }
     };
 
-    // Check if constraint is satisfied
-    const isConstraintSatisfied = (guardianIndex: number): boolean => {
-        return validateGuardianConstraint(
-            guardianValues[guardianIndex],
-            puzzleData.guardians[guardianIndex].constraint,
-            guardianValues
-        );
+    // Check if statue has the correct amount of gems according to the solution
+    const isStatueCorrect = (guardianIndex: number): boolean => {
+        return guardianValues[guardianIndex] === puzzleData.guardians[guardianIndex].solution;
     };
 
     return (
@@ -232,27 +227,27 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 width: '100%'
             }}>
                 {puzzleData.guardians.map((guardian, index) => {
-                    const isSatisfied = isConstraintSatisfied(index);
+                    const isCorrect = isStatueCorrect(index);
                     const value = guardianValues[index];
                     const displayFeedback = showFeedback || isSolved;
 
                     return (
                         <motion.div
                             key={index}
-                            animate={isSolved && isSatisfied ? { scale: [1, 1.05, 1], y: [0, -5, 0] } : {}}
+                            animate={isSolved && isCorrect ? { scale: [1, 1.05, 1], y: [0, -5, 0] } : {}}
                             transition={{ repeat: isSolved ? Infinity : 0, duration: 1.5 }}
                             style={{
                                 position: 'relative',
                                 background: `url(${guardianImage})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
-                                border: `3px solid ${displayFeedback ? (isSatisfied ? '#22c55e' : '#ef4444') : 'rgba(212, 175, 55, 0.3)'}`,
+                                border: `3px solid ${displayFeedback ? (isCorrect ? '#22c55e' : '#ef4444') : 'rgba(212, 175, 55, 0.3)'}`,
                                 borderRadius: '20px',
                                 overflow: 'hidden',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 height: '400px',
-                                boxShadow: displayFeedback && isSatisfied ? '0 0 30px rgba(34, 197, 94, 0.4)' : '0 10px 30px rgba(0,0,0,0.5)',
+                                boxShadow: displayFeedback && isCorrect ? '0 0 30px rgba(34, 197, 94, 0.4)' : '0 10px 30px rgba(0,0,0,0.5)',
                                 transition: 'all 0.3s'
                             }}
                         >
@@ -293,7 +288,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                         background: 'rgba(0,0,0,0.6)',
                                         padding: '0.75rem',
                                         borderRadius: '10px',
-                                        borderLeft: `4px solid ${displayFeedback ? (isSatisfied ? '#22c55e' : '#ef4444') : '#d4af37'}`
+                                        borderLeft: `4px solid ${displayFeedback ? (isCorrect ? '#22c55e' : '#ef4444') : '#d4af37'}`
                                     }}>
                                         {renderConstraint(guardian.constraint)}
                                     </div>
@@ -302,7 +297,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                     <div style={{
                                         fontSize: '3rem',
                                         fontWeight: 'bold',
-                                        color: displayFeedback ? (isSatisfied ? '#22c55e' : '#ef4444') : '#fbbf24',
+                                        color: displayFeedback ? (isCorrect ? '#22c55e' : '#ef4444') : '#fbbf24',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
@@ -312,8 +307,8 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                     }}>
                                         <span>💎</span>
                                         {value}
-                                        {displayFeedback && isSatisfied && <span style={{ fontSize: '2rem' }}>✓</span>}
-                                        {displayFeedback && !isSatisfied && value > 0 && <span style={{ fontSize: '2rem', color: '#ef4444' }}>✗</span>}
+                                        {displayFeedback && isCorrect && <span style={{ fontSize: '2rem' }}>✓</span>}
+                                        {displayFeedback && !isCorrect && value > 0 && <span style={{ fontSize: '2rem', color: '#ef4444' }}>✗</span>}
                                     </div>
 
                                     {/* Controls */}
