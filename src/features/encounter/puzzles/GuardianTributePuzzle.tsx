@@ -9,6 +9,7 @@ import {
     validateGuardianConstraint,
     validateGuardianTributeSolution
 } from '../../../utils/math/puzzles/guardian-tribute';
+import guardianImage from '../../../assets/images/puzzles/guardian-statue.png';
 
 interface GuardianTributePuzzleProps {
     data: PuzzleData;
@@ -152,7 +153,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                 background: 'rgba(139, 92, 46, 0.1)',
                                 border: `3px solid ${isSatisfied ? '#22c55e' : 'rgba(212, 175, 55, 0.3)'}`,
                                 borderRadius: '15px',
-                                padding: '1.5rem',
+                                padding: '0 1.5rem 1.5rem 1.5rem',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
@@ -162,7 +163,25 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                             }}
                         >
                             {/* Guardian Icon */}
-                            <div style={{ fontSize: '4rem' }}>🗿</div>
+                            <div style={{
+                                width: '100%',
+                                height: '180px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                overflow: 'hidden',
+                                borderRadius: '15px 15px 0 0'
+                            }}>
+                                <img
+                                    src={guardianImage}
+                                    alt="Guardian Statue"
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover'
+                                    }}
+                                />
+                            </div>
 
                             {/* Guardian Number */}
                             <div style={{
