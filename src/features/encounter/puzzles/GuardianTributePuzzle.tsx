@@ -18,6 +18,34 @@ interface GuardianTributePuzzleProps {
 
 const GUARDIAN_SYMBOLS = ['ᛗ', 'ᛟ', 'ᚦ', 'ᛒ', 'ᚠ'];
 
+const GuardianSymbolBadge = ({ symbol, size = '3.5rem', boxSize = '80px', style = {} }: {
+    symbol: string,
+    size?: string,
+    boxSize?: string,
+    style?: React.CSSProperties
+}) => (
+    <div style={{
+        fontSize: size,
+        color: '#d4af37',
+        fontWeight: 'bold',
+        fontFamily: 'serif',
+        textShadow: '0 4px 8px rgba(0,0,0,0.9)',
+        background: 'rgba(0,0,0,0.6)',
+        width: boxSize,
+        height: boxSize,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        border: '2px solid rgba(212, 175, 55, 0.4)',
+        boxShadow: 'inset 0 0 15px rgba(212, 175, 55, 0.2)',
+        lineHeight: '1',
+        ...style
+    }}>
+        {symbol}
+    </div>
+);
+
 export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzleProps) => {
     const { t } = useTranslation();
     const puzzleData = data as GuardianTributePuzzleData;
@@ -61,42 +89,71 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
     };
 
     // Format constraint description
-    const getConstraintDescription = (constraint: GuardianConstraint): string => {
+    const renderConstraint = (constraint: GuardianConstraint) => {
+        const targetSymbol = GUARDIAN_SYMBOLS[constraint.targetGuardian ?? 0];
+        const Badge = (
+            <GuardianSymbolBadge
+                symbol={targetSymbol}
+                boxSize="40px"
+                size="1.5rem"
+                style={{ verticalAlign: 'middle', margin: '0 0.25rem' }}
+            />
+        );
+
         switch (constraint.type) {
             case GuardianConstraintType.EXACT:
-                return t('puzzle.guardian_tribute.constraint.exact', '{{value}} 💎', { value: constraint.value });
+                return (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '1.8rem' }}>{constraint.value}</span>
+                        <span style={{ fontSize: '1.5rem' }}>💎</span>
+                    </div>
+                );
 
             case GuardianConstraintType.MULTIPLIER:
-                return t('puzzle.guardian_tribute.constraint.multiplier', '{{multiplier}}× {{target}}', {
-                    multiplier: constraint.multiplier,
-                    target: GUARDIAN_SYMBOLS[(constraint.targetGuardian ?? 0)]
-                });
+                return (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                        <span style={{ fontSize: '1.5rem' }}>{constraint.multiplier}×</span>
+                        {Badge}
+                    </div>
+                );
 
             case GuardianConstraintType.ADDITION:
                 const sign = (constraint.value ?? 0) >= 0 ? '+' : '';
-                return t('puzzle.guardian_tribute.constraint.addition', '{{value}} {{target}}', {
-                    value: `${sign}${constraint.value ?? 0}`,
-                    target: GUARDIAN_SYMBOLS[(constraint.targetGuardian ?? 0)]
-                });
+                return (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                        <span style={{ fontSize: '1.5rem' }}>{sign}{constraint.value}</span>
+                        {Badge}
+                    </div>
+                );
 
             case GuardianConstraintType.RANGE:
-                return t('puzzle.guardian_tribute.constraint.range', '{{min}}-{{max}} 💎', {
-                    min: constraint.min,
-                    max: constraint.max
-                });
+                return (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '1.5rem' }}>{constraint.min}-{constraint.max}</span>
+                        <span style={{ fontSize: '1.2rem' }}>💎</span>
+                    </div>
+                );
 
             case GuardianConstraintType.DIVISIBILITY:
-                return t('puzzle.guardian_tribute.constraint.divisibility', 'Multiple of {{value}} 💎', { value: constraint.value });
+                return (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                        <span>{t('puzzle.guardian_tribute.constraint.divisibility_prefix', 'Multiple of')}</span>
+                        <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{constraint.value}</span>
+                        <span style={{ fontSize: '1.2rem' }}>💎</span>
+                    </div>
+                );
 
             case GuardianConstraintType.COMPARISON:
                 const op = constraint.operator === 'greater' ? '>' : '<';
-                return t('puzzle.guardian_tribute.constraint.comparison', '{{op}} {{target}}', {
-                    op,
-                    target: GUARDIAN_SYMBOLS[(constraint.targetGuardian ?? 0)]
-                });
+                return (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                        <span style={{ fontSize: '1.8rem', fontWeight: 'bold' }}>{op}</span>
+                        {Badge}
+                    </div>
+                );
 
             default:
-                return '';
+                return null;
         }
     };
 
@@ -186,27 +243,11 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                 padding: '1.5rem',
                                 textAlign: 'center'
                             }}>
-                                {/* Guardian Symbol */}
-                                <div style={{
-                                    fontSize: '3.5rem',
-                                    color: '#d4af37',
-                                    fontWeight: 'bold',
-                                    fontFamily: 'serif',
-                                    textShadow: '0 4px 8px rgba(0,0,0,0.9)',
-                                    background: 'rgba(0,0,0,0.6)',
-                                    width: '80px',
-                                    height: '80px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    borderRadius: '50%',
-                                    border: '2px solid rgba(212, 175, 55, 0.4)',
-                                    boxShadow: 'inset 0 0 15px rgba(212, 175, 55, 0.2)',
-                                    marginTop: '-1rem', // Move higher
-                                    lineHeight: '1' // Better vertical centering
-                                }}>
-                                    {GUARDIAN_SYMBOLS[index]}
-                                </div>
+                                {/* Guardian Symbol Badge */}
+                                <GuardianSymbolBadge
+                                    symbol={GUARDIAN_SYMBOLS[index]}
+                                    style={{ marginTop: '-1rem' }}
+                                />
 
                                 <div style={{ width: '100%' }}>
                                     {/* Constraint Description */}
@@ -221,7 +262,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                         borderRadius: '10px',
                                         borderLeft: `4px solid ${isSatisfied ? '#22c55e' : '#d4af37'}`
                                     }}>
-                                        {getConstraintDescription(guardian.constraint)}
+                                        {renderConstraint(guardian.constraint)}
                                     </div>
 
                                     {/* Value Display */}
