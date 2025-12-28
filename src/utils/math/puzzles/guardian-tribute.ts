@@ -176,29 +176,33 @@ export const validateGuardianConstraint = (
         case GuardianConstraintType.EXACT:
             return value === constraint.value;
 
-        case GuardianConstraintType.MULTIPLIER:
+        case GuardianConstraintType.MULTIPLIER: {
             if (constraint.targetGuardian === undefined || constraint.multiplier === undefined) return false;
             const targetValue = guardianValues[constraint.targetGuardian];
             return value === targetValue * constraint.multiplier;
+        }
 
-        case GuardianConstraintType.ADDITION:
+        case GuardianConstraintType.ADDITION: {
             if (constraint.targetGuardian === undefined || constraint.value === undefined) return false;
             const baseValue = guardianValues[constraint.targetGuardian];
             return value === baseValue + constraint.value;
+        }
 
         case GuardianConstraintType.RANGE:
             if (constraint.min === undefined || constraint.max === undefined) return false;
             return value >= constraint.min && value <= constraint.max;
 
-        case GuardianConstraintType.HALVE:
+        case GuardianConstraintType.HALVE: {
             if (constraint.targetGuardian === undefined) return false;
             const sourceValue = guardianValues[constraint.targetGuardian];
             return value === sourceValue / 2;
+        }
 
-        case GuardianConstraintType.COMPARISON:
+        case GuardianConstraintType.COMPARISON: {
             if (constraint.targetGuardian === undefined || constraint.operator === undefined) return false;
             const compareValue = guardianValues[constraint.targetGuardian];
             return constraint.operator === 'greater' ? value > compareValue : value < compareValue;
+        }
 
         default:
             return false;

@@ -123,7 +123,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                     </div>
                 );
 
-            case GuardianConstraintType.ADDITION:
+            case GuardianConstraintType.ADDITION: {
                 const sign = (constraint.value ?? 0) >= 0 ? '+' : '';
                 return (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
@@ -131,6 +131,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                         <span style={{ fontSize: '1.5rem' }}>{sign}{constraint.value}</span>
                     </div>
                 );
+            }
 
             case GuardianConstraintType.RANGE:
                 return (
@@ -145,7 +146,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                         {Badge}
                     </div>
                 );
-            case GuardianConstraintType.COMPARISON:
+            case GuardianConstraintType.COMPARISON: {
                 const op = constraint.operator === 'greater' ? '>' : '<';
                 return (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
@@ -153,6 +154,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                         {Badge}
                     </div>
                 );
+            }
 
             default:
                 return null;
