@@ -1,292 +1,49 @@
 {
-    "common": {
-        "continue": "Continue"
-    },
-    "app_title": "Math Quest Adventures",
-    "subtitle": "Master math to explore the realms!",
-    "start_adventure": "Start Adventure",
-    "party_camp": "Camp",
-    "adventure_map": "Adventure Map",
-    "back_to_home": "Back to Home",
-    "empty_slot": "Empty Slot",
-    "combat_simulation": "Battle",
-    "retreat": "Retreat",
-    "remainder_text": "remainder",
-    "combat": {
-        "action": {
-            "attack": "Attack",
-            "defend": "Defend",
-            "heal": "Heal",
-            "special": "Special",
-            "attack_tooltip": "Attack (Cost: {{cost}})",
-            "defend_tooltip": "Defend (Cost: {{cost}})",
-            "heal_tooltip": "Heal (Cost: {{cost}})",
-            "special_tooltip": "Special (Cost: {{cost}})"
-        },
-        "victory": {
-            "title": "Victory! 🎉",
-            "message": "You defeated the {{monsterName}}!",
-            "collect_rewards": "Collect Rewards"
-        },
-        "defeat": {
-            "title": "Defeat 💥",
-            "message": "Your party was defeated!",
-            "retry": "Retry",
-            "return": "Return to Adventures"
-        },
-        "math": {
-            "title": "Solve to Act!",
-            "recharge_prompt": "Recharge",
-            "submit_answer": "Cast Spell"
-        },
-        "encounter": {
-            "victory_alert": "Victory! Returning to Map...",
-            "defeat_alert": "Defeat! Retreating to Camp...",
-            "vs": "VS",
-            "spirit_meter": "Party Spirit {{amount}}%",
-            "unleash_ultimate": "✨ UNLEASH ULTIMATE ✨",
-            "click_to_activate": "Click to Activate Ultimate!",
-            "spirit_tooltip": "{{amount}}% Spirit",
-            "ultimate_casting": "ULTIMATE CASTING!",
-            "solve_to_unleash": "Solve correctly to UNLEASH POWER!"
-        },
-        "completion": {
-            "victory_title": "VICTORY!",
-            "victory_message": "The enemy has been defeated!",
-            "victory_message_1": "Amazing work! The desert stands silent in awe of your power.",
-            "victory_message_2": "Victory! Your math skills are as sharp as a desert sun.",
-            "victory_message_3": "Spectacular! The enemy has been defeated. Onward to more adventures!",
-            "victory_message_4": "Incredible! You handled that with style and wisdom!",
-            "defeat_title": "DEFEAT",
-            "defeat_message": "Your party has fallen...",
-            "continue_button": "Continue"
-        },
-        "unit_card": {
-            "hp": "HP",
-            "ability": "Ability",
-            "shield": "Shield",
-            "ultimate_ready": "ULTIMATE READY!"
-        },
-        "turn": {
-            "player": "Your Turn",
-            "enemy": "Enemy Turn"
-        }
-    },
-    "rewards": {
-        "gained": "XP Gained:"
-    },
-    "party": {
-        "title": "Party Management",
-        "select_companion": "Select Companion for {{slot}}",
-        "available_companions": "Available Companions",
-        "cancel_selection": "Cancel Selection",
-        "empty_roster": "No unassigned companions available",
-        "empty_hint": "Complete adventures to recruit new companions!",
-        "select_companion_hint": "Select a companion",
-        "stats": {
-            "health": "Health",
-            "energy": "Energy",
-            "attack": "Attack"
-        }
-    },
-    "companions": {
-        "add": "Add to Party",
-        "remove": "Remove",
-        "locked": "Locked",
-        "unlock_requirement": "Complete adventures to unlock",
-        "amara": {
-            "name": "Amara",
-            "description": "Swift as the jaguar, silent as the wind.",
-            "special_ability_name": "Jaguar Strike",
-            "special_ability_description": "Deals {{value}} damage to a single enemy."
-        },
-        "tariq": {
-            "name": "Tariq",
-            "description": "Every problem has a potion.",
-            "special_ability_name": "Elixir of Life",
-            "special_ability_description": "Heals all allies for {{value}} health."
-        }
-    },
     "adventure": {
-        "not_found": "Adventure not found",
-        "target_monster": "Target Monster",
-        "rewards": "Adventure Rewards",
-        "no_rewards": "No rewards listed",
-        "cancel": "Cancel",
+        "title": "Adventures",
         "start": "Start Adventure",
+        "back": "Back to Journey",
+        "locked": "Locked",
+        "completed": "Completed",
+        "rewards": "Rewards",
         "nodes": {
-            "start": "Start",
-            "forest": "Forest",
+            "battle": "Battle",
+            "puzzle": "Puzzle",
             "camp": "Camp",
-            "various": "Various Locations",
-            "cave": "Cave",
             "boss": "Boss"
         }
     },
-    "monsters": {
-        "scorpion_1": {
-            "name": "Dune Scorpion"
-        },
-        "tiny_scorpion": {
-            "name": "Tiny Scorpion"
-        },
-        "scorpion_raider": {
-            "name": "Scorpion Raider"
-        },
-        "sand_spirit_1": {
-            "name": "Sand Spirit"
-        },
-        "puzzle_mock_1": {
-            "name": "Arithmetic Lock"
-        },
-        "sand_colossus": {
-            "name": "Sand Colossus"
-        },
-        "scavenger": {
-            "name": "Scavenger"
-        },
-        "bandit_raider": {
-            "name": "Bandit Raider"
-        },
-        "stone_guardian": {
-            "name": "Stone Guardian"
-        },
-        "assyrian_guardian": {
-            "name": "Assyrian Guardian"
-        },
-        "the_stone_emperor": {
-            "name": "The Stone Emperor"
-        }
-    },
-    "adventures": {
-        "1": {
-            "title": "The Hidden Entrance",
-            "description": "Tariq's homeland is plagued by strange sightings near the great stone archway. Deep in the sands, an ancient cave entrance has been revealed.",
-            "nodes": {
-                "1_1": {
-                    "label": "Desert Dust-up"
-                },
-                "1_2": {
-                    "label": "Swarm Attack"
-                },
-                "1_3": {
-                    "label": "Water Flow"
-                },
-                "1_5": {
-                    "label": "Sand Raiders"
-                },
-                "1_6": {
-                    "label": "Desert Ambush"
-                },
-                "1_7": {
-                    "label": "Weighing Rocks"
-                },
-                "1_9": {
-                    "label": "Mirages"
-                },
-                "1_10": {
-                    "label": "Star Map"
-                },
-                "1_11": {
-                    "label": "Ancient Guardians"
-                },
-                "1_13": {
-                    "label": "The Sand Colossus"
+    "encounter": {
+        "victory": "Victory!",
+        "defeat": "Defeat",
+        "rewards": "Combat Rewards",
+        "xp": "XP Gained",
+        "gold": "Gold Found",
+        "continue": "Continue",
+        "retry": "Try Again",
+        "puzzles": {
+            "guardian_tribute": {
+                "description": "Distribute the gems among the statues",
+                "offer": "Offer Tribute",
+                "constraint": {
+                    "exact": "{{value}}",
+                    "multiplier": "{{multiplier}}× {{target}}",
+                    "addition": "{{symbol}} {{operator}} {{value}}",
+                    "range": "Between {{min}} and {{max}}",
+                    "halve": "Half of {{symbol}}",
+                    "comparison": "{{operator}} than {{symbol}}"
                 }
             }
-        },
-        "2": {
-            "title": "The Ruins of Ashur",
-            "description": "Leaving the desert sun behind, you descend into the canyon cave where the vast subterranean city of Ashur awaits.",
-            "nodes": {
-                "2_1": {
-                    "label": "Cave Entrance"
-                },
-                "2_2": {
-                    "label": "Bandit Camp"
-                },
-                "2_3": {
-                    "label": "Memory Stones"
-                },
-                "2_5": {
-                    "label": "Ruined Plaza"
-                },
-                "2_6": {
-                    "label": "The Golem's Pass"
-                },
-                "2_7": {
-                    "label": "Balanced Pillars"
-                },
-                "2_9": {
-                    "label": "Ancient Courtyard"
-                },
-                "2_10": {
-                    "label": "Guardian's Tribute"
-                },
-                "2_11": {
-                    "label": "Throne Room Gates"
-                },
-                "2_13": {
-                    "label": "The Stone Emperor"
-                }
-            }
-        },
-        "3": {
-            "title": "The Void's Heart",
-            "description": "Face the source of the darkness."
         }
     },
-    "puzzle": {
-        "target": "Target",
-        "reset": "Reset",
-        "sequence": {
-            "instruction": "Connect the stars in order!"
-        },
-        "guardian_tribute": {
-            "title": "The Guardian's Tribute",
-            "desc": "Distribute the gems among the statues",
-            "total_gems": "Total Gems: {{total}}",
-            "remaining_gems": "Remaining: {{remaining}}",
-            "guardian_number": "Guardian {{number}}",
-            "offer": "Offer Tribute",
-            "success": "The guardians are satisfied! ✨",
-            "constraint": {
-                "exact": "{{value}}",
-                "multiplier": "{{multiplier}}× {{target}}",
-                "addition": "{{value}} {{target}}",
-                "range": "{{min}}-{{max}}",
-                "comparison": "{{op}} {{target}}"
-            }
+    "companions": {
+        "unlock": "New Companion Unlocked!",
+        "level_up": "Level Up!",
+        "stats": {
+            "hp": "HP",
+            "spirit": "Spirit",
+            "attack": "Attack",
+            "shield": "Shield"
         }
-    },
-    "difficulty": {
-        "apprentice": "Apprentice",
-        "scout": "Scout",
-        "adventurer": "Adventurer",
-        "veteran": "Veteran",
-        "master": "Master",
-        "desc_1": "Basic addition (0-10)",
-        "desc_2": "Addition and basic subtraction",
-        "desc_3": "Multiplication and harder arithmetic",
-        "desc_4": "Division and multi-digit numbers",
-        "desc_5": "Complex challenges and remainders",
-        "start": "Start",
-        "select_title": "Select Math Difficulty"
-    },
-    "chronicle": {
-        "title": "The Chronicle",
-        "subtitle": "Table of Contents",
-        "chapter_prefix": "Chapter",
-        "page_x_of_y": "Page {{current}} of {{total}}",
-        "prev": "◀ Previous",
-        "next": "Next ▶",
-        "contents": "📖 Contents",
-        "begin_chapter": "Begin Chapter",
-        "replay_chapter": "Replay Chapter",
-        "locked": "Locked",
-        "mystery_path": "The path ahead is shrouded in mystery...",
-        "difficulty": "Difficulty",
-        "encounters": "Encounters",
-        "completed": "COMPLETED"
     }
 }

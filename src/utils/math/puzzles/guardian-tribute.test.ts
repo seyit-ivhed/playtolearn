@@ -47,12 +47,16 @@ describe('Guardian Tribute Puzzle', () => {
             }
         });
 
-        it('should never exceed 50 total gems', () => {
+        it('should never exceed 50 total gems and respect age-appropriate ranges', () => {
             for (let difficulty = 1; difficulty <= 5; difficulty++) {
-                // Check 100 times for each difficulty to be sure
-                for (let i = 0; i < 100; i++) {
+                // Check 200 times for each difficulty to be sure
+                for (let i = 0; i < 200; i++) {
                     const data = generateGuardianTributeData(difficulty as 1 | 2 | 3 | 4 | 5);
                     expect(data.totalGems).toBeLessThanOrEqual(50);
+
+                    if (difficulty === 1) {
+                        expect(data.totalGems).toBeLessThanOrEqual(20);
+                    }
                 }
             }
         });
@@ -122,7 +126,16 @@ describe('Guardian Tribute Puzzle', () => {
             expect(validateGuardianConstraint(21, constraint, [])).toBe(false);
         });
 
-
+        it('should validate HALVE constraint correctly', () => {
+            const constraint: GuardianConstraint = {
+                type: GuardianConstraintType.HALVE,
+                targetGuardian: 0
+            };
+            const guardianValues = [10, 5, 15];
+            expect(validateGuardianConstraint(5, constraint, guardianValues)).toBe(true);
+            expect(validateGuardianConstraint(10, constraint, guardianValues)).toBe(false);
+            expect(validateGuardianConstraint(4, constraint, guardianValues)).toBe(false);
+        });
 
         it('should validate COMPARISON constraint correctly', () => {
             const greaterConstraint: GuardianConstraint = {

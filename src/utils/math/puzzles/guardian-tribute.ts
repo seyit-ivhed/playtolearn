@@ -10,6 +10,7 @@ export const GuardianConstraintType = {
     MULTIPLIER: 'MULTIPLIER',       // Requires N× as many gems as another guardian
     ADDITION: 'ADDITION',           // Requires X more/less gems than another guardian
     RANGE: 'RANGE',                 // Requires between X and Y gems
+    HALVE: 'HALVE',                 // Requires half as many gems as another guardian
     COMPARISON: 'COMPARISON'        // Requires more/less than another guardian
 } as const;
 
@@ -44,9 +45,10 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
 
     // Determine number of guardians and constraints based on difficulty
     if (difficulty === 1) {
-        // Difficulty 1: 2 guardians, simple constraints
-        const g1Value = getRandomInt(5, 10);
-        const additionValue = getRandomInt(3, 5);
+        // Level 1: Age 6 (Apprentice) - 2 guardians, simple addition/exact
+        // Target Sum: 10-15
+        const g1Value = getRandomInt(5, 8);
+        const additionValue = getRandomInt(1, 3);
         const g2Value = g1Value + additionValue;
 
         guardians = [
@@ -61,10 +63,11 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
         ];
         totalGems = g1Value + g2Value;
     } else if (difficulty === 2) {
-        // Difficulty 2: 3 guardians, exact + multiplier + addition
-        const g1Value = getRandomInt(4, 8); // Reduced from 6-10
+        // Level 2: Age 7 (Scout) - 3 guardians, exact + multiplier + addition
+        // Target Sum: 20-30
+        const g1Value = getRandomInt(4, 6);
         const g2Value = g1Value * 2;
-        const additionValue = getRandomInt(3, 6); // Reduced from 5-8
+        const additionValue = getRandomInt(4, 6);
         const g3Value = g2Value + additionValue;
 
         guardians = [
@@ -83,10 +86,11 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
         ];
         totalGems = g1Value + g2Value + g3Value;
     } else if (difficulty === 3) {
-        // Difficulty 3: 3 guardians, multiplier + addition + comparison
-        const g1Value = getRandomInt(5, 10); // Reduced from 10-15
-        const g2Value = g1Value * 2;
-        const g3Value = Math.max(2, g2Value - 5);
+        // Level 3: Age 8 (Adventurer) - 3 guardians, introduce Halve
+        // Target Sum: ~25-40
+        const g1Value = getRandomInt(4, 7) * 2; // Must be even
+        const g2Value = g1Value / 2;
+        const g3Value = 10;
 
         guardians = [
             {
@@ -94,20 +98,21 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g1Value
             },
             {
-                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 0 },
+                constraint: { type: GuardianConstraintType.HALVE, targetGuardian: 0 },
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.COMPARISON, operator: 'less', targetGuardian: 1 },
+                constraint: { type: GuardianConstraintType.EXACT, value: 10 },
                 solution: g3Value
             }
         ];
         totalGems = g1Value + g2Value + g3Value;
     } else if (difficulty === 4) {
-        // Difficulty 4: 3 guardians, complex chained relationships
-        const g1Value = getRandomInt(3, 6); // Reduced further
-        const g2Value = g1Value + 8; // Reduced from 10
-        const g3Value = g2Value * 2;
+        // Level 4: Age 9 (Veteran) - 3 guardians, complex chained relationships
+        // Target Sum: ~30-40
+        const g1Value = getRandomInt(3, 5);
+        const g2Value = g1Value + 10;
+        const g3Value = g2Value + 10;
 
         guardians = [
             {
@@ -115,23 +120,22 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g1Value
             },
             {
-                constraint: { type: GuardianConstraintType.ADDITION, value: 8, targetGuardian: 0 },
+                constraint: { type: GuardianConstraintType.ADDITION, value: 10, targetGuardian: 0 },
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 1 },
+                constraint: { type: GuardianConstraintType.ADDITION, value: 10, targetGuardian: 1 },
                 solution: g3Value
             }
         ];
         totalGems = g1Value + g2Value + g3Value;
     } else {
-        // Difficulty 5: 3 guardians, most complex constraints with range
+        // Level 5: Age 10 (Master) - 3 guardians, complex mix (max 50)
         const g1Min = 10;
-        const g1Max = 15;
+        const g1Max = 12;
         const g1Value = getRandomInt(g1Min, g1Max);
-        const g2Value = g1Value + 5;
-        const additionValue = getRandomInt(5, 10);
-        const g3Value = g2Value + additionValue;
+        const g2Value = g1Value * 2;
+        const g3Value = g2Value / 2;
 
         guardians = [
             {
@@ -139,11 +143,11 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g1Value
             },
             {
-                constraint: { type: GuardianConstraintType.ADDITION, value: 5, targetGuardian: 0 },
+                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 0 },
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 1 },
+                constraint: { type: GuardianConstraintType.HALVE, targetGuardian: 1 },
                 solution: g3Value
             }
         ];
@@ -184,6 +188,11 @@ export const validateGuardianConstraint = (
         case GuardianConstraintType.RANGE:
             if (constraint.min === undefined || constraint.max === undefined) return false;
             return value >= constraint.min && value <= constraint.max;
+
+        case GuardianConstraintType.HALVE:
+            if (constraint.targetGuardian === undefined) return false;
+            const sourceValue = guardianValues[constraint.targetGuardian];
+            return value === sourceValue / 2;
 
         case GuardianConstraintType.COMPARISON:
             if (constraint.targetGuardian === undefined || constraint.operator === undefined) return false;
