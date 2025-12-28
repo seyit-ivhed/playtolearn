@@ -91,7 +91,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
 
         if (validation.isValid) {
             setIsSolved(true);
-            setTimeout(() => onSolve(), 1500);
+            setTimeout(() => onSolve(), 3500);
         }
     };
 
