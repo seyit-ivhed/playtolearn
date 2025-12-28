@@ -65,7 +65,7 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
         const g1Value = getRandomInt(6, 10);
         const g2Value = g1Value * 2;
         const additionValue = getRandomInt(5, 8);
-        const g3Value = g1Value + additionValue;
+        const g3Value = g2Value + additionValue; // Based on g2
 
         guardians = [
             {
@@ -77,7 +77,7 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
+                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 1 },
                 solution: g3Value
             }
         ];
@@ -86,7 +86,7 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
         // Difficulty 3: 3 guardians, multiplier + addition + comparison
         const g1Value = getRandomInt(10, 15);
         const g2Value = g1Value * 2;
-        const g3Value = getRandomInt(5, 8);
+        const g3Value = Math.max(5, g2Value - 5); // Based on g2
 
         guardians = [
             {
@@ -98,7 +98,7 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.COMPARISON, operator: 'less', targetGuardian: 0 },
+                constraint: { type: GuardianConstraintType.COMPARISON, operator: 'less', targetGuardian: 1 },
                 solution: g3Value
             }
         ];
@@ -107,7 +107,7 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
         // Difficulty 4: 3 guardians, complex chained relationships
         const g1Value = getRandomInt(12, 18);
         const g2Value = g1Value + 10;
-        const g3Value = g1Value * 2;
+        const g3Value = g2Value * 2; // Based on g2
 
         guardians = [
             {
@@ -119,7 +119,7 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 0 },
+                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 1 },
                 solution: g3Value
             }
         ];
@@ -131,7 +131,7 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
         const g1Value = getRandomInt(g1Min, g1Max);
         const g2Value = g1Value * 2;
         const additionValue = getRandomInt(10, 20);
-        const g3Value = g1Value + additionValue;
+        const g3Value = g2Value + additionValue; // Based on g2
 
         guardians = [
             {
@@ -143,7 +143,7 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
+                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 1 },
                 solution: g3Value
             }
         ];
