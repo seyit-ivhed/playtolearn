@@ -1,4 +1,8 @@
 {
+    "common": {
+        "continue": "Fortsätt"
+    },
+    "party_camp": "Partyläger",
     "adventure": {
         "title": "Äventyr",
         "start": "Starta Äventyr",

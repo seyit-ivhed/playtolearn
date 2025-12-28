@@ -1,4 +1,8 @@
 {
+    "common": {
+        "continue": "Continue"
+    },
+    "party_camp": "Party Camp",
     "adventure": {
         "title": "Adventures",
         "start": "Start Adventure",
