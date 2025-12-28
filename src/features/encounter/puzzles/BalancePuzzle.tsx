@@ -1,9 +1,11 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import type { PuzzleData } from '../../../types/adventure.types';
+import { PuzzleType, type PuzzleData } from '../../../types/adventure.types';
 import { isBalanced, calculateScaleAngle, calculateTotalWeight } from './BalanceEngine';
 import styles from './BalancePuzzle.module.css';
+
+const CUNEIFORM_SYMBOLS = ['🏹', '🏺', '🐟', '🌾', '☀️', '🔱'];
 
 interface BalancePuzzleProps {
     data: PuzzleData;
@@ -11,6 +13,8 @@ interface BalancePuzzleProps {
 }
 
 export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
+    const isCuneiform = data.puzzleType === PuzzleType.CUNEIFORM;
+
     // Current state of weights on plates
     const [leftWeights, setLeftWeights] = useState<number[]>(() =>
         data.initialLeftWeight ? [data.initialLeftWeight] : []
@@ -126,7 +130,7 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
                                     >
-                                        {w}
+                                        {isCuneiform && (w - 1 < CUNEIFORM_SYMBOLS.length) ? CUNEIFORM_SYMBOLS[w - 1] : w}
                                     </motion.div>
                                 ))}
                                 <div className={styles.weightLabel}>{leftTotal}</div>
@@ -144,7 +148,7 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
                                     >
-                                        {w}
+                                        {isCuneiform && (w - 1 < CUNEIFORM_SYMBOLS.length) ? CUNEIFORM_SYMBOLS[w - 1] : w}
                                     </motion.div>
                                 ))}
                                 <div className={styles.weightLabel}>{rightTotal}</div>
@@ -170,7 +174,7 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                                         onClick={() => handleAddWeight(weight, idx, 'left')}
                                         disabled={isSolved || isUsed}
                                     >
-                                        <span className={styles.weightIcon}>🪨</span>
+                                        <span className={styles.weightIcon}>{isCuneiform && (weight - 1 < CUNEIFORM_SYMBOLS.length) ? CUNEIFORM_SYMBOLS[weight - 1] : '🪨'}</span>
                                         <span className={styles.weightValue}>{weight}</span>
                                     </motion.button>
                                 );
@@ -195,7 +199,7 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                                         disabled={isSolved || isUsed}
                                         style={{ background: '#3e2723', borderColor: '#5d4037' }}
                                     >
-                                        <span className={styles.weightIcon}>🪨</span>
+                                        <span className={styles.weightIcon}>{isCuneiform && (weight - 1 < CUNEIFORM_SYMBOLS.length) ? CUNEIFORM_SYMBOLS[weight - 1] : '🪨'}</span>
                                         <span className={styles.weightValue}>{weight}</span>
                                     </motion.button>
                                 );

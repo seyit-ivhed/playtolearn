@@ -11,10 +11,12 @@ export * from './math/validation';
 export * from './math/puzzles/sum-target';
 export * from './math/puzzles/balance';
 export * from './math/puzzles/sequence';
+export * from './math/puzzles/guardian-tribute';
 
 import { generateSumTargetData } from './math/puzzles/sum-target';
 import { generateBalanceData } from './math/puzzles/balance';
 import { generateSequenceData } from './math/puzzles/sequence';
+import { generateGuardianTributeData } from './math/puzzles/guardian-tribute';
 
 /**
  * Generates puzzle data based on puzzle type and difficulty
@@ -30,6 +32,18 @@ export const generatePuzzleData = (
             return generateBalanceData(difficulty);
         case PuzzleType.SEQUENCE:
             return generateSequenceData(difficulty);
+        case PuzzleType.IRRIGATION:
+            return {
+                ...generateSumTargetData(difficulty),
+                puzzleType: PuzzleType.IRRIGATION
+            };
+        case PuzzleType.CUNEIFORM:
+            return {
+                ...generateBalanceData(difficulty),
+                puzzleType: PuzzleType.CUNEIFORM
+            };
+        case PuzzleType.GUARDIAN_TRIBUTE:
+            return generateGuardianTributeData(difficulty);
         default:
             return {
                 puzzleType: PuzzleType.SUM_TARGET,

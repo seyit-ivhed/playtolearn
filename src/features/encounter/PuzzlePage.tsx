@@ -10,6 +10,7 @@ import { generatePuzzleData } from '../../utils/math-generator';
 import { SumTargetPuzzle } from './puzzles/SumTargetPuzzle';
 import { BalancePuzzle } from './puzzles/BalancePuzzle';
 import { SequencePuzzle } from './puzzles/SequencePuzzle';
+import { GuardianTributePuzzle } from './puzzles/GuardianTributePuzzle';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import styles from './PuzzlePage.module.css';
 
@@ -105,14 +106,14 @@ const PuzzlePage = () => {
             </header>
 
             <main className={styles.puzzleContent}>
-                {puzzleData.puzzleType === PuzzleType.SUM_TARGET && (
+                {(puzzleData.puzzleType === PuzzleType.SUM_TARGET || puzzleData.puzzleType === PuzzleType.IRRIGATION) && (
                     <SumTargetPuzzle
                         data={puzzleData}
                         onSolve={handleSolve}
                     />
                 )}
 
-                {puzzleData.puzzleType === PuzzleType.BALANCE && (
+                {(puzzleData.puzzleType === PuzzleType.BALANCE || puzzleData.puzzleType === PuzzleType.CUNEIFORM) && (
                     <BalancePuzzle
                         data={puzzleData}
                         onSolve={handleSolve}
@@ -121,6 +122,13 @@ const PuzzlePage = () => {
 
                 {puzzleData.puzzleType === PuzzleType.SEQUENCE && (
                     <SequencePuzzle
+                        data={puzzleData}
+                        onSolve={handleSolve}
+                    />
+                )}
+
+                {puzzleData.puzzleType === PuzzleType.GUARDIAN_TRIBUTE && (
+                    <GuardianTributePuzzle
                         data={puzzleData}
                         onSolve={handleSolve}
                     />

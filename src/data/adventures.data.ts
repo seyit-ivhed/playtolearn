@@ -3,6 +3,7 @@ import { MONSTERS } from './monsters.data';
 import chapter1Illustration from '../assets/images/chapters/chapter-1.png';
 import chapter2Illustration from '../assets/images/chapters/chapter-2.png';
 import adventure1Map from '../assets/images/maps/adventure-1.png';
+import adventure2Map from '../assets/images/maps/adventure-2.png';
 
 export const ADVENTURES: Adventure[] = [
     {
@@ -134,6 +135,7 @@ export const ADVENTURES: Adventure[] = [
         storyHook: "Leaving the desert sun behind, you descend into the cool depths of the canyon cave. The tunnel opens into a vast subterranean city—Ashur. But scavengers have turned the ruins into a bandit camp, and the stones themselves are starting to move.",
         completionSummary: "With the Stone Emperor silenced, the heart of Ashur is yours. But the inscriptions on the canyon walls speak of a 'High King' in the distant mountains who still holds the keys to the world's origins...",
         illustration: chapter2Illustration, // Using existing for now
+        mapImage: adventure2Map,
         volumeId: 'origins',
         difficulty: 2,
         encounters: [
@@ -155,7 +157,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_3',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 0, y: 1200 },
-                puzzleData: { puzzleType: PuzzleType.SUM_TARGET },
+                puzzleData: { puzzleType: PuzzleType.IRRIGATION },
                 xpReward: 120
             },
             {
@@ -181,14 +183,14 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '2_7',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 550, y: 2000 },
-                puzzleData: { puzzleType: PuzzleType.BALANCE },
+                coordinates: { x: 0, y: 2000 },
+                puzzleData: { puzzleType: PuzzleType.CUNEIFORM },
                 xpReward: 150
             },
             {
                 id: '2_8',
                 type: EncounterType.CAMP,
-                coordinates: { x: 400, y: 2300 },
+                coordinates: { x: -200, y: 2300 },
                 xpReward: 0
             },
             {
@@ -202,7 +204,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_10',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 250, y: 2950 },
-                puzzleData: { puzzleType: PuzzleType.SEQUENCE },
+                puzzleData: { puzzleType: PuzzleType.GUARDIAN_TRIBUTE },
                 xpReward: 170
             },
             {

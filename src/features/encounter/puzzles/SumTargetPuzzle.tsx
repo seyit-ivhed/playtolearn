@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import type { PuzzleData, PuzzleOption } from '../../../types/adventure.types';
+import { PuzzleType, type PuzzleData, type PuzzleOption } from '../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
 import styles from './SumTargetPuzzle.module.css';
 
@@ -19,6 +19,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     const actionIdCounter = useRef(0);
     const { t } = useTranslation();
 
+    const isIrrigation = data.puzzleType === PuzzleType.IRRIGATION;
     const target = data.targetValue;
     const progress = Math.min(100, Math.max(0, (currentSum / target) * 100));
 
@@ -50,7 +51,9 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                 {/* Reservoir Visual */}
                 <div className={styles.reservoirContainer}>
                     <div className={styles.targetMarker} style={{ bottom: '100%' }}>
-                        <span className={styles.targetLabel}>{t('puzzle.target')}: {target}</span>
+                        <span className={styles.targetLabel}>
+                            {isIrrigation ? t('puzzle.irrigation.target', 'Target Litres') : t('puzzle.target')}: {target}
+                        </span>
                     </div>
 
                     <div className={styles.reservoir}>
@@ -79,7 +82,9 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                         const isObj = typeof option !== 'number';
                         const puzzleOption = isObj ? (option as PuzzleOption) : null;
                         const label = formatActionLabel(option);
-                        const icon = puzzleOption ? (puzzleOption.type === 'MULTIPLY' ? '⚡' : '❄️') : '💧';
+                        let icon = puzzleOption ? (puzzleOption.type === 'MULTIPLY' ? '⚡' : '❄️') : '💧';
+
+                        if (isIrrigation && !isObj) icon = '🏺'; // Clay jar for water in ruins
 
                         const isUsed = usedOptions.includes(idx);
 
