@@ -47,6 +47,16 @@ describe('Guardian Tribute Puzzle', () => {
             }
         });
 
+        it('should never exceed 50 total gems', () => {
+            for (let difficulty = 1; difficulty <= 5; difficulty++) {
+                // Check 100 times for each difficulty to be sure
+                for (let i = 0; i < 100; i++) {
+                    const data = generateGuardianTributeData(difficulty as 1 | 2 | 3 | 4 | 5);
+                    expect(data.totalGems).toBeLessThanOrEqual(50);
+                }
+            }
+        });
+
         it('should generate solutions that satisfy all constraints', () => {
             for (let difficulty = 1; difficulty <= 5; difficulty++) {
                 const data = generateGuardianTributeData(difficulty as 1 | 2 | 3 | 4 | 5);
