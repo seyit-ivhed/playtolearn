@@ -118,9 +118,6 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
         }}>
             {/* Header */}
             <div style={{ textAlign: 'center' }}>
-                <h2 style={{ fontSize: '2rem', color: '#d4af37', marginBottom: '0.5rem', fontFamily: 'serif' }}>
-                    {t('puzzle.guardian_tribute.title', "The Guardian's Tribute")}
-                </h2>
                 <p style={{ fontSize: '1.2rem', color: '#94a3b8', marginBottom: '1rem' }}>
                     {t('puzzle.guardian_tribute.desc', "Distribute gems among the ancient guardians according to their demands.")}
                 </p>
