@@ -195,16 +195,18 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                     </p>
                 </div>
                 <div style={{
-                    fontSize: '1.5rem',
-                    color: remainingGems === 0 ? '#22c55e' : '#fbbf24',
+                    fontSize: '2.5rem',
+                    color: totalDistributed === puzzleData.totalGems ? '#22c55e' : '#fbbf24',
                     fontWeight: 'bold',
                     display: 'flex',
-                    gap: '2rem',
+                    alignItems: 'center',
                     justifyContent: 'center',
-                    marginBottom: '2rem'
+                    gap: '1rem',
+                    marginBottom: '2rem',
+                    textShadow: '0 0 20px rgba(0,0,0,0.5)'
                 }}>
-                    <span>{t('puzzle.guardian_tribute.total_gems', 'Total: {{total}}', { total: puzzleData.totalGems })}</span>
-                    <span>{t('puzzle.guardian_tribute.remaining_gems', 'Remaining: {{remaining}}', { remaining: remainingGems })}</span>
+                    <span>💎</span>
+                    <span>{totalDistributed} / {puzzleData.totalGems}</span>
                 </div>
             </div>
 
