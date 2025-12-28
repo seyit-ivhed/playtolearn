@@ -27,21 +27,21 @@ describe('Guardian Tribute Puzzle', () => {
             expect(data.totalGems).toBeGreaterThan(0);
         });
 
-        it('should generate 4 guardians for difficulty 4', () => {
+        it('should generate 3 guardians for difficulty 4', () => {
             const data = generateGuardianTributeData(4);
-            expect(data.guardians).toHaveLength(4);
+            expect(data.guardians).toHaveLength(3);
             expect(data.totalGems).toBeGreaterThan(0);
         });
 
-        it('should generate 5 guardians for difficulty 5', () => {
+        it('should generate 3 guardians for difficulty 5', () => {
             const data = generateGuardianTributeData(5);
-            expect(data.guardians).toHaveLength(5);
+            expect(data.guardians).toHaveLength(3);
             expect(data.totalGems).toBeGreaterThan(0);
         });
 
         it('should have valid solutions that sum to total gems', () => {
             for (let difficulty = 1; difficulty <= 5; difficulty++) {
-                const data = generateGuardianTributeData(difficulty);
+                const data = generateGuardianTributeData(difficulty as 1 | 2 | 3 | 4 | 5);
                 const sum = data.guardians.reduce((total, g) => total + g.solution, 0);
                 expect(sum).toBe(data.totalGems);
             }
@@ -49,7 +49,7 @@ describe('Guardian Tribute Puzzle', () => {
 
         it('should generate solutions that satisfy all constraints', () => {
             for (let difficulty = 1; difficulty <= 5; difficulty++) {
-                const data = generateGuardianTributeData(difficulty);
+                const data = generateGuardianTributeData(difficulty as 1 | 2 | 3 | 4 | 5);
                 const solutions = data.guardians.map(g => g.solution);
 
                 data.guardians.forEach((guardian, index) => {
