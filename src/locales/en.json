@@ -250,12 +250,12 @@
             "guardian_number": "Guardian {{number}}",
             "success": "The guardians are satisfied! ✨",
             "constraint": {
-                "exact": "Needs exactly {{value}} gems",
-                "multiplier": "Needs {{multiplier}}× Guardian {{target}}",
-                "addition": "Needs {{value}} Guardian {{target}}",
-                "range": "Needs {{min}}-{{max}} gems",
-                "divisibility": "Needs multiple of {{value}}",
-                "comparison": "Needs {{op}} Guardian {{target}}"
+                "exact": "Exactly {{value}} gems",
+                "multiplier": "{{multiplier}}× Guardian {{target}}",
+                "addition": "{{value}} Guardian {{target}}",
+                "range": "{{min}}-{{max}} gems",
+                "divisibility": "Multiple of {{value}}",
+                "comparison": "{{op}} Guardian {{target}}"
             }
         }
     },
