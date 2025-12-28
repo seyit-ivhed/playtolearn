@@ -19,36 +19,40 @@ import { generateSequenceData } from './math/puzzles/sequence';
 import { generateGuardianTributeData } from './math/puzzles/guardian-tribute';
 
 /**
+ * Mapping of puzzle types to their respective data generators
+ */
+const PUZZLE_GENERATORS: Record<PuzzleType, (difficulty: DifficultyLevel) => PuzzleData> = {
+    [PuzzleType.SUM_TARGET]: generateSumTargetData,
+    [PuzzleType.BALANCE]: generateBalanceData,
+    [PuzzleType.SEQUENCE]: generateSequenceData,
+    [PuzzleType.IRRIGATION]: (difficulty) => ({
+        ...generateSumTargetData(difficulty),
+        puzzleType: PuzzleType.IRRIGATION
+    }),
+    [PuzzleType.CUNEIFORM]: (difficulty) => ({
+        ...generateBalanceData(difficulty),
+        puzzleType: PuzzleType.CUNEIFORM
+    }),
+    [PuzzleType.GUARDIAN_TRIBUTE]: generateGuardianTributeData,
+};
+
+/**
  * Generates puzzle data based on puzzle type and difficulty
  */
 export const generatePuzzleData = (
     puzzleType: PuzzleType,
     difficulty: DifficultyLevel
 ): PuzzleData => {
-    switch (puzzleType) {
-        case PuzzleType.SUM_TARGET:
-            return generateSumTargetData(difficulty);
-        case PuzzleType.BALANCE:
-            return generateBalanceData(difficulty);
-        case PuzzleType.SEQUENCE:
-            return generateSequenceData(difficulty);
-        case PuzzleType.IRRIGATION:
-            return {
-                ...generateSumTargetData(difficulty),
-                puzzleType: PuzzleType.IRRIGATION
-            };
-        case PuzzleType.CUNEIFORM:
-            return {
-                ...generateBalanceData(difficulty),
-                puzzleType: PuzzleType.CUNEIFORM
-            };
-        case PuzzleType.GUARDIAN_TRIBUTE:
-            return generateGuardianTributeData(difficulty);
-        default:
-            return {
-                puzzleType: PuzzleType.SUM_TARGET,
-                targetValue: 10,
-                options: [2, 3, 5]
-            };
+    const generator = PUZZLE_GENERATORS[puzzleType];
+
+    if (generator) {
+        return generator(difficulty);
     }
+
+    // Default fallback if type is not recognized
+    return {
+        puzzleType: PuzzleType.SUM_TARGET,
+        targetValue: 10,
+        options: [2, 3, 5]
+    };
 };
