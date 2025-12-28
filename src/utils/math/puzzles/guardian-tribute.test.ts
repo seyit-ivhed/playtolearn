@@ -173,10 +173,16 @@ describe('Guardian Tribute Puzzle', () => {
 
         it('should reject solution with wrong constraint values', () => {
             const data = generateGuardianTributeData(2);
-            const wrongSolutions = [5, 10, 15]; // Arbitrary values that likely don't match constraints
+            const correctSolutions = data.guardians.map(g => g.solution);
+
+            // Swap two values to break constraints while keeping total sum the same
+            // In difficulty 2: g1 is EXACT, g2 is MULTIPLIER 2 of g1.
+            // These will always be different since g1 >= 4.
+            const wrongSolutions = [correctSolutions[1], correctSolutions[0], ...correctSolutions.slice(2)];
 
             const result = validateGuardianTributeSolution(wrongSolutions, data);
             expect(result.isValid).toBe(false);
+            expect(result.allConstraintsSatisfied).toBe(false);
         });
 
         it('should reject solution with wrong total gems', () => {
