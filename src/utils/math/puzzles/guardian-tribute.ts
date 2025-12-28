@@ -109,11 +109,11 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
         ];
         totalGems = g1Value + g2Value + g3Value;
     } else if (difficulty === 4) {
-        // Level 4: Age 9 (Veteran) - 3 guardians, complex chained relationships
-        // Target Sum: ~30-40
-        const g1Value = getRandomInt(3, 5);
-        const g2Value = g1Value + 10;
-        const g3Value = g2Value + 10;
+        // Level 4: Age 9 (Veteran) - 3 guardians, complex mix
+        // Target Sum: ~35-45
+        const g1Value = getRandomInt(4, 5);
+        const g2Value = g1Value * 3;
+        const g3Value = g2Value + getRandomInt(5, 10);
 
         guardians = [
             {
@@ -121,11 +121,11 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g1Value
             },
             {
-                constraint: { type: GuardianConstraintType.ADDITION, value: 10, targetGuardian: 0 },
+                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 3, targetGuardian: 0 },
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.ADDITION, value: 10, targetGuardian: 1 },
+                constraint: { type: GuardianConstraintType.COMPARISON, operator: 'greater', targetGuardian: 1 },
                 solution: g3Value
             }
         ];
