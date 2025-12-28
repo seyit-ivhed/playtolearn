@@ -64,33 +64,33 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
     const getConstraintDescription = (constraint: GuardianConstraint): string => {
         switch (constraint.type) {
             case GuardianConstraintType.EXACT:
-                return t('puzzle.guardian_tribute.constraint.exact', 'Exactly {{value}} gems', { value: constraint.value });
+                return t('puzzle.guardian_tribute.constraint.exact', '{{value}} 💎', { value: constraint.value });
 
             case GuardianConstraintType.MULTIPLIER:
-                return t('puzzle.guardian_tribute.constraint.multiplier', '{{multiplier}}× Guardian {{target}}', {
+                return t('puzzle.guardian_tribute.constraint.multiplier', '{{multiplier}}× {{target}}', {
                     multiplier: constraint.multiplier,
                     target: GUARDIAN_SYMBOLS[(constraint.targetGuardian ?? 0)]
                 });
 
             case GuardianConstraintType.ADDITION:
                 const sign = (constraint.value ?? 0) >= 0 ? '+' : '';
-                return t('puzzle.guardian_tribute.constraint.addition', '{{value}} Guardian {{target}}', {
+                return t('puzzle.guardian_tribute.constraint.addition', '{{value}} {{target}}', {
                     value: `${sign}${constraint.value ?? 0}`,
                     target: GUARDIAN_SYMBOLS[(constraint.targetGuardian ?? 0)]
                 });
 
             case GuardianConstraintType.RANGE:
-                return t('puzzle.guardian_tribute.constraint.range', '{{min}}-{{max}} gems', {
+                return t('puzzle.guardian_tribute.constraint.range', '{{min}}-{{max}} 💎', {
                     min: constraint.min,
                     max: constraint.max
                 });
 
             case GuardianConstraintType.DIVISIBILITY:
-                return t('puzzle.guardian_tribute.constraint.divisibility', 'Multiple of {{value}}', { value: constraint.value });
+                return t('puzzle.guardian_tribute.constraint.divisibility', 'Multiple of {{value}} 💎', { value: constraint.value });
 
             case GuardianConstraintType.COMPARISON:
                 const op = constraint.operator === 'greater' ? '>' : '<';
-                return t('puzzle.guardian_tribute.constraint.comparison', '{{op}} Guardian {{target}}', {
+                return t('puzzle.guardian_tribute.constraint.comparison', '{{op}} {{target}}', {
                     op,
                     target: GUARDIAN_SYMBOLS[(constraint.targetGuardian ?? 0)]
                 });
@@ -201,7 +201,9 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                     justifyContent: 'center',
                                     borderRadius: '50%',
                                     border: '2px solid rgba(212, 175, 55, 0.4)',
-                                    boxShadow: 'inset 0 0 15px rgba(212, 175, 55, 0.2)'
+                                    boxShadow: 'inset 0 0 15px rgba(212, 175, 55, 0.2)',
+                                    marginTop: '-1rem', // Move higher
+                                    lineHeight: '1' // Better vertical centering
                                 }}>
                                     {GUARDIAN_SYMBOLS[index]}
                                 </div>
