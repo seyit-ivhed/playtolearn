@@ -58,7 +58,7 @@ export const UnitCard = ({
     const handleCardClick = (e: React.MouseEvent) => {
         e.stopPropagation();
 
-        if (isMonster) return;
+        if (isMonster || disableInteraction || isFlipped || !!mathProblem) return;
         if (!canAct) return;
 
         if (unit.currentSpirit >= 100) {

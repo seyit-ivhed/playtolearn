@@ -38,6 +38,7 @@ export const SpecialChallengeOverlay = ({
                     isFlipped={challenge.isFlipped}
                     mathProblem={challenge.problem}
                     onMathAnswer={onComplete}
+                    disableInteraction={true}
                 />
             </div>
         </div>
