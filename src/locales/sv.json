@@ -244,7 +244,7 @@
         },
         "guardian_tribute": {
             "title": "Väktarnas Tribut",
-            "desc": "Fördela ädelstenar bland de uråldriga väktarna enligt deras krav.",
+            "desc": "Fördela ädelstenarna bland statyerna",
             "total_gems": "Totalt Ädelstenar: {{total}}",
             "remaining_gems": "Återstår: {{remaining}}",
             "guardian_number": "Väktare {{number}}",

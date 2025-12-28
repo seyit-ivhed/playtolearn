@@ -167,10 +167,33 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
             width: '100%'
         }}>
             {/* Header */}
-            <div style={{ textAlign: 'center', width: '100%' }}>
-                <p style={{ fontSize: '1.2rem', color: '#94a3b8', marginBottom: '1rem' }}>
-                    {t('puzzle.guardian_tribute.desc', "Distribute gems among the ancient guardians according to their demands.")}
-                </p>
+            <div style={{
+                textAlign: 'center',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.5rem'
+            }}>
+                <div style={{
+                    background: 'rgba(15, 23, 42, 0.6)',
+                    padding: '1.5rem',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(212, 175, 55, 0.2)',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                    maxWidth: '800px',
+                    margin: '0 auto'
+                }}>
+                    <p style={{
+                        fontSize: '1.8rem',
+                        color: '#e2e8f0', // Brighter text
+                        margin: 0,
+                        lineHeight: '1.6',
+                        fontFamily: 'serif',
+                        letterSpacing: '0.02em'
+                    }}>
+                        {t('puzzle.guardian_tribute.desc', "Distribute the gems among the statues")}
+                    </p>
+                </div>
                 <div style={{
                     fontSize: '1.5rem',
                     color: remainingGems === 0 ? '#22c55e' : '#fbbf24',

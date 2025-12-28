@@ -244,7 +244,7 @@
         },
         "guardian_tribute": {
             "title": "The Guardian's Tribute",
-            "desc": "Distribute gems among the ancient guardians according to their demands.",
+            "desc": "Distribute the gems among the statues",
             "total_gems": "Total Gems: {{total}}",
             "remaining_gems": "Remaining: {{remaining}}",
             "guardian_number": "Guardian {{number}}",
