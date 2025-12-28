@@ -205,17 +205,35 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 </div>
                 <div style={{
                     fontSize: '2.5rem',
-                    color: totalDistributed === puzzleData.totalGems ? '#22c55e' : '#fbbf24',
+                    color: totalDistributed === puzzleData.totalGems
+                        ? '#22c55e'
+                        : (showFeedback && remainingGems > 0 ? '#ef4444' : '#fbbf24'),
                     fontWeight: 'bold',
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '1rem',
+                    gap: '0.5rem',
                     marginBottom: '2rem',
                     textShadow: '0 0 20px rgba(0,0,0,0.5)'
                 }}>
-                    <span>💎</span>
-                    <span>{totalDistributed} / {puzzleData.totalGems}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <span>💎</span>
+                        <span>{totalDistributed} / {puzzleData.totalGems}</span>
+                    </div>
+                    {showFeedback && !isSolved && remainingGems > 0 && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            style={{
+                                fontSize: '1.2rem',
+                                color: '#ef4444',
+                                fontWeight: '500'
+                            }}
+                        >
+                            {t('encounter.puzzles.guardian_tribute.gems_remaining', 'You still have gems to distribute.')}
+                        </motion.div>
+                    )}
                 </div>
             </div>
 
@@ -308,7 +326,6 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                         <span>💎</span>
                                         {value}
                                         {displayFeedback && isCorrect && <span style={{ fontSize: '2rem' }}>✓</span>}
-                                        {displayFeedback && !isCorrect && value > 0 && <span style={{ fontSize: '2rem', color: '#ef4444' }}>✗</span>}
                                     </div>
 
                                     {/* Controls */}
@@ -394,6 +411,8 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 </motion.button>
             )}
 
+
+
             {/* Success Message */}
             {isSolved && (
                 <motion.div
@@ -403,10 +422,11 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                         fontSize: '1.5rem',
                         color: '#22c55e',
                         fontWeight: 'bold',
-                        textAlign: 'center'
+                        textAlign: 'center',
+                        marginTop: '1rem'
                     }}
                 >
-                    {t('puzzle.guardian_tribute.success', 'The guardians are satisfied! ✨')}
+                    {t('encounter.puzzles.guardian_tribute.success', 'The guardians are satisfied! ✨')}
                 </motion.div>
             )}
         </div>

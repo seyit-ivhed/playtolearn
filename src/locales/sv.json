@@ -25,6 +25,8 @@
             "guardian_tribute": {
                 "description": "Fördela ädelstenarna bland statyerna",
                 "offer": "Erbjud Tribut",
+                "success": "Väktarna är nöjda! ✨",
+                "gems_remaining": "Du har fortfarande ädelstenar att fördela.",
                 "constraint": {
                     "exact": "{{value}}",
                     "multiplier": "{{multiplier}}× {{target}}",
