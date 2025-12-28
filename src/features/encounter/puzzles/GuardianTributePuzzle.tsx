@@ -105,7 +105,6 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 return (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                         <span style={{ fontSize: '1.8rem' }}>{constraint.value}</span>
-                        <span style={{ fontSize: '1.5rem' }}>💎</span>
                     </div>
                 );
 
@@ -130,16 +129,6 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 return (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                         <span style={{ fontSize: '1.5rem' }}>{constraint.min}-{constraint.max}</span>
-                        <span style={{ fontSize: '1.2rem' }}>💎</span>
-                    </div>
-                );
-
-            case GuardianConstraintType.DIVISIBILITY:
-                return (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-                        <span>{t('puzzle.guardian_tribute.constraint.divisibility_prefix', 'Multiple of')}</span>
-                        <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{constraint.value}</span>
-                        <span style={{ fontSize: '1.2rem' }}>💎</span>
                     </div>
                 );
 
@@ -174,21 +163,25 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
             gap: '2rem',
             padding: '2rem',
             maxWidth: '1200px',
-            margin: '0 auto'
+            margin: '0 auto',
+            width: '100%'
         }}>
             {/* Header */}
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', width: '100%' }}>
                 <p style={{ fontSize: '1.2rem', color: '#94a3b8', marginBottom: '1rem' }}>
                     {t('puzzle.guardian_tribute.desc', "Distribute gems among the ancient guardians according to their demands.")}
                 </p>
                 <div style={{
                     fontSize: '1.5rem',
                     color: remainingGems === 0 ? '#22c55e' : '#fbbf24',
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    gap: '2rem',
+                    justifyContent: 'center',
+                    marginBottom: '2rem'
                 }}>
-                    {t('puzzle.guardian_tribute.total_gems', 'Total Gems: {{total}}', { total: puzzleData.totalGems })} |
-                    {' '}
-                    {t('puzzle.guardian_tribute.remaining_gems', 'Remaining: {{remaining}}', { remaining: remainingGems })}
+                    <span>{t('puzzle.guardian_tribute.total_gems', 'Total: {{total}}', { total: puzzleData.totalGems })}</span>
+                    <span>{t('puzzle.guardian_tribute.remaining_gems', 'Remaining: {{remaining}}', { remaining: remainingGems })}</span>
                 </div>
             </div>
 

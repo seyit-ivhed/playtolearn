@@ -250,11 +250,10 @@
             "guardian_number": "Guardian {{number}}",
             "success": "The guardians are satisfied! ✨",
             "constraint": {
-                "exact": "{{value}} 💎",
+                "exact": "{{value}}",
                 "multiplier": "{{multiplier}}× {{target}}",
                 "addition": "{{value}} {{target}}",
-                "range": "{{min}}-{{max}} 💎",
-                "divisibility": "Multiples of {{value}} 💎",
+                "range": "{{min}}-{{max}}",
                 "comparison": "{{op}} {{target}}"
             }
         }

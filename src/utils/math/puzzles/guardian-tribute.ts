@@ -10,7 +10,6 @@ export const GuardianConstraintType = {
     MULTIPLIER: 'MULTIPLIER',       // Requires N× as many gems as another guardian
     ADDITION: 'ADDITION',           // Requires X more/less gems than another guardian
     RANGE: 'RANGE',                 // Requires between X and Y gems
-    DIVISIBILITY: 'DIVISIBILITY',   // Requires a multiple of X
     COMPARISON: 'COMPARISON'        // Requires more/less than another guardian
 } as const;
 
@@ -18,7 +17,7 @@ export type GuardianConstraintType = typeof GuardianConstraintType[keyof typeof 
 
 export interface GuardianConstraint {
     type: GuardianConstraintType;
-    value?: number;                 // For EXACT, ADDITION, DIVISIBILITY
+    value?: number;                 // For EXACT, ADDITION
     multiplier?: number;            // For MULTIPLIER (2, 3, etc.)
     targetGuardian?: number;        // Index of guardian to compare to (0-based)
     min?: number;                   // For RANGE
@@ -84,39 +83,14 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
         ];
         totalGems = g1Value + g2Value + g3Value;
     } else if (difficulty === 3) {
-        // Difficulty 3: 3 guardians, multiplier + addition + divisibility
-        const divisor = [3, 5][getRandomInt(0, 1)];
-        const g1Value = divisor * getRandomInt(2, 4); // Multiple of divisor
-        const g2Value = g1Value * 3;
-        const additionValue = getRandomInt(10, 15);
-        const g3Value = g1Value + additionValue;
-
-        guardians = [
-            {
-                constraint: { type: GuardianConstraintType.DIVISIBILITY, value: divisor },
-                solution: g1Value
-            },
-            {
-                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 3, targetGuardian: 0 },
-                solution: g2Value
-            },
-            {
-                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
-                solution: g3Value
-            }
-        ];
-        totalGems = g1Value + g2Value + g3Value;
-    } else if (difficulty === 4) {
-        // Difficulty 4: 3 guardians, complex chained relationships
-        const divisor = 3;
-        const g1Value = divisor * getRandomInt(3, 5); // Multiple of 3
+        // Difficulty 3: 3 guardians, multiplier + addition + comparison
+        const g1Value = getRandomInt(10, 15);
         const g2Value = g1Value * 2;
-        const additionValue = getRandomInt(8, 12);
-        const g3Value = g1Value + additionValue;
+        const g3Value = getRandomInt(5, 8);
 
         guardians = [
             {
-                constraint: { type: GuardianConstraintType.DIVISIBILITY, value: divisor },
+                constraint: { type: GuardianConstraintType.EXACT, value: g1Value },
                 solution: g1Value
             },
             {
@@ -124,19 +98,40 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
+                constraint: { type: GuardianConstraintType.COMPARISON, operator: 'less', targetGuardian: 0 },
+                solution: g3Value
+            }
+        ];
+        totalGems = g1Value + g2Value + g3Value;
+    } else if (difficulty === 4) {
+        // Difficulty 4: 3 guardians, complex chained relationships
+        const g1Value = getRandomInt(12, 18);
+        const g2Value = g1Value + 10;
+        const g3Value = g1Value * 2;
+
+        guardians = [
+            {
+                constraint: { type: GuardianConstraintType.EXACT, value: g1Value },
+                solution: g1Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.ADDITION, value: 10, targetGuardian: 0 },
+                solution: g2Value
+            },
+            {
+                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 0 },
                 solution: g3Value
             }
         ];
         totalGems = g1Value + g2Value + g3Value;
     } else {
         // Difficulty 5: 3 guardians, most complex constraints with range
-        const g1Min = 12;
-        const g1Max = 18;
+        const g1Min = 15;
+        const g1Max = 25;
         const g1Value = getRandomInt(g1Min, g1Max);
         const g2Value = g1Value * 2;
-        const divisor = 5;
-        const g3Value = divisor * getRandomInt(4, 6);
+        const additionValue = getRandomInt(10, 20);
+        const g3Value = g1Value + additionValue;
 
         guardians = [
             {
@@ -148,7 +143,7 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g2Value
             },
             {
-                constraint: { type: GuardianConstraintType.DIVISIBILITY, value: divisor },
+                constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
                 solution: g3Value
             }
         ];
@@ -189,10 +184,6 @@ export const validateGuardianConstraint = (
         case GuardianConstraintType.RANGE:
             if (constraint.min === undefined || constraint.max === undefined) return false;
             return value >= constraint.min && value <= constraint.max;
-
-        case GuardianConstraintType.DIVISIBILITY:
-            if (constraint.value === undefined) return false;
-            return value > 0 && value % constraint.value === 0;
 
         case GuardianConstraintType.COMPARISON:
             if (constraint.targetGuardian === undefined || constraint.operator === undefined) return false;

@@ -112,17 +112,7 @@ describe('Guardian Tribute Puzzle', () => {
             expect(validateGuardianConstraint(21, constraint, [])).toBe(false);
         });
 
-        it('should validate DIVISIBILITY constraint correctly', () => {
-            const constraint: GuardianConstraint = {
-                type: GuardianConstraintType.DIVISIBILITY,
-                value: 5
-            };
-            expect(validateGuardianConstraint(5, constraint, [])).toBe(true);
-            expect(validateGuardianConstraint(10, constraint, [])).toBe(true);
-            expect(validateGuardianConstraint(15, constraint, [])).toBe(true);
-            expect(validateGuardianConstraint(7, constraint, [])).toBe(false);
-            expect(validateGuardianConstraint(0, constraint, [])).toBe(false); // 0 is not valid
-        });
+
 
         it('should validate COMPARISON constraint correctly', () => {
             const greaterConstraint: GuardianConstraint = {

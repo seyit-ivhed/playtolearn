@@ -250,11 +250,10 @@
             "guardian_number": "Väktare {{number}}",
             "success": "Väktarna är nöjda! ✨",
             "constraint": {
-                "exact": "{{value}} 💎",
+                "exact": "{{value}}",
                 "multiplier": "{{multiplier}}× {{target}}",
                 "addition": "{{value}} {{target}}",
-                "range": "{{min}}-{{max}} 💎",
-                "divisibility": "Multiplar av {{value}} 💎",
+                "range": "{{min}}-{{max}}",
                 "comparison": "{{op}} {{target}}"
             }
         }
