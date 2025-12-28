@@ -110,18 +110,18 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
 
             case GuardianConstraintType.MULTIPLIER:
                 return (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
-                        <span style={{ fontSize: '1.5rem' }}>{constraint.multiplier}×</span>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                         {Badge}
+                        <span style={{ fontSize: '1.5rem' }}>× {constraint.multiplier}</span>
                     </div>
                 );
 
             case GuardianConstraintType.ADDITION:
                 const sign = (constraint.value ?? 0) >= 0 ? '+' : '';
                 return (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
-                        <span style={{ fontSize: '1.5rem' }}>{sign}{constraint.value}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                         {Badge}
+                        <span style={{ fontSize: '1.5rem' }}>{sign}{constraint.value}</span>
                     </div>
                 );
 
