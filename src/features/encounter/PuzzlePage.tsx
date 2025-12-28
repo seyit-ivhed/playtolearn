@@ -8,9 +8,9 @@ import { PuzzleType } from '../../types/adventure.types';
 import { type DifficultyLevel } from '../../types/math.types';
 import { generatePuzzleData } from '../../utils/math-generator';
 import { SumTargetPuzzle } from './puzzles/SumTargetPuzzle';
-import { BalancePuzzle } from './puzzles/BalancePuzzle';
+import { BalancePuzzle } from './puzzles/balance/BalancePuzzle';
 import { SequencePuzzle } from './puzzles/SequencePuzzle';
-import { GuardianTributePuzzle } from './puzzles/GuardianTributePuzzle';
+import { GuardianTributePuzzle } from './puzzles/guardian-tribute/GuardianTributePuzzle';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import styles from './PuzzlePage.module.css';
 
