@@ -16,6 +16,8 @@ interface GuardianTributePuzzleProps {
     onSolve: () => void;
 }
 
+const GUARDIAN_SYMBOLS = ['ᛗ', 'ᛟ', 'ᚦ', 'ᛒ', 'ᚠ'];
+
 export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzleProps) => {
     const { t } = useTranslation();
     const puzzleData = data as GuardianTributePuzzleData;
@@ -67,14 +69,14 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
             case GuardianConstraintType.MULTIPLIER:
                 return t('puzzle.guardian_tribute.constraint.multiplier', '{{multiplier}}× Guardian {{target}}', {
                     multiplier: constraint.multiplier,
-                    target: (constraint.targetGuardian ?? 0) + 1
+                    target: GUARDIAN_SYMBOLS[(constraint.targetGuardian ?? 0)]
                 });
 
             case GuardianConstraintType.ADDITION:
                 const sign = (constraint.value ?? 0) >= 0 ? '+' : '';
                 return t('puzzle.guardian_tribute.constraint.addition', '{{value}} Guardian {{target}}', {
                     value: `${sign}${constraint.value ?? 0}`,
-                    target: (constraint.targetGuardian ?? 0) + 1
+                    target: GUARDIAN_SYMBOLS[(constraint.targetGuardian ?? 0)]
                 });
 
             case GuardianConstraintType.RANGE:
@@ -90,7 +92,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 const op = constraint.operator === 'greater' ? '>' : '<';
                 return t('puzzle.guardian_tribute.constraint.comparison', '{{op}} Guardian {{target}}', {
                     op,
-                    target: (constraint.targetGuardian ?? 0) + 1
+                    target: GUARDIAN_SYMBOLS[(constraint.targetGuardian ?? 0)]
                 });
 
             default:
@@ -184,19 +186,24 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                                 padding: '1.5rem',
                                 textAlign: 'center'
                             }}>
-                                {/* Guardian Number */}
+                                {/* Guardian Symbol */}
                                 <div style={{
-                                    fontSize: '2rem',
+                                    fontSize: '3.5rem',
                                     color: '#d4af37',
                                     fontWeight: 'bold',
                                     fontFamily: 'serif',
-                                    textShadow: '0 2px 4px rgba(0,0,0,0.8)',
-                                    background: 'rgba(0,0,0,0.4)',
-                                    padding: '0.2rem 1rem',
-                                    borderRadius: '20px',
-                                    border: '1px solid rgba(212, 175, 55, 0.3)'
+                                    textShadow: '0 4px 8px rgba(0,0,0,0.9)',
+                                    background: 'rgba(0,0,0,0.6)',
+                                    width: '80px',
+                                    height: '80px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: '50%',
+                                    border: '2px solid rgba(212, 175, 55, 0.4)',
+                                    boxShadow: 'inset 0 0 15px rgba(212, 175, 55, 0.2)'
                                 }}>
-                                    {t('puzzle.guardian_tribute.guardian_number', 'Guardian {{number}}', { number: index + 1 })}
+                                    {GUARDIAN_SYMBOLS[index]}
                                 </div>
 
                                 <div style={{ width: '100%' }}>

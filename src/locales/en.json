@@ -251,11 +251,11 @@
             "success": "The guardians are satisfied! ✨",
             "constraint": {
                 "exact": "Exactly {{value}} gems",
-                "multiplier": "{{multiplier}}× Guardian {{target}}",
-                "addition": "{{value}} Guardian {{target}}",
+                "multiplier": "{{multiplier}}× {{target}}",
+                "addition": "{{value}} {{target}}",
                 "range": "{{min}}-{{max}} gems",
                 "divisibility": "Multiple of {{value}}",
-                "comparison": "{{op}} Guardian {{target}}"
+                "comparison": "{{op}} {{target}}"
             }
         }
     },

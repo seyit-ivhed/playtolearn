@@ -251,11 +251,11 @@
             "success": "Väktarna är nöjda! ✨",
             "constraint": {
                 "exact": "Exakt {{value}} ädelstenar",
-                "multiplier": "{{multiplier}}× Väktare {{target}}",
-                "addition": "{{value}} Väktare {{target}}",
+                "multiplier": "{{multiplier}}× {{target}}",
+                "addition": "{{value}} {{target}}",
                 "range": "{{min}}-{{max}} ädelstenar",
                 "divisibility": "Multipel av {{value}}",
-                "comparison": "{{op}} Väktare {{target}}"
+                "comparison": "{{op}} {{target}}"
             }
         }
     },
