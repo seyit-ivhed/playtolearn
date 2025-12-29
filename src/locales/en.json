@@ -70,16 +70,16 @@
                     "label": "Bandit Guards"
                 },
                 "2_2": {
-                    "label": "Ruined Outpost"
-                },
-                "2_3": {
                     "label": "Water Network"
                 },
-                "2_5": {
+                "2_3": {
                     "label": "Patrolling Bandits"
                 },
+                "2_5": {
+                    "label": "Bandit Camp"
+                },
                 "2_6": {
-                    "label": "Awakened Guardian"
+                    "label": "Awakened Guardians"
                 },
                 "2_7": {
                     "label": "Symbol Algebra"

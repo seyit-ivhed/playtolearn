@@ -135,88 +135,88 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '2_1',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 0, y: 600 },
+                coordinates: { x: -250, y: 800 },
                 enemies: [MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
                 xpReward: 100
             },
             {
                 id: '2_2',
-                type: EncounterType.BATTLE,
-                coordinates: { x: -200, y: 900 },
-                enemies: [MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 100, y: 900 },
+                puzzleData: { puzzleType: PuzzleType.IRRIGATION },
                 xpReward: 110
             },
             {
                 id: '2_3',
-                type: EncounterType.PUZZLE,
-                coordinates: { x: 0, y: 1200 },
-                puzzleData: { puzzleType: PuzzleType.IRRIGATION },
+                type: EncounterType.BATTLE,
+                coordinates: { x: 170, y: 1150 },
+                enemies: [MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
                 xpReward: 120
             },
             {
                 id: '2_4',
                 type: EncounterType.CAMP,
-                coordinates: { x: 250, y: 1300 },
+                coordinates: { x: -80, y: 1520 },
                 xpReward: 0
             },
             {
                 id: '2_5',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 0, y: 1600 },
+                coordinates: { x: 200, y: 1950 },
                 enemies: [MONSTERS.STONE_GUARDIAN],
                 xpReward: 130
             },
             {
                 id: '2_6',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 200, y: 1800 },
+                coordinates: { x: -220, y: 1950 },
                 enemies: [MONSTERS.STONE_GUARDIAN, MONSTERS.STONE_GUARDIAN],
                 xpReward: 140
             },
             {
                 id: '2_7',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 0, y: 2000 },
+                coordinates: { x: -250, y: 2600 },
                 puzzleData: { puzzleType: PuzzleType.CUNEIFORM },
                 xpReward: 150
             },
             {
                 id: '2_8',
                 type: EncounterType.CAMP,
-                coordinates: { x: -200, y: 2300 },
+                coordinates: { x: -150, y: 2950 },
                 xpReward: 0
             },
             {
                 id: '2_9',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 200, y: 2700 },
+                coordinates: { x: 180, y: 2800 },
                 enemies: [MONSTERS.ASSYRIAN_GUARDIAN, MONSTERS.STONE_GUARDIAN],
                 xpReward: 160
             },
             {
                 id: '2_10',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 250, y: 2950 },
+                coordinates: { x: 350, y: 3000 },
                 puzzleData: { puzzleType: PuzzleType.GUARDIAN_TRIBUTE },
                 xpReward: 170
             },
             {
                 id: '2_11',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 600, y: 3200 },
+                coordinates: { x: 300, y: 4050 },
                 enemies: [MONSTERS.ASSYRIAN_GUARDIAN, MONSTERS.ASSYRIAN_GUARDIAN],
                 xpReward: 180
             },
             {
                 id: '2_12',
                 type: EncounterType.CAMP,
-                coordinates: { x: 400, y: 3500 },
+                coordinates: { x: 0, y: 4300 },
                 xpReward: 0
             },
             {
                 id: '2_13',
                 type: EncounterType.BOSS,
-                coordinates: { x: -100, y: 3900 },
+                coordinates: { x: 0, y: 3700 },
                 enemies: [MONSTERS.THE_STONE_EMPEROR],
                 xpReward: 200
             }

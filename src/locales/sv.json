@@ -70,13 +70,13 @@
                     "label": "Banditvakter"
                 },
                 "2_2": {
-                    "label": "Ruinutpost"
-                },
-                "2_3": {
                     "label": "Vattennätverk"
                 },
-                "2_5": {
+                "2_3": {
                     "label": "Patrullerande banditer"
+                },
+                "2_5": {
+                    "label": ""
                 },
                 "2_6": {
                     "label": "Uppvaknad väktare"
