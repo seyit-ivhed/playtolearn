@@ -163,14 +163,14 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 0, y: 1600 },
-                enemies: [MONSTERS.BANDIT_RAIDER],
+                enemies: [MONSTERS.STONE_GUARDIAN],
                 xpReward: 130
             },
             {
                 id: '2_6',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1800 },
-                enemies: [MONSTERS.STONE_GUARDIAN],
+                enemies: [MONSTERS.STONE_GUARDIAN, MONSTERS.STONE_GUARDIAN],
                 xpReward: 140
             },
             {
@@ -190,7 +190,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_9',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 2700 },
-                enemies: [MONSTERS.STONE_GUARDIAN, MONSTERS.STONE_GUARDIAN],
+                enemies: [MONSTERS.ASSYRIAN_GUARDIAN, MONSTERS.STONE_GUARDIAN],
                 xpReward: 160
             },
             {
@@ -204,7 +204,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_11',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 600, y: 3200 },
-                enemies: [MONSTERS.ASSYRIAN_GUARDIAN, MONSTERS.STONE_GUARDIAN],
+                enemies: [MONSTERS.ASSYRIAN_GUARDIAN, MONSTERS.ASSYRIAN_GUARDIAN],
                 xpReward: 180
             },
             {

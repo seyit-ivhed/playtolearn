@@ -28,8 +28,8 @@ export const MONSTERS = {
     },
     STONE_GUARDIAN: {
         id: 'stone_guardian',
-        maxHealth: 70,
-        attack: 10,
+        maxHealth: 80,
+        attack: 15,
     },
     ASSYRIAN_GUARDIAN: {
         id: 'assyrian_guardian',
