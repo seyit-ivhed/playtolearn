@@ -44,14 +44,11 @@ Monster portraits use a consistent style: **Stylized 3D digital illustration, ch
 **Tiny Scorpion (TINY_SCORPION)**
 > Portrait of a Tiny Scorpion, scrappy and grumpy baby creature with an oversized head and tiny pinchers. Fierce determined eyes and a pale soft shell, very small but puffing out its chest to look intimidating. Pouncing forward with a tiny growl expression. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
 
-**Scorpion Raider (SCORPION_RAIDER)**
-> Portrait of a Scorpion Raider, bumbling bandit and grumpy thief, medium-sized scorpion creature wearing a dusty dark bandana and clutching a small stolen bag of coins. Shifty squinty eyes and a dark-red shell, wearing a tattered little leather vest with a skull-and-pincher emblem. Looking for trouble. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
-
 **Sand Spirit (SAND_SPIRIT_1)**
 > Portrait of a Sand Spirit, mischievous and blocking the path, floating creature made of swirling dark-golden sand with sharp-edged cloud shapes. Big glowing restless blue eyes and a smirk showing a hint of a swirling mouth. Looking like it's about to play a mean trick. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft glow lighting. Safe for children.
 
-**Scavenger (SCAVENGER)**
-> Portrait of a Scavenger, a shifty and lean desert bandit with a dusty hooded cloak and a mask covering the lower face. Narrowed, suspicious yellow eyes and carrying a small tinkered satchel over its shoulder. Looking around mischievously for something to swipe. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
+**Desert Scavenger (DESERT_SCAVENGER)**
+> Portrait of a Desert Scavenger, a shifty and lean desert bandit with a dusty hooded cloak and a mask covering the lower face. Narrowed, suspicious yellow eyes and carrying a small tinkered satchel over its shoulder. Looking around mischievously for something to swipe. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
 
 **The Sand Colossus (SAND_COLOSSUS - Boss)**
 > Portrait of The Sand Colossus, mysterious and territorial sandstone giant, massive creature made of jagged sandstone blocks and boulders. Deep ancient glowing orange eyes looking down sternly. Sand cascading like a heavy storm from its massive shoulders. Raising a giant stony fist in a commanding, adversarial pose. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.

@@ -11,13 +11,8 @@ export const MONSTERS = {
         maxHealth: 15,
         attack: 4,
     },
-    SCORPION_RAIDER: {
-        id: 'scorpion_raider',
-        maxHealth: 50,
-        attack: 10,
-    },
-    SCAVENGER: {
-        id: 'scavenger',
+    DESERT_SCAVENGER: {
+        id: 'desert_scavenger',
         maxHealth: 35,
         attack: 8,
     },

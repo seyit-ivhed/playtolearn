@@ -6,8 +6,8 @@
 
 import duneScorpionImg from '../assets/images/enemies/dune-scorpion.png';
 import sandSpiritImg from '../assets/images/enemies/sand-spirit.png';
-import scorpionRaiderImg from '../assets/images/enemies/scorpion-raider.jpg';
 import tinyScorpionImg from '../assets/images/enemies/tiny-scorpion.jpg';
+import desertScavengerImg from '../assets/images/enemies/desert-scavenger.png';
 import sandColossusImg from '../assets/images/enemies/the-sand-colossus.jpg';
 import banditRaiderImg from '../assets/images/enemies/bandit-raider.png';
 import stoneGuardianImg from '../assets/images/enemies/stone-guardian.png';
@@ -17,7 +17,7 @@ import theStoneEmperorImg from '../assets/images/enemies/the-stone-emperor.png';
 export const MONSTER_SPRITES: Record<string, string> = {
     'scorpion_1': duneScorpionImg,
     'tiny_scorpion': tinyScorpionImg,
-    'scorpion_raider': scorpionRaiderImg,
+    'desert_scavenger': desertScavengerImg,
     'sand_spirit_1': sandSpiritImg,
     'sand_colossus': sandColossusImg,
     'bandit_raider': banditRaiderImg,
