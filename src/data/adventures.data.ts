@@ -52,9 +52,9 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 1600 },
                 enemies: [
-                    MONSTERS.SCORPION_1,
-                    MONSTERS.SCORPION_1,
-                    MONSTERS.SCORPION_1
+                    MONSTERS.DESERT_SCAVENGER,
+                    MONSTERS.DESERT_SCAVENGER,
+                    MONSTERS.DESERT_SCAVENGER
                 ],
                 xpReward: 50,
             },
@@ -63,7 +63,7 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: 0, y: 1800 },
                 enemies: [
-                    MONSTERS.DESERT_SCAVENGER,
+                    MONSTERS.BANDIT_LEADER,
                     MONSTERS.DESERT_SCAVENGER,
                     MONSTERS.DESERT_SCAVENGER
                 ],

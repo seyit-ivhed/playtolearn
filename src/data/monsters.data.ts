@@ -48,4 +48,9 @@ export const MONSTERS = {
         attack: 30,
         isBoss: true,
     },
+    BANDIT_LEADER: {
+        id: 'bandit_leader',
+        maxHealth: 120,
+        attack: 20,
+    },
 } as const satisfies Record<string, AdventureMonster>;

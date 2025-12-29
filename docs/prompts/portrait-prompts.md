@@ -50,6 +50,9 @@ Monster portraits use a consistent style: **Stylized 3D digital illustration, ch
 **Desert Scavenger (DESERT_SCAVENGER)**
 > Portrait of a Desert Scavenger, a shifty and lean desert bandit with a dusty hooded cloak and a mask covering the lower face. Narrowed, suspicious yellow eyes and carrying a small tinkered satchel over its shoulder. Looking around mischievously for something to swipe. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
 
+**Bandit Leader (BANDIT_LEADER)**
+> Portrait of a Bandit Leader, a charismatic and imposing rogue wearing a tattered but ornate crimson cloak over hardened leather armor. Wearing a distinct golden headband and having a confident, slightly arrogant smirk. One hand rests on a blunt curved saber at the hip. Standing tall on a rocky outcrop under the desert sun, looking down with a commanding gaze. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
+
 **The Sand Colossus (SAND_COLOSSUS - Boss)**
 > Portrait of The Sand Colossus, mysterious and territorial sandstone giant, massive creature made of jagged sandstone blocks and boulders. Deep ancient glowing orange eyes looking down sternly. Sand cascading like a heavy storm from its massive shoulders. Raising a giant stony fist in a commanding, adversarial pose. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
 

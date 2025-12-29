@@ -242,6 +242,9 @@
         },
         "the_stone_emperor": {
             "name": "The Stone Emperor"
+        },
+        "bandit_leader": {
+            "name": "Bandit Leader"
         }
     }
 }

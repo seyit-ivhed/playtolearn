@@ -242,6 +242,9 @@
         },
         "the_stone_emperor": {
             "name": "Stenkejsaren"
+        },
+        "bandit_leader": {
+            "name": "Banditledare"
         }
     }
 }
