@@ -143,14 +143,14 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_1',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 0, y: 600 },
-                enemies: [MONSTERS.SCAVENGER, MONSTERS.SCAVENGER],
+                enemies: [MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
                 xpReward: 100
             },
             {
                 id: '2_2',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 900 },
-                enemies: [MONSTERS.BANDIT_RAIDER],
+                enemies: [MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
                 xpReward: 110
             },
             {
