@@ -1,6 +1,6 @@
-# High-Level Progression Structure (MVP F2P)
+# High-Level Progression Structure (Free Trial + DLC)
 
-This document outlines the progression flow, story, and encounter details for the Free-to-Play (F2P) portion of *Math Quest Adventures*.
+This document outlines the progression flow, story, and encounter details for the Free Trial and subsequent paid content of *Math Quest Adventures*.
 
 ## Realm: The World of Origins
 **Theme:** A vibrant, mystical world where nature and ancient magic coexist. It is the birthplace of the companions.
@@ -15,7 +15,7 @@ As they journey through the Desert and Jungle, their experiences and the math ch
 
 ---
 
-## Adventure 1: The Oasis Quest (Starting Adventure)
+## Adventure 1: The Oasis Quest (Free Trial Adventure)
 **Theme:** Tariq's Home (The Luminescent Desert)
 **Character Focus:** Learning the basics while venturing through the desert.
 **Tutorial Learning Objectives (Integrated into Encounter 1):**
@@ -59,7 +59,7 @@ As they journey through the Desert and Jungle, their experiences and the math ch
 
 ---
 
-## Adventure 2: The Jungle Expedition
+## Adventure 2: The Jungle Expedition (Paid Content)
 **Theme:** Deeper Jungle (Ancient Ruins)
 **Focus:** Synergy between the two young heroes.
 
@@ -103,7 +103,7 @@ Puzzles adapt to the **Difficulty Level (1-5)** selected by the player:
     - ...
     - **Encounter 10 (Boss):** 100 XP
     - **Encounter 20 (Final Boss):** 200 XP
-- **Growth Milestone:** At **Level 10** (Free Tier Cap), companions undergo their **First Evolution**. Players will reach this milestone after completing both adventures (20 encounters).
+- **Growth Milestone:** At **Level 10**, companions undergo their **First Evolution**. Players will reach this milestone after completing both adventures (20 encounters). In the new business model, this milestone occurs at the end of the first **Paid Content** adventure.
 
 
 ### Death & Failure

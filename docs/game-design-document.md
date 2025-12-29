@@ -4,13 +4,13 @@
 
 **Game Title:** Math Quest Adventures (working title)
 
-**Target Audience:** Children ages 6-12
+**Target Audience:** Children ages 6-10
 
 **Platform:** Web Browser (Desktop & Tablet)
 
 **Genre:** Educational Fantasy Adventure / RPG Lite
 
-**Core Concept:** Players embark on an epic **Journey** through magical realms, leading an adventuring party. The Journey is divided into many **Adventures**, each with its own theme, story, and map featuring a linear set of **Encounters**. Some encounters involve battles against monsters, while others present puzzles to solve. Each adventure culminates in a **Boss Fight**. Through the adventures players can unlock new companions, grow their existign companions and collect visual elements to create their own unique Magical Canvas. The party grows from a small band to a formidable fellowship of heroes.
+**Core Concept:** Players embark on an epic **Journey** through magical realms, leading an adventuring party. The Journey is divided into many **Adventures**, each with its own theme, story, and map featuring a linear set of **Encounters**. Some encounters involve battles against monsters, while others present puzzles to solve. Each adventure culminates in a **Boss Fight**. Through the adventures players can unlock new companions, grow and evolve their existing companions and collect visual elements to create their own unique Magical Canvas. The party grows from a small band to a formidable fellowship of heroes.
 
 ---
 
@@ -20,22 +20,19 @@
 Math Quest Adventures transforms math practicing into an exciting fantasy **Journey** where every challenge overcome makes your party stronger. Players lead their own fellowship through multiple **Adventures**, each containing a series of **Encounters** (battles and puzzles) that culminate in epic **Boss Fights**. Companions solve contextual math challenges to achieve **Companion Growth**, defeat monsters, and unlock new regions of the realm.
 
 ### 1.2 Core Gameplay Loop
-```mermaid
-graph LR
-    A[Select Adventure] --> B[Face Encounters]
-    B --> C[Solve Math Challenges]
-    C --> D[Defeat Boss Fight]
-    D --> E[Companion Growth]
-    E --> F[Choose Party of 4]
-    F --> G[Next Adventure]
-    G --> A
-```
+* Choose Adventure/Chapter
+* Choose Party from fellowship
+* Face Encounters
+* Solve Math Challenges
+* Grow Companions
+* Defeat Boss Fight
+* Unlock next adventure
 
 ### 1.3 Key Features
 - **Epic Journey**: Progress through multiple themed adventures, each with unique stories and maps
 - **Selectable Math Curriculum**: Players can select which math curriculum to practice
 - **Companion Collection**: Recruit diverse heroes, each with unique abilities
-- **Party Customization**: Choose 4 companions to take on each adventure
+- **Party Customization**: Choose 4 companions to take on each encounter
 - **Companion Growth System**: Companions learn upgrade their unique skills as they gain experience
 - **Linear Adventure Maps**: Each adventure features a sequence of encounters leading to a boss fight
 - **Encounter Variety**: Face monster battles and solve puzzles
@@ -97,8 +94,7 @@ Each **Adventure** consists of:
 
 #### Player-Controlled Difficulty
 - Players choose both the math skill and difficulty level for each adventure
-- Game encourages players to increase difficulty when they perform well (e.g., "You got 9/10 correct! Ready to try Level 3?")
-- Game suggests trying easier difficulty or previous skills if player struggles (e.g., "That was tough! Want to practice Level 2 first?")
+- Game encourages players to increase difficulty when they perform well using a star system
 - No forced adjustments - player always has final choice
 - Progress tracking shows performance by skill and difficulty to help inform choices
 
@@ -108,7 +104,7 @@ Each **Adventure** consists of:
 - **Permanent Companions**: Once unlocked, companions are yours forever
 - **No Equipment**: Companions upgrade directly (simpler for children)
 - **Party Selection**: Choose which 4 companions to bring on each encounter
-- **Diverse Heroes**: Each companion has unique personality, appearance, and role
+- **Diverse Heroes**: Each companion has unique personality, appearance, and abilities
 
 ### 2.4 Encounter System
 
@@ -171,10 +167,10 @@ Each realm contains multiple adventures:
 - **Adventure Map**: Accessible via the "Portal" icon.
 
 ### 4.2 Party Management Interface (The Roster)
-- **Access**: Global button available from the Canvas and Map.
+- **Access**: Access through Camp encounter sites
 - **Functionality**:
   - **Team Selection**: Drag-and-drop interface to choose the 4 active companions.
-  - **Companion Details**: Click any companion to view their "Card" (Stats, Abilities, Lore).
+  - **Companion Details**: Hover any companion to view their "Card" (Stats, Abilities, Lore).
   - **Growth Visualization**: 
     - XP bars and "Next Level" previews.
     - "Evolution" animations play here when a companion levels up.
@@ -221,7 +217,6 @@ Each realm contains multiple adventures:
 - **Responsive Design**: Desktop (1024px+) and tablet (768px+)
 - **Performance**: Smooth 60fps animations
 - **Save System**: Cloud-based progress saving (account required)
-- **Offline Mode**: Optional offline play with sync when online
 
 ### 6.2 Technology Stack
 - **Frontend**: HTML5, CSS3, TypeScript
@@ -245,15 +240,15 @@ Each realm contains multiple adventures:
 
 ## 7. Business Model & Meta Game
 
-### 7.1 "The Chronicles of Realms" (Freemium + DLC)
+### 7.1 "The Chronicles of Realms" (Free Trial + DLC)
 - **Core Philosophy**: Honest, high-value content purchases. No ads, no predatory microtransactions for consumables.
-- **Base Game (Free)**:
-    - Includes "The Training Grounds" and "Realm 1: The Whispering Woods".
+- **Free Trial (The Hook)**:
+    - Includes "Realm 1: The World of Origins" - First Adventure: "The Oasis Quest".
     - Full access to "The Magical Canvas" with a starter sticker set.
     - Full access to core math curriculum (Grades 1-2).
-- **Realm Packs (Paid DLC)**:
-    - **Content**: Unlocks a new Realm (e.g., "The Steam Canyons", "The Crystal Peaks").
-    - **Value**: ~10-15 new Adventures, 2 new Unique Companions, new Monsters, and new Math Mechanics.
+- **Expansion Packs (Paid DLCs)**:
+    - **Content**: Unlocks subsequent content as separate DLCs (e.g., "The Steam Canyons", "The Crystal Peaks") or as a bundle.
+    - **Value**: Each DLC contains several adventures (10-15 encounters each), 2 new Unique Companions, new Monsters, and new Math Mechanics.
     - **Bonus**: Exclusive themed Sticker Sets for the Magical Canvas.
 
 ### 7.2 Engagement Loops
