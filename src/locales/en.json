@@ -2,6 +2,7 @@
     "common": {
         "continue": "Continue"
     },
+    "remainder_text": " R ",
     "party_camp": "Party Camp",
     "adventure": {
         "title": "Adventures",
@@ -136,6 +137,10 @@
             "defeat_title": "DEFEAT",
             "defeat_message": "Your party has fallen...",
             "continue_button": "Continue"
+        },
+        "turn": {
+            "player": "Your Turn",
+            "enemy": "Enemy Turn"
         }
     },
     "rewards": {
@@ -162,6 +167,7 @@
         "gold": "Gold Found",
         "continue": "Continue",
         "retry": "Try Again",
+        "vs": "VS",
         "puzzles": {
             "guardian_tribute": {
                 "description": "Distribute the gems among the statues",
@@ -179,6 +185,16 @@
             }
         }
     },
+    "puzzle": {
+        "reset": "Reset",
+        "target": "Target",
+        "irrigation": {
+            "target": "Target Litres"
+        },
+        "sequence": {
+            "instruction": "Connect the stars in order!"
+        }
+    },
     "companions": {
         "unlock": "New Companion Unlocked!",
         "level_up": "Level Up!",
@@ -187,6 +203,16 @@
             "spirit": "Spirit",
             "attack": "Attack",
             "shield": "Shield"
+        },
+        "amara": {
+            "name": "Amara",
+            "special_ability_name": "Jaguar Strike",
+            "special_ability_description": "Deals {{value}} damage to a single enemy."
+        },
+        "tariq": {
+            "name": "Tariq",
+            "special_ability_name": "Elixir of Life",
+            "special_ability_description": "Heals all allies for {{value}} HP."
         }
     },
     "monsters": {

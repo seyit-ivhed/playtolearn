@@ -136,7 +136,7 @@ export const UnitCard = ({
                             abilityName={
                                 isUltimateReady && companionData?.specialAbility
                                     ? t(`companions.${unit.templateId}.special_ability_name`)
-                                    : t('party.stats.attack')
+                                    : t('companions.stats.attack')
                             }
                             abilityDescription={
                                 isUltimateReady && companionData?.specialAbility
@@ -168,7 +168,7 @@ export const UnitCard = ({
                 mathProblem && onMathAnswer && (
                     <MathCardFace
                         problem={mathProblem}
-                        abilityName={companionData?.specialAbility ? t(`companions.${unit.templateId}.special_ability_name`) : 'MIGHTY BLOW'}
+                        abilityName={companionData?.specialAbility ? t(`companions.${unit.templateId}.special_ability_name`) : t('companions.stats.attack')}
                         onAnswer={onMathAnswer}
                     />
                 )

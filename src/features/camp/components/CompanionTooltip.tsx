@@ -27,11 +27,11 @@ export const CompanionTooltip: React.FC<CompanionTooltipProps> = ({ companionId,
             <div className={styles.statGrid}>
                 <div className={styles.statItem}>
                     <Heart size={18} className={styles.iconHp} />
-                    <span>{calculatedStats.maxHealth} HP</span>
+                    <span>{calculatedStats.maxHealth} {t('companions.stats.hp')}</span>
                 </div>
                 <div className={styles.statItem}>
                     <Swords size={18} className={styles.iconAtk} />
-                    <span>{calculatedStats.abilityDamage} ATK</span>
+                    <span>{calculatedStats.abilityDamage} {t('companions.stats.attack')}</span>
                 </div>
             </div>
 

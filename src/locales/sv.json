@@ -2,6 +2,7 @@
     "common": {
         "continue": "Fortsätt"
     },
+    "remainder_text": " rest ",
     "party_camp": "Lägerplats",
     "adventure": {
         "title": "Äventyr",
@@ -136,6 +137,10 @@
             "defeat_title": "NEDERLAG",
             "defeat_message": "Din grupp har fallit...",
             "continue_button": "Fortsätt"
+        },
+        "turn": {
+            "player": "Din tur",
+            "enemy": "Fiendens tur"
         }
     },
     "rewards": {
@@ -162,6 +167,7 @@
         "gold": "Guld funnet",
         "continue": "Fortsätt",
         "retry": "Försök igen",
+        "vs": "MOT",
         "puzzles": {
             "guardian_tribute": {
                 "description": "Fördela ädelstenarna mellan statyerna",
@@ -179,6 +185,16 @@
             }
         }
     },
+    "puzzle": {
+        "reset": "Nollställ",
+        "target": "Mål",
+        "irrigation": {
+            "target": "Målliter"
+        },
+        "sequence": {
+            "instruction": "Koppla ihop stjärnorna i rätt ordning!"
+        }
+    },
     "companions": {
         "unlock": "Ny följeslagare upplåst!",
         "level_up": "Nivå upp!",
@@ -187,6 +203,16 @@
             "spirit": "Ande",
             "attack": "Attack",
             "shield": "Sköld"
+        },
+        "amara": {
+            "name": "Amara",
+            "special_ability_name": "Jaguarhugg",
+            "special_ability_description": "Gör {{value}} skada på en enskild fiende."
+        },
+        "tariq": {
+            "name": "Tariq",
+            "special_ability_name": "Livselixir",
+            "special_ability_description": "Helar alla allierade med {{value}} HP."
         }
     },
     "monsters": {
