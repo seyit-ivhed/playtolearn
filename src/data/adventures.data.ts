@@ -163,7 +163,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1950 },
-                enemies: [MONSTERS.STONE_GUARDIAN],
+                enemies: [MONSTERS.BANDIT_LEADER, MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
                 xpReward: 130
             },
             {
