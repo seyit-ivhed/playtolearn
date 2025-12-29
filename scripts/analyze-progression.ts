@@ -1,10 +1,10 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { ADVENTURES } from '../data/adventures.data';
-import { getXpForNextLevel } from '../utils/progression.utils';
-import { EncounterType } from '../types/adventure.types';
-import type { AdventureSimulationConfig } from '../utils/simulation/simulation.types';
+import { ADVENTURES } from '../src/data/adventures.data';
+import { getXpForNextLevel } from '../src/utils/progression.utils';
+import { EncounterType } from '../src/types/adventure.types';
+import type { AdventureSimulationConfig } from '../src/utils/simulation/simulation.types';
 
 // Types
 interface SimCompanion {

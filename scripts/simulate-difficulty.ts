@@ -2,11 +2,11 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { getAdventureById } from '../../data/adventures.data';
-import { EncounterType } from '../../types/adventure.types';
-import { DifficultyAnalyzer } from './DifficultyAnalyzer';
-import { ConsoleOutputFormatter } from './output/OutputFormatter';
-import type { AdventureSimulationConfig, EncounterSimulationResults, SimulationConfigFile } from './simulation.types';
+import { getAdventureById } from '../src/data/adventures.data';
+import { EncounterType } from '../src/types/adventure.types';
+import { DifficultyAnalyzer } from '../src/utils/simulation/DifficultyAnalyzer';
+import { ConsoleOutputFormatter } from '../src/utils/simulation/output/OutputFormatter';
+import type { AdventureSimulationConfig, EncounterSimulationResults, SimulationConfigFile } from '../src/utils/simulation/simulation.types';
 
 /**
  * CLI for running battle difficulty simulations
