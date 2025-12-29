@@ -23,8 +23,8 @@
         "1": {
             "title": "The Hidden Entrance",
             "description": "An ancient cave revealed by the shifting sands.",
-            "story_hook": "Tariq's homeland is plagued by strange sightings near the great stone archway in the southwest. An ancient cave entrance, long buried by sand, has been revealed.",
-            "completion_summary": "The Sand Colossus is defeated at the mouth of the massive cave. As the dust settles, the dark tunnel beckons you forward. Scavengers are already slipping into the shadows ahead.",
+            "story_hook": "Amara, a young traveler from distant southern lands, is visiting her friend Tariq in his homeland. Strange sightings near the great stone archway have caught their attention. Together, they set out to investigate an ancient cave entrance, long buried by sand, that has been revealed by the shifting dunes.",
+            "completion_summary": "The Sand Colossus is defeated! Amara and Tariq stand together at the mouth of the massive cave, their friendship strengthened by their first adventure. The dark tunnel beckons them forward into the unknown depths.",
             "mystery_path": "A mysterious path into the unknown...",
             "nodes": {
                 "1_1": {
@@ -62,8 +62,8 @@
         "2": {
             "title": "The Ruins of Ashur",
             "description": "A subterranean city overrun by bandits and stone guardians.",
-            "story_hook": "Leaving the desert sun behind, you descend into the cool depths of the canyon cave. The tunnel opens into a vast subterranean city—Ashur. But scavengers have turned the ruins into a bandit camp, and the stones themselves are starting to move.",
-            "completion_summary": "With the Stone Emperor silenced, the heart of Ashur is yours. But the inscriptions on the canyon walls speak of a 'High King' in the distant mountains who still holds the keys to the world's origins...",
+            "story_hook": "Leaving the desert sun behind, Amara and Tariq descend into the cool depths of the canyon cave. The tunnel opens into a vast subterranean city—the ancient Ashur. But bandits have turned the ruins into their camp, and the stones themselves are beginning to stir with ancient magic.",
+            "completion_summary": "With the Stone Emperor defeated, the heart of Ashur is safe. As Amara and Tariq stand among the ancient ruins, they realize this is just the beginning. Inspired by their adventures together, they make a pact: to explore the world beyond these lands, to see what wonders await, and to face whatever challenges come their way—together.",
             "mystery_path": "Deep within the ruins, a new shadow grows...",
             "nodes": {
                 "2_1": {

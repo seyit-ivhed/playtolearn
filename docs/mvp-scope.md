@@ -36,62 +36,62 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 
 ## 2. Content Scope
 
-### Progression System: Level Cap & Evolution
+> **Story Framework**: See [story-and-journey.md](file:///Users/seyitivhed/Github/playtolearn-workspaces/workspace-1/docs/story-and-journey.md) for the complete narrative framework. The game follows young companions traveling the world together, growing through friendship and shared experiences.
 
-- **Free Trial Cap**: Companions are capped at **Level 10**.
-- **Premium Cap Increase**: Each Realm Pack purchased increases the cap by **+10 levels**.
-    - 1 Pack → Cap 20
-    - 2 Packs (Bundle) → Cap 30
-- **Evolution Milestones**: Companions evolve at levels **10, 20, 30, 40, 50** (5 evolutions total).
-    - Free Trial: **First evolution** (Evolution 1) is possible at Level 10.
-    - 1 Pack: 2nd evolution unlockable (can reach Lv 20).
-    - 2 Packs: 3rd evolution unlockable (can reach Lv 30).
+### Business Model: Freemium with Premium Content
 
-- **Future Packs**: Additional realm packs can raise the cap further to unlock evolutions 3-5.
+- **Free Trial**: 1 adventure (Adventure 1) to hook players
+- **Premium Content**: 5 additional adventures (Adventures 2-6) as paid content
+- **No Level Caps**: Companions can level up freely based on XP distribution
+- **Evolution System**: Companions evolve at levels **5, 10, 15, 20, 25** (5 evolutions total)
+  - Evolutions represent companions aging and maturing (Age 8 → 10 → 13 → 16 → 18)
+  - First evolution happens early in premium content (level 5) to create an exciting hook
 
----
+### Content Structure: 6 Adventures Across 3 Realms
 
-### Free Trial (The Hook)
-**Realm: The World of Origins**
-
-- **Companions (2)**:
-    - *Amara* (South American-inspired Ranger) - Starter
-    - *Tariq* (Middle-Eastern-inspired Alchemist) - Starter
-- **Adventure (1)**:
-    - **1. The Oasis Quest**:
-        - Theme: Middle-Eastern Desert entry to ancient ruins.
-        - Length: 6 Combat Encounters + 3 Puzzle Encounters + 2 camp sites + 1 Boss.
+**MVP includes 6 total adventures**, organized into 3 realms (2 adventures per realm). Each realm represents a thematic arc with a distinct cultural setting.
 
 ---
 
-### Paid Content (The Value Test)
+### Realm 1: The Desert and Ancient City
+**Adventures 1-2 | Theme: Middle Eastern Desert & Assyrian Ruins**
 
-#### Realm: The World of Origins (Continued)
-- **Adventure (1)**:
-    - **2. The Jungle Expedition**:
-        - Theme: Ruins of an ancient city in the deep jungle.
-        - Length: 6 Combat Encounters + 3 Puzzle Encounters + 2 camp sites + 1 Boss.
+**Free Trial**:
+- **Adventure 1: The Hidden Entrance**
+  - Theme: Desert and ancient cave entrance
+  - Length: 6 Combat + 3 Puzzle + 3 Camps + 1 Boss
+  - **Companions**: Amara (South African-inspired Ranger) & Tariq (Middle Eastern-inspired Alchemist)
+  - **Story**: Amara, a young traveler from distant lands, visits Tariq's homeland. Together they investigate mysterious sightings and discover hidden ruins.
+
+**Premium Content**:
+- **Adventure 2: The Ruins of Ashur**
+  - Theme: Subterranean Assyrian city
+  - Length: 6 Combat + 3 Puzzle + 3 Camps + 1 Boss
+  - **Story**: Exploring the ancient underground city, cementing their friendship and deciding to explore the world together.
 
 ---
 
-### Paid Tier (The Value Test)
+### Realm 2: [Theme To Be Determined]
+**Adventures 3-4 | Premium Content**
 
-#### Realm Pack: The Baobab Plains (African Theme)
-- **New Companion**: *Zahara* (African-inspired Mage)
-- **Adventures (4)**:
-    - Theme: African Savannah, Ancient Kingdoms.
-    - Structure: 6 Combat Encounters + 3 Puzzle Encounters + 3 camp sites + 1 Boss each.
-- **New Monsters**: Lions, Hyenas, Nature Spirits, Ancient Guardians.
-- **Magical Canvas Pack**: African theme stickers/backgrounds.
+- **New Companions**: 1-2 companions from this realm (children who join the journey)
+- **Story Arc**: Amara and Tariq (now older/more experienced) meet young locals and become mentors
+- Structure: 6 Combat + 3 Puzzle + 3 Camps + 1 Boss each
 
-#### Realm Pack: The Sakura Highlands (Japanese Theme)
-- **New Companion**: *Kenji* (Japanese-inspired Samurai)
-- **Adventures (4)**:
-    - Theme: Cherry Blossom Forests, Misty Mountains.
-    - Structure: 6 Combat Encounters + 3 Puzzle Encounters + 3 camp sites + 1 Boss each.
-- **New Monsters**: Oni, Kappa, Tengu, Kitsune Boss.
-- **Magical Canvas Pack**: Japanese theme stickers/backgrounds.
+---
 
-#### Bundle: Both Realms
-- Discounted price for purchasing both The Baobab Plains and The Sakura Highlands together.
-- Complete party of 4 companions (Amara, Tariq, Zahara, Kenji).
+### Realm 3: [Theme To Be Determined]
+**Adventures 5-6 | Premium Content**
+
+- **New Companions**: 1-2 companions from this realm
+- **Story Arc**: The found family is complete, with companions at different ages and experience levels
+- Structure: 6 Combat + 3 Puzzle + 3 Camps + 1 Boss each
+
+---
+
+### Future Content (Post-MVP)
+
+Additional realms can be added as DLC packs:
+- Each realm = 2 adventures with shared theme
+- Each realm introduces 1-2 new companions
+- Continues the wandering companions' journey to new lands

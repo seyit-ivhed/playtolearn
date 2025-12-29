@@ -23,8 +23,8 @@
         "1": {
             "title": "Den gömda ingången",
             "description": "En uråldrig grotta avslöjad av de skiftande sanddynerna.",
-            "story_hook": "Tariqs hemland plågas av märkliga syner nära den stora stenporten i sydväst. En uråldrig grottöppning, länge begravd i sand, har blottats.",
-            "completion_summary": "Sandkolossen är besegrad vid mynningen av den massiva grottan. När dammet lägger sig lockar den mörka tunneln dig framåt.",
+            "story_hook": "Amara, en ung resenär från avlägsna södra länder, besöker sin vän Tariq i hans hemland. Märkliga syner nära den stora stenporten har fångat deras uppmärksamhet. Tillsammans ger de sig ut för att undersöka en uråldrig grottöppning, länge begravd i sand, som har avslöjats av de skiftande dynerna.",
+            "completion_summary": "Sandkolossen är besegrad! Amara och Tariq står tillsammans vid mynningen av den massiva grottan, deras vänskap stärkt av deras första äventyr. Den mörka tunneln lockar dem framåt in i de okända djupen.",
             "mystery_path": "En mystisk väg in i det okända...",
             "nodes": {
                 "1_1": {
@@ -62,8 +62,8 @@
         "2": {
             "title": "Ashurs ruiner",
             "description": "En underjordisk stad övertagen av banditer och stenväktare.",
-            "story_hook": "När du lämnar ökensolen bakom dig stiger du ner i de svala djupen av kanjongrottan. Tunneln öppnar sig mot en enorm underjordisk stad — Ashur. Men plundrare har förvandlat ruinerna till ett banditläger, och stenarna själva börjar röra på sig.",
-            "completion_summary": "Med Stenkejsaren tystad är Ashurs hjärta ditt. Men inskriptionerna på kanjonväggarna talar om en 'Högkonung' i de avlägsna bergen som fortfarande håller nycklarna till världens ursprung...",
+            "story_hook": "När de lämnar ökensolen bakom sig stiger Amara och Tariq ner i de svala djupen av kanjongrottan. Tunneln öppnar sig mot en enorm underjordisk stad—det uråldriga Ashur. Men banditer har förvandlat ruinerna till sitt läger, och stenarna själva börjar röra på sig med uråldrig magi.",
+            "completion_summary": "Med Stenkejsaren besegrad är Ashurs hjärta säkert. När Amara och Tariq står bland de uråldriga ruinerna inser de att detta bara är början. Inspirerade av sina äventyr tillsammans gör de en pakt: att utforska världen bortom dessa länder, att se vilka under som väntar, och att möta alla utmaningar som kommer i deras väg—tillsammans.",
             "mystery_path": "Djupt inne i ruinerna växer en ny skugga...",
             "nodes": {
                 "2_1": {
