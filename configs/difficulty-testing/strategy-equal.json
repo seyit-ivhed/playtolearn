@@ -54,11 +54,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 2
+            "level": 3
           },
           {
             "companionId": "tariq",
-            "level": 2
+            "level": 3
           }
         ]
       },
@@ -66,11 +66,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 2
+            "level": 3
           },
           {
             "companionId": "tariq",
-            "level": 2
+            "level": 3
           }
         ]
       },

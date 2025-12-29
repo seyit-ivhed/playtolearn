@@ -61,7 +61,7 @@ export const ADVENTURES: Adventure[] = [
                     MONSTERS.BANDIT_LEADER,
                     MONSTERS.DESERT_SCAVENGER
                 ],
-                xpReward: 55,
+                xpReward: 60,
             },
             {
                 id: '1_7',
@@ -70,7 +70,7 @@ export const ADVENTURES: Adventure[] = [
                 puzzleData: {
                     puzzleType: PuzzleType.BALANCE
                 },
-                xpReward: 60
+                xpReward: 70
             },
             {
                 id: '1_8',
