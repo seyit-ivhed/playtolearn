@@ -44,8 +44,7 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
     const currentStats = stats || { level: 1, xp: 0 };
 
     const canLevelUp = typeof xpPool === 'number' &&
-        xpPool >= (getXpForNextLevel(currentStats.level) - currentStats.xp) &&
-        currentStats.level < 10;
+        xpPool >= (getXpForNextLevel(currentStats.level) - currentStats.xp);
 
     return (
         <div
@@ -81,11 +80,11 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                 </div>
                 <button
                     className={`${styles.levelUpBtn} ${canLevelUp ? styles.canLevelUp : ''}`}
-                    disabled={!canLevelUp && (currentStats.level >= 10 || xpPool < (getXpForNextLevel(currentStats.level) - currentStats.xp))}
+                    disabled={!canLevelUp}
                     onClick={() => onLevelUp?.(companionId)}
                     data-testid={`level-up-btn-${companionId}`}
                 >
-                    {currentStats.level >= 10 ? 'MAX LVL' : `LEVEL UP (${getXpForNextLevel(currentStats.level) - currentStats.xp} XP)`}
+                    LEVEL UP ({getXpForNextLevel(currentStats.level) - currentStats.xp} XP)
                 </button>
             </div>
         </div>

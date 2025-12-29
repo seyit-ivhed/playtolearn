@@ -13,18 +13,12 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
         let newXp = stats.xp + amount;
         let newLevel = stats.level;
 
-        // Simple while loop for multi-lebel up (though unrealistic with small amounts)
-        // Cap level at 10 for Free Tier MVP
+        // Simple while loop for multi-level up
         let xpNeeded = getXpForNextLevel(newLevel);
-        const LEVEL_CAP = 10;
-        while (newXp >= xpNeeded && newLevel < LEVEL_CAP) {
+        while (newXp >= xpNeeded) {
             newXp -= xpNeeded;
             newLevel++;
             xpNeeded = getXpForNextLevel(newLevel);
-        }
-
-        if (newLevel === LEVEL_CAP) {
-            newXp = 0;
         }
 
         set({
@@ -43,9 +37,6 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
         const level = typeof stats.level === 'number' ? stats.level : 1;
         const xp = typeof stats.xp === 'number' ? stats.xp : 0;
         const pool = typeof state.xpPool === 'number' ? state.xpPool : 0;
-
-        const LEVEL_CAP = 10;
-        if (level >= LEVEL_CAP) return;
 
         const xpNeeded = getXpForNextLevel(level);
         const actualXpNeeded = Math.max(0, xpNeeded - xp);

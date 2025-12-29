@@ -312,20 +312,7 @@ describe('useGameStore', () => {
             expect(state.companionStats['c1'].level).toBe(1);
         });
 
-        it('should not level up beyond cap', () => {
-            useGameStore.setState({
-                xpPool: 1000,
-                companionStats: {
-                    c1: { level: 10, xp: 0 }
-                }
-            });
 
-            useGameStore.getState().levelUpCompanion('c1');
-
-            const state = useGameStore.getState();
-            expect(state.companionStats['c1'].level).toBe(10);
-            expect(state.xpPool).toBe(1000);
-        });
 
         it('should strictly prevent level up if xpPool is 0 and companion has 0 xp', () => {
             useGameStore.setState({
