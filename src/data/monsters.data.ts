@@ -13,8 +13,13 @@ export const MONSTERS = {
     },
     DESERT_SCAVENGER: {
         id: 'desert_scavenger',
-        maxHealth: 35,
-        attack: 8,
+        maxHealth: 40,
+        attack: 10,
+    },
+    BANDIT_LEADER: {
+        id: 'bandit_leader',
+        maxHealth: 100,
+        attack: 12,
     },
     BANDIT_RAIDER: {
         id: 'bandit_raider',
@@ -34,7 +39,7 @@ export const MONSTERS = {
     SAND_SPIRIT_1: {
         id: 'sand_spirit_1',
         maxHealth: 60,
-        attack: 15,
+        attack: 12,
     },
     SAND_COLOSSUS: {
         id: 'sand_colossus',
@@ -47,10 +52,5 @@ export const MONSTERS = {
         maxHealth: 250,
         attack: 30,
         isBoss: true,
-    },
-    BANDIT_LEADER: {
-        id: 'bandit_leader',
-        maxHealth: 120,
-        attack: 20,
     },
 } as const satisfies Record<string, AdventureMonster>;
