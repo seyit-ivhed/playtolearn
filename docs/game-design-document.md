@@ -252,9 +252,9 @@ Each realm contains multiple adventures:
     - **Bonus**: Exclusive themed Sticker Sets for the Magical Canvas.
 
 ### 7.2 Engagement Loops
-- **Short Term**: Complete an Adventure -> Earn "Starlight Shards" & Find Hidden Stickers -> Create a new scene in the Canvas.
-- **Mid Term**: Level up Companions -> Unlock "Memory Fragments" (Story Comics) -> Deepen connection to characters.
-- **Long Term**: Complete a Realm -> Defeat Realm Boss -> Unlock next Realm option -> Collect "Boss Trophy" Sticker.
+- **Map Progression**: Progress through the story, unlock new monsters and maps, and feel a sense of achievement through overcoming challenges.
+- **Companion Progression**: Acquire new companions and watch them grow and evolve as they level up.
+- **Magical Canvas**: Unlock new styling options to enable creative self-expression in the Magical Canvas.
 
 ### 7.3 Content Strategy
 - **AI-Assisted Production**: Leveraging AI to generate "filler" content (flavor text, math variations, basic balance curves) allows for a steady stream of content from a small team.
