@@ -62,8 +62,8 @@
         "2": {
             "title": "Ashurs ruiner",
             "description": "En underjordisk stad övertagen av banditer och stenväktare.",
-            "story_hook": "När du lämnar ökensolen bakom dig stiger du ner i de svala djupen av kanjongrottan. Tunneln öppnar sig mot en enorm underjordisk stad — Ashur.",
-            "completion_summary": "Med Stenkejsaren tystad är Ashurs hjärta ditt. Men inskriptionerna på kanjonväggarna talar om en 'Högkonung' i de avlägsna bergen...",
+            "story_hook": "När du lämnar ökensolen bakom dig stiger du ner i de svala djupen av kanjongrottan. Tunneln öppnar sig mot en enorm underjordisk stad — Ashur. Men plundrare har förvandlat ruinerna till ett banditläger, och stenarna själva börjar röra på sig.",
+            "completion_summary": "Med Stenkejsaren tystad är Ashurs hjärta ditt. Men inskriptionerna på kanjonväggarna talar om en 'Högkonung' i de avlägsna bergen som fortfarande håller nycklarna till världens ursprung...",
             "mystery_path": "Djupt inne i ruinerna växer en ny skugga...",
             "nodes": {
                 "2_1": {
@@ -76,10 +76,10 @@
                     "label": "Patrullerande banditer"
                 },
                 "2_5": {
-                    "label": ""
+                    "label": "Banditläger"
                 },
                 "2_6": {
-                    "label": "Uppvaknad väktare"
+                    "label": "Uppvaknade väktare"
                 },
                 "2_7": {
                     "label": "Symbolalgebra"
