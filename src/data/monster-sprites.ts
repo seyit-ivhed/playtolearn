@@ -4,16 +4,16 @@
  * Kept separate from data files to avoid Node.js import issues with image assets.
  */
 
-import duneScorpionImg from '../assets/images/enemies/dune-scorpion.png';
-import sandSpiritImg from '../assets/images/enemies/sand-spirit.png';
-import tinyScorpionImg from '../assets/images/enemies/tiny-scorpion.jpg';
-import desertScavengerImg from '../assets/images/enemies/desert-scavenger.png';
-import sandColossusImg from '../assets/images/enemies/the-sand-colossus.jpg';
-import banditRaiderImg from '../assets/images/enemies/bandit-raider.png';
-import stoneGuardianImg from '../assets/images/enemies/stone-guardian.png';
-import assyrianGuardianImg from '../assets/images/enemies/assyrian-guardian.png';
-import theStoneEmperorImg from '../assets/images/enemies/the-stone-emperor.png';
-import banditLeaderImg from '../assets/images/enemies/bandit-leader.png';
+const duneScorpionImg = new URL('../assets/images/enemies/dune-scorpion.png', import.meta.url).href;
+const sandSpiritImg = new URL('../assets/images/enemies/sand-spirit.png', import.meta.url).href;
+const tinyScorpionImg = new URL('../assets/images/enemies/tiny-scorpion.jpg', import.meta.url).href;
+const desertScavengerImg = new URL('../assets/images/enemies/desert-scavenger.png', import.meta.url).href;
+const sandColossusImg = new URL('../assets/images/enemies/the-sand-colossus.jpg', import.meta.url).href;
+const banditRaiderImg = new URL('../assets/images/enemies/bandit-raider.png', import.meta.url).href;
+const stoneGuardianImg = new URL('../assets/images/enemies/stone-guardian.png', import.meta.url).href;
+const assyrianGuardianImg = new URL('../assets/images/enemies/assyrian-guardian.png', import.meta.url).href;
+const theStoneEmperorImg = new URL('../assets/images/enemies/the-stone-emperor.png', import.meta.url).href;
+const banditLeaderImg = new URL('../assets/images/enemies/bandit-leader.png', import.meta.url).href;
 
 
 export const MONSTER_SPRITES: Record<string, string> = {

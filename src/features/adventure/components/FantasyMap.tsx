@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { MapPathSVG } from './MapPathSVG';
 import { MapNode } from './MapNode';
 import type { Adventure, Encounter } from '../../../types/adventure.types';
+import { getAdventureMapImage } from '../../../data/adventure-assets';
 
 interface FantasyMapProps {
     adventure: Adventure;
@@ -17,6 +18,8 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
     // Looking at current data, nodes go up to y: 3900.
     // The previous min-height was 4500px.
     const referenceHeight = 4500;
+
+    const mapImage = getAdventureMapImage(adventure.id);
 
     useEffect(() => {
         // Use a small timeout to ensure the DOM is fully ready and styles are applied
@@ -37,9 +40,9 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
         <div className="map-container">
             {/* Background image defines the container scale */}
             <div className="map-bg-pattern">
-                {adventure.mapImage && (
+                {mapImage && (
                     <img
-                        src={adventure.mapImage}
+                        src={mapImage}
                         alt="Map Background"
                         className="map-bg-image"
                         ref={mapImageRef}

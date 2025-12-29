@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Adventure } from '../../../types/adventure.types';
 import { AdventureStatus } from '../../../types/adventure.types';
+import { getAdventureIllustration } from '../../../data/adventure-assets';
 import './ChapterPage.css';
 
 interface ChapterPageProps {
@@ -36,6 +37,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     const { t } = useTranslation();
     const isLocked = status === AdventureStatus.LOCKED;
     const isCompleted = status === AdventureStatus.COMPLETED;
+    const illustration = getAdventureIllustration(adventure.id);
 
     return (
         <div className={`chapter-page ${isLocked ? 'locked' : ''}`} data-testid="chapter-page">
@@ -52,9 +54,9 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 300 }}
                 >
-                    {adventure.illustration ? (
+                    {illustration ? (
                         <img
-                            src={adventure.illustration}
+                            src={illustration}
                             alt={adventure.title}
                             className="chapter-illustration"
                         />

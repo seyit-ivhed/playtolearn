@@ -127,7 +127,9 @@ Example:
 }
 
 // Run if executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+const isMain = import.meta.url.endsWith(process.argv[1]) ||
+    (process.argv[1] && import.meta.url.includes(process.argv[1]));
+if (isMain) {
     SimulationCLI.main();
 }
 

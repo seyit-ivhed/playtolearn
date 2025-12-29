@@ -4,8 +4,8 @@
  * Kept separate from data files to avoid Node.js import issues with image assets.
  */
 
-import amaraImg from '../assets/images/companions/Amara/Amara-0.png';
-import tariqImg from '../assets/images/companions/Tariq/Tariq-0.png';
+const amaraImg = new URL('../assets/images/companions/Amara/Amara-0.png', import.meta.url).href;
+const tariqImg = new URL('../assets/images/companions/Tariq/Tariq-0.png', import.meta.url).href;
 
 export const COMPANION_SPRITES: Record<string, string> = {
     'amara': amaraImg,
