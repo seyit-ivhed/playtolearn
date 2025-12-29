@@ -36,6 +36,8 @@ This document serves as a central repository for all character and monster portr
 
 Monster portraits use a consistent style: **Stylized 3D digital illustration, child-friendly, bright vibrant colors, and soft lighting.**
 
+### Adventure 1: The Hidden Entrance
+
 **Dune Scorpion (SCORPION_1)**
 > Portrait of a Dune Scorpion, territorial and snappy, small creature with sturdy rounded pinchers, narrowed expressive eyes, and a tough golden sandy shell. Stubby legs and a curled tail held in a defensive, ready-to-snap posture. Looking grumpy and guarding its sand dune. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
 
@@ -54,14 +56,16 @@ Monster portraits use a consistent style: **Stylized 3D digital illustration, ch
 **The Sand Colossus (SAND_COLOSSUS - Boss)**
 > Portrait of The Sand Colossus, mysterious and territorial sandstone giant, massive creature made of jagged sandstone blocks and boulders. Deep ancient glowing orange eyes looking down sternly. Sand cascading like a heavy storm from its massive shoulders. Raising a giant stony fist in a commanding, adversarial pose. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
 
+### Adventure 2: The Ruins of Ashur
+
 **Bandit Raider (BANDIT_RAIDER)**
-> Portrait of a Bandit Raider, a boisterous and grumpy desert warrior wearing patchwork leather armor and a spiked tooth necklace. Grinning mischievously while brandishing a small, blunt wooden club. Tall and sturdy-built with a confident, adversarial stance. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
+> Portrait of a Bandit Raider, a boisterous and grumpy cavern warrior wearing patchwork leather armor and a spiked tooth necklace. Grinning mischievously while brandishing a small, blunt wooden club. Tall and sturdy-built with a confident, adversarial stance. Set inside a dimly lit, vast subterranean hall of the ancient Assyrian city, with flickering torchlight casting long shadows on ruins. Stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
 
 **Stone Guardian (STONE_GUARDIAN)**
-> Portrait of a Stone Guardian, a stern and rigid golem made of cracked desert limestone. Glowing teal eyes and ancient geometric patterns carved into its chest. Standing tall and motionless, blocking a doorway with a heavy, unyielding expression. Stylized 3D digital illustration, child-friendly, earthy desert colors, soft lighting. Safe for children.
+> Portrait of a Stone Guardian, a stern and rigid golem made of dark, damp cavernous stone. Glowing teal eyes and ancient geometric patterns carved into its chest. Standing tall and motionless, blocking a narrow tunnel entrance within the subterranean Assyrian city. Surrounded by crystalline cave walls and ancient stone reliefs. Stylized 3D digital illustration, child-friendly, cool stone colors, soft teal glow lighting. Safe for children.
 
 **Assyrian Guardian (ASSYRIAN_GUARDIAN)**
-> Portrait of an Assyrian Guardian, an ornate and powerful winged bull statue come to life. Majestic stone beard and a crown-like helmet, with large stone wings folded back. Glowing golden eyes and a commanding presence, guarding the inner sanctum. Stylized 3D digital illustration, child-friendly, rich stone and gold colors, soft lighting. Safe for children.
+> Portrait of an Assyrian Guardian, an ornate and powerful winged bull statue come to life. Majestic stone beard and a crown-like helmet, with large stone wings folded back. Glowing golden eyes and a commanding presence, guarding a massive bronze door inside a grand subterranean vaulted chamber. The high cavern ceiling is lost in shadow, with faint light reflecting off ancient pillars. Stylized 3D digital illustration, child-friendly, rich stone and gold colors, soft lighting. Safe for children.
 
 **The Stone Emperor (THE_STONE_EMPEROR - Boss)**
-> Portrait of The Stone Emperor, a grand and intimidating ruler made of polished black obsidian and gold-veined marble. Sitting on a floating stone throne, wearing a massive jeweled headdress. Deep glowing purple eyes and a regal, yet stern adversarial expression. Controlling the surrounding stone debris with floating gestures. Stylized 3D digital illustration, child-friendly, majestic dark and gold colors, soft lighting. Safe for children.
+> Portrait of The Stone Emperor, a grand and intimidating ruler made of polished black obsidian and gold-veined marble. Sitting on a floating stone throne in the heart of the subterranean Assyrian capital. Wearing a massive jeweled headdress. Deep glowing purple eyes and a regal, yet stern adversarial expression. Controlling the surrounding stone debris and floating stalactites with magical gestures. Set in a magnificent cavernous throne room with glowing purple crystals and ancient hanging gardens. Stylized 3D digital illustration, child-friendly, majestic dark and gold colors, soft purple glow lighting. Safe for children.
