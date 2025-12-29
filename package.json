@@ -14,7 +14,8 @@
     "test:e2e": "playwright test",
     "start-project": "bash scripts/start-project.sh",
     "complete-project": "bash scripts/complete-project.sh",
-    "simulate-difficulty": "tsx src/utils/simulation/SimulationCLI.ts"
+    "simulate-difficulty": "tsx src/utils/simulation/SimulationCLI.ts",
+    "analyze-progression": "tsx src/scripts/analyze-progression.ts"
   },
   "dependencies": {
     "@tsparticles/react": "^3.0.0",

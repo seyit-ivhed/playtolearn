@@ -84,3 +84,5 @@ export interface AdventureSimulationConfig {
     adventureId: string;
     encounters: Record<string, EncounterConfig>;
 }
+
+export type SimulationConfigFile = AdventureSimulationConfig | AdventureSimulationConfig[];

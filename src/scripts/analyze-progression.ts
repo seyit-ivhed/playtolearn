@@ -1,7 +1,10 @@
 
+import * as fs from 'fs';
+import * as path from 'path';
 import { ADVENTURES } from '../data/adventures.data';
 import { getXpForNextLevel } from '../utils/progression.utils';
 import { EncounterType } from '../types/adventure.types';
+import type { AdventureSimulationConfig } from '../utils/simulation/simulation.types';
 
 // Types
 interface SimCompanion {
@@ -58,7 +61,7 @@ async function runAnalysis() {
 
     // Pre-calculate all encounters linear list for easier iteration if needed, 
     // but nested is fine since we just want to track state.
-    
+
     // Initialize simulation state for each scenario
     const simulations = SCENARIOS.map(scenario => ({
         scenario,
@@ -90,15 +93,15 @@ async function runAnalysis() {
 
                     sim.compA = addXpToCompanion(sim.compA, xpA);
                     sim.compB = addXpToCompanion(sim.compB, xpB);
-                    
+
                     sim.pendingXp = 0;
                 }
 
                 // Record state
                 stateSnapshot.scenarioStates.push({
                     scenarioName: sim.scenario.name,
-                    compA: { ...sim.compA },
-                    compB: { ...sim.compB }
+                    compA: { level: sim.compA.level, xp: sim.compA.currentXp },
+                    compB: { level: sim.compB.level, xp: sim.compB.currentXp }
                 });
             }
             reportData.push(stateSnapshot);
@@ -106,6 +109,7 @@ async function runAnalysis() {
     }
 
     generateMarkdownReport(reportData);
+    generateSimulationConfigs(reportData);
 }
 
 function generateMarkdownReport(data: EncounterState[]) {
@@ -114,11 +118,63 @@ function generateMarkdownReport(data: EncounterState[]) {
     console.log('|---|---|---|---|---|---|');
 
     data.forEach(row => {
-        const scenarioCols = row.scenarioStates.map(s => 
+        const scenarioCols = row.scenarioStates.map(s =>
             `Lvl ${s.compA.level} / Lvl ${s.compB.level}`
         ).join(' | ');
-        
+
         console.log(`| ${row.adventureId} | ${row.encounterId} | ${row.type} | ${scenarioCols} |`);
+    });
+}
+
+function generateSimulationConfigs(data: EncounterState[]) {
+    // Group by Scenario -> Adventure
+    const scenarios = ['Equal', 'Favored (65/35)', 'Exclusive'];
+    const outputDir = path.resolve(process.cwd(), 'configs/difficulty-testing');
+
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    scenarios.forEach(scenarioName => {
+        const adventureConfigs: AdventureSimulationConfig[] = [];
+
+        // Find all adventures
+        const adventureIds = Array.from(new Set(data.map(d => d.adventureId)));
+
+        adventureIds.forEach(advId => {
+            const advConfig: AdventureSimulationConfig = {
+                adventureId: advId,
+                encounters: {}
+            };
+
+            // Get all encounters for this adventure where we have data
+            const encounters = data.filter(d => d.adventureId === advId && (d.type === EncounterType.BATTLE || d.type === EncounterType.BOSS));
+
+            encounters.forEach(enc => {
+                const state = enc.scenarioStates.find(s => s.scenarioName === scenarioName);
+                if (state) {
+                    advConfig.encounters[enc.encounterId] = {
+                        party: [
+                            { companionId: 'amara', level: state.compA.level },
+                            { companionId: 'tariq', level: state.compB.level }
+                        ]
+                    };
+                }
+            });
+
+            if (Object.keys(advConfig.encounters).length > 0) {
+                adventureConfigs.push(advConfig);
+            }
+        });
+
+        // Determine filename safe scenario name
+        let safeName = 'equal';
+        if (scenarioName.includes('Favored')) safeName = 'favored';
+        if (scenarioName.includes('Exclusive')) safeName = 'exclusive';
+
+        const filePath = path.join(outputDir, `strategy-${safeName}.json`);
+        fs.writeFileSync(filePath, JSON.stringify(adventureConfigs, null, 2));
+        console.log(`Generated config: ${filePath}`);
     });
 }
 

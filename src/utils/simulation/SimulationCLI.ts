@@ -6,7 +6,7 @@ import { getAdventureById } from '../../data/adventures.data';
 import { EncounterType } from '../../types/adventure.types';
 import { DifficultyAnalyzer } from './DifficultyAnalyzer';
 import { ConsoleOutputFormatter } from './output/OutputFormatter';
-import type { AdventureSimulationConfig, EncounterSimulationResults } from './simulation.types';
+import type { AdventureSimulationConfig, EncounterSimulationResults, SimulationConfigFile } from './simulation.types';
 
 /**
  * CLI for running battle difficulty simulations
@@ -15,7 +15,7 @@ class SimulationCLI {
     /**
      * Parse configuration file
      */
-    private static parseConfigFile(configPath: string): AdventureSimulationConfig {
+    private static parseConfigFile(configPath: string): SimulationConfigFile {
         const fullPath = path.resolve(process.cwd(), configPath);
 
         if (!fs.existsSync(fullPath)) {
@@ -23,7 +23,7 @@ class SimulationCLI {
         }
 
         const fileContent = fs.readFileSync(fullPath, 'utf-8');
-        const config = JSON.parse(fileContent) as AdventureSimulationConfig;
+        const config = JSON.parse(fileContent) as SimulationConfigFile;
 
         return config;
     }
@@ -99,7 +99,15 @@ class SimulationCLI {
 
         try {
             const config = this.parseConfigFile(configPath!);
-            this.runAdventureSimulation(config);
+
+            if (Array.isArray(config)) {
+                console.log(`📋 Found ${config.length} adventures in configuration.`);
+                for (const adventureConfig of config) {
+                    this.runAdventureSimulation(adventureConfig);
+                }
+            } else {
+                this.runAdventureSimulation(config);
+            }
         } catch (error) {
             console.error('\n❌ Error:', error instanceof Error ? error.message : error);
             process.exit(1);
