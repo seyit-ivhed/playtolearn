@@ -13,6 +13,8 @@ import banditRaiderImg from '../assets/images/enemies/bandit-raider.png';
 import stoneGuardianImg from '../assets/images/enemies/stone-guardian.png';
 import assyrianGuardianImg from '../assets/images/enemies/assyrian-guardian.png';
 import theStoneEmperorImg from '../assets/images/enemies/the-stone-emperor.png';
+import banditLeaderImg from '../assets/images/enemies/bandit-leader.png';
+
 
 export const MONSTER_SPRITES: Record<string, string> = {
     'scorpion_1': duneScorpionImg,
@@ -24,6 +26,7 @@ export const MONSTER_SPRITES: Record<string, string> = {
     'stone_guardian': stoneGuardianImg,
     'assyrian_guardian': assyrianGuardianImg,
     'the_stone_emperor': theStoneEmperorImg,
+    'bandit_leader': banditLeaderImg,
 };
 
 /**

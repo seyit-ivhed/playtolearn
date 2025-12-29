@@ -53,7 +53,6 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: -150, y: 1600 },
                 enemies: [
                     MONSTERS.DESERT_SCAVENGER,
-                    MONSTERS.DESERT_SCAVENGER,
                     MONSTERS.DESERT_SCAVENGER
                 ],
                 xpReward: 50,
