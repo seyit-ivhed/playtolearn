@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../stores/game/store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { ADVENTURES } from '../../data/adventures.data';
-import { AdventureStatus } from '../../types/adventure.types';
+import { AdventureStatus, EncounterType } from '../../types/adventure.types';
 import { VOLUMES } from '../../data/volumes.data';
 import { ChapterPage } from './components/ChapterPage';
 import { TableOfContents } from './components/TableOfContents';
@@ -15,10 +15,8 @@ export const ChronicleBook: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { t } = useTranslation();
-    // Store State
 
-
-    const { chronicle, updateChroniclePosition, setActiveAdventure } = useGameStore();
+    const { chronicle, updateChroniclePosition, setActiveAdventure, encounterResults } = useGameStore();
     const { adventureStatuses } = useAdventureStore();
 
     // UI State
@@ -107,6 +105,39 @@ export const ChronicleBook: React.FC = () => {
         }, {} as Record<string, string>)
         , [t]);
 
+    const calculateAdventureStars = (adventureId: string): number => {
+        const adventure = ADVENTURES.find(a => a.id === adventureId);
+        if (!adventure) return 0;
+
+        let minStars = 5;
+        let hasScorableEncounters = false;
+
+        adventure.encounters.forEach((encounter, index) => {
+            // Only count Battle, Boss, and Puzzle encounters
+            if (encounter.type === EncounterType.BATTLE ||
+                encounter.type === EncounterType.BOSS ||
+                encounter.type === EncounterType.PUZZLE) {
+
+                hasScorableEncounters = true;
+                const encounterKey = `${adventureId}_${index + 1}`;
+                const result = encounterResults[encounterKey];
+
+                // If any encounter is not completed or has 0 stars, the chapter stars will be low
+                // However, based on user request: "If player has all encounters on star 5 but one on star 3..."
+                // It implies we take the minimum of completed ones? 
+                // Or if uncompleted, it should be 0? 
+                // Let's assume for a "Completed" adventure, all nodes are effectively "done" or accessible.
+                // If a node was skipped (if possible) or has 0 stars, it counts as 0.
+                const stars = result ? result.stars : 0;
+                if (stars < minStars) {
+                    minStars = stars;
+                }
+            }
+        });
+
+        return hasScorableEncounters ? minStars : 0;
+    };
+
     return (
         <div className="chronicle-wrapper" data-testid="chronicle-page">
             <div className="book-container" data-testid="chronicle-book">
@@ -124,7 +155,7 @@ export const ChronicleBook: React.FC = () => {
                             <ChapterPage
                                 adventure={currentAdventure}
                                 status={adventureStatuses[currentAdventure.id] || 'LOCKED'}
-                                stars={0} // TODO: Get stars from encounterResults
+                                stars={calculateAdventureStars(currentAdventure.id)}
                                 onBegin={handleBegin}
                                 onReplay={handleBegin}
                                 onNext={handleNext}
