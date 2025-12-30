@@ -2,7 +2,7 @@ import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit } from '../../types/encounter.types';
 import { applyDamage } from './damage.utils';
 import { executeDamageAbility, executeHealAbility, executeShieldAbility, type HealableUnit, type ShieldableUnit } from './ability.utils';
-import { selectRandomTarget } from './combat.utils';
+import { selectRandomTarget, getTargetDamageMultiplier } from './combat.utils';
 
 /**
  * Unified Combat Engine
@@ -135,8 +135,10 @@ export class CombatEngine {
 
         const target = validTargets[0]; // First valid target
         const damage = attacker.damage || 0;
+        const multiplier = getTargetDamageMultiplier(target as any as EncounterUnit);
+        const finalDamage = Math.floor(damage * multiplier);
 
-        const result = applyDamage(target as any as EncounterUnit, damage);
+        const result = applyDamage(target as any as EncounterUnit, finalDamage);
 
         logs.push({
             message: `${attacker.name} attacked ${target.name} for ${result.damageDealt} damage!`,
@@ -169,8 +171,10 @@ export class CombatEngine {
 
         const target = livingParty[targetIdx];
         const damage = attacker.damage || 0;
+        const multiplier = getTargetDamageMultiplier(target as any as EncounterUnit);
+        const finalDamage = Math.floor(damage * multiplier);
 
-        const result = applyDamage(target as any as EncounterUnit, damage);
+        const result = applyDamage(target as any as EncounterUnit, finalDamage);
 
         logs.push({
             message: `${attacker.name} attacked ${target.name} for ${result.damageDealt} damage!`,

@@ -53,6 +53,13 @@ describe('CombatEngine', () => {
             // No change expected
             expect(result.updatedTargets[0].currentHealth).toBe(0);
         });
+        it('should deal increased damage to marked targets (1.25x)', () => {
+            const markedEnemy = { ...mockEnemy, statusEffects: [{ id: 'marked', duration: 2 }] };
+            const result = CombatEngine.executeStandardAttack(mockAttacker, [markedEnemy]);
+            // Damage 10 * 1.25 = 12.5 -> floor(12.5) = 12
+            // Health 100 - 12 = 88
+            expect(result.updatedTargets[0].currentHealth).toBe(88);
+        });
     });
 
     describe('executeSpecialAbility', () => {
