@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import { AdventureStatus, type AdventureId } from '../types/adventure.types';
 import { ADVENTURES } from '../data/adventures.data';
 
-interface AdventureState {
+export interface AdventureState {
     adventureStatuses: Record<AdventureId, AdventureStatus>;
 
     // Actions
