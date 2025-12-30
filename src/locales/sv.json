@@ -235,7 +235,23 @@
         "elixir_of_life": {
             "name": "Livselixir",
             "description": "Helar alla allierade med {{value}} HP."
+        },
+        "elixir_of_renewal": {
+            "name": "Förnyelsens elixir",
+            "description": "Helar alla allierade och ger Regeneration (Helar 10% HP varje tur)."
+        },
+        "panacea_burst": {
+            "name": "Panacé-utbrott",
+            "description": "Stor helning och renar en negativ statuseffekt."
+        },
+        "philosophers_brew": {
+            "name": "De vises brygd",
+            "description": "Massiv helning och återupplivar fallna kamrater med 30% HP."
         }
+    },
+    "status_effects": {
+        "marked": "Markerad (+25% skada tagen)",
+        "regeneration": "Regeneration (Helning över tid)"
     },
     "monsters": {
         "scorpion_1": {
