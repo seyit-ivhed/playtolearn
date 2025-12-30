@@ -2,7 +2,6 @@ import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit } from '../../types/encounter.types';
 import { applyDamage } from './damage.utils';
 import { executeDamageAbility, executeHealAbility, executeShieldAbility, type HealableUnit, type ShieldableUnit } from './ability.utils';
-import { selectRandomTarget, getTargetDamageMultiplier } from './combat.utils';
 
 /**
  * Unified Combat Engine
@@ -123,19 +122,14 @@ export class CombatEngine {
     ): { updatedTargets: BattleUnit[], logs: CombatLog[] } {
         const logs: CombatLog[] = [];
 
-        // Find target
-        // Find target (different team)
-        const validTargets = targets.filter(t =>
-            !t.isDead &&
-            t.id !== attacker.id &&
-            t.isPlayer !== attacker.isPlayer
-        );
+        // Find target (different team, using pure utility)
+        const targetIndex = CombatEngine.findFirstValidEnemy(attacker, targets);
 
-        if (validTargets.length === 0) return { updatedTargets: targets, logs };
+        if (targetIndex === -1) return { updatedTargets: targets, logs };
 
-        const target = validTargets[0]; // First valid target
+        const target = targets[targetIndex];
         const damage = attacker.damage || 0;
-        const multiplier = getTargetDamageMultiplier(target as any as EncounterUnit);
+        const multiplier = CombatEngine.getTargetDamageMultiplier(target as any as EncounterUnit);
         const finalDamage = Math.floor(damage * multiplier);
 
         const result = applyDamage(target as any as EncounterUnit, finalDamage);
@@ -166,12 +160,12 @@ export class CombatEngine {
 
         if (livingParty.length === 0) return { updatedParty: playerParty, logs };
 
-        const targetIdx = selectRandomTarget(livingParty);
+        const targetIdx = CombatEngine.selectRandomTarget(livingParty);
         if (targetIdx === -1) return { updatedParty: playerParty, logs };
 
         const target = livingParty[targetIdx];
         const damage = attacker.damage || 0;
-        const multiplier = getTargetDamageMultiplier(target as any as EncounterUnit);
+        const multiplier = CombatEngine.getTargetDamageMultiplier(target as any as EncounterUnit);
         const finalDamage = Math.floor(damage * multiplier);
 
         const result = applyDamage(target as any as EncounterUnit, finalDamage);
@@ -228,5 +222,44 @@ export class CombatEngine {
             ...unit,
             currentSpirit: 0
         };
+    }
+
+    /**
+     * Get damage multiplier based on unit status effects
+     */
+    static getTargetDamageMultiplier(unit: EncounterUnit): number {
+        if (!unit.statusEffects) return 1.0;
+        const isMarked = unit.statusEffects.some(se => se.id === 'marked');
+        return isMarked ? 1.25 : 1.0;
+    }
+
+    /**
+     * Select random living target from array
+     */
+    static selectRandomTarget<T extends { isDead: boolean }>(
+        targets: T[]
+    ): number {
+        const livingTargets = targets
+            .map((t, i) => ({ t, i }))
+            .filter(({ t }) => !t.isDead);
+
+        if (livingTargets.length === 0) return -1;
+
+        const randomIndex = Math.floor(Math.random() * livingTargets.length);
+        return livingTargets[randomIndex].i;
+    }
+
+    /**
+     * Find first valid enemy target (alive, different team, not self)
+     */
+    static findFirstValidEnemy<T extends { id: string, isPlayer: boolean, isDead: boolean }>(
+        attacker: { id: string, isPlayer: boolean },
+        targets: T[]
+    ): number {
+        return targets.findIndex(t =>
+            !t.isDead &&
+            t.id !== attacker.id &&
+            t.isPlayer !== attacker.isPlayer
+        );
     }
 }

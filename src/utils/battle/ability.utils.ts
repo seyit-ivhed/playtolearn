@@ -18,7 +18,7 @@ export interface ShieldableUnit {
     isDead: boolean;
 }
 
-import { getTargetDamageMultiplier } from './combat.utils';
+import { CombatEngine } from './combat-engine';
 
 /**
  * Execute damage ability on targets
@@ -36,7 +36,7 @@ export function executeDamageAbility(
     if (ability.target === 'ALL_ENEMIES') {
         return targets.map(t => {
             if (t.isDead) return t;
-            const multiplier = getTargetDamageMultiplier(t);
+            const multiplier = CombatEngine.getTargetDamageMultiplier(t);
             const actualDamage = Math.floor(abilityValue * multiplier);
             let result = applyDamage(t, actualDamage).unit;
 
@@ -51,7 +51,7 @@ export function executeDamageAbility(
 
         const newTargets = [...targets];
         const target = targets[targetIndex];
-        const multiplier = getTargetDamageMultiplier(target);
+        const multiplier = CombatEngine.getTargetDamageMultiplier(target);
         const actualDamage = Math.floor(abilityValue * multiplier);
 
         let result = applyDamage(target, actualDamage).unit;

@@ -1,4 +1,3 @@
-
 import { describe, it, expect } from 'vitest';
 import { CombatEngine, type BattleUnit } from './combat-engine';
 import type { SpecialAbility } from '../../types/companion.types';
@@ -145,9 +144,107 @@ describe('CombatEngine', () => {
 
     describe('consumeSpiritCost', () => {
         it('should reset spirit to 0', () => {
-            const unit: BattleUnit = { ...mockAttacker, currentSpirit: 100 };
-            const updated = CombatEngine.consumeSpiritCost(unit);
-            expect(updated.currentSpirit).toBe(0);
+            const unit = { ...mockAttacker, currentSpirit: 50 };
+            const result = CombatEngine.consumeSpiritCost(unit);
+            expect(result.currentSpirit).toBe(0);
+        });
+    });
+
+    describe('selectRandomTarget', () => {
+        it('should return valid index for living targets', () => {
+            const targets = [
+                { isDead: false },
+                { isDead: false },
+                { isDead: false }
+            ];
+
+            const index = CombatEngine.selectRandomTarget(targets);
+
+            expect(index).toBeGreaterThanOrEqual(0);
+            expect(index).toBeLessThan(3);
+            expect(targets[index].isDead).toBe(false);
+        });
+
+        it('should only select from living targets', () => {
+            const targets = [
+                { isDead: true },
+                { isDead: false },
+                { isDead: true }
+            ];
+
+            // Run multiple times to ensure consistency
+            for (let i = 0; i < 10; i++) {
+                const index = CombatEngine.selectRandomTarget(targets);
+                expect(index).toBe(1);
+            }
+        });
+
+        it('should return -1 when all targets are dead', () => {
+            const targets = [
+                { isDead: true },
+                { isDead: true }
+            ];
+
+            const index = CombatEngine.selectRandomTarget(targets);
+
+            expect(index).toBe(-1);
+        });
+
+        it('should return -1 for empty array', () => {
+            const targets: { isDead: boolean }[] = [];
+
+            const index = CombatEngine.selectRandomTarget(targets);
+
+            expect(index).toBe(-1);
+        });
+    });
+
+    describe('findFirstValidEnemy', () => {
+        it('should find first living enemy', () => {
+            const attacker = { id: 'u1', isPlayer: true, isDead: false };
+            const targets = [
+                { id: 'u1', isPlayer: true, isDead: false }, // Self
+                { id: 'u2', isPlayer: true, isDead: false }, // Ally
+                { id: 'm1', isPlayer: false, isDead: false }, // Enemy 1
+                { id: 'm2', isPlayer: false, isDead: false }  // Enemy 2
+            ];
+
+            const index = CombatEngine.findFirstValidEnemy(attacker as any, targets as any);
+            expect(index).toBe(2);
+        });
+
+        it('should skip dead enemies', () => {
+            const attacker = { id: 'u1', isPlayer: true, isDead: false };
+            const targets = [
+                { id: 'm1', isPlayer: false, isDead: true }, // Dead Enemy
+                { id: 'm2', isPlayer: false, isDead: false } // Living Enemy
+            ];
+
+            const index = CombatEngine.findFirstValidEnemy(attacker as any, targets as any);
+            expect(index).toBe(1);
+        });
+
+        it('should return -1 if no valid targets', () => {
+            const attacker = { id: 'u1', isPlayer: true, isDead: false };
+            const targets = [
+                { id: 'u1', isPlayer: true, isDead: false },
+                { id: 'u2', isPlayer: true, isDead: false }
+            ];
+
+            const index = CombatEngine.findFirstValidEnemy(attacker as any, targets as any);
+            expect(index).toBe(-1);
+        });
+    });
+
+    describe('getTargetDamageMultiplier', () => {
+        it('should return 1.0 for no status effects', () => {
+            const unit = { ...mockAttacker, statusEffects: [], maxShield: 0 };
+            expect(CombatEngine.getTargetDamageMultiplier(unit as any)).toBe(1.0);
+        });
+
+        it('should return 1.25 for marked status', () => {
+            const unit = { ...mockAttacker, statusEffects: [{ id: 'marked', duration: 1 }], maxShield: 0 };
+            expect(CombatEngine.getTargetDamageMultiplier(unit as any)).toBe(1.25);
         });
     });
 });
