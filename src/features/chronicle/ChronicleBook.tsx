@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../stores/game/store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { ADVENTURES } from '../../data/adventures.data';
-import { AdventureStatus, EncounterType } from '../../types/adventure.types';
+import { AdventureStatus } from '../../types/adventure.types';
 import { VOLUMES } from '../../data/volumes.data';
 import { calculateAdventureStars } from '../../utils/progression.utils';
 import { ChapterPage } from './components/ChapterPage';
@@ -106,38 +106,6 @@ export const ChronicleBook: React.FC = () => {
         }, {} as Record<string, string>)
         , [t]);
 
-    const calculateAdventureStars = (adventureId: string): number => {
-        const adventure = ADVENTURES.find(a => a.id === adventureId);
-        if (!adventure) return 0;
-
-        let minStars = 5;
-        let hasScorableEncounters = false;
-
-        adventure.encounters.forEach((encounter, index) => {
-            // Only count Battle, Boss, and Puzzle encounters
-            if (encounter.type === EncounterType.BATTLE ||
-                encounter.type === EncounterType.BOSS ||
-                encounter.type === EncounterType.PUZZLE) {
-
-                hasScorableEncounters = true;
-                const encounterKey = `${adventureId}_${index + 1}`;
-                const result = encounterResults[encounterKey];
-
-                // If any encounter is not completed or has 0 stars, the chapter stars will be low
-                // However, based on user request: "If player has all encounters on star 5 but one on star 3..."
-                // It implies we take the minimum of completed ones? 
-                // Or if uncompleted, it should be 0? 
-                // Let's assume for a "Completed" adventure, all nodes are effectively "done" or accessible.
-                // If a node was skipped (if possible) or has 0 stars, it counts as 0.
-                const stars = result ? result.stars : 0;
-                if (stars < minStars) {
-                    minStars = stars;
-                }
-            }
-        });
-
-        return hasScorableEncounters ? minStars : 0;
-    };
 
     return (
         <div className="chronicle-wrapper" data-testid="chronicle-page">
