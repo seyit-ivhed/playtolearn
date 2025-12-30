@@ -7,15 +7,33 @@ import {
     type ShieldableUnit
 } from './ability.utils';
 import type { SpecialAbility } from '../../types/companion.types';
-import type { DamageableUnit } from './damage.utils';
+import type { EncounterUnit } from '../../types/encounter.types';
+
+const createMockUnit = (overrides: Partial<EncounterUnit> = {}): EncounterUnit => ({
+    id: 'test-unit',
+    templateId: 'test-template',
+    name: 'Test Unit',
+    isPlayer: false,
+    maxHealth: 100,
+    currentHealth: 100,
+    maxShield: 0,
+    currentShield: 0,
+    isDead: false,
+    hasActed: false,
+    currentSpirit: 0,
+    maxSpirit: 100,
+    spiritGain: 10,
+    statusEffects: [],
+    ...overrides
+});
 
 describe('ability.utils', () => {
     describe('executeDamageAbility', () => {
         it('should damage all enemies when target is ALL_ENEMIES', () => {
-            const enemies: DamageableUnit[] = [
-                { currentHealth: 100, currentShield: 0, isDead: false },
-                { currentHealth: 80, currentShield: 0, isDead: false },
-                { currentHealth: 60, currentShield: 0, isDead: false }
+            const enemies: EncounterUnit[] = [
+                createMockUnit({ currentHealth: 100, currentShield: 0, isDead: false }),
+                createMockUnit({ currentHealth: 80, currentShield: 0, isDead: false }),
+                createMockUnit({ currentHealth: 60, currentShield: 0, isDead: false })
             ];
 
             const ability: SpecialAbility = {
@@ -33,9 +51,9 @@ describe('ability.utils', () => {
         });
 
         it('should damage single enemy when target is SINGLE_ENEMY', () => {
-            const enemies: DamageableUnit[] = [
-                { currentHealth: 100, currentShield: 0, isDead: false },
-                { currentHealth: 80, currentShield: 0, isDead: false }
+            const enemies: EncounterUnit[] = [
+                createMockUnit({ currentHealth: 100, currentShield: 0, isDead: false }),
+                createMockUnit({ currentHealth: 80, currentShield: 0, isDead: false })
             ];
 
             const ability: SpecialAbility = {
@@ -52,9 +70,9 @@ describe('ability.utils', () => {
         });
 
         it('should skip dead enemies when damaging all', () => {
-            const enemies: DamageableUnit[] = [
-                { currentHealth: 0, currentShield: 0, isDead: true },
-                { currentHealth: 80, currentShield: 0, isDead: false }
+            const enemies: EncounterUnit[] = [
+                createMockUnit({ currentHealth: 0, currentShield: 0, isDead: true }),
+                createMockUnit({ currentHealth: 80, currentShield: 0, isDead: false })
             ];
 
             const ability: SpecialAbility = {
@@ -72,9 +90,9 @@ describe('ability.utils', () => {
         });
 
         it('should target first living enemy when some are dead', () => {
-            const enemies: DamageableUnit[] = [
-                { currentHealth: 0, currentShield: 0, isDead: true },
-                { currentHealth: 80, currentShield: 0, isDead: false }
+            const enemies: EncounterUnit[] = [
+                createMockUnit({ currentHealth: 0, currentShield: 0, isDead: true }),
+                createMockUnit({ currentHealth: 80, currentShield: 0, isDead: false })
             ];
 
             const ability: SpecialAbility = {

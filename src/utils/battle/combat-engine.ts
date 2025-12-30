@@ -1,6 +1,6 @@
 import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit } from '../../types/encounter.types';
-import { applyDamage } from './damage.utils';
+import { applyDamage, getTargetDamageMultiplier } from './damage.utils';
 import { executeDamageAbility, executeHealAbility, executeShieldAbility, type HealableUnit, type ShieldableUnit } from './ability.utils';
 
 /**
@@ -129,7 +129,7 @@ export class CombatEngine {
 
         const target = targets[targetIndex];
         const damage = attacker.damage || 0;
-        const multiplier = CombatEngine.getTargetDamageMultiplier(target as any as EncounterUnit);
+        const multiplier = getTargetDamageMultiplier(target as any as EncounterUnit);
         const finalDamage = Math.floor(damage * multiplier);
 
         const result = applyDamage(target as any as EncounterUnit, finalDamage);
@@ -165,7 +165,7 @@ export class CombatEngine {
 
         const target = livingParty[targetIdx];
         const damage = attacker.damage || 0;
-        const multiplier = CombatEngine.getTargetDamageMultiplier(target as any as EncounterUnit);
+        const multiplier = getTargetDamageMultiplier(target as any as EncounterUnit);
         const finalDamage = Math.floor(damage * multiplier);
 
         const result = applyDamage(target as any as EncounterUnit, finalDamage);
@@ -228,9 +228,7 @@ export class CombatEngine {
      * Get damage multiplier based on unit status effects
      */
     static getTargetDamageMultiplier(unit: EncounterUnit): number {
-        if (!unit.statusEffects) return 1.0;
-        const isMarked = unit.statusEffects.some(se => se.id === 'marked');
-        return isMarked ? 1.25 : 1.0;
+        return getTargetDamageMultiplier(unit);
     }
 
     /**

@@ -5,7 +5,7 @@
 
 import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit } from '../../types/encounter.types';
-import { applyDamage } from './damage.utils';
+import { applyDamage, getTargetDamageMultiplier } from './damage.utils';
 
 export interface HealableUnit {
     currentHealth: number;
@@ -17,8 +17,6 @@ export interface ShieldableUnit {
     currentShield: number;
     isDead: boolean;
 }
-
-import { CombatEngine } from './combat-engine';
 
 /**
  * Execute damage ability on targets
@@ -36,7 +34,7 @@ export function executeDamageAbility(
     if (ability.target === 'ALL_ENEMIES') {
         return targets.map(t => {
             if (t.isDead) return t;
-            const multiplier = CombatEngine.getTargetDamageMultiplier(t);
+            const multiplier = getTargetDamageMultiplier(t);
             const actualDamage = Math.floor(abilityValue * multiplier);
             let result = applyDamage(t, actualDamage).unit;
 
@@ -51,7 +49,7 @@ export function executeDamageAbility(
 
         const newTargets = [...targets];
         const target = targets[targetIndex];
-        const multiplier = CombatEngine.getTargetDamageMultiplier(target);
+        const multiplier = getTargetDamageMultiplier(target);
         const actualDamage = Math.floor(abilityValue * multiplier);
 
         let result = applyDamage(target, actualDamage).unit;
