@@ -4,8 +4,7 @@ import { EncounterPhase } from '../../../types/encounter.types';
 import { getCompanionById } from '../../../data/companions.data';
 
 import { performWarriorAction } from '../actions/standard/warrior.action';
-
-
+// ... (rest of imports)
 import { executeDamageAbility } from '../actions/special/damage.ability';
 import { executeShieldAbility } from '../actions/special/shield.ability';
 import { executeHealAbility } from '../actions/special/heal.ability';
@@ -64,22 +63,33 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         if (unitIndex === -1) return;
 
         const unit = party[unitIndex];
-        const companionData = getCompanionById(unit.templateId);
-        const ability = companionData.specialAbility;
+        const abilityId = unit.specialAbilityId || 'attack';
+        const abilityType = unit.specialAbilityType || 'DAMAGE';
+        const abilityValue = unit.specialAbilityValue || 10;
 
         let logs: string[] = [];
 
         if (success) {
-            logs.push(`${unit.name} cast ${ability.id}!`);
+            logs.push(`${unit.name} cast ${abilityId}!`);
 
             // EXECUTE ABILITY LOGIC
             let abilityLogs: string[] = [];
-            if (ability.type === 'DAMAGE') {
-                abilityLogs = executeDamageAbility(get, set, unitId, ability);
-            } else if (ability.type === 'SHIELD') {
-                abilityLogs = executeShieldAbility(get, set, unitId, ability);
-            } else if (ability.type === 'HEAL') {
-                abilityLogs = executeHealAbility(get, set, unitId, ability);
+
+            // Re-wrap into a SpecialAbility-like object for existing action functions if needed,
+            // or update them. For now, we wrap to minimize downstream changes.
+            const abilityData = {
+                id: abilityId,
+                type: abilityType,
+                value: abilityValue,
+                target: (unit.templateId === 'amara' && unit.specialAbilityId === 'twin_shadows') ? 'ALL_ENEMIES' : 'SINGLE_ENEMY' // Simplified for MVP
+            } as any;
+
+            if (abilityType === 'DAMAGE') {
+                abilityLogs = executeDamageAbility(get, set, unitId, abilityData);
+            } else if (abilityType === 'SHIELD') {
+                abilityLogs = executeShieldAbility(get, set, unitId, abilityData);
+            } else if (abilityType === 'HEAL') {
+                abilityLogs = executeHealAbility(get, set, unitId, abilityData);
             }
             logs = [...logs, ...abilityLogs];
 

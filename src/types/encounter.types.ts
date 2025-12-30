@@ -12,6 +12,7 @@ export interface EncounterUnit {
     id: string; // Unique Instance ID
     templateId: string; // Reference to Companion/Monster ID
     name: string;
+    title?: string;
     isPlayer: boolean;
 
     // Stats
@@ -20,6 +21,8 @@ export interface EncounterUnit {
     maxShield: number;
     currentShield: number;
     damage?: number;
+    specialAbilityId?: string;
+    specialAbilityType?: 'DAMAGE' | 'SHIELD' | 'HEAL';
     specialAbilityValue?: number;
 
     // Visuals

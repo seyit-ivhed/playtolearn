@@ -215,6 +215,28 @@
             "special_ability_description": "Heals all allies for {{value}} HP."
         }
     },
+    "abilities": {
+        "jaguar_strike": {
+            "name": "Jaguar Strike",
+            "description": "Deals {{value}} damage to a single enemy."
+        },
+        "hunters_mark": {
+            "name": "Hunter's Mark",
+            "description": "Deals {{value}} damage and marks the target. Allies deal +25% damage to them."
+        },
+        "twin_shadows": {
+            "name": "Twin Shadows",
+            "description": "Deals {{value}} damage and marks multiple enemies."
+        },
+        "spirit_release": {
+            "name": "Spirit Release",
+            "description": "Deals {{value}} damage. Purifies enemies with low health."
+        },
+        "elixir_of_life": {
+            "name": "Elixir of Life",
+            "description": "Heals all allies for {{value}} HP."
+        }
+    },
     "monsters": {
         "scorpion_1": {
             "name": "Desert Scorpion"

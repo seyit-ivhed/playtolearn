@@ -15,7 +15,10 @@ export interface SpecialAbility {
 
 export interface CompanionStats {
     maxHealth: number;
+    title?: string;
     abilityDamage?: number;
+    specialAbilityId?: string;
+    specialAbilityType?: 'DAMAGE' | 'SHIELD' | 'HEAL';
     specialAbilityValue?: number;
     spiritGain?: number;
 }

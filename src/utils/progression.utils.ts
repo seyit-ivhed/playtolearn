@@ -18,17 +18,28 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
         abilityDamage: 0
     };
 
+    // Keep track of the latest evolution milestone reached
+    let currentEvolution = companion.evolutions
+        .filter(evo => level >= evo.atLevel)
+        .sort((a, b) => b.atLevel - a.atLevel)[0];
+
+    // Build the evolved ability (checking all steps)
+    let evolvedAbility = companion.specialAbility;
     companion.evolutions.forEach(evo => {
-        if (level >= evo.atLevel && evo.statsBonus) {
-            if (evo.statsBonus.maxHealth) evolutionBonus.maxHealth = (evolutionBonus.maxHealth || 0) + evo.statsBonus.maxHealth;
-            if (evo.statsBonus.abilityDamage) evolutionBonus.abilityDamage = (evolutionBonus.abilityDamage || 0) + evo.statsBonus.abilityDamage;
+        if (level >= evo.atLevel && evo.newSpecialAbility) {
+            evolvedAbility = evo.newSpecialAbility;
         }
     });
 
+    const baseAbilityValue = evolvedAbility.value;
+
     return {
         maxHealth: Math.floor(companion.baseStats.maxHealth * scalingFactor) + (evolutionBonus.maxHealth || 0),
+        title: currentEvolution ? currentEvolution.title : companion.title,
         abilityDamage: companion.baseStats.abilityDamage ? Math.floor(companion.baseStats.abilityDamage * scalingFactor) + (evolutionBonus.abilityDamage || 0) : undefined,
-        specialAbilityValue: companion.specialAbility.value ? Math.floor(companion.specialAbility.value * scalingFactor) : undefined,
+        specialAbilityId: evolvedAbility.id,
+        specialAbilityType: evolvedAbility.type,
+        specialAbilityValue: baseAbilityValue ? Math.floor(baseAbilityValue * scalingFactor) : undefined,
         spiritGain: companion.baseStats.spiritGain,
     };
 };
