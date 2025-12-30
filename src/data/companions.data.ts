@@ -63,7 +63,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 10
                 },
                 newSpecialAbility: {
-                    id: 'predators_focus',
+                    id: 'spirit_release',
                     type: 'DAMAGE',
                     value: 100,
                     target: 'SINGLE_ENEMY'

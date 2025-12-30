@@ -39,7 +39,7 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 |-------|-------|-----------------|--------|
 | **5** | **Jungle Tracker** | **Hunter's Mark** | Deals damage + applies mark. Allies deal **+25% damage** to marked target for 2 rounds. |
 | **10** | **Apex Stalker** | **Twin Shadows** | Now marks **two enemies** instead of one. |
-| **15** | **Nature's Wrath** | **Predator's Focus** | If marked target HP < 20%, **instantly defeats them** (Execute). |
+| **15** | **Nature's Wrath** | **Spirit Release** | If marked target HP < 20%, **purifies them** (Vanquish). |
 
 ---
 
