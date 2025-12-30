@@ -235,7 +235,23 @@
         "elixir_of_life": {
             "name": "Elixir of Life",
             "description": "Heals all allies for {{value}} HP."
+        },
+        "elixir_of_renewal": {
+            "name": "Elixir of Renewal",
+            "description": "Heals all allies and grants Regeneration (Heals 10% HP each turn)."
+        },
+        "panacea_burst": {
+            "name": "Panacea Burst",
+            "description": "Major heal and cleanses one negative status effect."
+        },
+        "philosophers_brew": {
+            "name": "Philosopher's Brew",
+            "description": "Massive heal and revives fallen companions with 30% HP."
         }
+    },
+    "status_effects": {
+        "marked": "Marked (+25% Damage Taken)",
+        "regeneration": "Regeneration (Healing over time)"
     },
     "monsters": {
         "scorpion_1": {

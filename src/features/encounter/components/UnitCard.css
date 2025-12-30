@@ -791,6 +791,11 @@
     box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
 }
 
+.effect-regeneration {
+    border-color: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
 .effect-duration {
     position: absolute;
     bottom: -2px;

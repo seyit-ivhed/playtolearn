@@ -120,8 +120,8 @@ export const UnitCard = ({
 
             <div className="status-effects-container">
                 {unit.statusEffects.map(effect => (
-                    <div key={effect.id} className={`status-effect-icon effect-${effect.id}`} title={effect.id}>
-                        {effect.id === 'marked' ? '🎯' : '✨'}
+                    <div key={effect.id} className={`status-effect-icon effect-${effect.id}`} title={t(`status_effects.${effect.id}`, effect.id)}>
+                        {effect.id === 'marked' ? '🎯' : effect.id === 'regeneration' ? '🧪' : '✨'}
                         <span className="effect-duration">{effect.duration}</span>
                     </div>
                 ))}
