@@ -28,11 +28,45 @@ export const COMPANIONS: Record<string, Companion> = {
         initialSpirit: 65,
         evolutions: [
             {
+                atLevel: 5,
+                title: 'Jungle Tracker',
+                statsBonus: {
+                    maxHealth: 15,
+                    abilityDamage: 4
+                },
+                newSpecialAbility: {
+                    id: 'hunters_mark',
+                    type: 'DAMAGE',
+                    value: 40,
+                    target: 'SINGLE_ENEMY'
+                }
+            },
+            {
                 atLevel: 10,
-                title: 'Jungle Sentinel',
+                title: 'Apex Stalker',
                 statsBonus: {
                     maxHealth: 20,
-                    abilityDamage: 5
+                    abilityDamage: 6
+                },
+                newSpecialAbility: {
+                    id: 'twin_shadows',
+                    type: 'DAMAGE',
+                    value: 35,
+                    target: 'ALL_ENEMIES'
+                }
+            },
+            {
+                atLevel: 15,
+                title: 'Nature\'s Wrath',
+                statsBonus: {
+                    maxHealth: 30,
+                    abilityDamage: 10
+                },
+                newSpecialAbility: {
+                    id: 'predators_focus',
+                    type: 'DAMAGE',
+                    value: 100,
+                    target: 'SINGLE_ENEMY'
                 }
             }
         ]

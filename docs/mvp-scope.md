@@ -43,8 +43,8 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 - **Free Trial**: 1 adventure (Adventure 1) to hook players
 - **Premium Content**: 5 additional adventures (Adventures 2-6) as paid content
 - **No Level Caps**: Companions can level up freely based on XP distribution
-- **Evolution System**: Companions evolve at levels **5, 10, 15, 20, 25** (5 evolutions total)
-  - Evolutions represent companions aging and maturing (Age 8 → 10 → 13 → 16 → 18)
+- **Evolution System**: Companions evolve at levels **5, 10, 15** (3 evolutions total)
+  - Evolutions represent companions aging and maturing (Age 8 → 12 → 15 → 18)
   - First evolution happens early in premium content (level 5) to create an exciting hook
 
 ### Content Structure: 6 Adventures Across 3 Realms

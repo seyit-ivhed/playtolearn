@@ -103,7 +103,7 @@ Puzzles adapt to the **Difficulty Level (1-5)** selected by the player:
     - ...
     - **Encounter 10 (Boss):** 100 XP
     - **Encounter 20 (Final Boss):** 200 XP
-- **Growth Milestone:** At **Level 10**, companions undergo their **First Evolution**. Players will reach this milestone after completing both adventures (20 encounters). In the new business model, this milestone occurs at the end of the first **Paid Content** adventure.
+- **Growth Milestones:** At **Levels 5, 10, and 15**, companions undergo **Evolution**. These represent significant physical and skill maturation milestones. Players will reach the first evolution milestone toward the end of the first **Paid Content** adventure.
 
 
 ### Death & Failure
