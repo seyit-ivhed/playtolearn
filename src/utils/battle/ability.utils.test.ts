@@ -198,8 +198,8 @@ describe('ability.utils', () => {
                 target: 'ALL_ALLIES'
             };
 
-            const result = executeHealAbility(allies as any, ability, 30);
-            const updatedAlly = result[0] as unknown as EncounterUnit;
+            const result = executeHealAbility(allies, ability, 30);
+            const updatedAlly = result[0];
 
             expect(updatedAlly.currentHealth).toBe(80);
             expect(updatedAlly.statusEffects.some(se => se.id === 'regeneration')).toBe(true);
