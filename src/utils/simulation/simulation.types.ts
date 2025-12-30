@@ -22,7 +22,10 @@ export interface SimulationUnit {
     maxShield: number;
     currentShield: number;
     damage: number;
+    specialAbilityId?: string;
+    specialAbilityType?: 'DAMAGE' | 'SHIELD' | 'HEAL';
     specialAbilityValue?: number;
+    specialAbilityTarget?: 'SINGLE_ENEMY' | 'ALL_ENEMIES' | 'SINGLE_ALLY' | 'ALL_ALLIES' | 'SELF' | 'RANDOM_ENEMY';
 
     // State
     isDead: boolean;
@@ -30,6 +33,7 @@ export interface SimulationUnit {
     currentSpirit: number;
     maxSpirit: number;
     spiritGain: number;
+    statusEffects?: any[];
 }
 
 export interface BattleState {

@@ -23,6 +23,12 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
         .filter(evo => level >= evo.atLevel)
         .sort((a, b) => b.atLevel - a.atLevel)[0];
 
+    // Apply evolution stats bonus
+    if (currentEvolution && currentEvolution.statsBonus) {
+        evolutionBonus.maxHealth = currentEvolution.statsBonus.maxHealth || 0;
+        evolutionBonus.abilityDamage = currentEvolution.statsBonus.abilityDamage || 0;
+    }
+
     // Build the evolved ability (checking all steps)
     let evolvedAbility = companion.specialAbility;
     companion.evolutions.forEach(evo => {
@@ -40,6 +46,7 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
         specialAbilityId: evolvedAbility.id,
         specialAbilityType: evolvedAbility.type,
         specialAbilityValue: baseAbilityValue ? Math.floor(baseAbilityValue * scalingFactor) : undefined,
+        specialAbilityTarget: evolvedAbility.target,
         spiritGain: companion.baseStats.spiritGain,
     };
 };

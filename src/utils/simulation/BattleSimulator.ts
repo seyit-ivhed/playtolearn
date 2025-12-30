@@ -2,9 +2,7 @@ import type { AdventureMonster } from '../../types/adventure.types';
 import type { SpecialAbility } from '../../types/companion.types';
 import { getCompanionById } from '../../data/companions.data';
 import { getStatsForLevel } from '../progression.utils';
-import { applyDamage } from '../battle/damage.utils';
-import { executeDamageAbility, executeHealAbility, executeShieldAbility } from '../battle/ability.utils';
-import { findFirstLivingTarget, selectRandomTarget } from '../battle/combat.utils';
+import { CombatEngine, type BattleUnit } from '../battle/combat-engine';
 import type {
     SimulationUnit,
     BattleState,
@@ -55,12 +53,19 @@ export class BattleSimulator {
                     maxShield: 0,
                     currentShield: 0,
                     damage: stats.abilityDamage || 10,
+
+                    // Evolution details
+                    specialAbilityId: stats.specialAbilityId,
+                    specialAbilityType: stats.specialAbilityType,
                     specialAbilityValue: stats.specialAbilityValue || undefined,
+                    specialAbilityTarget: stats.specialAbilityTarget,
+
                     isDead: false,
                     hasActed: false,
                     currentSpirit: companionData.initialSpirit || 0,
                     maxSpirit: 100,
-                    spiritGain: stats.spiritGain
+                    spiritGain: stats.spiritGain || 0,
+                    statusEffects: []
                 };
             })
             .filter((unit) => unit !== null) as SimulationUnit[];
@@ -80,7 +85,8 @@ export class BattleSimulator {
             hasActed: false,
             currentSpirit: 0,
             maxSpirit: 100,
-            spiritGain: 0
+            spiritGain: 0,
+            statusEffects: []
         }));
 
         return {
@@ -112,8 +118,10 @@ export class BattleSimulator {
      * Simulate one complete turn (player actions + monster actions)
      */
     private simulateTurn(): void {
-        // Regenerate spirit at start of player turn
-        this.regenerateSpirit();
+        // Start of Turn: Status Effects & Spirit Regeneration
+        const units = this.state.party as unknown as BattleUnit[];
+        const processedUnits = CombatEngine.processTurnStart(units);
+        this.state.party = CombatEngine.regenerateSpirit(processedUnits) as unknown as SimulationUnit[];
 
         // Player turn
         this.executePlayerTurn();
@@ -137,19 +145,6 @@ export class BattleSimulator {
         // Reset acted flags for next turn
         this.state.party = this.state.party.map(u => ({ ...u, hasActed: false }));
         this.state.monsters = this.state.monsters.map(u => ({ ...u, hasActed: false }));
-    }
-
-    /**
-     * Regenerate spirit for all living party members
-     */
-    private regenerateSpirit(): void {
-        this.state.party = this.state.party.map(unit => {
-            if (unit.isDead) return unit;
-            return {
-                ...unit,
-                currentSpirit: Math.min(unit.maxSpirit, unit.currentSpirit + unit.spiritGain)
-            };
-        });
     }
 
     /**
@@ -195,94 +190,62 @@ export class BattleSimulator {
      * Execute standard attack
      */
     private executeStandardAttack(attacker: SimulationUnit): void {
-        const targetIndex = findFirstLivingTarget(this.state.monsters);
-        if (targetIndex === -1) return;
+        const allUnits = [...this.state.party, ...this.state.monsters] as unknown as BattleUnit[];
+        const result = CombatEngine.executeStandardAttack(attacker as unknown as BattleUnit, allUnits);
 
-        const target = this.state.monsters[targetIndex];
-        const damage = attacker.damage;
-
-        this.state.monsters[targetIndex] = applyDamage(target, damage).unit;
+        this.updateStateFromCombatResult(result.updatedTargets);
     }
 
     /**
      * Execute ultimate ability
      */
     private executeUltimate(attacker: SimulationUnit, success: boolean): void {
-        const companionData = getCompanionById(attacker.templateId);
-        if (!companionData) return;
-
-        const ability = companionData.specialAbility;
-
-        if (success) {
-            this.executeAbility(attacker, ability);
+        if (!success) {
+            // Reset spirit on failure
+            const partyIndex = this.state.party.findIndex(p => p.id === attacker.id);
+            if (partyIndex !== -1) {
+                const updatedUnit = CombatEngine.consumeSpiritCost(this.state.party[partyIndex] as unknown as BattleUnit);
+                this.state.party[partyIndex] = updatedUnit as unknown as SimulationUnit;
+            }
+            return;
         }
 
-        // Reset spirit regardless of success/failure
+        // Construct ability object from Unit state (evolved data)
+        if (!attacker.specialAbilityId || !attacker.specialAbilityType) {
+            // Fallback to companion data if for some reason missing (shouldn't happen with new init)
+            const companionData = getCompanionById(attacker.templateId);
+            if (companionData) {
+                const ability = companionData.specialAbility;
+                this.runAbilityExecution(attacker, ability, attacker.specialAbilityValue || ability.value);
+            }
+        } else {
+            const ability: SpecialAbility = {
+                id: attacker.specialAbilityId,
+                type: attacker.specialAbilityType,
+                value: attacker.specialAbilityValue || 0,
+                target: attacker.specialAbilityTarget || 'SINGLE_ENEMY' // Default fallback
+            };
+            this.runAbilityExecution(attacker, ability, ability.value);
+        }
+    }
+
+    private runAbilityExecution(attacker: SimulationUnit, ability: SpecialAbility, value: number) {
+        const allUnits = [...this.state.party, ...this.state.monsters] as unknown as BattleUnit[];
+        const result = CombatEngine.executeSpecialAbility(
+            attacker as unknown as BattleUnit,
+            allUnits,
+            ability,
+            value
+        );
+
+        this.updateStateFromCombatResult(result.updatedUnits);
+
+        // Reset spirit after success
         const partyIndex = this.state.party.findIndex(p => p.id === attacker.id);
         if (partyIndex !== -1) {
-            this.state.party[partyIndex] = {
-                ...this.state.party[partyIndex],
-                currentSpirit: 0
-            };
+            const updatedUnit = CombatEngine.consumeSpiritCost(this.state.party[partyIndex] as unknown as BattleUnit);
+            this.state.party[partyIndex] = updatedUnit as unknown as SimulationUnit;
         }
-    }
-
-    /**
-     * Execute special ability based on type
-     */
-    private executeAbility(attacker: SimulationUnit, ability: SpecialAbility): void {
-        const actualValue = attacker.specialAbilityValue || ability.value;
-
-        switch (ability.type) {
-            case 'DAMAGE':
-                this.executeDamageAbility(ability.target, actualValue);
-                break;
-            case 'HEAL':
-                this.executeHealAbility(ability.target, actualValue);
-                break;
-            case 'SHIELD':
-                this.executeShieldAbility(ability.target, actualValue);
-                break;
-        }
-    }
-
-    /**
-     * Execute damage ability
-     */
-    private executeDamageAbility(target: string, value: number): void {
-        const ability: SpecialAbility = {
-            id: 'temp',
-            type: 'DAMAGE',
-            value,
-            target: target as 'SINGLE_ENEMY' | 'ALL_ENEMIES'
-        };
-        this.state.monsters = executeDamageAbility(this.state.monsters, ability, value);
-    }
-
-    /**
-     * Execute heal ability
-     */
-    private executeHealAbility(target: string, value: number): void {
-        const ability: SpecialAbility = {
-            id: 'temp',
-            type: 'HEAL',
-            value,
-            target: target as 'SINGLE_ALLY' | 'ALL_ALLIES'
-        };
-        this.state.party = executeHealAbility(this.state.party, ability, value);
-    }
-
-    /**
-     * Execute shield ability
-     */
-    private executeShieldAbility(target: string, value: number): void {
-        const ability: SpecialAbility = {
-            id: 'temp',
-            type: 'SHIELD',
-            value,
-            target: target as 'SINGLE_ALLY' | 'ALL_ALLIES'
-        };
-        this.state.party = executeShieldAbility(this.state.party, ability, value);
     }
 
     /**
@@ -295,18 +258,26 @@ export class BattleSimulator {
         if (livingParty.length === 0) return;
 
         for (const monster of activeMonsters) {
-            // Random target selection
-            const targetIdx = selectRandomTarget(this.state.party);
-            if (targetIdx === -1) return;
+            const result = CombatEngine.processMonsterAction(
+                monster as unknown as BattleUnit,
+                this.state.party as unknown as BattleUnit[]
+            );
 
-            const target = this.state.party[targetIdx];
-            this.state.party[targetIdx] = applyDamage(target, monster.damage).unit;
+            // Updates party state
+            // We need to match back to SimulationUnit
+            this.state.party = result.updatedParty as unknown as SimulationUnit[];
 
             // Check defeat after each attack
             if (this.isDefeat()) {
                 return;
             }
         }
+    }
+
+    private updateStateFromCombatResult(units: BattleUnit[]) {
+        // Split back into party and monsters
+        this.state.party = units.filter(u => u.isPlayer) as unknown as SimulationUnit[];
+        this.state.monsters = units.filter(u => !u.isPlayer) as unknown as SimulationUnit[];
     }
 
     /**

@@ -1,49 +1,54 @@
 import type { StateCreator } from 'zustand';
 import type { EncounterStore, PlayerActionsSlice } from '../interfaces';
-import { EncounterPhase } from '../../../types/encounter.types';
-import { getCompanionById } from '../../../data/companions.data';
-
-import { performWarriorAction } from '../actions/standard/warrior.action';
-// ... (rest of imports)
-import { executeDamageAbility } from '../actions/special/damage.ability';
-import { executeShieldAbility } from '../actions/special/shield.ability';
-import { executeHealAbility } from '../actions/special/heal.ability';
+import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.types';
+import { CombatEngine, type BattleUnit } from '../../../utils/battle/combat-engine';
+import type { SpecialAbility } from '../../../types/companion.types';
 
 export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => ({
     selectUnit: (unitId) => set({ selectedUnitId: unitId }),
 
     performAction: (unitId) => {
-        const { party } = get();
+        const { party, monsters } = get();
         const unitIndex = party.findIndex(u => u.id === unitId);
         if (unitIndex === -1) return;
 
         const unit = party[unitIndex];
-
-        // Get Ability Data
-        const companionData = getCompanionById(unit.templateId);
 
         if (unit.hasActed) return;
 
         // consume energy & mark acted
         const newParty = [...party];
         newParty[unitIndex] = { ...unit, hasActed: true };
-        set({ party: newParty }); // Commit early state change for UI responsiveness if needed, but we mostly overwrite later or inside actions
+        set({ party: newParty });
 
-        let actionLog = '';
+        // Execute Standard Attack via Combat Engine
+        // (Assuming performAction is always standard attack for now as per previous logic)
+        // Previous logic called performWarriorAction which did damage.
 
-        // Apply Effects
-        if (companionData.role === 'WARRIOR') {
-            actionLog = performWarriorAction(get, set, unitIndex, 1);
-        }
+        const allUnits = [...newParty, ...monsters];
+        const result = CombatEngine.executeStandardAttack(
+            unit as unknown as BattleUnit,
+            allUnits as unknown as BattleUnit[]
+        );
 
-        if (actionLog) {
-            set(state => ({
-                encounterLog: [...state.encounterLog, `${unit.name} used Ability!${actionLog}`]
-            }));
-        }
+        // Update State
+        const updatedLogs = result.logs.map(l => l.message);
+        set(state => ({
+            encounterLog: [...state.encounterLog, ...updatedLogs]
+        }));
+
+        // Split results back
+        const resultUnits = result.updatedTargets as unknown as EncounterUnit[];
+        const finalParty = resultUnits.filter(u => u.isPlayer);
+        const finalMonsters = resultUnits.filter(u => !u.isPlayer);
+
+        set({
+            party: finalParty,
+            monsters: finalMonsters
+        });
 
         // Check Victory
-        if (get().monsters.every(m => m.isDead)) {
+        if (finalMonsters.every(m => m.isDead)) {
             setTimeout(() => {
                 set({ phase: EncounterPhase.VICTORY, encounterLog: [...get().encounterLog, 'Victory!'] });
             }, 1500);
@@ -51,64 +56,78 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         }
 
         // Check End Turn Condition (All living party members acted)
-        const allActed = get().party.every(p => p.isDead || p.hasActed);
+        // Use latest state
+        const currentParty = get().party;
+        const allActed = currentParty.every(p => p.isDead || p.hasActed);
         if (allActed) {
             get().endPlayerTurn();
         }
     },
 
     resolveSpecialAttack: (unitId, success) => {
-        const { party } = get();
+        const { party, monsters } = get();
         const unitIndex = party.findIndex(u => u.id === unitId);
         if (unitIndex === -1) return;
 
         const unit = party[unitIndex];
+        // Construct ability object with fallbacks
+        // Note: unit.specialAbilityTarget should be populated now, but we keep fallback logic just in case for older saves/states (though state resets on reload)
         const abilityId = unit.specialAbilityId || 'attack';
         const abilityType = unit.specialAbilityType || 'DAMAGE';
         const abilityValue = unit.specialAbilityValue || 10;
+        const abilityTarget = unit.specialAbilityTarget ||
+            (unit.templateId === 'amara' && unit.specialAbilityId === 'twin_shadows' ? 'ALL_ENEMIES' : 'SINGLE_ENEMY');
 
-        let logs: string[] = [];
+        const inputAbility: SpecialAbility = {
+            id: abilityId,
+            type: abilityType,
+            value: abilityValue,
+            target: abilityTarget
+        };
 
         if (success) {
-            logs.push(`${unit.name} cast ${abilityId}!`);
+            // EXECUTE ABILITY LOGIC via CombatEngine
+            const allUnits = [...party, ...monsters];
 
-            // EXECUTE ABILITY LOGIC
-            let abilityLogs: string[] = [];
+            const result = CombatEngine.executeSpecialAbility(
+                unit as unknown as BattleUnit,
+                allUnits as unknown as BattleUnit[],
+                inputAbility,
+                abilityValue
+            );
 
-            // Re-wrap into a SpecialAbility-like object for existing action functions if needed,
-            // or update them. For now, we wrap to minimize downstream changes.
-            const abilityData = {
-                id: abilityId,
-                type: abilityType,
-                value: abilityValue,
-                target: (unit.templateId === 'amara' && unit.specialAbilityId === 'twin_shadows') ? 'ALL_ENEMIES' : 'SINGLE_ENEMY' // Simplified for MVP
-            } as any;
+            // Map logs
+            const updatedLogs = result.logs.map(l => l.message);
 
-            if (abilityType === 'DAMAGE') {
-                abilityLogs = executeDamageAbility(get, set, unitId, abilityData);
-            } else if (abilityType === 'SHIELD') {
-                abilityLogs = executeShieldAbility(get, set, unitId, abilityData);
-            } else if (abilityType === 'HEAL') {
-                abilityLogs = executeHealAbility(get, set, unitId, abilityData);
-            }
-            logs = [...logs, ...abilityLogs];
+            // Update State
+            // Note: consume charge & mark acted is handled manually below because CombatEngine is pure 
+            // and doesn't know about "consuming charge" mechanic specifically for the UI state flow (Unit state update)
+            // ACTUALLY CombatEngine updates unit state if we pass it, but specific "Acted" flag management might be UI specific?
+            // CombatEngine result uses the units passed in.
+            // We need to ensure the attacker has spirit 0 and hasActed = true.
 
-            // Consume Charge (Reset to 0) AND Mark as Acted
-            // Need to re-fetch party in case it was modified by ability logic actions
-            const currentParty = get().party;
-            const currentUnitIndex = currentParty.findIndex(u => u.id === unitId);
-            if (currentUnitIndex !== -1) {
-                const newParty = [...currentParty];
-                newParty[currentUnitIndex] = { ...newParty[currentUnitIndex], currentSpirit: 0, hasActed: true };
-                set({ party: newParty });
-            }
+            let finalUnits = result.updatedUnits as unknown as EncounterUnit[];
+
+            // Force reset spirit and acted for attacker in the result set
+            finalUnits = finalUnits.map(u => {
+                if (u.id === unitId) {
+                    const consumed = CombatEngine.consumeSpiritCost(u as unknown as BattleUnit);
+                    return { ...(consumed as unknown as EncounterUnit), hasActed: true };
+                }
+                return u;
+            });
+
+            const finalParty = finalUnits.filter(u => u.isPlayer);
+            const finalMonsters = finalUnits.filter(u => !u.isPlayer);
 
             set(state => ({
-                encounterLog: [...state.encounterLog, ...logs]
+                party: finalParty,
+                monsters: finalMonsters,
+                encounterLog: [...state.encounterLog, ...updatedLogs]
             }));
 
             // Check Victory
-            if (get().monsters.every(m => m.isDead)) {
+            if (finalMonsters.every(m => m.isDead)) {
                 setTimeout(() => {
                     set({ phase: EncounterPhase.VICTORY, encounterLog: [...get().encounterLog, 'Victory!'] });
                 }, 1500);
@@ -116,7 +135,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
             }
 
             // Check End Turn Condition
-            if (get().party.every(p => p.isDead || p.hasActed)) {
+            if (finalParty.every(p => p.isDead || p.hasActed)) {
                 get().endPlayerTurn();
             }
 
@@ -127,7 +146,8 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
 
             if (currentUnitIndex !== -1) {
                 const newParty = [...currentParty];
-                newParty[currentUnitIndex] = { ...newParty[currentUnitIndex], currentSpirit: 0, hasActed: true };
+                const consumed = CombatEngine.consumeSpiritCost(newParty[currentUnitIndex] as unknown as BattleUnit);
+                newParty[currentUnitIndex] = { ...(consumed as unknown as EncounterUnit), hasActed: true };
                 set({
                     party: newParty,
                     encounterLog: [...get().encounterLog, `${unit.name}'s ability FAILED! Charge lost.`]

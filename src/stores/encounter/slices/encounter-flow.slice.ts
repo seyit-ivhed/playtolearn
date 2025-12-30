@@ -5,8 +5,7 @@ import { getCompanionById } from '../../../data/companions.data';
 import { getStatsForLevel } from '../../../utils/progression.utils';
 import { getMonsterSprite } from '../../../data/monster-sprites';
 import { getCompanionSprite } from '../../../data/companion-sprites';
-import { applyDamage } from '../../../utils/battle/damage.utils';
-import { selectRandomTarget } from '../../../utils/battle/combat.utils';
+import { CombatEngine, type BattleUnit } from '../../../utils/battle/combat-engine';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
     initializeEncounter: (partyIds, enemies, xpReward, nodeIndex, difficulty, companionStats) => {
@@ -38,6 +37,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     specialAbilityId: calculatedStats.specialAbilityId,
                     specialAbilityType: calculatedStats.specialAbilityType,
                     specialAbilityValue: calculatedStats.specialAbilityValue || 0,
+                    specialAbilityTarget: calculatedStats.specialAbilityTarget,
                     isDead: false,
                     hasActed: false,
                     currentSpirit: data.initialSpirit || 0,
@@ -99,39 +99,40 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
     },
 
     processMonsterTurn: () => {
-        const { monsters, party } = get();
+        const { monsters } = get();
         const activeMonsters = monsters.filter(m => !m.isDead);
 
         if (activeMonsters.length === 0) return; // Should be victory already
 
-        let newParty = [...party];
-        const newMonsters = [...monsters];
         const logs: string[] = [];
 
         // Process each monster attack sequentially with delays
         const processMonsterAttack = (monsterIndex: number) => {
-            if (monsterIndex >= activeMonsters.length) {
+            // Re-fetch state at start of each execution to get latest updates
+            // But we actually modify local copies and push updates...
+            // Standard reducer pattern usually simpler, but we have async delays.
+            // We'll rely on get() inside the loop if we were doing single steps,
+            // but here we are using recursion.
+
+            // Actually, we must fetch state LATEST inside the recursion to be safe because
+            // previous timeouts might have committed state.
+            const currentStore = get();
+            const currentMonsters = currentStore.monsters;
+            const currentParty = currentStore.party;
+            const currentActiveMonsters = currentMonsters.filter(m => !m.isDead);
+
+            if (monsterIndex >= currentActiveMonsters.length) {
                 // All monsters have attacked - prepare for next player turn
-                // Reset party actions for next turn
-                newParty = newParty.map(u => ({ ...u, hasActed: false }));
 
-                // Decrement and filter status effects for all units
-                const decrementStatus = (unit: EncounterUnit) => ({
-                    ...unit,
-                    statusEffects: unit.statusEffects
-                        .map(se => ({ ...se, duration: se.duration - 1 }))
-                        .filter(se => se.duration > 0)
-                });
+                let newParty = currentParty.map(u => ({ ...u, hasActed: false }));
+                let newMonsters = currentMonsters;
 
-                newParty = newParty.map(decrementStatus);
-                const decayedMonsters = newMonsters.map(decrementStatus);
+                // Decrement and filter status effects for all units via CombatEngine
+                newParty = CombatEngine.processTurnStart(newParty as unknown as BattleUnit[]) as unknown as EncounterUnit[];
+                const decayedMonsters = CombatEngine.processTurnStart(newMonsters as unknown as BattleUnit[]) as unknown as EncounterUnit[];
 
-                // Passive Charge at start of Player Turn
-                // Spirit to all living party members based on their spiritGain stat
-                newParty = newParty.map(p => {
-                    if (p.isDead) return p;
-                    return { ...p, currentSpirit: Math.min(100, p.currentSpirit + p.spiritGain) };
-                });
+                // Passive Charge at start of Player Turn via CombatEngine
+                newParty = CombatEngine.regenerateSpirit(newParty as unknown as BattleUnit[]) as unknown as EncounterUnit[];
 
                 // Add a cooldown before returning to player turn
                 setTimeout(() => {
@@ -140,7 +141,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                         monsters: decayedMonsters,
                         phase: EncounterPhase.PLAYER_TURN,
                         turnCount: state.turnCount + 1,
-                        encounterLog: [...state.encounterLog, ...logs]
+                        encounterLog: [...state.encounterLog, ...logs] // logs might be empty here as we pushed them incrementally? NO, we push them in the attack steps
                     }));
 
                     if (newParty.every(p => p.isDead)) {
@@ -150,41 +151,30 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 return;
             }
 
-            const monster = activeMonsters[monsterIndex];
-            const livingTargets = newParty.filter(p => !p.isDead);
-
-            if (livingTargets.length === 0) {
-                // All party members dead, end immediately
-                processMonsterAttack(activeMonsters.length);
-                return;
-            }
+            const monster = currentActiveMonsters[monsterIndex];
 
             // Mark monster as acted
-            const storeMonsterIndex = newMonsters.findIndex(m => m.id === monster.id);
-            if (storeMonsterIndex !== -1) {
-                newMonsters[storeMonsterIndex] = { ...newMonsters[storeMonsterIndex], hasActed: true };
+            // Need to find index in the MAIN array
+            const monsterMainIndex = currentMonsters.findIndex(m => m.id === monster.id);
+            if (monsterMainIndex !== -1) {
+                const updatedMonsters = [...currentMonsters];
+                updatedMonsters[monsterMainIndex] = { ...updatedMonsters[monsterMainIndex], hasActed: true };
+                set({ monsters: updatedMonsters });
             }
 
-            // Random target selection
-            const targetIdx = selectRandomTarget(newParty);
-            if (targetIdx === -1) {
-                // No valid targets, skip this monster's turn or end encounter if all party members are dead
-                processMonsterAttack(monsterIndex + 1);
-                return;
-            }
+            const currentPlayerParty = get().party; // Latest party state
+            const result = CombatEngine.processMonsterAction(
+                monster as unknown as BattleUnit,
+                currentPlayerParty as unknown as BattleUnit[]
+            );
 
-            const target = newParty[targetIdx];
-            const result = applyDamage(target, monster.damage || 8);
-            newParty[targetIdx] = result.unit;
+            // Add logs and update state
+            const newLogs = result.logs.map(l => l.message);
 
-            logs.push(`${monster.name} attacked ${result.unit.name} for ${result.damageDealt} damage!`);
-
-            // Update state immediately so the UI reflects this attack
-            set({
-                party: newParty,
-                monsters: newMonsters,
-                encounterLog: [...get().encounterLog, logs[logs.length - 1]]
-            });
+            set(state => ({
+                party: result.updatedParty as unknown as EncounterUnit[],
+                encounterLog: [...state.encounterLog, ...newLogs]
+            }));
 
             // Wait 1s before the next monster attacks
             setTimeout(() => {
