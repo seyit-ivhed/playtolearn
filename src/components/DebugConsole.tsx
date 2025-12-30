@@ -21,8 +21,11 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
         debugResetCompanions,
         debugResetEncounterResults,
         debugUnlockAllCompanions,
+        debugSetCompanionLevel,
+        debugSetEncounterStars,
         xpPool,
         companionStats,
+        currentMapNode,
         activeAdventureId,
         setActiveAdventure
     } = useGameStore();
@@ -73,6 +76,10 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                 log('  xp <amount>     - Add XP to pool');
                 log('  companions      - Unlock all companions');
                 log('  adv <id>        - Set active adventure by ID');
+                log('  level <id> <v>  - Set companion level (e.g. level tara 5)');
+                log('  stars <v>       - Set stars for current encounter (e.g. stars 3)');
+                log('  stars <i> <v>   - Set stars for encounter in current adventure');
+                log('  stars <a> <i> <v>- Set stars for specific adventure encounter');
                 log('  status          - Show current game state');
                 log('  clear           - Clear console history');
                 break;
@@ -167,6 +174,59 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
                     log(`Active adventure set to "${advId}".`);
                 } else {
                     log('Error: Missing ID. Usage: adv <id>');
+                }
+                break;
+            }
+            case 'level':
+            case 'lv': {
+                const id = parts[1];
+                const level = parseInt(parts[2]);
+                if (id && !isNaN(level)) {
+                    debugSetCompanionLevel(id, level);
+                    log(`Companion "${id}" level set to ${level}.`);
+                } else {
+                    log('Error: Invalid arguments. Usage: level <companionId> <level>');
+                }
+                break;
+            }
+            case 'star':
+            case 'stars': {
+                const arg1 = parts[1];
+                const arg2 = parts[2];
+                const arg3 = parts[3];
+
+                if (arg3) {
+                    // stars <advId> <nodeIdx> <stars>
+                    const advId = arg1;
+                    const nodeIdx = parseInt(arg2);
+                    const stars = parseInt(arg3);
+                    if (!isNaN(nodeIdx) && !isNaN(stars)) {
+                        debugSetEncounterStars(advId, nodeIdx, stars);
+                        log(`Stars for adventure ${advId}, node ${nodeIdx} set to ${stars}.`);
+                    } else {
+                        log('Error: Invalid arguments. Usage: stars <advId> <nodeIdx> <stars>');
+                    }
+                } else if (arg2) {
+                    // stars <nodeIdx> <stars> (current adventure)
+                    const nodeIdx = parseInt(arg1);
+                    const stars = parseInt(arg2);
+                    if (!isNaN(nodeIdx) && !isNaN(stars)) {
+                        debugSetEncounterStars(activeAdventureId, nodeIdx, stars);
+                        log(`Stars for node ${nodeIdx} in current adventure set to ${stars}.`);
+                    } else {
+                        log('Error: Invalid arguments. Usage: stars <nodeIdx> <stars>');
+                    }
+                } else if (arg1) {
+                    // stars <stars> (current node, current adventure)
+                    const stars = parseInt(arg1);
+                    if (!isNaN(stars)) {
+                        debugSetEncounterStars(activeAdventureId, currentMapNode, stars);
+                        log(`Stars for current node (${currentMapNode}) set to ${stars}.`);
+                    } else {
+                        log('Error: Invalid arguments. Usage: stars <stars>');
+                    }
+                } else {
+                    log('Error: Missing arguments. Usage: stars <val> OR stars <idx> <val> OR stars <adv> <idx> <val>');
                 }
                 break;
             }

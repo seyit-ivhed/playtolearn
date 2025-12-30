@@ -62,6 +62,8 @@ export interface DebugSlice {
     debugResetXpPool: () => void;
     debugResetCompanions: () => void;
     debugResetEncounterResults: () => void;
+    debugSetCompanionLevel: (companionId: string, level: number) => void;
+    debugSetEncounterStars: (adventureId: string, nodeIndex: number, stars: number) => void;
     resetAll: () => void;
 }
 

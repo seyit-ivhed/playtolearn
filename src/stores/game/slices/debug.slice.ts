@@ -40,6 +40,32 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
 
     debugResetEncounterResults: () => set({ encounterResults: {} }),
 
+    debugSetCompanionLevel: (companionId, level) => set((state) => ({
+        companionStats: {
+            ...state.companionStats,
+            [companionId]: {
+                ...state.companionStats[companionId],
+                level,
+                xp: 0
+            }
+        }
+    })),
+
+    debugSetEncounterStars: (adventureId, nodeIndex, stars) => set((state) => {
+        const key = `${adventureId}_${nodeIndex}`;
+        const existing = state.encounterResults[key];
+        return {
+            encounterResults: {
+                ...state.encounterResults,
+                [key]: {
+                    stars,
+                    difficulty: existing?.difficulty ?? 1,
+                    completedAt: existing?.completedAt ?? Date.now()
+                }
+            }
+        };
+    }),
+
     resetAll: () => {
         set({
             currentMapNode: 1,
