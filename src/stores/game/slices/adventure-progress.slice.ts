@@ -53,8 +53,8 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
 
     setEncounterDifficulty: (difficulty) => set({ activeEncounterDifficulty: difficulty }),
 
-    setActiveAdventure: (adventureId) => {
-        set({ activeAdventureId: adventureId, currentMapNode: 1 });
+    setActiveAdventure: (adventureId, initialNode) => {
+        set({ activeAdventureId: adventureId, currentMapNode: initialNode ?? 1 });
     },
 
     resetMap: () => set({ currentMapNode: 1 }),

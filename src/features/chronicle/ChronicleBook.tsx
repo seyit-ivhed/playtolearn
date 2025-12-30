@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../stores/game/store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { ADVENTURES } from '../../data/adventures.data';
+import { AdventureStatus } from '../../types/adventure.types';
 import { VOLUMES } from '../../data/volumes.data';
 import { ChapterPage } from './components/ChapterPage';
 import { TableOfContents } from './components/TableOfContents';
@@ -69,7 +70,15 @@ export const ChronicleBook: React.FC = () => {
     };
 
     const handleBegin = (id: string) => {
-        setActiveAdventure(id);
+        const isCompleted = adventureStatuses[id] === AdventureStatus.COMPLETED;
+        if (isCompleted) {
+            const adventure = ADVENTURES.find(a => a.id === id);
+            // Set node to one past the last encounter to unlock all nodes
+            const maxNode = adventure ? adventure.encounters.length + 1 : 99;
+            setActiveAdventure(id, maxNode);
+        } else {
+            setActiveAdventure(id);
+        }
         navigate('/map');
     };
 

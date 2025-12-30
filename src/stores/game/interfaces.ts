@@ -31,7 +31,7 @@ export interface GameState {
 export interface AdventureProgressSlice {
     completeEncounter: (nodeIndex?: number) => void;
     setEncounterDifficulty: (difficulty: number) => void;
-    setActiveAdventure: (adventureId: string) => void;
+    setActiveAdventure: (adventureId: string, initialNode?: number) => void;
     resetMap: () => void;
     updateChroniclePosition: (volumeId: string, adventureId: string) => void;
 }
