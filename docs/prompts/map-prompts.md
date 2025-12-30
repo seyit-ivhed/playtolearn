@@ -3,7 +3,7 @@
 ## Adventure 1 Map Background
 
 **Prompt:**
-A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a journey through a dangerous desert, flowing from top to bottom without any text, labels, or grid lines.
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a journey through a dangerous desert, flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
 
 At the top, the terrain consists of rolling sand dunes and small scattered rocks, evoking a dry, scorpion-infested wasteland.
 
@@ -18,7 +18,7 @@ Try to make it as long as possible.
 ## Adventure 2 Map Background
 
 **Prompt:**
-A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a descent into a subterranean cavernous city, flowing from top to bottom without any text, labels, or grid lines.
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a descent into a subterranean cavernous city, flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
 
 At the top, a narrow canyon entrance transitions into a cool, shadowed cave system, leaving the desert sunlight behind.
 

@@ -113,7 +113,16 @@ const EncounterPage = () => {
         if (phase === EncounterPhase.VICTORY) {
             const { nodeIndex } = useEncounterStore.getState();
             useGameStore.getState().completeEncounter(nodeIndex);
-            navigate('/map');
+
+            // Check if this was a BOSS encounter
+            const currentMonsters = useEncounterStore.getState().monsters;
+            const isBossEncounter = currentMonsters.some(m => m.isBoss);
+
+            if (isBossEncounter) {
+                navigate('/map', { state: { adventureCompleted: true } });
+            } else {
+                navigate('/map');
+            }
         } else if (phase === EncounterPhase.DEFEAT) {
             navigate('/map');
         }

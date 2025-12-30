@@ -211,6 +211,13 @@
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
 }
 
+.node-container.ending {
+    background: linear-gradient(135deg, #a855f7, #6b21a8);
+    /* Purple */
+    border-color: #c084fc;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
 .node-container.boss {
     background: radial-gradient(circle at center, #dc2626, #7f1d1d 120%);
     /* Red Energy Core */
@@ -344,7 +351,8 @@
 .node-container.current.camp,
 .node-container.current.default,
 .node-container.current.puzzle,
-.node-container.current.boss {
+.node-container.current.boss,
+.node-container.current.ending {
     box-shadow: 0 0 0 4px white, 0 0 40px currentColor;
     animation: bounce 1s infinite, pulse 2s infinite;
 }
@@ -367,6 +375,11 @@
 .node-container.current.boss {
     border-color: #f87171;
     color: #ef4444;
+}
+
+.node-container.current.ending {
+    border-color: #c084fc;
+    color: #a855f7;
 }
 
 .node-container.completed {
@@ -429,6 +442,15 @@
     /* border-emerald-400 */
     color: #d1fae5;
     /* text-emerald-100 */
+}
+
+.node-label.current.ending {
+    background-color: rgba(107, 33, 168, 0.95);
+    /* bg-purple-900/95 */
+    border-color: #c084fc;
+    /* border-purple-400 */
+    color: #f3e8ff;
+    /* text-purple-100 */
 }
 
 .node-label.completed {

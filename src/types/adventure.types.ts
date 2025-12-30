@@ -16,7 +16,8 @@ export const EncounterType = {
     BATTLE: 'BATTLE',      // Turn-based combat against monsters
     PUZZLE: 'PUZZLE',      // Logic and math puzzles (future feature)
     BOSS: 'BOSS',          // Boss fight at the end of an adventure
-    CAMP: 'CAMP'           // Rest stop to adjust party
+    CAMP: 'CAMP',          // Rest stop to adjust party
+    ENDING: 'ENDING'       // Transition node to next adventure
 } as const;
 
 export type EncounterType = typeof EncounterType[keyof typeof EncounterType];

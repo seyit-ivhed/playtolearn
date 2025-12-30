@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import { usePlayerStore } from '../../stores/player.store';
 import { useEncounterStore } from '../../stores/encounter.store';
+import { useAdventureStore } from '../../stores/adventure.store';
 import { DifficultySelectionModal } from './components/DifficultySelectionModal';
 import './AdventurePage.css';
 
@@ -25,6 +26,7 @@ const AdventurePage = () => {
         activeEncounterDifficulty
     } = useGameStore();
     const { initializeEncounter } = useEncounterStore();
+    const { completeAdventure, unlockAdventure } = useAdventureStore();
     const { difficulty: playerDifficulty } = usePlayerStore();
 
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
@@ -48,6 +50,22 @@ const AdventurePage = () => {
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS || encounter.type === EncounterType.PUZZLE) {
             setSelectedEncounter(encounter);
             setIsDifficultyModalOpen(true);
+        }
+
+        if (encounter.type === EncounterType.ENDING) {
+            // Complete current adventure
+            completeAdventure(activeAdventureId);
+
+            // Find next adventure to unlock
+            const currentAdventureIndex = ADVENTURES.findIndex(a => a.id === activeAdventureId);
+            if (currentAdventureIndex !== -1 && currentAdventureIndex < ADVENTURES.length - 1) {
+                const nextAdventure = ADVENTURES[currentAdventureIndex + 1];
+                unlockAdventure(nextAdventure.id);
+                // Update chronicle focus to next adventure
+                useGameStore.getState().updateChroniclePosition('origins', nextAdventure.id);
+            }
+
+            navigate('/chronicle');
         }
     };
 

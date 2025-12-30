@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Swords, Tent, Puzzle, Star } from 'lucide-react';
+import { Swords, Tent, Puzzle, Star, BookOpen } from 'lucide-react';
 import { EncounterType, type Encounter } from '../../../types/adventure.types';
 import { useGameStore } from '../../../stores/game/store';
 
@@ -34,6 +34,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
     const isCamp = node.type === EncounterType.CAMP;
     const isBoss = node.type === EncounterType.BOSS;
     const isPuzzle = node.type === EncounterType.PUZZLE;
+    const isEnding = node.type === EncounterType.ENDING;
 
     // Use coordinates from data or fallback
     // Horizontal range is -500 to 500 (total width 1000)
@@ -45,9 +46,10 @@ export const MapNode: React.FC<MapNodeProps> = ({
     // CSS Classes Construction
     const nodeContainerClasses = [
         'node-container',
-        isCamp ? 'camp' : isBoss ? 'boss' : isPuzzle ? 'puzzle' : 'default',
+        isCamp ? 'camp' : isBoss ? 'boss' : isPuzzle ? 'puzzle' : isEnding ? 'ending' : 'default',
         isLocked ? 'locked' : '',
         isCurrent ? 'current' : '',
+
         isCompleted ? 'completed' : ''
     ].filter(Boolean).join(' ');
 
@@ -69,6 +71,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
         if (isBoss) return <Swords {...iconProps} />;
         if (isCamp) return <Tent {...iconProps} />;
         if (isPuzzle) return <Puzzle {...iconProps} />;
+        if (isEnding) return <BookOpen {...iconProps} />;
         return <Swords {...iconProps} />;
     };
 

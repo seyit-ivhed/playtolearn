@@ -115,9 +115,16 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_13',
                 type: EncounterType.BOSS,
-                coordinates: { x: -150, y: 3900 },
+                coordinates: { x: -100, y: 3850 },
                 enemies: [MONSTERS.SAND_COLOSSUS],
                 xpReward: 100
+            },
+            {
+                id: '1_14',
+                type: EncounterType.ENDING,
+                coordinates: { x: -300, y: 3850 },
+                xpReward: 0,
+                label: 'To the Ruins'
             }
         ]
     },
@@ -213,6 +220,13 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: 0, y: 3700 },
                 enemies: [MONSTERS.THE_STONE_EMPEROR],
                 xpReward: 200
+            },
+            {
+                id: '2_14',
+                type: EncounterType.ENDING,
+                coordinates: { x: 0, y: 3950 },
+                xpReward: 0,
+                label: 'Journey Onward'
             }
         ]
     }
