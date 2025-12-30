@@ -33,7 +33,7 @@ export interface SimulationUnit {
     currentSpirit: number;
     maxSpirit: number;
     spiritGain: number;
-    statusEffects?: any[];
+    statusEffects?: { id: string; duration: number; type?: string }[];
 }
 
 export interface BattleState {

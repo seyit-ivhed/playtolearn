@@ -125,7 +125,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 // All monsters have attacked - prepare for next player turn
 
                 let newParty = currentParty.map(u => ({ ...u, hasActed: false }));
-                let newMonsters = currentMonsters;
+                const newMonsters = currentMonsters;
 
                 // Decrement and filter status effects for all units via CombatEngine
                 newParty = CombatEngine.processTurnStart(newParty as unknown as BattleUnit[]) as unknown as EncounterUnit[];

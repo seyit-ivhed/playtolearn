@@ -1,5 +1,5 @@
 import type { SpecialAbility } from '../../types/companion.types';
-import type { EncounterUnit } from '../../types/encounter.types';
+import type { EncounterUnit, StatusEffect } from '../../types/encounter.types';
 import { applyDamage, getTargetDamageMultiplier } from './damage.utils';
 import { executeDamageAbility, executeHealAbility, executeShieldAbility, type HealableUnit, type ShieldableUnit } from './ability.utils';
 
@@ -27,6 +27,7 @@ export interface BattleUnit extends HealableUnit, ShieldableUnit {
     name: string;
     isPlayer: boolean;
     damage?: number;
+    maxShield: number;
 
     // Stats
     maxSpirit: number;
@@ -35,7 +36,7 @@ export interface BattleUnit extends HealableUnit, ShieldableUnit {
 
     // State
     hasActed: boolean;
-    statusEffects?: any[]; // Simplified for now
+    statusEffects: StatusEffect[]; // Simplified for now
 }
 
 export class CombatEngine {
@@ -63,14 +64,14 @@ export class CombatEngine {
         // In a strict refactor, we would unify the Unit interfaces completely.
 
         if (ability.type === 'DAMAGE') {
-            const targets = enemies as any as EncounterUnit[];
+            const targets = enemies as unknown as EncounterUnit[];
             const result = executeDamageAbility(targets, ability, abilityValue);
 
             // Map results back to updatedUnits
             updatedUnits = updatedUnits.map(u => {
                 if (u.isPlayer) return u;
                 const updated = result.find(t => t.id === u.id);
-                return updated ? (updated as any as BattleUnit) : u;
+                return updated ? (updated as unknown as BattleUnit) : u;
             });
 
             // Generate logs
@@ -129,10 +130,10 @@ export class CombatEngine {
 
         const target = targets[targetIndex];
         const damage = attacker.damage || 0;
-        const multiplier = getTargetDamageMultiplier(target as any as EncounterUnit);
+        const multiplier = getTargetDamageMultiplier(target as unknown as EncounterUnit);
         const finalDamage = Math.floor(damage * multiplier);
 
-        const result = applyDamage(target as any as EncounterUnit, finalDamage);
+        const result = applyDamage(target as unknown as EncounterUnit, finalDamage);
 
         logs.push({
             message: `${attacker.name} attacked ${target.name} for ${result.damageDealt} damage!`,
@@ -140,7 +141,7 @@ export class CombatEngine {
         });
 
         const updatedTargets = targets.map(t =>
-            t.id === target.id ? (result.unit as any as BattleUnit) : t
+            t.id === target.id ? (result.unit as unknown as BattleUnit) : t
         );
 
         return { updatedTargets, logs };
@@ -165,10 +166,10 @@ export class CombatEngine {
 
         const target = livingParty[targetIdx];
         const damage = attacker.damage || 0;
-        const multiplier = getTargetDamageMultiplier(target as any as EncounterUnit);
+        const multiplier = getTargetDamageMultiplier(target as unknown as EncounterUnit);
         const finalDamage = Math.floor(damage * multiplier);
 
-        const result = applyDamage(target as any as EncounterUnit, finalDamage);
+        const result = applyDamage(target as unknown as EncounterUnit, finalDamage);
 
         logs.push({
             message: `${attacker.name} attacked ${target.name} for ${result.damageDealt} damage!`,
@@ -176,7 +177,7 @@ export class CombatEngine {
         });
 
         const updatedParty = playerParty.map(p =>
-            p.id === target.id ? (result.unit as any as BattleUnit) : p
+            p.id === target.id ? (result.unit as unknown as BattleUnit) : p
         );
 
         return { updatedParty, logs };
@@ -204,8 +205,8 @@ export class CombatEngine {
 
             // Decrement duration and filter expired
             const newEffects = unit.statusEffects
-                .map((se: any) => ({ ...se, duration: se.duration - 1 }))
-                .filter((se: any) => se.duration > 0);
+                .map(se => ({ ...se, duration: se.duration - 1 }))
+                .filter(se => se.duration > 0);
 
             return {
                 ...unit,

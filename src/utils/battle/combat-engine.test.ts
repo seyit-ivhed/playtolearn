@@ -11,6 +11,7 @@ describe('CombatEngine', () => {
         damage: 10,
         maxHealth: 100,
         currentHealth: 100,
+        maxShield: 0,
         currentShield: 0,
         maxSpirit: 100,
         currentSpirit: 100,
@@ -28,6 +29,7 @@ describe('CombatEngine', () => {
         damage: 5,
         maxHealth: 100,
         currentHealth: 100,
+        maxShield: 0,
         currentShield: 0,
         maxSpirit: 100,
         currentSpirit: 0,
@@ -53,7 +55,7 @@ describe('CombatEngine', () => {
             expect(result.updatedTargets[0].currentHealth).toBe(0);
         });
         it('should deal increased damage to marked targets (1.25x)', () => {
-            const markedEnemy = { ...mockEnemy, statusEffects: [{ id: 'marked', duration: 2 }] };
+            const markedEnemy = { ...mockEnemy, statusEffects: [{ id: 'marked', duration: 2, type: 'DEBUFF' as const }] };
             const result = CombatEngine.executeStandardAttack(mockAttacker, [markedEnemy]);
             // Damage 10 * 1.25 = 12.5 -> floor(12.5) = 12
             // Health 100 - 12 = 88
@@ -126,7 +128,7 @@ describe('CombatEngine', () => {
         it('should decrement status effect duration', () => {
             const unit: BattleUnit = {
                 ...mockAttacker,
-                statusEffects: [{ id: 'poison', duration: 2 }]
+                statusEffects: [{ id: 'poison', duration: 2, type: 'DEBUFF' as const }]
             };
             const updated = CombatEngine.processTurnStart([unit]);
             expect(updated[0].statusEffects![0].duration).toBe(1);
@@ -135,7 +137,7 @@ describe('CombatEngine', () => {
         it('should remove expired status effects', () => {
             const unit: BattleUnit = {
                 ...mockAttacker,
-                statusEffects: [{ id: 'stun', duration: 1 }]
+                statusEffects: [{ id: 'stun', duration: 1, type: 'DEBUFF' as const }]
             };
             const updated = CombatEngine.processTurnStart([unit]);
             expect(updated[0].statusEffects!.length).toBe(0);
@@ -209,7 +211,7 @@ describe('CombatEngine', () => {
                 { id: 'm2', isPlayer: false, isDead: false }  // Enemy 2
             ];
 
-            const index = CombatEngine.findFirstValidEnemy(attacker as any, targets as any);
+            const index = CombatEngine.findFirstValidEnemy(attacker, targets);
             expect(index).toBe(2);
         });
 
@@ -220,7 +222,7 @@ describe('CombatEngine', () => {
                 { id: 'm2', isPlayer: false, isDead: false } // Living Enemy
             ];
 
-            const index = CombatEngine.findFirstValidEnemy(attacker as any, targets as any);
+            const index = CombatEngine.findFirstValidEnemy(attacker, targets);
             expect(index).toBe(1);
         });
 
@@ -231,7 +233,7 @@ describe('CombatEngine', () => {
                 { id: 'u2', isPlayer: true, isDead: false }
             ];
 
-            const index = CombatEngine.findFirstValidEnemy(attacker as any, targets as any);
+            const index = CombatEngine.findFirstValidEnemy(attacker, targets);
             expect(index).toBe(-1);
         });
     });
@@ -239,12 +241,12 @@ describe('CombatEngine', () => {
     describe('getTargetDamageMultiplier', () => {
         it('should return 1.0 for no status effects', () => {
             const unit = { ...mockAttacker, statusEffects: [], maxShield: 0 };
-            expect(CombatEngine.getTargetDamageMultiplier(unit as any)).toBe(1.0);
+            expect(CombatEngine.getTargetDamageMultiplier(unit as unknown as BattleUnit)).toBe(1.0);
         });
 
         it('should return 1.25 for marked status', () => {
-            const unit = { ...mockAttacker, statusEffects: [{ id: 'marked', duration: 1 }], maxShield: 0 };
-            expect(CombatEngine.getTargetDamageMultiplier(unit as any)).toBe(1.25);
+            const unit = { ...mockAttacker, statusEffects: [{ id: 'marked', duration: 1, type: 'DEBUFF' as const }], maxShield: 0 };
+            expect(CombatEngine.getTargetDamageMultiplier(unit as unknown as BattleUnit)).toBe(1.25);
         });
     });
 });

@@ -19,7 +19,7 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
     };
 
     // Keep track of the latest evolution milestone reached
-    let currentEvolution = companion.evolutions
+    const currentEvolution = companion.evolutions
         .filter(evo => level >= evo.atLevel)
         .sort((a, b) => b.atLevel - a.atLevel)[0];
 
