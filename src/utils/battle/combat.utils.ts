@@ -33,14 +33,3 @@ export function selectRandomTarget<T extends { isDead: boolean }>(
     return livingTargets[randomIndex].i;
 }
 
-/**
- * Find first living target
- * 
- * @param targets - Array of units
- * @returns Index of first living target, or -1 if none found
- */
-export function findFirstLivingTarget<T extends { isDead: boolean }>(
-    targets: T[]
-): number {
-    return targets.findIndex(t => !t.isDead);
-}
