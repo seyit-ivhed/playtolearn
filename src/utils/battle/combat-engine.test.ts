@@ -142,6 +142,20 @@ describe('CombatEngine', () => {
             const updated = CombatEngine.processTurnStart([unit]);
             expect(updated[0].statusEffects!.length).toBe(0);
         });
+
+        it('should heal unit over time when regeneration is active', () => {
+            const unit: BattleUnit = {
+                ...mockAttacker,
+                currentHealth: 50,
+                maxHealth: 100,
+                statusEffects: [{ id: 'regeneration', duration: 2, type: 'BUFF' as const }]
+            };
+            const updated = CombatEngine.processTurnStart([unit]);
+
+            // Should heal 10% of 100 = 10 HP
+            expect(updated[0].currentHealth).toBe(60);
+            expect(updated[0].statusEffects![0].duration).toBe(1);
+        });
     });
 
     describe('consumeSpiritCost', () => {

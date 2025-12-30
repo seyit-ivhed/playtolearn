@@ -99,10 +99,33 @@ export function executeHealAbility<T extends HealableUnit>(
     if (ability.target === 'ALL_ALLIES') {
         return targets.map(t => {
             if (t.isDead) return t;
-            return {
+
+            // Base Heal
+            let updatedUnit = {
                 ...t,
                 currentHealth: Math.min(t.maxHealth, t.currentHealth + abilityValue)
             };
+
+            // Apply Regeneration for Elixir of Renewal
+            if (ability.id === 'elixir_of_renewal' && 'statusEffects' in updatedUnit) {
+                const unitWithEffects = updatedUnit as unknown as EncounterUnit;
+                const newEffects = [...unitWithEffects.statusEffects];
+
+                // Refresh existing or add new
+                const existingIdx = newEffects.findIndex(se => se.id === 'regeneration');
+                if (existingIdx >= 0) {
+                    newEffects[existingIdx] = { ...newEffects[existingIdx], duration: 2 };
+                } else {
+                    newEffects.push({ id: 'regeneration', type: 'BUFF', duration: 2 });
+                }
+
+                updatedUnit = {
+                    ...updatedUnit,
+                    statusEffects: newEffects
+                };
+            }
+
+            return updatedUnit;
         });
     } else if (ability.target === 'SINGLE_ALLY') {
         // Heal lowest health ally
@@ -114,11 +137,14 @@ export function executeHealAbility<T extends HealableUnit>(
         if (lowestHealthIndex === undefined) return targets;
 
         const newTargets = [...targets];
-        const target = targets[lowestHealthIndex];
-        newTargets[lowestHealthIndex] = {
+        let target = targets[lowestHealthIndex];
+
+        target = {
             ...target,
             currentHealth: Math.min(target.maxHealth, target.currentHealth + abilityValue)
         };
+
+        newTargets[lowestHealthIndex] = target;
         return newTargets;
     }
     return targets;

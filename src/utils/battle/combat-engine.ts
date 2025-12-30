@@ -203,6 +203,13 @@ export class CombatEngine {
         return units.map(unit => {
             if (unit.isDead || !unit.statusEffects) return unit;
 
+            // Handle Regeneration
+            let currentHealth = unit.currentHealth;
+            if (unit.statusEffects.some(se => se.id === 'regeneration')) {
+                const healAmount = Math.floor(unit.maxHealth * 0.1);
+                currentHealth = Math.min(unit.maxHealth, currentHealth + healAmount);
+            }
+
             // Decrement duration and filter expired
             const newEffects = unit.statusEffects
                 .map(se => ({ ...se, duration: se.duration - 1 }))
@@ -210,6 +217,7 @@ export class CombatEngine {
 
             return {
                 ...unit,
+                currentHealth,
                 statusEffects: newEffects
             };
         });
