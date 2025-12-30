@@ -109,9 +109,9 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     <motion.button
                         className="nav-btn"
                         onClick={onPrev}
-                        disabled={!canPrev || isJustCompleted}
-                        whileHover={canPrev && !isJustCompleted ? { scale: 1.1 } : {}}
-                        whileTap={canPrev && !isJustCompleted ? { scale: 0.9 } : {}}
+                        disabled={!canPrev}
+                        whileHover={canPrev ? { scale: 1.1 } : {}}
+                        whileTap={canPrev ? { scale: 0.9 } : {}}
                         data-testid="prev-page-btn"
                         aria-label="Previous Page"
                     >
@@ -120,14 +120,23 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
 
                     <div className="main-action">
                         {!isLocked ? (
-                            isCompleted ? (
+                            isJustCompleted && canNext ? (
+                                <motion.button
+                                    className="book-btn begin-btn"
+                                    onClick={onNext}
+                                    data-testid="next-chapter-btn"
+                                    whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    {t('chronicle.next_chapter', 'Next Chapter')}
+                                </motion.button>
+                            ) : isCompleted ? (
                                 <motion.button
                                     className="book-btn replay-btn"
                                     onClick={() => onReplay(adventure.id)}
-                                    disabled={isJustCompleted}
                                     data-testid="replay-chapter-btn"
-                                    whileHover={!isJustCompleted ? { scale: 1.05 } : {}}
-                                    whileTap={!isJustCompleted ? { scale: 0.95 } : {}}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     {t('chronicle.replay_chapter')}
                                 </motion.button>
@@ -150,15 +159,16 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     <motion.button
                         className="nav-btn"
                         onClick={onNext}
-                        disabled={!canNext || isJustCompleted}
-                        whileHover={canNext && !isJustCompleted ? { scale: 1.1 } : {}}
-                        whileTap={canNext && !isJustCompleted ? { scale: 0.9 } : {}}
+                        disabled={!canNext}
+                        whileHover={canNext ? { scale: 1.1 } : {}}
+                        whileTap={canNext ? { scale: 0.9 } : {}}
                         data-testid="next-page-btn"
                         aria-label="Next Page"
                     >
                         <ChevronRight size={64} />
                     </motion.button>
                 </div>
+
 
                 <div className="page-indicator-bottom" data-testid="page-indicator">
                     {t('chronicle.page_x_of_y', { current: currentPage, total: totalPages })}

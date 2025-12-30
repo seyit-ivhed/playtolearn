@@ -43,31 +43,18 @@ export const ChronicleBook: React.FC = () => {
     const justCompletedAdventureId = location.state?.justCompletedAdventureId;
     const isJustCompleted = justCompletedAdventureId === currentAdventure?.id;
 
-    // Handle auto-advance after completion animation
-    useEffect(() => {
-        if (isJustCompleted) {
-            const timer = setTimeout(() => {
-                // Advance to next adventure if available
-                if (currentAdventureIndex < volumeAdventures.length - 1) {
-                    const nextAdj = volumeAdventures[currentAdventureIndex + 1];
-                    updateChroniclePosition(currentVolume.id, nextAdj.id);
-                }
-
-                // Clear the completion state so animation doesn't play again
-                navigate(location.pathname, { replace: true, state: {} });
-            }, 3000); // Wait 1.5s for animation + reading time
-
-            return () => clearTimeout(timer);
-        }
-    }, [isJustCompleted, currentAdventureIndex, volumeAdventures, currentVolume.id, updateChroniclePosition, navigate, location.pathname]);
-
     // Navigation Handlers
     const handleNext = useCallback(() => {
         if (currentAdventureIndex < volumeAdventures.length - 1) {
             const nextAdj = volumeAdventures[currentAdventureIndex + 1];
             updateChroniclePosition(currentVolume.id, nextAdj.id);
+
+            // If we were in "just completed" state, clear it now
+            if (isJustCompleted) {
+                navigate(location.pathname, { replace: true, state: {} });
+            }
         }
-    }, [currentAdventureIndex, volumeAdventures, currentVolume.id, updateChroniclePosition]);
+    }, [currentAdventureIndex, volumeAdventures, currentVolume.id, updateChroniclePosition, isJustCompleted, navigate, location.pathname]);
 
     const handlePrev = useCallback(() => {
         if (currentAdventureIndex > 0) {
