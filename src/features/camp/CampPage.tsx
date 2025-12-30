@@ -129,6 +129,7 @@ const CampPage = () => {
                 unlockedCompanions={unlockedCompanions}
                 activeParty={activeParty}
                 maxPartySize={MAX_PARTY_SIZE}
+                companionStats={companionStats}
                 onAdd={addToParty}
             />
 

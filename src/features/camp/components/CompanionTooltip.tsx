@@ -21,7 +21,7 @@ export const CompanionTooltip: React.FC<CompanionTooltipProps> = ({ companionId,
         <div className={styles.statsTooltip}>
             <div className={styles.tooltipHeader}>
                 <div className={styles.heroName}>{data.name}</div>
-                <div className={styles.heroTitle}>{data.title}</div>
+                <div className={styles.heroTitle}>{calculatedStats.title || data.title}</div>
             </div>
 
             <div className={styles.statGrid}>
@@ -38,10 +38,10 @@ export const CompanionTooltip: React.FC<CompanionTooltipProps> = ({ companionId,
             <div className={styles.abilitySection}>
                 <div className={styles.abilityHeader}>
                     <Star size={16} className={styles.iconUltimate} />
-                    <span>{t(`companions.${companionId}.special_ability_name`)}</span>
+                    <span>{t(`abilities.${calculatedStats.specialAbilityId || data.specialAbility.id}.name`)}</span>
                 </div>
                 <p className={styles.abilityText}>
-                    {t(`companions.${companionId}.special_ability_description`, { value: calculatedStats.specialAbilityValue || data.specialAbility.value })}
+                    {t(`abilities.${calculatedStats.specialAbilityId || data.specialAbility.id}.description`, { value: calculatedStats.specialAbilityValue || data.specialAbility.value })}
                 </p>
             </div>
         </div>

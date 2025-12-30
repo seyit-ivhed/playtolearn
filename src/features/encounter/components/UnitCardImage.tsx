@@ -5,6 +5,7 @@ interface UnitCardImageProps {
     isMonster: boolean;
     companionData: Companion | null;
     image?: string;
+    level?: number;
     displayName: string;
 }
 
@@ -12,13 +13,14 @@ export const UnitCardImage = ({
     isMonster,
     companionData,
     image,
+    level = 1,
     displayName
 }: UnitCardImageProps) => {
     return (
         <div className="unit-card-bg">
-            {(!isMonster && companionData) || (isMonster && image) ? (
+            {(!isMonster && (image || companionData)) || (isMonster && image) ? (
                 <img
-                    src={!isMonster && companionData ? getCompanionSprite(companionData.id) : image}
+                    src={image || (companionData ? getCompanionSprite(companionData.id, level) : '')}
                     alt={displayName}
                     className="unit-card-image"
                     draggable={false}

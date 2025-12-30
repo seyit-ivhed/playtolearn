@@ -7,6 +7,7 @@ interface FellowshipRosterProps {
     unlockedCompanions: string[];
     activeParty: string[];
     maxPartySize: number;
+    companionStats: Record<string, { level: number; xp: number }>;
     onAdd: (id: string) => void;
 }
 
@@ -14,6 +15,7 @@ export const FellowshipRoster: React.FC<FellowshipRosterProps> = ({
     unlockedCompanions,
     activeParty,
     maxPartySize,
+    companionStats,
     onAdd
 }) => {
     return (
@@ -31,7 +33,7 @@ export const FellowshipRoster: React.FC<FellowshipRosterProps> = ({
                             className={`${styles.rosterCard} ${inParty ? styles.rosterCardInParty : ''}`}
                             onClick={() => !inParty && activeParty.length < maxPartySize && onAdd(id)}
                         >
-                            <img src={getCompanionSprite(id)} alt={data.name} className={styles.smallAvatar} />
+                            <img src={getCompanionSprite(id, companionStats[id]?.level || 1)} alt={data.name} className={styles.smallAvatar} />
                             {inParty && <div className={styles.inPartyIndicator}>In Camp</div>}
                         </div>
                     );

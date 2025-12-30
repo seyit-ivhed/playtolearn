@@ -42,7 +42,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                 <div className={styles.characterSection}>
                     <div className={styles.portraitContainer}>
                         <img
-                            src={getCompanionSprite(companion.id)}
+                            src={getCompanionSprite(companion.id, newLevel)}
                             alt={companion.name}
                             className={styles.portrait}
                         />

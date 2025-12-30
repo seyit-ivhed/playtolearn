@@ -125,6 +125,7 @@ export const UnitCard = ({
                     isMonster={isMonster}
                     companionData={companionData}
                     image={unit.image}
+                    level={level}
                     displayName={displayName}
                 />
 

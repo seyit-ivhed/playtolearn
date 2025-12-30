@@ -54,7 +54,7 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
             onMouseLeave={() => onHover?.(null, 0)}
         >
             <div className={styles.companionFocus}>
-                <img src={getCompanionSprite(companionId)} alt={data.name} className={styles.largeAvatar} />
+                <img src={getCompanionSprite(companionId, currentStats.level)} alt={data.name} className={styles.largeAvatar} />
                 <div className={styles.companionBadge}>
                     <div className={styles.miniName}>{data.name}</div>
                     <div className={styles.miniLevel}>Lv {currentStats.level}</div>
