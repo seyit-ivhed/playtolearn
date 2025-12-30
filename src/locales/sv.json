@@ -215,6 +215,28 @@
             "special_ability_description": "Helar alla allierade med {{value}} HP."
         }
     },
+    "abilities": {
+        "jaguar_strike": {
+            "name": "Jaguarhugg",
+            "description": "Gör {{value}} skada på en enskild fiende."
+        },
+        "hunters_mark": {
+            "name": "Jägarens märke",
+            "description": "Gör {{value}} skada och märker målet. Allierade gör +25% skada på dem."
+        },
+        "twin_shadows": {
+            "name": "Tvillingskuggor",
+            "description": "Gör {{value}} skada och märker flera fiender."
+        },
+        "spirit_release": {
+            "name": "Andefrigörelse",
+            "description": "Gör {{value}} skada. Renar fiender med låg hälsa."
+        },
+        "elixir_of_life": {
+            "name": "Livselixir",
+            "description": "Helar alla allierade med {{value}} HP."
+        }
+    },
     "monsters": {
         "scorpion_1": {
             "name": "Ökenskorpion"
