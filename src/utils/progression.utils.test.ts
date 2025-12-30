@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { getXpForNextLevel, getStatsForLevel } from './progression.utils';
+import { getXpForNextLevel, getStatsForLevel, calculateAdventureStars } from './progression.utils';
 import { CompanionRole, type Companion } from '../types/companion.types';
+import { EncounterType } from '../types/adventure.types';
 
 describe('progression.utils', () => {
     describe('getStatsForLevel', () => {
@@ -97,4 +98,58 @@ describe('progression.utils', () => {
         });
     });
 
+    describe('calculateAdventureStars', () => {
+        const mockEncounters = [
+            { id: '1', type: EncounterType.BATTLE },
+            { id: '2', type: EncounterType.PUZZLE },
+            { id: '3', type: EncounterType.BOSS },
+            { id: '4', type: EncounterType.CAMP }, // Non-scorable
+        ] as any;
+
+        it('should return 0 if no scorable encounters exist', () => {
+            const result = calculateAdventureStars('adv1', [{ id: '1', type: EncounterType.CAMP }] as any, {});
+            expect(result).toBe(0);
+        });
+
+        it('should return 5 stars if all scorable encounters have 5 stars', () => {
+            const results = {
+                'adv1_1': { stars: 5 },
+                'adv1_2': { stars: 5 },
+                'adv1_3': { stars: 5 }
+            } as any;
+            const result = calculateAdventureStars('adv1', mockEncounters, results);
+            expect(result).toBe(5);
+        });
+
+        it('should return the minimum stars among scorable encounters', () => {
+            const results = {
+                'adv1_1': { stars: 5 },
+                'adv1_2': { stars: 3 },
+                'adv1_3': { stars: 5 }
+            } as any;
+            const result = calculateAdventureStars('adv1', mockEncounters, results);
+            expect(result).toBe(3);
+        });
+
+        it('should return 0 stars if a scorable encounter is missing from results (uncompleted)', () => {
+            const results = {
+                'adv1_1': { stars: 5 },
+                'adv1_3': { stars: 5 }
+                // adv1_2 is missing
+            } as any;
+            const result = calculateAdventureStars('adv1', mockEncounters, results);
+            expect(result).toBe(0);
+        });
+
+        it('should ignore non-scorable encounter types (e.g. CAMP)', () => {
+            const results = {
+                'adv1_1': { stars: 5 },
+                'adv1_2': { stars: 5 },
+                'adv1_3': { stars: 5 },
+                'adv1_4': { stars: 2 } // CAMP node has result (unlikely but testable)
+            } as any;
+            const result = calculateAdventureStars('adv1', mockEncounters, results);
+            expect(result).toBe(5); // Should still be 5 because it ignores 'adv1_4'
+        });
+    });
 });

@@ -7,6 +7,7 @@ import { useAdventureStore } from '../../stores/adventure.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { AdventureStatus, EncounterType } from '../../types/adventure.types';
 import { VOLUMES } from '../../data/volumes.data';
+import { calculateAdventureStars } from '../../utils/progression.utils';
 import { ChapterPage } from './components/ChapterPage';
 import { TableOfContents } from './components/TableOfContents';
 import './ChronicleBook.css';
@@ -155,7 +156,7 @@ export const ChronicleBook: React.FC = () => {
                             <ChapterPage
                                 adventure={currentAdventure}
                                 status={adventureStatuses[currentAdventure.id] || 'LOCKED'}
-                                stars={calculateAdventureStars(currentAdventure.id)}
+                                stars={calculateAdventureStars(currentAdventure.id, currentAdventure.encounters, encounterResults)}
                                 onBegin={handleBegin}
                                 onReplay={handleBegin}
                                 onNext={handleNext}

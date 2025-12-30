@@ -1,4 +1,6 @@
 import type { Companion, CompanionStats } from '../types/companion.types';
+import { EncounterType, type Encounter } from '../types/adventure.types';
+import type { EncounterResult } from '../stores/game/interfaces';
 
 /**
  * Calculates the stats for a companion at a specific level.
@@ -49,4 +51,37 @@ export const getCurrentEvolution = (companion: Companion, level: number) => {
     // Get the latest applied evolution
     const sortedEvos = [...companion.evolutions].sort((a, b) => b.atLevel - a.atLevel);
     return sortedEvos.find(e => level >= e.atLevel);
+};
+
+/**
+ * Calculates the overall star rating for an adventure based on its scorable encounters.
+ * The chapter stars are designated by the encounter with the least stars.
+ */
+export const calculateAdventureStars = (
+    adventureId: string,
+    encounters: Encounter[],
+    encounterResults: Record<string, EncounterResult>
+): number => {
+    let minStars = 5;
+    let hasScorableEncounters = false;
+
+    encounters.forEach((encounter, index) => {
+        // Only count Battle, Boss, and Puzzle encounters
+        if (encounter.type === EncounterType.BATTLE ||
+            encounter.type === EncounterType.BOSS ||
+            encounter.type === EncounterType.PUZZLE) {
+
+            hasScorableEncounters = true;
+            const encounterKey = `${adventureId}_${index + 1}`;
+            const result = encounterResults[encounterKey];
+
+            // If any encounter is not completed or has 0 stars, the chapter stars will be low
+            const stars = result ? result.stars : 0;
+            if (stars < minStars) {
+                minStars = stars;
+            }
+        }
+    });
+
+    return hasScorableEncounters ? minStars : 0;
 };
