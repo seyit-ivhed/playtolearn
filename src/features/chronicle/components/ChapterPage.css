@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     padding: 2rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1.5rem;
     height: 100%;
     color: #4a3721;
     font-family: 'Inter', sans-serif;
@@ -141,8 +141,6 @@
     font-family: 'Inter', sans-serif;
     opacity: 0.3;
     letter-spacing: 0.05em;
-    margin-top: 0.5rem;
-    margin-bottom: 0px;
 }
 
 .footer-controls {
