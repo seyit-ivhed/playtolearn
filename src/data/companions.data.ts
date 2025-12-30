@@ -97,11 +97,45 @@ export const COMPANIONS: Record<string, Companion> = {
         initialSpirit: 0,
         evolutions: [
             {
+                atLevel: 5,
+                title: 'Desert Physician',
+                statsBonus: {
+                    maxHealth: 15,
+                    abilityDamage: 3
+                },
+                newSpecialAbility: {
+                    id: 'elixir_of_renewal',
+                    type: 'HEAL',
+                    value: 35, // Stronger heal + Regen effect logic
+                    target: 'ALL_ALLIES'
+                }
+            },
+            {
                 atLevel: 10,
                 title: 'Master Alchemist',
                 statsBonus: {
-                    maxHealth: 25,
-                    abilityDamage: 3
+                    maxHealth: 20,
+                    abilityDamage: 4
+                },
+                newSpecialAbility: {
+                    id: 'panacea_burst',
+                    type: 'HEAL',
+                    value: 45, // Major heal + Cleanse logic
+                    target: 'ALL_ALLIES'
+                }
+            },
+            {
+                atLevel: 15,
+                title: 'Sage of Sands',
+                statsBonus: {
+                    maxHealth: 30,
+                    abilityDamage: 6
+                },
+                newSpecialAbility: {
+                    id: 'philosophers_brew',
+                    type: 'HEAL',
+                    value: 80, // Massive heal + Revive logic
+                    target: 'ALL_ALLIES'
                 }
             }
         ]

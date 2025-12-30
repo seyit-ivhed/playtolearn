@@ -23,10 +23,9 @@ The player is **not a character in the story**. Instead, they are reading "The C
 Companions literally **grow up** through their adventures. Each evolution represents them aging and maturing:
 
 - **Age 8** (Evo 0): Young children, just starting their journey
-- **Age 10** (Evo 1): Pre-teens, gaining confidence
-- **Age 13** (Evo 2): Early teens, becoming capable
-- **Age 16** (Evo 3): Mid-teens, experienced adventurers
-- **Age 18** (Evo 4): Young adults, fully matured
+- **Age 13** (Evo 1): Early teens, becoming capable
+- **Age 16** (Evo 2): Mid-teens, experienced adventurers
+- **Age 18** (Evo 3): Young adults, fully matured
 
 ### The Mentorship Dynamic
 
@@ -45,7 +44,7 @@ As Amara and Tariq grow older through their journey, they naturally become mento
 
 **Late Journey (Adventures 5-6)**:
 - Amara and Tariq reach young adulthood (age 16-18)
-- Earlier companions are catching up (age 10-13)
+- Earlier companions are catching up (age 13-16)
 - Newest companions are just starting (age 8)
 - Full found family dynamic with multiple age tiers
 

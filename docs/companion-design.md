@@ -64,6 +64,14 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 
 **Fantasy:** Protector alchemist — his potions restore the party's health in critical moments.
 
+#### Evolution Path
+
+| Level | Title | Ability Upgrade | Effect |
+|-------|-------|-----------------|--------|
+| **5** | **Desert Physician** | **Elixir of Renewal** | Heals all allies + Grants **Regeneration** (Restores HP at start of next 2 turns). |
+| **10** | **Master Alchemist** | **Panacea Burst** | Heals all allies + **Cleanses** 1 negative status effect. |
+| **15** | **Sage of Sands** | **Philosopher's Brew** | Massive Heal to all allies + **Revives** one fallen companion with 30% HP. |
+
 ---
 
 ### Zahara — The Savannah Mage (Paid Tier)
@@ -111,25 +119,3 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 **Fantasy:** Immovable defender — protects the entire party with his disciplined stance.
 
 ---
-
-## Summary
-
-| Companion | HP | Dmg | Spirit | Ultimate | Type | Target | Value |
-|-----------|-----|-----|--------|----------|------|--------|-------|
-| Amara | 75 | 10 | 30 | Jaguar Strike | DAMAGE | SINGLE_ENEMY | 25 |
-| Tariq | 85 | 6 | 50 | Elixir of Life | HEAL | ALL_ALLIES | 15 |
-| Zahara | 70 | 8 | 40 | Ancestral Storm | DAMAGE | ALL_ENEMIES | 15 |
-| Kenji | 100 | 7 | 60 | Blade Barrier | SHIELD | ALL_ALLIES | 12 |
-
----
-
-## Implementation Notes
-
-To implement these companions, the following changes are required:
-
-1. **Add HEAL ability type** to `SpecialAbility` in `src/types/companion.types.ts`
-2. **Implement heal.ability.ts** in `src/stores/encounter/actions/special/`
-3. **Remove the role system** — Delete `CompanionRole` or make it optional
-4. **Replace existing companions** (Garrick, Elara) with Amara and Tariq
-5. **Add Zahara and Kenji** as unlockable companions
-6. **Generate portrait images** for all 4 companions
