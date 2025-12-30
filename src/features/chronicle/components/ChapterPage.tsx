@@ -19,6 +19,7 @@ interface ChapterPageProps {
     canPrev: boolean;
     currentPage: number;
     totalPages: number;
+    isJustCompleted?: boolean;
 }
 
 export const ChapterPage: React.FC<ChapterPageProps> = ({
@@ -31,8 +32,10 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     onPrev,
     canNext,
     canPrev,
+
     currentPage,
-    totalPages
+    totalPages,
+    isJustCompleted
 }) => {
     const { t } = useTranslation();
     const isLocked = status === AdventureStatus.LOCKED;
@@ -82,7 +85,19 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                                     <span key={i} className={`star ${i < stars ? 'filled' : ''}`}>⭐</span>
                                 ))}
                             </div>
-                            <div className="wax-seal">{t('chronicle.completed')}</div>
+                            <motion.div
+                                className="wax-seal"
+                                initial={isJustCompleted ? { scale: 3, opacity: 0 } : { scale: 1, opacity: 1 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 300,
+                                    damping: 20,
+                                    delay: 0.2
+                                }}
+                            >
+                                {t('chronicle.completed')}
+                            </motion.div>
                         </div>
                     )}
                 </div>
@@ -94,9 +109,9 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     <motion.button
                         className="nav-btn"
                         onClick={onPrev}
-                        disabled={!canPrev}
-                        whileHover={canPrev ? { scale: 1.1 } : {}}
-                        whileTap={canPrev ? { scale: 0.9 } : {}}
+                        disabled={!canPrev || isJustCompleted}
+                        whileHover={canPrev && !isJustCompleted ? { scale: 1.1 } : {}}
+                        whileTap={canPrev && !isJustCompleted ? { scale: 0.9 } : {}}
                         data-testid="prev-page-btn"
                         aria-label="Previous Page"
                     >
@@ -109,9 +124,10 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                                 <motion.button
                                     className="book-btn replay-btn"
                                     onClick={() => onReplay(adventure.id)}
+                                    disabled={isJustCompleted}
                                     data-testid="replay-chapter-btn"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
+                                    whileHover={!isJustCompleted ? { scale: 1.05 } : {}}
+                                    whileTap={!isJustCompleted ? { scale: 0.95 } : {}}
                                 >
                                     {t('chronicle.replay_chapter')}
                                 </motion.button>
@@ -134,9 +150,9 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     <motion.button
                         className="nav-btn"
                         onClick={onNext}
-                        disabled={!canNext}
-                        whileHover={canNext ? { scale: 1.1 } : {}}
-                        whileTap={canNext ? { scale: 0.9 } : {}}
+                        disabled={!canNext || isJustCompleted}
+                        whileHover={canNext && !isJustCompleted ? { scale: 1.1 } : {}}
+                        whileTap={canNext && !isJustCompleted ? { scale: 0.9 } : {}}
                         data-testid="next-page-btn"
                         aria-label="Next Page"
                     >
@@ -151,6 +167,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
 
 
 
-        </div>
+        </div >
     );
 };

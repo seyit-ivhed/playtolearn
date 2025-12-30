@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../stores/game/store';
@@ -12,6 +12,7 @@ import './ChronicleBook.css';
 
 export const ChronicleBook: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const { t } = useTranslation();
     // Store State
 
@@ -37,6 +38,28 @@ export const ChronicleBook: React.FC = () => {
     }, [volumeAdventures, chronicle.lastViewedAdventureId]);
 
     const currentAdventure = volumeAdventures[currentAdventureIndex];
+
+    // Check if we just completed this adventure (triggering animation)
+    const justCompletedAdventureId = location.state?.justCompletedAdventureId;
+    const isJustCompleted = justCompletedAdventureId === currentAdventure?.id;
+
+    // Handle auto-advance after completion animation
+    useEffect(() => {
+        if (isJustCompleted) {
+            const timer = setTimeout(() => {
+                // Advance to next adventure if available
+                if (currentAdventureIndex < volumeAdventures.length - 1) {
+                    const nextAdj = volumeAdventures[currentAdventureIndex + 1];
+                    updateChroniclePosition(currentVolume.id, nextAdj.id);
+                }
+
+                // Clear the completion state so animation doesn't play again
+                navigate(location.pathname, { replace: true, state: {} });
+            }, 3000); // Wait 1.5s for animation + reading time
+
+            return () => clearTimeout(timer);
+        }
+    }, [isJustCompleted, currentAdventureIndex, volumeAdventures, currentVolume.id, updateChroniclePosition, navigate, location.pathname]);
 
     // Navigation Handlers
     const handleNext = useCallback(() => {
@@ -114,6 +137,7 @@ export const ChronicleBook: React.FC = () => {
                                 canPrev={currentAdventureIndex > 0}
                                 currentPage={currentAdventureIndex + 1}
                                 totalPages={volumeAdventures.length}
+                                isJustCompleted={isJustCompleted}
                             />
 
                         </motion.div>

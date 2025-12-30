@@ -61,11 +61,11 @@ const AdventurePage = () => {
             if (currentAdventureIndex !== -1 && currentAdventureIndex < ADVENTURES.length - 1) {
                 const nextAdventure = ADVENTURES[currentAdventureIndex + 1];
                 unlockAdventure(nextAdventure.id);
-                // Update chronicle focus to next adventure
-                useGameStore.getState().updateChroniclePosition('origins', nextAdventure.id);
+                // Note: We don't update chronicle position here anymore.
+                // It will be updated by ChronicleBook after the completion animation.
             }
 
-            navigate('/chronicle');
+            navigate('/chronicle', { state: { justCompletedAdventureId: activeAdventureId } });
         }
     };
 
