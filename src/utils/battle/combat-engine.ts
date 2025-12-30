@@ -2,7 +2,7 @@ import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit } from '../../types/encounter.types';
 import { applyDamage } from './damage.utils';
 import { executeDamageAbility, executeHealAbility, executeShieldAbility, type HealableUnit, type ShieldableUnit } from './ability.utils';
-import { findFirstLivingTarget, selectRandomTarget } from './combat.utils';
+import { selectRandomTarget } from './combat.utils';
 
 /**
  * Unified Combat Engine
@@ -124,25 +124,22 @@ export class CombatEngine {
         const logs: CombatLog[] = [];
 
         // Find target
-        const livingTargets = targets.filter(t => !t.isDead);
-        if (livingTargets.length === 0) return { updatedTargets: targets, logs };
+        // Find target (different team)
+        const validTargets = targets.filter(t =>
+            !t.isDead &&
+            t.id !== attacker.id &&
+            t.isPlayer !== attacker.isPlayer
+        );
 
-        // Simple targeting: First living target
-        // (Encounters might want random, this is default logic mostly for Player vs Monster 1st slot)
-        // For monsters attacking players, we usually use random.
-        // Let's standardise: if multiple, pick first (usually tank/frontline concept) or provide target selection logic?
-        // UI currently uses `findFirstLivingTarget` for players.
+        if (validTargets.length === 0) return { updatedTargets: targets, logs };
 
-        const targetIndex = livingTargets.findIndex(t => !t.isDead); // First living
-        if (targetIndex === -1) return { updatedTargets: targets, logs };
-
-        const target = livingTargets[targetIndex];
+        const target = validTargets[0]; // First valid target
         const damage = attacker.damage || 0;
 
         const result = applyDamage(target as any as EncounterUnit, damage);
 
         logs.push({
-            message: `${attacker.name} attacked ${target.name} for ${result.damageDealt}`,
+            message: `${attacker.name} attacked ${target.name} for ${result.damageDealt} damage!`,
             type: 'ATTACK'
         });
 
@@ -176,7 +173,7 @@ export class CombatEngine {
         const result = applyDamage(target as any as EncounterUnit, damage);
 
         logs.push({
-            message: `${attacker.name} attacked ${target.name} for ${result.damageDealt}!`,
+            message: `${attacker.name} attacked ${target.name} for ${result.damageDealt} damage!`,
             type: 'ATTACK'
         });
 

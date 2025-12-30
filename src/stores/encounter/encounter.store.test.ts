@@ -67,7 +67,7 @@ describe('EncounterStore', () => {
         // Warrior deals 10 dmg (base 10)
         expect(state.monsters[0].currentHealth).toBe(40);
         expect(state.party[0].hasActed).toBe(true);
-        expect(state.encounterLog).toContainEqual(expect.stringContaining('Dealt 10 damage'));
+        expect(state.encounterLog).toContainEqual(expect.stringContaining('attacked Goblin for 10 damage'));
     });
 
     it('should end player turn when all units acted', () => {
