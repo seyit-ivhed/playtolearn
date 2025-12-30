@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { getXpForNextLevel, getStatsForLevel, calculateAdventureStars } from './progression.utils';
 import { CompanionRole, type Companion } from '../types/companion.types';
-import { EncounterType } from '../types/adventure.types';
+import { EncounterType, type Encounter } from '../types/adventure.types';
+import type { EncounterResult } from '../stores/game/interfaces';
 
 describe('progression.utils', () => {
     describe('getStatsForLevel', () => {
@@ -104,10 +105,10 @@ describe('progression.utils', () => {
             { id: '2', type: EncounterType.PUZZLE },
             { id: '3', type: EncounterType.BOSS },
             { id: '4', type: EncounterType.CAMP }, // Non-scorable
-        ] as any;
+        ] as unknown as Encounter[];
 
         it('should return 0 if no scorable encounters exist', () => {
-            const result = calculateAdventureStars('adv1', [{ id: '1', type: EncounterType.CAMP }] as any, {});
+            const result = calculateAdventureStars('adv1', [{ id: '1', type: EncounterType.CAMP }] as unknown as Encounter[], {});
             expect(result).toBe(0);
         });
 
@@ -116,7 +117,7 @@ describe('progression.utils', () => {
                 'adv1_1': { stars: 5 },
                 'adv1_2': { stars: 5 },
                 'adv1_3': { stars: 5 }
-            } as any;
+            } as unknown as Record<string, EncounterResult>;
             const result = calculateAdventureStars('adv1', mockEncounters, results);
             expect(result).toBe(5);
         });
@@ -126,7 +127,7 @@ describe('progression.utils', () => {
                 'adv1_1': { stars: 5 },
                 'adv1_2': { stars: 3 },
                 'adv1_3': { stars: 5 }
-            } as any;
+            } as unknown as Record<string, EncounterResult>;
             const result = calculateAdventureStars('adv1', mockEncounters, results);
             expect(result).toBe(3);
         });
@@ -136,7 +137,7 @@ describe('progression.utils', () => {
                 'adv1_1': { stars: 5 },
                 'adv1_3': { stars: 5 }
                 // adv1_2 is missing
-            } as any;
+            } as unknown as Record<string, EncounterResult>;
             const result = calculateAdventureStars('adv1', mockEncounters, results);
             expect(result).toBe(0);
         });
@@ -147,7 +148,7 @@ describe('progression.utils', () => {
                 'adv1_2': { stars: 5 },
                 'adv1_3': { stars: 5 },
                 'adv1_4': { stars: 2 } // CAMP node has result (unlikely but testable)
-            } as any;
+            } as unknown as Record<string, EncounterResult>;
             const result = calculateAdventureStars('adv1', mockEncounters, results);
             expect(result).toBe(5); // Should still be 5 because it ignores 'adv1_4'
         });
