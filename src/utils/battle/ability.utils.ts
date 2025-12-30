@@ -4,7 +4,8 @@
  */
 
 import type { SpecialAbility } from '../../types/companion.types';
-import { applyDamage, type DamageableUnit } from './damage.utils';
+import type { EncounterUnit } from '../../types/encounter.types';
+import { applyDamage } from './damage.utils';
 
 export interface HealableUnit {
     currentHealth: number;
@@ -17,33 +18,71 @@ export interface ShieldableUnit {
     isDead: boolean;
 }
 
+import { getTargetDamageMultiplier } from './combat.utils';
+
 /**
  * Execute damage ability on targets
  * 
- * @param targets - Array of enemy units
+ * @param targets - Array of unit instances
  * @param ability - The special ability being executed
- * @param abilityValue - The damage value to apply
+ * @param abilityValue - The base damage value to apply
  * @returns Updated array of targets
  */
-export function executeDamageAbility<T extends DamageableUnit>(
-    targets: T[],
+export function executeDamageAbility(
+    targets: EncounterUnit[],
     ability: SpecialAbility,
     abilityValue: number
-): T[] {
+): EncounterUnit[] {
     if (ability.target === 'ALL_ENEMIES') {
         return targets.map(t => {
             if (t.isDead) return t;
-            return applyDamage(t, abilityValue).unit;
+            const multiplier = getTargetDamageMultiplier(t);
+            const actualDamage = Math.floor(abilityValue * multiplier);
+            let result = applyDamage(t, actualDamage).unit;
+
+            if (ability.id === 'hunters_mark') {
+                result = applyMarked(result);
+            }
+            return result;
         });
     } else if (ability.target === 'SINGLE_ENEMY') {
         const targetIndex = targets.findIndex(t => !t.isDead);
         if (targetIndex === -1) return targets;
 
         const newTargets = [...targets];
-        newTargets[targetIndex] = applyDamage(targets[targetIndex], abilityValue).unit;
+        const target = targets[targetIndex];
+        const multiplier = getTargetDamageMultiplier(target);
+        const actualDamage = Math.floor(abilityValue * multiplier);
+
+        let result = applyDamage(target, actualDamage).unit;
+
+        if (ability.id === 'hunters_mark') {
+            result = applyMarked(result);
+        }
+
+        newTargets[targetIndex] = result;
         return newTargets;
     }
     return targets;
+}
+
+function applyMarked(unit: EncounterUnit): EncounterUnit {
+    const alreadyMarked = unit.statusEffects.some(se => se.id === 'marked');
+    if (alreadyMarked) {
+        return {
+            ...unit,
+            statusEffects: unit.statusEffects.map(se =>
+                se.id === 'marked' ? { ...se, duration: 2 } : se
+            )
+        };
+    }
+    return {
+        ...unit,
+        statusEffects: [
+            ...unit.statusEffects,
+            { id: 'marked', type: 'DEBUFF', duration: 2 }
+        ]
+    };
 }
 
 /**

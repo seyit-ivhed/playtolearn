@@ -8,6 +8,12 @@ export const EncounterPhase = {
 
 export type EncounterPhase = typeof EncounterPhase[keyof typeof EncounterPhase];
 
+export interface StatusEffect {
+    id: string;
+    type: 'BUFF' | 'DEBUFF';
+    duration: number; // Rounds remaining
+}
+
 export interface EncounterUnit {
     id: string; // Unique Instance ID
     templateId: string; // Reference to Companion/Monster ID
@@ -35,6 +41,7 @@ export interface EncounterUnit {
     maxSpirit: number;     // 100
     spiritGain: number;
     isBoss?: boolean;
+    statusEffects: StatusEffect[];
 }
 
 export interface EncounterState {

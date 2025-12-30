@@ -1,7 +1,7 @@
 
 import type { EncounterStore } from '../../interfaces';
 import { applyDamage } from '../../../../utils/battle/damage.utils';
-import { findFirstLivingTarget } from '../../../../utils/battle/combat.utils';
+import { findFirstLivingTarget, getTargetDamageMultiplier } from '../../../../utils/battle/combat.utils';
 
 export const performWarriorAction = (
     get: () => EncounterStore,
@@ -17,7 +17,8 @@ export const performWarriorAction = (
     if (targetIndex !== -1 && attacker) {
         const target = monsters[targetIndex];
         const baseDamage = attacker.damage || 10;
-        const damage = baseDamage * multiplier;
+        const statusMultiplier = getTargetDamageMultiplier(target);
+        const damage = Math.floor(baseDamage * multiplier * statusMultiplier);
 
         const result = applyDamage(target, damage);
 

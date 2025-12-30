@@ -118,6 +118,15 @@ export const UnitCard = ({
             <FloatingTextOverlay floatingTexts={floatingTexts} />
             <UnitNameBadge displayName={displayName} />
 
+            <div className="status-effects-container">
+                {unit.statusEffects.map(effect => (
+                    <div key={effect.id} className={`status-effect-icon effect-${effect.id}`} title={effect.id}>
+                        {effect.id === 'marked' ? '🎯' : '✨'}
+                        <span className="effect-duration">{effect.duration}</span>
+                    </div>
+                ))}
+            </div>
+
             {!isMonster && !isFlipped && <UnitLevelBadge level={level} />}
 
             <div className="unit-card-front">

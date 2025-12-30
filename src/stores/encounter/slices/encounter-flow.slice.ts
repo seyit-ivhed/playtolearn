@@ -43,7 +43,8 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     currentSpirit: data.initialSpirit || 0,
                     maxSpirit: 100,
                     spiritGain: calculatedStats.spiritGain || 0,
-                    image: getCompanionSprite(id, stats.level)
+                    image: getCompanionSprite(id, stats.level),
+                    statusEffects: []
                 };
             });
 
@@ -64,8 +65,9 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 hasActed: false,
                 currentSpirit: 0,
                 maxSpirit: 100,
-                spiritGain: 0,
-                isBoss: enemy.isBoss
+                spiritGain: 20,
+                isBoss: enemy.isBoss,
+                statusEffects: []
             };
         });
 
@@ -113,6 +115,17 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 // Reset party actions for next turn
                 newParty = newParty.map(u => ({ ...u, hasActed: false }));
 
+                // Decrement and filter status effects for all units
+                const decrementStatus = (unit: EncounterUnit) => ({
+                    ...unit,
+                    statusEffects: unit.statusEffects
+                        .map(se => ({ ...se, duration: se.duration - 1 }))
+                        .filter(se => se.duration > 0)
+                });
+
+                newParty = newParty.map(decrementStatus);
+                const decayedMonsters = newMonsters.map(decrementStatus);
+
                 // Passive Charge at start of Player Turn
                 // Spirit to all living party members based on their spiritGain stat
                 newParty = newParty.map(p => {
@@ -124,7 +137,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 setTimeout(() => {
                     set(state => ({
                         party: newParty,
-                        monsters: newMonsters,
+                        monsters: decayedMonsters,
                         phase: EncounterPhase.PLAYER_TURN,
                         turnCount: state.turnCount + 1,
                         encounterLog: [...state.encounterLog, ...logs]

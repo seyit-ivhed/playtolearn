@@ -1,7 +1,18 @@
+import type { EncounterUnit } from '../../types/encounter.types';
+
 /**
  * Combat Helper Utilities
  * General helper functions for combat mechanics
  */
+
+/**
+ * Get damage multiplier based on unit status effects
+ */
+export function getTargetDamageMultiplier(unit: EncounterUnit): number {
+    if (!unit.statusEffects) return 1.0;
+    const isMarked = unit.statusEffects.some(se => se.id === 'marked');
+    return isMarked ? 1.25 : 1.0;
+}
 
 /**
  * Select random living target from array
