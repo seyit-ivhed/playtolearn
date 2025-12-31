@@ -15,6 +15,8 @@ import { UnitCardShield } from './UnitCardShield';
 import { UnitCardVFX } from './UnitCardVFX';
 import { UnitLevelBadge } from './UnitLevelBadge';
 import { useUnitCardAnimations } from '../hooks/useUnitCardAnimations';
+import { UnitStatusEffects } from './UnitStatusEffects';
+import { RestingIndicator } from './RestingIndicator';
 
 interface UnitCardProps {
     unit: EncounterUnit;
@@ -118,14 +120,7 @@ export const UnitCard = ({
             <FloatingTextOverlay floatingTexts={floatingTexts} />
             <UnitNameBadge displayName={displayName} />
 
-            <div className="status-effects-container">
-                {unit.statusEffects.map(effect => (
-                    <div key={effect.id} className={`status-effect-icon effect-${effect.id}`} title={t(`status_effects.${effect.id}`, effect.id)}>
-                        {effect.id === 'marked' ? '🎯' : effect.id === 'regeneration' ? '🧪' : '✨'}
-                        <span className="effect-duration">{effect.duration}</span>
-                    </div>
-                ))}
-            </div>
+            <UnitStatusEffects statusEffects={unit.statusEffects} />
 
             {!isMonster && !isFlipped && <UnitLevelBadge level={level} />}
 
@@ -187,13 +182,7 @@ export const UnitCard = ({
             <UnitCardVFX activeVisualEffect={activeVisualEffect} />
 
             {/* Sleeping/Resting State Indicator */}
-            {unit.hasActed && !unit.isDead && !isMonster && (
-                <div className="zzz-container">
-                    <div className="zzz-icon zzz-1">Z</div>
-                    <div className="zzz-icon zzz-2">Z</div>
-                    <div className="zzz-icon zzz-3">Z</div>
-                </div>
-            )}
+            {unit.hasActed && !unit.isDead && !isMonster && <RestingIndicator />}
 
         </div>
     );
