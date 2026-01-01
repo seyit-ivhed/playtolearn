@@ -25,53 +25,64 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
 }) => {
     const { t } = useTranslation();
 
-
     const healthDiff = newStats.maxHealth - oldStats.maxHealth;
-    const damageDiff = (newStats.abilityDamage || 0) - (oldStats.abilityDamage || 0);
+    const attackDiff = (newStats.abilityDamage || 0) - (oldStats.abilityDamage || 0);
+
+    const companionImage = getCompanionSprite(companion.id, newLevel);
+    const abilityId = newStats.specialAbilityId || companion.specialAbility.id;
+    const abilityValue = newStats.specialAbilityValue || companion.specialAbility.value;
+    const abilityName = t(`abilities.${abilityId}.name`);
+    const abilityDescription = t(`abilities.${abilityId}.description`, { value: abilityValue });
 
     return (
         <div className={styles.overlay}>
             <GameParticles options={CONFETTI_OPTIONS} className={styles.particles} />
 
             <div className={styles.content}>
-                <div className={styles.header}>
-                    <h1 className={styles.title}>{t('camp.level_up_title', 'LEVEL UP!')}</h1>
-                    <div className={styles.subtitle}>{companion.name} reached Level {newLevel}!</div>
-                </div>
-
-                <div className={styles.characterSection}>
-                    <div className={styles.portraitContainer}>
+                {companionImage && (
+                    <div className={styles.backgroundWrapper}>
                         <img
-                            src={getCompanionSprite(companion.id, newLevel)}
-                            alt={companion.name}
-                            className={styles.portrait}
+                            src={companionImage}
+                            alt=""
+                            className={styles.backgroundImage}
                         />
-                        <div className={styles.levelBadge}>{newLevel}</div>
+                    </div>
+                )}
+
+                <div className={styles.header}>
+                    <h1 className={styles.title}>Level {newLevel}</h1>
+                </div>
+
+                <div className={styles.mainLayout}>
+                    <div className={styles.statsContainer}>
+                        <div className={`${styles.statCard} ${styles.leftStat}`}>
+                            <div className={styles.statLabel}>{t('companions.stats.hp', 'Health')}</div>
+                            <div className={styles.statValue}>
+                                {oldStats.maxHealth}
+                                <ArrowRight className={styles.arrow} size={16} />
+                                {newStats.maxHealth}
+                            </div>
+                            <div className={styles.increase}>(+{healthDiff})</div>
+                            <Heart size={32} color="#ff6b6b" className={styles.statIcon} />
+                        </div>
+
+                        <div className={`${styles.statCard} ${styles.rightStat}`}>
+                            <div className={styles.statLabel}>{t('companions.stats.attack', 'Attack')}</div>
+                            <div className={styles.statValue}>
+                                {oldStats.abilityDamage || 0}
+                                <ArrowRight className={styles.arrow} size={16} />
+                                {newStats.abilityDamage || 0}
+                            </div>
+                            <div className={styles.increase}>(+{attackDiff})</div>
+                            <Swords size={32} color="#ffd700" className={styles.statIcon} />
+                        </div>
                     </div>
                 </div>
 
-                <div className={styles.statsGrid}>
-                    <div className={styles.statCard}>
-                        <div className={styles.statLabel}>Max Health</div>
-                        <div className={styles.statValue}>
-                            {oldStats.maxHealth}
-                            <ArrowRight className={styles.arrow} size={20} />
-                            {newStats.maxHealth}
-                            <span className={styles.increase}>(+{healthDiff})</span>
-                        </div>
-                        <Heart size={24} color="#ff6b6b" style={{ marginTop: 10 }} />
-                    </div>
-
-                    <div className={styles.statCard}>
-                        <div className={styles.statLabel}>Ability Damage</div>
-                        <div className={styles.statValue}>
-                            {oldStats.abilityDamage || 0}
-                            <ArrowRight className={styles.arrow} size={20} />
-                            {newStats.abilityDamage || 0}
-                            <span className={styles.increase}>(+{damageDiff})</span>
-                        </div>
-                        <Swords size={24} color="#ffd700" style={{ marginTop: 10 }} />
-                    </div>
+                <div className={styles.abilitySection}>
+                    <div className={styles.abilityLabel}>Ultimate Ability</div>
+                    <div className={styles.abilityName}>{abilityName}</div>
+                    <div className={styles.abilityDescription}>{abilityDescription}</div>
                 </div>
 
                 <div className={styles.footer}>
