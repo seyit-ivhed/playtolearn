@@ -16,6 +16,19 @@ To maintain consistency with the *Math Quest Adventures* aesthetic, use the foll
 
 ---
 
+## Prologue: The Call to Adventure
+
+### Concept
+Two young travelers, Amara and Tariq, standing at the precipice of their journey, overlooking a world full of mystery and wonder.
+
+### Primary Prompt
+A grand storybook illustration of two young adventurers, Amara and Tariq, standing on a rocky outcrop overlooking a vast, breathtaking fantasy landscape. Amara wears practical travel robes while Tariq is in traditional desert gear. They are looking out towards a horizon where golden sands meet lush green forests and distant misty mountains under a vibrant, multi-colored dawn sky. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, magical atmosphere. High quality, wide shot.
+
+### Variation (Ages and Time)
+> A beautiful storybook illustration of an ancient, open chronicle book sitting on a wooden desk. From its pages, a glowing magical projection of a world map emerges, showing desert ruins and distant mountains. Warm candlelight illuminates the scene. Hand-painted digital illustration, rich painterly textures, magical atmosphere, nostalgic mood.
+
+---
+
 ## Adventure 1: The Hidden Entrance
 
 ### Concept
