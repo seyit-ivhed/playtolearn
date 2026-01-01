@@ -1,9 +1,11 @@
 .statsTooltip {
     position: absolute;
-    top: 20px;
+    top: 265px;
+    /* Positioned just below the 220px avatar + level/gaps */
     left: 50%;
     transform: translateX(-50%);
-    width: 320px;
+    width: 260px;
+    /* Match the companion seat width */
     background: rgba(15, 23, 42, 0.98);
     backdrop-filter: blur(20px);
     border: 2px solid rgba(251, 191, 36, 0.5);
@@ -19,7 +21,7 @@
 @keyframes slide-up {
     from {
         opacity: 0;
-        transform: translate(-50%, -10px);
+        transform: translate(-50%, 10px);
     }
 
     to {
