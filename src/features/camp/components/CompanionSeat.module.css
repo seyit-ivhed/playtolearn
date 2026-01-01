@@ -184,6 +184,37 @@
     animation: pulse-gold 2s infinite;
 }
 
+.evolutionBtn {
+    background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%) !important;
+    animation: pulse-purple 1.5s infinite;
+    box-shadow: 0 5px 0 #581c87;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.evolutionBtn:not(:disabled):hover {
+    box-shadow: 0 6px 0 #581c87, 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+@keyframes pulse-purple {
+    0% {
+        box-shadow: 0 5px 0 #581c87, 0 0 0 0 rgba(168, 85, 247, 0.6);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow:
+            0 5px 0 #581c87,
+            0 0 50px 25px rgba(168, 85, 247, 0.4),
+            0 0 100px 50px rgba(168, 85, 247, 0.1);
+        transform: scale(1.08);
+    }
+
+    100% {
+        box-shadow: 0 5px 0 #581c87, 0 0 0 0 rgba(168, 85, 247, 0.6);
+        transform: scale(1);
+    }
+}
+
 @keyframes pulse-gold {
     0% {
         box-shadow: 0 5px 0 #b45309, 0 0 0 0 rgba(251, 191, 36, 0.6);

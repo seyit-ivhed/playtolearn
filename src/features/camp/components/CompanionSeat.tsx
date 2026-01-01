@@ -1,6 +1,6 @@
 import { getCompanionById } from '../../../data/companions.data';
 import { getCompanionSprite } from '../../../data/companion-sprites';
-import { getXpForNextLevel } from '../../../utils/progression.utils';
+import { getXpForNextLevel, getEvolutionAtLevel } from '../../../utils/progression.utils';
 import styles from './CompanionSeat.module.css';
 
 interface CompanionSeatProps {
@@ -43,6 +43,8 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
 
     const currentStats = stats || { level: 1, xp: 0 };
 
+    const isEvolution = !!getEvolutionAtLevel(data, currentStats.level + 1);
+
     const canLevelUp = typeof xpPool === 'number' &&
         xpPool >= (getXpForNextLevel(currentStats.level) - currentStats.xp);
 
@@ -78,12 +80,12 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                     />
                 </div>
                 <button
-                    className={`${styles.levelUpBtn} ${canLevelUp ? styles.canLevelUp : ''}`}
+                    className={`${styles.levelUpBtn} ${canLevelUp ? styles.canLevelUp : ''} ${isEvolution && canLevelUp ? styles.evolutionBtn : ''}`}
                     disabled={!canLevelUp}
                     onClick={() => onLevelUp?.(companionId)}
                     data-testid={`level-up-btn-${companionId}`}
                 >
-                    LEVEL UP ({getXpForNextLevel(currentStats.level) - currentStats.xp} XP)
+                    {isEvolution ? 'EVOLVE!' : 'LEVEL UP'} ({getXpForNextLevel(currentStats.level) - currentStats.xp} XP)
                 </button>
             </div>
         </div>
