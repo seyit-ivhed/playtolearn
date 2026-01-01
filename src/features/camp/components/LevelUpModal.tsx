@@ -102,9 +102,6 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                 </div>
 
                 <div className={`${styles.abilitySection} ${!showEvolution ? styles.hidden : styles.visible}`}>
-                    <div className={styles.abilityLabel}>
-                        {isEvolution ? 'New Power Unlocked' : 'Ultimate Ability'}
-                    </div>
                     <div className={styles.abilityName}>{abilityName}</div>
                     <div className={styles.abilityDescription}>{abilityDescription}</div>
                 </div>

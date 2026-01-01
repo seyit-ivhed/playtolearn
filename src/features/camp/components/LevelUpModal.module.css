@@ -239,17 +239,17 @@
     backdrop-filter: blur(8px);
 }
 
-.abilityLabel {
+.abilityName {
     color: #ffd700;
-    font-size: 0.65rem;
+    font-size: 1.4rem;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 4px;
-    opacity: 0.6;
 }
 
 .abilityDescription {
-    color: #a0a0ff;
+    color: fff;
     font-size: 0.95rem;
     line-height: 1.4;
     max-width: 500px;
@@ -280,21 +280,21 @@
 
 .evolvingText {
     font-size: 2rem;
-    color: #fff;
+    color: #ffd700;
     font-weight: 800;
     text-transform: uppercase;
     text-shadow: 0 0 20px rgba(160, 160, 255, 0.8);
-    animation: pulsate 1s infinite alternate;
+    animation: evolving-text-scale 2s infinite alternate;
 }
 
-@keyframes pulsate {
+@keyframes evolving-text-scale {
     from {
         transform: scale(1);
-        opacity: 0.8;
+        opacity: 0.6;
     }
 
     to {
-        transform: scale(1.1);
+        transform: scale(2);
         opacity: 1;
     }
 }
