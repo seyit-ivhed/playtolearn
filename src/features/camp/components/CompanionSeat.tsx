@@ -54,21 +54,20 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
             onMouseLeave={() => onHover?.(null, 0)}
         >
             <div className={styles.companionFocus}>
-                <img src={getCompanionSprite(companionId, currentStats.level)} alt={data.name} className={styles.largeAvatar} />
-                <div className={styles.companionBadge}>
-                    <div className={styles.miniName}>{data.name}</div>
-                    <div className={styles.miniLevel}>Lv {currentStats.level}</div>
+                <div className={styles.miniLevel}>Lv {currentStats.level}</div>
+                <div className={styles.avatarWrapper}>
+                    <img src={getCompanionSprite(companionId, currentStats.level)} alt={data.name} className={styles.largeAvatar} />
+                    {onRemove && (
+                        <button
+                            className={styles.leaveButton}
+                            onClick={() => onRemove(companionId)}
+                            data-testid={`remove-companion-${companionId}`}
+                        >
+                            ✕
+                        </button>
+                    )}
                 </div>
-
-                {onRemove && (
-                    <button
-                        className={styles.leaveButton}
-                        onClick={() => onRemove(companionId)}
-                        data-testid={`remove-companion-${companionId}`}
-                    >
-                        ✕
-                    </button>
-                )}
+                <div className={styles.miniName}>{data.name}</div>
             </div>
 
             <div className={styles.companionXpBar}>
