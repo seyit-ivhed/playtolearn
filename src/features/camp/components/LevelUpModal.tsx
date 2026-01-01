@@ -20,15 +20,36 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
     companion,
     oldStats,
     newStats,
+    oldLevel,
     newLevel,
     onClose
 }) => {
     const { t } = useTranslation();
+    const oldImage = getCompanionSprite(companion.id, oldLevel);
+    const newImage = getCompanionSprite(companion.id, newLevel);
+    const isEvolution = oldImage !== newImage;
+
+    // State for evolution sequence
+    const [showEvolution, setShowEvolution] = React.useState(!isEvolution);
+    const [triggerBang, setTriggerBang] = React.useState(false);
+
+    React.useEffect(() => {
+        if (isEvolution) {
+            const timer = setTimeout(() => {
+                setTriggerBang(true);
+                // Switch image shortly after bang starts
+                setTimeout(() => {
+                    setShowEvolution(true);
+                }, 100);
+            }, 2000); // Wait 2 seconds instead of 1
+            return () => clearTimeout(timer);
+        }
+    }, [isEvolution]);
 
     const healthDiff = newStats.maxHealth - oldStats.maxHealth;
     const attackDiff = (newStats.abilityDamage || 0) - (oldStats.abilityDamage || 0);
 
-    const companionImage = getCompanionSprite(companion.id, newLevel);
+    const companionImage = showEvolution ? newImage : oldImage;
     const abilityId = newStats.specialAbilityId || companion.specialAbility.id;
     const abilityValue = newStats.specialAbilityValue || companion.specialAbility.value;
     const abilityName = t(`abilities.${abilityId}.name`);
@@ -38,22 +59,25 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
         <div className={styles.overlay}>
             <GameParticles options={CONFETTI_OPTIONS} className={styles.particles} />
 
-            <div className={styles.content}>
+            <div className={`${styles.content} ${triggerBang ? styles.bangEffect : ''}`}>
                 {companionImage && (
                     <div className={styles.backgroundWrapper}>
                         <img
+                            key={companionImage}
                             src={companionImage}
                             alt=""
-                            className={styles.backgroundImage}
+                            className={`${styles.backgroundImage} ${showEvolution && isEvolution ? styles.evolvedImage : ''}`}
                         />
                     </div>
                 )}
 
-                <div className={styles.header}>
+                {triggerBang && <div className={styles.evolutionFlash} />}
+
+                <div className={`${styles.header} ${!showEvolution ? styles.hidden : styles.visible}`}>
                     <h1 className={styles.title}>Level {newLevel}</h1>
                 </div>
 
-                <div className={styles.mainLayout}>
+                <div className={`${styles.mainLayout} ${!showEvolution ? styles.hidden : styles.visible}`}>
                     <div className={styles.statsContainer}>
                         <div className={`${styles.statCard} ${styles.leftStat}`}>
                             <div className={styles.statValue}>
@@ -77,12 +101,15 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                     </div>
                 </div>
 
-                <div className={styles.abilitySection}>
+                <div className={`${styles.abilitySection} ${!showEvolution ? styles.hidden : styles.visible}`}>
+                    <div className={styles.abilityLabel}>
+                        {isEvolution ? 'New Power Unlocked' : 'Ultimate Ability'}
+                    </div>
                     <div className={styles.abilityName}>{abilityName}</div>
                     <div className={styles.abilityDescription}>{abilityDescription}</div>
                 </div>
 
-                <div className={styles.footer}>
+                <div className={`${styles.footer} ${!showEvolution ? styles.hidden : styles.visible}`}>
                     <button
                         className={styles.continueButton}
                         onClick={onClose}
@@ -90,6 +117,14 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                         {t('common.continue', 'Continue')}
                     </button>
                 </div>
+
+                {isEvolution && !showEvolution && (
+                    <div className={styles.evolutionNarrative}>
+                        <div className={styles.evolvingText}>
+                            Evolution
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
