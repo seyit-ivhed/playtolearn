@@ -2,12 +2,14 @@
     display: flex;
     flex-direction: column;
     padding: 2rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
     height: 100%;
     color: #4a3721;
     font-family: 'Inter', sans-serif;
     position: relative;
     box-sizing: border-box;
+    overflow: hidden;
+    /* Footer will be anchored, content will scroll */
 }
 
 .chapter-header {
@@ -33,10 +35,14 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: stretch;
-    /* Change from center to stretch to ensure 100% width */
     width: 100%;
+    overflow-y: auto;
+    /* Internal scrolling */
+    padding-right: 0.5rem;
+    /* Space for scrollbar */
+    margin-bottom: 1rem;
 }
 
 .illustration-container {
@@ -130,10 +136,10 @@
     flex-direction: column;
     align-items: center;
     gap: 0;
-    margin-top: auto;
-    /* Push to the bottom of the flex container */
-    padding-top: 2rem;
+    flex-shrink: 0;
+    padding-top: 1rem;
     width: 100%;
+    border-top: 1px solid rgba(74, 55, 33, 0.1);
 }
 
 .page-indicator-bottom {

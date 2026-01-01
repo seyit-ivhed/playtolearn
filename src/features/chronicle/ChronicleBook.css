@@ -44,7 +44,8 @@
     flex: 1;
     height: 100%;
     position: relative;
-    overflow-y: auto;
+    overflow: hidden;
+    /* Internal scrolling handled by ChapterPage */
 }
 
 .page-motion-wrapper {
