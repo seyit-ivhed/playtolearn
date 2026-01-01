@@ -8,16 +8,20 @@
 
 .campfireScene {
     position: relative;
-    width: 1000px;
-    height: 750px;
+    width: 100%;
+    max-width: 1300px;
+    height: auto;
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-end;
     justify-content: center;
+    gap: 3rem;
+    padding-bottom: 2rem;
 }
 
 @media (max-width: 1200px) {
     .campfireScene {
-        width: 600px;
-        height: 600px;
+        gap: 1.5rem;
+        flex-wrap: wrap;
     }
 }

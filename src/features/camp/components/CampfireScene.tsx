@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { CentralHub } from './CentralHub';
 import { CompanionSeat } from './CompanionSeat';
 import { CompanionTooltip } from './CompanionTooltip';
 import styles from './CampfireScene.module.css';
@@ -24,12 +23,9 @@ export const CampfireScene: React.FC<CampfireSceneProps> = ({
     return (
         <section className={styles.mainCampArea}>
             <div className={styles.campfireScene}>
-                <CentralHub />
-
                 {slots.map((companionId, idx) => (
                     <CompanionSeat
                         key={companionId || `empty-${idx}`}
-                        index={idx}
                         companionId={companionId}
                         stats={companionId ? companionStats[companionId] : undefined}
                         xpPool={xpPool}
