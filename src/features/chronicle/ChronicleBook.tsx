@@ -28,9 +28,21 @@ export const ChronicleBook: React.FC = () => {
         VOLUMES.find(v => v.id === chronicle.lastViewedVolumeId) || VOLUMES[0]
         , [chronicle.lastViewedVolumeId]);
 
-    const volumeAdventures = useMemo(() =>
-        ADVENTURES.filter(a => currentVolume.adventureIds.includes(a.id))
-        , [currentVolume]);
+    const volumeAdventures = useMemo(() => {
+        const filtered = ADVENTURES.filter(a => currentVolume.adventureIds.includes(a.id));
+        if (currentVolume.id === 'origins') {
+            const prologue: any = {
+                id: 'prologue',
+                title: t('adventures.prologue.title'),
+                storyHook: t('adventures.prologue.story_hook'),
+                difficulty: 0,
+                encounters: [],
+                volumeId: 'origins'
+            };
+            return [prologue, ...filtered];
+        }
+        return filtered;
+    }, [currentVolume, t]);
 
     const currentAdventureIndex = useMemo(() => {
         const idx = volumeAdventures.findIndex(a => a.id === chronicle.lastViewedAdventureId);
@@ -69,6 +81,7 @@ export const ChronicleBook: React.FC = () => {
     };
 
     const handleBegin = (id: string) => {
+        if (id === 'prologue') return; // Should not be possible from Begin button but safety first
         const isCompleted = adventureStatuses[id] === AdventureStatus.COMPLETED;
         if (isCompleted) {
             const adventure = ADVENTURES.find(a => a.id === id);
@@ -99,12 +112,15 @@ export const ChronicleBook: React.FC = () => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [handleNext, handlePrev, isTocOpen]);
 
-    const adventureTitles = useMemo(() =>
-        ADVENTURES.reduce((acc, a) => {
+    const adventureTitles = useMemo(() => {
+        const titles = ADVENTURES.reduce((acc, a) => {
             acc[a.id] = t(`adventures.${a.id}.title`, a.title || `Adventure ${a.id}`);
             return acc;
-        }, {} as Record<string, string>)
-        , [t]);
+        }, {} as Record<string, string>);
+
+        titles['prologue'] = t('adventures.prologue.title', 'Prologue');
+        return titles;
+    }, [t]);
 
 
     return (

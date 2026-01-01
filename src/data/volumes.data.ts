@@ -7,7 +7,8 @@ export const VOLUMES: Volume[] = [
         description: 'Where the journey begins. Join Amara and Tariq as they face the first challenges of their quest.',
         coverImage: '/assets/covers/origins.webp',
         isLocked: false,
-        adventureIds: ['1', '2', '3']
+        price: 0,
+        adventureIds: ['prologue', '1', '2', '3']
     },
     {
         id: 'baobab',

@@ -40,12 +40,13 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     const { t } = useTranslation();
     const isLocked = status === AdventureStatus.LOCKED;
     const isCompleted = status === AdventureStatus.COMPLETED;
+    const isPrologue = adventure.id === 'prologue';
     const illustration = getAdventureIllustration(adventure.id);
 
     return (
         <div className={`chapter-page ${isLocked ? 'locked' : ''}`} data-testid="chapter-page">
             <div className="chapter-header">
-                <span className="chapter-number">{t('chronicle.chapter_prefix')} {adventure.id}</span>
+                {!isPrologue && <span className="chapter-number">{t('chronicle.chapter_prefix')} {adventure.id}</span>}
                 <h2 className="chapter-title" data-testid="chapter-title">{t(`adventures.${adventure.id}.title`, adventure.title || '???')}</h2>
             </div>
 
@@ -78,26 +79,28 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     </p>
 
 
-                    <div className="completion-stats" style={{ visibility: isCompleted ? 'visible' : 'hidden' }}>
-                        <div className="stars-earned">
-                            {Array.from({ length: 5 }).map((_, i) => (
-                                <span key={i} className={`star ${i < stars ? 'filled' : ''}`}>⭐</span>
-                            ))}
+                    {!isPrologue && (
+                        <div className="completion-stats" style={{ visibility: isCompleted ? 'visible' : 'hidden' }}>
+                            <div className="stars-earned">
+                                {Array.from({ length: 5 }).map((_, i) => (
+                                    <span key={i} className={`star ${i < stars ? 'filled' : ''}`}>⭐</span>
+                                ))}
+                            </div>
+                            <motion.div
+                                className="wax-seal"
+                                initial={isJustCompleted ? { scale: 3, opacity: 0 } : { scale: 1, opacity: 1 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 300,
+                                    damping: 20,
+                                    delay: 0.2
+                                }}
+                            >
+                                {t('chronicle.completed')}
+                            </motion.div>
                         </div>
-                        <motion.div
-                            className="wax-seal"
-                            initial={isJustCompleted ? { scale: 3, opacity: 0 } : { scale: 1, opacity: 1 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{
-                                type: "spring",
-                                stiffness: 300,
-                                damping: 20,
-                                delay: 0.2
-                            }}
-                        >
-                            {t('chronicle.completed')}
-                        </motion.div>
-                    </div>
+                    )}
                 </div>
             </div>
 
@@ -117,7 +120,17 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     </motion.button>
 
                     <div className="main-action">
-                        {!isLocked ? (
+                        {isPrologue ? (
+                            <motion.button
+                                className="book-btn begin-btn"
+                                onClick={onNext}
+                                data-testid="next-chapter-btn"
+                                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                {t('chronicle.next_chapter', 'Next Chapter')}
+                            </motion.button>
+                        ) : !isLocked ? (
                             isJustCompleted && canNext ? (
                                 <motion.button
                                     className="book-btn begin-btn"

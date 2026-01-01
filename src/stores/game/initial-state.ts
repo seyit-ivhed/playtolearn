@@ -18,7 +18,7 @@ export const initialGameState: GameState = {
     restedCompanions: [],
     chronicle: {
         lastViewedVolumeId: 'origins',
-        lastViewedAdventureId: '1',
+        lastViewedAdventureId: 'prologue',
     },
 };
 

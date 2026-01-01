@@ -44,7 +44,8 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                             <ul className="chapters-list">
                                 {volume.adventureIds.map((adventureId, index) => {
                                     const status = adventureStatuses[adventureId] || 'LOCKED';
-                                    const isAvailable = status !== 'LOCKED' && !volume.isLocked;
+                                    const isPrologue = adventureId === 'prologue';
+                                    const isAvailable = isPrologue || (status !== 'LOCKED' && !volume.isLocked);
 
                                     return (
                                         <li
@@ -55,7 +56,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                                         >
                                             {activeAdventureId === adventureId && <div className="bookmark-ribbon" title="Active Adventure" data-testid="bookmark-ribbon" />}
                                             <span className="chapter-marker">
-                                                {status === 'COMPLETED' ? '✓' : index + 1}
+                                                {isPrologue ? '⭐' : (status === 'COMPLETED' ? '✓' : index)}
                                             </span>
                                             <span className="chapter-link">
                                                 {adventureTitles[adventureId] || `Chapter ${adventureId}`}

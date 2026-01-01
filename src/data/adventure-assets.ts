@@ -10,6 +10,7 @@ const adventure1Map = new URL('../assets/images/maps/adventure-1.png', import.me
 const adventure2Map = new URL('../assets/images/maps/adventure-2.png', import.meta.url).href;
 
 export const ADVENTURE_ILLUSTRATIONS: Record<string, string> = {
+    'prologue': chapter1Illustration,
     '1': chapter1Illustration,
     '2': chapter2Illustration,
 };

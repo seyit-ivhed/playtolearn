@@ -20,6 +20,10 @@
         }
     },
     "adventures": {
+        "prologue": {
+            "title": "Prologue",
+            "story_hook": "A story that spans across ages and lands begins with a single step. Join Amara and Tariq as they embark on an epic quest to uncover the mysteries of the ancient world. Their journey will take them through shifting sands, deep ruins, and beyond."
+        },
         "1": {
             "title": "The Hidden Entrance",
             "description": "An ancient cave revealed by the shifting sands.",

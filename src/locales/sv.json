@@ -20,6 +20,10 @@
         }
     },
     "adventures": {
+        "prologue": {
+            "title": "Prolog",
+            "story_hook": "En berättelse som spänner över tidsåldrar och länder börjar med ett enda steg. Följ med Amara och Tariq när de ger sig ut på ett episkt uppdrag för att avslöja den antika världens mysterier. Deras resa kommer att ta dem genom skiftande sand, djupa ruiner och bortom."
+        },
         "1": {
             "title": "Den gömda ingången",
             "description": "En uråldrig grotta avslöjad av de skiftande sanddynerna.",
