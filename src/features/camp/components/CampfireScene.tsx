@@ -23,11 +23,11 @@ export const CampfireScene: React.FC<CampfireSceneProps> = ({
     return (
         <section className={styles.mainCampArea}>
             <div className={styles.campfireScene}>
-                {slots.map((companionId, idx) => (
+                {slots.filter(id => id !== null).map((companionId) => (
                     <CompanionSeat
-                        key={companionId || `empty-${idx}`}
-                        companionId={companionId}
-                        stats={companionId ? companionStats[companionId] : undefined}
+                        key={companionId!}
+                        companionId={companionId!}
+                        stats={companionStats[companionId!]}
                         xpPool={xpPool}
                         onRemove={onRemove}
                         onLevelUp={onLevelUp}

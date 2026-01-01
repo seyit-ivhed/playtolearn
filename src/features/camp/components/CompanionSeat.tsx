@@ -4,7 +4,7 @@ import { getXpForNextLevel, getEvolutionAtLevel } from '../../../utils/progressi
 import styles from './CompanionSeat.module.css';
 
 interface CompanionSeatProps {
-    companionId: string | null;
+    companionId: string;
     stats?: {
         level: number;
         xp: number;
@@ -24,17 +24,6 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
     onHover
 }) => {
     const seatClass = styles.companionSeat;
-
-    if (!companionId) {
-        return (
-            <div
-                className={seatClass}
-                data-testid="empty-slot"
-            >
-                <div className={styles.emptyAvatar}>?</div>
-            </div>
-        );
-    }
 
     const data = getCompanionById(companionId);
     if (!data) return null;
