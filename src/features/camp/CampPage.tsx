@@ -107,7 +107,9 @@ const CampPage = () => {
     return (
         <div
             className={styles.container}
-            style={backgroundUrl ? { backgroundImage: `url(${backgroundUrl})` } : {}}
+            style={backgroundUrl ? {
+                backgroundImage: `linear-gradient(rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.6)), url(${backgroundUrl})`
+            } : {}}
         >
             <div className={styles.headerSection}>
                 <h1 className={styles.simpleTitle} data-testid="camp-title">{t('party_camp')}</h1>
