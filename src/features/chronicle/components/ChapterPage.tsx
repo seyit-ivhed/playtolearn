@@ -38,16 +38,20 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     isJustCompleted
 }) => {
     const { t } = useTranslation();
-    const isLocked = status === AdventureStatus.LOCKED;
-    const isCompleted = status === AdventureStatus.COMPLETED;
     const isPrologue = adventure.id === 'prologue';
+    const isLocked = !isPrologue && status === AdventureStatus.LOCKED;
+    const isCompleted = status === AdventureStatus.COMPLETED;
     const illustration = getAdventureIllustration(adventure.id);
 
     return (
         <div className={`chapter-page ${isLocked ? 'locked' : ''}`} data-testid="chapter-page">
             <div className="chapter-header">
-                {!isPrologue && <span className="chapter-number">{t('chronicle.chapter_prefix')} {adventure.id}</span>}
-                <h2 className="chapter-title" data-testid="chapter-title">{t(`adventures.${adventure.id}.title`, adventure.title || '???')}</h2>
+                <span className="chapter-number">
+                    {isPrologue ? t('adventures.prologue.prefix') : `${t('chronicle.chapter_prefix')} ${adventure.id}`}
+                </span>
+                <h2 className="chapter-title" data-testid="chapter-title">
+                    {t(`adventures.${adventure.id}.title`, adventure.title || '???')}
+                </h2>
             </div>
 
 
