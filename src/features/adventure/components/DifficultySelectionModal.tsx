@@ -62,6 +62,17 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
         }
     };
 
+    const getDifficultyExamples = (level: number) => {
+        switch (level) {
+            case 1: return ['3 + 3', '7 + 1', '4 + 2'];
+            case 2: return ['12 + 8', '15 + 5', '9 - 2'];
+            case 3: return ['24 + 16', '15 - 7', '4 × 3'];
+            case 4: return ['65 + 35', '82 - 14', '7 × 8', '48 ÷ 6'];
+            case 5: return ['320 + 150', '450 - 200', '12 × 9', '73 ÷ 8'];
+            default: return [];
+        }
+    };
+
     const displayDifficulty = hoveredDifficulty ?? selectedDifficulty;
 
     return (
@@ -133,9 +144,22 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                     </div>
 
                     <div className="difficulty-explanation-box">
-                        <p className="explanation-text">
-                            {getDifficultyDescription(displayDifficulty)}
-                        </p>
+                        <div className="explanation-content">
+                            <div className="explanation-left">
+                                <p className="explanation-text">
+                                    {getDifficultyDescription(displayDifficulty)}
+                                </p>
+                            </div>
+                            <div className="explanation-right">
+                                <div className="examples-container">
+                                    {getDifficultyExamples(displayDifficulty).map((example, index) => (
+                                        <div key={index} className="example-tag">
+                                            {example}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
