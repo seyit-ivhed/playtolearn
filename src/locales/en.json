@@ -114,6 +114,7 @@
         "begin_chapter": "Begin Adventure",
         "locked": "Locked",
         "page_x_of_y": "{{current}} of {{total}}",
+        "next_chapter": "Next Chapter",
         "subtitle": "Your Journey Through the Ages"
     },
     "volumes": {
