@@ -1,6 +1,6 @@
 .statsTooltip {
     position: absolute;
-    bottom: 110%;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
     width: 320px;
@@ -19,7 +19,7 @@
 @keyframes slide-up {
     from {
         opacity: 0;
-        transform: translate(-50%, 10px);
+        transform: translate(-50%, -10px);
     }
 
     to {
