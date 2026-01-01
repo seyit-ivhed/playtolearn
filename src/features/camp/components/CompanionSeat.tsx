@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import { getCompanionById } from '../../../data/companions.data';
 import { getCompanionSprite } from '../../../data/companion-sprites';
 import { getXpForNextLevel, getEvolutionAtLevel } from '../../../utils/progression.utils';
+import { CompanionTooltip } from './CompanionTooltip';
 import styles from './CompanionSeat.module.css';
 
 interface CompanionSeatProps {
@@ -12,7 +14,6 @@ interface CompanionSeatProps {
     xpPool: number;
     onRemove?: (id: string) => void;
     onLevelUp?: (id: string) => void;
-    onHover?: (id: string | null, level: number) => void;
 }
 
 export const CompanionSeat: React.FC<CompanionSeatProps> = ({
@@ -21,8 +22,8 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
     xpPool,
     onRemove,
     onLevelUp,
-    onHover
 }) => {
+    const [isHovered, setIsHovered] = useState(false);
     const seatClass = styles.companionSeat;
 
     const data = getCompanionById(companionId);
@@ -39,10 +40,12 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
         <div
             className={seatClass}
             data-testid={`party-card-${companionId}`}
-            onMouseEnter={() => onHover?.(companionId, currentStats.level)}
-            onMouseLeave={() => onHover?.(null, 0)}
         >
-            <div className={styles.companionFocus}>
+            <div
+                className={styles.companionFocus}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
                 <div className={styles.miniLevel}>Lv {currentStats.level}</div>
                 <div className={styles.avatarWrapper}>
                     <img src={getCompanionSprite(companionId, currentStats.level)} alt={data.name} className={styles.largeAvatar} />
@@ -58,6 +61,13 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                 </div>
                 <div className={styles.miniName}>{data.name}</div>
             </div>
+
+            {isHovered && (
+                <CompanionTooltip
+                    companionId={companionId}
+                    level={currentStats.level}
+                />
+            )}
 
             <div className={styles.companionXpBar}>
                 <div className={styles.xpSmallBar}>
