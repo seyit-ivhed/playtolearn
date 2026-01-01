@@ -4,7 +4,7 @@ import styles from './CentralHub.module.css';
 export const CentralHub: React.FC = () => {
     return (
         <div className={styles.centralHub}>
-            <div className={styles.fireEffect}>🔥</div>
+            {/* Campfire focal point removed in favor of background art */}
         </div>
     );
 };

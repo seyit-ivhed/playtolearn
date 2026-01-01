@@ -2,10 +2,31 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: radial-gradient(circle at center, #1e293b 0%, #0f172a 70%, #020617 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #020617;
   color: #f8fafc;
   overflow: hidden;
   font-family: 'Outfit', sans-serif;
+  position: relative;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(2, 6, 23, 0.3) 70%, rgba(2, 6, 23, 0.6) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.container>* {
+  position: relative;
+  z-index: 2;
 }
 
 .headerSection {

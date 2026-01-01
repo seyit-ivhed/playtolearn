@@ -8,30 +8,5 @@
     justify-content: center;
     gap: 1.5rem;
     z-index: 30;
-    background: radial-gradient(circle, rgba(234, 88, 12, 0.15) 0%, transparent 70%);
-}
-
-.fireEffect {
-    font-size: 6rem;
-    filter: drop-shadow(0 0 40px #f97316);
-    animation: fire-flicker 2s infinite alternate ease-in-out;
-    margin-top: -1rem;
-    user-select: none;
-}
-
-@keyframes fire-flicker {
-    0% {
-        transform: scale(1) rotate(-1deg);
-        filter: drop-shadow(0 0 30px #f97316);
-    }
-
-    50% {
-        transform: scale(1.1) rotate(1deg);
-        filter: drop-shadow(0 0 50px #fbbf24);
-    }
-
-    100% {
-        transform: scale(1.05) rotate(-2deg);
-        filter: drop-shadow(0 0 40px #ea580c);
-    }
+    /* Subtle glow removed as background art handles lighting */
 }

@@ -9,7 +9,14 @@ import { FellowshipRoster } from './components/FellowshipRoster';
 import { LevelUpModal } from './components/LevelUpModal';
 import { getCompanionById } from '../../data/companions.data';
 import { getXpForNextLevel, getStatsForLevel } from '../../utils/progression.utils';
+import camp1 from '../../assets/images/camps/camp-1.png';
+import camp2 from '../../assets/images/camps/camp-2.png';
 import type { Companion, CompanionStats } from '../../types/companion.types';
+
+const CAMP_BACKGROUNDS: Record<string, string> = {
+    '1': camp1,
+    '2': camp2,
+};
 
 const MAX_PARTY_SIZE = 4;
 
@@ -95,8 +102,13 @@ const CampPage = () => {
             stats.level < 10;
     });
 
+    const backgroundUrl = activeAdventureId ? CAMP_BACKGROUNDS[activeAdventureId] : null;
+
     return (
-        <div className={styles.container}>
+        <div
+            className={styles.container}
+            style={backgroundUrl ? { backgroundImage: `url(${backgroundUrl})` } : {}}
+        >
             <div className={styles.headerSection}>
                 <h1 className={styles.simpleTitle} data-testid="camp-title">{t('party_camp')}</h1>
                 <div className={styles.xpPoolDisplay}>
