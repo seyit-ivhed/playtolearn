@@ -56,7 +56,6 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                 <div className={styles.mainLayout}>
                     <div className={styles.statsContainer}>
                         <div className={`${styles.statCard} ${styles.leftStat}`}>
-                            <div className={styles.statLabel}>{t('companions.stats.hp', 'Health')}</div>
                             <div className={styles.statValue}>
                                 {oldStats.maxHealth}
                                 <ArrowRight className={styles.arrow} size={16} />
@@ -67,7 +66,6 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                         </div>
 
                         <div className={`${styles.statCard} ${styles.rightStat}`}>
-                            <div className={styles.statLabel}>{t('companions.stats.attack', 'Attack')}</div>
                             <div className={styles.statValue}>
                                 {oldStats.abilityDamage || 0}
                                 <ArrowRight className={styles.arrow} size={16} />
@@ -80,7 +78,6 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                 </div>
 
                 <div className={styles.abilitySection}>
-                    <div className={styles.abilityLabel}>Ultimate Ability</div>
                     <div className={styles.abilityName}>{abilityName}</div>
                     <div className={styles.abilityDescription}>{abilityDescription}</div>
                 </div>
