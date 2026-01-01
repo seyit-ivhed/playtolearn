@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../stores/game/store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { ADVENTURES } from '../../data/adventures.data';
-import { AdventureStatus } from '../../types/adventure.types';
+import { AdventureStatus, type Adventure } from '../../types/adventure.types';
 import { VOLUMES } from '../../data/volumes.data';
 import { calculateAdventureStars } from '../../utils/progression.utils';
 import { ChapterPage } from './components/ChapterPage';
@@ -31,7 +31,7 @@ export const ChronicleBook: React.FC = () => {
     const volumeAdventures = useMemo(() => {
         const filtered = ADVENTURES.filter(a => currentVolume.adventureIds.includes(a.id));
         if (currentVolume.id === 'origins') {
-            const prologue: any = {
+            const prologue: Adventure = {
                 id: 'prologue',
                 title: t('adventures.prologue.title'),
                 storyHook: t('adventures.prologue.story_hook'),
