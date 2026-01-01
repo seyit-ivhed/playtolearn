@@ -1,4 +1,3 @@
-/* radial Slot System */
 .companionSeat {
     position: relative;
     width: 260px;
@@ -6,18 +5,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    /* Uniform gap for the entire column */
+    gap: 0.8rem;
     z-index: 20;
     transition: transform 0.3s ease-out;
 }
 
 /* Character Visuals */
 .companionFocus {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    display: contents;
+    /* Let children be spaced by the parent gap */
 }
 
 .largeAvatar {
@@ -34,7 +31,6 @@
 
 .avatarWrapper {
     position: relative;
-    order: 2;
 }
 
 .companionSeat:hover .largeAvatar {
@@ -51,7 +47,6 @@
     line-height: 1;
     color: #ffffff;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    order: 3;
     letter-spacing: -0.01em;
     background: rgba(15, 23, 42, 0.7);
     padding: 0.4rem 1.2rem;
@@ -66,15 +61,12 @@
     font-weight: 950;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    order: 1;
     background: rgba(15, 23, 42, 0.8);
     padding: 0.2rem 0.8rem;
     border-radius: 2rem;
-    margin-bottom: -0.8rem;
     z-index: 5;
     border: 1px solid rgba(251, 191, 36, 0.2);
     backdrop-filter: blur(4px);
-    /* Added for glassmorphism effect */
 }
 
 /* Overlay now handled via inline-styles in CampPage.tsx for better blending */
@@ -110,21 +102,20 @@
 
 /* XP Control */
 .companionXpBar {
-    display: flex;
-    flex-direction: column;
-    width: 180px;
-    gap: 0.5rem;
+    display: contents;
+    /* Let children be spaced by the parent gap */
 }
 
 .levelUpBtn {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     border: none;
-    padding: 0.85rem;
+    padding: 0.85rem 1.5rem;
     border-radius: 1rem;
     font-weight: 900;
     font-size: 0.9rem;
     cursor: pointer;
+    min-width: 200px;
     transition: all 0.2s;
     box-shadow: 0 5px 0 #065f46, 0 10px 20px rgba(0, 0, 0, 0.4);
     letter-spacing: 0.05em;
@@ -150,6 +141,7 @@
 
 .xpSmallBar {
     height: 6px;
+    width: 180px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 999px;
     overflow: hidden;
