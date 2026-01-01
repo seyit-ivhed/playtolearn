@@ -1,22 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { CONFIG } from './config';
 import { type DifficultyLevel, MathOperation } from '../../types/math.types';
-
-// We need to extract the examples from the component. 
-// Since we can't easily import the internal function, we'll replicate the data here 
-// but it's better if we could export it or move it to a shared place.
-// For now, I'll replicate it to satisfy the requirement of "test automation to check these static examples".
-
-const getDifficultyExamples = (level: number) => {
-    switch (level) {
-        case 1: return ['3 + 3', '7 + 1', '4 + 2'];
-        case 2: return ['12 + 8', '15 + 5', '9 - 2'];
-        case 3: return ['24 + 16', '15 - 7', '4 × 3'];
-        case 4: return ['65 + 35', '82 - 14', '7 × 8', '48 ÷ 6'];
-        case 5: return ['320 + 150', '450 - 200', '12 × 9', '73 ÷ 8'];
-        default: return [];
-    }
-};
+import { getDifficultyExamples } from './examples';
 
 const parseExample = (example: string) => {
     const match = example.match(/(\d+)\s*([\+\-×÷])\s*(\d+)/);
