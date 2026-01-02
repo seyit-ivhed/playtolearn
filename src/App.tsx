@@ -8,8 +8,11 @@ import PuzzlePage from './features/encounter/PuzzlePage';
 import MathTestPage from './features/math/MathTestPage';
 
 import Layout from './components/Layout';
+import { useAuth } from './hooks/useAuth';
 
 function App() {
+  useAuth(); // Initialize authentication on mount
+
   return (
     <BrowserRouter>
       <Routes>
