@@ -28,16 +28,24 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
         const shouldUpdateResult = !existingResult || newStars > existingResult.stars;
 
         if (shouldUpdateResult) {
-            set((state) => ({
-                encounterResults: {
+            set((state) => {
+                const newResults = {
                     ...state.encounterResults,
                     [encounterKey]: {
                         stars: newStars,
                         difficulty: activeEncounterDifficulty,
                         completedAt: Date.now(),
                     }
-                }
-            }));
+                };
+
+                // Trigger auth milestone if 3 or more unique encounters completed
+                const milestoneReached = Object.keys(newResults).length >= 3;
+
+                return {
+                    encounterResults: newResults,
+                    authMilestoneReached: state.authMilestoneReached || milestoneReached
+                };
+            });
         }
 
         // Only increment currentMapNode if we completed the latest unlocked node

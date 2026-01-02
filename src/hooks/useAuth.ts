@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../services/supabase.service';
+import { IdentityService } from '../services/identity.service';
 import type { Session, User } from '@supabase/supabase-js';
 
 export const useAuth = () => {
@@ -7,19 +8,15 @@ export const useAuth = () => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // Initial session check
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session);
-            setUser(session?.user ?? null);
+    const refreshSession = useCallback(async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+    }, []);
 
-            if (!session) {
-                // Automatically sign in anonymously if no session exists
-                signInAnonymously();
-            } else {
-                setLoading(false);
-            }
-        });
+    useEffect(() => {
+        refreshSession();
 
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -29,15 +26,21 @@ export const useAuth = () => {
         });
 
         return () => subscription.unsubscribe();
-    }, []);
+    }, [refreshSession]);
 
     const signInAnonymously = async () => {
         try {
             setLoading(true);
-            const { error } = await supabase.auth.signInAnonymously();
+            const { error, data } = await supabase.auth.signInAnonymously({
+                options: {
+                    data: { device_id: IdentityService.getDeviceId() }
+                }
+            });
             if (error) throw error;
+            return data;
         } catch (error) {
             console.error('Error signing in anonymously:', error);
+            throw error;
         } finally {
             setLoading(false);
         }
@@ -46,7 +49,9 @@ export const useAuth = () => {
     return {
         session,
         user,
+        isAuthenticated: !!session,
         loading,
-        signInAnonymously
+        signInAnonymously,
+        refreshSession
     };
 };

@@ -9,9 +9,19 @@ import MathTestPage from './features/math/MathTestPage';
 
 import Layout from './components/Layout';
 import { useAuth } from './hooks/useAuth';
+import { useGameStore } from './stores/game/store';
+import { useEffect } from 'react';
 
 function App() {
-  useAuth(); // Initialize authentication on mount
+  const { isAuthenticated, signInAnonymously } = useAuth();
+  const authMilestoneReached = useGameStore(state => state.authMilestoneReached);
+
+  useEffect(() => {
+    if (authMilestoneReached && !isAuthenticated) {
+      console.log('Milestone reached! Creating anonymous account...');
+      signInAnonymously();
+    }
+  }, [authMilestoneReached, isAuthenticated, signInAnonymously]);
 
   return (
     <BrowserRouter>
