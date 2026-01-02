@@ -5,10 +5,10 @@ import { type DifficultyLevel, MathOperation } from '../../types/math.types';
 
 
 const parseExample = (example: string) => {
-    const match = example.match(/(\d+)\s*([\+\-×÷])\s*(\d+)/);
+    const match = example.match(/(\d+)\s*([+\-×÷])\s*(\d+)/);
     if (!match) throw new Error(`Failed to parse example: ${example}`);
 
-    const [_, op1, symbol, op2] = match;
+    const [, op1, symbol, op2] = match;
     let operation: MathOperation;
     switch (symbol) {
         case '+': operation = MathOperation.ADD; break;
