@@ -10,18 +10,28 @@ import MathTestPage from './features/math/MathTestPage';
 import Layout from './components/Layout';
 import { useAuth } from './hooks/useAuth';
 import { useGameStore } from './stores/game/store';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 function App() {
-  const { isAuthenticated, signInAnonymously } = useAuth();
+  const { isAuthenticated, signInAnonymously, loading } = useAuth();
   const authMilestoneReached = useGameStore(state => state.authMilestoneReached);
+  const authTriggered = useRef(false);
 
   useEffect(() => {
-    if (authMilestoneReached && !isAuthenticated) {
+    // Only trigger if:
+    // 1. Initial auth check (loading) is finished
+    // 2. Milestone is reached
+    // 3. User is not yet authenticated
+    // 4. We haven't already triggered it in this component lifecycle
+    if (!loading && authMilestoneReached && !isAuthenticated && !authTriggered.current) {
       console.log('Milestone reached! Creating anonymous account...');
-      signInAnonymously();
+      authTriggered.current = true;
+      signInAnonymously().catch(err => {
+        console.error('Failed to create anonymous account:', err);
+        authTriggered.current = false; // Allow retry on failure
+      });
     }
-  }, [authMilestoneReached, isAuthenticated, signInAnonymously]);
+  }, [authMilestoneReached, isAuthenticated, signInAnonymously, loading]);
 
   return (
     <BrowserRouter>
