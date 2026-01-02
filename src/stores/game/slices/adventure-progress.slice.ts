@@ -1,6 +1,7 @@
 import type { StateCreator } from 'zustand';
 import type { GameStore, AdventureProgressSlice } from '../interfaces';
 import { ADVENTURES } from '../../../data/adventures.data';
+import { PersistenceService } from '../../../services/persistence.service';
 
 export const createAdventureProgressSlice: StateCreator<GameStore, [], [], AdventureProgressSlice> = (set, get) => ({
     completeEncounter: (nodeIndex) => {
@@ -57,6 +58,9 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
                 set({ currentMapNode: 1 });
             }
         }
+
+        // Trigger cloud sync
+        PersistenceService.sync(get());
     },
 
     setEncounterDifficulty: (difficulty) => set({ activeEncounterDifficulty: difficulty }),

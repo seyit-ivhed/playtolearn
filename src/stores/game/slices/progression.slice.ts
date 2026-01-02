@@ -1,6 +1,7 @@
 import type { StateCreator } from 'zustand';
 import type { GameStore, ProgressionSlice } from '../interfaces';
 import { getXpForNextLevel } from '../../../utils/progression.utils';
+import { PersistenceService } from '../../../services/persistence.service';
 
 export const createProgressionSlice: StateCreator<GameStore, [], [], ProgressionSlice> = (set, get) => ({
     addXpToPool: (amount) => set((state) => ({ xpPool: state.xpPool + amount })),
@@ -28,6 +29,8 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
                 [companionId]: { level: newLevel, xp: newXp }
             }
         });
+
+        PersistenceService.sync(get());
     },
 
     levelUpCompanion: (companionId) => {
@@ -50,6 +53,8 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
                 [companionId]: { level: level + 1, xp: 0 }
             }
         });
+
+        PersistenceService.sync(get());
     },
 
     markRestedCompanions: () => {

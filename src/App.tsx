@@ -9,11 +9,14 @@ import MathTestPage from './features/math/MathTestPage';
 
 import Layout from './components/Layout';
 import { useAuth } from './hooks/useAuth';
+import { usePersistence } from './hooks/usePersistence';
 import { useGameStore } from './stores/game/store';
 import { useEffect, useRef } from 'react';
 
 function App() {
   const { isAuthenticated, signInAnonymously, loading } = useAuth();
+  usePersistence(); // Handle cloud sync and rehydration
+
   const authMilestoneReached = useGameStore(state => state.authMilestoneReached);
   const authTriggered = useRef(false);
 
