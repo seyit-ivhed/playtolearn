@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star, X, ChevronDown } from 'lucide-react';
+import { getDifficultyExamples } from '../../../utils/math/difficulty-examples';
 import './DifficultySelectionModal.css';
 
 interface DifficultySelectionModalProps {
@@ -62,16 +63,6 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
         }
     };
 
-    const getDifficultyExamples = (level: number) => {
-        switch (level) {
-            case 1: return ['3 + 3', '7 + 1', '4 + 2'];
-            case 2: return ['12 + 8', '15 + 5', '9 - 2'];
-            case 3: return ['24 + 16', '15 - 7', '4 × 3'];
-            case 4: return ['65 + 35', '82 - 14', '7 × 8', '48 ÷ 6'];
-            case 5: return ['320 + 150', '450 - 200', '12 × 9', '73 ÷ 8'];
-            default: return [];
-        }
-    };
 
     const displayDifficulty = hoveredDifficulty ?? selectedDifficulty;
 
