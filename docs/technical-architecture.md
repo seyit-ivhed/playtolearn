@@ -231,6 +231,30 @@ export { EncounterPage } from '../features/encounter/EncounterPage';
 
 ---
 
+## Authentication & Persistence
+
+### Overview
+The application uses **Supabase** for centralized authentication and cloud persistence, following an anonymous-first progression model.
+
+### 1. Progressive Authentication
+- **Anonymous Entry**: On first launch, the app creates an anonymous Supabase session. Players can start playing immediately without registration.
+- **Account Upgrade**: Players are prompted to "upgrade" their account (link an email) before making purchases or to ensure cross-device persistence.
+- **Identity Linking**: Local anonymous state is merged with the permanent account upon registration/login.
+
+### 2. Persistence Strategy
+- **Local-First**: Primary state management remains in **Zustand** stores for immediate UI responsiveness.
+- **Background Sync**: Stores are persisted to `localStorage` and periodically synced to Supabase (PostgreSQL) in the background.
+- **Sync Triggers**: Sync occurs at critical gameplay milestones, specifically after completing an encounter or making a purchase.
+- **Conflict Resolution**: In case of multi-device conflicts, the server-side state (Supabase) acts as the source of truth (Server Wins).
+
+### 3. Service Integration
+- **Supabase Auth**: Manages anonymous and authenticated user sessions.
+- **Supabase Edge Functions**: Handles server-authoritative logic, specifically for secure **Stripe** payment verification and granting content entitlements.
+- **PostgreSQL**: Stores flattened JSONB blobs of game state for flexible progression tracking and structured analytics events.
+
+---
+
+
 ### `/src/types/` - TypeScript Types
 
 **Purpose**: Shared TypeScript type definitions.

@@ -72,8 +72,8 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 ### Realm 2: [Theme To Be Determined]
 **Adventures 3-4 | Premium Content**
 
-- **New Companions**: 1-2 companions from this realm (children who join the journey)
-- **Story Arc**: Amara and Tariq (now older/more experienced) meet young locals and become mentors
+- **New Companion**: 1 new companion from this realm (children who join the journey)
+- **Story Arc**: Amara and Tariq (now older/more experienced) meet a young local and become mentors
 - Structure: 6 Combat + 3 Puzzle + 3 Camps + 1 Boss each
 
 ---
@@ -81,7 +81,7 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 ### Realm 3: [Theme To Be Determined]
 **Adventures 5-6 | Premium Content**
 
-- **New Companions**: 1-2 companions from this realm
+- **New Companion**: 1 new companion from this realm
 - **Story Arc**: The found family is complete, with companions at different ages and experience levels
 - Structure: 6 Combat + 3 Puzzle + 3 Camps + 1 Boss each
 
@@ -91,5 +91,5 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 
 Additional realms can be added as DLC packs:
 - Each realm = 2 adventures with shared theme
-- Each realm introduces 1-2 new companions
+- Each realm introduces 1 new companion
 - Continues the wandering companions' journey to new lands
