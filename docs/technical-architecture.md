@@ -249,8 +249,25 @@ The application uses **Supabase** for centralized authentication and cloud persi
 
 ### 3. Service Integration
 - **Supabase Auth**: Manages anonymous and authenticated user sessions.
-- **Supabase Edge Functions**: Handles server-authoritative logic, specifically for secure **Stripe** payment verification and granting content entitlements.
+- **Supabase Edge Functions**: Handles server-authoritative logic (e.g., secure payment verification).
 - **PostgreSQL**: Stores flattened JSONB blobs of game state for flexible progression tracking and structured analytics events.
+
+---
+
+## Schema Management & Evolution
+
+To maintain data consistency for existing players while the game evolves, we use a dual-layer versioning strategy:
+
+### 1. Database Layer (SQL Migrations)
+- **Versioned Migrations**: All changes to structured tables (e.g., `player_profiles`) are managed via timestamped SQL migration files in `/supabase/migrations/`.
+- **Backward Compatibility**: We prioritize non-breaking changes (e.g., adding nullable columns, new tables) over destructive ones (e.g., renaming columns).
+
+### 2. Application Layer (State Versioning)
+- **JSONB "Schema-on-Read"**: The core game state is stored as a JSONB blob. This allows us to change the internal structure of the game state without modifying the database schema.
+- **Zustand Migrations**: We leverage Zustand's `persist` middleware `version` and `migrate` features. 
+    - When the application loads a `state_blob` from Supabase, the middleware checks the version.
+    - If it's an older version, a `migrate` function transforms the data into the current format before the game starts.
+- **Defaulting Values**: New features use optional properties or default values in the store to ensure old save files remain valid.
 
 ---
 
