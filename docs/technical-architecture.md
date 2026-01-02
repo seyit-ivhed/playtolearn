@@ -529,14 +529,6 @@ When moving files to the new structure:
 
 ---
 
-## Future Considerations
-
-### Potential Additions
-- **API Layer**: When backend is added, create `/src/api/` directory
-- **Contexts**: If needed, create `/src/contexts/` for React Context providers
-- **Animations**: Consider `/src/animations/` for complex animation logic
-- **Workers**: For heavy computations, add `/src/workers/`
-
 ### Scalability
 - As features grow, consider sub-features: `/src/features/combat/sub-features/`
 - For very large features, split into multiple smaller features

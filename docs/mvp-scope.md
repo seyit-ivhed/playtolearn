@@ -27,8 +27,6 @@ To create a playable loop that delivers on the promise of an RPG Math Adventure.
 - **Party Management**:
     - Select active companions.
     - **XP Distribution**: Manage XP pool and Level Up companions directly from the roster screen.
-- **Save System**:
-    - **Cloud Persistence**: Essential for ownership.
 - **Analytics**:
     - **Retention**: First Play Duration, Second Day Retention.
     - **Funnel**: Drop-off tracking at exact Encounter #.

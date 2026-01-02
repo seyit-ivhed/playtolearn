@@ -210,34 +210,6 @@ Each realm contains multiple adventures:
 
 ---
 
-## 6. Technical Considerations
-
-### 6.1 Platform Requirements
-- **Browser Compatibility**: Chrome, Firefox, Safari, Edge (latest versions)
-- **Responsive Design**: Desktop (1024px+) and tablet (768px+)
-- **Performance**: Smooth 60fps animations
-- **Save System**: Cloud-based progress saving (account required)
-
-### 6.2 Technology Stack
-- **Frontend**: HTML5, CSS3, TypeScript
-- **Framework**: React with TypeScript
-- **State Management**: Zustand (already in use)
-- **Routing**: React Router (already in use)
-- **Internationalization**: i18next (already in use)
-- **Testing**: Vitest for unit tests, Playwright for E2E (already in use)
-- **Build Tool**: Vite (already in use)
-- **Graphics**: CSS animations and SVG for companions/battle visuals
-- **AI Art**: Google Nano Banana
-
-### 6.3 Data Storage
-- **User Profile**: Username, current realm
-- **Companion Collection**: Unlocked companions and their levels
-- **Progress**: Completed adventures, unlocked realms, earned badges
-- **Statistics**: Problems solved by math skill and difficulty, accuracy rates
-- **Settings**: Audio, visual preferences
-
----
-
 ## 7. Business Model & Meta Game
 
 ### 7.1 "The Chronicles of Realms" (Free Trial + DLC)
