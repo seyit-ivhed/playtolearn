@@ -5,7 +5,7 @@ describe('Player Store', () => {
     beforeEach(() => {
         usePlayerStore.setState({
             name: 'Cadet',
-            difficulty: 3,
+            difficulty: 1,
             language: 'en',
             currentAdventure: 1,
             unlockedAdventures: [1],

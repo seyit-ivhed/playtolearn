@@ -22,7 +22,7 @@ export const usePlayerStore = create<PlayerState>()(
     persist(
         (set) => ({
             name: 'Cadet',
-            difficulty: 3, // Default to middle ground (Age 8)
+            difficulty: 1, // Default to lowest (Apprentice)
             language: 'en',
             currentAdventure: 1,
             unlockedAdventures: [1],
