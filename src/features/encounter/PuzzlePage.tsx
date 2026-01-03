@@ -49,18 +49,6 @@ const PuzzlePage = () => {
         return generatePuzzleData(pType, currentDifficulty);
     }, [encounter, difficulty, activeEncounterDifficulty]);
 
-    console.log('[PuzzlePage] Debug Info:', {
-        nodeId,
-        activeAdventureId,
-        currentMapNode,
-        encounterIndex,
-        isLocked,
-        foundEncounter: encounter?.id,
-        difficulty,
-        hasPuzzleData: !!puzzleData,
-        xpReward
-    });
-
     if (!encounter || !puzzleData || isLocked) {
         return (
             <div className={styles.errorContainer}>
