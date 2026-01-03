@@ -10,26 +10,36 @@ export const PersistenceService = {
             // 1. Get or create the player profile linked to this authId
             const { data: profile, error: profileError } = await supabase
                 .from('player_profiles')
-                .select('id')
+                .select('id, device_id')
                 .eq('auth_id', authId)
-                .single();
+                .maybeSingle();
 
-            if (profileError && profileError.code !== 'PGRST116') {
-                throw profileError;
-            }
+            if (profileError) throw profileError;
 
             let playerId = profile?.id;
 
             // If no profile exists yet, create one
             if (!profile) {
+                const { IdentityService } = await import('./identity.service');
                 const { data: newProfile, error: createError } = await supabase
                     .from('player_profiles')
-                    .insert({ auth_id: authId, is_anonymous: true })
+                    .insert({
+                        auth_id: authId,
+                        is_anonymous: true,
+                        device_id: IdentityService.getDeviceId()
+                    })
                     .select('id')
                     .single();
 
                 if (createError) throw createError;
                 playerId = newProfile.id;
+            } else if (!profile.device_id) {
+                // Backfill device_id if missing from existing profile
+                const { IdentityService } = await import('./identity.service');
+                await supabase
+                    .from('player_profiles')
+                    .update({ device_id: IdentityService.getDeviceId() })
+                    .eq('id', playerId);
             }
 
             // 2. Upsert the game state
@@ -57,22 +67,25 @@ export const PersistenceService = {
      */
     async pullState(authId: string) {
         try {
+            // Step 1: Get the player profile ID first
+            const { data: profile, error: profileError } = await supabase
+                .from('player_profiles')
+                .select('id')
+                .eq('auth_id', authId)
+                .maybeSingle();
+
+            if (profileError) throw profileError;
+            if (!profile) return null;
+
+            // Step 2: Get the game state for that profile
             const { data, error } = await supabase
                 .from('game_states')
                 .select('state_blob')
-                .eq('player_id', (
-                    supabase.from('player_profiles')
-                        .select('id')
-                        .eq('auth_id', authId)
-                ))
-                .single();
+                .eq('player_id', profile.id)
+                .maybeSingle();
 
-            if (error) {
-                if (error.code === 'PGRST116') return null; // No state found
-                throw error;
-            }
-
-            return data.state_blob;
+            if (error) throw error;
+            return data?.state_blob || null;
         } catch (error) {
             console.error('Failed to pull state from Supabase:', error);
             return null;
@@ -84,10 +97,14 @@ export const PersistenceService = {
      * Useful for event-driven syncing from store slices.
      */
     async sync(state: any) {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-            console.log('Event-driven sync triggered...');
-            return this.pushState(session.user.id, state);
+        try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                console.log('Event-driven sync triggered...');
+                return this.pushState(session.user.id, state);
+            }
+        } catch (error) {
+            console.error('Error in sync helper:', error);
         }
     }
 };

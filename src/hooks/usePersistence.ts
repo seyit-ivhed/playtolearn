@@ -18,6 +18,11 @@ export const usePersistence = () => {
                     // Merge cloud state into local store
                     // Server wins for now as per architecture
                     useGameStore.setState(cloudState);
+                } else {
+                    // No cloud state found, this is a fresh account
+                    // Push the current local state immediately
+                    console.log('No cloud state found. Syncing local progress to cloud...');
+                    PersistenceService.pushState(user.id, useGameStore.getState());
                 }
             });
         }
