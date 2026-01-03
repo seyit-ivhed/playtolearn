@@ -17,13 +17,19 @@ export default defineConfig({
       output: {
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
-          'vendor-utils': ['framer-motion', 'zustand', 'i18next', 'react-i18next'],
+          'vendor-router': ['react-router-dom'],
+          'vendor-supabase': ['@supabase/supabase-js'],
+          'vendor-utils': ['framer-motion', 'zustand', 'i18next', 'react-i18next', 'react-hook-form'],
           'vendor-ui': ['lucide-react'],
           'vendor-particles': ['tsparticles', '@tsparticles/react', '@tsparticles/slim'],
         },
       },
       onwarn(warning) {
-        // Fail the build on any rollup warnings
+        // Ignore circular dependency warnings from node_modules
+        if (warning.code === 'CIRCULAR_DEPENDENCY' && warning.message.includes('node_modules')) {
+          return;
+        }
+        // Fail the build on any other rollup warnings
         throw new Error(warning.message);
       },
     },

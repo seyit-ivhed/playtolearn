@@ -1,11 +1,12 @@
 import { supabase } from './supabase.service';
+import { IdentityService } from './identity.service';
 
 export const PersistenceService = {
     /**
      * Pushes the current game state to Supabase.
      * Handles both checking for a profile and upserting the state.
      */
-    async pushState(authId: string, state: Record<string, unknown>) {
+    async pushState(authId: string, state: object) {
         try {
             // 1. Get or create the player profile linked to this authId
             const { data: profile, error: profileError } = await supabase
@@ -20,7 +21,6 @@ export const PersistenceService = {
 
             // If no profile exists yet, create one
             if (!profile) {
-                const { IdentityService } = await import('./identity.service');
                 const { data: newProfile, error: createError } = await supabase
                     .from('player_profiles')
                     .insert({
@@ -35,7 +35,6 @@ export const PersistenceService = {
                 playerId = newProfile.id;
             } else if (!profile.device_id) {
                 // Backfill device_id if missing from existing profile
-                const { IdentityService } = await import('./identity.service');
                 await supabase
                     .from('player_profiles')
                     .update({ device_id: IdentityService.getDeviceId() })
@@ -96,7 +95,7 @@ export const PersistenceService = {
      * Helper to sync provided state if a session exists.
      * Useful for event-driven syncing from store slices.
      */
-    async sync(state: Record<string, unknown>) {
+    async sync(state: object) {
         try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {

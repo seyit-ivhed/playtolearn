@@ -27,7 +27,7 @@ export const createPartyManagementSlice: StateCreator<GameStore, [], [], PartyMa
                 unlockedCompanions: [...unlockedCompanions, companionId],
                 companionStats: {
                     ...companionStats,
-                    [companionId]: { level: maxLevel, xp: 0 }
+                    [companionId]: { level: maxLevel }
                 }
             });
         }
