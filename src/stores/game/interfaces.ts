@@ -19,7 +19,7 @@ export interface GameState {
 
     // Progression System
     xpPool: number;
-    companionStats: Record<string, { level: number; xp: number }>;
+    companionStats: Record<string, { level: number }>;
     restedCompanions: string[]; // IDs of companions who are rested
     // Chronicle (Storybook Navigation)
     chronicle: {
@@ -49,7 +49,6 @@ export interface PartyManagementSlice {
 // XP, Leveling & Rested State
 export interface ProgressionSlice {
     addXpToPool: (amount: number) => void;
-    assignXpToCompanion: (companionId: string, amount: number) => void;
     levelUpCompanion: (companionId: string) => void;
     consumeRestedBonus: (companionId: string) => void; // Call when bonus used
     markRestedCompanions: () => void; // Call when starting adventure

@@ -7,7 +7,7 @@ interface FellowshipRosterProps {
     unlockedCompanions: string[];
     activeParty: string[];
     maxPartySize: number;
-    companionStats: Record<string, { level: number; xp: number }>;
+    companionStats: Record<string, { level: number }>;
     onAdd: (id: string) => void;
 }
 

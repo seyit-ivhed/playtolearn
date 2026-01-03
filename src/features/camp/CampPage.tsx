@@ -65,7 +65,7 @@ const CampPage = () => {
     const handleLevelUp = (companionId: string) => {
         const companion = getCompanionById(companionId);
         // Find current stats
-        const currentStats = companionStats[companionId] || { level: 1, xp: 0 };
+        const currentStats = companionStats[companionId] || { level: 1 };
 
         if (!companion) return;
 
@@ -94,11 +94,11 @@ const CampPage = () => {
     // New logic: check if ANY companion can level up
     const canLevelAny = slots.some(compId => {
         if (!compId) return false;
-        const stats = companionStats[compId] || { level: 1, xp: 0 };
+        const stats = companionStats[compId] || { level: 1 };
         const data = getCompanionById(compId);
         if (!data) return false;
         return typeof xpPool === 'number' &&
-            xpPool >= (getXpForNextLevel(stats.level) - stats.xp) &&
+            xpPool >= getXpForNextLevel(stats.level) &&
             stats.level < 10;
     });
 

@@ -9,7 +9,6 @@ interface CompanionSeatProps {
     companionId: string;
     stats?: {
         level: number;
-        xp: number;
     };
     xpPool: number;
     onRemove?: (id: string) => void;
@@ -29,12 +28,12 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
     const data = getCompanionById(companionId);
     if (!data) return null;
 
-    const currentStats = stats || { level: 1, xp: 0 };
+    const currentStats = stats || { level: 1 };
 
     const isEvolution = !!getEvolutionAtLevel(data, currentStats.level + 1);
 
     const canLevelUp = typeof xpPool === 'number' &&
-        xpPool >= (getXpForNextLevel(currentStats.level) - currentStats.xp);
+        xpPool >= getXpForNextLevel(currentStats.level);
 
     return (
         <div
@@ -70,19 +69,13 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
             )}
 
             <div className={styles.companionXpBar}>
-                <div className={styles.xpSmallBar}>
-                    <div
-                        className={styles.xpSmallFill}
-                        style={{ width: `${(currentStats.xp / getXpForNextLevel(currentStats.level)) * 100}%` }}
-                    />
-                </div>
                 <button
                     className={`${styles.levelUpBtn} ${canLevelUp ? styles.canLevelUp : ''} ${isEvolution && canLevelUp ? styles.evolutionBtn : ''}`}
                     disabled={!canLevelUp}
                     onClick={() => onLevelUp?.(companionId)}
                     data-testid={`level-up-btn-${companionId}`}
                 >
-                    {isEvolution ? 'EVOLVE!' : 'LEVEL UP'} ({getXpForNextLevel(currentStats.level) - currentStats.xp} XP)
+                    {isEvolution ? 'EVOLVE!' : 'LEVEL UP'} ({getXpForNextLevel(currentStats.level)} XP)
                 </button>
             </div>
         </div>

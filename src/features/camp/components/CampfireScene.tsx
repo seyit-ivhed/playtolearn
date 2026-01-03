@@ -5,7 +5,7 @@ import styles from './CampfireScene.module.css';
 interface CampfireSceneProps {
     slots: (string | null)[];
     xpPool: number;
-    companionStats: Record<string, { level: number; xp: number }>;
+    companionStats: Record<string, { level: number }>;
     onRemove?: (id: string) => void;
     onLevelUp?: (id: string) => void;
 }

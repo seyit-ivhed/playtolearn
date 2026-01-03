@@ -8,7 +8,6 @@ export const COMPANIONS: Record<string, Companion> = {
         title: 'The Jungle Ranger',
         role: CompanionRole.WARRIOR,
         level: 1,
-        xp: 0,
         baseStats: {
             maxHealth: 75,
             abilityDamage: 8,
@@ -77,7 +76,6 @@ export const COMPANIONS: Record<string, Companion> = {
         title: 'The Desert Alchemist',
         role: CompanionRole.WARRIOR,
         level: 1,
-        xp: 0,
         baseStats: {
             maxHealth: 85,
             abilityDamage: 5,

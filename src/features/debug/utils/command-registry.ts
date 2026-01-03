@@ -37,7 +37,7 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
             log(`XP Pool: ${xpPool}`);
             log('Companions:');
             Object.entries(companionStats).forEach(([id, stats]) => {
-                log(`  ${id}: Level ${stats.level} (${stats.xp} XP)`);
+                log(`  ${id}: Level ${stats.level}`);
             });
         }
     },

@@ -14,9 +14,9 @@ export const initialGameState: GameState = {
 
     xpPool: 0,
     companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
-        acc[id] = { level: 1, xp: 0 };
+        acc[id] = { level: 1 };
         return acc;
-    }, {} as Record<string, { level: number; xp: number }>),
+    }, {} as Record<string, { level: number }>),
     restedCompanions: [],
     chronicle: {
         lastViewedVolumeId: 'origins',

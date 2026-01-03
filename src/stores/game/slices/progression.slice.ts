@@ -4,53 +4,24 @@ import { getXpForNextLevel } from '../../../utils/progression.utils';
 import { PersistenceService } from '../../../services/persistence.service';
 
 export const createProgressionSlice: StateCreator<GameStore, [], [], ProgressionSlice> = (set, get) => ({
-    addXpToPool: (amount) => set((state) => ({ xpPool: state.xpPool + amount })),
+    addXpToPool: (amount: number) => set((state) => ({ xpPool: state.xpPool + amount })),
 
-    assignXpToCompanion: (companionId, amount) => {
+    levelUpCompanion: (companionId: string) => {
         const state = get();
-        if (state.xpPool < amount) return;
-
-        const stats = state.companionStats[companionId] || { level: 1, xp: 0 };
-        let newXp = stats.xp + amount;
-        let newLevel = stats.level;
-
-        // Simple while loop for multi-level up
-        let xpNeeded = getXpForNextLevel(newLevel);
-        while (newXp >= xpNeeded) {
-            newXp -= xpNeeded;
-            newLevel++;
-            xpNeeded = getXpForNextLevel(newLevel);
-        }
-
-        set({
-            xpPool: Math.max(0, (state.xpPool || 0) - amount),
-            companionStats: {
-                ...state.companionStats,
-                [companionId]: { level: newLevel, xp: newXp }
-            }
-        });
-
-        PersistenceService.sync(get());
-    },
-
-    levelUpCompanion: (companionId) => {
-        const state = get();
-        const stats = state.companionStats[companionId] || { level: 1, xp: 0 };
+        const stats = state.companionStats[companionId] || { level: 1 };
 
         const level = typeof stats.level === 'number' ? stats.level : 1;
-        const xp = typeof stats.xp === 'number' ? stats.xp : 0;
         const pool = typeof state.xpPool === 'number' ? state.xpPool : 0;
 
         const xpNeeded = getXpForNextLevel(level);
-        const actualXpNeeded = Math.max(0, xpNeeded - xp);
 
-        if (pool < actualXpNeeded) return;
+        if (pool < xpNeeded) return;
 
         set({
-            xpPool: Math.max(0, pool - actualXpNeeded),
+            xpPool: Math.max(0, pool - xpNeeded),
             companionStats: {
                 ...state.companionStats,
-                [companionId]: { level: level + 1, xp: 0 }
+                [companionId]: { level: level + 1 }
             }
         });
 
@@ -64,7 +35,7 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
         set({ restedCompanions: rested });
     },
 
-    consumeRestedBonus: (companionId) => {
+    consumeRestedBonus: (companionId: string) => {
         const { restedCompanions } = get();
         if (restedCompanions.includes(companionId)) {
             set({ restedCompanions: restedCompanions.filter(id => id !== companionId) });

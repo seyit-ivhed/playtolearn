@@ -32,9 +32,9 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
     debugResetCompanions: () => {
         set({
             companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
-                acc[id] = { level: 1, xp: 0 };
+                acc[id] = { level: 1 };
                 return acc;
-            }, {} as Record<string, { level: number; xp: number }>)
+            }, {} as Record<string, { level: number }>)
         });
     },
 
@@ -44,9 +44,7 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
         companionStats: {
             ...state.companionStats,
             [companionId]: {
-                ...state.companionStats[companionId],
-                level,
-                xp: 0
+                level
             }
         }
     })),
@@ -76,9 +74,9 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
             activeEncounterDifficulty: 1,
             xpPool: 0,
             companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
-                acc[id] = { level: 1, xp: 0 };
+                acc[id] = { level: 1 };
                 return acc;
-            }, {} as Record<string, { level: number; xp: number }>),
+            }, {} as Record<string, { level: number }>),
             restedCompanions: []
         });
     }

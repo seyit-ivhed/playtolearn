@@ -41,12 +41,10 @@ export interface Companion {
 
     // Progression
     level: number;
-    xp: number;
 
     // Stats
     baseStats: CompanionStats;
     stats: CompanionStats; // Current calculated stats
-
 
     // Special Ability
     specialAbility: SpecialAbility;
