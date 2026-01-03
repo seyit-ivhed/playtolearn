@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, ShieldCheck, Sparkles, Map, Users } from 'lucide-react';
 import { CheckoutOverlay } from './CheckoutOverlay';
+import { AccountCreationStep } from './AccountCreationStep';
 import { usePremiumStore } from '../../../stores/premium.store';
+import { useAuth } from '../../../hooks/useAuth';
 import './Premium.css';
 
 interface PremiumStoreModalProps {
@@ -12,8 +14,12 @@ interface PremiumStoreModalProps {
 
 export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, onClose }) => {
     const { t } = useTranslation();
+    const { user } = useAuth();
+    const [showAccountStep, setShowAccountStep] = useState(false);
     const [showCheckout, setShowCheckout] = useState(false);
     const { initialize: refreshPremium } = usePremiumStore();
+
+    const isAnonymous = user?.is_anonymous ?? true;
 
     if (!isOpen) return null;
 
@@ -33,7 +39,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
                     <X size={24} />
                 </button>
 
-                {!showCheckout ? (
+                {!showCheckout && !showAccountStep ? (
                     <div className="premium-upsell">
                         <div className="premium-header">
                             <h2 className="premium-title">{t('premium.store.title')}</h2>
@@ -63,12 +69,25 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
                             <div className="price-tag">{t('premium.store.price')}</div>
                             <button
                                 className="unlock-button"
-                                onClick={() => setShowCheckout(true)}
+                                onClick={() => {
+                                    if (isAnonymous) {
+                                        setShowAccountStep(true);
+                                    } else {
+                                        setShowCheckout(true);
+                                    }
+                                }}
                             >
                                 {t('premium.store.buy_now')}
                             </button>
                         </div>
                     </div>
+                ) : showAccountStep ? (
+                    <AccountCreationStep
+                        onSuccess={() => {
+                            setShowAccountStep(false);
+                            setShowCheckout(true);
+                        }}
+                    />
                 ) : (
                     <div className="premium-checkout">
                         <h2 className="premium-title">{t('premium.store.buy_now')}</h2>

@@ -303,6 +303,23 @@
             },
             "price": "89 SEK",
             "buy_now": "Unlock Premium",
+            "account": {
+                "title": "Secure Your Progress",
+                "subtitle": "Create an account to save your purchase and play on any device.",
+                "email_label": "Email Address",
+                "email_placeholder": "your@email.com",
+                "confirm_email_label": "Confirm Email Address",
+                "password_label": "Password",
+                "password_placeholder": "Choose a strong password",
+                "continue_btn": "Continue with purchase",
+                "already_registered": "Already have an account? Sign In",
+                "errors": {
+                    "invalid_email": "Please enter a valid email.",
+                    "emails_dont_match": "Email addresses do not match.",
+                    "weak_password": "Password must be at least 6 characters.",
+                    "already_exists": "This email is already registered. Please sign in."
+                }
+            },
             "success_title": "Premium Unlocked!",
             "success_message": "Thank you for your support! All premium content is now available."
         }

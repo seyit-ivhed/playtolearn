@@ -50,7 +50,8 @@
     color: #e5c05b;
     margin-bottom: 15px;
     text-shadow: 0 0 15px rgba(229, 192, 91, 0.4);
-    font-family: 'MedievalSharp', cursive, serif; /* Fallback to serif */
+    font-family: 'MedievalSharp', cursive, serif;
+    /* Fallback to serif */
 }
 
 .premium-subtitle {
@@ -198,6 +199,143 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Account Creation Step */
+.account-step {
+    padding: 2rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.account-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: var(--premium-gold);
+    filter: drop-shadow(0 0 10px var(--premium-gold-glow));
+}
+
+.account-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.account-subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.account-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    text-align: left;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+}
+
+.input-group input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 0.8rem 1rem;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--premium-gold);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+.form-error {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ff4d4d;
+    background: rgba(255, 77, 77, 0.1);
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.account-actions.single-action {
+    display: block;
+}
+
+.create-btn .spinner {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.skip-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.create-btn {
+    background: linear-gradient(135deg, var(--premium-gold), #b38627);
+    border: none;
+    color: white;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+}
+
+.create-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.create-btn .spinner {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+    margin-bottom: 0;
 }
