@@ -290,5 +290,21 @@
         "bandit_leader": {
             "name": "Bandit Leader"
         }
+    },
+    "premium": {
+        "store": {
+            "title": "Unlock the Full Adventure",
+            "description": "Continue the journey with Amara and Tariq. Unlock all 6 adventures, companion evolutions, and future realms.",
+            "features": {
+                "adventures": "Unlock All 6 Adventures",
+                "evolutions": "Unlock Companion Evolutions",
+                "realms": "Future Realm Access",
+                "support": "Support Solo Development"
+            },
+            "price": "89 SEK",
+            "buy_now": "Unlock Premium",
+            "success_title": "Premium Unlocked!",
+            "success_message": "Thank you for your support! All premium content is now available."
+        }
     }
 }

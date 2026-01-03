@@ -10,6 +10,8 @@ import { VOLUMES } from '../../data/volumes.data';
 import { calculateAdventureStars } from '../../utils/progression.utils';
 import { ChapterPage } from './components/ChapterPage';
 import { TableOfContents } from './components/TableOfContents';
+import { PremiumStoreModal } from '../premium/components/PremiumStoreModal';
+import { usePremiumStore } from '../../stores/premium.store';
 import './ChronicleBook.css';
 
 export const ChronicleBook: React.FC = () => {
@@ -22,6 +24,9 @@ export const ChronicleBook: React.FC = () => {
 
     // UI State
     const [isTocOpen, setIsTocOpen] = useState(false);
+    const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
+
+    const { isAdventureUnlocked } = usePremiumStore();
 
     // Find current volume and context
     const currentVolume = useMemo(() =>
@@ -81,7 +86,14 @@ export const ChronicleBook: React.FC = () => {
     };
 
     const handleBegin = (id: string) => {
-        if (id === 'prologue') return; // Should not be possible from Begin button but safety first
+        if (id === 'prologue') return;
+
+        // Check premium status
+        if (!isAdventureUnlocked(id)) {
+            setIsPremiumModalOpen(true);
+            return;
+        }
+
         const isCompleted = adventureStatuses[id] === AdventureStatus.COMPLETED;
         if (isCompleted) {
             const adventure = ADVENTURES.find(a => a.id === id);
@@ -150,11 +162,17 @@ export const ChronicleBook: React.FC = () => {
                                 currentPage={currentAdventureIndex + 1}
                                 totalPages={volumeAdventures.length}
                                 isJustCompleted={isJustCompleted}
+                                isPremiumLocked={!isAdventureUnlocked(currentAdventure.id)}
                             />
 
                         </motion.div>
                     </AnimatePresence>
                 </div>
+
+                <PremiumStoreModal
+                    isOpen={isPremiumModalOpen}
+                    onClose={() => setIsPremiumModalOpen(false)}
+                />
 
 
                 {/* TOC Button Overlay */}

@@ -290,5 +290,21 @@
         "bandit_leader": {
             "name": "Banditledare"
         }
+    },
+    "premium": {
+        "store": {
+            "title": "Lås upp hela äventyret",
+            "description": "Fortsätt resan med Amara och Tariq. Lås upp alla 6 äventyr, följeslagar-evolutioner och framtida riken.",
+            "features": {
+                "adventures": "Lås upp alla 6 äventyr",
+                "evolutions": "Lås upp följeslagar-evolutioner",
+                "realms": "Tillgång till framtida riken",
+                "support": "Stöd soloutveckling"
+            },
+            "price": "89 KR",
+            "buy_now": "Lås upp Premium",
+            "success_title": "Premium upplåst!",
+            "success_message": "Tack för ditt stöd! Allt premiuminnehåll är nu tillgängligt."
+        }
     }
 }

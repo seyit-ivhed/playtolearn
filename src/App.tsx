@@ -11,14 +11,20 @@ import Layout from './components/Layout';
 import { useAuth } from './hooks/useAuth';
 import { usePersistence } from './hooks/usePersistence';
 import { useGameStore } from './stores/game/store';
+import { usePremiumStore } from './stores/premium.store';
 import { useEffect, useRef } from 'react';
 
 function App() {
   const { isAuthenticated, signInAnonymously, loading } = useAuth();
   usePersistence(); // Handle cloud sync and rehydration
 
+  const initializePremium = usePremiumStore(state => state.initialize);
   const authMilestoneReached = useGameStore(state => state.authMilestoneReached);
   const authTriggered = useRef(false);
+
+  useEffect(() => {
+    initializePremium();
+  }, [initializePremium]);
 
   useEffect(() => {
     // Only trigger if:

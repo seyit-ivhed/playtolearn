@@ -20,6 +20,7 @@ interface ChapterPageProps {
     currentPage: number;
     totalPages: number;
     isJustCompleted?: boolean;
+    isPremiumLocked?: boolean;
 }
 
 export const ChapterPage: React.FC<ChapterPageProps> = ({
@@ -35,11 +36,13 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
 
     currentPage,
     totalPages,
-    isJustCompleted
+    isJustCompleted,
+    isPremiumLocked
 }) => {
     const { t } = useTranslation();
     const isPrologue = adventure.id === 'prologue';
-    const isLocked = !isPrologue && status === AdventureStatus.LOCKED;
+    const isProgressionLocked = !isPrologue && status === AdventureStatus.LOCKED;
+    const isLocked = isProgressionLocked || isPremiumLocked;
     const isCompleted = status === AdventureStatus.COMPLETED;
     const illustration = getAdventureIllustration(adventure.id);
 
@@ -166,6 +169,15 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                                     {t('chronicle.begin_chapter')}
                                 </motion.button>
                             )
+                        ) : isPremiumLocked && !isProgressionLocked ? (
+                            <motion.button
+                                className="book-btn premium-btn"
+                                onClick={() => onBegin(adventure.id)}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                {t('premium.store.buy_now', 'Unlock')}
+                            </motion.button>
                         ) : (
                             <div className="locked-msg" data-testid="chapter-locked-msg">{t('chronicle.locked')}</div>
                         )}
@@ -189,9 +201,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     {t('chronicle.page_x_of_y', { current: currentPage, total: totalPages })}
                 </div>
             </div>
-
-
-
-        </div >
+        </div>
     );
 };

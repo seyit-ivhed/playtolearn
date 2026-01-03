@@ -5,6 +5,7 @@ import { useGameStore } from '../../stores/game/store';
 import { usePlayerStore } from '../../stores/player.store';
 import { useEncounterStore } from '../../stores/encounter.store';
 import { useAdventureStore } from '../../stores/adventure.store';
+import { usePremiumStore } from '../../stores/premium.store';
 import { DifficultySelectionModal } from './components/DifficultySelectionModal';
 import './AdventurePage.css';
 
@@ -28,12 +29,19 @@ const AdventurePage = () => {
     const { initializeEncounter } = useEncounterStore();
     const { completeAdventure, unlockAdventure } = useAdventureStore();
     const { difficulty: playerDifficulty } = usePlayerStore();
+    const { isAdventureUnlocked, initialized: premiumInitialized } = usePremiumStore();
 
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
     const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
 
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
+
+    // Safety gate: If premium content is locked, redirect to chronicle
+    if (premiumInitialized && activeAdventureId && !isAdventureUnlocked(activeAdventureId)) {
+        navigate('/chronicle');
+        return null;
+    }
 
     if (!adventure) {
         return <div>{t('adventure.not_found', 'Adventure not found')}</div>;
