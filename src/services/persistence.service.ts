@@ -5,7 +5,7 @@ export const PersistenceService = {
      * Pushes the current game state to Supabase.
      * Handles both checking for a profile and upserting the state.
      */
-    async pushState(authId: string, state: any) {
+    async pushState(authId: string, state: Record<string, unknown>) {
         try {
             // 1. Get or create the player profile linked to this authId
             const { data: profile, error: profileError } = await supabase
@@ -96,7 +96,7 @@ export const PersistenceService = {
      * Helper to sync provided state if a session exists.
      * Useful for event-driven syncing from store slices.
      */
-    async sync(state: any) {
+    async sync(state: Record<string, unknown>) {
         try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
