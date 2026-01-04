@@ -48,8 +48,14 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel 
                 fields: {
                     billingDetails: {
                         email: 'never'
-                    }
-                }
+                    },
+                },
+                wallets: {
+                    applePay: 'never',
+                    googlePay: 'never'
+                },
+                // Explicitly order and limit
+                paymentMethodOrder: ['card', 'klarna']
             }} />
 
             {errorMessage && <div className="payment-error">{errorMessage}</div>}

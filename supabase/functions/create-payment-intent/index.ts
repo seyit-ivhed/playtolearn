@@ -102,8 +102,8 @@ Deno.serve(async (req: Request) => {
         }
 
         // Create a PaymentIntent with the specific amount and currency
-        // We use automatic_payment_methods so Stripe handles the logic 
-        // (Swish, Klarna, etc.) based on your dashboard settings.
+        // We explicitly list the types to avoid certain methods like 'link' 
+        // that the user wants to keep hidden, and to handle 'swish' carefully.
         const paymentIntent = await stripe.paymentIntents.create({
             amount: pack.amount_cents,
             currency: pack.currency.toLowerCase(),

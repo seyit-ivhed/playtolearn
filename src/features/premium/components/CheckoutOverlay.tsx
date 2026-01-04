@@ -60,7 +60,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
             theme: 'night' as const,
             variables: {
                 colorPrimary: '#e5c05b',
-                colorBackground: 'rgba(26, 26, 46, 0.9)',
+                colorBackground: '#1a1a2e',
                 colorText: '#ffffff',
                 colorDanger: '#ff4d4d',
                 fontFamily: 'Inter, system-ui, sans-serif',
@@ -82,7 +82,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
 
     return (
         <div className="checkout-overlay-container">
-            <Elements stripe={stripePromise} options={options}>
+            <Elements key={clientSecret} stripe={stripePromise} options={options}>
                 <CheckoutForm onSuccess={onSuccess} onCancel={onCancel} />
             </Elements>
         </div>
