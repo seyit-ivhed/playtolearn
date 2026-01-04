@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '../../../services/supabase.service';
 import './Premium.css';
 
 interface CheckoutFormProps {
@@ -22,21 +23,34 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel 
         setIsProcessing(true);
         setErrorMessage(null);
 
-        const { error, paymentIntent } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-                return_url: `${window.location.origin}/premium-success`,
-            },
-            redirect: 'if_required',
-        });
+        try {
+            // Get current user email for billing details (required because we hide the email field)
+            const { data: { user } } = await supabase.auth.getUser();
 
-        if (error) {
-            setErrorMessage(error.message || 'Payment failed');
-            setIsProcessing(false);
-        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-            onSuccess();
-        } else {
-            // Handle other statuses if necessary (e.g. processing)
+            const { error, paymentIntent } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: `${window.location.origin}/premium-success`,
+                    payment_method_data: {
+                        billing_details: {
+                            email: user?.email || '',
+                        }
+                    }
+                },
+                redirect: 'if_required',
+            });
+
+            if (error) {
+                setErrorMessage(error.message || 'Payment failed');
+                setIsProcessing(false);
+            } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+                onSuccess();
+            } else {
+                setIsProcessing(false);
+            }
+        } catch (err: any) {
+            console.error('Submission error:', err);
+            setErrorMessage(err.message || 'An unexpected error occurred');
             setIsProcessing(false);
         }
     };
