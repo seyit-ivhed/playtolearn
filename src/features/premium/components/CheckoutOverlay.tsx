@@ -62,19 +62,19 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
                 colorPrimary: '#e5c05b',
                 colorBackground: '#1a1a2e',
                 colorText: '#ffffff',
-                colorDanger: '#ff4d4d',
+                colorDanger: '#ef4444',
                 fontFamily: 'Inter, system-ui, sans-serif',
                 spacingUnit: '4px',
                 borderRadius: '8px',
             },
             rules: {
                 '.Input': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(229, 192, 91, 0.2)',
+                    backgroundColor: '#2a2a40',
+                    border: '1px solid #e5c05b33',
                 },
                 '.Input:focus': {
                     border: '1px solid #e5c05b',
-                    boxShadow: '0 0 0 2px rgba(229, 192, 91, 0.1)',
+                    boxShadow: '0 0 0 2px #e5c05b1a',
                 }
             }
         },

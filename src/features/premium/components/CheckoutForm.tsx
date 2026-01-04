@@ -52,10 +52,12 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel 
                 },
                 wallets: {
                     applePay: 'never',
-                    googlePay: 'never'
-                },
-                // Explicitly order and limit
-                paymentMethodOrder: ['card', 'klarna']
+                    googlePay: 'never',
+                    // This is the most direct way to disable Stripe Link in the UI
+                    // even if it's technically enabled in the dashboard.
+                    // @ts-ignore - Stripe types sometimes lag for newer beta options
+                    link: 'never'
+                }
             }} />
 
             {errorMessage && <div className="payment-error">{errorMessage}</div>}
