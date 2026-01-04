@@ -43,7 +43,14 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel 
 
     return (
         <form onSubmit={handleSubmit} className="checkout-form">
-            <PaymentElement options={{ layout: 'tabs' }} />
+            <PaymentElement options={{
+                layout: 'tabs',
+                fields: {
+                    billingDetails: {
+                        email: 'never'
+                    }
+                }
+            }} />
 
             {errorMessage && <div className="payment-error">{errorMessage}</div>}
 
