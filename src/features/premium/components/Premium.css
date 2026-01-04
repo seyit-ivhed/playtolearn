@@ -208,6 +208,107 @@
     }
 }
 
+/* Processing Overlay */
+.processing-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(26, 26, 46, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: 24px;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.processing-overlay .spinner {
+    width: 60px;
+    height: 60px;
+    border-width: 4px;
+}
+
+.processing-text {
+    font-size: 1.2rem;
+    color: #e5c05b;
+    font-weight: 600;
+    margin-top: 20px;
+    text-shadow: 0 0 10px rgba(229, 192, 91, 0.3);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Success Screen */
+.success-screen {
+    text-align: center;
+    padding: 20px;
+    animation: slideUp 0.5s ease-out;
+}
+
+.success-icon-container {
+    margin-bottom: 30px;
+    color: #10b981;
+    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4));
+}
+
+.success-screen .premium-title {
+    color: #e5c05b;
+    margin-bottom: 20px;
+}
+
+.success-description {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.back-to-journey-btn {
+    background: linear-gradient(135deg, #e5c05b 0%, #b8860b 100%);
+    color: #1a1a2e;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.back-to-journey-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(229, 192, 91, 0.3);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 /* Account Creation Step */
 .account-step {
     padding: 2rem;

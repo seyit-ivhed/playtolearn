@@ -7,9 +7,10 @@ import './Premium.css';
 interface CheckoutFormProps {
     onSuccess: () => void;
     onCancel: () => void;
+    price: string;
 }
 
-export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel }) => {
+export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel, price }) => {
     const { t } = useTranslation();
     const stripe = useStripe();
     const elements = useElements();
@@ -67,6 +68,13 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel 
 
     return (
         <form onSubmit={handleSubmit} className="checkout-form">
+            {isProcessing && (
+                <div className="processing-overlay">
+                    <div className="spinner"></div>
+                    <div className="processing-text">{t('premium.store.processing_payment', 'Securing your adventure...')}</div>
+                </div>
+            )}
+
             <PaymentElement options={{
                 layout: 'tabs',
                 fields: {
@@ -86,6 +94,9 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel 
             {errorMessage && <div className="payment-error">{errorMessage}</div>}
 
             <div className="checkout-actions">
+                <div className="price-display-simple">
+                    {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value">{price}</span>
+                </div>
                 <button
                     type="submit"
                     className="pay-button"

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { X, ShieldCheck, Sparkles, Map, Users } from 'lucide-react';
+import { X, ShieldCheck, Sparkles, Map, Users, CheckCircle2 } from 'lucide-react';
 import { CheckoutOverlay } from './CheckoutOverlay';
 import { AccountCreationStep } from './AccountCreationStep';
 import { usePremiumStore } from '../../../stores/premium.store';
@@ -17,6 +17,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
     const { user } = useAuth();
     const [showAccountStep, setShowAccountStep] = useState(false);
     const [showCheckout, setShowCheckout] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
     const { initialize: refreshPremium } = usePremiumStore();
 
     const isAnonymous = user?.is_anonymous ?? true;
@@ -34,17 +35,32 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
         await refreshPremium(true);
 
         setShowCheckout(false);
-        onClose();
+        setShowSuccess(true);
     };
 
     return (
         <div className="premium-modal-overlay">
-            <div className="premium-modal-content">
-                <button className="premium-close-button" onClick={onClose} aria-label="Close">
-                    <X size={24} />
-                </button>
+            <div className={`premium-modal-content ${showSuccess ? 'success-mode' : ''}`}>
+                {!showCheckout && !showSuccess && (
+                    <button className="premium-close-button" onClick={onClose} aria-label="Close">
+                        <X size={24} />
+                    </button>
+                )}
 
-                {!showCheckout && !showAccountStep ? (
+                {showSuccess ? (
+                    <div className="success-screen">
+                        <div className="success-icon-container">
+                            <CheckCircle2 size={80} />
+                        </div>
+                        <h2 className="premium-title">{t('premium.store.success_title')}</h2>
+                        <p className="success-description">
+                            {t('premium.store.success_message')}
+                        </p>
+                        <button className="back-to-journey-btn" onClick={onClose}>
+                            {t('adventure.back', 'Back to Journey')}
+                        </button>
+                    </div>
+                ) : !showCheckout && !showAccountStep ? (
                     <div className="premium-upsell">
                         <div className="premium-header">
                             <h2 className="premium-title">{t('premium.store.title')}</h2>
@@ -100,6 +116,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
                             contentPackId="premium_base"
                             onSuccess={handleSuccess}
                             onCancel={() => setShowCheckout(false)}
+                            price={t('premium.store.price', '89 SEK')}
                         />
                     </div>
                 )}
