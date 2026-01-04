@@ -38,12 +38,6 @@ We use CSS variables for all coloring. Existing code uses these variable names, 
 
 ## 4. UI Components
 
-### Buttons ("Runestones")
-Buttons should look like physical magical stones or wooden planks.
-- **Border:** 2px solid Gold (`#ffa502`) or Stone (`#57606f`).
-- **Shadow:** Deep shadow to give 3D "pushable" feel.
-- **Hover:** Glow effect (Inner shadow or text glow).
-
 #### Navigation Buttons (Chronicle)
 For page navigation in the Chronicle, use clean, icon-only buttons (e.g., Lucide Chevrons) without circular borders or backgrounds to maintain an elegant, book-like feel.
 - **Color:** Inherit theme brown (`#4a3721`) or accent gold (`#ffa502`) on hover.

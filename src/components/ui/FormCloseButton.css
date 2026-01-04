@@ -2,25 +2,42 @@
     position: absolute;
     top: 24px;
     right: 24px;
-    background: transparent;
+    background: none;
     border: none;
-    padding: 8px;
+    outline: none;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s ease;
     z-index: 100;
+
+    /* Style Guide Alignment: Accent color (Gold) with partial opacity */
+    color: var(--color-accent-primary, #ffa502);
     opacity: 0.7;
-    color: #e5c05b;
 }
 
 .form-close-button:hover {
+    /* Style Guide Alignment: Full opacity and scale up */
     opacity: 1;
     transform: scale(1.1);
+
+    /* Slight color shift towards a brighter gold on hover */
     color: #ffd700;
 }
 
 .form-close-button:active {
     transform: scale(0.95);
+}
+
+.form-close-button:focus-visible {
+    /* Subtle focus indicator for accessibility, preserving elegance */
+    outline: 2px solid var(--color-accent-primary, #ffa502);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.form-close-button:focus:not(:focus-visible) {
+    outline: none;
 }
