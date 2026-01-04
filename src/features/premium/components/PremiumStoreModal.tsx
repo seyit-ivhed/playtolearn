@@ -24,11 +24,16 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
     if (!isOpen) return null;
 
     const handleSuccess = async () => {
-        // Refresh local entitlement state
-        await refreshPremium();
-        // Force state update by refreshing the page or showing success UI
+        console.log('Payment success reported to modal. Waiting 2.5s for webhook fulfillment...');
+
+        // Wait for webhook fulfillment propagation
+        await new Promise(resolve => setTimeout(resolve, 2500));
+
+        console.log('Forcing store refresh...');
+        // Refresh local entitlement state - force it to bypass the 'initialized' check
+        await refreshPremium(true);
+
         setShowCheckout(false);
-        // We can show a success message here or just close
         onClose();
     };
 

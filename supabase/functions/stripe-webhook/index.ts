@@ -44,10 +44,10 @@ Deno.serve(async (req: Request) => {
 
             if (error) {
                 console.error('Error inserting entitlement:', error)
-                return new Response('Error updating database', { status: 500 })
+                return new Response(`Error updating database: ${error.message}`, { status: 500 })
             }
 
-            console.log(`Entitlement granted: Player ${playerId} -> Pack ${contentPackId} `)
+            console.log(`SUCCESS: Entitlement granted for Player ${playerId} (Pack: ${contentPackId})`)
         }
 
         return new Response(JSON.stringify({ received: true }), {

@@ -8,7 +8,7 @@ export interface PremiumState {
     initialized: boolean;
 
     // Actions
-    initialize: () => Promise<void>;
+    initialize: (force?: boolean) => Promise<void>;
     isAdventureUnlocked: (adventureId: string) => boolean;
     hasEntitlement: (contentPackId: string) => boolean;
 }
@@ -23,26 +23,34 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
     isLoading: false,
     initialized: false,
 
-    initialize: async () => {
-        if (get().initialized) return;
+    initialize: async (force = false) => {
+        if (get().initialized && !force) return;
 
+        console.log('Initializing premium store (force:', force, ')');
         set({ isLoading: true });
         try {
             const { data: { user } } = await supabase.auth.getUser();
+            console.log('Premium store: Current Auth User ID:', user?.id);
 
             if (!user) {
+                console.warn('Premium store: No user found in Auth');
                 set({ entitlements: [], userRole: 'player', isLoading: false, initialized: true });
                 return;
             }
 
             // Fetch profile for role
-            const { data: profile } = await supabase
+            const { data: profile, error: profileError } = await supabase
                 .from('player_profiles')
                 .select('id, role')
                 .eq('auth_id', user.id)
                 .single();
 
+            if (profileError) {
+                console.error('Premium store: Profile fetch error:', profileError);
+            }
+
             if (profile) {
+                console.log('Premium store: Found profile', profile.id, 'Role:', profile.role);
                 // Fetch entitlements from the player_entitlements table
                 const { data: entitlementsData, error: entitlementsError } = await supabase
                     .from('player_entitlements')
@@ -53,9 +61,12 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
                     console.error('Error fetching entitlements:', entitlementsError);
                 }
 
+                const entitlements = entitlementsData?.map(e => e.content_pack_id) || [];
+                console.log('Premium store: Fetched entitlements:', entitlements);
+
                 set({
                     userRole: profile.role || 'player',
-                    entitlements: entitlementsData?.map(e => e.content_pack_id) || [],
+                    entitlements,
                     isLoading: false,
                     initialized: true
                 });

@@ -35,27 +35,33 @@ ALTER TABLE public.game_states ENABLE ROW LEVEL SECURITY;
 -- 4. RLS Policies
 
 -- Player Profiles: Users can only see and edit their own profile
+DROP POLICY IF EXISTS "Users can view own profile" ON public.player_profiles;
 CREATE POLICY "Users can view own profile" 
 ON public.player_profiles FOR SELECT 
 USING (auth.uid() = auth_id);
 
+DROP POLICY IF EXISTS "Users can update own profile" ON public.player_profiles;
 CREATE POLICY "Users can update own profile" 
 ON public.player_profiles FOR UPDATE 
 USING (auth.uid() = auth_id);
 
+DROP POLICY IF EXISTS "Users can insert own profile" ON public.player_profiles;
 CREATE POLICY "Users can insert own profile" 
 ON public.player_profiles FOR INSERT 
 WITH CHECK (auth.uid() = auth_id);
 
 -- Game States: Users can only see and edit their own game state
+DROP POLICY IF EXISTS "Users can view own game state" ON public.game_states;
 CREATE POLICY "Users can view own game state" 
 ON public.game_states FOR SELECT 
 USING (player_id IN (SELECT id FROM public.player_profiles WHERE auth_id = auth.uid()));
 
+DROP POLICY IF EXISTS "Users can insert own game state" ON public.game_states;
 CREATE POLICY "Users can insert own game state" 
 ON public.game_states FOR INSERT 
 WITH CHECK (player_id IN (SELECT id FROM public.player_profiles WHERE auth_id = auth.uid()));
 
+DROP POLICY IF EXISTS "Users can update own game state" ON public.game_states;
 CREATE POLICY "Users can update own game state" 
 ON public.game_states FOR UPDATE 
 USING (player_id IN (SELECT id FROM public.player_profiles WHERE auth_id = auth.uid()));
