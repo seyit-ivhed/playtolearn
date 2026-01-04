@@ -57,9 +57,10 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel 
                 console.warn('No error and no paymentIntent returned from Stripe');
                 setIsProcessing(false);
             }
-        } catch (err: any) {
-            console.error('Submission error:', err);
-            setErrorMessage(err.message || 'An unexpected error occurred');
+        } catch (err: unknown) {
+            const error = err as Error;
+            console.error('Submission error:', error);
+            setErrorMessage(error.message || 'An unexpected error occurred');
             setIsProcessing(false);
         }
     };
@@ -78,7 +79,6 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel 
                     googlePay: 'never',
                     // This is the most direct way to disable Stripe Link in the UI
                     // even if it's technically enabled in the dashboard.
-                    // @ts-ignore - Stripe types sometimes lag for newer beta options
                     link: 'never'
                 }
             }} />

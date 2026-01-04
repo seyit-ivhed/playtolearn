@@ -55,11 +55,13 @@ Deno.serve(async (req: Request) => {
         )
 
         // 1. Get or create player profile ID from Auth ID
-        let { data: profile, error: profileError } = await supabaseClient
+        const { data: existingProfile, error: profileError } = await supabaseClient
             .from('player_profiles')
             .select('id')
             .eq('auth_id', user.id)
             .maybeSingle()
+
+        let profile = existingProfile;
 
         if (profileError) {
             console.error('Error fetching profile:', profileError)
@@ -122,7 +124,8 @@ Deno.serve(async (req: Request) => {
             JSON.stringify({ clientSecret: paymentIntent.client_secret }),
             { headers: { ...headers, 'Content-Type': 'application/json' } }
         )
-    } catch (error: any) {
+    } catch (err: unknown) {
+        const error = err as Error;
         console.error('Error creating payment intent:', error)
         return new Response(JSON.stringify({ error: error.message }), {
             status: 400,

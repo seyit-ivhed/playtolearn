@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../../../hooks/useAuth';
 import { supabase } from '../../../services/supabase.service';
-import { PersistenceService } from '../../../services/persistence.service';
+
 
 interface AccountCreationStepProps {
     onSuccess: () => void;
@@ -118,9 +118,10 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 await new Promise(resolve => setTimeout(resolve, 1500));
                 onSuccess();
             }
-        } catch (err: any) {
-            console.error('Account creation error:', err);
-            setError(err.message || 'Failed to create account');
+        } catch (err: unknown) {
+            const error = err as Error;
+            console.error('Account creation error:', error);
+            setError(error.message || 'Failed to create account');
         } finally {
             setLoading(false);
         }
