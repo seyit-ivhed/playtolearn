@@ -1,10 +1,8 @@
-// Use a stable ESM import for Stripe with Deno target
-import Stripe from 'https://esm.sh/stripe@14.25.0?target=deno&no-check'
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.2'
+import Stripe from 'npm:stripe@^14.0.0'
+import { createClient } from 'npm:@supabase/supabase-js@^2.0.0'
 
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
-    httpClient: Stripe.createFetchHttpClient(),
-})
+const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '')
+
 
 Deno.serve(async (req: Request) => {
     const headers = {
