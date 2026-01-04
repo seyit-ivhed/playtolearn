@@ -41,11 +41,20 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel 
             });
 
             if (error) {
+                console.error('Stripe confirmPayment error:', error);
                 setErrorMessage(error.message || 'Payment failed');
                 setIsProcessing(false);
-            } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-                onSuccess();
+            } else if (paymentIntent) {
+                console.log('Payment intent received:', paymentIntent.id, 'Status:', paymentIntent.status);
+                if (paymentIntent.status === 'succeeded') {
+                    console.log('Payment confirmed as succeeded. Closing form...');
+                    onSuccess();
+                } else {
+                    console.warn('Payment intent status is not succeeded:', paymentIntent.status);
+                    setIsProcessing(false);
+                }
             } else {
+                console.warn('No error and no paymentIntent returned from Stripe');
                 setIsProcessing(false);
             }
         } catch (err: any) {

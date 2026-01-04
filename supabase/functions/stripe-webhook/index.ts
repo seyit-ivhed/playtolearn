@@ -8,7 +8,10 @@ const endpointSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET') || ''
 
 Deno.serve(async (req: Request) => {
     const signature = req.headers.get('stripe-signature')
+    console.log('Incoming webhook request. Signature present:', !!signature)
+
     if (!signature) {
+        console.error('Missing stripe-signature header')
         return new Response('Missing stripe-signature', { status: 400 })
     }
 

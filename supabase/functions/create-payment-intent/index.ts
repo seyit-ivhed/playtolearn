@@ -116,6 +116,8 @@ Deno.serve(async (req: Request) => {
             },
         })
 
+        console.log('Created Payment Intent:', paymentIntent.id)
+
         return new Response(
             JSON.stringify({ clientSecret: paymentIntent.client_secret }),
             { headers: { ...headers, 'Content-Type': 'application/json' } }
