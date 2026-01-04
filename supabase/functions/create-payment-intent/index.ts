@@ -1,12 +1,12 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import Stripe from 'https://esm.sh/stripe@14.12.0?target=deno'
+// Use a stable ESM import for Stripe with Deno target
+import Stripe from 'https://esm.sh/stripe@14.25.0?target=deno&no-check'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.2'
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
     httpClient: Stripe.createFetchHttpClient(),
 })
 
-serve(async (req) => {
+Deno.serve(async (req: Request) => {
     const headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -19,27 +19,72 @@ serve(async (req) => {
     try {
         const { contentPackId } = await req.json()
 
-        // Get user from token
+        // Get user from token using Admin Client for better reliability in Edge Functions
         const authHeader = req.headers.get('Authorization')
-        if (!authHeader) throw new Error('Missing Authorization header')
+        if (!authHeader) {
+            console.error('Missing Authorization header')
+            return new Response(JSON.stringify({ error: 'Missing Authorization header' }), { status: 401, headers: { ...headers, 'Content-Type': 'application/json' } })
+        }
 
+        const jwt = authHeader.replace('Bearer ', '')
+        const supabaseAdmin = createClient(
+            Deno.env.get('SUPABASE_URL') ?? '',
+            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+        )
+
+        const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(jwt)
+        if (authError || !user) {
+            console.error('Auth verification failed:', authError?.message || 'No user returned')
+            return new Response(
+                JSON.stringify({
+                    error: 'Unauthorized',
+                    details: authError?.message
+                }),
+                { status: 401, headers: { ...headers, 'Content-Type': 'application/json' } }
+            )
+        }
+
+        console.log('Authorized user:', user.id, 'Email:', user.email)
+
+        // Use a user-scoped client for DB operations to respect RLS if needed, 
+        // or just use admin if we want to bypass (but here we should respect RLS)
         const supabaseClient = createClient(
             Deno.env.get('SUPABASE_URL') ?? '',
             Deno.env.get('SUPABASE_ANON_KEY') ?? '',
             { global: { headers: { Authorization: authHeader } } }
         )
 
-        const { data: { user }, error: authError } = await supabaseClient.auth.getUser()
-        if (authError || !user) throw new Error('Unauthorized')
-
-        // 1. Get player profile ID from Auth ID
-        const { data: profile, error: profileError } = await supabaseClient
+        // 1. Get or create player profile ID from Auth ID
+        let { data: profile, error: profileError } = await supabaseClient
             .from('player_profiles')
             .select('id')
             .eq('auth_id', user.id)
-            .single()
+            .maybeSingle()
 
-        if (profileError || !profile) throw new Error('Player profile not found')
+        if (profileError) {
+            console.error('Error fetching profile:', profileError)
+            throw new Error('Database error during profile lookup')
+        }
+
+        if (!profile) {
+            console.log('No profile found for user, creating one on the fly...')
+            const { data: newProfile, error: createError } = await supabaseAdmin
+                .from('player_profiles')
+                .insert({
+                    auth_id: user.id,
+                    is_anonymous: false, // They just converted or are regular users
+                })
+                .select('id')
+                .single()
+
+            if (createError) {
+                console.error('Failed to create missing profile:', createError)
+                throw new Error('Could not initialize player profile')
+            }
+            profile = newProfile
+        }
+
+        if (!profile) throw new Error('Player profile not found')
 
         // 2. Get content pack price from DB
         const { data: pack, error: packError } = await supabaseClient

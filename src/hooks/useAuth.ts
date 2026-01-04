@@ -9,14 +9,28 @@ export const useAuth = () => {
     const [loading, setLoading] = useState(true);
 
     const refreshSession = useCallback(async () => {
-        const { data: { session } } = await supabase.auth.getSession();
-        setSession(session);
-        setUser(session?.user ?? null);
+        const { data: { session }, error } = await supabase.auth.refreshSession();
+        if (error) {
+            // Fallback to getSession if refresh fails (e.g. no session exists)
+            const { data: { session: currentSession } } = await supabase.auth.getSession();
+            setSession(currentSession);
+            setUser(currentSession?.user ?? null);
+        } else {
+            setSession(session);
+            setUser(session?.user ?? null);
+        }
         setLoading(false);
     }, []);
 
     useEffect(() => {
-        refreshSession();
+        // Initial load
+        const init = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setSession(session);
+            setUser(session?.user ?? null);
+            setLoading(false);
+        };
+        init();
 
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -26,7 +40,7 @@ export const useAuth = () => {
         });
 
         return () => subscription.unsubscribe();
-    }, [refreshSession]);
+    }, []);
 
     const signInAnonymously = async () => {
         try {

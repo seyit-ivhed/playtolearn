@@ -1,5 +1,4 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import Stripe from 'https://esm.sh/stripe@14.12.0?target=deno'
+import Stripe from 'https://esm.sh/stripe@14.25.0?target=deno&no-check'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.2'
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
@@ -7,7 +6,7 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
 })
 const endpointSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET') || ''
 
-serve(async (req) => {
+Deno.serve(async (req: Request) => {
     const signature = req.headers.get('stripe-signature')
     if (!signature) {
         return new Response('Missing stripe-signature', { status: 400 })
@@ -45,14 +44,14 @@ serve(async (req) => {
                 return new Response('Error updating database', { status: 500 })
             }
 
-            console.log(`Entitlement granted: Player ${playerId} -> Pack ${contentPackId}`)
+            console.log(`Entitlement granted: Player ${playerId} -> Pack ${contentPackId} `)
         }
 
         return new Response(JSON.stringify({ received: true }), {
             headers: { 'Content-Type': 'application/json' },
         })
-    } catch (err) {
-        console.error(`Webhook Error: ${err.message}`)
-        return new Response(`Webhook Error: ${err.message}`, { status: 400 })
+    } catch (err: any) {
+        console.error(`Webhook Error: ${err.message} `)
+        return new Response(`Webhook Error: ${err.message} `, { status: 400 })
     }
 })

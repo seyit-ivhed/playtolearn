@@ -1,7 +1,10 @@
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../../../hooks/useAuth';
 import { supabase } from '../../../services/supabase.service';
-import './Premium.css';
+import { PersistenceService } from '../../../services/persistence.service';
 
 interface AccountCreationStepProps {
     onSuccess: () => void;
@@ -11,7 +14,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
     onSuccess
 }) => {
     const { t } = useTranslation();
-    const { user, signInAnonymously } = useAuth();
+    const { refreshSession } = useAuth();
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -41,25 +44,78 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
         setError(null);
 
         try {
-            // 1. Ensure we have an anonymous session first if none exists
-            if (!user) {
-                console.log('No guest session found, creating one before conversion...');
-                await signInAnonymously();
+            // 1. Ensure we have a session. If null or not anonymous, we need to handle it.
+            const { data: { session: currentSession } } = await supabase.auth.getSession();
+            let session = currentSession;
+
+            if (!session) {
+                console.log('No session found, creating anonymous session first...');
+                const { data: signInData, error: signInError } = await supabase.auth.signInAnonymously();
+                if (signInError) throw signInError;
+                session = signInData.session;
             }
 
-            // 2. Convert anonymous user to permanent user
+            console.log('Converting session for email:', email);
+
+            // 2. Convert to permanent user
+            // We use updateUser to add email/password to the existing anonymous session.
+            // This is the standard Supabase way to "convert" a guest to a permanent user
+            // while keeping the same Auth ID.
             const { error: updateError } = await supabase.auth.updateUser({
                 email,
                 password
             });
 
             if (updateError) {
-                if (updateError.message.includes('already registered')) {
+                if (updateError.message.includes('already registered') || updateError.message.includes('already in use')) {
                     setError(t('premium.store.account.errors.already_exists'));
                 } else {
                     throw updateError;
                 }
             } else {
+                console.log('Account conversion triggered successfully. Finalizing profile...');
+
+                // 3. Ensure a player profile exists and is updated
+                // This also ensures the Edge Function can find it immediately
+                const userId = session?.user.id;
+                if (userId) {
+                    console.log('Synchronizing player profile for:', userId);
+                    const { data: profile } = await supabase
+                        .from('player_profiles')
+                        .select('id')
+                        .eq('auth_id', userId)
+                        .maybeSingle();
+
+                    if (!profile) {
+                        console.log('No existing profile found, creating a new one...');
+                        await supabase.from('player_profiles').insert({
+                            auth_id: userId,
+                            is_anonymous: false
+                        });
+                    } else {
+                        console.log('Updating existing profile state...');
+                        await supabase
+                            .from('player_profiles')
+                            .update({ is_anonymous: false })
+                            .eq('auth_id', userId);
+                    }
+                }
+
+                console.log('Refreshing session...');
+
+                // 4. Force a session refresh to get the updated JWT
+                await refreshSession();
+
+                // 5. Double check we have a valid session now
+                const { data: { session: updatedSession } } = await supabase.auth.getSession();
+                console.log('Post-conversion session check:', updatedSession ? 'Valid' : 'Missing');
+
+                if (!updatedSession) {
+                    console.error('Session not found after conversion. This might happen if Email Confirmation is enabled.');
+                }
+
+                // 6. Slightly longer delay to ensure the session is propagated before proceeding to checkout
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 onSuccess();
             }
         } catch (err: any) {
