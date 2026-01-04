@@ -60,6 +60,34 @@ npm run dev
 
 This will start the Vite development server. Open your browser and navigate to the URL shown in the terminal (usually `http://localhost:5173`).
 
+## Backend Setup (Supabase)
+
+The project uses Supabase for authentication, database, and edge functions.
+
+### 1. Database Migrations
+Apply the migrations in the `supabase/migrations` directory to your Supabase project:
+1. `initial_schema.sql`: Sets up players and game states.
+2. `payment_and_dlc.sql`: Sets up content packs and entitlements.
+3. `fix_entitlements_rls.sql`: Fixes security policies for entitlements.
+
+### 2. Edge Functions
+Deploy the logic for payments and webhooks:
+```bash
+supabase functions deploy create-payment-intent
+supabase functions deploy stripe-webhook
+```
+
+> [!IMPORTANT]
+> Both functions require `verify_jwt = false` in [config.toml](file:///Users/seyitivhed/Github/playtolearn-workspaces/workspace-1/supabase/config.toml) to handle manual verification and Stripe webhooks correctly.
+
+### 3. Environment Secrets
+Set the required secrets in your Supabase project:
+```bash
+supabase secrets set STRIPE_SECRET_KEY=sk_test_...
+supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_...
+```
+Also ensure your frontend `.env` has the correct `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+
 ## Testing
 
 ### Unit Tests (Vitest)
