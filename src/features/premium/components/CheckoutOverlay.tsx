@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { PaymentService } from '../../../services/payment.service';
 import { CheckoutForm } from './CheckoutForm';
@@ -21,18 +21,25 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
     const { t } = useTranslation();
     const [clientSecret, setClientSecret] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const lastFetchedIdRef = useRef<string | null>(null);
     const stripePromise = PaymentService.getStripe();
 
     useEffect(() => {
+        // Prevent duplicate fetches for the same content pack
+        // This is especially important in React 18 StrictMode (Dev) which runs effects twice
+        if (lastFetchedIdRef.current === contentPackId && clientSecret) return;
+
+        lastFetchedIdRef.current = contentPackId;
         PaymentService.createPaymentIntent(contentPackId)
             .then(data => {
                 setClientSecret(data.clientSecret);
             })
             .catch(err => {
                 console.error('Failed to create payment intent:', err);
+                lastFetchedIdRef.current = null; // Reset on error to allow retry
                 setError(t('premium.store.error_loading_payment', 'Failed to initialize payment. Please try again.'));
             });
-    }, [contentPackId, t]);
+    }, [contentPackId, t, clientSecret]);
 
     if (error) {
         return (
