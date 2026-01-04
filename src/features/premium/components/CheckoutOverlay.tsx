@@ -27,7 +27,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
     useEffect(() => {
         // Prevent duplicate fetches for the same content pack
         // This is especially important in React 18 StrictMode (Dev) which runs effects twice
-        if (lastFetchedIdRef.current === contentPackId && clientSecret) return;
+        if (lastFetchedIdRef.current === contentPackId) return;
 
         lastFetchedIdRef.current = contentPackId;
         PaymentService.createPaymentIntent(contentPackId)
@@ -39,7 +39,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
                 lastFetchedIdRef.current = null; // Reset on error to allow retry
                 setError(t('premium.store.error_loading_payment', 'Failed to initialize payment. Please try again.'));
             });
-    }, [contentPackId, t, clientSecret]);
+    }, [contentPackId, t]);
 
     if (error) {
         return (
