@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { PaymentService } from '../../../services/payment.service';
 import { CheckoutForm } from './CheckoutForm';
+import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { useTranslation } from 'react-i18next';
 
 interface CheckoutOverlayProps {
@@ -79,6 +80,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
 
     return (
         <div className="checkout-overlay-container">
+            <FormCloseButton onClick={onCancel} />
             <Elements key={clientSecret} stripe={stripePromise} options={options}>
                 <CheckoutForm onSuccess={onSuccess} onCancel={onCancel} price={price} />
             </Elements>

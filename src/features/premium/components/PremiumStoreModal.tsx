@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { X, ShieldCheck, Sparkles, Map, Users, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Sparkles, Map, Users, CheckCircle2 } from 'lucide-react';
+import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { CheckoutOverlay } from './CheckoutOverlay';
 import { AccountCreationStep } from './AccountCreationStep';
 import { usePremiumStore } from '../../../stores/premium.store';
@@ -42,9 +43,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
         <div className="premium-modal-overlay">
             <div className={`premium-modal-content ${showSuccess ? 'success-mode' : ''}`}>
                 {!showCheckout && !showSuccess && (
-                    <button className="premium-close-button" onClick={onClose} aria-label="Close">
-                        <X size={24} />
-                    </button>
+                    <FormCloseButton onClick={onClose} />
                 )}
 
                 {showSuccess ? (

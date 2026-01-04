@@ -1,0 +1,26 @@
+.form-close-button {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 100;
+    opacity: 0.7;
+    color: #e5c05b;
+}
+
+.form-close-button:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    color: #ffd700;
+}
+
+.form-close-button:active {
+    transform: scale(0.95);
+}

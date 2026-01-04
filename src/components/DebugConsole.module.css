@@ -39,13 +39,6 @@
     letter-spacing: 2px;
 }
 
-.closeButton {
-    background: none;
-    border: none;
-    color: #666;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
 
 .history {
     flex: 1;

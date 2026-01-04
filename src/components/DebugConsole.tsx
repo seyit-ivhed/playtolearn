@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDebugCommands } from '../features/debug/hooks/useDebugCommands';
+import { FormCloseButton } from './ui/FormCloseButton';
 import styles from './DebugConsole.module.css';
 
 interface DebugConsoleProps {
@@ -44,7 +45,7 @@ export const DebugConsole: React.FC<DebugConsoleProps> = ({ onClose }) => {
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
                 <div className={styles.header}>
                     <h2 className={styles.title}>Debug Console</h2>
-                    <button className={styles.closeButton} onClick={onClose}>&times;</button>
+                    <FormCloseButton onClick={onClose} className={styles.closeButton} />
                 </div>
                 <div className={styles.history} ref={historyRef}>
                     {history.map((line, i) => (

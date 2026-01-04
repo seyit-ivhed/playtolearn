@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { X } from 'lucide-react';
+import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import type { Volume, AdventureId, AdventureStatus } from '../../../types/adventure.types';
 import './TableOfContents.css';
 
@@ -26,9 +26,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
         <div className="toc-overlay" data-testid="toc-overlay">
             <div className="toc-container" data-testid="toc-container">
                 <div className="toc-header">
-                    <button className="close-toc" onClick={onClose} aria-label="Close Table of Contents" data-testid="close-toc-btn">
-                        <X size={32} />
-                    </button>
+                    <FormCloseButton onClick={onClose} size={32} />
                     <h1 className="toc-title">{t('chronicle.title')}</h1>
                     <h2 className="toc-subtitle">{t('chronicle.subtitle')}</h2>
                 </div>

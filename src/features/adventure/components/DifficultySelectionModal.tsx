@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Star, X, ChevronDown } from 'lucide-react';
+import { Star, ChevronDown } from 'lucide-react';
+import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { getDifficultyExamples } from '../../../utils/math/difficulty-examples';
 import './DifficultySelectionModal.css';
 
@@ -69,9 +70,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
     return (
         <div className="difficulty-modal-overlay" data-testid="difficulty-modal">
             <div className="difficulty-modal-content">
-                <button className="close-button" onClick={onClose} aria-label="Close">
-                    <X size={24} color="#e5c05b" />
-                </button>
+                <FormCloseButton onClick={onClose} />
 
                 <h2 className="modal-title">
                     {title}
