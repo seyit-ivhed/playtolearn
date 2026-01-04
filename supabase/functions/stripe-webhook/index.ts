@@ -17,7 +17,7 @@ Deno.serve(async (req: Request) => {
 
     try {
         const body = await req.text()
-        const event = stripe.webhooks.constructEvent(body, signature, endpointSecret)
+        const event = await stripe.webhooks.constructEventAsync(body, signature, endpointSecret)
 
         if (event.type === 'payment_intent.succeeded') {
             const paymentIntent = event.data.object
