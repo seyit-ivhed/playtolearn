@@ -3,6 +3,7 @@ import { useAuth } from './useAuth';
 import { useGameStore } from '../stores/game/store';
 import { usePremiumStore } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
+import { supabase } from '../services/supabase.service';
 
 export const useInitializeGame = () => {
     const { isAuthenticated, user, loading: authLoading, refreshSession } = useAuth();
@@ -33,7 +34,6 @@ export const useInitializeGame = () => {
                     useGameStore.setState(cloudState);
 
                     // Check if we should navigate to map
-                    // If they have an active adventure or any results, they are an existing player
                     const state = useGameStore.getState();
                     if (state.activeAdventureId && (Object.keys(state.encounterResults).length > 0 || state.currentMapNode > 1)) {
                         setShouldNavigateToMap(true);
@@ -46,12 +46,16 @@ export const useInitializeGame = () => {
                 // 2. Initialize Premium Store
                 await initializePremium(true);
             } else {
-                console.log('User is not authenticated (guest mode).');
+                console.log('User is not authenticated (guest mode). Checking connectivity...');
+                // Force a connectivity check: try to fetch something small or refresh session
+                // supabase.auth.getSession() usually hits cache, but refreshSession hits server.
+                // Or we can just check if we can reach any public table.
+                const { error: pingError } = await supabase.from('player_profiles').select('count').limit(0);
+                if (pingError) throw pingError;
+
                 // If it's a guest, we check if they have local progress that warrants going to map
                 const state = useGameStore.getState();
                 if (state.activeAdventureId && (Object.keys(state.encounterResults).length > 0 || state.currentMapNode > 1)) {
-                    // But wait, the user said "before displaying the chronicles or map"
-                    // For guests, we might still want to go to map if they have local storage
                     setShouldNavigateToMap(true);
                 }
             }
@@ -60,8 +64,9 @@ export const useInitializeGame = () => {
             setIsInitializing(false);
         } catch (err) {
             console.error('Initialization failed:', err);
-            setError('Failed to connect to the server. Please check your connection.');
+            setError('offline');
             setIsInitializing(false);
+            setShouldNavigateToMap(false);
         }
     }, [authLoading, isAuthenticated, user, initializePremium]);
 

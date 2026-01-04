@@ -47,7 +47,7 @@ function AppContent() {
     }
   }, [authMilestoneReached, isAuthenticated, signInAnonymously, authLoading]);
 
-  if (isInitializing) {
+  if (isInitializing || error) {
     return <LoadingScreen error={error} onRetry={retry} />;
   }
 

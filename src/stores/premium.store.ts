@@ -47,6 +47,7 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
 
             if (profileError) {
                 console.error('Premium store: Profile fetch error:', profileError);
+                throw profileError;
             }
 
             if (profile) {
@@ -59,6 +60,7 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
 
                 if (entitlementsError) {
                     console.error('Error fetching entitlements:', entitlementsError);
+                    throw entitlementsError;
                 }
 
                 const entitlements = entitlementsData?.map(e => e.content_pack_id) || [];
@@ -73,9 +75,8 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
             } else {
                 set({ isLoading: false, initialized: true });
             }
-        } catch (error) {
-            console.error('Error initializing premium store:', error);
-            set({ isLoading: false, initialized: true });
+        } finally {
+            set({ isLoading: false });
         }
     },
 

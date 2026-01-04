@@ -65,30 +65,25 @@ export const PersistenceService = {
      * Pulls the latest game state from Supabase for a given authId.
      */
     async pullState(authId: string) {
-        try {
-            // Step 1: Get the player profile ID first
-            const { data: profile, error: profileError } = await supabase
-                .from('player_profiles')
-                .select('id')
-                .eq('auth_id', authId)
-                .maybeSingle();
+        // Step 1: Get the player profile ID first
+        const { data: profile, error: profileError } = await supabase
+            .from('player_profiles')
+            .select('id')
+            .eq('auth_id', authId)
+            .maybeSingle();
 
-            if (profileError) throw profileError;
-            if (!profile) return null;
+        if (profileError) throw profileError;
+        if (!profile) return null;
 
-            // Step 2: Get the game state for that profile
-            const { data, error } = await supabase
-                .from('game_states')
-                .select('state_blob')
-                .eq('player_id', profile.id)
-                .maybeSingle();
+        // Step 2: Get the game state for that profile
+        const { data, error } = await supabase
+            .from('game_states')
+            .select('state_blob')
+            .eq('player_id', profile.id)
+            .maybeSingle();
 
-            if (error) throw error;
-            return data?.state_blob || null;
-        } catch (error) {
-            console.error('Failed to pull state from Supabase:', error);
-            return null;
-        }
+        if (error) throw error;
+        return data?.state_blob || null;
     },
 
     /**
