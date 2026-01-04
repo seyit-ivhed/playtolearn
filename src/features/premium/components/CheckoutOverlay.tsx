@@ -21,17 +21,12 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
     const stripePromise = PaymentService.getStripe();
 
     useEffect(() => {
-        console.log('Fetching payment intent for:', contentPackId);
         PaymentService.createPaymentIntent(contentPackId)
             .then(data => {
-                console.log('Payment intent created successfully');
                 setClientSecret(data.clientSecret);
             })
             .catch(err => {
-                console.error('Failed to create payment intent. Details:', err);
-                if (err.context) {
-                    console.error('Error context:', err.context);
-                }
+                console.error('Failed to create payment intent:', err);
                 setError(t('premium.store.error_loading_payment', 'Failed to initialize payment. Please try again.'));
             });
     }, [contentPackId, t]);

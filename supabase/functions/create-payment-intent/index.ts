@@ -42,7 +42,7 @@ Deno.serve(async (req: Request) => {
             )
         }
 
-        console.log('Authorized user:', user.id, 'Email:', user.email)
+        console.log('Authorized user:', user.id)
 
         // Use a user-scoped client for DB operations to respect RLS if needed, 
         // or just use admin if we want to bypass (but here we should respect RLS)
