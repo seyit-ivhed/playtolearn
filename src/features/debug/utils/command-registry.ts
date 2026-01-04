@@ -49,46 +49,60 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
             log('All adventures unlocked.');
         }
     },
-    goto: {
-        name: 'goto',
-        description: 'Jump to encounter (goto <index> or <advId> <index>)',
+    progress: {
+        name: 'progress',
+        description: 'Complete encounters up to index (progress <index> or <advId> <index>)',
         execute: (parts, { log, stores }) => {
             const arg1 = parts[1];
             const arg2 = parts[2];
 
-            if (arg2) {
-                const advId = arg1;
-                const targetNode = parseInt(arg2);
-                const adventure = ADVENTURES.find(a => a.id === advId);
+            let advId = stores.game.activeAdventureId;
+            let targetNode = NaN;
 
-                if (adventure && !isNaN(targetNode)) {
-                    if (targetNode >= 1 && targetNode <= adventure.encounters.length + 1) {
-                        stores.adventure.unlockAdventure(advId);
-                        stores.game.setActiveAdventure(advId);
-                        stores.game.debugSetMapNode(targetNode);
-                        log(`Switched to adventure ${advId} and jumped to encounter ${targetNode}.`);
-                    } else {
-                        log(`Error: Invalid encounter index for adventure ${advId}.`);
-                    }
-                } else {
-                    log(`Error: Adventure ${advId} not found or invalid node.`);
-                }
+            if (arg2) {
+                advId = arg1;
+                targetNode = parseInt(arg2);
             } else if (arg1) {
-                const targetNode = parseInt(arg1);
-                const currentAdventure = ADVENTURES.find(a => a.id === stores.game.activeAdventureId);
-                if (!isNaN(targetNode) && currentAdventure) {
-                    if (targetNode >= 1 && targetNode <= currentAdventure.encounters.length + 1) {
-                        stores.game.debugSetMapNode(targetNode);
-                        log(`Jumped to encounter ${targetNode} in current adventure.`);
-                    } else {
-                        log(`Error: Invalid encounter index. Must be between 1 and ${currentAdventure.encounters.length + 1}.`);
-                    }
-                } else {
-                    log('Error: Invalid usage. Usage: goto <index> OR goto <advId> <index>');
-                }
-            } else {
-                log('Error: Missing arguments. Usage: goto <index> OR goto <advId> <index>');
+                targetNode = parseInt(arg1);
             }
+
+            const adventure = ADVENTURES.find(a => a.id === advId);
+            if (!adventure || isNaN(targetNode)) {
+                log('Error: Invalid usage. Usage: progress <index> OR progress <advId> <index>');
+                return;
+            }
+
+            if (targetNode < 1 || targetNode > adventure.encounters.length) {
+                log(`Error: Invalid encounter index. Must be between 1 and ${adventure.encounters.length}.`);
+                return;
+            }
+
+            // Switch adventure if necessary
+            if (advId !== stores.game.activeAdventureId) {
+                stores.adventure.unlockAdventure(advId);
+                stores.game.setActiveAdventure(advId);
+            }
+
+            // Mark encounters as completed (1 star if no stars)
+            let markedCount = 0;
+            const results = stores.game.encounterResults;
+            for (let i = 1; i <= targetNode; i++) {
+                const key = `${advId}_${i}`;
+                if (!results[key] || (results[key].stars === 0)) {
+                    stores.game.debugSetEncounterStars(advId, i, 1);
+                    markedCount++;
+                }
+            }
+
+            // Move to the node AFTER the last completed one
+            const nextNode = Math.min(targetNode + 1, adventure.encounters.length + 1);
+            stores.game.debugSetMapNode(nextNode);
+
+            log(`Progressed to encounter ${targetNode} in adventure ${advId}.`);
+            if (markedCount > 0) {
+                log(`Marked ${markedCount} additional encounter(s) as completed with 1 star.`);
+            }
+            log(`Current map node set to ${nextNode}.`);
         }
     },
     reset: {
