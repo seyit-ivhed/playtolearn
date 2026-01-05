@@ -8,7 +8,7 @@ export interface PremiumState {
     initialized: boolean;
 
     // Actions
-    initialize: (force?: boolean) => Promise<void>;
+    initialize: (force?: boolean, profile?: { id: string; role: string }) => Promise<void>;
     isAdventureUnlocked: (adventureId: string) => boolean;
     hasEntitlement: (contentPackId: string) => boolean;
 }
@@ -23,40 +23,50 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
     isLoading: false,
     initialized: false,
 
-    initialize: async (force = false) => {
+    initialize: async (force = false, profileData?: { id: string; role: string }) => {
         if (get().initialized && !force) return;
 
         console.log('Initializing premium store (force:', force, ')');
         set({ isLoading: true });
         try {
-            const { data: { user } } = await supabase.auth.getUser();
-            console.log('Premium store: Current Auth User ID:', user?.id);
+            let playerId: string | undefined = profileData?.id;
+            let role: string | undefined = profileData?.role;
 
-            if (!user) {
-                console.warn('Premium store: No user found in Auth');
-                set({ entitlements: [], userRole: 'player', isLoading: false, initialized: true });
-                return;
+            if (!playerId) {
+                const { data: { user } } = await supabase.auth.getUser();
+                console.log('Premium store: Current Auth User ID:', user?.id);
+
+                if (!user) {
+                    console.warn('Premium store: No user found in Auth');
+                    set({ entitlements: [], userRole: 'player', isLoading: false, initialized: true });
+                    return;
+                }
+
+                // Fetch profile for role
+                const { data: profile, error: profileError } = await supabase
+                    .from('player_profiles')
+                    .select('id, role')
+                    .eq('auth_id', user.id)
+                    .single();
+
+                if (profileError) {
+                    console.error('Premium store: Profile fetch error:', profileError);
+                    throw profileError;
+                }
+
+                if (profile) {
+                    playerId = profile.id;
+                    role = profile.role;
+                }
             }
 
-            // Fetch profile for role
-            const { data: profile, error: profileError } = await supabase
-                .from('player_profiles')
-                .select('id, role')
-                .eq('auth_id', user.id)
-                .single();
-
-            if (profileError) {
-                console.error('Premium store: Profile fetch error:', profileError);
-                throw profileError;
-            }
-
-            if (profile) {
-                console.log('Premium store: Found profile', profile.id, 'Role:', profile.role);
+            if (playerId) {
+                console.log('Premium store: Initializing for profile', playerId, 'Role:', role);
                 // Fetch entitlements from the player_entitlements table
                 const { data: entitlementsData, error: entitlementsError } = await supabase
                     .from('player_entitlements')
                     .select('content_pack_id')
-                    .eq('player_id', profile.id);
+                    .eq('player_id', playerId);
 
                 if (entitlementsError) {
                     console.error('Error fetching entitlements:', entitlementsError);
@@ -67,7 +77,7 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
                 console.log('Premium store: Fetched entitlements:', entitlements);
 
                 set({
-                    userRole: profile.role || 'player',
+                    userRole: role || 'player',
                     entitlements,
                     isLoading: false,
                     initialized: true

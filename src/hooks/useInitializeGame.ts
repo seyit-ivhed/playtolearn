@@ -19,15 +19,22 @@ export const useInitializeGame = () => {
         if (initialized.current) return;
 
         console.log('Starting game initialization sequence...');
+        initialized.current = true; // Set immediately to prevent race conditions
         setError(null);
         setIsInitializing(true);
 
         try {
             if (isAuthenticated && user) {
-                console.log('User is authenticated, pulling state from backend...');
+                console.log('User is authenticated, initializing data...');
 
-                // 1. Pull State from Backend
-                const cloudState = await PersistenceService.pullState(user.id);
+                // 1. Get or create profile (single fetch)
+                const profile = await PersistenceService.getOrCreateProfile(user.id);
+
+                // 2. Fetch state and entitlements in parallel
+                const [cloudState] = await Promise.all([
+                    PersistenceService.pullState(user.id, profile.id),
+                    initializePremium(false, profile) // Not forced, using shared profile
+                ]);
 
                 if (cloudState) {
                     console.log('Cloud state found, rehydrating store...');
@@ -40,30 +47,24 @@ export const useInitializeGame = () => {
                     }
                 } else {
                     console.log('No cloud state found. Syncing local progress to cloud...');
-                    await PersistenceService.pushState(user.id, useGameStore.getState());
+                    await PersistenceService.pushState(user.id, useGameStore.getState(), profile.id);
                 }
-
-                // 2. Initialize Premium Store
-                await initializePremium(true);
             } else {
                 console.log('User is not authenticated (guest mode). Checking connectivity...');
-                // Force a connectivity check: try to fetch something small or refresh session
-                // supabase.auth.getSession() usually hits cache, but refreshSession hits server.
-                // Or we can just check if we can reach any public table.
                 const { error: pingError } = await supabase.from('player_profiles').select('count').limit(0);
                 if (pingError) throw pingError;
 
-                // If it's a guest, we check if they have local progress that warrants going to map
+                // Sync guest state if any
                 const state = useGameStore.getState();
                 if (state.activeAdventureId && (Object.keys(state.encounterResults).length > 0 || state.currentMapNode > 1)) {
                     setShouldNavigateToMap(true);
                 }
             }
 
-            initialized.current = true;
             setIsInitializing(false);
         } catch (err) {
             console.error('Initialization failed:', err);
+            initialized.current = false; // Reset on failure to allow retry
             setError('offline');
             setIsInitializing(false);
             setShouldNavigateToMap(false);
