@@ -422,3 +422,91 @@
     border-width: 2px;
     margin-bottom: 0;
 }
+
+/* Checkout Page Styles */
+.checkout-page-container {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkout-header {
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkout-header .back-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.checkout-header .back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.checkout-header .checkout-title {
+    font-size: 1.5rem;
+    color: #e5c05b;
+    margin: 0;
+    font-family: 'MedievalSharp', cursive, serif;
+}
+
+.checkout-main {
+    flex: 1;
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.checkout-page-loading {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #1a1a2e;
+    color: white;
+    gap: 1rem;
+}
+
+.redirect-notice {
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    margin-bottom: 2rem;
+}
+
+/* Adjustments for page mode */
+.checkout-page-container .account-step {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 3rem;
+    border-radius: 24px;
+    border: 1px solid rgba(229, 192, 91, 0.1);
+}
+
+.checkout-page-container .premium-checkout {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 3rem;
+    border-radius: 24px;
+    border: 1px solid rgba(229, 192, 91, 0.1);
+}

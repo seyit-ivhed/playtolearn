@@ -14,6 +14,10 @@ export default defineConfig({
   customLogger: logger,
   build: {
     rollupOptions: {
+      input: {
+        main: '/index.html',
+        checkout: '/checkout.html',
+      },
       output: {
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
