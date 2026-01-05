@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../hooks/useAuth';
 import { AccountCreationStep } from './AccountCreationStep';
@@ -9,16 +9,9 @@ import './Premium.css';
 export const CheckoutPage: React.FC = () => {
     const { t } = useTranslation();
     const { user, loading: authLoading } = useAuth();
-    const [showCheckout, setShowCheckout] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
 
     const isAnonymous = user?.is_anonymous ?? true;
-
-    useEffect(() => {
-        if (!authLoading && !isAnonymous) {
-            setShowCheckout(true);
-        }
-    }, [authLoading, isAnonymous]);
 
     const handleBackToGame = () => {
         window.location.href = '/';
@@ -68,17 +61,19 @@ export const CheckoutPage: React.FC = () => {
                             {t('adventure.back', 'Back to Journey')}
                         </button>
                     </div>
-                ) : !showCheckout ? (
-                    <AccountCreationStep
-                        onSuccess={() => setShowCheckout(true)}
-                    />
+                ) : isAnonymous ? (
+                    <div className="account-creation-container">
+                        <AccountCreationStep
+                            onSuccess={() => {/* useAuth state change will trigger re-render */ }}
+                        />
+                    </div>
                 ) : (
                     <div className="premium-checkout">
-                        <h2 className="premium-title">{t('premium.store.buy_now')}</h2>
+                        <h2 className="premium-title">{t('premium.store.buy_now', 'Finalize Purchase')}</h2>
                         <CheckoutOverlay
                             contentPackId="premium_base"
                             onSuccess={handleSuccess}
-                            onCancel={() => setShowCheckout(false)}
+                            onCancel={handleBackToGame}
                             price={t('premium.store.price', '89 SEK')}
                         />
                     </div>

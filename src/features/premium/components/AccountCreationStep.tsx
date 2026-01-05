@@ -44,7 +44,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
         setError(null);
 
         try {
-            // 1. Ensure we have a session. If null or not anonymous, we need to handle it.
+            // 1. Ensure we have a session and the user is ANONYMOUS
             const { data: { session: currentSession } } = await supabase.auth.getSession();
             let session = currentSession;
 
@@ -55,20 +55,27 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 session = signInData.session;
             }
 
+            if (session?.user && !session.user.is_anonymous) {
+                console.warn('User is already authenticated. Skipping conversion.');
+                onSuccess();
+                return;
+            }
+
             console.log('Converting session for email:', email);
 
             // 2. Convert to permanent user
             // We use updateUser to add email/password to the existing anonymous session.
-            // This is the standard Supabase way to "convert" a guest to a permanent user
-            // while keeping the same Auth ID.
             const { error: updateError } = await supabase.auth.updateUser({
                 email,
                 password
             });
 
             if (updateError) {
-                if (updateError.message.includes('already registered') || updateError.message.includes('already in use')) {
-                    setError(t('premium.store.account.errors.already_exists'));
+                // If the email is already taken, Supabase returns 422 or specific message
+                if (updateError.message.toLowerCase().includes('already registered') ||
+                    updateError.message.toLowerCase().includes('already in use') ||
+                    updateError.status === 422) {
+                    setError(t('premium.store.account.errors.already_exists', 'This email is already registered. Please sign in with your existing account.'));
                 } else {
                     throw updateError;
                 }
