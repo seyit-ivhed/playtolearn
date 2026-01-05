@@ -13,6 +13,13 @@ export const useInitializeGame = () => {
 
     const initializePremium = usePremiumStore(state => state.initialize);
     const initialized = useRef(false);
+    const lastAuthId = useRef<string | undefined>(user?.id);
+
+    // Re-initialize if auth identity changes (e.g. guest -> anonymous)
+    if (user?.id !== lastAuthId.current) {
+        initialized.current = false;
+        lastAuthId.current = user?.id;
+    }
 
     const performInitialization = useCallback(async () => {
         if (authLoading) return;

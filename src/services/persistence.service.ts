@@ -2,6 +2,12 @@ import { supabase } from './supabase.service';
 import { IdentityService } from './identity.service';
 
 export const PersistenceService = {
+    cachedPlayerId: null as string | null,
+
+    clearCache() {
+        this.cachedPlayerId = null;
+    },
+
     /**
      * Fetches or creates a player profile for a given authId.
      * Returns the profile id and role.
@@ -17,6 +23,8 @@ export const PersistenceService = {
         if (profileError) throw profileError;
 
         if (profile) {
+            this.cachedPlayerId = profile.id;
+
             // Backfill device_id if missing from existing profile
             if (!profile.device_id) {
                 await supabase
@@ -39,6 +47,7 @@ export const PersistenceService = {
             .single();
 
         if (createError) throw createError;
+        this.cachedPlayerId = newProfile.id;
         return { id: newProfile.id, role: newProfile.role };
     },
 
@@ -48,12 +57,13 @@ export const PersistenceService = {
      */
     async pushState(authId: string, state: object, playerId?: string) {
         try {
-            let actualPlayerId = playerId;
+            let actualPlayerId = playerId || this.cachedPlayerId;
 
             if (!actualPlayerId) {
                 const profile = await this.getOrCreateProfile(authId);
                 actualPlayerId = profile.id;
             }
+            this.cachedPlayerId = actualPlayerId;
 
             // 2. Upsert the game state
             const { error: upsertError } = await supabase
@@ -79,7 +89,7 @@ export const PersistenceService = {
      * Pulls the latest game state from Supabase for a given authId.
      */
     async pullState(authId: string, playerId?: string) {
-        let actualPlayerId = playerId;
+        let actualPlayerId = playerId || this.cachedPlayerId;
 
         if (!actualPlayerId) {
             // Step 1: Get the player profile ID first
@@ -93,6 +103,8 @@ export const PersistenceService = {
             if (!profile) return null;
             actualPlayerId = profile.id;
         }
+
+        this.cachedPlayerId = actualPlayerId;
 
         // Step 2: Get the game state for that profile
         const { data, error } = await supabase
@@ -114,7 +126,7 @@ export const PersistenceService = {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
                 console.log('Event-driven sync triggered...');
-                return this.pushState(session.user.id, state);
+                return this.pushState(session.user.id, state, this.cachedPlayerId ?? undefined);
             }
         } catch (error) {
             console.error('Error in sync helper:', error);
