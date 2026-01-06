@@ -15,10 +15,14 @@ export const useChronicleData = () => {
     const { adventureStatuses } = useAdventureStore();
     const { t } = useTranslation();
 
-    // Default to the highest unlocked adventure if none specified
-    const initialAdventure = useMemo(() =>
-        getHighestUnlockedAdventure(adventureStatuses).adventureId
-        , [adventureStatuses]);
+    // For new players (no progress), default to prologue
+    // For returning players, show their highest unlocked adventure
+    const initialAdventure = useMemo(() => {
+        const hasProgress = Object.keys(encounterResults).length > 0;
+        return hasProgress
+            ? getHighestUnlockedAdventure(adventureStatuses).adventureId
+            : 'prologue';
+    }, [adventureStatuses, encounterResults]);
 
     const [activeAdventureId, setActiveAdventureId] = useState<string>(initialAdventure);
 
