@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import { usePlayerStore } from '../../stores/player.store';
 import { useEncounterStore } from '../../stores/encounter.store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
+import { getFocalNodeIndex } from './utils/navigation.utils';
 import { DifficultySelectionModal } from './components/DifficultySelectionModal';
 import './AdventurePage.css';
 
@@ -17,14 +18,16 @@ import { AdventureHeader } from './components/AdventureHeader';
 const AdventurePage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const location = useLocation();
+    const { adventureId } = useParams<{ adventureId: string }>();
+
     const {
         activeParty: party,
-        activeAdventureId,
         companionStats,
-        currentMapNode,
         encounterResults,
         setEncounterDifficulty,
-        activeEncounterDifficulty
+        activeEncounterDifficulty,
+        completeEncounter
     } = useGameStore();
     const { initializeEncounter } = useEncounterStore();
     const { completeAdventure, unlockAdventure } = useAdventureStore();
@@ -35,23 +38,27 @@ const AdventurePage = () => {
     const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
 
     // Get active adventure
-    const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
+    const adventure = ADVENTURES.find(a => a.id === adventureId);
 
     // Safety gate: If premium content is locked, redirect to chronicle
-    if (premiumInitialized && activeAdventureId && !isAdventureUnlocked(activeAdventureId)) {
-        navigate('/chronicle');
+    if (premiumInitialized && adventureId && !isAdventureUnlocked(adventureId)) {
+        navigate('/chronicle', { replace: true });
         return null;
     }
 
-    if (!adventure) {
+    if (!adventure || !adventureId) {
         return <div>{t('adventure.not_found', 'Adventure not found')}</div>;
     }
+
+    // Dynamic focal node logic
+    const focalNodeFromState = (location.state as any)?.focalNode;
+    const currentNode = focalNodeFromState ?? getFocalNodeIndex(adventureId, encounterResults);
 
     const { encounters } = adventure;
 
     const handleNodeClick = (encounter: typeof encounters[0]) => {
         if (encounter.type === EncounterType.CAMP) {
-            navigate(`/camp/${encounter.id}`);
+            navigate(`/camp/${adventureId}/${encounters.indexOf(encounter) + 1}`);
             return;
         }
 
@@ -61,19 +68,20 @@ const AdventurePage = () => {
         }
 
         if (encounter.type === EncounterType.ENDING) {
-            // Complete current adventure
-            completeAdventure(activeAdventureId);
+            // Complete current adventure in game progress
+            completeEncounter(adventureId, encounters.indexOf(encounter) + 1);
+
+            // Mark adventure as completed in metadata store
+            completeAdventure(adventureId);
 
             // Find next adventure to unlock
-            const currentAdventureIndex = ADVENTURES.findIndex(a => a.id === activeAdventureId);
+            const currentAdventureIndex = ADVENTURES.findIndex(a => a.id === adventureId);
             if (currentAdventureIndex !== -1 && currentAdventureIndex < ADVENTURES.length - 1) {
                 const nextAdventure = ADVENTURES[currentAdventureIndex + 1];
                 unlockAdventure(nextAdventure.id);
-                // Note: We don't update chronicle position here anymore.
-                // It will be updated by ChronicleBook after the completion animation.
             }
 
-            navigate('/chronicle', { state: { justCompletedAdventureId: activeAdventureId } });
+            navigate('/chronicle', { state: { justCompletedAdventureId: adventureId } });
         }
     };
 
@@ -91,10 +99,10 @@ const AdventurePage = () => {
                     name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)
                 }));
                 initializeEncounter(party, localizedEnemies, xpReward, nodeStep, difficulty, companionStats);
-                navigate('/encounter');
+                navigate(`/encounter/${adventureId}/${nodeStep}`);
             }
         } else if (selectedEncounter.type === EncounterType.PUZZLE) {
-            navigate(`/puzzle/${selectedEncounter.id}`);
+            navigate(`/puzzle/${adventureId}/${nodeStep}`);
         }
 
         setIsDifficultyModalOpen(false);
@@ -115,9 +123,9 @@ const AdventurePage = () => {
     };
 
     const getCurrentStars = (encounter: Encounter | null) => {
-        if (!encounter) return 0;
+        if (!encounter || !adventureId) return 0;
         const nodeStep = encounters.indexOf(encounter) + 1;
-        const encounterKey = `${activeAdventureId}_${nodeStep}`;
+        const encounterKey = `${adventureId}_${nodeStep}`;
         return encounterResults[encounterKey]?.stars || 0;
     };
 
@@ -132,7 +140,7 @@ const AdventurePage = () => {
 
                 <FantasyMap
                     adventure={adventure}
-                    currentNode={currentMapNode}
+                    currentNode={currentNode}
                     onNodeClick={handleNodeClick}
                 />
             </main>
@@ -141,7 +149,7 @@ const AdventurePage = () => {
                 isOpen={isDifficultyModalOpen}
                 onClose={() => setIsDifficultyModalOpen(false)}
                 onStart={handleStartEncounter}
-                title={(selectedEncounter ? t(`adventures.${activeAdventureId}.nodes.${selectedEncounter.id}.label`, selectedEncounter.label || '') : '') as string}
+                title={(selectedEncounter ? t(`adventures.${adventureId}.nodes.${selectedEncounter.id}.label`, selectedEncounter.label || '') : '') as string}
                 initialDifficulty={getInitialDifficulty()}
                 currentStars={getCurrentStars(selectedEncounter)}
             />

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
 import { ChronicleBook } from './features/chronicle/ChronicleBook';
 
@@ -15,25 +15,11 @@ import { useInitializeGame } from './hooks/useInitializeGame';
 import { LoadingScreen } from './components/LoadingScreen';
 
 function AppContent() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { isInitializing, error, shouldNavigateToMap, retry } = useInitializeGame();
+  const { isInitializing, error, retry } = useInitializeGame();
   const { isAuthenticated, signInAnonymously, loading: authLoading } = useAuth();
 
   const authMilestoneReached = useGameStore(state => state.authMilestoneReached);
   const authTriggered = useRef(false);
-  const redirected = useRef(false);
-
-  // Handle automatic navigation to map on reload if progress exists
-  useEffect(() => {
-    if (!isInitializing && shouldNavigateToMap && !redirected.current) {
-      if (location.pathname === '/' || location.pathname === '/chronicle') {
-        console.log('Redirecting to map based on loaded state...');
-        redirected.current = true;
-        navigate('/map', { replace: true });
-      }
-    }
-  }, [isInitializing, shouldNavigateToMap, navigate, location]);
 
   // Handle anonymous account creation when milestones are reached
   useEffect(() => {
@@ -60,18 +46,17 @@ function AppContent() {
         <Route path="/chronicle" element={<ChronicleBook />} />
 
         {/* 1. The Camp (Starting Hub) */}
-
-        <Route path="/camp" element={<CampPage />} />
-        <Route path="/camp/:nodeId" element={<CampPage />} />
+        <Route path="/camp/:adventureId" element={<CampPage />} />
+        <Route path="/camp/:adventureId/:nodeIndex" element={<CampPage />} />
 
         {/* 2. The Adventure Map */}
-        <Route path="/map" element={<AdventurePage />} />
+        <Route path="/map/:adventureId" element={<AdventurePage />} />
 
         {/* 3. The Encounter */}
-        <Route path="/encounter" element={<EncounterPage />} />
+        <Route path="/encounter/:adventureId/:nodeIndex" element={<EncounterPage />} />
 
         {/* 4. The Puzzle */}
-        <Route path="/puzzle/:nodeId" element={<PuzzlePage />} />
+        <Route path="/puzzle/:adventureId/:nodeIndex" element={<PuzzlePage />} />
 
 
         {/* Legacy / Dev routes */}

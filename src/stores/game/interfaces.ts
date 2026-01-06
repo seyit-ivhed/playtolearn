@@ -7,8 +7,6 @@ export interface EncounterResult {
 // State shape only (no actions)
 export interface GameState {
     // Progression
-    currentMapNode: number; // 1-indexed, relative to current adventure
-    activeAdventureId: string;
     unlockedCompanions: string[]; // IDs
     activeParty: string[]; // IDs (Max 4)
     deviceId: string;
@@ -31,10 +29,8 @@ export interface GameState {
 
 // Adventure & Encounter Management
 export interface AdventureProgressSlice {
-    completeEncounter: (nodeIndex?: number) => void;
+    completeEncounter: (adventureId: string, nodeIndex: number) => void;
     setEncounterDifficulty: (difficulty: number) => void;
-    setActiveAdventure: (adventureId: string, initialNode?: number) => void;
-    resetMap: () => void;
     updateChroniclePosition: (volumeId: string, adventureId: string) => void;
 }
 
@@ -56,7 +52,6 @@ export interface ProgressionSlice {
 
 // Debug & Reset Actions
 export interface DebugSlice {
-    debugSetMapNode: (node: number) => void;
     debugUnlockAllCompanions: () => void;
     debugUnlockAllEncounters: () => void;
     debugAddXp: (amount: number) => void;

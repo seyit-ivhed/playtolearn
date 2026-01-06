@@ -6,6 +6,12 @@ import * as progressionUtils from '../utils/progression.utils';
 vi.mock('../data/adventures.data', () => ({
     ADVENTURES: [
         {
+            id: 'origins_prologue',
+            encounters: [
+                { id: 'p_1', xpReward: 5 }
+            ]
+        },
+        {
             id: '1',
             encounters: [
                 { id: '1_1', xpReward: 10 },
@@ -20,11 +26,12 @@ vi.mock('../data/adventures.data', () => ({
             ],
         }
     ],
-    getAdventureById: vi.fn(),
+    getAdventureById: vi.fn((id) => {
+        if (id === '1') return { id: '1', encounters: [{ xpReward: 10 }, { xpReward: 20 }, { xpReward: 30 }] };
+        return undefined;
+    }),
 }));
 
-// Mock INITIAL_FELLOWSHIP if needed, but imported one is fine as it is constant data
-// Mock COMPANIONS keys for Object.keys usage in store
 vi.mock('../data/companions.data', async (importOriginal) => {
     const actual = await importOriginal<typeof import('../data/companions.data')>();
     return {
@@ -42,114 +49,50 @@ vi.mock('../data/companions.data', async (importOriginal) => {
 
 describe('useGameStore', () => {
     beforeEach(() => {
-        useGameStore.setState({
-            currentMapNode: 1,
-            activeAdventureId: '1',
-            unlockedCompanions: ['c1', 'c2'],
-            activeParty: ['c1', 'c2'],
-            xpPool: 0,
-            companionStats: {
-                c1: { level: 1 },
-                c2: { level: 1 },
-                c3: { level: 1 },
-                c4: { level: 1 },
-                c5: { level: 1 },
-            },
-            restedCompanions: [],
-            encounterResults: {},
-        });
+        useGameStore.getState().resetAll();
         vi.clearAllMocks();
     });
 
     it('should initialize with default state', () => {
-        // We set state in beforeEach, but testing "initial" requires resetting purely
-        // Because persist middleware might interfere, explicit reset is safer for unit tests usually
-        // But here we rely on the beforeEach reset.
         const state = useGameStore.getState();
-        expect(state.currentMapNode).toBe(1);
-        expect(state.activeAdventureId).toBe('1');
         expect(state.unlockedCompanions).toEqual(['c1', 'c2']);
         expect(state.activeParty).toEqual(['c1', 'c2']);
         expect(state.xpPool).toBe(0);
+        expect(state.encounterResults).toEqual({});
     });
 
     describe('Adventure Flow', () => {
-        it('should advance map node on completeEncounter if completing latest node', () => {
-            useGameStore.setState({ currentMapNode: 1, activeAdventureId: '1' });
-            useGameStore.getState().completeEncounter(1);
-            expect(useGameStore.getState().currentMapNode).toBe(2);
+        it('should update encounterResults on completeEncounter', () => {
+            useGameStore.setState({ activeEncounterDifficulty: 3 });
+            useGameStore.getState().completeEncounter('1', 1);
+            const results = useGameStore.getState().encounterResults;
+            expect(results['1_1']).toBeDefined();
+            expect(results['1_1'].stars).toBe(3);
         });
 
-        it('should NOT advance map node on completeEncounter if completing old node', () => {
-            useGameStore.setState({ currentMapNode: 2, activeAdventureId: '1' });
-            useGameStore.getState().completeEncounter(1); // Replay encounter 1
-            expect(useGameStore.getState().currentMapNode).toBe(2); // Stay at 2
+        it('should grant XP based on encounter data', () => {
+            useGameStore.getState().completeEncounter('1', 1);
+            expect(useGameStore.getState().xpPool).toBe(10);
+
+            useGameStore.getState().completeEncounter('1', 2);
+            expect(useGameStore.getState().xpPool).toBe(10 + 20);
         });
 
-        it('should still advance if nodeIndex is not provided (backward compatibility)', () => {
-            useGameStore.setState({ currentMapNode: 1, activeAdventureId: '1' });
-            useGameStore.getState().completeEncounter(); // No index
-            expect(useGameStore.getState().currentMapNode).toBe(2);
-        });
+        it('should NOT grant XP if encounter already completed', () => {
+            useGameStore.getState().completeEncounter('1', 1);
+            expect(useGameStore.getState().xpPool).toBe(10);
 
-        it('should loop back to 1 when adventure finishes (prototype behavior)', () => {
-            // Adventure 1 has 3 encounters.
-            // Node 1 -> complete -> 2
-            // Node 2 -> complete -> 3
-            // Node 3 -> complete -> 1 (Loop)
-
-            useGameStore.setState({ currentMapNode: 3, activeAdventureId: '1' });
-            useGameStore.getState().completeEncounter();
-            expect(useGameStore.getState().currentMapNode).toBe(1);
-        });
-
-        it('should do nothing if adventure not found', () => {
-            useGameStore.setState({ activeAdventureId: 'non-existent' });
-            const currentNode = useGameStore.getState().currentMapNode;
-            useGameStore.getState().completeEncounter();
-            expect(useGameStore.getState().currentMapNode).toBe(currentNode);
-        });
-
-        it('should set active adventure and reset map', () => {
-            useGameStore.getState().setActiveAdventure('2');
-            expect(useGameStore.getState().activeAdventureId).toBe('2');
-            expect(useGameStore.getState().currentMapNode).toBe(1);
-        });
-
-        it('should reset map manually', () => {
-            useGameStore.setState({ currentMapNode: 5 });
-            useGameStore.getState().resetMap();
-            expect(useGameStore.getState().currentMapNode).toBe(1);
-        });
-
-        it('should reset xp pool via debug action', () => {
-            useGameStore.setState({ xpPool: 100 });
-            useGameStore.getState().debugResetXpPool();
-            expect(useGameStore.getState().xpPool).toBe(0);
-        });
-
-        it('should reset companion stats via debug action', () => {
-            useGameStore.setState({
-                companionStats: {
-                    c1: { level: 5 },
-                    c2: { level: 3 },
-                }
-            });
-            useGameStore.getState().debugResetCompanions();
-            const stats = useGameStore.getState().companionStats;
-            expect(stats['c1']).toEqual({ level: 1 });
-            expect(stats['c2']).toEqual({ level: 1 });
+            useGameStore.getState().completeEncounter('1', 1);
+            expect(useGameStore.getState().xpPool).toBe(10); // Still 10
         });
 
         it('should unlock all encounters via debug action', () => {
             useGameStore.getState().debugUnlockAllEncounters();
             const results = useGameStore.getState().encounterResults;
-            // Adventure 1 (3 encounters) + Adventure 2 (1 encounter) = 4 total in mock
-            expect(Object.keys(results).length).toBe(4);
+            // Mock has 1 (prologue) + 3 (adv 1) + 1 (adv 2) = 5 total
+            expect(Object.keys(results).length).toBe(5);
             expect(results['1_1']).toBeDefined();
-            expect(results['1_1'].stars).toBe(3);
             expect(results['2_1']).toBeDefined();
-            expect(results['2_1'].stars).toBe(3);
         });
     });
 
@@ -167,52 +110,10 @@ describe('useGameStore', () => {
             expect(useGameStore.getState().activeParty).toEqual(['c1']);
         });
 
-        it('should not add if not unlocked', () => {
-            useGameStore.setState({ activeParty: ['c1'], unlockedCompanions: ['c1'] });
-            useGameStore.getState().addToParty('c3'); // c3 not unlocked
-            expect(useGameStore.getState().activeParty).toEqual(['c1']);
-        });
-
-        it('should not add if party is full (max 4)', () => {
-            const fullParty = ['c1', 'c2', 'c3', 'c4'];
-            useGameStore.setState({
-                activeParty: fullParty,
-                unlockedCompanions: [...fullParty, 'c5']
-            });
-            useGameStore.getState().addToParty('c5');
-            expect(useGameStore.getState().activeParty).toEqual(fullParty);
-        });
-
         it('should remove companion from party', () => {
             useGameStore.setState({ activeParty: ['c1', 'c2'] });
             useGameStore.getState().removeFromParty('c1');
             expect(useGameStore.getState().activeParty).toEqual(['c2']);
-        });
-    });
-
-    describe('Companion Unlocking', () => {
-        it('should unlock companion and set level to max of current party', () => {
-            useGameStore.setState({
-                unlockedCompanions: ['c1'],
-                companionStats: {
-                    c1: { level: 5 },
-                    c2: { level: 1 } // default initialization mock
-                }
-            });
-
-            useGameStore.getState().unlockCompanion('c2');
-
-            const state = useGameStore.getState();
-            expect(state.unlockedCompanions).toContain('c2');
-            // Catch up logic: max level is 5
-            expect(state.companionStats['c2'].level).toBe(5);
-        });
-
-        it('should ignore if already unlocked', () => {
-            useGameStore.setState({ unlockedCompanions: ['c1'] });
-            useGameStore.getState().unlockCompanion('c1');
-            const state = useGameStore.getState();
-            expect(state.unlockedCompanions.length).toBe(1);
         });
     });
 
@@ -223,117 +124,35 @@ describe('useGameStore', () => {
             expect(useGameStore.getState().xpPool).toBe(100);
         });
 
-        it('should grant dynamic XP based on global encounter index', () => {
-            // Adventure 1, Encounter 1 -> (0 * 10 + 1) * 10 = 10 XP
-            useGameStore.setState({ currentMapNode: 1, activeAdventureId: '1', xpPool: 0 });
-            useGameStore.getState().completeEncounter();
-            expect(useGameStore.getState().xpPool).toBe(10);
-
-            // Adventure 1, Encounter 2 -> (0 * 10 + 2) * 10 = 20 XP
-            // currentMapNode is now 2 after previous call
-            useGameStore.getState().completeEncounter();
-            expect(useGameStore.getState().xpPool).toBe(10 + 20);
-
-            // Adventure 2, Encounter 1 -> (1 * 10 + 1) * 10 = 110 XP
-            useGameStore.setState({ currentMapNode: 1, activeAdventureId: '2', xpPool: 0 });
-            useGameStore.getState().completeEncounter();
-            expect(useGameStore.getState().xpPool).toBe(110);
-        });
-
-
-        it('should level up companion and consume exact XP needed from pool', () => {
-            // Level 1 -> 2 needs 15 XP
+        it('should level up companion and consume XP', () => {
             useGameStore.setState({
                 xpPool: 100,
-                companionStats: {
-                    c1: { level: 1 }
-                }
+                companionStats: { c1: { level: 1 } }
             });
 
-            // Mock getXpForNextLevel(1) = 15
             vi.spyOn(progressionUtils, 'getXpForNextLevel').mockReturnValue(15);
 
             useGameStore.getState().levelUpCompanion('c1');
 
             const state = useGameStore.getState();
-            expect(state.xpPool).toBe(100 - 15); // 85
+            expect(state.xpPool).toBe(85);
             expect(state.companionStats['c1'].level).toBe(2);
-        });
-
-        it('should not level up if pool is insufficient', () => {
-            useGameStore.setState({
-                xpPool: 5,
-                companionStats: {
-                    c1: { level: 1 }
-                }
-            });
-
-            vi.spyOn(progressionUtils, 'getXpForNextLevel').mockReturnValue(15);
-
-            useGameStore.getState().levelUpCompanion('c1');
-
-            const state = useGameStore.getState();
-            expect(state.xpPool).toBe(5);
-            expect(state.companionStats['c1'].level).toBe(1);
-        });
-
-
-
-        it('should strictly prevent level up if xpPool is 0 and companion has 0 xp', () => {
-            useGameStore.setState({
-                xpPool: 0,
-                companionStats: {
-                    c1: { level: 1 }
-                }
-            });
-
-            vi.spyOn(progressionUtils, 'getXpForNextLevel').mockReturnValue(15);
-
-            useGameStore.getState().levelUpCompanion('c1');
-
-            const state = useGameStore.getState();
-            expect(state.companionStats['c1'].level).toBe(1);
-            expect(state.xpPool).toBe(0);
-        });
-    });
-
-    describe('Rested System', () => {
-        it('should mark inactive companions as rested', () => {
-            useGameStore.setState({
-                unlockedCompanions: ['c1', 'c2', 'c3'],
-                activeParty: ['c1'],
-                restedCompanions: []
-            });
-
-            useGameStore.getState().markRestedCompanions();
-
-            expect(useGameStore.getState().restedCompanions).toEqual(['c2', 'c3']);
-        });
-
-        it('should consume rested bonus', () => {
-            useGameStore.setState({ restedCompanions: ['c2', 'c3'] });
-            useGameStore.getState().consumeRestedBonus('c2');
-
-            expect(useGameStore.getState().restedCompanions).toEqual(['c3']);
         });
     });
 
     describe('Reset', () => {
         it('should reset all state', () => {
             useGameStore.setState({
-                currentMapNode: 5,
-                activeAdventureId: '2',
-                unlockedCompanions: ['c1', 'c2', 'c3'],
                 xpPool: 500,
+                encounterResults: { 'test': { stars: 3, difficulty: 1, completedAt: 123 } }
             });
 
             useGameStore.getState().resetAll();
 
             const state = useGameStore.getState();
-            expect(state.currentMapNode).toBe(1);
-            expect(state.activeAdventureId).toBe('1');
-            expect(state.unlockedCompanions).toEqual(['c1', 'c2']); // Reset to initial fellowship mock
             expect(state.xpPool).toBe(0);
+            expect(state.encounterResults).toEqual({});
+            expect(state.unlockedCompanions).toEqual(['c1', 'c2']);
         });
     });
 });

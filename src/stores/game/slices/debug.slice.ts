@@ -4,8 +4,6 @@ import { INITIAL_FELLOWSHIP, COMPANIONS } from '../../../data/companions.data';
 import { ADVENTURES } from '../../../data/adventures.data';
 
 export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (set) => ({
-    debugSetMapNode: (node) => set({ currentMapNode: node }),
-
     debugUnlockAllCompanions: () => {
         const companionIds = Object.keys(COMPANIONS);
         set({ unlockedCompanions: companionIds });
@@ -66,8 +64,6 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
 
     resetAll: () => {
         set({
-            currentMapNode: 1,
-            activeAdventureId: '1',
             unlockedCompanions: [...INITIAL_FELLOWSHIP],
             activeParty: [...INITIAL_FELLOWSHIP],
             encounterResults: {},

@@ -1,10 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useGameStore } from '../../../stores/game/store';
-import { useAdventureStore } from '../../../stores/adventure.store';
 import { usePremiumStore } from '../../../stores/premium.store';
-import { AdventureStatus } from '../../../types/adventure.types';
-import { ADVENTURES } from '../../../data/adventures.data';
 import type { Adventure, Volume } from '../../../types/adventure.types';
 
 interface UseChronicleNavigationProps {
@@ -26,8 +23,7 @@ export const useChronicleNavigation = ({
 }: UseChronicleNavigationProps) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { updateChroniclePosition, setActiveAdventure } = useGameStore();
-    const { adventureStatuses } = useAdventureStore();
+    const { updateChroniclePosition } = useGameStore();
     const { isAdventureUnlocked } = usePremiumStore();
 
     const justCompletedAdventureId = location.state?.justCompletedAdventureId;
@@ -64,16 +60,9 @@ export const useChronicleNavigation = ({
             return;
         }
 
-        const isCompleted = adventureStatuses[id] === AdventureStatus.COMPLETED;
-        if (isCompleted) {
-            const adventure = ADVENTURES.find(a => a.id === id);
-            const maxNode = adventure ? adventure.encounters.length + 1 : 99;
-            setActiveAdventure(id, maxNode);
-        } else {
-            setActiveAdventure(id);
-        }
-        navigate('/map');
-    }, [isAdventureUnlocked, adventureStatuses, setActiveAdventure, navigate, setIsPremiumModalOpen]);
+        // Navigate to the map for this adventure
+        navigate(`/map/${id}`);
+    }, [isAdventureUnlocked, navigate, setIsPremiumModalOpen]);
 
     return {
         handleNext,

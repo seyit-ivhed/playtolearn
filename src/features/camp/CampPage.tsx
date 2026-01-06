@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
-import { ADVENTURES } from '../../data/adventures.data';
 import styles from './CampPage.module.css';
 import { CampfireScene } from './components/CampfireScene';
 import { FellowshipRoster } from './components/FellowshipRoster';
@@ -22,7 +21,8 @@ const MAX_PARTY_SIZE = 4;
 
 const CampPage = () => {
     const navigate = useNavigate();
-    const { nodeId } = useParams<{ nodeId: string }>();
+    const { adventureId, nodeIndex: nodeIndexParam } = useParams<{ adventureId: string; nodeIndex: string }>();
+    const nodeIndex = parseInt(nodeIndexParam || '1', 10);
 
     // Level Up Modal State
     const [levelUpData, setLevelUpData] = React.useState<{
@@ -39,8 +39,6 @@ const CampPage = () => {
         removeFromParty,
         xpPool,
         companionStats,
-        activeAdventureId,
-        currentMapNode,
         completeEncounter,
         levelUpCompanion
     } = useGameStore();
@@ -49,15 +47,7 @@ const CampPage = () => {
 
 
     // Get active adventure and current camp info
-    const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
 
-    // Find encounter either by ID from URL or fallback to current node
-    const encounter = nodeId
-        ? adventure?.encounters.find(e => e.id === nodeId)
-        : adventure?.encounters[currentMapNode - 1];
-
-    const currentEncounterIndex = adventure?.encounters.findIndex(e => e.id === encounter?.id) ?? -1;
-    const nodeIndex = currentEncounterIndex + 1;
 
     // Helper to get remaining slots
     const slots = Array(MAX_PARTY_SIZE).fill(null).map((_, i) => activeParty[i] || null);
@@ -87,8 +77,14 @@ const CampPage = () => {
     };
 
     const handlePackUp = () => {
-        completeEncounter(nodeIndex);
-        navigate('/map');
+        if (adventureId) {
+            completeEncounter(adventureId, nodeIndex);
+            // After camp, we focus on the SAME node if they just wanted to rest, 
+            // but usually camp is a transition. Let's focus on the next one.
+            navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex + 1 } });
+        } else {
+            navigate('/chronicle');
+        }
     };
 
     // New logic: check if ANY companion can level up
@@ -102,7 +98,7 @@ const CampPage = () => {
             stats.level < 10;
     });
 
-    const backgroundUrl = activeAdventureId ? CAMP_BACKGROUNDS[activeAdventureId] : null;
+    const backgroundUrl = adventureId ? CAMP_BACKGROUNDS[adventureId] : null;
 
     return (
         <div

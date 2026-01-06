@@ -17,27 +17,27 @@ import styles from './PuzzlePage.module.css';
 const PuzzlePage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { nodeId } = useParams<{ nodeId: string }>();
-    const { activeAdventureId, currentMapNode, completeEncounter, activeEncounterDifficulty, encounterResults } = useGameStore();
+    const { adventureId, nodeIndex: nodeIndexParam } = useParams<{ adventureId: string; nodeIndex: string }>();
+    const nodeIndex = parseInt(nodeIndexParam || '1', 10);
+    const { completeEncounter, activeEncounterDifficulty, encounterResults } = useGameStore();
     const { difficulty } = usePlayerStore();
 
     const [isCompleted, setIsCompleted] = useState(false);
 
-    const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
+    const adventure = ADVENTURES.find(a => a.id === adventureId);
 
-    // Find encounter either by ID from URL or fallback to current node
-    const encounter = nodeId
-        ? adventure?.encounters.find(e => e.id === nodeId)
-        : adventure?.encounters[currentMapNode - 1];
+    // Find encounter by nodeIndex
+    const encounter = adventure?.encounters[nodeIndex - 1];
 
-    const encounterIndex = adventure?.encounters.findIndex(e => e.id === encounter?.id) ?? -1;
-    const isLocked = encounterIndex + 1 > currentMapNode;
+    // Puzzles are generally not locked in the new system if you have the URL
+    // but we can still check progress if we want to be strict.
+    const isLocked = false;
 
     // Use XP reward from encounter data
     const xpReward = encounter?.xpReward ?? 0;
 
     // Check if this is the first time completing this node
-    const encounterKey = `${activeAdventureId}_${encounterIndex + 1}`;
+    const encounterKey = `${adventureId}_${nodeIndex}`;
     const isFirstTime = !encounterResults[encounterKey];
 
     // Dynamically generate puzzle values based on difficulty
@@ -55,12 +55,12 @@ const PuzzlePage = () => {
                 <h2>{isLocked ? t('puzzle.locked', 'Puzzle Locked') : t('puzzle.not_found', 'Puzzle Not Found')}</h2>
                 <div style={{ margin: '1rem', color: '#666' }}>
                     {isLocked ? t('puzzle.locked_desc', 'You haven\'t reached this part of the journey yet!') : (
-                        `Node ID: ${nodeId || 'none'} | Index: ${currentMapNode}`
+                        `Node Index: ${nodeIndex}`
                     )}
                 </div>
                 <button
                     className={styles.backButton}
-                    onClick={() => navigate('/map')}
+                    onClick={() => navigate(`/map/${adventureId}`)}
                 >
                     {t('back_to_map', 'Back to Map')}
                 </button>
@@ -74,12 +74,16 @@ const PuzzlePage = () => {
     };
 
     const handleCompletionContinue = () => {
-        completeEncounter(encounterIndex + 1);
-        navigate('/map');
+        if (adventureId) {
+            completeEncounter(adventureId, nodeIndex);
+            navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex + 1 } });
+        } else {
+            navigate('/chronicle');
+        }
     };
 
     const handleBack = () => {
-        navigate('/map');
+        navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
     };
 
     return (
@@ -89,7 +93,7 @@ const PuzzlePage = () => {
                     {t('retreat', 'Retreat')}
                 </button>
                 <h1 className={styles.title}>
-                    {t(`adventures.${activeAdventureId}.nodes.${encounter.id}.label`, encounter.label || '')}
+                    {t(`adventures.${adventureId}.nodes.${encounter.id}.label`, encounter.label || '')}
                 </h1>
             </header>
 

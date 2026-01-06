@@ -5,18 +5,16 @@ import { PersistenceService } from '../../../services/persistence.service';
 import { EncounterType } from '../../../types/adventure.types';
 
 export const createAdventureProgressSlice: StateCreator<GameStore, [], [], AdventureProgressSlice> = (set, get) => ({
-    completeEncounter: (nodeIndex) => {
-        const { currentMapNode, activeAdventureId, addXpToPool, activeEncounterDifficulty, encounterResults } = get();
-        const adventure = ADVENTURES.find(a => a.id === activeAdventureId);
+    completeEncounter: (adventureId, nodeIndex) => {
+        const { addXpToPool, encounterResults } = get();
+        const adventure = ADVENTURES.find(a => a.id === adventureId);
 
         if (!adventure) return;
 
-        // Use provided nodeIndex or fallback to current
-        const completedIndex = nodeIndex ?? currentMapNode;
-        const encounter = adventure.encounters[completedIndex - 1];
+        const encounter = adventure.encounters[nodeIndex - 1];
 
         // Unique key for this encounter
-        const encounterKey = `${activeAdventureId}_${completedIndex}`;
+        const encounterKey = `${adventureId}_${nodeIndex}`;
         const existingResult = encounterResults[encounterKey];
 
         // Grant dynamic XP only if first time completion
@@ -29,6 +27,7 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
         const isRatedType = encounter?.type !== EncounterType.CAMP && encounter?.type !== EncounterType.ENDING;
 
         if (isRatedType) {
+            const { activeEncounterDifficulty } = get();
             const newStars = activeEncounterDifficulty;
             const shouldUpdateResult = !existingResult || newStars > existingResult.stars;
 
@@ -54,27 +53,11 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
             }
         }
 
-        // Only increment currentMapNode if we completed the latest unlocked node
-        if (completedIndex >= currentMapNode) {
-            if (currentMapNode < adventure.encounters.length) {
-                set({ currentMapNode: currentMapNode + 1 });
-            } else {
-                // Adventure Completed (Loop for now, or handle win state)
-                set({ currentMapNode: 1 });
-            }
-        }
-
         // Trigger cloud sync
         PersistenceService.sync(get());
     },
 
     setEncounterDifficulty: (difficulty) => set({ activeEncounterDifficulty: difficulty }),
-
-    setActiveAdventure: (adventureId, initialNode) => {
-        set({ activeAdventureId: adventureId, currentMapNode: initialNode ?? 1 });
-    },
-
-    resetMap: () => set({ currentMapNode: 1 }),
 
     updateChroniclePosition: (volumeId, adventureId) => {
         set((state) => ({

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useGameStore } from '../../stores/game/store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { VOLUMES } from '../../data/volumes.data';
 import { calculateAdventureStars } from '../../utils/progression.utils';
@@ -112,7 +111,7 @@ export const ChronicleBook: React.FC = () => {
                     volumes={VOLUMES}
                     adventureStatuses={adventureStatuses}
                     adventureTitles={adventureTitles}
-                    activeAdventureId={useGameStore.getState().activeAdventureId}
+                    activeAdventureId={currentAdventure.id}
                     onJumpToChapter={handleJumpToChapter}
                     onClose={() => setIsTocOpen(false)}
                 />

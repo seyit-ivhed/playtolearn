@@ -89,6 +89,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                 isJustCompleted={isJustCompleted}
                 currentPage={currentPage}
                 totalPages={totalPages}
+                hasProgress={status !== AdventureStatus.LOCKED && stars > 0}
             />
         </div>
     );

@@ -19,6 +19,7 @@ interface ChapterActionsProps {
     isJustCompleted?: boolean;
     currentPage: number;
     totalPages: number;
+    hasProgress?: boolean;
 }
 
 export const ChapterActions: React.FC<ChapterActionsProps> = ({
@@ -36,7 +37,8 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
     isCompleted,
     isJustCompleted,
     currentPage,
-    totalPages
+    totalPages,
+    hasProgress
 }) => {
     const { t } = useTranslation();
 
@@ -95,7 +97,7 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                                 whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                {t('chronicle.begin_chapter')}
+                                {hasProgress ? t('chronicle.continue_chapter', 'Continue Adventure') : t('chronicle.begin_chapter')}
                             </motion.button>
                         )
                     ) : isPremiumLocked && !isProgressionLocked ? (

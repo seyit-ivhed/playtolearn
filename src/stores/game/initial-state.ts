@@ -3,8 +3,6 @@ import type { GameState } from './interfaces';
 import { IdentityService } from '../../services/identity.service';
 
 export const initialGameState: GameState = {
-    currentMapNode: 1,
-    activeAdventureId: '1',
     unlockedCompanions: [...INITIAL_FELLOWSHIP],
     activeParty: [...INITIAL_FELLOWSHIP], // Default full party
     deviceId: IdentityService.getDeviceId(),

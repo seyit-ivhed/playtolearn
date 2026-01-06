@@ -19,7 +19,8 @@ export interface AdventureState {
 }
 
 const INITIAL_STATUSES: Record<AdventureId, AdventureStatus> = {
-    '1': AdventureStatus.AVAILABLE // First adventure is always available
+    'prologue': AdventureStatus.AVAILABLE,
+    '1': AdventureStatus.AVAILABLE
 };
 
 export const useAdventureStore = create<AdventureState>()(

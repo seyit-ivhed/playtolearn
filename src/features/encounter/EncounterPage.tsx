@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEncounterStore } from '../../stores/encounter.store';
 import { useGameStore } from '../../stores/game/store';
 import { EncounterPhase } from '../../types/encounter.types';
@@ -20,17 +20,19 @@ import './EncounterPage.css';
 const EncounterPage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { adventureId, nodeIndex: nodeIndexParam } = useParams<{ adventureId: string; nodeIndex: string }>();
+    const nodeIndex = parseInt(nodeIndexParam || '1', 10);
+
     const {
         phase, party, monsters,
         performAction,
         resolveSpecialAttack,
         xpReward,
-        difficulty,
-        nodeIndex
+        difficulty
     } = useEncounterStore();
 
-    const { activeAdventureId, encounterResults } = useGameStore();
-    const encounterKey = `${activeAdventureId}_${nodeIndex}`;
+    const { encounterResults, completeEncounter } = useGameStore();
+    const encounterKey = `${adventureId}_${nodeIndex}`;
     const isFirstTime = !encounterResults[encounterKey];
 
     const [activeChallenge, setActiveChallenge] = useState<{
@@ -110,21 +112,27 @@ const EncounterPage = () => {
     };
 
     const handleCompletionContinue = () => {
+        if (!adventureId || !nodeIndex) {
+            navigate('/chronicle');
+            return;
+        }
+
         if (phase === EncounterPhase.VICTORY) {
-            const { nodeIndex } = useEncounterStore.getState();
-            useGameStore.getState().completeEncounter(nodeIndex);
+            completeEncounter(adventureId, nodeIndex);
 
             // Check if this was a BOSS encounter
             const currentMonsters = useEncounterStore.getState().monsters;
             const isBossEncounter = currentMonsters.some(m => m.isBoss);
 
             if (isBossEncounter) {
-                navigate('/map', { state: { adventureCompleted: true } });
+                navigate(`/map/${adventureId}`, { state: { adventureCompleted: true, focalNode: nodeIndex } });
             } else {
-                navigate('/map');
+                // Focus on the NEXT node
+                navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex + 1 } });
             }
         } else if (phase === EncounterPhase.DEFEAT) {
-            navigate('/map');
+            // Focus on the SAME node
+            navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
         }
     };
 
@@ -134,7 +142,7 @@ const EncounterPage = () => {
                 <div className={styles.headerControls}>
                     <button
                         className={styles.abortLink}
-                        onClick={() => navigate('/map')}
+                        onClick={() => navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } })}
                         disabled={!!activeChallenge || !!activeVFX || isEncounterOver}
                     >
                         {t('retreat')}

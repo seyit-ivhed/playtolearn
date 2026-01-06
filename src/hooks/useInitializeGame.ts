@@ -1,15 +1,23 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from './useAuth';
 import { useGameStore } from '../stores/game/store';
+import { useAdventureStore } from '../stores/adventure.store';
 import { usePremiumStore } from '../stores/premium.store';
+import { getHighestUnlockedAdventure } from '../features/adventure/utils/navigation.utils';
 import { PersistenceService } from '../services/persistence.service';
 import { supabase } from '../services/supabase.service';
 
+/**
+ * Orchestrates the initial loading sequence:
+ * 1. Checks authentication status
+ * 2. Fetches player profile and rehydrates game state from cloud
+ * 3. Initializes premium entitlements
+ * 4. Resolves the landing page (Chronicle)
+ */
 export const useInitializeGame = () => {
     const { isAuthenticated, user, loading: authLoading, refreshSession } = useAuth();
     const [isInitializing, setIsInitializing] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [shouldNavigateToMap, setShouldNavigateToMap] = useState(false);
 
     const initializePremium = usePremiumStore(state => state.initialize);
     const initialized = useRef(false);
@@ -47,34 +55,48 @@ export const useInitializeGame = () => {
                     console.log('Cloud state found, rehydrating store...');
                     useGameStore.setState(cloudState);
 
-                    // Check if we should navigate to map
-                    const state = useGameStore.getState();
-                    if (state.activeAdventureId && (Object.keys(state.encounterResults).length > 0 || state.currentMapNode > 1)) {
-                        setShouldNavigateToMap(true);
-                    }
+                    // AFTER rehydration, determine which chronicle adventure to focus
+                    const { encounterResults } = useGameStore.getState();
+                    const { adventureStatuses } = useAdventureStore.getState();
+
+                    // New players (no progress) land on prologue, others land on highest unlocked
+                    const hasProgress = Object.keys(encounterResults).length > 0;
+                    const { volumeId, adventureId } = hasProgress
+                        ? getHighestUnlockedAdventure(adventureStatuses)
+                        : { volumeId: 'origins', adventureId: 'prologue' };
+
+                    // Set the chronicle position so the player lands on the right page
+                    useGameStore.getState().updateChroniclePosition(volumeId, adventureId);
                 } else {
                     console.log('No cloud state found. Syncing local progress to cloud...');
                     await PersistenceService.pushState(user.id, useGameStore.getState(), profile.id);
                 }
             } else {
                 console.log('User is not authenticated (guest mode). Checking connectivity...');
+                // Ensure premium is initialized even for guests (to know what's locked)
+                await initializePremium(false);
+
                 const { error: pingError } = await supabase.from('player_profiles').select('count').limit(0);
                 if (pingError) throw pingError;
 
-                // Sync guest state if any
-                const state = useGameStore.getState();
-                if (state.activeAdventureId && (Object.keys(state.encounterResults).length > 0 || state.currentMapNode > 1)) {
-                    setShouldNavigateToMap(true);
-                }
+                // For guest mode, land based on local progress
+                const { encounterResults } = useGameStore.getState();
+                const { adventureStatuses } = useAdventureStore.getState();
+
+                const hasProgress = Object.keys(encounterResults).length > 0;
+                const { volumeId, adventureId } = hasProgress
+                    ? getHighestUnlockedAdventure(adventureStatuses)
+                    : { volumeId: 'origins', adventureId: 'prologue' };
+
+                useGameStore.getState().updateChroniclePosition(volumeId, adventureId);
             }
 
             setIsInitializing(false);
-        } catch (err) {
+        } catch (err: any) {
             console.error('Initialization failed:', err);
             initialized.current = false; // Reset on failure to allow retry
             setError('offline');
             setIsInitializing(false);
-            setShouldNavigateToMap(false);
         }
     }, [authLoading, isAuthenticated, user, initializePremium]);
 
@@ -93,7 +115,6 @@ export const useInitializeGame = () => {
     return {
         isInitializing: isInitializing || authLoading,
         error,
-        shouldNavigateToMap,
         retry
     };
 };

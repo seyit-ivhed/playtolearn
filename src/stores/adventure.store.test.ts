@@ -5,6 +5,7 @@ import { AdventureStatus } from '../types/adventure.types';
 // Mock the adventures data
 vi.mock('../data/adventures.data', () => ({
     ADVENTURES: [
+        { id: 'prologue', difficulty: 0, encounters: [] },
         { id: '1', difficulty: 1, encounters: [] },
         { id: '2', difficulty: 1, encounters: [] },
         { id: '3', difficulty: 1, encounters: [] },
@@ -18,9 +19,11 @@ describe('AdventureStore', () => {
         useAdventureStore.getState().resetProgress();
     });
 
-    it('should initialize with adventure 1 available', () => {
-        const status = useAdventureStore.getState().getAdventureStatus('1');
-        expect(status).toBe(AdventureStatus.AVAILABLE);
+    it('should initialize with prologue and adventure 1 available', () => {
+        const prologueStatus = useAdventureStore.getState().getAdventureStatus('prologue');
+        const adventure1Status = useAdventureStore.getState().getAdventureStatus('1');
+        expect(prologueStatus).toBe(AdventureStatus.AVAILABLE);
+        expect(adventure1Status).toBe(AdventureStatus.AVAILABLE);
     });
 
     it('should have other adventures locked initially', () => {
