@@ -83,25 +83,16 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
                 stores.game.setActiveAdventure(advId);
             }
 
-            // Mark encounters as completed (1 star if no stars)
-            let markedCount = 0;
-            const results = stores.game.encounterResults;
+            // Use completeEncounter for each node to ensure all logic (XP, Auth, Sync) is triggered
             for (let i = 1; i <= targetNode; i++) {
-                const key = `${advId}_${i}`;
-                if (!results[key] || (results[key].stars === 0)) {
-                    stores.game.debugSetEncounterStars(advId, i, 1);
-                    markedCount++;
-                }
+                stores.game.completeEncounter(i);
             }
 
-            // Move to the node AFTER the last completed one
+            // Move to the node AFTER the last completed one (ensures consistency)
             const nextNode = Math.min(targetNode + 1, adventure.encounters.length + 1);
             stores.game.debugSetMapNode(nextNode);
 
             log(`Progressed to encounter ${targetNode} in adventure ${advId}.`);
-            if (markedCount > 0) {
-                log(`Marked ${markedCount} additional encounter(s) as completed with 1 star.`);
-            }
             log(`Current map node set to ${nextNode}.`);
         }
     },
