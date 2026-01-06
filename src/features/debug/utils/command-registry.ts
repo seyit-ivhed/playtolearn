@@ -28,47 +28,16 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
             });
         }
     },
-    status: {
-        name: 'status',
-        description: 'Show current game state',
-        execute: (_parts, { log, stores }) => {
-            const { activeAdventureId, xpPool, companionStats } = stores.game;
-            log(`Active Adventure: ${activeAdventureId}`);
-            log(`XP Pool: ${xpPool}`);
-            log('Companions:');
-            Object.entries(companionStats).forEach(([id, stats]) => {
-                log(`  ${id}: Level ${stats.level}`);
-            });
-        }
-    },
-    unlock: {
-        name: 'unlock',
-        description: 'Unlock all adventures',
-        execute: (_parts, { log, stores }) => {
-            stores.adventure.debugUnlockAllAdventures();
-            log('All adventures unlocked.');
-        }
-    },
     progress: {
         name: 'progress',
-        description: 'Complete encounters up to index (progress <index> or <advId> <index>)',
+        description: 'Complete encounters up to index (progress <advId> <index>)',
         execute: (parts, { log, stores }) => {
-            const arg1 = parts[1];
-            const arg2 = parts[2];
-
-            let advId = stores.game.activeAdventureId;
-            let targetNode = NaN;
-
-            if (arg2) {
-                advId = arg1;
-                targetNode = parseInt(arg2);
-            } else if (arg1) {
-                targetNode = parseInt(arg1);
-            }
+            const advId = parts[1];
+            const targetNode = parseInt(parts[2]);
 
             const adventure = ADVENTURES.find(a => a.id === advId);
             if (!adventure || isNaN(targetNode)) {
-                log('Error: Invalid usage. Usage: progress <index> OR progress <advId> <index>');
+                log('Error: Invalid usage. Usage: progress <advId> <index>');
                 return;
             }
 
@@ -77,35 +46,17 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
                 return;
             }
 
-            // Switch adventure if necessary
-            if (advId !== stores.game.activeAdventureId) {
+            // Unlock adventure if necessary
+            if (advId !== 'prologue') {
                 stores.adventure.unlockAdventure(advId);
-                stores.game.setActiveAdventure(advId);
             }
 
             // Use completeEncounter for each node to ensure all logic (XP, Auth, Sync) is triggered
             for (let i = 1; i <= targetNode; i++) {
-                stores.game.completeEncounter(i);
+                stores.game.completeEncounter(advId, i);
             }
 
-            // Move to the node AFTER the last completed one (ensures consistency)
-            const nextNode = Math.min(targetNode + 1, adventure.encounters.length + 1);
-            stores.game.debugSetMapNode(nextNode);
-
             log(`Progressed to encounter ${targetNode} in adventure ${advId}.`);
-            log(`Current map node set to ${nextNode}.`);
-        }
-    },
-    reset: {
-        name: 'reset',
-        description: 'Reset progress in current adventure',
-        execute: (_parts, { log, stores }) => {
-            stores.game.debugSetMapNode(1);
-            stores.game.debugResetXpPool();
-            stores.game.debugResetCompanions();
-            stores.game.debugResetEncounterResults();
-            stores.adventure.resetProgress();
-            log('Adventure progress, XP pool, and companion levels reset to start.');
         }
     },
     xp: {
@@ -118,27 +69,6 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
                 log(`Added ${amount} XP to pool.`);
             } else {
                 log('Error: Invalid amount. Usage: xp <amount>');
-            }
-        }
-    },
-    companions: {
-        name: 'companions',
-        description: 'Unlock all companions',
-        execute: (_parts, { log, stores }) => {
-            stores.game.debugUnlockAllCompanions();
-            log('All companions unlocked.');
-        }
-    },
-    adv: {
-        name: 'adv',
-        description: 'Set active adventure by ID (adv <id>)',
-        execute: (parts, { log, stores }) => {
-            const advId = parts[1];
-            if (advId) {
-                stores.game.setActiveAdventure(advId);
-                log(`Active adventure set to "${advId}".`);
-            } else {
-                log('Error: Missing ID. Usage: adv <id>');
             }
         }
     },
@@ -156,55 +86,21 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
             }
         }
     },
-    lv: {
-        name: 'lv',
-        description: 'Alias for level',
-        execute: (parts, context) => DEBUG_COMMANDS.level.execute(parts, context)
-    },
     stars: {
         name: 'stars',
-        description: 'Set stars (stars <v> or <idx> <v> or <adv> <idx> <v>)',
+        description: 'Set stars (stars <adv> <idx> <v>)',
         execute: (parts, { log, stores }) => {
-            const arg1 = parts[1];
-            const arg2 = parts[2];
-            const arg3 = parts[3];
+            const advId = parts[1];
+            const nodeIdx = parseInt(parts[2]);
+            const stars = parseInt(parts[3]);
 
-            if (arg3) {
-                const advId = arg1;
-                const nodeIdx = parseInt(arg2);
-                const stars = parseInt(arg3);
-                if (!isNaN(nodeIdx) && !isNaN(stars)) {
-                    stores.game.debugSetEncounterStars(advId, nodeIdx, stars);
-                    log(`Stars for adventure ${advId}, node ${nodeIdx} set to ${stars}.`);
-                } else {
-                    log('Error: Invalid arguments. Usage: stars <advId> <nodeIdx> <stars>');
-                }
-            } else if (arg2) {
-                const nodeIdx = parseInt(arg1);
-                const stars = parseInt(arg2);
-                if (!isNaN(nodeIdx) && !isNaN(stars)) {
-                    stores.game.debugSetEncounterStars(stores.game.activeAdventureId, nodeIdx, stars);
-                    log(`Stars for node ${nodeIdx} in current adventure set to ${stars}.`);
-                } else {
-                    log('Error: Invalid arguments. Usage: stars <nodeIdx> <stars>');
-                }
-            } else if (arg1) {
-                const stars = parseInt(arg1);
-                if (!isNaN(stars)) {
-                    stores.game.debugSetEncounterStars(stores.game.activeAdventureId, stores.game.currentMapNode, stars);
-                    log(`Stars for current node (${stores.game.currentMapNode}) set to ${stars}.`);
-                } else {
-                    log('Error: Invalid arguments. Usage: stars <stars>');
-                }
+            if (advId && !isNaN(nodeIdx) && !isNaN(stars)) {
+                stores.game.debugSetEncounterStars(advId, nodeIdx, stars);
+                log(`Stars for adventure ${advId}, node ${nodeIdx} set to ${stars}.`);
             } else {
-                log('Error: Missing arguments. Usage: stars <val> OR stars <idx> <val> OR stars <adv> <idx> <val>');
+                log('Error: Invalid arguments. Usage: stars <advId> <nodeIdx> <stars>');
             }
         }
-    },
-    star: {
-        name: 'star',
-        description: 'Alias for stars',
-        execute: (parts, context) => DEBUG_COMMANDS.stars.execute(parts, context)
     },
     clear: {
         name: 'clear',
