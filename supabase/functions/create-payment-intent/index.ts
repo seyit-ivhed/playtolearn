@@ -157,7 +157,7 @@ Deno.serve(async (req: Request) => {
         })
 
         // 6. Record the new intent in our DB
-        const { data: newIntent, error: insertError } = await supabaseAdmin
+        const { error: insertError } = await supabaseAdmin
             .from('purchase_intents')
             .insert({
                 player_id: profile.id,
@@ -168,8 +168,6 @@ Deno.serve(async (req: Request) => {
                     stripe_client_secret: paymentIntent.client_secret,
                 }
             })
-            .select('id')
-            .single()
 
         if (insertError) {
             console.error('Failed to record purchase intent:', insertError)

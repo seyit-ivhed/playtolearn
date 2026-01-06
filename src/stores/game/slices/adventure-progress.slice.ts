@@ -25,30 +25,33 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
             addXpToPool(xpReward);
         }
 
-        // Update encounter results
+        // Update encounter results ONLY for rated types (Battle, Boss, Puzzle)
         const isRatedType = encounter?.type !== EncounterType.CAMP && encounter?.type !== EncounterType.ENDING;
-        const newStars = isRatedType ? activeEncounterDifficulty : 0;
-        const shouldUpdateResult = !existingResult || newStars > existingResult.stars;
 
-        if (shouldUpdateResult) {
-            set((state) => {
-                const newResults = {
-                    ...state.encounterResults,
-                    [encounterKey]: {
-                        stars: newStars,
-                        difficulty: activeEncounterDifficulty,
-                        completedAt: Date.now(),
-                    }
-                };
+        if (isRatedType) {
+            const newStars = activeEncounterDifficulty;
+            const shouldUpdateResult = !existingResult || newStars > existingResult.stars;
 
-                // Trigger auth milestone if 3 or more unique encounters completed
-                const milestoneReached = Object.keys(newResults).length >= 3;
+            if (shouldUpdateResult) {
+                set((state) => {
+                    const newResults = {
+                        ...state.encounterResults,
+                        [encounterKey]: {
+                            stars: newStars,
+                            difficulty: activeEncounterDifficulty,
+                            completedAt: Date.now(),
+                        }
+                    };
 
-                return {
-                    encounterResults: newResults,
-                    authMilestoneReached: state.authMilestoneReached || milestoneReached
-                };
-            });
+                    // Trigger auth milestone if 3 or more unique encounters completed
+                    const milestoneReached = Object.keys(newResults).length >= 3;
+
+                    return {
+                        encounterResults: newResults,
+                        authMilestoneReached: state.authMilestoneReached || milestoneReached
+                    };
+                });
+            }
         }
 
         // Only increment currentMapNode if we completed the latest unlocked node
