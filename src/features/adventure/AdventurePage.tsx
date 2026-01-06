@@ -68,7 +68,7 @@ const AdventurePage = () => {
     }
 
     // Dynamic focal node logic
-    const focalNodeFromState = (location.state as any)?.focalNode;
+    const focalNodeFromState = (location.state as { focalNode?: number } | null)?.focalNode;
     const currentNode = focalNodeFromState ?? getFocalNodeIndex(adventureId, encounterResults);
 
     const { encounters } = adventure;

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useGameStore } from '../../stores/game/store';
 import { usePlayerStore } from '../../stores/player.store';
 import { useAdventureStore } from '../../stores/adventure.store';
@@ -35,22 +35,6 @@ const PuzzlePage = () => {
 
     const [isCompleted, setIsCompleted] = useState(false);
 
-    // Safety gate: Validate premium, progression and node sequence
-    if (premiumInitialized && adventureId) {
-        const access = checkNavigationAccess({
-            adventureId,
-            nodeIndex,
-            isPremiumUnlocked,
-            isProgressionUnlocked,
-            encounterResults
-        });
-
-        if (!access.allowed) {
-            navigate('/chronicle', { replace: true });
-            return null;
-        }
-    }
-
     const adventure = ADVENTURES.find(a => a.id === adventureId);
 
     // Find encounter by nodeIndex
@@ -74,6 +58,23 @@ const PuzzlePage = () => {
         const currentDifficulty = (activeEncounterDifficulty || difficulty) as DifficultyLevel;
         return generatePuzzleData(pType, currentDifficulty);
     }, [encounter, difficulty, activeEncounterDifficulty]);
+
+    // Safety gate: Validate premium, progression and node sequence
+    useEffect(() => {
+        if (premiumInitialized && adventureId) {
+            const access = checkNavigationAccess({
+                adventureId,
+                nodeIndex,
+                isPremiumUnlocked,
+                isProgressionUnlocked,
+                encounterResults
+            });
+
+            if (!access.allowed) {
+                navigate('/chronicle', { replace: true });
+            }
+        }
+    }, [premiumInitialized, adventureId, nodeIndex, isPremiumUnlocked, isProgressionUnlocked, encounterResults, navigate]);
 
     if (!encounter || !puzzleData || isLocked) {
         return (

@@ -72,7 +72,7 @@ export const useInitializeGame = () => {
             }
 
             setIsInitializing(false);
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Initialization failed:', err);
             initialized.current = false; // Reset on failure to allow retry
             setError('offline');

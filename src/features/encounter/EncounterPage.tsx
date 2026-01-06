@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEncounterStore } from '../../stores/encounter.store';
@@ -39,22 +39,6 @@ const EncounterPage = () => {
     const { isAdventureUnlocked: isProgressionUnlocked } = useAdventureStore();
     const { isAdventureUnlocked: isPremiumUnlocked, initialized: premiumInitialized } = usePremiumStore();
 
-    // Safety gate: Validate premium, progression and node sequence
-    if (premiumInitialized && adventureId) {
-        const access = checkNavigationAccess({
-            adventureId,
-            nodeIndex,
-            isPremiumUnlocked,
-            isProgressionUnlocked,
-            encounterResults
-        });
-
-        if (!access.allowed) {
-            navigate('/chronicle', { replace: true });
-            return null;
-        }
-    }
-
     const encounterKey = `${adventureId}_${nodeIndex}`;
     const isFirstTime = !encounterResults[encounterKey];
 
@@ -76,6 +60,23 @@ const EncounterPage = () => {
     } | null>(null);
 
     const isEncounterOver = checkIsEncounterOver(monsters);
+
+    // Safety gate: Validate premium, progression and node sequence
+    useEffect(() => {
+        if (premiumInitialized && adventureId) {
+            const access = checkNavigationAccess({
+                adventureId,
+                nodeIndex,
+                isPremiumUnlocked,
+                isProgressionUnlocked,
+                encounterResults
+            });
+
+            if (!access.allowed) {
+                navigate('/chronicle', { replace: true });
+            }
+        }
+    }, [premiumInitialized, adventureId, nodeIndex, isPremiumUnlocked, isProgressionUnlocked, encounterResults, navigate]);
 
     const handleUnitAction = (unitId: string) => {
         if (phase !== EncounterPhase.PLAYER_TURN || isEncounterOver) return;

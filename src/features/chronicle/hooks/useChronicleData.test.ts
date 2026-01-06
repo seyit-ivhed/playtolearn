@@ -26,14 +26,14 @@ describe('useChronicleData', () => {
             // Mock new player state - no encounter results
             vi.mocked(useGameStore).mockReturnValue({
                 encounterResults: {},
-            } as any);
+            } as ReturnType<typeof useGameStore>);
 
             vi.mocked(useAdventureStore).mockReturnValue({
                 adventureStatuses: {
                     'prologue': AdventureStatus.AVAILABLE,
                     '1': AdventureStatus.AVAILABLE,
                 },
-            } as any);
+            } as ReturnType<typeof useAdventureStore>);
 
             const { result } = renderHook(() => useChronicleData());
 
@@ -47,7 +47,7 @@ describe('useChronicleData', () => {
                     'prologue_1': { stars: 3, difficulty: 1, completedAt: Date.now() },
                     '1_1': { stars: 2, difficulty: 2, completedAt: Date.now() },
                 },
-            } as any);
+            } as ReturnType<typeof useGameStore>);
 
             vi.mocked(useAdventureStore).mockReturnValue({
                 adventureStatuses: {
@@ -55,7 +55,7 @@ describe('useChronicleData', () => {
                     '1': AdventureStatus.AVAILABLE,
                     '2': AdventureStatus.AVAILABLE,
                 },
-            } as any);
+            } as ReturnType<typeof useAdventureStore>);
 
             const { result } = renderHook(() => useChronicleData());
 
@@ -68,14 +68,14 @@ describe('useChronicleData', () => {
             // but new players should still see prologue
             vi.mocked(useGameStore).mockReturnValue({
                 encounterResults: {},
-            } as any);
+            } as ReturnType<typeof useGameStore>);
 
             vi.mocked(useAdventureStore).mockReturnValue({
                 adventureStatuses: {
                     'prologue': AdventureStatus.AVAILABLE,
                     '1': AdventureStatus.AVAILABLE, // Unlocked by default
                 },
-            } as any);
+            } as ReturnType<typeof useAdventureStore>);
 
             const { result } = renderHook(() => useChronicleData());
 
