@@ -2,6 +2,7 @@ import type { StateCreator } from 'zustand';
 import type { GameStore, AdventureProgressSlice } from '../interfaces';
 import { ADVENTURES } from '../../../data/adventures.data';
 import { PersistenceService } from '../../../services/persistence.service';
+import { EncounterType } from '../../../types/adventure.types';
 
 export const createAdventureProgressSlice: StateCreator<GameStore, [], [], AdventureProgressSlice> = (set, get) => ({
     completeEncounter: (nodeIndex) => {
@@ -12,6 +13,7 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
 
         // Use provided nodeIndex or fallback to current
         const completedIndex = nodeIndex ?? currentMapNode;
+        const encounter = adventure.encounters[completedIndex - 1];
 
         // Unique key for this encounter
         const encounterKey = `${activeAdventureId}_${completedIndex}`;
@@ -19,13 +21,13 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
 
         // Grant dynamic XP only if first time completion
         if (!existingResult) {
-            const encounter = adventure.encounters[completedIndex - 1];
             const xpReward = encounter?.xpReward ?? 0;
             addXpToPool(xpReward);
         }
 
         // Update encounter results
-        const newStars = activeEncounterDifficulty; // 1:1 ratio as requested
+        const isRatedType = encounter?.type !== EncounterType.CAMP && encounter?.type !== EncounterType.ENDING;
+        const newStars = isRatedType ? activeEncounterDifficulty : 0;
         const shouldUpdateResult = !existingResult || newStars > existingResult.stars;
 
         if (shouldUpdateResult) {
