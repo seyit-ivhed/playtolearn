@@ -83,7 +83,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
             onClick={() => !isLocked && onNodeClick(node)}
         >
             {/* Stars Display */}
-            {!isCamp && !isLocked && (
+            {!isCamp && !isEnding && !isLocked && (
                 <div className="node-stars">
                     {[...Array(5)].map((_, i) => (
                         <Star
