@@ -143,4 +143,18 @@ describe('navigation-security.utils', () => {
         });
         expect(result.allowed).toBe(true);
     });
+
+    it('should deny access if a previous gating encounter has 0 stars', () => {
+        const result = checkNavigationAccess({
+            adventureId: '1',
+            nodeIndex: 2,
+            isPremiumUnlocked: mockIsPremiumUnlocked,
+            isProgressionUnlocked: mockIsProgressionUnlocked,
+            encounterResults: {
+                '1_1': { stars: 0, difficulty: 1, completedAt: 123 }
+            }
+        });
+        expect(result.allowed).toBe(false);
+        expect(result.reason).toBe('NODE_LOCKED');
+    });
 });

@@ -53,14 +53,14 @@ export const checkNavigationAccess = ({
         for (let i = 0; i < nodeIndex - 1; i++) {
             const encounter = adventure.encounters[i];
 
-            // These types act as progress milestones that must be cleared
             if (
                 encounter.type === EncounterType.BATTLE ||
                 encounter.type === EncounterType.BOSS ||
                 encounter.type === EncounterType.PUZZLE
             ) {
                 const encounterKey = `${adventureId}_${i + 1}`;
-                if (!encounterResults[encounterKey]) {
+                const result = encounterResults[encounterKey];
+                if (!result || result.stars < 1) {
                     return { allowed: false, reason: 'NODE_LOCKED' };
                 }
             }

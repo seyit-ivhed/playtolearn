@@ -24,16 +24,6 @@ export const getHighestUnlockedAdventure = (
 };
 
 /**
- * Checks if a player has any completed encounters in a specific adventure.
- */
-export const hasProgressInAdventure = (
-    adventureId: string,
-    encounterResults: Record<string, EncounterResult>
-): boolean => {
-    return Object.keys(encounterResults).some(key => key.startsWith(`${adventureId}_`));
-};
-
-/**
  * Returns the index (1-indexed) of the highest completed encounter in an adventure.
  * Returns 0 if none are completed.
  */
@@ -76,28 +66,4 @@ export const getFocalNodeIndex = (
 
     // If no encounters completed, start at 1
     return 1;
-};
-
-/**
- * Checks if a specific node is completed.
- */
-export const isNodeCompleted = (
-    adventureId: string,
-    nodeIndex: number,
-    encounterResults: Record<string, EncounterResult>
-): boolean => {
-    return !!encounterResults[`${adventureId}_${nodeIndex}`];
-};
-
-/**
- * Checks if a specific node is unlocked.
- * A node is unlocked if it's the first node OR if the previous node is completed.
- */
-export const isNodeLocked = (
-    adventureId: string,
-    nodeIndex: number,
-    encounterResults: Record<string, EncounterResult>
-): boolean => {
-    if (nodeIndex <= 1) return false;
-    return !isNodeCompleted(adventureId, nodeIndex - 1, encounterResults);
 };
