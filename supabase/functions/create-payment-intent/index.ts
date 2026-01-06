@@ -44,50 +44,57 @@ Deno.serve(async (req: Request) => {
 
         console.log('Authorized user:', user.id)
 
-        // Use a user-scoped client for DB operations to respect RLS if needed, 
-        // or just use admin if we want to bypass (but here we should respect RLS)
-        const supabaseClient = createClient(
-            Deno.env.get('SUPABASE_URL') ?? '',
-            Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-            { global: { headers: { Authorization: authHeader } } }
-        )
+        // 1. Strict Validation
+        if (!user.email) {
+            return new Response(JSON.stringify({ error: 'Account with a valid email is required for purchases' }), {
+                status: 400,
+                headers: { ...headers, 'Content-Type': 'application/json' },
+            })
+        }
 
-        // 1. Get or create player profile ID from Auth ID
-        const { data: existingProfile, error: profileError } = await supabaseClient
+        const { data: profile, error: profileError } = await supabaseAdmin
             .from('player_profiles')
-            .select('id')
+            .select('id, is_anonymous')
             .eq('auth_id', user.id)
             .maybeSingle()
 
-        let profile = existingProfile;
-
-        if (profileError) {
+        if (profileError || !profile) {
             console.error('Error fetching profile:', profileError)
-            throw new Error('Database error during profile lookup')
+            return new Response(JSON.stringify({ error: 'Player profile not found. Please ensure you are logged in correctly.' }), {
+                status: 400,
+                headers: { ...headers, 'Content-Type': 'application/json' },
+            })
         }
 
-        if (!profile) {
-            console.log('No profile found for user, creating one on the fly...')
-            const { data: newProfile, error: createError } = await supabaseAdmin
-                .from('player_profiles')
-                .insert({
-                    auth_id: user.id,
-                    is_anonymous: false, // They just converted or are regular users
-                })
-                .select('id')
-                .single()
-
-            if (createError) {
-                console.error('Failed to create missing profile:', createError)
-                throw new Error('Could not initialize player profile')
-            }
-            profile = newProfile
+        if (profile.is_anonymous) {
+            return new Response(JSON.stringify({ error: 'Anonymous accounts cannot make purchases. Please register your account first.' }), {
+                status: 400,
+                headers: { ...headers, 'Content-Type': 'application/json' },
+            })
         }
 
-        if (!profile) throw new Error('Player profile not found')
+        // 2. Check for existing entitlement FIRST
+        const { data: existingEntitlement, error: entitlementError } = await supabaseAdmin
+            .from('player_entitlements')
+            .select('id')
+            .eq('player_id', profile.id)
+            .eq('content_pack_id', contentPackId)
+            .maybeSingle()
 
-        // 2. Get content pack price from DB
-        const { data: pack, error: packError } = await supabaseClient
+        if (entitlementError) {
+            console.error('Error checking entitlement:', entitlementError)
+            throw new Error('Database error during entitlement check')
+        }
+
+        if (existingEntitlement) {
+            return new Response(JSON.stringify({ error: 'You already own this content.' }), {
+                status: 400,
+                headers: { ...headers, 'Content-Type': 'application/json' },
+            })
+        }
+
+        // 3. Get content pack price from DB
+        const { data: pack, error: packError } = await supabaseAdmin
             .from('content_pack_prices')
             .select('amount_cents, currency')
             .eq('content_pack_id', contentPackId)
@@ -101,9 +108,42 @@ Deno.serve(async (req: Request) => {
             })
         }
 
-        // Create a PaymentIntent with the specific amount and currency
-        // We explicitly list the types to avoid certain methods like 'link' 
-        // that the user wants to keep hidden, and to handle 'swish' carefully.
+        // 4. Check for existing PENDING purchase intent
+        const { data: existingIntent, error: intentError } = await supabaseAdmin
+            .from('purchase_intents')
+            .select('id, stripe_payment_intent_id, created_at')
+            .eq('player_id', profile.id)
+            .eq('content_pack_id', contentPackId)
+            .eq('status', 'pending')
+            .maybeSingle()
+
+        if (intentError) {
+            console.error('Error fetching existing intent:', intentError)
+        }
+
+        if (existingIntent) {
+            const createdDate = new Date(existingIntent.created_at)
+            const now = new Date()
+            const diffHours = (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60)
+
+            if (diffHours < 24) {
+                console.log('Reusing existing pending intent:', existingIntent.stripe_payment_intent_id)
+                const intent = await stripe.paymentIntents.retrieve(existingIntent.stripe_payment_intent_id)
+
+                return new Response(
+                    JSON.stringify({ clientSecret: intent.client_secret }),
+                    { headers: { ...headers, 'Content-Type': 'application/json' } }
+                )
+            } else {
+                // Mark as abandoned if too old
+                await supabaseAdmin
+                    .from('purchase_intents')
+                    .update({ status: 'abandoned' })
+                    .eq('id', existingIntent.id)
+            }
+        }
+
+        // 5. Create new Stripe PaymentIntent
         const paymentIntent = await stripe.paymentIntents.create({
             amount: pack.amount_cents,
             currency: pack.currency.toLowerCase(),
@@ -116,7 +156,28 @@ Deno.serve(async (req: Request) => {
             },
         })
 
-        console.log('Created Payment Intent:', paymentIntent.id)
+        // 6. Record the new intent in our DB
+        const { data: newIntent, error: insertError } = await supabaseAdmin
+            .from('purchase_intents')
+            .insert({
+                player_id: profile.id,
+                content_pack_id: contentPackId,
+                stripe_payment_intent_id: paymentIntent.id,
+                status: 'pending',
+                metadata: {
+                    stripe_client_secret: paymentIntent.client_secret,
+                }
+            })
+            .select('id')
+            .single()
+
+        if (insertError) {
+            console.error('Failed to record purchase intent:', insertError)
+            // We don't throw here as the Stripe intent is already created, 
+            // but it's a critical telemetry/safety failure.
+        }
+
+        console.log('Created and recorded Payment Intent:', paymentIntent.id)
 
         return new Response(
             JSON.stringify({ clientSecret: paymentIntent.client_secret }),

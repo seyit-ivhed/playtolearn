@@ -17,7 +17,7 @@ Deno.serve(async (req: Request) => {
         const body = await req.text()
         const event = await stripe.webhooks.constructEventAsync(body, signature, endpointSecret)
 
-        if (event.type === 'payment_intent.succeeded') {
+        if (event.type === 'payment_intent.succeeded' || event.type === 'payment_intent.payment_failed' || event.type === 'payment_intent.canceled') {
             const paymentIntent = event.data.object
             const { playerId, contentPackId } = paymentIntent.metadata
 
@@ -26,26 +26,45 @@ Deno.serve(async (req: Request) => {
                 return new Response('Missing metadata', { status: 400 })
             }
 
-            // Use Service Role Key to bypass RLS and insert entitlement
             const supabaseAdmin = createClient(
                 Deno.env.get('SUPABASE_URL') ?? '',
                 Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
             )
 
-            const { error } = await supabaseAdmin
-                .from('player_entitlements')
-                .upsert({
-                    player_id: playerId,
-                    content_pack_id: contentPackId,
-                    stripe_payment_intent_id: paymentIntent.id,
-                }, { onConflict: 'player_id, content_pack_id' })
+            // 1. Update Purchase Intent Status
+            let status = 'pending'
+            if (event.type === 'payment_intent.succeeded') status = 'succeeded'
+            if (event.type === 'payment_intent.payment_failed') status = 'failed'
+            if (event.type === 'payment_intent.canceled') status = 'canceled'
 
-            if (error) {
-                console.error('Error inserting entitlement:', error)
-                return new Response(`Error updating database: ${error.message}`, { status: 500 })
+            const { data: intent, error: intentError } = await supabaseAdmin
+                .from('purchase_intents')
+                .update({ status, updated_at: new Date().toISOString() })
+                .eq('stripe_payment_intent_id', paymentIntent.id)
+                .select('id')
+                .maybeSingle()
+
+            if (intentError) {
+                console.error('Error updating purchase intent:', intentError)
             }
 
-            console.log(`SUCCESS: Entitlement granted for Player ${playerId} (Pack: ${contentPackId})`)
+            // 2. Grant Entitlement if Succeeded
+            if (event.type === 'payment_intent.succeeded') {
+                const { error: entitlementError } = await supabaseAdmin
+                    .from('player_entitlements')
+                    .upsert({
+                        player_id: playerId,
+                        content_pack_id: contentPackId,
+                        purchase_intent_id: intent?.id,
+                    }, { onConflict: 'player_id, content_pack_id' })
+
+                if (entitlementError) {
+                    console.error('Error inserting entitlement:', entitlementError)
+                    return new Response(`Error updating database: ${entitlementError.message}`, { status: 500 })
+                }
+
+                console.log(`SUCCESS: Entitlement granted for Player ${playerId} (Pack: ${contentPackId})`)
+            }
         }
 
         return new Response(JSON.stringify({ received: true }), {
