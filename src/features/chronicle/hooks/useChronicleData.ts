@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../../stores/game/store';
+import { useAdventureStore } from '../../../stores/adventure.store';
+import { getHighestUnlockedAdventure } from '../../adventure/utils/navigation.utils';
 import {
     resolveCurrentVolume,
     resolveVolumeAdventures,
@@ -9,20 +11,28 @@ import {
 } from '../utils/chronicle.utils';
 
 export const useChronicleData = () => {
-    const { chronicle, encounterResults } = useGameStore();
+    const { encounterResults } = useGameStore();
+    const { adventureStatuses } = useAdventureStore();
     const { t } = useTranslation();
 
+    // Default to the highest unlocked adventure if none specified
+    const initialAdventure = useMemo(() =>
+        getHighestUnlockedAdventure(adventureStatuses).adventureId
+        , [adventureStatuses]);
+
+    const [activeAdventureId, setActiveAdventureId] = useState<string>(initialAdventure);
+
     const currentVolume = useMemo(() =>
-        resolveCurrentVolume(chronicle.lastViewedVolumeId)
-        , [chronicle.lastViewedVolumeId]);
+        resolveCurrentVolume(activeAdventureId)
+        , [activeAdventureId]);
 
     const volumeAdventures = useMemo(() =>
         resolveVolumeAdventures(currentVolume, t)
         , [currentVolume, t]);
 
     const currentAdventureIndex = useMemo(() =>
-        resolveCurrentAdventureIndex(volumeAdventures, chronicle.lastViewedAdventureId)
-        , [volumeAdventures, chronicle.lastViewedAdventureId]);
+        resolveCurrentAdventureIndex(volumeAdventures, activeAdventureId)
+        , [volumeAdventures, activeAdventureId]);
 
     const currentAdventure = volumeAdventures[currentAdventureIndex];
 
@@ -36,6 +46,8 @@ export const useChronicleData = () => {
         currentAdventureIndex,
         currentAdventure,
         adventureTitles,
-        encounterResults
+        encounterResults,
+        activeAdventureId,
+        setActiveAdventureId
     };
 };

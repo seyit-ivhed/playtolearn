@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from './useAuth';
 import { useGameStore } from '../stores/game/store';
-import { useAdventureStore } from '../stores/adventure.store';
 import { usePremiumStore } from '../stores/premium.store';
-import { getHighestUnlockedAdventure } from '../features/adventure/utils/navigation.utils';
 import { PersistenceService } from '../services/persistence.service';
 import { supabase } from '../services/supabase.service';
 
@@ -55,18 +53,8 @@ export const useInitializeGame = () => {
                     console.log('Cloud state found, rehydrating store...');
                     useGameStore.setState(cloudState);
 
-                    // AFTER rehydration, determine which chronicle adventure to focus
-                    const { encounterResults } = useGameStore.getState();
-                    const { adventureStatuses } = useAdventureStore.getState();
-
                     // New players (no progress) land on prologue, others land on highest unlocked
-                    const hasProgress = Object.keys(encounterResults).length > 0;
-                    const { volumeId, adventureId } = hasProgress
-                        ? getHighestUnlockedAdventure(adventureStatuses)
-                        : { volumeId: 'origins', adventureId: 'prologue' };
-
-                    // Set the chronicle position so the player lands on the right page
-                    useGameStore.getState().updateChroniclePosition(volumeId, adventureId);
+                    // Note: Resolution is now handled algorithmically in useChronicleData
                 } else {
                     console.log('No cloud state found. Syncing local progress to cloud...');
                     await PersistenceService.pushState(user.id, useGameStore.getState(), profile.id);
@@ -80,15 +68,7 @@ export const useInitializeGame = () => {
                 if (pingError) throw pingError;
 
                 // For guest mode, land based on local progress
-                const { encounterResults } = useGameStore.getState();
-                const { adventureStatuses } = useAdventureStore.getState();
-
-                const hasProgress = Object.keys(encounterResults).length > 0;
-                const { volumeId, adventureId } = hasProgress
-                    ? getHighestUnlockedAdventure(adventureStatuses)
-                    : { volumeId: 'origins', adventureId: 'prologue' };
-
-                useGameStore.getState().updateChroniclePosition(volumeId, adventureId);
+                // Note: Resolution is now handled algorithmically in useChronicleData
             }
 
             setIsInitializing(false);

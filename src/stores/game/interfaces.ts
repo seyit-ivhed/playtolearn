@@ -19,11 +19,6 @@ export interface GameState {
     xpPool: number;
     companionStats: Record<string, { level: number }>;
     restedCompanions: string[]; // IDs of companions who are rested
-    // Chronicle (Storybook Navigation)
-    chronicle: {
-        lastViewedVolumeId: string;
-        lastViewedAdventureId: string;
-    };
     authMilestoneReached: boolean;
 }
 
@@ -31,7 +26,6 @@ export interface GameState {
 export interface AdventureProgressSlice {
     completeEncounter: (adventureId: string, nodeIndex: number) => void;
     setEncounterDifficulty: (difficulty: number) => void;
-    updateChroniclePosition: (volumeId: string, adventureId: string) => void;
 }
 
 

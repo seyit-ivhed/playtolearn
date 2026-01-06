@@ -24,12 +24,12 @@ export const ChronicleBook: React.FC = () => {
 
     // Hooks
     const {
-        currentVolume,
         volumeAdventures,
         currentAdventureIndex,
         currentAdventure,
         adventureTitles,
-        encounterResults
+        encounterResults,
+        setActiveAdventureId
     } = useChronicleData();
 
     const {
@@ -41,8 +41,8 @@ export const ChronicleBook: React.FC = () => {
     } = useChronicleNavigation({
         currentAdventureIndex,
         volumeAdventures,
-        currentVolume,
         currentAdventure,
+        setActiveAdventureId,
         setIsPremiumModalOpen,
         setIsTocOpen
     });

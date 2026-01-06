@@ -22,17 +22,22 @@ describe('chronicle.utils', () => {
     });
 
     describe('resolveCurrentVolume', () => {
-        it('should return the volume matching the ID', () => {
-            const result = resolveCurrentVolume('baobab');
+        it('should return the volume containing the adventure', () => {
+            const result = resolveCurrentVolume('4');
             expect(result.id).toBe('baobab');
         });
 
-        it('should return the first volume if ID is not found', () => {
+        it('should return the first volume for the prologue', () => {
+            const result = resolveCurrentVolume('prologue');
+            expect(result.id).toBe('origins');
+        });
+
+        it('should return the first volume if adventure is not found', () => {
             const result = resolveCurrentVolume('non-existent');
             expect(result.id).toBe(VOLUMES[0].id);
         });
 
-        it('should return the first volume if ID is undefined', () => {
+        it('should return the first volume if adventureId is undefined', () => {
             const result = resolveCurrentVolume(undefined);
             expect(result.id).toBe(VOLUMES[0].id);
         });

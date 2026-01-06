@@ -16,10 +16,6 @@ export const initialGameState: GameState = {
         return acc;
     }, {} as Record<string, { level: number }>),
     restedCompanions: [],
-    chronicle: {
-        lastViewedVolumeId: 'origins',
-        lastViewedAdventureId: 'prologue',
-    },
     authMilestoneReached: false,
 };
 

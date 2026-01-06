@@ -58,15 +58,4 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
     },
 
     setEncounterDifficulty: (difficulty) => set({ activeEncounterDifficulty: difficulty }),
-
-    updateChroniclePosition: (volumeId, adventureId) => {
-        set((state) => ({
-            chronicle: {
-                ...state.chronicle,
-                lastViewedVolumeId: volumeId,
-                lastViewedAdventureId: adventureId,
-            }
-        }));
-    },
 });
-

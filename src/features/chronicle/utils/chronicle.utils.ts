@@ -4,11 +4,14 @@ import type { Adventure, Volume } from '../../../types/adventure.types';
 import type { TFunction } from 'i18next';
 
 /**
- * Gets the current volume based on the last viewed volume ID.
+ * Gets the current volume based on an adventure ID.
  * Defaults to the first volume if not found.
  */
-export const resolveCurrentVolume = (lastViewedVolumeId?: string): Volume => {
-    return VOLUMES.find(v => v.id === lastViewedVolumeId) || VOLUMES[0];
+export const resolveCurrentVolume = (adventureId?: string): Volume => {
+    if (!adventureId) return VOLUMES[0];
+    if (adventureId === 'prologue') return VOLUMES[0];
+
+    return VOLUMES.find(v => v.adventureIds.includes(adventureId)) || VOLUMES[0];
 };
 
 /**
@@ -35,8 +38,8 @@ export const resolveVolumeAdventures = (volume: Volume, t: TFunction): Adventure
 /**
  * Gets the index of the current adventure within the volume's adventures.
  */
-export const resolveCurrentAdventureIndex = (adventures: Adventure[], lastViewedAdventureId?: string): number => {
-    const idx = adventures.findIndex(a => a.id === lastViewedAdventureId);
+export const resolveCurrentAdventureIndex = (adventures: Adventure[], adventureId?: string): number => {
+    const idx = adventures.findIndex(a => a.id === adventureId);
     return idx !== -1 ? idx : 0;
 };
 
