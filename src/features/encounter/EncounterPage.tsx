@@ -6,6 +6,7 @@ import { useEncounterStore } from '../../stores/encounter.store';
 import { useGameStore } from '../../stores/game/store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
+import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { EncounterPhase } from '../../types/encounter.types';
 import { generateProblem, getAllowedOperations } from '../../utils/math-generator';
 import { type MathProblem, type DifficultyLevel } from '../../types/math.types';
@@ -38,12 +39,17 @@ const EncounterPage = () => {
     const { isAdventureUnlocked: isProgressionUnlocked } = useAdventureStore();
     const { isAdventureUnlocked: isPremiumUnlocked, initialized: premiumInitialized } = usePremiumStore();
 
-    // Safety gate: Validate premium and progression
+    // Safety gate: Validate premium, progression and node sequence
     if (premiumInitialized && adventureId) {
-        const hasPremiumAccess = isPremiumUnlocked(adventureId);
-        const isLevelUnlocked = isProgressionUnlocked(adventureId);
+        const access = checkNavigationAccess({
+            adventureId,
+            nodeIndex,
+            isPremiumUnlocked,
+            isProgressionUnlocked,
+            encounterResults
+        });
 
-        if (!hasPremiumAccess || !isLevelUnlocked) {
+        if (!access.allowed) {
             navigate('/chronicle', { replace: true });
             return null;
         }

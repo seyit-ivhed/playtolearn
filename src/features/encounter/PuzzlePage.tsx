@@ -5,6 +5,7 @@ import { useGameStore } from '../../stores/game/store';
 import { usePlayerStore } from '../../stores/player.store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
+import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
 import { type DifficultyLevel } from '../../types/math.types';
@@ -34,12 +35,17 @@ const PuzzlePage = () => {
 
     const [isCompleted, setIsCompleted] = useState(false);
 
-    // Safety gate: Validate premium and progression
+    // Safety gate: Validate premium, progression and node sequence
     if (premiumInitialized && adventureId) {
-        const hasPremiumAccess = isPremiumUnlocked(adventureId);
-        const isLevelUnlocked = isProgressionUnlocked(adventureId);
+        const access = checkNavigationAccess({
+            adventureId,
+            nodeIndex,
+            isPremiumUnlocked,
+            isProgressionUnlocked,
+            encounterResults
+        });
 
-        if (!hasPremiumAccess || !isLevelUnlocked) {
+        if (!access.allowed) {
             navigate('/chronicle', { replace: true });
             return null;
         }

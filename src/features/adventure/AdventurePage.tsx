@@ -7,6 +7,7 @@ import { useEncounterStore } from '../../stores/encounter.store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
 import { getFocalNodeIndex } from './utils/navigation.utils';
+import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { DifficultySelectionModal } from './components/DifficultySelectionModal';
 import './AdventurePage.css';
 
@@ -49,10 +50,14 @@ const AdventurePage = () => {
 
     // Safety gate: Validate premium and progression
     if (premiumInitialized && adventureId) {
-        const hasPremiumAccess = isPremiumUnlocked(adventureId);
-        const isLevelUnlocked = isProgressionUnlocked(adventureId);
+        const access = checkNavigationAccess({
+            adventureId,
+            isPremiumUnlocked,
+            isProgressionUnlocked,
+            encounterResults
+        });
 
-        if (!hasPremiumAccess || !isLevelUnlocked) {
+        if (!access.allowed) {
             navigate('/chronicle', { replace: true });
             return null;
         }

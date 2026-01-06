@@ -5,6 +5,7 @@ import { useGameStore } from '../../stores/game/store';
 import styles from './CampPage.module.css';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
+import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { CampfireScene } from './components/CampfireScene';
 import { FellowshipRoster } from './components/FellowshipRoster';
 import { LevelUpModal } from './components/LevelUpModal';
@@ -52,10 +53,15 @@ const CampPage = () => {
 
     // Safety gate: Validate premium and progression
     if (premiumInitialized && adventureId) {
-        const hasPremiumAccess = isPremiumUnlocked(adventureId);
-        const isLevelUnlocked = isProgressionUnlocked(adventureId);
+        const access = checkNavigationAccess({
+            adventureId,
+            nodeIndex,
+            isPremiumUnlocked,
+            isProgressionUnlocked,
+            encounterResults: useGameStore.getState().encounterResults // Use fresh state if necessary, but encounterResults from hook is usually fine.
+        });
 
-        if (!hasPremiumAccess || !isLevelUnlocked) {
+        if (!access.allowed) {
             navigate('/chronicle', { replace: true });
             return null;
         }
