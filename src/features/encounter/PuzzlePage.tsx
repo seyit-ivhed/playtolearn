@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useMemo, useState } from 'react';
 import { useGameStore } from '../../stores/game/store';
 import { usePlayerStore } from '../../stores/player.store';
+import { useAdventureStore } from '../../stores/adventure.store';
+import { usePremiumStore } from '../../stores/premium.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
 import { type DifficultyLevel } from '../../types/math.types';
@@ -20,17 +22,35 @@ const PuzzlePage = () => {
     const { adventureId, nodeIndex: nodeIndexParam } = useParams<{ adventureId: string; nodeIndex: string }>();
     const nodeIndex = parseInt(nodeIndexParam || '1', 10);
     const { completeEncounter, activeEncounterDifficulty, encounterResults } = useGameStore();
+    const {
+        isAdventureUnlocked: isProgressionUnlocked
+    } = useAdventureStore();
+    const {
+        isAdventureUnlocked: isPremiumUnlocked,
+        initialized: premiumInitialized
+    } = usePremiumStore();
+
     const { difficulty } = usePlayerStore();
 
     const [isCompleted, setIsCompleted] = useState(false);
+
+    // Safety gate: Validate premium and progression
+    if (premiumInitialized && adventureId) {
+        const hasPremiumAccess = isPremiumUnlocked(adventureId);
+        const isLevelUnlocked = isProgressionUnlocked(adventureId);
+
+        if (!hasPremiumAccess || !isLevelUnlocked) {
+            navigate('/chronicle', { replace: true });
+            return null;
+        }
+    }
 
     const adventure = ADVENTURES.find(a => a.id === adventureId);
 
     // Find encounter by nodeIndex
     const encounter = adventure?.encounters[nodeIndex - 1];
 
-    // Puzzles are generally not locked in the new system if you have the URL
-    // but we can still check progress if we want to be strict.
+    // Progression and premium gates are handled above
     const isLocked = false;
 
     // Use XP reward from encounter data

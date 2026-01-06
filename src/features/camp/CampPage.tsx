@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import styles from './CampPage.module.css';
+import { useAdventureStore } from '../../stores/adventure.store';
+import { usePremiumStore } from '../../stores/premium.store';
 import { CampfireScene } from './components/CampfireScene';
 import { FellowshipRoster } from './components/FellowshipRoster';
 import { LevelUpModal } from './components/LevelUpModal';
@@ -43,11 +45,21 @@ const CampPage = () => {
         levelUpCompanion
     } = useGameStore();
 
+    const { isAdventureUnlocked: isProgressionUnlocked } = useAdventureStore();
+    const { isAdventureUnlocked: isPremiumUnlocked, initialized: premiumInitialized } = usePremiumStore();
+
     const { t } = useTranslation();
 
+    // Safety gate: Validate premium and progression
+    if (premiumInitialized && adventureId) {
+        const hasPremiumAccess = isPremiumUnlocked(adventureId);
+        const isLevelUnlocked = isProgressionUnlocked(adventureId);
 
-    // Get active adventure and current camp info
-
+        if (!hasPremiumAccess || !isLevelUnlocked) {
+            navigate('/chronicle', { replace: true });
+            return null;
+        }
+    }
 
     // Helper to get remaining slots
     const slots = Array(MAX_PARTY_SIZE).fill(null).map((_, i) => activeParty[i] || null);

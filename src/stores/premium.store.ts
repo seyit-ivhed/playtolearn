@@ -93,8 +93,8 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
     isAdventureUnlocked: (adventureId: string) => {
         const { entitlements, userRole } = get();
 
-        // Adventure 1 is the free trial
-        if (adventureId === '1') return true;
+        // Prologue and Adventure 1 are free
+        if (adventureId === 'prologue' || adventureId === '1') return true;
 
         // Internal roles (Tester/Admin) bypass all content gates
         if (userRole === 'tester' || userRole === 'admin') return true;

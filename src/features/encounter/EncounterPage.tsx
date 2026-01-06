@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEncounterStore } from '../../stores/encounter.store';
 import { useGameStore } from '../../stores/game/store';
+import { useAdventureStore } from '../../stores/adventure.store';
+import { usePremiumStore } from '../../stores/premium.store';
 import { EncounterPhase } from '../../types/encounter.types';
 import { generateProblem, getAllowedOperations } from '../../utils/math-generator';
 import { type MathProblem, type DifficultyLevel } from '../../types/math.types';
@@ -32,6 +34,21 @@ const EncounterPage = () => {
     } = useEncounterStore();
 
     const { encounterResults, completeEncounter } = useGameStore();
+
+    const { isAdventureUnlocked: isProgressionUnlocked } = useAdventureStore();
+    const { isAdventureUnlocked: isPremiumUnlocked, initialized: premiumInitialized } = usePremiumStore();
+
+    // Safety gate: Validate premium and progression
+    if (premiumInitialized && adventureId) {
+        const hasPremiumAccess = isPremiumUnlocked(adventureId);
+        const isLevelUnlocked = isProgressionUnlocked(adventureId);
+
+        if (!hasPremiumAccess || !isLevelUnlocked) {
+            navigate('/chronicle', { replace: true });
+            return null;
+        }
+    }
+
     const encounterKey = `${adventureId}_${nodeIndex}`;
     const isFirstTime = !encounterResults[encounterKey];
 

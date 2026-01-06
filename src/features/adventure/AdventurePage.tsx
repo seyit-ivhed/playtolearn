@@ -30,9 +30,16 @@ const AdventurePage = () => {
         completeEncounter
     } = useGameStore();
     const { initializeEncounter } = useEncounterStore();
-    const { completeAdventure, unlockAdventure } = useAdventureStore();
+    const {
+        completeAdventure,
+        unlockAdventure,
+        isAdventureUnlocked: isProgressionUnlocked
+    } = useAdventureStore();
     const { difficulty: playerDifficulty } = usePlayerStore();
-    const { isAdventureUnlocked, initialized: premiumInitialized } = usePremiumStore();
+    const {
+        isAdventureUnlocked: isPremiumUnlocked,
+        initialized: premiumInitialized
+    } = usePremiumStore();
 
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
     const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
@@ -40,10 +47,15 @@ const AdventurePage = () => {
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === adventureId);
 
-    // Safety gate: If premium content is locked, redirect to chronicle
-    if (premiumInitialized && adventureId && !isAdventureUnlocked(adventureId)) {
-        navigate('/chronicle', { replace: true });
-        return null;
+    // Safety gate: Validate premium and progression
+    if (premiumInitialized && adventureId) {
+        const hasPremiumAccess = isPremiumUnlocked(adventureId);
+        const isLevelUnlocked = isProgressionUnlocked(adventureId);
+
+        if (!hasPremiumAccess || !isLevelUnlocked) {
+            navigate('/chronicle', { replace: true });
+            return null;
+        }
     }
 
     if (!adventure || !adventureId) {
