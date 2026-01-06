@@ -111,6 +111,7 @@
         "mystery_path": "Denna väg förblir höljd i dunkel...",
         "completed": "Slutfört",
         "replay_chapter": "Spela om kapitel",
+        "continue_chapter": "Fortsätt äventyr",
         "begin_chapter": "Börja äventyr",
         "locked": "Låst",
         "page_x_of_y": "{{current}} av {{total}}",

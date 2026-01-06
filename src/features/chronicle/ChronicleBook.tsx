@@ -84,6 +84,7 @@ export const ChronicleBook: React.FC = () => {
                                 totalPages={volumeAdventures.length}
                                 isJustCompleted={isJustCompleted}
                                 isPremiumLocked={!isAdventureUnlocked(currentAdventure.id)}
+                                hasProgress={Object.keys(encounterResults).some(key => key.startsWith(`${currentAdventure.id}_`))}
                             />
 
                         </motion.div>

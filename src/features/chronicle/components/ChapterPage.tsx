@@ -22,6 +22,7 @@ interface ChapterPageProps {
     totalPages: number;
     isJustCompleted?: boolean;
     isPremiumLocked?: boolean;
+    hasProgress: boolean;
 }
 
 export const ChapterPage: React.FC<ChapterPageProps> = ({
@@ -38,7 +39,8 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     currentPage,
     totalPages,
     isJustCompleted,
-    isPremiumLocked
+    isPremiumLocked,
+    hasProgress
 }) => {
     const isPrologue = adventure.id === 'prologue';
     const isProgressionLocked = !isPrologue && status === AdventureStatus.LOCKED;
@@ -89,7 +91,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                 isJustCompleted={isJustCompleted}
                 currentPage={currentPage}
                 totalPages={totalPages}
-                hasProgress={status !== AdventureStatus.LOCKED && stars > 0}
+                hasProgress={hasProgress}
             />
         </div>
     );
