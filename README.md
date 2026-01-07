@@ -13,6 +13,7 @@ A browser-based educational game designed to teach math concepts to children thr
 
 - Node.js (v18 or higher recommended)
 - npm
+- **[Deno](https://deno.land/)** (Required for Edge Function testing)
 
 ## Installation
 
@@ -136,6 +137,11 @@ We use **Playwright** for end-to-end testing.
 ### Edge Function Tests (Deno)
 
 We use **Deno** for testing Supabase Edge Functions.
+
+**Installation (if needed):**
+```bash
+curl -fsSL https://deno.land/install.sh | sh
+```
 
 - **Run all edge function tests:**
   ```bash
