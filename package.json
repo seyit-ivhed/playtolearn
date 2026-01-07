@@ -15,7 +15,8 @@
     "start-project": "bash scripts/start-project.sh",
     "complete-project": "bash scripts/complete-project.sh",
     "simulate-difficulty": "tsx scripts/simulate-difficulty.ts",
-    "analyze-progression": "tsx scripts/analyze-progression.ts"
+    "analyze-progression": "tsx scripts/analyze-progression.ts",
+    "deploy-supabase": "bash scripts/deploy-supabase.sh"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^5.4.1",
