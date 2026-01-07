@@ -475,6 +475,19 @@ await page.click('[data-testid="attack-button"]', { force: true });
 await page.click('text=Attack');
 ```
 
+### Edge Function Testing
+We use **Deno's built-in test runner** and the `@std/testing` module for mocking to test Supabase Edge Functions without affecting the underlying database.
+
+**Key Principles:**
+- **Mocking the Supabase Client**: Instead of connecting to a real Supabase instance, we mock the `supabaseAdmin` client. This allows us to define exactly what the database "returns" for a given query.
+- **Mocking External Services**: Similarly, we mock external SDKs like Stripe to simulate successful or failed interactions.
+- **Isolation**: Each test runs in isolation with its own set of mocks, ensuring no side effects on the project's data.
+
+**Test Structure:**
+- **Arrange**: Mock global objects (like `fetch`), environment variables, and external SDKs.
+- **Act**: Invoke the edge function's handler with a mock `Request` object.
+- **Assert**: Verify that the response status and content are correct, and that the expected database calls were made.
+
 ---
 
 ## Migration Strategy

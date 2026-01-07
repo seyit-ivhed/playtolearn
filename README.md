@@ -133,6 +133,20 @@ We use **Playwright** for end-to-end testing.
   npx playwright show-report
   ```
 
+### Edge Function Tests (Deno)
+
+We use **Deno** for testing Supabase Edge Functions.
+
+- **Run all edge function tests:**
+  ```bash
+  deno test --allow-all supabase/functions/
+  ```
+
+- **Run a specific edge function test:**
+  ```bash
+  deno test --allow-all supabase/functions/create-payment-intent/index.test.ts
+  ```
+
 ## Project Structure
 
 - `/src` - Frontend React application code
