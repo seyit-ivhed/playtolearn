@@ -13,6 +13,7 @@
     "test:coverage": "vitest --coverage",
     "test:e2e": "playwright test",
     "start-project": "bash scripts/start-project.sh",
+    "sync-supabase": "bash scripts/sync-supabase.sh",
     "complete-project": "bash scripts/complete-project.sh",
     "simulate-difficulty": "tsx scripts/simulate-difficulty.ts",
     "analyze-progression": "tsx scripts/analyze-progression.ts"
