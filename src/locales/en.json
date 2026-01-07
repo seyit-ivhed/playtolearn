@@ -324,6 +324,8 @@
             "success_title": "Premium Unlocked!",
             "success_message": "Thank you for your support!",
             "processing_payment": "Securing your adventure...",
+            "verifying_access": "Verifying your new content...",
+            "verification_timeout": "Payment succeeded, but we are still processing your access. It will appear in your account shortly.",
             "total_amount": "Total Amount"
         }
     }

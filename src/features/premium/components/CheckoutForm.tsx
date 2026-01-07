@@ -5,17 +5,56 @@ import { supabase } from '../../../services/supabase.service';
 import './Premium.css';
 
 interface CheckoutFormProps {
+    contentPackId: string;
     onSuccess: () => void;
     onCancel: () => void;
     price: string;
 }
 
-export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel, price }) => {
+export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuccess, onCancel, price }) => {
     const { t } = useTranslation();
     const stripe = useStripe();
     const elements = useElements();
     const [isProcessing, setIsProcessing] = useState(false);
+    const [isVerifying, setIsVerifying] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const verifyEntitlement = async (): Promise<boolean> => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return false;
+
+        // Get player profile ID
+        const { data: profile } = await supabase
+            .from('player_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single();
+
+        if (!profile) return false;
+
+        // Poll for up to 30 seconds (15 retries * 2 seconds)
+        // High latency on edge functions is expected during redeploys
+        const maxRetries = 15;
+        const delay = 2000;
+
+        for (let i = 0; i < maxRetries; i++) {
+            const { data: entitlement } = await supabase
+                .from('player_entitlements')
+                .select('id')
+                .eq('player_id', profile.id)
+                .eq('content_pack_id', contentPackId)
+                .maybeSingle();
+
+            if (entitlement) {
+                console.log('Entitlement verified in database!');
+                return true;
+            }
+            console.log(`Verifying entitlement (attempt ${i + 1}/${maxRetries})...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+
+        return false;
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -48,8 +87,18 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel,
             } else if (paymentIntent) {
                 console.log('Payment intent received:', paymentIntent.id, 'Status:', paymentIntent.status);
                 if (paymentIntent.status === 'succeeded') {
-                    console.log('Payment confirmed as succeeded. Closing form...');
-                    onSuccess();
+                    console.log('Payment confirmed as succeeded. Starting verification...');
+                    setIsVerifying(true);
+
+                    const verified = await verifyEntitlement();
+                    if (verified) {
+                        onSuccess();
+                    } else {
+                        console.warn('Verification timed out, but payment succeeded.');
+                        setErrorMessage(t('premium.store.verification_timeout', 'Payment succeeded, but we are still processing your access. It will appear in your account shortly.'));
+                        setIsProcessing(false);
+                        setIsVerifying(false);
+                    }
                 } else {
                     console.warn('Payment intent status is not succeeded:', paymentIntent.status);
                     setIsProcessing(false);
@@ -63,6 +112,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel,
             console.error('Submission error:', error);
             setErrorMessage(error.message || 'An unexpected error occurred');
             setIsProcessing(false);
+            setIsVerifying(false);
         }
     };
 
@@ -71,7 +121,11 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ onSuccess, onCancel,
             {isProcessing && (
                 <div className="processing-overlay">
                     <div className="spinner"></div>
-                    <div className="processing-text">{t('premium.store.processing_payment', 'Securing your adventure...')}</div>
+                    <div className="processing-text">
+                        {isVerifying
+                            ? t('premium.store.verifying_access', 'Verifying your new content...')
+                            : t('premium.store.processing_payment', 'Securing your adventure...')}
+                    </div>
                 </div>
             )}
 
