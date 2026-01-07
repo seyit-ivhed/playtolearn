@@ -3,13 +3,9 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Camp Page', () => {
     test.beforeEach(async ({ page }) => {
-        // Navigate to camp page. Assuming we can go there directly or via map.
-        // For stability, we might want to inject state or navigate from map?
-        // Let's try direct navigation first if the app supports it, 
-        // but the app might need initialization.
-        // A safer bet is to go to map then camp if buttons exist.
-        // But for now let's try direct URL and wait for title.
-        await page.goto('http://localhost:5173/camp');
+        // Navigate to camp page with adventureId parameter
+        // Using adventure 1 as the default test adventure
+        await page.goto('http://localhost:5173/camp/1');
     });
 
     test('should display camp page title', async ({ page }) => {

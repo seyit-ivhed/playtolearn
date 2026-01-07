@@ -39,8 +39,8 @@ test.describe('Chronicle Storybook Flow', () => {
         await expect(beginBtn).toBeVisible();
         await beginBtn.click({ force: true });
 
-        // Should be at the map
-        await expect(page).toHaveURL('/map');
+        // Should be at the map with adventure ID
+        await expect(page).toHaveURL('/map/1');
         await expect(page.getByTestId('map-title')).toBeVisible();
 
         // 4. Test Back to Chronicle

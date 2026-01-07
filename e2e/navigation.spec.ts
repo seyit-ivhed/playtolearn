@@ -3,25 +3,29 @@ import { test, expect } from '@playwright/test';
 test.describe('Navigation Flow', () => {
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('/map');
-        await expect(page).toHaveURL('/map');
+        await page.goto('/map/1');
+        await expect(page).toHaveURL('/map/1');
     });
 
     test('should navigate between Map and Camp', async ({ page }) => {
         // Assert Map ID
         await expect(page.getByTestId('map-title')).toBeVisible();
 
-        // 1. Hack the state to unlock Node 3 (Camp)
+        // 1. Hack the state to unlock Node 4 (Camp)
         await page.evaluate(() => {
             const storageKey = 'math-quest-fantasy-storage-v1';
             const currentData = localStorage.getItem(storageKey);
             const parsed = currentData ? JSON.parse(currentData) : { state: {} };
 
+            // Mark encounters 1-3 as completed to unlock node 4
             parsed.state = {
                 ...parsed.state,
-                currentMapNode: 4, // Unlock up to Node 4 (Camp)
-                // Ensure other required fields are present if needed, but partial update might work if hydration handles it
-                // Actually, let's just update currentMapNode, assuming other state is initialized
+                encounterResults: {
+                    ...parsed.state.encounterResults,
+                    '1_1': { stars: 3, difficulty: 1, completedAt: Date.now() },
+                    '1_2': { stars: 3, difficulty: 1, completedAt: Date.now() },
+                    '1_3': { stars: 3, difficulty: 1, completedAt: Date.now() }
+                }
             };
 
             // Need valid structure for Zustand persist
@@ -38,14 +42,14 @@ test.describe('Navigation Flow', () => {
 
         // 4. Click Camp Node
         await campNode.click({ force: true });
-        await expect(page).toHaveURL(/\/camp\/1_4/);
+        await expect(page).toHaveURL('/camp/1/4');
 
         // Assert Camp ID
         await expect(page.getByTestId('camp-title')).toBeVisible();
 
         // Return to Map
         await page.getByTestId('nav-map-btn').click({ force: true });
-        await expect(page).toHaveURL('/map');
+        await expect(page).toHaveURL('/map/1');
         await expect(page.getByTestId('map-title')).toBeVisible();
     });
 
@@ -61,8 +65,8 @@ test.describe('Navigation Flow', () => {
         // Click the start button in the modal
         await page.getByTestId('difficulty-start-btn').click({ force: true });
 
-        // Should be in encounter
-        await expect(page).toHaveURL('/encounter');
+        // Should be in encounter with adventureId and nodeIndex
+        await expect(page).toHaveURL('/encounter/1/1');
 
         // Check for key combat elements (unit cards instead of removed header elements)
         // Party members should be visible
@@ -72,7 +76,7 @@ test.describe('Navigation Flow', () => {
         await page.goBack();
 
         // Should return to Map
-        await expect(page).toHaveURL('/map');
+        await expect(page).toHaveURL('/map/1');
         await expect(page.getByTestId('map-title')).toBeVisible();
     });
 });
