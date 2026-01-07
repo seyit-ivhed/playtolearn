@@ -322,7 +322,7 @@
                 }
             },
             "success_title": "Premium upplåst!",
-            "success_message": "Tack för ditt stöd! Allt premiuminnehåll är nu tillgängligt.",
+            "success_message": "Tack för ditt stöd!",
             "processing_payment": "Säkrar ditt äventyr...",
             "total_amount": "Totalt belopp"
         }

@@ -322,7 +322,7 @@
                 }
             },
             "success_title": "Premium Unlocked!",
-            "success_message": "Thank you for your support! All premium content is now available.",
+            "success_message": "Thank you for your support!",
             "processing_payment": "Securing your adventure...",
             "total_amount": "Total Amount"
         }

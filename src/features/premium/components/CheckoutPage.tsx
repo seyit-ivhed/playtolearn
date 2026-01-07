@@ -19,10 +19,6 @@ export const CheckoutPage: React.FC = () => {
 
     const handleSuccess = () => {
         setShowSuccess(true);
-        // After 3 seconds, automatically redirect back to game
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 3000);
     };
 
     if (authLoading) {
@@ -53,9 +49,6 @@ export const CheckoutPage: React.FC = () => {
                         <h2 className="premium-title">{t('premium.store.success_title')}</h2>
                         <p className="success-description">
                             {t('premium.store.success_message')}
-                        </p>
-                        <p className="redirect-notice">
-                            {t('premium.store.redirecting', 'Redirecting you back to your adventure...')}
                         </p>
                         <button className="back-to-journey-btn" onClick={handleBackToGame}>
                             {t('adventure.back', 'Back to Journey')}
