@@ -147,7 +147,7 @@ fi
 
 echo -e "${GREEN}E2E tests passed on main.${NC}\n"
 
-# Step 12: Push main to origin
+# Step 13: Push main to origin
 echo -e "${YELLOW}Step 12: Pushing main to origin...${NC}"
 git push origin main
 if [ $? -ne 0 ]; then
@@ -157,36 +157,8 @@ fi
 
 echo -e "${GREEN}Successfully pushed main to origin.${NC}\n"
 
-# Step 13: Deploy to Supabase Production
-echo -e "${YELLOW}Step 13: Deploying to Supabase Production...${NC}"
-
-echo -e "${YELLOW}Pushing migrations...${NC}"
-supabase db push
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to push migrations to Supabase Production.${NC}"
-    # We continue here because the git push was successful, but the user should be warned
-fi
-
-echo -e "${YELLOW}Deploying Edge Functions...${NC}"
-# This will deploy all functions in the supabase/functions directory
-supabase functions deploy
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to deploy Edge Functions to Supabase Production.${NC}"
-fi
-
-echo -e "${GREEN}Supabase production deployment complete.${NC}\n"
-
-# Step 14: Delete Supabase preview branch
-echo -e "${YELLOW}Step 14: Deleting Supabase preview branch $CURRENT_BRANCH...${NC}"
-supabase branches delete "$CURRENT_BRANCH"
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to delete Supabase preview branch.${NC}"
-else
-    echo -e "${GREEN}Successfully deleted Supabase preview branch: $CURRENT_BRANCH${NC}\n"
-fi
-
-# Step 15: Delete the feature branch locally
-echo -e "${YELLOW}Step 15: Deleting branch $CURRENT_BRANCH locally...${NC}"
+# Step 14: Delete the feature branch locally
+echo -e "${YELLOW}Step 13: Deleting branch $CURRENT_BRANCH locally...${NC}"
 git branch -d "$CURRENT_BRANCH"
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to delete local branch. Using force delete...${NC}"
@@ -195,17 +167,8 @@ fi
 
 echo -e "${GREEN}Successfully deleted local branch: $CURRENT_BRANCH${NC}\n"
 
-# Step 16: Delete local .env.local
-echo -e "${YELLOW}Step 16: Cleaning up local environment variables...${NC}"
-if [ -f .env.local ]; then
-    rm .env.local
-    echo -e "${GREEN}Deleted .env.local. Switched back to production environment variables.${NC}\n"
-else
-    echo -e "${YELLOW}No .env.local found. Skip cleaning.${NC}\n"
-fi
-
-# Step 17: Delete the feature branch remotely
-echo -e "${YELLOW}Step 17: Deleting branch $CURRENT_BRANCH from origin...${NC}"
+# Step 15: Delete the feature branch remotely
+echo -e "${YELLOW}Step 14: Deleting branch $CURRENT_BRANCH from origin...${NC}"
 git push origin --delete "$CURRENT_BRANCH"
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to delete remote branch.${NC}"
