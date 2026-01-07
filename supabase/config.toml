@@ -5,6 +5,3 @@ verify_jwt = false
 
 [functions.stripe-webhook]
 verify_jwt = false
-
-[auth.password]
-hibp_enabled = true
