@@ -5,9 +5,19 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '')
 
 
 Deno.serve(async (req: Request) => {
+    const origin = req.headers.get('Origin')
+    const productionUrl = Deno.env.get('CLIENT_URL')
+
+    // Dynamic CORS origin check
+    let corsOrigin = productionUrl || ''
+    if (origin && (origin.startsWith('http://localhost:') || origin === 'http://localhost')) {
+        corsOrigin = origin
+    }
+
     const headers = {
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': corsOrigin,
         'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
     }
 
     if (req.method === 'OPTIONS') {
