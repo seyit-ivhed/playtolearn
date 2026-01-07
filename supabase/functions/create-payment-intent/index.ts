@@ -4,7 +4,7 @@ import { createClient } from 'npm:@supabase/supabase-js@^2.0.0'
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '')
 
 
-Deno.serve(async (req: Request) => {
+export const handler = async (req: Request) => {
     const origin = req.headers.get('Origin')
     const productionUrl = Deno.env.get('CLIENT_URL')
 
@@ -199,4 +199,6 @@ Deno.serve(async (req: Request) => {
             headers: { ...headers, 'Content-Type': 'application/json' },
         })
     }
-})
+}
+
+Deno.serve(handler)

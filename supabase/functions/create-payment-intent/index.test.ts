@@ -1,0 +1,115 @@
+import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
+import { handler } from "./index.ts";
+
+/**
+ * Mocks the Deno.env and global fetch to test the edge function 
+ * without hitting any real external services or databases.
+ */
+Deno.test("create-payment-intent handler - successful creation", async () => {
+    // 1. Setup Mock Environment Variables
+    const originalGet = Deno.env.get;
+    const mockEnv: Record<string, string> = {
+        'STRIPE_SECRET_KEY': 'sk_test_mock',
+        'SUPABASE_URL': 'https://mock.supabase.co',
+        'SUPABASE_SERVICE_ROLE_KEY': 'service-role-key',
+    };
+
+    // Note: We avoid Deno.env.set to prevent leaking state, 
+    // though in some environments Deno.env.get is not writable.
+    // For these tests, we assume we can safely mock the fetch layer instead.
+
+    // 2. Mock Global Fetch
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async (input: string | URL | Request, _init?: RequestInit) => {
+        const url = typeof input === 'string' ? input : input.url;
+
+        // Mock Supabase Auth verification
+        if (url.includes('/auth/v1/user')) {
+            return new Response(JSON.stringify({ user: { id: 'user-123', email: 'test@example.com' } }), { status: 200 });
+        }
+
+        // Mock Supabase Database calls
+        if (url.includes('/rest/v1/player_profiles')) {
+            return new Response(JSON.stringify([{ id: 'profile-123', is_anonymous: false }]), { status: 200, headers: { 'Content-Range': '0-0/1' } });
+        }
+        if (url.includes('/rest/v1/player_entitlements')) {
+            return new Response(JSON.stringify([]), { status: 200 });
+        }
+        if (url.includes('/rest/v1/content_pack_prices')) {
+            return new Response(JSON.stringify([{ amount_cents: 9900, currency: 'SEK' }]), { status: 200 });
+        }
+        if (url.includes('/rest/v1/purchase_intents')) {
+            // Support both SELECT (empty) and INSERT (success)
+            return new Response(JSON.stringify([]), { status: 200 });
+        }
+
+        // Mock Stripe API
+        if (url.includes('api.stripe.com/v1/payment_intents')) {
+            return new Response(JSON.stringify({ id: 'pi_mock', client_secret: 'pi_mock_secret' }), { status: 200 });
+        }
+
+        return new Response(JSON.stringify({ error: `Not mocked: ${url}` }), { status: 404 });
+    };
+
+    try {
+        // 3. Create Mock Request
+        const req = new Request("http://localhost/create-payment-intent", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer mock-jwt",
+                "Origin": "http://localhost:5173"
+            },
+            body: JSON.stringify({ contentPackId: "pack-1" }),
+        });
+
+        // 4. Invoke Handler
+        const res = await handler(req);
+        const data = await res.json();
+
+        // 5. Assertions
+        assertEquals(res.status, 200);
+        assertEquals(data.clientSecret, "pi_mock_secret");
+        assertEquals(res.headers.get('Access-Control-Allow-Origin'), "http://localhost:5173");
+
+    } finally {
+        // 6. Restore global state
+        globalThis.fetch = originalFetch;
+    }
+});
+
+Deno.test("create-payment-intent handler - fails if anonymous", async () => {
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async (input: string | URL | Request) => {
+        const url = typeof input === 'string' ? input : input.url;
+
+        if (url.includes('/auth/v1/user')) {
+            return new Response(JSON.stringify({ user: { id: 'user-123', email: 'test@example.com' } }), { status: 200 });
+        }
+        if (url.includes('/rest/v1/player_profiles')) {
+            // Mock anonymous profile
+            return new Response(JSON.stringify([{ id: 'profile-123', is_anonymous: true }]), { status: 200 });
+        }
+        return new Response(JSON.stringify([]), { status: 200 });
+    };
+
+    try {
+        const req = new Request("http://localhost/create-payment-intent", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer mock-jwt",
+            },
+            body: JSON.stringify({ contentPackId: "pack-1" }),
+        });
+
+        const res = await handler(req);
+        const data = await res.json();
+
+        assertEquals(res.status, 400);
+        assertEquals(data.error.includes("Anonymous accounts cannot make purchases"), true);
+
+    } finally {
+        globalThis.fetch = originalFetch;
+    }
+});
