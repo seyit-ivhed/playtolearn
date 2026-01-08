@@ -6,7 +6,6 @@ interface CampfireSceneProps {
     slots: (string | null)[];
     xpPool: number;
     companionStats: Record<string, { level: number }>;
-    onRemove?: (id: string) => void;
     onLevelUp?: (id: string) => void;
 }
 
@@ -14,7 +13,6 @@ export const CampfireScene: React.FC<CampfireSceneProps> = ({
     slots,
     xpPool,
     companionStats,
-    onRemove,
     onLevelUp
 }) => {
     return (
@@ -26,7 +24,6 @@ export const CampfireScene: React.FC<CampfireSceneProps> = ({
                         companionId={companionId!}
                         stats={companionStats[companionId!]}
                         xpPool={xpPool}
-                        onRemove={onRemove}
                         onLevelUp={onLevelUp}
                     />
                 ))}

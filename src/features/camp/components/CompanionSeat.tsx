@@ -11,7 +11,6 @@ interface CompanionSeatProps {
         level: number;
     };
     xpPool: number;
-    onRemove?: (id: string) => void;
     onLevelUp?: (id: string) => void;
 }
 
@@ -19,7 +18,6 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
     companionId,
     stats,
     xpPool,
-    onRemove,
     onLevelUp,
 }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -48,15 +46,6 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
                 <div className={styles.miniLevel}>Lv {currentStats.level}</div>
                 <div className={styles.avatarWrapper}>
                     <img src={getCompanionSprite(companionId, currentStats.level)} alt={data.name} className={styles.largeAvatar} />
-                    {onRemove && (
-                        <button
-                            className={styles.leaveButton}
-                            onClick={() => onRemove(companionId)}
-                            data-testid={`remove-companion-${companionId}`}
-                        >
-                            ✕
-                        </button>
-                    )}
                 </div>
                 <div className={styles.miniName}>{data.name}</div>
             </div>

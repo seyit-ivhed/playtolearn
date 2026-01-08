@@ -7,7 +7,6 @@ import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
 import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { CampfireScene } from './components/CampfireScene';
-import { FellowshipRoster } from './components/FellowshipRoster';
 import { LevelUpModal } from './components/LevelUpModal';
 import { getCompanionById } from '../../data/companions.data';
 import { getXpForNextLevel, getStatsForLevel } from '../../utils/progression.utils';
@@ -36,10 +35,7 @@ const CampPage = () => {
         newLevel: number;
     } | null>(null);
     const {
-        unlockedCompanions,
         activeParty,
-        addToParty,
-        removeFromParty,
         xpPool,
         companionStats,
         completeEncounter,
@@ -138,7 +134,6 @@ const CampPage = () => {
                     slots={slots}
                     xpPool={xpPool}
                     companionStats={companionStats}
-                    onRemove={removeFromParty}
                     onLevelUp={handleLevelUp}
                 />
             </div>
@@ -153,13 +148,6 @@ const CampPage = () => {
                 </button>
             </div>
 
-            <FellowshipRoster
-                unlockedCompanions={unlockedCompanions}
-                activeParty={activeParty}
-                maxPartySize={MAX_PARTY_SIZE}
-                companionStats={companionStats}
-                onAdd={addToParty}
-            />
 
             {levelUpData && (
                 <LevelUpModal
