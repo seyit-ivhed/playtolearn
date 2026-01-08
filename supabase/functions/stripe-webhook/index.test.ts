@@ -51,7 +51,7 @@ Deno.test({
         };
 
         // 3. Invoke processEvent
-        const result = await processEvent(event as Stripe.Event, mockSupabaseAdmin as unknown as SupabaseClient);
+        const result = await processEvent(event as unknown as Stripe.Event, mockSupabaseAdmin as unknown as SupabaseClient);
 
         // 4. Assertions
         assertEquals(result.received, true);
@@ -74,7 +74,7 @@ Deno.test({
             }
         };
 
-        const result = await processEvent(event as Stripe.Event, {} as unknown as SupabaseClient);
+        const result = await processEvent(event as unknown as Stripe.Event, {} as unknown as SupabaseClient);
 
         assertEquals(result.status, 400);
         assertEquals(result.error, "Missing metadata");
@@ -111,7 +111,7 @@ Deno.test({
             }
         };
 
-        const result = await processEvent(event as Stripe.Event, mockSupabaseAdmin as unknown as SupabaseClient);
+        const result = await processEvent(event as unknown as Stripe.Event, mockSupabaseAdmin as unknown as SupabaseClient);
 
         assertEquals(result.received, true);
         assertEquals(result.error, undefined);
