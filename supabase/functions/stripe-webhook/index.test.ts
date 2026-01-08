@@ -1,5 +1,7 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/mod.ts";
 import { processEvent } from "./index.ts";
+import { SupabaseClient } from 'npm:@supabase/supabase-js@^2.0.0';
+import Stripe from 'npm:stripe@^14.0.0';
 
 /**
  * Tests the processEvent logic in isolation by mocking the Supabase client.
@@ -16,9 +18,9 @@ Deno.test({
             from: (table: string) => {
                 if (table === 'purchase_intents') {
                     return {
-                        update: (_updates: any) => ({
-                            eq: (_col: string, _val: any) => ({
-                                select: (_cols: string) => ({
+                        update: () => ({
+                            eq: () => ({
+                                select: () => ({
                                     maybeSingle: async () => ({ data: { id: 'intent-123' }, error: null })
                                 })
                             })
@@ -27,7 +29,7 @@ Deno.test({
                 }
                 if (table === 'player_entitlements') {
                     return {
-                        upsert: async (_data: any, _opts: any) => ({ error: null })
+                        upsert: async () => ({ error: null })
                     };
                 }
                 return {};
@@ -49,7 +51,7 @@ Deno.test({
         };
 
         // 3. Invoke processEvent
-        const result = await processEvent(event, mockSupabaseAdmin as any);
+        const result = await processEvent(event as Stripe.Event, mockSupabaseAdmin as unknown as SupabaseClient);
 
         // 4. Assertions
         assertEquals(result.received, true);
@@ -72,7 +74,7 @@ Deno.test({
             }
         };
 
-        const result = await processEvent(event, {} as any);
+        const result = await processEvent(event as Stripe.Event, {} as unknown as SupabaseClient);
 
         assertEquals(result.status, 400);
         assertEquals(result.error, "Missing metadata");
@@ -85,10 +87,10 @@ Deno.test({
     sanitizeOps: false,
     async fn() {
         const mockSupabaseAdmin = {
-            from: (_table: string) => ({
-                update: (_updates: any) => ({
-                    eq: (_col: string, _val: any) => ({
-                        select: (_cols: string) => ({
+            from: () => ({
+                update: () => ({
+                    eq: () => ({
+                        select: () => ({
                             maybeSingle: async () => ({ data: { id: 'intent-123' }, error: null })
                         })
                     })
@@ -109,7 +111,7 @@ Deno.test({
             }
         };
 
-        const result = await processEvent(event, mockSupabaseAdmin as any);
+        const result = await processEvent(event as Stripe.Event, mockSupabaseAdmin as unknown as SupabaseClient);
 
         assertEquals(result.received, true);
         assertEquals(result.error, undefined);

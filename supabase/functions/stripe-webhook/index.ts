@@ -1,8 +1,8 @@
 import Stripe from 'npm:stripe@^14.0.0'
-import { createClient } from 'npm:@supabase/supabase-js@^2.0.0'
+import { createClient, SupabaseClient } from 'npm:@supabase/supabase-js@^2.0.0'
 
 
-export const processEvent = async (event: any, supabaseAdmin: any) => {
+export const processEvent = async (event: Stripe.Event, supabaseAdmin: SupabaseClient) => {
     if (event.type === 'payment_intent.succeeded' || event.type === 'payment_intent.payment_failed' || event.type === 'payment_intent.canceled') {
         const paymentIntent = event.data.object
         const { playerId, contentPackId } = paymentIntent.metadata

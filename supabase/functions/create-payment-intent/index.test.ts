@@ -24,7 +24,7 @@ Deno.test({
 
         // 2. Mock Global Fetch
         const originalFetch = globalThis.fetch;
-        globalThis.fetch = async (input: string | URL | Request, _init?: RequestInit) => {
+        globalThis.fetch = async (input: string | URL | Request) => {
             const url = typeof input === 'string' ? input : input.toString();
 
             // Mock Supabase Auth verification
