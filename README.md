@@ -143,6 +143,9 @@ We use **Deno** for testing Supabase Edge Functions.
 curl -fsSL https://deno.land/install.sh | sh
 ```
 
+**Note on Dependencies:**
+The project includes a `deno.json` file that enables automatic installation of `npm:` dependencies (like Stripe and Supabase JS). Deno will automatically download these the first time you run the tests.
+
 - **Run all edge function tests:**
   ```bash
   deno test --allow-all supabase/functions/
