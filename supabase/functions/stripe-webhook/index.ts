@@ -1,8 +1,6 @@
 import Stripe from 'npm:stripe@^14.0.0'
 import { createClient } from 'npm:@supabase/supabase-js@^2.0.0'
 
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '')
-const endpointSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET') || ''
 
 export const processEvent = async (event: any, supabaseAdmin: any) => {
     if (event.type === 'payment_intent.succeeded' || event.type === 'payment_intent.payment_failed' || event.type === 'payment_intent.canceled') {
@@ -53,6 +51,8 @@ export const processEvent = async (event: any, supabaseAdmin: any) => {
 }
 
 export const handler = async (req: Request) => {
+    const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '')
+    const endpointSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET') || ''
     const signature = req.headers.get('stripe-signature')
 
     if (!signature) {
@@ -66,7 +66,8 @@ export const handler = async (req: Request) => {
 
         const supabaseAdmin = createClient(
             Deno.env.get('SUPABASE_URL') ?? '',
-            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+            { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
         )
 
         const result = await processEvent(event, supabaseAdmin)
@@ -85,4 +86,6 @@ export const handler = async (req: Request) => {
     }
 }
 
-Deno.serve(handler)
+if (import.meta.main) {
+    Deno.serve(handler)
+}

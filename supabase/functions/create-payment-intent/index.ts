@@ -1,10 +1,9 @@
 import Stripe from 'npm:stripe@^14.0.0'
 import { createClient } from 'npm:@supabase/supabase-js@^2.0.0'
 
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '')
-
 
 export const handler = async (req: Request) => {
+    const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '')
     const origin = req.headers.get('Origin')
     const productionUrl = Deno.env.get('CLIENT_URL')
 
@@ -37,7 +36,8 @@ export const handler = async (req: Request) => {
         const jwt = authHeader.replace('Bearer ', '')
         const supabaseAdmin = createClient(
             Deno.env.get('SUPABASE_URL') ?? '',
-            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+            { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
         )
 
         const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(jwt)
@@ -201,4 +201,6 @@ export const handler = async (req: Request) => {
     }
 }
 
-Deno.serve(handler)
+if (import.meta.main) {
+    Deno.serve(handler)
+}
