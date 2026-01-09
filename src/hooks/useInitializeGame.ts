@@ -3,7 +3,7 @@ import { useAuth } from './useAuth';
 import { useGameStore } from '../stores/game/store';
 import { usePremiumStore } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
-import { supabase } from '../services/supabase.service';
+
 
 /**
  * Orchestrates the initial loading sequence:
@@ -21,18 +21,18 @@ export const useInitializeGame = () => {
     const initialized = useRef(false);
     const lastAuthId = useRef<string | undefined>(user?.id);
 
-    // Re-initialize if auth identity changes (e.g. guest -> anonymous)
-    if (user?.id !== lastAuthId.current) {
-        initialized.current = false;
-        lastAuthId.current = user?.id;
-    }
-
     const performInitialization = useCallback(async () => {
+        await Promise.resolve();
         if (authLoading) return;
-        if (initialized.current) return;
+
+        // Re-initialize if auth identity changes or not initialized yet
+        if (initialized.current && lastAuthId.current === user?.id) {
+            return;
+        }
 
         console.log('Starting game initialization sequence...');
         initialized.current = true; // Set immediately to prevent race conditions
+        lastAuthId.current = user?.id;
         setError(null);
         setIsInitializing(true);
 
@@ -75,7 +75,10 @@ export const useInitializeGame = () => {
     }, [authLoading, isAuthenticated, user, initializePremium]);
 
     useEffect(() => {
-        performInitialization();
+        const runInit = async () => {
+            await performInitialization();
+        };
+        runInit();
     }, [performInitialization]);
 
     const retry = useCallback(() => {
