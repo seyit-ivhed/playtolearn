@@ -87,6 +87,9 @@ if [ $? -ne 0 ]; then
 fi
 
 # Reset Database
+echo -e "${YELLOW}Waiting for services to stabilize...${NC}"
+sleep 5
+
 echo -e "${YELLOW}Resetting database and applying migrations...${NC}"
 npx supabase db reset --yes
 if [ $? -ne 0 ]; then
