@@ -60,10 +60,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo -e "${GREEN}Successfully published branch: $BRANCH_NAME${NC}\n"
-
-# Step 5: Reset and Start Local Supabase
-echo -e "${YELLOW}Step 5: Resetting and starting local Supabase instance...${NC}"
+# Step 5: Start or Reuse Supabase, then Reset
+echo -e "${YELLOW}Step 5: Preparing local Supabase instance...${NC}"
 
 # Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
@@ -74,30 +72,30 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
-# Stop Supabase to ensure fresh config
-echo -e "${YELLOW}Stopping existing Supabase services...${NC}"
-npx supabase stop --no-backup
-
-# Start Supabase
-echo -e "${YELLOW}Starting Supabase services...${NC}"
-npx supabase start
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to start local Supabase instance.${NC}"
-    exit 1
+# Check if Supabase is already running
+if npx supabase status > /dev/null 2>&1; then
+    echo -e "${GREEN}Supabase is already running. Skipping start.${NC}"
+else
+    echo -e "${YELLOW}Supabase is not running. Starting services...${NC}"
+    npx supabase start
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}Failed to start local Supabase instance.${NC}"
+        exit 1
+    fi
+    # Give it a moment to stabilize after a fresh start
+    echo -e "${YELLOW}Waiting for services to stabilize...${NC}"
+    sleep 5
 fi
 
 # Reset Database
-echo -e "${YELLOW}Waiting for services to stabilize...${NC}"
-sleep 5
-
-echo -e "${YELLOW}Resetting database and applying migrations...${NC}"
+echo -e "${YELLOW}Resetting database to ensure clean state...${NC}"
 npx supabase db reset --yes
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to reset Supabase database.${NC}"
     exit 1
 fi
 
-echo -e "${GREEN}Local Supabase instance started and reset successfully.${NC}\n"
+echo -e "${GREEN}Local Supabase instance is ready and database has been reset.${NC}\n"
 
 # Step 6: Configure .env.local
 echo -e "${YELLOW}Step 6: Configuring .env.local...${NC}"
