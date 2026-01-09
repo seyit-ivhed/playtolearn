@@ -206,5 +206,19 @@ if [ $? -ne 0 ]; then
 fi
 
 echo -e "${GREEN}Successfully deleted remote branch: $CURRENT_BRANCH${NC}\n"
+
+# Step 19: Stop Local Supabase
+echo -e "${YELLOW}Step 19: Stopping local Supabase instance...${NC}"
+npx supabase stop
+if [ $? -ne 0 ]; then
+    echo -e "${YELLOW}Warning: Failed to stop Supabase instance. You may need to stop it manually.${NC}"
+else
+    echo -e "${GREEN}Local Supabase instance stopped.${NC}\n"
+fi
+
+# Optional: Clean up .env.local
+# echo -e "${YELLOW}Cleaning up .env.local...${NC}"
+# rm -f .env.local
+
 echo -e "${GREEN}Project completion workflow finished successfully!${NC}"
 echo -e "${YELLOW}Branch $CURRENT_BRANCH has been merged into main and deleted.${NC}"
