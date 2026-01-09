@@ -87,16 +87,6 @@ else
     sleep 5
 fi
 
-# Reset Database
-echo -e "${YELLOW}Resetting database to ensure clean state...${NC}"
-npx supabase db reset --yes
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Failed to reset Supabase database.${NC}"
-    exit 1
-fi
-
-echo -e "${GREEN}Local Supabase instance is ready and database has been reset.${NC}\n"
-
 # Step 6: Configure .env.local
 echo -e "${YELLOW}Step 6: Configuring .env.local...${NC}"
 
