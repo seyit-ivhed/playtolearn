@@ -27,14 +27,6 @@
     height: 100%;
 }
 
-.trainingBackground {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../assets/images/backgrounds/training_zone.png');
-}
-
-.deepSpaceBackground {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../assets/images/backgrounds/deep_space.png');
-}
-
 .header {
     display: flex;
     justify-content: space-between;
