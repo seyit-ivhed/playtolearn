@@ -10,13 +10,13 @@ export const PersistenceService = {
 
     /**
      * Fetches or creates a player profile for a given authId.
-     * Returns the profile id and role.
+     * Returns the profile id.
      */
     async getOrCreateProfile(authId: string) {
         // 1. Get the player profile linked to this authId
         const { data: profile, error: profileError } = await supabase
             .from('player_profiles')
-            .select('id, role, device_id')
+            .select('id, device_id')
             .eq('auth_id', authId)
             .maybeSingle();
 
@@ -32,7 +32,7 @@ export const PersistenceService = {
                     .update({ device_id: IdentityService.getDeviceId() })
                     .eq('id', profile.id);
             }
-            return { id: profile.id, role: profile.role };
+            return { id: profile.id };
         }
 
         // If no profile exists yet, create one
@@ -43,12 +43,12 @@ export const PersistenceService = {
                 is_anonymous: true,
                 device_id: IdentityService.getDeviceId()
             })
-            .select('id, role')
+            .select('id')
             .single();
 
         if (createError) throw createError;
         this.cachedPlayerId = newProfile.id;
-        return { id: newProfile.id, role: newProfile.role };
+        return { id: newProfile.id };
     },
 
     /**

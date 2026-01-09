@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS public.player_profiles (
     auth_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     device_id UUID,
     is_anonymous BOOLEAN DEFAULT TRUE,
-    role TEXT DEFAULT 'player',
     created_at TIMESTAMPTZ DEFAULT now(),
     last_login TIMESTAMPTZ DEFAULT now(),
     UNIQUE(auth_id)

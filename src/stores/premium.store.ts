@@ -3,34 +3,31 @@ import { supabase } from '../services/supabase.service';
 
 export interface PremiumState {
     entitlements: string[];
-    userRole: string;
     isLoading: boolean;
     initialized: boolean;
 
     // Actions
-    initialize: (force?: boolean, profile?: { id: string; role: string }) => Promise<void>;
+    initialize: (force?: boolean, profile?: { id: string }) => Promise<void>;
     isAdventureUnlocked: (adventureId: string) => boolean;
     hasEntitlement: (contentPackId: string) => boolean;
 }
 
 /**
- * Store to manage premium content ownership and player roles.
+ * Store to manage premium content ownership.
  * This is not persisted locally to ensure ownership is always server-verified.
  */
 export const usePremiumStore = create<PremiumState>((set, get) => ({
     entitlements: [],
-    userRole: 'player',
     isLoading: false,
     initialized: false,
 
-    initialize: async (force = false, profileData?: { id: string; role: string }) => {
+    initialize: async (force = false, profileData?: { id: string }) => {
         if (get().initialized && !force) return;
 
         console.log('Initializing premium store (force:', force, ')');
         set({ isLoading: true });
         try {
             let playerId: string | undefined = profileData?.id;
-            let role: string | undefined = profileData?.role;
 
             if (!playerId) {
                 const { data: { user } } = await supabase.auth.getUser();
@@ -38,14 +35,14 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
 
                 if (!user) {
                     console.warn('Premium store: No user found in Auth');
-                    set({ entitlements: [], userRole: 'player', isLoading: false, initialized: true });
+                    set({ entitlements: [], isLoading: false, initialized: true });
                     return;
                 }
 
-                // Fetch profile for role
+                // Fetch profile ID
                 const { data: profile, error: profileError } = await supabase
                     .from('player_profiles')
-                    .select('id, role')
+                    .select('id')
                     .eq('auth_id', user.id)
                     .single();
 
@@ -56,12 +53,11 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
 
                 if (profile) {
                     playerId = profile.id;
-                    role = profile.role;
                 }
             }
 
             if (playerId) {
-                console.log('Premium store: Initializing for profile', playerId, 'Role:', role);
+                console.log('Premium store: Initializing for profile', playerId);
                 // Fetch entitlements from the player_entitlements table
                 const { data: entitlementsData, error: entitlementsError } = await supabase
                     .from('player_entitlements')
@@ -77,7 +73,6 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
                 console.log('Premium store: Fetched entitlements:', entitlements);
 
                 set({
-                    userRole: role || 'player',
                     entitlements,
                     isLoading: false,
                     initialized: true
@@ -91,13 +86,10 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
     },
 
     isAdventureUnlocked: (adventureId: string) => {
-        const { entitlements, userRole } = get();
+        const { entitlements } = get();
 
         // Prologue and Adventure 1 are free
         if (adventureId === 'prologue' || adventureId === '1') return true;
-
-        // Internal roles (Tester/Admin) bypass all content gates
-        if (userRole === 'tester' || userRole === 'admin') return true;
 
         // Check for 'premium_base' pack which covers Adventures 2-6 in the MVP
         if (entitlements.includes('premium_base')) {
@@ -113,8 +105,7 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
     },
 
     hasEntitlement: (contentPackId: string) => {
-        const { entitlements, userRole } = get();
-        if (userRole === 'tester' || userRole === 'admin') return true;
+        const { entitlements } = get();
         return entitlements.includes(contentPackId);
     }
 }));
