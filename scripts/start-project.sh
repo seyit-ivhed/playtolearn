@@ -90,19 +90,19 @@ echo -e "${YELLOW}Step 6: Configuring .env.local...${NC}"
 # We use json output for reliable parsing if available, but text grep is often simpler for simple scripts
 # npx supabase status -o json... let's stick to standard status and grep for simplicity and reliability across versions without jq
 
-# Capture status output
-SUPABASE_STATUS=$(npx supabase status)
+# Capture status output in JSON format
+SUPABASE_STATUS=$(npx supabase status -o json)
 
-# Extract API URL and Anon Key
-# Typical output:
-# API URL: http://localhost:54321
-# anon key: eyJ...
-API_URL=$(echo "$SUPABASE_STATUS" | grep "API URL" | awk '{print $3}')
-ANON_KEY=$(echo "$SUPABASE_STATUS" | grep "anon key" | awk '{print $3}')
-SERVICE_KEY=$(echo "$SUPABASE_STATUS" | grep "service_role key" | awk '{print $3}')
+# Extract credentials using node for reliable JSON parsing
+# We use node -p to print the result of the evaluation
+API_URL=$(node -p "try { JSON.parse(process.argv[1]).API_URL } catch(e) { '' }" "$SUPABASE_STATUS")
+ANON_KEY=$(node -p "try { JSON.parse(process.argv[1]).ANON_KEY } catch(e) { '' }" "$SUPABASE_STATUS")
+SERVICE_KEY=$(node -p "try { JSON.parse(process.argv[1]).SERVICE_ROLE_KEY } catch(e) { '' }" "$SUPABASE_STATUS")
 
 if [ -z "$API_URL" ] || [ -z "$ANON_KEY" ]; then
     echo -e "${RED}Failed to retrieve Supabase credentials.${NC}"
+    echo -e "${YELLOW}Supabase Status Output:${NC}"
+    echo "$SUPABASE_STATUS"
     exit 1
 fi
 
