@@ -72,8 +72,7 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
             companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
                 acc[id] = { level: 1 };
                 return acc;
-            }, {} as Record<string, { level: number }>),
-            restedCompanions: []
+            }, {} as Record<string, { level: number }>)
         });
     }
 });

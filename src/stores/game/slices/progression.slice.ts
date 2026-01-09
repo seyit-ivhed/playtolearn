@@ -27,18 +27,4 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
 
         PersistenceService.sync(get());
     },
-
-    markRestedCompanions: () => {
-        const { activeParty, unlockedCompanions } = get();
-        // Everyone NOT in active party gets rested
-        const rested = unlockedCompanions.filter(id => !activeParty.includes(id));
-        set({ restedCompanions: rested });
-    },
-
-    consumeRestedBonus: (companionId: string) => {
-        const { restedCompanions } = get();
-        if (restedCompanions.includes(companionId)) {
-            set({ restedCompanions: restedCompanions.filter(id => id !== companionId) });
-        }
-    },
 });

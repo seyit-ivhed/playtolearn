@@ -18,7 +18,6 @@ export interface GameState {
     // Progression System
     xpPool: number;
     companionStats: Record<string, { level: number }>;
-    restedCompanions: string[]; // IDs of companions who are rested
     authMilestoneReached: boolean;
 }
 
@@ -36,12 +35,10 @@ export interface PartyManagementSlice {
     unlockCompanion: (companionId: string) => void;
 }
 
-// XP, Leveling & Rested State
+// XP & Leveling
 export interface ProgressionSlice {
     addXpToPool: (amount: number) => void;
     levelUpCompanion: (companionId: string) => void;
-    consumeRestedBonus: (companionId: string) => void; // Call when bonus used
-    markRestedCompanions: () => void; // Call when starting adventure
 }
 
 // Debug & Reset Actions
