@@ -1,10 +1,3 @@
-export const CompanionRole = {
-    WARRIOR: 'WARRIOR',
-
-} as const;
-
-export type CompanionRole = typeof CompanionRole[keyof typeof CompanionRole];
-
 export interface SpecialAbility {
     id: string; // Used for translation key and VFX lookup
     type: 'DAMAGE' | 'SHIELD' | 'HEAL';
@@ -37,7 +30,6 @@ export interface Companion {
     // Identity
     name: string;
     title: string;
-    role: CompanionRole;
 
     // Progression
     level: number;

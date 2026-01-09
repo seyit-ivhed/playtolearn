@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { getXpForNextLevel, getStatsForLevel, calculateAdventureStars } from './progression.utils';
-import { CompanionRole, type Companion } from '../types/companion.types';
+import type { Companion } from '../types/companion.types';
 import { EncounterType, type Encounter } from '../types/adventure.types';
 import type { EncounterResult } from '../stores/game/interfaces';
 
@@ -9,7 +9,6 @@ describe('progression.utils', () => {
         const mockCompanion = {
             id: 'test',
             name: 'Test',
-            role: CompanionRole.WARRIOR,
             baseStats: {
                 maxHealth: 100,
                 abilityDamage: 10

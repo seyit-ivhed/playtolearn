@@ -9,7 +9,6 @@ vi.mock('../../data/companions.data', () => ({
     getCompanionById: (id: string) => ({
         id,
         name: 'Test Companion',
-        role: 'WARRIOR',
         maxHealth: 100,
         icon: 'test-icon',
         color: 'red',

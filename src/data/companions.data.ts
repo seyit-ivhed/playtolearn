@@ -1,4 +1,3 @@
-import { CompanionRole } from '../types/companion.types';
 import type { Companion } from '../types/companion.types';
 
 export const COMPANIONS: Record<string, Companion> = {
@@ -6,7 +5,6 @@ export const COMPANIONS: Record<string, Companion> = {
         id: 'amara',
         name: 'Amara',
         title: 'The Jungle Ranger',
-        role: CompanionRole.WARRIOR,
         level: 1,
         baseStats: {
             maxHealth: 75,
@@ -74,7 +72,6 @@ export const COMPANIONS: Record<string, Companion> = {
         id: 'tariq',
         name: 'Tariq',
         title: 'The Desert Alchemist',
-        role: CompanionRole.WARRIOR,
         level: 1,
         baseStats: {
             maxHealth: 85,

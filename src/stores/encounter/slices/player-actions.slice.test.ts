@@ -10,21 +10,15 @@ vi.mock('../../../data/companions.data', () => ({
             return {
                 id,
                 name: 'Warrior',
-                role: 'WARRIOR',
                 stats: { abilityDamage: 10 },
                 specialAbility: { id: 'special_dmg', type: 'DAMAGE', value: 20, target: 'SINGLE_ENEMY' }
             };
         }
 
-
-
-
-
         if (id === 'guardian_id_revived') {
             return {
                 id,
                 name: 'Guardian',
-                role: 'WARRIOR',
                 stats: {},
                 specialAbility: { id: 'special_shield', type: 'SHIELD', value: 15, target: 'ALL_ALLIES' }
             };
@@ -34,7 +28,6 @@ vi.mock('../../../data/companions.data', () => ({
             return {
                 id,
                 name: 'Mage',
-                role: 'WARRIOR', // Just reusing warrior logic for base
                 stats: { abilityDamage: 10 },
                 specialAbility: { id: 'meteor', type: 'DAMAGE', value: 10, target: 'ALL_ENEMIES' }
             };
@@ -42,7 +35,6 @@ vi.mock('../../../data/companions.data', () => ({
 
         return {
             id,
-            role: 'WARRIOR',
             stats: {}
         };
     }
@@ -60,7 +52,7 @@ describe('Player Actions Slice', () => {
     });
 
     describe('performAction', () => {
-        it('should deal damage for WARRIOR role', () => {
+        it('should deal damage for standard attack', () => {
             const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, maxShield: 0, currentShield: 0, currentSpirit: 0, maxSpirit: 100, spiritGain: 10, damage: 10, statusEffects: [] };
             const monster = { id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isDead: false, isPlayer: false, maxShield: 0, currentShield: 0, currentSpirit: 0, maxSpirit: 100, hasActed: false, spiritGain: 10, statusEffects: [] };
 
