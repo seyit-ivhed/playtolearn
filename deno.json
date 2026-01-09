@@ -1,3 +1,15 @@
 {
-    "nodeModulesDir": "auto"
+    "nodeModulesDir": "auto",
+    "lint": {
+        "exclude": [
+            "src/",
+            "scripts/"
+        ]
+    },
+    "fmt": {
+        "exclude": [
+            "src/",
+            "scripts/"
+        ]
+    }
 }
