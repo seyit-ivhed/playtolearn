@@ -62,8 +62,8 @@ fi
 
 echo -e "${GREEN}Successfully published branch: $BRANCH_NAME${NC}\n"
 
-# Step 5: Start Local Supabase
-echo -e "${YELLOW}Step 5: Starting local Supabase instance...${NC}"
+# Step 5: Reset and Start Local Supabase
+echo -e "${YELLOW}Step 5: Resetting and starting local Supabase instance...${NC}"
 
 # Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
@@ -74,14 +74,27 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
+# Stop Supabase to ensure fresh config
+echo -e "${YELLOW}Stopping existing Supabase services...${NC}"
+npx supabase stop --no-backup
+
 # Start Supabase
+echo -e "${YELLOW}Starting Supabase services...${NC}"
 npx supabase start
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to start local Supabase instance.${NC}"
     exit 1
 fi
 
-echo -e "${GREEN}Local Supabase instance started successfully.${NC}\n"
+# Reset Database
+echo -e "${YELLOW}Resetting database and applying migrations...${NC}"
+npx supabase db reset --yes
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Failed to reset Supabase database.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}Local Supabase instance started and reset successfully.${NC}\n"
 
 # Step 6: Configure .env.local
 echo -e "${YELLOW}Step 6: Configuring .env.local...${NC}"
