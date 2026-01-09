@@ -63,12 +63,6 @@ export const useInitializeGame = () => {
                 console.log('User is not authenticated (guest mode). Checking connectivity...');
                 // Ensure premium is initialized even for guests (to know what's locked)
                 await initializePremium(false);
-
-                const { error: pingError } = await supabase.from('player_profiles').select('count').limit(0);
-                if (pingError) throw pingError;
-
-                // For guest mode, land based on local progress
-                // Note: Resolution is now handled algorithmically in useChronicleData
             }
 
             setIsInitializing(false);
