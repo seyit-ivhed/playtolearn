@@ -28,6 +28,13 @@ export const useAuth = () => {
         const init = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             setSession(session);
+            
+            if (session?.user?.id) {
+                IdentityService.setPlayerId(session.user.id);
+            } else {
+                IdentityService.clearPlayerId();
+            }
+
             setUser(session?.user ?? null);
             setLoading(false);
         };
@@ -36,6 +43,13 @@ export const useAuth = () => {
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             const newUser = session?.user ?? null;
+
+            // Sync IdentityService
+            if (newUser?.id) {
+                IdentityService.setPlayerId(newUser.id);
+            } else {
+                IdentityService.clearPlayerId();
+            }
 
             // Clear persistence cache if user switched
             setUser(current => {
