@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { useGameStore } from './game/store';
+import { useGameStore } from './store';
 
 // Mock dependencies
 vi.mock('../data/adventures.data', () => ({
@@ -32,7 +32,7 @@ vi.mock('../data/adventures.data', () => ({
 }));
 
 vi.mock('../data/companions.data', async (importOriginal) => {
-    const actual = await importOriginal<typeof import('../data/companions.data')>();
+    const actual = await importOriginal<typeof import('../../data/companions.data')>();
     return {
         ...actual,
         INITIAL_FELLOWSHIP: ['c1', 'c2'],

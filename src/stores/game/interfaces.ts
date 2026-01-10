@@ -29,7 +29,6 @@ export interface ProgressionSlice {
 
 // Debug & Reset Actions
 export interface DebugSlice {
-    debugUnlockAllEncounters: () => void;
     debugAddXp: (amount: number) => void;
     debugResetXpPool: () => void;
     debugResetCompanions: () => void;

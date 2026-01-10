@@ -1,22 +1,9 @@
 import type { StateCreator } from 'zustand';
 import type { GameStore, DebugSlice } from '../interfaces';
 import { COMPANIONS } from '../../../data/companions.data';
-import { ADVENTURES } from '../../../data/adventures.data';
 
 export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (set) => ({
-    debugUnlockAllEncounters: () => {
-        const results: Record<string, { stars: number; difficulty: number; completedAt: number }> = {};
-        ADVENTURES.forEach((adv) => {
-            adv.encounters.forEach((_, idx) => {
-                results[`${adv.id}_${idx + 1}`] = {
-                    stars: 3,
-                    difficulty: 3,
-                    completedAt: Date.now()
-                };
-            });
-        });
-        set({ encounterResults: results });
-    },
+    
 
     debugAddXp: (amount) => set((state) => ({ xpPool: state.xpPool + amount })),
 
