@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../services/supabase.service';
-import { PersistenceService } from '../services/persistence.service';
+
 import { IdentityService } from '../services/identity.service';
 import type { Session, User } from '@supabase/supabase-js';
 
@@ -51,13 +51,7 @@ export const useAuth = () => {
                 IdentityService.clearPlayerId();
             }
 
-            // Clear persistence cache if user switched
-            setUser(current => {
-                if (current?.id !== newUser?.id) {
-                    PersistenceService.clearCache();
-                }
-                return newUser;
-            });
+            setUser(newUser);
 
             setSession(session);
             setLoading(false);

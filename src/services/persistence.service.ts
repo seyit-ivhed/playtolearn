@@ -2,11 +2,7 @@ import { supabase } from './supabase.service';
 import { IdentityService } from './identity.service';
 
 export const PersistenceService = {
-    cachedPlayerId: null as string | null,
 
-    clearCache() {
-        this.cachedPlayerId = null;
-    },
 
     /**
      * Fetches or creates a player profile for a given authId.
@@ -28,7 +24,7 @@ export const PersistenceService = {
             .single();
 
         if (error) throw error;
-        this.cachedPlayerId = data.id;
+
         return { id: data.id };
     },
 
@@ -39,7 +35,7 @@ export const PersistenceService = {
         try {
             // Player ID is same as Auth ID now
             const actualPlayerId = playerId || authId;
-            this.cachedPlayerId = actualPlayerId;
+
 
             // Ensure profile exists (idempotent) - arguably we could skip this if we trust the flow
             // but it's safer to ensure profile exists before linking game state
@@ -72,7 +68,7 @@ export const PersistenceService = {
      */
     async pullState(authId: string, playerId?: string) {
         const actualPlayerId = playerId || authId;
-        this.cachedPlayerId = actualPlayerId;
+
 
         // Step 1: Get the game state for that profile
         const { data, error } = await supabase
