@@ -23,15 +23,6 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return false;
 
-        // Get player profile ID
-        const { data: profile } = await supabase
-            .from('player_profiles')
-            .select('id')
-            .eq('auth_id', user.id)
-            .single();
-
-        if (!profile) return false;
-
         // Poll for up to 30 seconds (15 retries * 2 seconds)
         // High latency on edge functions is expected during redeploys
         const maxRetries = 15;
@@ -41,7 +32,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
             const { data: entitlement } = await supabase
                 .from('player_entitlements')
                 .select('id')
-                .eq('player_id', profile.id)
+                .eq('player_id', user.id)
                 .eq('content_pack_id', contentPackId)
                 .maybeSingle();
 

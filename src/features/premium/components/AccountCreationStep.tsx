@@ -5,7 +5,6 @@ import { Mail, Lock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../../../hooks/useAuth';
 import { supabase } from '../../../services/supabase.service';
 
-
 interface AccountCreationStepProps {
     onSuccess: () => void;
 }
@@ -41,7 +40,6 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
         }
 
         setLoading(true);
-        setError(null);
 
         try {
             // 1. Ensure we have a session and the user is ANONYMOUS
@@ -64,7 +62,6 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
             console.log('Converting session for email:', email);
 
             // 2. Convert to permanent user
-            // We use updateUser to add email/password to the existing anonymous session.
             const { error: updateError } = await supabase.auth.updateUser({
                 email,
                 password
@@ -76,56 +73,50 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                     updateError.message.toLowerCase().includes('already in use') ||
                     updateError.status === 422) {
                     setError(t('premium.store.account.errors.already_exists', 'This email is already registered. Please sign in with your existing account.'));
+                    return;
                 } else {
                     throw updateError;
                 }
-            } else {
-                console.log('Account conversion triggered successfully. Finalizing profile...');
-
-                // 3. Ensure a player profile exists and is updated
-                // This also ensures the Edge Function can find it immediately
-                const userId = session?.user.id;
-                if (userId) {
-                    console.log('Synchronizing player profile for:', userId);
-                    const { data: profile } = await supabase
-                        .from('player_profiles')
-                        .select('id')
-                        .eq('auth_id', userId)
-                        .maybeSingle();
-
-                    if (!profile) {
-                        console.log('No existing profile found, creating a new one...');
-                        await supabase.from('player_profiles').insert({
-                            auth_id: userId
-                        });
-                    } else {
-                        console.log('Updating existing profile state...');
-                        // Profile exists, no specific update needed for anonymous flag as it's handled by auth
-                        console.log('Profile exists, proceeding...');
-                    }
-                }
-
-                console.log('Refreshing session...');
-
-                // 4. Force a session refresh to get the updated JWT
-                await refreshSession();
-
-                // 5. Double check we have a valid session now
-                const { data: { session: updatedSession } } = await supabase.auth.getSession();
-                console.log('Post-conversion session check:', updatedSession ? 'Valid' : 'Missing');
-
-                if (!updatedSession) {
-                    console.error('Session not found after conversion. This might happen if Email Confirmation is enabled.');
-                }
-
-                // 6. Slightly longer delay to ensure the session is propagated before proceeding to checkout
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                onSuccess();
             }
+
+            console.log('Account conversion triggered successfully. Finalizing profile...');
+
+            // 3. Ensure a player profile exists and is updated
+            const userId = session?.user.id;
+            if (userId) {
+                console.log('Synchronizing player profile for:', userId);
+                const { error: upsertError } = await supabase
+                    .from('player_profiles')
+                    .upsert({ id: userId }, { onConflict: 'id' });
+
+                if (upsertError) {
+                    console.error('Error synchronizing profile:', upsertError);
+                } else {
+                    console.log('Profile synchronized.');
+                }
+            }
+
+            console.log('Refreshing session...');
+
+            // 4. Force a session refresh to get the updated JWT
+            await refreshSession();
+
+            // 5. Double check we have a valid session now
+            const { data: { session: updatedSession } } = await supabase.auth.getSession();
+            console.log('Post-conversion session check:', updatedSession ? 'Valid' : 'Missing');
+
+            if (!updatedSession) {
+                console.error('Session not found after conversion. This might happen if Email Confirmation is enabled.');
+            }
+
+            // 6. Slightly longer delay to ensure the session is propagated before proceeding to checkout
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            onSuccess();
+
         } catch (err: unknown) {
-            const error = err as Error;
-            console.error('Account creation error:', error);
-            setError(error.message || 'Failed to create account');
+            const errObj = err as Error;
+            console.error('Account creation error:', errObj);
+            setError(errObj.message || 'Failed to create account');
         } finally {
             setLoading(false);
         }

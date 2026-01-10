@@ -62,26 +62,17 @@ export const handler = async (req: Request) => {
             })
         }
 
-        const { data: profile, error: profileError } = await supabaseAdmin
-            .from('player_profiles')
-            .select('id')
-            .eq('auth_id', user.id)
-            .maybeSingle()
-
-        if (profileError || !profile) {
-            console.error('Error fetching profile:', profileError)
-            return new Response(JSON.stringify({ error: 'Player profile not found. Please ensure you are logged in correctly.' }), {
-                status: 400,
-                headers: { ...headers, 'Content-Type': 'application/json' },
-            })
-        }
-
         if (user.is_anonymous) {
             return new Response(JSON.stringify({ error: 'Anonymous accounts cannot make purchases. Please register your account first.' }), {
                 status: 400,
                 headers: { ...headers, 'Content-Type': 'application/json' },
             })
         }
+
+        // Profile ID matches User ID. We can check existence if we want to be pedantic, 
+        // but for now we will trust the 1:1 relationship or let FKs fail.
+        // For flow compatibility, we treat profile as just an object with an ID.
+        const profile = { id: user.id };
 
         // 2. Check for existing entitlement FIRST
         const { data: existingEntitlement, error: entitlementError } = await supabaseAdmin

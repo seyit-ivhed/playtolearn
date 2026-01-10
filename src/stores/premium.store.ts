@@ -39,21 +39,8 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
                     return;
                 }
 
-                // Fetch profile ID
-                const { data: profile, error: profileError } = await supabase
-                    .from('player_profiles')
-                    .select('id')
-                    .eq('auth_id', user.id)
-                    .single();
-
-                if (profileError) {
-                    console.error('Premium store: Profile fetch error:', profileError);
-                    throw profileError;
-                }
-
-                if (profile) {
-                    playerId = profile.id;
-                }
+                // Player ID IS the Auth ID now
+                playerId = user.id;
             }
 
             if (playerId) {
