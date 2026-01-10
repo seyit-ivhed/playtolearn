@@ -2,7 +2,6 @@ import { INITIAL_FELLOWSHIP, COMPANIONS } from '../../data/companions.data';
 import type { GameState } from './interfaces';
 
 export const initialGameState: GameState = {
-    unlockedCompanions: [...INITIAL_FELLOWSHIP],
     activeParty: [...INITIAL_FELLOWSHIP], // Default full party
 
     encounterResults: {},

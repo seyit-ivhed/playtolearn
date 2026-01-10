@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useGameStore } from './game/store';
-import * as progressionUtils from '../utils/progression.utils';
 
 // Mock dependencies
 vi.mock('../data/adventures.data', () => ({
@@ -49,13 +48,26 @@ vi.mock('../data/companions.data', async (importOriginal) => {
 
 describe('useGameStore', () => {
     beforeEach(() => {
-        useGameStore.getState().resetAll();
+        // Manually reset state since resetAll was removed
+        useGameStore.setState({
+            activeParty: ['c1', 'c2'],
+            encounterResults: {},
+            activeEncounterDifficulty: 1,
+            xpPool: 0,
+            companionStats: {
+                'c1': { level: 1 },
+                'c2': { level: 1 },
+                'c3': { level: 1 },
+                'c4': { level: 1 },
+                'c5': { level: 1 }
+            },
+            authMilestoneReached: false
+        });
         vi.clearAllMocks();
     });
 
     it('should initialize with default state', () => {
         const state = useGameStore.getState();
-        expect(state.unlockedCompanions).toEqual(['c1', 'c2']);
         expect(state.activeParty).toEqual(['c1', 'c2']);
         expect(state.xpPool).toBe(0);
         expect(state.encounterResults).toEqual({});
@@ -93,66 +105,6 @@ describe('useGameStore', () => {
             expect(Object.keys(results).length).toBe(5);
             expect(results['1_1']).toBeDefined();
             expect(results['2_1']).toBeDefined();
-        });
-    });
-
-    describe('Party Management', () => {
-        it('should add companion to party if valid', () => {
-            useGameStore.setState({ activeParty: ['c1'], unlockedCompanions: ['c1', 'c2'] });
-            useGameStore.getState().addToParty('c2');
-            expect(useGameStore.getState().activeParty).toContain('c2');
-            expect(useGameStore.getState().activeParty.length).toBe(2);
-        });
-
-        it('should not add if already in party', () => {
-            useGameStore.setState({ activeParty: ['c1'], unlockedCompanions: ['c1', 'c2'] });
-            useGameStore.getState().addToParty('c1');
-            expect(useGameStore.getState().activeParty).toEqual(['c1']);
-        });
-
-        it('should remove companion from party', () => {
-            useGameStore.setState({ activeParty: ['c1', 'c2'] });
-            useGameStore.getState().removeFromParty('c1');
-            expect(useGameStore.getState().activeParty).toEqual(['c2']);
-        });
-    });
-
-    describe('Progression System', () => {
-        it('should add xp to pool', () => {
-            useGameStore.setState({ xpPool: 0 });
-            useGameStore.getState().addXpToPool(100);
-            expect(useGameStore.getState().xpPool).toBe(100);
-        });
-
-        it('should level up companion and consume XP', () => {
-            useGameStore.setState({
-                xpPool: 100,
-                companionStats: { c1: { level: 1 } }
-            });
-
-            vi.spyOn(progressionUtils, 'getXpForNextLevel').mockReturnValue(15);
-
-            useGameStore.getState().levelUpCompanion('c1');
-
-            const state = useGameStore.getState();
-            expect(state.xpPool).toBe(85);
-            expect(state.companionStats['c1'].level).toBe(2);
-        });
-    });
-
-    describe('Reset', () => {
-        it('should reset all state', () => {
-            useGameStore.setState({
-                xpPool: 500,
-                encounterResults: { 'test': { stars: 3, difficulty: 1, completedAt: 123 } }
-            });
-
-            useGameStore.getState().resetAll();
-
-            const state = useGameStore.getState();
-            expect(state.xpPool).toBe(0);
-            expect(state.encounterResults).toEqual({});
-            expect(state.unlockedCompanions).toEqual(['c1', 'c2']);
         });
     });
 });

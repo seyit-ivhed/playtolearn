@@ -3,7 +3,6 @@ import { persist } from 'zustand/middleware';
 import type { GameStore } from './interfaces';
 import { initialGameState } from './initial-state';
 import { createAdventureProgressSlice } from './slices/adventure-progress.slice';
-import { createPartyManagementSlice } from './slices/party-management.slice';
 import { createProgressionSlice } from './slices/progression.slice';
 import { createDebugSlice } from './slices/debug.slice';
 
@@ -12,7 +11,6 @@ export const useGameStore = create<GameStore>()(
         (...a) => ({
             ...initialGameState,
             ...createAdventureProgressSlice(...a),
-            ...createPartyManagementSlice(...a),
             ...createProgressionSlice(...a),
             ...createDebugSlice(...a),
         }),

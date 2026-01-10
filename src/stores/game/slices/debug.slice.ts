@@ -1,14 +1,9 @@
 import type { StateCreator } from 'zustand';
 import type { GameStore, DebugSlice } from '../interfaces';
-import { INITIAL_FELLOWSHIP, COMPANIONS } from '../../../data/companions.data';
+import { COMPANIONS } from '../../../data/companions.data';
 import { ADVENTURES } from '../../../data/adventures.data';
 
 export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (set) => ({
-    debugUnlockAllCompanions: () => {
-        const companionIds = Object.keys(COMPANIONS);
-        set({ unlockedCompanions: companionIds });
-    },
-
     debugUnlockAllEncounters: () => {
         const results: Record<string, { stars: number; difficulty: number; completedAt: number }> = {};
         ADVENTURES.forEach((adv) => {
@@ -60,19 +55,5 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
                 }
             }
         };
-    }),
-
-    resetAll: () => {
-        set({
-            unlockedCompanions: [...INITIAL_FELLOWSHIP],
-            activeParty: [...INITIAL_FELLOWSHIP],
-            encounterResults: {},
-            activeEncounterDifficulty: 1,
-            xpPool: 0,
-            companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
-                acc[id] = { level: 1 };
-                return acc;
-            }, {} as Record<string, { level: number }>)
-        });
-    }
+    })
 });
