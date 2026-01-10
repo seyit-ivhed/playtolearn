@@ -101,7 +101,7 @@ Deno.test({
             const url = typeof input === 'string' ? input : input.toString();
 
             if (url.includes('/auth/v1/user')) {
-                return new Response(JSON.stringify({ user: { id: 'user-123', email: 'test@example.com' } }), { status: 200 });
+                return new Response(JSON.stringify({ user: { id: 'user-123', email: '' } }), { status: 200 });
             }
             if (url.includes('/rest/v1/player_profiles')) {
                 // Mock anonymous profile
@@ -127,7 +127,7 @@ Deno.test({
             const data = await res.json();
 
             assertEquals(res.status, 400);
-            assertEquals(data.error.includes("Anonymous accounts cannot make purchases"), true);
+            assertEquals(data.error.includes("Account with a valid email is required for purchases"), true);
 
         } finally {
             globalThis.fetch = originalFetch;
