@@ -3,7 +3,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import { usePlayerStore } from '../../stores/player.store';
-import { useEncounterStore } from '../../stores/encounter.store';
+import { useEncounterStore } from '../../stores/encounter/store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
 import { getFocalNodeIndex } from './utils/navigation.utils';

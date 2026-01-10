@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEncounterStore } from '../../stores/encounter.store';
+import { useEncounterStore } from '../../stores/encounter/store';
 import { useGameStore } from '../../stores/game/store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
