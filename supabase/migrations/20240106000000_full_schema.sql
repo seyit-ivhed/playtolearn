@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS public.player_profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     auth_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     device_id UUID,
-    is_anonymous BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMPTZ DEFAULT now(),
     last_login TIMESTAMPTZ DEFAULT now(),
     UNIQUE(auth_id)

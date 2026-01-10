@@ -34,7 +34,7 @@ Deno.test({
 
             // Mock Supabase Database calls
             if (url.includes('/rest/v1/player_profiles')) {
-                return new Response(JSON.stringify([{ id: 'profile-123', is_anonymous: false }]), { status: 200, headers: { 'Content-Range': '0-0/1' } });
+                return new Response(JSON.stringify([{ id: 'profile-123' }]), { status: 200, headers: { 'Content-Range': '0-0/1' } });
             }
             if (url.includes('/rest/v1/player_entitlements')) {
                 return new Response(JSON.stringify([]), { status: 200 });
@@ -105,7 +105,7 @@ Deno.test({
             }
             if (url.includes('/rest/v1/player_profiles')) {
                 // Mock anonymous profile
-                return new Response(JSON.stringify([{ id: 'profile-123', is_anonymous: true }]), { status: 200 });
+                return new Response(JSON.stringify([{ id: 'profile-123' }]), { status: 200 });
             }
             if (url.includes('/rest/v1/content_pack_prices')) {
                 return new Response(JSON.stringify({ amount_cents: 9900, currency: 'SEK' }), { status: 200 });

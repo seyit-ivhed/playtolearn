@@ -96,15 +96,12 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                     if (!profile) {
                         console.log('No existing profile found, creating a new one...');
                         await supabase.from('player_profiles').insert({
-                            auth_id: userId,
-                            is_anonymous: false
+                            auth_id: userId
                         });
                     } else {
                         console.log('Updating existing profile state...');
-                        await supabase
-                            .from('player_profiles')
-                            .update({ is_anonymous: false })
-                            .eq('auth_id', userId);
+                        // Profile exists, no specific update needed for anonymous flag as it's handled by auth
+                        console.log('Profile exists, proceeding...');
                     }
                 }
 

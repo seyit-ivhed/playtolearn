@@ -64,7 +64,7 @@ export const handler = async (req: Request) => {
 
         const { data: profile, error: profileError } = await supabaseAdmin
             .from('player_profiles')
-            .select('id, is_anonymous')
+            .select('id')
             .eq('auth_id', user.id)
             .maybeSingle()
 
@@ -76,7 +76,7 @@ export const handler = async (req: Request) => {
             })
         }
 
-        if (profile.is_anonymous) {
+        if (user.is_anonymous) {
             return new Response(JSON.stringify({ error: 'Anonymous accounts cannot make purchases. Please register your account first.' }), {
                 status: 400,
                 headers: { ...headers, 'Content-Type': 'application/json' },

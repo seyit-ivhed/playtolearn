@@ -40,7 +40,6 @@ export const PersistenceService = {
             .from('player_profiles')
             .insert({
                 auth_id: authId,
-                is_anonymous: true,
                 device_id: IdentityService.getDeviceId()
             })
             .select('id')

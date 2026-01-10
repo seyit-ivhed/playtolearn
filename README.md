@@ -1,6 +1,7 @@
 # Space Math Academy (PlayToLearn)
 
-A browser-based educational game designed to teach math concepts to children through space-themed missions and challenges.
+A browser-based educational game designed to teach math concepts to children
+through space-themed missions and challenges.
 
 ## Tech Stack
 
@@ -17,28 +18,29 @@ A browser-based educational game designed to teach math concepts to children thr
 
 ## Installation
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd playtolearn
-    ```
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd playtolearn
+   ```
 
-2.  **Install Frontend Dependencies:**
-    ```bash
-    npm install
-    ```
+2. **Install Frontend Dependencies:**
+   ```bash
+   npm install
+   ```
 
-3.  **Install Backend Dependencies:**
-    Navigate to the server directory and install dependencies:
-    ```bash
-    cd server
-    npm install
-    cd ..
-    ```
+3. **Install Backend Dependencies:** Navigate to the server directory and
+   install dependencies:
+   ```bash
+   cd server
+   npm install
+   cd ..
+   ```
 
 ## Running the Project
 
-To run the full application, you will need to start both the client (frontend) and the server (backend) in separate terminal instances.
+To run the full application, you will need to start both the client (frontend)
+and the server (backend) in separate terminal instances.
 
 ### 1. Start the Server (Backend)
 
@@ -59,35 +61,69 @@ Open a new terminal window (from the root directory) and run:
 npm run dev
 ```
 
-This will start the Vite development server. Open your browser and navigate to the URL shown in the terminal (usually `http://localhost:5173`).
+This will start the Vite development server. Open your browser and navigate to
+the URL shown in the terminal (usually `http://localhost:5173`).
 
 ## Backend Setup (Supabase)
 
 The project uses Supabase for authentication, database, and edge functions.
 
-### 1. Database Migrations
-Apply the migrations in the `supabase/migrations` directory to your Supabase project:
-1. `initial_schema.sql`: Sets up players and game states.
-2. `payment_and_dlc.sql`: Sets up content packs and entitlements.
-3. `fix_entitlements_rls.sql`: Fixes security policies for entitlements.
+### Local Development
 
-### 2. Edge Functions
-Deploy the logic for payments and webhooks:
+We use a local Supabase instance run via Docker.
+
+**1. Manage Local Secrets:** To use features like Stripe payments locally, you
+must set your API keys.
+
+1. Create a `supabase/functions/.env` file.
+2. Add your secrets there (this file is git-ignored and safe):
+   ```
+   STRIPE_SECRET_KEY=sk_test_...
+   STRIPE_WEBHOOK_SECRET=whsec_...
+   ```
+3. Restart services to load the keys: `npm run deploy-supabase`
+
+**2. View Edge Function Logs:** Supabase Edge Functions run effectively in a
+Docker container locally. To view real-time logs (including `console.log` from
+your functions):
+
 ```bash
-supabase functions deploy create-payment-intent
-supabase functions deploy stripe-webhook
+docker logs -f supabase_edge_runtime_workspace-1
 ```
 
-> [!IMPORTANT]
-> Both functions require `verify_jwt = false` in [config.toml](file:///Users/seyitivhed/Github/playtolearn-workspaces/workspace-1/supabase/config.toml) to handle manual verification and Stripe webhooks correctly.
+**4. Test Webhooks Locally:** To receive Stripe events (like successful
+payments) on your local machine:
 
-### 3. Environment Secrets
-Set the required secrets in your Supabase project:
-```bash
-supabase secrets set STRIPE_SECRET_KEY=sk_test_...
-supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_...
-```
-Also ensure your frontend `.env` has the correct `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+1. **Install Stripe CLI:** `brew install stripe/stripe-cli/stripe`
+2. **Login:** `stripe login`
+3. **Forward events:**
+   ```bash
+   stripe listen --forward-to localhost:54321/functions/v1/stripe-webhook
+   ```
+4. **Copy the Signing Secret:** The command will output a secret starting with
+   `whsec_...`.
+5. **Update .env:** Paste this into `supabase/functions/.env` as
+   `STRIPE_WEBHOOK_SECRET`.
+6. **Restart:** Run `npm run deploy-supabase` to apply the new secret.
+
+### Production Deployment
+
+1. **Database Migrations:** The project uses a consolidated migration strategy.
+   - `20240106000000_full_schema.sql`: Contains the entire schema (Players, Game
+     States, Payments, Entitlements).
+
+2. **Edge Functions:** Deploy the payment logic:
+   ```bash
+   supabase functions deploy create-payment-intent
+   supabase functions deploy stripe-webhook
+   ```
+
+3. **Environment Secrets:** Set the required secrets in your live Supabase
+   project:
+   ```bash
+   supabase secrets set STRIPE_SECRET_KEY=sk_live_...
+   supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_...
+   ```
 
 ## Testing
 
@@ -113,7 +149,7 @@ We use **Vitest** for unit testing.
 - **Check test coverage for a specific directory:**
   ```bash
   npm run test:coverage -- src/stores/game
-  ``` 
+  ```
 
 ### End-to-End Tests (Playwright)
 
@@ -139,12 +175,14 @@ We use **Playwright** for end-to-end testing.
 We use **Deno** for testing Supabase Edge Functions.
 
 **Installation (if needed):**
+
 ```bash
 curl -fsSL https://deno.land/install.sh | sh
 ```
 
-**Note on Dependencies:**
-The project includes a `deno.json` file that enables automatic installation of `npm:` dependencies (like Stripe and Supabase JS). Deno will automatically download these the first time you run the tests.
+**Note on Dependencies:** The project includes a `deno.json` file that enables
+automatic installation of `npm:` dependencies (like Stripe and Supabase JS).
+Deno will automatically download these the first time you run the tests.
 
 - **Run all edge function tests:**
   ```bash
