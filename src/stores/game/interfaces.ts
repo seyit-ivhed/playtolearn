@@ -9,7 +9,6 @@ export interface GameState {
     // Progression
     unlockedCompanions: string[]; // IDs
     activeParty: string[]; // IDs (Max 4)
-    deviceId: string;
 
     // Per-Encounter Progression
     encounterResults: Record<string, EncounterResult>; // Key: adventureId_nodeIndex
