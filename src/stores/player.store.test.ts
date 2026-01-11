@@ -4,7 +4,7 @@ import { usePlayerStore } from './player.store';
 describe('Player Store', () => {
     beforeEach(() => {
         usePlayerStore.setState({
-            name: 'Cadet',
+
             difficulty: 1,
             language: 'en',
             currentAdventure: 1,
@@ -12,11 +12,7 @@ describe('Player Store', () => {
         });
     });
 
-    it('should update player name', () => {
-        const store = usePlayerStore.getState();
-        store.setName('New Hero');
-        expect(usePlayerStore.getState().name).toBe('New Hero');
-    });
+
 
     it('should update difficulty', () => {
         const store = usePlayerStore.getState();
@@ -51,7 +47,7 @@ describe('Player Store', () => {
     it('should reset progress but keep settings', () => {
         // Set up some non-default state
         usePlayerStore.setState({
-            name: 'Veteran',
+
             difficulty: 4, // Hero
             language: 'sv', // Swedish
             currentAdventure: 2,
@@ -71,7 +67,7 @@ describe('Player Store', () => {
         // Progress should be reset
         expect(resetStore.currentAdventure).toBe(1);
         expect(resetStore.unlockedAdventures).toEqual([1]);
-        expect(resetStore.name).toBe('Cadet'); // Confirmed assumption
+
 
         // Settings should be preserved
         expect(resetStore.difficulty).toBe(4);
