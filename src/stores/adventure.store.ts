@@ -10,7 +10,6 @@ export interface AdventureState {
     completeAdventure: (id: AdventureId) => void;
     unlockAdventure: (id: AdventureId) => void;
     debugUnlockAllAdventures: () => void;
-    resetProgress: () => void;
 
     // Computed
     getAdventureStatus: (id: AdventureId) => AdventureStatus;
@@ -65,8 +64,6 @@ export const useAdventureStore = create<AdventureState>()(
                 });
                 set({ adventureStatuses: newStatuses });
             },
-
-            resetProgress: () => set({ adventureStatuses: INITIAL_STATUSES }),
 
             getAdventureStatus: (id) => {
                 return get().adventureStatuses[id] || AdventureStatus.LOCKED;

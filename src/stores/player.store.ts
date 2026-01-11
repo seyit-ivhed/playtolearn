@@ -15,7 +15,6 @@ export interface PlayerState {
     setLanguage: (lang: 'en' | 'sv') => void;
     unlockAdventure: (adventureId: number) => void;
     setCurrentAdventure: (adventureId: number) => void;
-    resetProgress: () => void;
 }
 
 export const usePlayerStore = create<PlayerState>()(
@@ -37,14 +36,7 @@ export const usePlayerStore = create<PlayerState>()(
                         : [...state.unlockedAdventures, adventureId]
                 })),
 
-            setCurrentAdventure: (currentAdventure) => set({ currentAdventure }),
-
-            resetProgress: () => set((state) => ({
-                difficulty: state.difficulty,
-                language: state.language,
-                currentAdventure: 1,
-                unlockedAdventures: [1],
-            }))
+            setCurrentAdventure: (currentAdventure) => set({ currentAdventure })
         }),
         {
             name: 'space-math-player-storage',
