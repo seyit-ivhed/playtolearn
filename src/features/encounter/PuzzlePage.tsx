@@ -2,7 +2,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useMemo, useState, useEffect } from 'react';
 import { useGameStore } from '../../stores/game/store';
-import { usePlayerStore } from '../../stores/player.store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
 import { checkNavigationAccess } from '../../utils/navigation-security.utils';
@@ -31,7 +30,6 @@ const PuzzlePage = () => {
         initialized: premiumInitialized
     } = usePremiumStore();
 
-    const { difficulty } = usePlayerStore();
 
     const [isCompleted, setIsCompleted] = useState(false);
 
@@ -55,9 +53,9 @@ const PuzzlePage = () => {
         const pType = encounter?.puzzleData?.puzzleType;
         if (!pType) return null;
         // Prefer explicit encounter difficulty if set, fallback to player preference
-        const currentDifficulty = (activeEncounterDifficulty || difficulty) as DifficultyLevel;
+        const currentDifficulty = activeEncounterDifficulty as DifficultyLevel;
         return generatePuzzleData(pType, currentDifficulty);
-    }, [encounter, difficulty, activeEncounterDifficulty]);
+    }, [encounter, activeEncounterDifficulty]);
 
     // Safety gate: Validate premium, progression and node sequence
     useEffect(() => {
@@ -160,7 +158,7 @@ const PuzzlePage = () => {
                     result="VICTORY"
                     onContinue={handleCompletionContinue}
                     xpReward={xpReward}
-                    difficulty={(activeEncounterDifficulty || difficulty) as number}
+                    difficulty={activeEncounterDifficulty as number}
                     isFirstTime={isFirstTime}
                 />
             )}

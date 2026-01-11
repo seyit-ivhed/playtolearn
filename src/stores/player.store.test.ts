@@ -5,19 +5,10 @@ describe('Player Store', () => {
     beforeEach(() => {
         usePlayerStore.setState({
 
-            difficulty: 1,
             language: 'en',
             currentAdventure: 1,
             unlockedAdventures: [1],
         });
-    });
-
-
-
-    it('should update difficulty', () => {
-        const store = usePlayerStore.getState();
-        store.setDifficulty(5);
-        expect(usePlayerStore.getState().difficulty).toBe(5);
     });
 
     it('should update language', () => {

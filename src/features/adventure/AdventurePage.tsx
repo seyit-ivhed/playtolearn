@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
-import { usePlayerStore } from '../../stores/player.store';
 import { useEncounterStore } from '../../stores/encounter/store';
 import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
@@ -36,7 +35,6 @@ const AdventurePage = () => {
         unlockAdventure,
         isAdventureUnlocked: isProgressionUnlocked
     } = useAdventureStore();
-    const { difficulty: playerDifficulty } = usePlayerStore();
     const {
         isAdventureUnlocked: isPremiumUnlocked,
         initialized: premiumInitialized
@@ -71,73 +69,65 @@ const AdventurePage = () => {
     const focalNodeFromState = (location.state as { focalNode?: number } | null)?.focalNode;
     const currentNode = focalNodeFromState ?? getFocalNodeIndex(adventureId, encounterResults);
 
-    const { encounters } = adventure;
-
-    const handleNodeClick = (encounter: typeof encounters[0]) => {
-        if (encounter.type === EncounterType.CAMP) {
-            navigate(`/camp/${adventureId}/${encounters.indexOf(encounter) + 1}`);
-            return;
-        }
-
-        if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS || encounter.type === EncounterType.PUZZLE) {
-            setSelectedEncounter(encounter);
-            setIsDifficultyModalOpen(true);
-        }
-
-        if (encounter.type === EncounterType.ENDING) {
-            // Complete current adventure in game progress
-            completeEncounter(adventureId, encounters.indexOf(encounter) + 1);
-
-            // Mark adventure as completed in metadata store
-            completeAdventure(adventureId);
-
-            // Find next adventure to unlock
-            const currentAdventureIndex = ADVENTURES.findIndex(a => a.id === adventureId);
-            if (currentAdventureIndex !== -1 && currentAdventureIndex < ADVENTURES.length - 1) {
-                const nextAdventure = ADVENTURES[currentAdventureIndex + 1];
-                unlockAdventure(nextAdventure.id);
+        const { encounters } = adventure;
+    
+        const handleNodeClick = (encounter: typeof encounters[0]) => {
+            if (encounter.type === EncounterType.CAMP) {
+                navigate(`/camp/${adventureId}/${encounters.indexOf(encounter) + 1}`);
+                return;
             }
-
-            navigate('/chronicle', { state: { justCompletedAdventureId: adventureId } });
-        }
-    };
-
-    const handleStartEncounter = (difficulty: number) => {
-        if (!selectedEncounter) return;
-
-        const nodeStep = encounters.indexOf(selectedEncounter) + 1;
-        setEncounterDifficulty(difficulty);
-
-        if (selectedEncounter.type === EncounterType.BATTLE || selectedEncounter.type === EncounterType.BOSS) {
-            if (selectedEncounter.enemies && selectedEncounter.enemies.length > 0) {
-                const xpReward = selectedEncounter.xpReward;
-                const localizedEnemies = selectedEncounter.enemies.map((enemy: AdventureMonster) => ({
-                    ...enemy,
-                    name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)
-                }));
-                initializeEncounter(party, localizedEnemies, xpReward, nodeStep, difficulty, companionStats);
-                navigate(`/encounter/${adventureId}/${nodeStep}`);
+    
+            if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS || encounter.type === EncounterType.PUZZLE) {
+                setSelectedEncounter(encounter);
+                setIsDifficultyModalOpen(true);
             }
-        } else if (selectedEncounter.type === EncounterType.PUZZLE) {
-            navigate(`/puzzle/${adventureId}/${nodeStep}`);
-        }
-
-        setIsDifficultyModalOpen(false);
-    };
-
-    const getInitialDifficulty = () => {
-        // Per user request: Always stick to previously selected difficulty ("sticky").
-        // activeEncounterDifficulty tracks the last difficulty used to START an encounter.
-
-        // Edge case: If this is a fresh session (default 1) and we haven't completed anything,
-        // respect the player's profile setting.
-        const hasCompletedAny = Object.keys(encounterResults).length > 0;
-        if (!hasCompletedAny && activeEncounterDifficulty === 1) {
-            return playerDifficulty;
-        }
-
-        return activeEncounterDifficulty;
-    };
+    
+            if (encounter.type === EncounterType.ENDING) {
+                // Complete current adventure in game progress
+                completeEncounter(adventureId, encounters.indexOf(encounter) + 1);
+    
+                // Mark adventure as completed in metadata store
+                completeAdventure(adventureId);
+    
+                // Find next adventure to unlock
+                const currentAdventureIndex = ADVENTURES.findIndex(a => a.id === adventureId);
+                if (currentAdventureIndex !== -1 && currentAdventureIndex < ADVENTURES.length - 1) {
+                    const nextAdventure = ADVENTURES[currentAdventureIndex + 1];
+                    unlockAdventure(nextAdventure.id);
+                }
+    
+                navigate('/chronicle', { state: { justCompletedAdventureId: adventureId } });
+            }
+        };
+    
+        const handleStartEncounter = (difficulty: number) => {
+            if (!selectedEncounter) return;
+    
+            const nodeStep = encounters.indexOf(selectedEncounter) + 1;
+            setEncounterDifficulty(difficulty);
+    
+            if (selectedEncounter.type === EncounterType.BATTLE || selectedEncounter.type === EncounterType.BOSS) {
+                if (selectedEncounter.enemies && selectedEncounter.enemies.length > 0) {
+                    const xpReward = selectedEncounter.xpReward;
+                    const localizedEnemies = selectedEncounter.enemies.map((enemy: AdventureMonster) => ({
+                        ...enemy,
+                        name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)
+                    }));
+                    initializeEncounter(party, localizedEnemies, xpReward, nodeStep, difficulty, companionStats);
+                    navigate(`/encounter/${adventureId}/${nodeStep}`);
+                }
+            } else if (selectedEncounter.type === EncounterType.PUZZLE) {
+                navigate(`/puzzle/${adventureId}/${nodeStep}`);
+            }
+    
+            setIsDifficultyModalOpen(false);
+        };
+    
+        const getInitialDifficulty = () => {
+            // Per user request: Always stick to previously selected difficulty ("sticky").
+            // activeEncounterDifficulty tracks the last difficulty used to START an encounter.
+            return activeEncounterDifficulty;
+        };
 
     const getCurrentStars = (encounter: Encounter | null) => {
         if (!encounter || !adventureId) return 0;
