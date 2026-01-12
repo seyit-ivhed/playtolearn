@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import type { Session, User } from '@supabase/supabase-js';
 import { renderHook } from '@testing-library/react';
 import { useAnonymousLoginTrigger } from './useAnonymousLoginTrigger';
 import * as useAuthHook from './useAuth';
@@ -41,8 +42,8 @@ describe('useAnonymousLoginTrigger', () => {
             isAuthenticated: true,
             loading: false,
             signInAnonymously: signInAnonymouslyMock,
-            session: {} as any,
-            user: {} as any,
+            session: {} as unknown as Session,
+            user: {} as unknown as User,
             refreshSession: vi.fn(),
         });
 
