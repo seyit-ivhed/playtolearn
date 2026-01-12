@@ -2,7 +2,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useMemo, useState, useEffect } from 'react';
 import { useGameStore } from '../../stores/game/store';
-import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
 import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { ADVENTURES } from '../../data/adventures.data';
@@ -22,9 +21,7 @@ const PuzzlePage = () => {
     const { adventureId, nodeIndex: nodeIndexParam } = useParams<{ adventureId: string; nodeIndex: string }>();
     const nodeIndex = parseInt(nodeIndexParam || '1', 10);
     const { completeEncounter, activeEncounterDifficulty, encounterResults } = useGameStore();
-    const {
-        isAdventureUnlocked: isProgressionUnlocked
-    } = useAdventureStore();
+    const isProgressionUnlocked = useGameStore(state => state.isAdventureUnlocked);
     const {
         isAdventureUnlocked: isPremiumUnlocked,
         initialized: premiumInitialized

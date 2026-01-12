@@ -2,12 +2,10 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useChronicleData } from './useChronicleData';
 import { useGameStore } from '../../../stores/game/store';
-import { useAdventureStore } from '../../../stores/adventure.store';
 import { AdventureStatus } from '../../../types/adventure.types';
 
 // Mock the stores
 vi.mock('../../../stores/game/store');
-vi.mock('../../../stores/adventure.store');
 
 // Mock i18next
 vi.mock('react-i18next', () => ({
@@ -26,14 +24,11 @@ describe('useChronicleData', () => {
             // Mock new player state - no encounter results
             vi.mocked(useGameStore).mockReturnValue({
                 encounterResults: {},
-            } as ReturnType<typeof useGameStore>);
-
-            vi.mocked(useAdventureStore).mockReturnValue({
                 adventureStatuses: {
                     'prologue': AdventureStatus.AVAILABLE,
                     '1': AdventureStatus.AVAILABLE,
                 },
-            } as ReturnType<typeof useAdventureStore>);
+            } as ReturnType<typeof useGameStore>);
 
             const { result } = renderHook(() => useChronicleData());
 
@@ -47,15 +42,12 @@ describe('useChronicleData', () => {
                     'prologue_1': { stars: 3, difficulty: 1, completedAt: Date.now() },
                     '1_1': { stars: 2, difficulty: 2, completedAt: Date.now() },
                 },
-            } as ReturnType<typeof useGameStore>);
-
-            vi.mocked(useAdventureStore).mockReturnValue({
                 adventureStatuses: {
                     'prologue': AdventureStatus.COMPLETED,
                     '1': AdventureStatus.AVAILABLE,
                     '2': AdventureStatus.AVAILABLE,
                 },
-            } as ReturnType<typeof useAdventureStore>);
+            } as ReturnType<typeof useGameStore>);
 
             const { result } = renderHook(() => useChronicleData());
 
@@ -68,14 +60,11 @@ describe('useChronicleData', () => {
             // but new players should still see prologue
             vi.mocked(useGameStore).mockReturnValue({
                 encounterResults: {},
-            } as ReturnType<typeof useGameStore>);
-
-            vi.mocked(useAdventureStore).mockReturnValue({
                 adventureStatuses: {
                     'prologue': AdventureStatus.AVAILABLE,
                     '1': AdventureStatus.AVAILABLE, // Unlocked by default
                 },
-            } as ReturnType<typeof useAdventureStore>);
+            } as ReturnType<typeof useGameStore>);
 
             const { result } = renderHook(() => useChronicleData());
 

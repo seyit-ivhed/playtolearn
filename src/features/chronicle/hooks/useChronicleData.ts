@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../../stores/game/store';
-import { useAdventureStore } from '../../../stores/adventure.store';
 import { getHighestUnlockedAdventure } from '../../adventure/utils/navigation.utils';
 import {
     resolveCurrentVolume,
@@ -11,8 +10,7 @@ import {
 } from '../utils/chronicle.utils';
 
 export const useChronicleData = () => {
-    const { encounterResults } = useGameStore();
-    const { adventureStatuses } = useAdventureStore();
+    const { encounterResults, adventureStatuses } = useGameStore();
     const { t } = useTranslation();
 
     // For new players (no progress), default to prologue

@@ -11,7 +11,6 @@ export const useAnonymousLoginTrigger = () => {
         const milestoneReached = completedEncountersCount >= 3;
         
         if (!authLoading && milestoneReached && !isAuthenticated && !authTriggered.current) {
-            console.log('Milestone reached! Creating anonymous account...');
             authTriggered.current = true;
             signInAnonymously().catch(err => {
                 console.error('Failed to create anonymous account:', err);

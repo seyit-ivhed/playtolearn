@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEncounterStore } from '../../stores/encounter/store';
 import { useGameStore } from '../../stores/game/store';
-import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
 import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { EncounterPhase } from '../../types/encounter.types';
@@ -36,7 +35,7 @@ const EncounterPage = () => {
 
     const { encounterResults, completeEncounter } = useGameStore();
 
-    const { isAdventureUnlocked: isProgressionUnlocked } = useAdventureStore();
+    const isProgressionUnlocked = useGameStore(state => state.isAdventureUnlocked);
     const { isAdventureUnlocked: isPremiumUnlocked, initialized: premiumInitialized } = usePremiumStore();
 
     const encounterKey = `${adventureId}_${nodeIndex}`;

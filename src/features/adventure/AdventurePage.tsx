@@ -3,7 +3,6 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import { useEncounterStore } from '../../stores/encounter/store';
-import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
 import { getFocalNodeIndex } from './utils/navigation.utils';
 import { checkNavigationAccess } from '../../utils/navigation-security.utils';
@@ -27,14 +26,12 @@ const AdventurePage = () => {
         encounterResults,
         setEncounterDifficulty,
         activeEncounterDifficulty,
-        completeEncounter
-    } = useGameStore();
-    const { initializeEncounter } = useEncounterStore();
-    const {
+        completeEncounter,
         completeAdventure,
         unlockAdventure,
         isAdventureUnlocked: isProgressionUnlocked
-    } = useAdventureStore();
+    } = useGameStore();
+    const { initializeEncounter } = useEncounterStore();
     const {
         isAdventureUnlocked: isPremiumUnlocked,
         initialized: premiumInitialized

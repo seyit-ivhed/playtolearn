@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAdventureStore } from '../../stores/adventure.store';
+import { useGameStore } from '../../stores/game/store';
 import { VOLUMES } from '../../data/volumes.data';
 import { calculateAdventureStars } from '../../utils/progression.utils';
 import { ChapterPage } from './components/ChapterPage';
 import { TableOfContents } from './components/TableOfContents';
 import { PremiumStoreModal } from '../premium/components/PremiumStoreModal';
-import { usePremiumStore } from '../../stores/premium.store';
 import { useChronicleData } from './hooks/useChronicleData';
 import { useChronicleNavigation } from './hooks/useChronicleNavigation';
 import { useChronicleKeyboardShortcuts } from './hooks/useChronicleKeyboardShortcuts';
@@ -15,8 +14,7 @@ import './ChronicleBook.css';
 
 export const ChronicleBook: React.FC = () => {
     const { t } = useTranslation();
-    const { adventureStatuses } = useAdventureStore();
-    const { isAdventureUnlocked } = usePremiumStore();
+    const { adventureStatuses, isAdventureUnlocked } = useGameStore();
 
     // UI State
     const [isTocOpen, setIsTocOpen] = useState(false);

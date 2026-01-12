@@ -46,11 +46,6 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
                 return;
             }
 
-            // Unlock adventure if necessary
-            if (advId !== 'prologue') {
-                stores.adventure.unlockAdventure(advId);
-            }
-
             // Use completeEncounter for each node to ensure all logic (XP, Auth, Sync) is triggered
             for (let i = 1; i <= targetNode; i++) {
                 stores.game.completeEncounter(advId, i);

@@ -2,8 +2,6 @@ import { supabase } from './supabase.service';
 import { IdentityService } from './identity.service';
 
 export const PersistenceService = {
-
-
     /**
      * Fetches or creates a player profile for a given authId.
      * Returns the profile id.

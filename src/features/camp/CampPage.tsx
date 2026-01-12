@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import styles from './CampPage.module.css';
-import { useAdventureStore } from '../../stores/adventure.store';
 import { usePremiumStore } from '../../stores/premium.store';
 import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { CampfireScene } from './components/CampfireScene';
@@ -42,7 +41,7 @@ const CampPage = () => {
         levelUpCompanion
     } = useGameStore();
 
-    const { isAdventureUnlocked: isProgressionUnlocked } = useAdventureStore();
+    const isProgressionUnlocked = useGameStore(state => state.isAdventureUnlocked);
     const { isAdventureUnlocked: isPremiumUnlocked, initialized: premiumInitialized } = usePremiumStore();
 
     const { t } = useTranslation();

@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { useGameStore } from '../../../stores/game/store';
-import { useAdventureStore } from '../../../stores/adventure.store';
 import { DEBUG_COMMANDS } from '../utils/command-registry';
 
 export const useDebugCommands = () => {
     const [history, setHistory] = useState<string[]>(['Debug console initialized. Type "help" for commands.']);
     const gameStore = useGameStore();
-    const adventureStore = useAdventureStore();
 
     const log = (message: string) => {
         setHistory(prev => [...prev, message]);
@@ -27,8 +25,7 @@ export const useDebugCommands = () => {
                 log,
                 setHistory,
                 stores: {
-                    game: gameStore,
-                    adventure: adventureStore
+                    game: gameStore
                 }
             });
         } else {

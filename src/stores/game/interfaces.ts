@@ -1,3 +1,5 @@
+import { AdventureStatus, type AdventureId } from '../../types/adventure.types';
+
 export interface EncounterResult {
     stars: number;
     difficulty: number;
@@ -11,12 +13,20 @@ export interface GameState {
     activeEncounterDifficulty: number;
     xpPool: number;
     companionStats: Record<string, { level: number }>;
+    adventureStatuses: Record<AdventureId, AdventureStatus>;
 }
 
 // Adventure & Encounter Management
 export interface AdventureProgressSlice {
     completeEncounter: (adventureId: string, nodeIndex: number) => void;
     setEncounterDifficulty: (difficulty: number) => void;
+}
+
+export interface AdventureStatusSlice {
+    adventureStatuses: Record<AdventureId, AdventureStatus>;
+    completeAdventure: (id: AdventureId) => void;
+    unlockAdventure: (id: AdventureId) => void;
+    isAdventureUnlocked: (id: AdventureId) => boolean;
 }
 
 
@@ -37,4 +47,4 @@ export interface DebugSlice {
 }
 
 // Combined store type
-export interface GameStore extends GameState, AdventureProgressSlice, ProgressionSlice, DebugSlice { }
+export interface GameStore extends GameState, AdventureProgressSlice, AdventureStatusSlice, ProgressionSlice, DebugSlice { }
