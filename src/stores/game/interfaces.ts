@@ -11,7 +11,6 @@ export interface GameState {
     activeEncounterDifficulty: number;
     xpPool: number;
     companionStats: Record<string, { level: number }>;
-    authMilestoneReached: boolean;
 }
 
 // Adventure & Encounter Management

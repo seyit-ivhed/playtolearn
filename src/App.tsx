@@ -8,30 +8,14 @@ import PuzzlePage from './features/encounter/PuzzlePage';
 import MathTestPage from './features/math/MathTestPage';
 
 import Layout from './components/Layout';
-import { useAuth } from './hooks/useAuth';
-import { useGameStore } from './stores/game/store';
-import { useEffect, useRef } from 'react';
 import { useInitializeGame } from './hooks/useInitializeGame';
+import { useAnonymousLoginTrigger } from './hooks/useAnonymousLoginTrigger';
 import { LoadingScreen } from './components/LoadingScreen';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
-  const { isAuthenticated, signInAnonymously, loading: authLoading } = useAuth();
-
-  const authMilestoneReached = useGameStore(state => state.authMilestoneReached);
-  const authTriggered = useRef(false);
-
-  // Handle anonymous account creation when milestones are reached
-  useEffect(() => {
-    if (!authLoading && authMilestoneReached && !isAuthenticated && !authTriggered.current) {
-      console.log('Milestone reached! Creating anonymous account...');
-      authTriggered.current = true;
-      signInAnonymously().catch(err => {
-        console.error('Failed to create anonymous account:', err);
-        authTriggered.current = false; // Allow retry on failure
-      });
-    }
-  }, [authMilestoneReached, isAuthenticated, signInAnonymously, authLoading]);
+  
+  useAnonymousLoginTrigger();
 
   if (isInitializing || error) {
     return <LoadingScreen error={error} onRetry={retry} />;

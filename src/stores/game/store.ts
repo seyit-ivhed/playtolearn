@@ -22,3 +22,5 @@ export const useGameStore = create<GameStore>()(
 
 // Re-export types for convenience
 export type { EncounterResult, GameStore } from './interfaces';
+
+export const selectCompletedEncountersCount = (state: GameStore) => Object.keys(state.encounterResults).length;

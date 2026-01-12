@@ -42,12 +42,8 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
                         }
                     };
 
-                    // Trigger auth milestone if 3 or more unique encounters completed
-                    const milestoneReached = Object.keys(newResults).length >= 3;
-
                     return {
                         encounterResults: newResults,
-                        authMilestoneReached: state.authMilestoneReached || milestoneReached
                     };
                 });
             }

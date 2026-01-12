@@ -60,8 +60,7 @@ describe('useGameStore', () => {
                 'c3': { level: 1 },
                 'c4': { level: 1 },
                 'c5': { level: 1 }
-            },
-            authMilestoneReached: false
+            }
         });
         vi.clearAllMocks();
     });
