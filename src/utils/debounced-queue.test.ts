@@ -16,7 +16,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         queue.enqueue('test-value');
@@ -37,7 +37,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         // Enqueue multiple items rapidly
@@ -61,7 +61,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         queue.enqueue('value-1');
@@ -100,7 +100,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         queue.enqueue('value-1');
@@ -130,7 +130,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         // First enqueue
@@ -162,7 +162,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         queue.enqueue('value-1');
@@ -185,7 +185,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         queue.enqueue('value-1');
@@ -207,7 +207,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         expect(queue.isCurrentlyProcessing()).toBe(false);
@@ -233,7 +233,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue<TestState>({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         const state1: TestState = { id: '1', count: 1, nested: { value: 'a' } };
@@ -256,7 +256,7 @@ describe('DebouncedQueue', () => {
         const queue = new DebouncedQueue({
             processor,
             debounceMs: 300,
-            timers: { setTimeout: vi.fn(setTimeout), clearTimeout: vi.fn(clearTimeout) }
+            timers: { setTimeout, clearTimeout }
         });
 
         // Start processing first item
