@@ -12,5 +12,6 @@ export const initialGameState: GameState = {
         acc[id] = { level: 1 };
         return acc;
     }, {} as Record<string, { level: number }>),
+    adventureStatuses: {},
 };
 

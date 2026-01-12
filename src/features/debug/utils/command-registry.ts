@@ -1,13 +1,11 @@
 import { ADVENTURES } from '../../../data/adventures.data';
 import type { GameStore } from '../../../stores/game/interfaces';
-import type { AdventureState } from '../../../stores/adventure.store';
 
 export interface DebugCommandContext {
     log: (message: string) => void;
     setHistory: React.Dispatch<React.SetStateAction<string[]>>;
     stores: {
         game: GameStore;
-        adventure: AdventureState;
     };
 }
 
