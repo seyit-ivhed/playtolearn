@@ -4,7 +4,7 @@ interface Identity {
     playerId?: string;
 }
 
-const STORAGE_KEY = 'playtolearn_identity';
+const STORAGE_KEY = 'playtolearn-identity';
 
 export const IdentityService = {
     getIdentity: (): Identity => {

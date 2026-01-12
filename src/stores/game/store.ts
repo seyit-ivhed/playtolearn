@@ -17,7 +17,7 @@ export const useGameStore = create<GameStore>()(
             ...createDebugSlice(...a),
         }),
         {
-            name: 'math-quest-fantasy-storage-v1',
+            name: 'playtolearn-game-store',
         }
     )
 );

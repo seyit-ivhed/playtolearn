@@ -2,7 +2,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { IdentityService } from './identity.service';
 
-const STORAGE_KEY = 'playtolearn_identity';
+const STORAGE_KEY = 'playtolearn-identity';
 
 describe('IdentityService', () => {
     beforeEach(() => {
