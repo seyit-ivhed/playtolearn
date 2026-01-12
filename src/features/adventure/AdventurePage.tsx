@@ -70,7 +70,7 @@ const AdventurePage = () => {
 
     const handleNodeClick = (encounter: typeof encounters[0]) => {
         if (encounter.type === EncounterType.CAMP) {
-            navigate(`/camp/${adventureId}/${encounters.indexOf(encounter) + 1}`);
+            navigate(`/camp/${adventureId}/${encounters.findIndex(e => e.id === encounter.id) + 1}`);
             return;
         }
 
@@ -81,7 +81,7 @@ const AdventurePage = () => {
 
         if (encounter.type === EncounterType.ENDING) {
             // Complete current adventure in game progress
-            completeEncounter(adventureId, encounters.indexOf(encounter) + 1);
+            completeEncounter(adventureId, encounters.findIndex(e => e.id === encounter.id) + 1);
 
             // Mark adventure as completed in metadata store
             completeAdventure(adventureId);
@@ -100,7 +100,7 @@ const AdventurePage = () => {
     const handleStartEncounter = (difficulty: number) => {
         if (!selectedEncounter) return;
 
-        const nodeStep = encounters.indexOf(selectedEncounter) + 1;
+        const nodeStep = encounters.findIndex(e => e.id === selectedEncounter.id) + 1;
         setEncounterDifficulty(difficulty);
 
         if (selectedEncounter.type === EncounterType.BATTLE || selectedEncounter.type === EncounterType.BOSS) {
@@ -128,7 +128,7 @@ const AdventurePage = () => {
 
     const getCurrentStars = (encounter: Encounter | null) => {
         if (!encounter || !adventureId) return 0;
-        const nodeStep = encounters.indexOf(encounter) + 1;
+        const nodeStep = encounters.findIndex(e => e.id === encounter.id) + 1;
         const encounterKey = `${adventureId}_${nodeStep}`;
         return encounterResults[encounterKey]?.stars || 0;
     };
