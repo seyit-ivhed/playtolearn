@@ -31,10 +31,6 @@ export const PersistenceService = {
      */
     async pushState(authId: string, state: object) {
         try {
-            // Ensure profile exists (idempotent) - arguably we could skip this if we trust the flow
-            // but it's safer to ensure profile exists before linking game state
-            await this.getOrCreateProfile(authId);
-
             // Upsert the game state
             const { error: upsertError } = await supabase
                 .from('game_states')

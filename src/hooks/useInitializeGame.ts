@@ -52,17 +52,7 @@ export const useInitializeGame = () => {
                 if (cloudState) {
                     console.log('Cloud state found, rehydrating store...');
                     useGameStore.setState(cloudState);
-
-                    // New players (no progress) land on prologue, others land on highest unlocked
-                    // Note: Resolution is now handled algorithmically in useChronicleData
-                } else {
-                    console.log('No cloud state found. Syncing local progress to cloud...');
-                    await PersistenceService.pushState(user.id, useGameStore.getState());
                 }
-            } else {
-                console.log('User is not authenticated (guest mode). Checking connectivity...');
-                // Ensure premium is initialized even for guests (to know what's locked)
-                await initializePremium(false);
             }
 
             setIsInitializing(false);
