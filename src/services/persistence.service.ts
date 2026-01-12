@@ -29,23 +29,17 @@ export const PersistenceService = {
     /**
      * Pushes the current game state to Supabase.
      */
-    async pushState(authId: string, state: object, playerId?: string) {
+    async pushState(authId: string, state: object) {
         try {
-            // Player ID is same as Auth ID now
-            const actualPlayerId = playerId || authId;
-
-
             // Ensure profile exists (idempotent) - arguably we could skip this if we trust the flow
             // but it's safer to ensure profile exists before linking game state
-            if (actualPlayerId === authId && !playerId) {
-                 await this.getOrCreateProfile(authId);
-            }
+            await this.getOrCreateProfile(authId);
 
-            // 2. Upsert the game state
+            // Upsert the game state
             const { error: upsertError } = await supabase
                 .from('game_states')
                 .upsert({
-                    player_id: actualPlayerId,
+                    player_id: authId,
                     state_blob: state,
                     updated_at: new Date().toISOString()
                 }, {
@@ -64,15 +58,12 @@ export const PersistenceService = {
     /**
      * Pulls the latest game state from Supabase for a given authId.
      */
-    async pullState(authId: string, playerId?: string) {
-        const actualPlayerId = playerId || authId;
-
-
-        // Step 1: Get the game state for that profile
+    async pullState(authId: string) {
+        // Get the game state for that profile
         const { data, error } = await supabase
             .from('game_states')
             .select('state_blob')
-            .eq('player_id', actualPlayerId)
+            .eq('player_id', authId)
             .maybeSingle();
 
         if (error) throw error;
@@ -88,7 +79,7 @@ export const PersistenceService = {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
                 console.log('Event-driven sync triggered...');
-                return this.pushState(session.user.id, state, session.user.id);
+                return this.pushState(session.user.id, state);
             }
         } catch (error) {
             console.error('Error in sync helper:', error);

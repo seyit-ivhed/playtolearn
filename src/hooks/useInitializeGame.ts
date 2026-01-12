@@ -45,7 +45,7 @@ export const useInitializeGame = () => {
 
                 // 2. Fetch state and entitlements in parallel
                 const [cloudState] = await Promise.all([
-                    PersistenceService.pullState(user.id, profile.id),
+                    PersistenceService.pullState(user.id),
                     initializePremium(false, profile) // Not forced, using shared profile
                 ]);
 
@@ -57,7 +57,7 @@ export const useInitializeGame = () => {
                     // Note: Resolution is now handled algorithmically in useChronicleData
                 } else {
                     console.log('No cloud state found. Syncing local progress to cloud...');
-                    await PersistenceService.pushState(user.id, useGameStore.getState(), profile.id);
+                    await PersistenceService.pushState(user.id, useGameStore.getState());
                 }
             } else {
                 console.log('User is not authenticated (guest mode). Checking connectivity...');
