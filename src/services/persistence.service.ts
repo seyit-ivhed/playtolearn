@@ -1,7 +1,21 @@
 import { supabase } from './supabase.service';
 import { IdentityService } from './identity.service';
+import { DebouncedQueue } from '../utils/debounced-queue';
+
+interface SyncInput {
+    authId: string;
+    state: object;
+}
 
 export const PersistenceService = {
+    // Debounced queue to prevent race conditions during rapid state updates
+    syncQueue: new DebouncedQueue<SyncInput>({
+        processor: async (input) => {
+            await PersistenceService.pushState(input.authId, input.state);
+        },
+        debounceMs: 300
+    }),
+
     /**
      * Fetches or creates a player profile for a given authId.
      * Returns the profile id.
@@ -69,16 +83,20 @@ export const PersistenceService = {
     /**
      * Helper to sync provided state if a session exists.
      * Useful for event-driven syncing from store slices.
+     * 
+     * Uses a debounced queue to prevent race conditions when multiple
+     * rapid sync calls occur. Only the latest state will be pushed.
      */
     async sync(state: object) {
         try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
                 console.log('Event-driven sync triggered...');
-                return this.pushState(session.user.id, state);
+                this.syncQueue.enqueue({ authId: session.user.id, state });
             }
         } catch (error) {
             console.error('Error in sync helper:', error);
         }
     }
 };
+
