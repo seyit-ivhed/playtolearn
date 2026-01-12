@@ -1,16 +1,22 @@
 import { describe, it, expect, vi } from 'vitest';
+import type { StoreApi } from 'zustand';
 import { createAdventureProgressSlice } from './adventure-progress.slice';
 import { ADVENTURES } from '../../../data/adventures.data';
 import { EncounterType } from '../../../types/adventure.types';
+import type { GameStore, EncounterResult } from '../interfaces';
 
 // Mock get() function for Zustand
-const mockGet = (state: any) => () => state;
-const mockSet = vi.fn();
+const mockGet = (state: Partial<GameStore>) => () => state as GameStore;
+const mockSet = vi.fn() as unknown as StoreApi<GameStore>['setState'];
 
 describe('adventure-progress.slice - getAdventureNodes', () => {
     // Helper to setup slice
-    const setupSlice = (encounterResults: any = {}) => {
-        const slice = createAdventureProgressSlice(mockSet, mockGet({ encounterResults, activeEncounterDifficulty: 1 }) as any, {} as any);
+    const setupSlice = (encounterResults: Record<string, EncounterResult> = {}) => {
+        const slice = createAdventureProgressSlice(
+            mockSet,
+            mockGet({ encounterResults, activeEncounterDifficulty: 1 }),
+            {} as StoreApi<GameStore>
+        );
         return slice;
     };
 
