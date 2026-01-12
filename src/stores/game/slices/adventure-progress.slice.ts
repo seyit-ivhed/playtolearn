@@ -54,4 +54,33 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
     },
 
     setEncounterDifficulty: (difficulty) => set({ activeEncounterDifficulty: difficulty }),
+
+    getAdventureNodes: (adventureId) => {
+        const { encounterResults } = get();
+        const adventure = ADVENTURES.find(a => a.id === adventureId);
+
+        if (!adventure) return [];
+
+        let lastUnlockedNodeCompleted = true; // First node is always unlocked
+
+        return adventure.encounters.map((node, index) => {
+            const nodeStep = index + 1;
+            const encounterKey = `${adventureId}_${nodeStep}`;
+            const result = encounterResults[encounterKey];
+            const stars = result?.stars || 0;
+            const isCompleted = stars > 0;
+            const isLocked = !isCompleted && !lastUnlockedNodeCompleted;
+
+            if (node.type !== EncounterType.CAMP && node.type !== EncounterType.ENDING) {
+                 // This is a "blocker" node. If it's not completed, the *next* node will be locked.
+                 lastUnlockedNodeCompleted = isCompleted;
+            } 
+            
+            return {
+                ...node,
+                isLocked,
+                stars
+            };
+        });
+    }
 });

@@ -1,9 +1,14 @@
-import { AdventureStatus, type AdventureId } from '../../types/adventure.types';
+import { AdventureStatus, type AdventureId, type Encounter } from '../../types/adventure.types';
 
 export interface EncounterResult {
     stars: number;
     difficulty: number;
     completedAt: number;
+}
+
+export interface EncounterWithStatus extends Encounter {
+    isLocked: boolean;
+    stars: number;
 }
 
 // State shape only (no actions)
@@ -20,6 +25,7 @@ export interface GameState {
 export interface AdventureProgressSlice {
     completeEncounter: (adventureId: string, nodeIndex: number) => void;
     setEncounterDifficulty: (difficulty: number) => void;
+    getAdventureNodes: (adventureId: string) => EncounterWithStatus[];
 }
 
 export interface AdventureStatusSlice {

@@ -2,10 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Swords, Tent, Puzzle, Star, BookOpen } from 'lucide-react';
 import { EncounterType, type Encounter } from '../../../types/adventure.types';
-import { useGameStore } from '../../../stores/game/store';
+
+import { type EncounterWithStatus } from '../../../stores/game/interfaces';
 
 interface MapNodeProps {
-    node: Encounter;
+    node: EncounterWithStatus;
     index: number;
     currentNode: number;
     adventureId: string;
@@ -23,14 +24,13 @@ export const MapNode: React.FC<MapNodeProps> = ({
     nodeRef,
     referenceHeight
 }) => {
-    const { encounterResults } = useGameStore();
-    const encounterKey = `${adventureId}_${index + 1}`;
-    const stars = encounterResults[encounterKey]?.stars || 0;
     const { t } = useTranslation();
     const nodeStep = index + 1;
-    const isCompleted = nodeStep < currentNode;
+   
+    const { isLocked, stars } = node;
+    const isCompleted = stars > 0;
     const isCurrent = nodeStep === currentNode;
-    const isLocked = nodeStep > currentNode;
+
     const isCamp = node.type === EncounterType.CAMP;
     const isBoss = node.type === EncounterType.BOSS;
     const isPuzzle = node.type === EncounterType.PUZZLE;
@@ -49,7 +49,6 @@ export const MapNode: React.FC<MapNodeProps> = ({
         isCamp ? 'camp' : isBoss ? 'boss' : isPuzzle ? 'puzzle' : isEnding ? 'ending' : 'default',
         isLocked ? 'locked' : '',
         isCurrent ? 'current' : '',
-
         isCompleted ? 'completed' : ''
     ].filter(Boolean).join(' ');
 

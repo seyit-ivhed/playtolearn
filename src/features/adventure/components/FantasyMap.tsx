@@ -3,6 +3,7 @@ import { MapPathSVG } from './MapPathSVG';
 import { MapNode } from './MapNode';
 import type { Adventure, Encounter } from '../../../types/adventure.types';
 import { getAdventureMapImage } from '../../../data/adventure-assets';
+import { useGameStore } from '../../../stores/game/store';
 
 interface FantasyMapProps {
     adventure: Adventure;
@@ -21,6 +22,8 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
 
     const mapImage = getAdventureMapImage(adventure.id);
 
+    const { getAdventureNodes } = useGameStore();
+
     useEffect(() => {
         // Use a small timeout to ensure the DOM is fully ready and styles are applied
         const timer = setTimeout(() => {
@@ -35,6 +38,7 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
     }, [currentNode]);
 
     const { encounters } = adventure;
+    const nodes = getAdventureNodes(adventure.id);
 
     return (
         <div className="map-container">
@@ -54,7 +58,7 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
                 <div className="map-col-inner">
                     <MapPathSVG encounters={encounters} referenceHeight={referenceHeight} />
 
-                    {encounters.map((node, index) => (
+                    {nodes.map((node, index) => (
                         <MapNode
                             key={node.id}
                             node={node}
