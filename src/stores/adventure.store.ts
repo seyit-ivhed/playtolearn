@@ -9,11 +9,8 @@ export interface AdventureState {
     // Actions
     completeAdventure: (id: AdventureId) => void;
     unlockAdventure: (id: AdventureId) => void;
-    debugUnlockAllAdventures: () => void;
 
     // Computed
-    getAdventureStatus: (id: AdventureId) => AdventureStatus;
-    getAvailableAdventures: () => string[]; // Returns IDs
     isAdventureUnlocked: (id: AdventureId) => boolean;
 }
 
@@ -56,26 +53,6 @@ export const useAdventureStore = create<AdventureState>()(
                         [id]: AdventureStatus.AVAILABLE
                     }
                 })),
-
-            debugUnlockAllAdventures: () => {
-                const newStatuses: Record<AdventureId, AdventureStatus> = {};
-                ADVENTURES.forEach(adv => {
-                    newStatuses[adv.id] = AdventureStatus.AVAILABLE;
-                });
-                set({ adventureStatuses: newStatuses });
-            },
-
-            getAdventureStatus: (id) => {
-                return get().adventureStatuses[id] || AdventureStatus.LOCKED;
-            },
-
-            getAvailableAdventures: () => {
-                const statuses = get().adventureStatuses;
-                return Object.keys(statuses).filter(id =>
-                    statuses[id] === AdventureStatus.AVAILABLE ||
-                    statuses[id] === AdventureStatus.COMPLETED
-                );
-            },
 
             isAdventureUnlocked: (id) => {
                 const status = get().adventureStatuses[id];
