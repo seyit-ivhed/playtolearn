@@ -40,3 +40,4 @@ dist-ssr
 .env.production.local
 supabase/.temp/
 supabase/.branches/_current_branch
+deno.lock
