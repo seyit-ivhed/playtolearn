@@ -6,6 +6,13 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# Check if Docker is running
+if ! docker info > /dev/null 2>&1; then
+    echo -e "${RED}Error: Docker is not running.${NC}"
+    echo -e "${YELLOW}Please start Docker Desktop and try again.${NC}"
+    exit 1
+fi
+
 # 1. Reset database, Apply config, Apply migrations, Deploy functions
 # All of these are handled by stopping (wiping data) and starting fresh.
 echo -e "${YELLOW}Step 1: Restarting Supabase services with a clean slate...${NC}"
