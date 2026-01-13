@@ -36,3 +36,7 @@ echo -e "${GREEN}Supabase services started successfully.${NC}"
 echo -e "${GREEN}Database has been reset, migrations applied, and edge functions are executing.${NC}\n"
 
 echo -e "${GREEN}Local Supabase deployment/reset completed successfully!${NC}"
+
+# 2. View Edge Function Logs
+echo -e "${YELLOW}Tailing Edge Function logs... (Press Ctrl+C to exit)${NC}"
+docker logs -f supabase_edge_runtime_workspace-1
