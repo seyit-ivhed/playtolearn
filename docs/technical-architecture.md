@@ -178,6 +178,10 @@ feature-name/
 - `camp/` - Party camp and companion management
 - `encounter/` - Combat encounters and battles
 - `combat/` - Combat mechanics and UI
+- `chronicle/` - Story progression and book interface
+- `premium/` - Premium features and monetization
+- `debug/` - Debugging tools
+- `math/` - Math game mechanics
 
 ---
 
@@ -225,9 +229,12 @@ feature-name/
 
 **Rules**:
 
-- Stores should be domain-focused, not feature-focused
+- Stores should be domain-focused
 - Can be used by multiple features
 - Include selectors for derived state
+- **Sliced Store Pattern**: For complex domains (like `game`), use the slice
+  pattern where a main store combines multiple slice files (e.g.,
+  `src/stores/game/slices/`).
 
 ---
 
@@ -565,6 +572,8 @@ When moving files to the new structure:
 ### File Size Limits
 
 - TypeScript/TSX files should not exceed **250 lines**
+  - **Exception**: `.test.ts` and `.test.tsx` files are excluded from this
+    limit.
 - If a file exceeds 250 lines, consider refactoring:
   - Extract sub-components
   - Move logic to custom hooks

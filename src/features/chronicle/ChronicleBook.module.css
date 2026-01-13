@@ -1,4 +1,4 @@
-.chronicle-wrapper {
+.chronicleWrapper {
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -12,7 +12,7 @@
     box-sizing: border-box;
 }
 
-.book-container {
+.bookContainer {
     width: 100%;
     max-width: 600px;
     /* Single page for now in MVP */
@@ -28,7 +28,7 @@
     overflow: visible;
 }
 
-.book-spine {
+.bookSpine {
     position: absolute;
     top: 0;
     left: -20px;
@@ -40,7 +40,7 @@
     border-radius: 4px 0 0 4px;
 }
 
-.book-page {
+.bookPage {
     flex: 1;
     height: 100%;
     position: relative;
@@ -48,13 +48,13 @@
     /* Internal scrolling handled by ChapterPage */
 }
 
-.page-motion-wrapper {
+.pageMotionWrapper {
     height: 100%;
     width: 100%;
 }
 
 
-.toc-trigger {
+.tocTrigger {
     position: absolute;
     top: -40px;
     right: 0;
@@ -68,24 +68,24 @@
     transition: transform 0.2s;
 }
 
-.toc-trigger:hover {
+.tocTrigger:hover {
     transform: translateY(-2px);
 }
 
 /* Animations for page turns (placeholder for Phase 3) */
-.page-enter {
+.pageEnter {
     opacity: 0;
     transform: rotateY(-10deg);
 }
 
-.page-enter-active {
+.pageEnterActive {
     opacity: 1;
     transform: rotateY(0deg);
     transition: all 0.5s ease;
 }
 
 @media (min-width: 1000px) {
-    .book-container {
+    .bookContainer {
         max-width: 600px;
         /* Future: Double page layout */
     }

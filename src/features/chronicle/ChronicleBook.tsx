@@ -10,7 +10,7 @@ import { PremiumStoreModal } from '../premium/components/PremiumStoreModal';
 import { useChronicleData } from './hooks/useChronicleData';
 import { useChronicleNavigation } from './hooks/useChronicleNavigation';
 import { useChronicleKeyboardShortcuts } from './hooks/useChronicleKeyboardShortcuts';
-import './ChronicleBook.css';
+import styles from './ChronicleBook.module.css';
 
 export const ChronicleBook: React.FC = () => {
     const { t } = useTranslation();
@@ -55,10 +55,10 @@ export const ChronicleBook: React.FC = () => {
     if (!currentAdventure) return null;
 
     return (
-        <div className="chronicle-wrapper" data-testid="chronicle-page">
-            <div className="book-container" data-testid="chronicle-book">
-                <div className="book-spine"></div>
-                <div className="book-page left-page">
+        <div className={styles.chronicleWrapper} data-testid="chronicle-page">
+            <div className={styles.bookContainer} data-testid="chronicle-book">
+                <div className={styles.bookSpine}></div>
+                <div className={styles.bookPage}>
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={currentAdventure.id}
@@ -66,7 +66,7 @@ export const ChronicleBook: React.FC = () => {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -20 }}
                             transition={{ duration: 0.3 }}
-                            className="page-motion-wrapper"
+                            className={styles.pageMotionWrapper}
                         >
                             <ChapterPage
                                 adventure={currentAdventure}
@@ -97,7 +97,7 @@ export const ChronicleBook: React.FC = () => {
 
                 {/* TOC Button Overlay */}
                 <button
-                    className="toc-trigger"
+                    className={styles.tocTrigger}
                     onClick={() => setIsTocOpen(true)}
                     data-testid="toc-trigger-btn"
                 >

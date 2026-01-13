@@ -9,7 +9,7 @@ export interface AccountConversionParams {
     email: string;
     password: string;
     refreshSession: () => Promise<void>;
-    translation: (key: string, options?: any) => string;
+    translation: (key: string, options?: Record<string, unknown>) => string;
     supabaseClient: SupabaseClient;
 }
 
@@ -21,7 +21,7 @@ export const validateAccountCreationForm = (
     email: string,
     confirmEmail: string,
     password: string,
-    translation: (key: string, options?: any) => string
+    translation: (key: string, options?: Record<string, unknown>) => string
 ): string | null => {
     if (!email || !email.includes('@')) {
         return translation('premium.store.account.errors.invalid_email');
