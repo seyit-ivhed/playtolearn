@@ -5,6 +5,8 @@ describe('getInitialLanguage', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         localStorage.clear();
+        // Suppress console warnings during tests to keep terminal output clean
+        vi.spyOn(console, 'warn').mockImplementation(() => {});
         // Default navigator.language to something neutral if not overridden
         Object.defineProperty(window, 'navigator', {
             value: { language: 'fr' },
