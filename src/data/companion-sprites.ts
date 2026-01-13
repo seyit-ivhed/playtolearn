@@ -17,7 +17,7 @@ const tariqImg = [
     new URL('../assets/images/companions/Tariq/Tariq-3.png', import.meta.url).href,
 ];
 
-export const COMPANION_SPRITES: Record<string, string[]> = {
+const COMPANION_SPRITES: Record<string, string[]> = {
     'amara': amaraImg,
     'tariq': tariqImg,
 };

@@ -1,11 +1,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-export interface AccountConversionResult {
+interface AccountConversionResult {
     success: boolean;
     error?: string;
 }
 
-export interface AccountConversionParams {
+interface AccountConversionParams {
     email: string;
     password: string;
     refreshSession: () => Promise<void>;
@@ -80,7 +80,7 @@ export const performAccountConversion = async ({
                 updateError.status === 422) {
                 return {
                     success: false,
-                    error: translation('premium.store.account.errors.already_exists', 'This email is already registered. Please sign in with your existing account.')
+                    error: translation('premium.store.account.errors.already_exists', { defaultValue: 'This email is already registered. Please sign in with your existing account.' })
                 };
             } else {
                 throw updateError;

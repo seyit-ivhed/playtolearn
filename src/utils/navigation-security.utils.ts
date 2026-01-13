@@ -2,9 +2,9 @@ import { ADVENTURES } from '../data/adventures.data';
 import { EncounterType } from '../types/adventure.types';
 import type { EncounterResult } from '../stores/game/interfaces';
 
-export type NavigationAccessReason = 'PREMIUM_LOCKED' | 'ADVENTURE_LOCKED' | 'NODE_LOCKED' | 'INVALID_ADVENTURE';
+type NavigationAccessReason = 'PREMIUM_LOCKED' | 'ADVENTURE_LOCKED' | 'NODE_LOCKED' | 'INVALID_ADVENTURE';
 
-export interface NavigationAccessParams {
+interface NavigationAccessParams {
     adventureId: string;
     nodeIndex?: number; // 1-indexed
     isPremiumUnlocked: (id: string) => boolean;

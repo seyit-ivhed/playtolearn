@@ -13,14 +13,6 @@ export const isBalanced = (leftWeight: number, rightWeight: number): boolean => 
 };
 
 /**
- * Calculates the target weight if one isn't explicitly provided.
- * In a balance puzzle, the target is usually to make both sides equal.
- */
-export const getTargetWeight = (leftWeight: number, rightWeight: number): number => {
-    return Math.max(leftWeight, rightWeight);
-};
-
-/**
  * Calculates the tilt angle of the scale based on the weight difference.
  * Returns an angle in degrees (e.g., -15 to 15).
  */

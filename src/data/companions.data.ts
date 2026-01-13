@@ -139,5 +139,4 @@ export const COMPANIONS: Record<string, Companion> = {
 
 export const INITIAL_FELLOWSHIP = ['amara', 'tariq'];
 
-export const getAllCompanions = () => Object.values(COMPANIONS);
 export const getCompanionById = (id: string) => COMPANIONS[id];

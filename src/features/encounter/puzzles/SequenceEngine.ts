@@ -1,11 +1,6 @@
-export interface StarPosition {
+interface StarPosition {
     x: number;
     y: number;
-}
-
-export interface SequenceState {
-    currentPath: number[]; // Indices of selected options
-    isComplete: boolean;
 }
 
 /**

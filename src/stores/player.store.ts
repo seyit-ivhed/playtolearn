@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export interface PlayerState {
+interface PlayerState {
 
     language: 'en' | 'sv';
 

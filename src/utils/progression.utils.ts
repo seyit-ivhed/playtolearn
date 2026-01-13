@@ -65,12 +65,6 @@ export const getEvolutionAtLevel = (companion: Companion, level: number) => {
     return companion.evolutions.find(e => e.atLevel === level);
 };
 
-export const getCurrentEvolution = (companion: Companion, level: number) => {
-    // Get the latest applied evolution
-    const sortedEvos = [...companion.evolutions].sort((a, b) => b.atLevel - a.atLevel);
-    return sortedEvos.find(e => level >= e.atLevel);
-};
-
 /**
  * Calculates the overall star rating for an adventure based on its scorable encounters.
  * The chapter stars are designated by the encounter with the least stars.

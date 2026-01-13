@@ -10,13 +10,13 @@ const chapter2Illustration = new URL('../assets/images/chapters/chapter-2.png', 
 const adventure1Map = new URL('../assets/images/maps/adventure-1.png', import.meta.url).href;
 const adventure2Map = new URL('../assets/images/maps/adventure-2.png', import.meta.url).href;
 
-export const ADVENTURE_ILLUSTRATIONS: Record<string, string> = {
+const ADVENTURE_ILLUSTRATIONS: Record<string, string> = {
     'prologue': prologueIllustration,
     '1': chapter1Illustration,
     '2': chapter2Illustration,
 };
 
-export const ADVENTURE_MAP_IMAGES: Record<string, string> = {
+const ADVENTURE_MAP_IMAGES: Record<string, string> = {
     '1': adventure1Map,
     '2': adventure2Map,
 };

@@ -15,8 +15,7 @@ const assyrianGuardianImg = new URL('../assets/images/enemies/assyrian-guardian.
 const theStoneEmperorImg = new URL('../assets/images/enemies/the-stone-emperor.png', import.meta.url).href;
 const banditLeaderImg = new URL('../assets/images/enemies/bandit-leader.png', import.meta.url).href;
 
-
-export const MONSTER_SPRITES: Record<string, string> = {
+const MONSTER_SPRITES: Record<string, string> = {
     'scorpion_1': duneScorpionImg,
     'tiny_scorpion': tinyScorpionImg,
     'desert_scavenger': desertScavengerImg,

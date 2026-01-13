@@ -55,7 +55,7 @@ export const generateSubtractionProblem = (difficulty: DifficultyLevel): MathPro
 /**
  * Generates a multiplication problem
  */
-export const generateMultiplicationProblem = (difficulty: DifficultyLevel): MathProblem => {
+const generateMultiplicationProblem = (difficulty: DifficultyLevel): MathProblem => {
     const settings = getSettings(difficulty).multiplication;
     const operand1 = getRandomInt(settings.left.min, settings.left.max);
     const operand2 = getRandomInt(settings.right.min, settings.right.max);

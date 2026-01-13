@@ -3,7 +3,7 @@ import type { EncounterSimulationResults } from '../simulation.types';
 /**
  * Output formatter interface for modular output system
  */
-export interface IOutputFormatter {
+interface IOutputFormatter {
     format(results: EncounterSimulationResults[]): void;
 }
 

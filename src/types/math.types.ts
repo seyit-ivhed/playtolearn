@@ -76,18 +76,18 @@ export interface MathEngineConfig {
     level5: LevelConfig;
 }
 
-export interface Range {
+interface Range {
     min: number;
     max: number;
 }
 
-export interface OperationConfig {
+interface OperationConfig {
     enabled: boolean;
     left: Range;
     right: Range;
 }
 
-export interface DivisionConfig extends OperationConfig {
+interface DivisionConfig extends OperationConfig {
     forceRemainder?: boolean;
 }
 

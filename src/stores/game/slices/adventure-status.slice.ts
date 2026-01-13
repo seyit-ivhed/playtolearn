@@ -4,7 +4,7 @@ import { AdventureStatus, type AdventureId } from '../../../types/adventure.type
 import { ADVENTURES } from '../../../data/adventures.data';
 import { PersistenceService } from '../../../services/persistence.service';
 
-export const INITIAL_ADVENTURE_STATUSES: Record<AdventureId, AdventureStatus> = {
+const INITIAL_ADVENTURE_STATUSES: Record<AdventureId, AdventureStatus> = {
     'prologue': AdventureStatus.AVAILABLE,
     '1': AdventureStatus.AVAILABLE
 };

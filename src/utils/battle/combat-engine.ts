@@ -13,13 +13,6 @@ export interface CombatLog {
     type: 'ATTACK' | 'ABILITY' | 'EFFECT' | 'INFO';
 }
 
-export interface TurnResult {
-    updatedUnits: EncounterUnit[];
-    logs: CombatLog[];
-    victory?: boolean;
-    defeat?: boolean;
-}
-
 // Generic interface to cover both EncounterUnit and SimulationUnit
 export interface BattleUnit extends HealableUnit, ShieldableUnit {
     id: string;

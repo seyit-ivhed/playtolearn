@@ -27,7 +27,7 @@ export const getHighestUnlockedAdventure = (
  * Returns the index (1-indexed) of the highest completed encounter in an adventure.
  * Returns 0 if none are completed.
  */
-export const getMaxCompletedNodeIndex = (
+const getMaxCompletedNodeIndex = (
     adventureId: string,
     encounterResults: Record<string, EncounterResult>
 ): number => {

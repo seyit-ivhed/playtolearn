@@ -1,7 +1,7 @@
 import { ADVENTURES } from '../../../data/adventures.data';
 import type { GameStore } from '../../../stores/game/interfaces';
 
-export interface DebugCommandContext {
+interface DebugCommandContext {
     log: (message: string) => void;
     setHistory: React.Dispatch<React.SetStateAction<string[]>>;
     stores: {
@@ -9,7 +9,7 @@ export interface DebugCommandContext {
     };
 }
 
-export interface DebugCommand {
+interface DebugCommand {
     name: string;
     description: string;
     execute: (parts: string[], context: DebugCommandContext) => void;
