@@ -7,17 +7,14 @@
     "npm:@stripe/stripe-js@^8.6.0": "8.6.1",
     "npm:@supabase/supabase-js@2": "2.90.1",
     "npm:@supabase/supabase-js@^2.89.0": "2.90.1",
-    "npm:@testing-library/jest-dom@^6.9.1": "6.9.1",
     "npm:@testing-library/react@^16.3.0": "16.3.1_@testing-library+dom@10.4.1_@types+react@19.2.7_@types+react-dom@19.2.3__@types+react@19.2.7_react@19.2.3_react-dom@19.2.3__react@19.2.3",
-    "npm:@testing-library/user-event@^14.6.1": "14.6.1_@testing-library+dom@10.4.1",
+    "npm:@tsparticles/engine@^3.9.1": "3.9.1",
     "npm:@tsparticles/react@3": "3.0.0_@tsparticles+engine@3.9.1_react@19.2.3_react-dom@19.2.3__react@19.2.3",
-    "npm:@tsparticles/slim@^3.9.1": "3.9.1",
     "npm:@types/node@^24.10.1": "24.10.4",
     "npm:@types/react-dom@^19.2.3": "19.2.3_@types+react@19.2.7",
     "npm:@types/react@^19.2.5": "19.2.7",
     "npm:@vitejs/plugin-react@^5.1.1": "5.1.2_vite@7.3.1__@types+node@24.10.4__tsx@4.21.0__picomatch@4.0.3_@babel+core@7.28.5_@types+node@24.10.4_tsx@4.21.0",
     "npm:@vitest/coverage-v8@^4.0.14": "4.0.16_vitest@4.0.16__@types+node@24.10.4__jsdom@27.4.0__vite@7.3.1___@types+node@24.10.4___tsx@4.21.0___picomatch@4.0.3__tsx@4.21.0_@types+node@24.10.4_jsdom@27.4.0_tsx@4.21.0",
-    "npm:clsx@^2.1.1": "2.1.1",
     "npm:eslint-plugin-react-hooks@^7.0.1": "7.0.1_eslint@9.39.2_zod@4.3.5",
     "npm:eslint-plugin-react-refresh@~0.4.24": "0.4.26_eslint@9.39.2",
     "npm:eslint@^9.39.1": "9.39.2",
@@ -28,7 +25,6 @@
     "npm:lucide-react@0.555": "0.555.0_react@19.2.3",
     "npm:playwright@^1.57.0": "1.57.0",
     "npm:react-dom@^19.2.0": "19.2.3_react@19.2.3",
-    "npm:react-hook-form@^7.66.1": "7.70.0_react@19.2.3",
     "npm:react-i18next@^16.3.5": "16.5.1_i18next@25.7.4__typescript@5.9.3_react@19.2.3_typescript@5.9.3",
     "npm:react-router-dom@^7.9.6": "7.12.0_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:react@^19.2.0": "19.2.3",
@@ -44,9 +40,6 @@
   "npm": {
     "@acemir/cssom@0.9.30": {
       "integrity": "sha512-9CnlMCI0LmCIq0olalQqdWrJHPzm0/tw3gzOA9zJSgvFX7Xau3D24mAGa4BtwxwY69nsuJW6kQqqCzf/mEcQgg=="
-    },
-    "@adobe/css-tools@4.4.4": {
-      "integrity": "sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg=="
     },
     "@asamuzakjp/css-color@4.1.1_@csstools+css-parser-algorithms@3.0.5__@csstools+css-tokenizer@3.0.4_@csstools+css-tokenizer@3.0.4": {
       "integrity": "sha512-B0Hv6G3gWGMn0xKJ0txEi/jM5iFpT3MfDxmhZFb4W047GvytCf1DHQ1D69W3zHI4yWe2aTZAA0JnbMZ7Xc8DuQ==",
@@ -679,21 +672,10 @@
         "@babel/runtime",
         "@types/aria-query",
         "aria-query",
-        "dom-accessibility-api@0.5.16",
+        "dom-accessibility-api",
         "lz-string",
         "picocolors",
         "pretty-format"
-      ]
-    },
-    "@testing-library/jest-dom@6.9.1": {
-      "integrity": "sha512-zIcONa+hVtVSSep9UT3jZ5rizo2BsxgyDYU7WFD5eICBE7no3881HGeb/QkGfsJs6JTkY1aQhT7rIPC7e+0nnA==",
-      "dependencies": [
-        "@adobe/css-tools",
-        "aria-query",
-        "css.escape",
-        "dom-accessibility-api@0.6.3",
-        "picocolors",
-        "redent"
       ]
     },
     "@testing-library/react@16.3.1_@testing-library+dom@10.4.1_@types+react@19.2.7_@types+react-dom@19.2.3__@types+react@19.2.7_react@19.2.3_react-dom@19.2.3__react@19.2.3": {
@@ -709,12 +691,6 @@
       "optionalPeers": [
         "@types/react",
         "@types/react-dom"
-      ]
-    },
-    "@testing-library/user-event@14.6.1_@testing-library+dom@10.4.1": {
-      "integrity": "sha512-vq7fv0rnt+QTXgPxr5Hjc210p6YKq2kmdziLgnsZGgLJ9e6VAShx1pACLuRjd/AS/sr7phAR58OIIpf0LlmQNw==",
-      "dependencies": [
-        "@testing-library/dom"
       ]
     },
     "@tsparticles/basic@3.9.1": {
@@ -1418,9 +1394,6 @@
         "supports-color"
       ]
     },
-    "clsx@2.1.1": {
-      "integrity": "sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA=="
-    },
     "color-convert@2.0.1": {
       "integrity": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
       "dependencies": [
@@ -1453,9 +1426,6 @@
         "mdn-data",
         "source-map-js"
       ]
-    },
-    "css.escape@1.5.1": {
-      "integrity": "sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg=="
     },
     "cssstyle@5.3.7": {
       "integrity": "sha512-7D2EPVltRrsTkhpQmksIu+LxeWAIEk6wRDMJ1qljlv+CKHJM+cJLlfhWIzNA44eAsHXSNe3+vO6DW1yCYx8SuQ==",
@@ -1493,9 +1463,6 @@
     },
     "dom-accessibility-api@0.5.16": {
       "integrity": "sha512-X7BJ2yElsnOJ30pZF4uIIDfBEVgF4XEBxL9Bxhy6dnrm5hkzqmsWHGTiHqRiITNhMyFLyAiWndIJP7Z1NTteDg=="
-    },
-    "dom-accessibility-api@0.6.3": {
-      "integrity": "sha512-7ZgogeTnjuHbo+ct10G9Ffp0mif17idi0IyWNVA/wcwcm7NPOD/WEHVP3n7n3MhXqxoIYm8d6MuZohYWIZ4T3w=="
     },
     "dunder-proto@1.0.1": {
       "integrity": "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==",
@@ -1863,9 +1830,6 @@
     "imurmurhash@0.1.4": {
       "integrity": "sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA=="
     },
-    "indent-string@4.0.0": {
-      "integrity": "sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg=="
-    },
     "is-extglob@2.1.1": {
       "integrity": "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ=="
     },
@@ -2036,9 +2000,6 @@
     "mdn-data@2.12.2": {
       "integrity": "sha512-IEn+pegP1aManZuckezWCO+XZQDplx1366JoVhTpMpBB1sPey/SbveZQUosKiKiGYjg1wH4pMlNgXbCiYgihQA=="
     },
-    "min-indent@1.0.1": {
-      "integrity": "sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg=="
-    },
     "minimatch@3.1.2": {
       "integrity": "sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==",
       "dependencies": [
@@ -2189,12 +2150,6 @@
         "scheduler"
       ]
     },
-    "react-hook-form@7.70.0_react@19.2.3": {
-      "integrity": "sha512-COOMajS4FI3Wuwrs3GPpi/Jeef/5W1DRR84Yl5/ShlT3dKVFUfoGiEZ/QE6Uw8P4T2/CLJdcTVYKvWBMQTEpvw==",
-      "dependencies": [
-        "react"
-      ]
-    },
     "react-i18next@16.5.1_i18next@25.7.4__typescript@5.9.3_react@19.2.3_typescript@5.9.3": {
       "integrity": "sha512-Hks6UIRZWW4c+qDAnx1csVsCGYeIR4MoBGQgJ+NUoNnO6qLxXuf8zu0xdcinyXUORgGzCdRsexxO1Xzv3sTdnw==",
       "dependencies": [
@@ -2240,13 +2195,6 @@
     },
     "react@19.2.3": {
       "integrity": "sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA=="
-    },
-    "redent@3.0.0": {
-      "integrity": "sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==",
-      "dependencies": [
-        "indent-string",
-        "strip-indent"
-      ]
     },
     "require-from-string@2.0.2": {
       "integrity": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw=="
@@ -2368,12 +2316,6 @@
     },
     "std-env@3.10.0": {
       "integrity": "sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg=="
-    },
-    "strip-indent@3.0.0": {
-      "integrity": "sha512-laJTa3Jb+VQpaC6DseHhF7dXVqHTfJPCRDaEbid/drOhgitgYku/letMUqOXFoWV0zIIUbjpdH2t+tYj4bQMRQ==",
-      "dependencies": [
-        "min-indent"
-      ]
     },
     "strip-json-comments@3.1.1": {
       "integrity": "sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig=="
@@ -2686,17 +2628,14 @@
         "npm:@stripe/react-stripe-js@^5.4.1",
         "npm:@stripe/stripe-js@^8.6.0",
         "npm:@supabase/supabase-js@^2.89.0",
-        "npm:@testing-library/jest-dom@^6.9.1",
         "npm:@testing-library/react@^16.3.0",
-        "npm:@testing-library/user-event@^14.6.1",
+        "npm:@tsparticles/engine@^3.9.1",
         "npm:@tsparticles/react@3",
-        "npm:@tsparticles/slim@^3.9.1",
         "npm:@types/node@^24.10.1",
         "npm:@types/react-dom@^19.2.3",
         "npm:@types/react@^19.2.5",
         "npm:@vitejs/plugin-react@^5.1.1",
         "npm:@vitest/coverage-v8@^4.0.14",
-        "npm:clsx@^2.1.1",
         "npm:eslint-plugin-react-hooks@^7.0.1",
         "npm:eslint-plugin-react-refresh@~0.4.24",
         "npm:eslint@^9.39.1",
@@ -2707,7 +2646,6 @@
         "npm:lucide-react@0.555",
         "npm:playwright@^1.57.0",
         "npm:react-dom@^19.2.0",
-        "npm:react-hook-form@^7.66.1",
         "npm:react-i18next@^16.3.5",
         "npm:react-router-dom@^7.9.6",
         "npm:react@^19.2.0",
