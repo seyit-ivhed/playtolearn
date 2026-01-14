@@ -34,15 +34,13 @@ export const GateVisual = ({
             <div className={styles.gateStructure}>
                 <div className={styles.gateArch}>
                     <motion.div
-                        className={styles.gateDoor}
+                        className={`${styles.gateDoor} ${isSolved ? styles.solved : ''}`}
                         animate={{
-                            y: isSolved ? -100 : 0,
-                            opacity: isSolved ? 0.5 : 1,
-                            filter: isSolved ? "brightness(1.5) drop-shadow(0 0 10px #d4af37)" : "brightness(1)"
+                            y: isSolved ? -240 : 0
                         }}
                         transition={{ duration: 1.5, ease: "easeInOut" }}
                     >
-                        <div className={styles.gateSymbol}></div>
+
                     </motion.div>
                 </div>
                 <div className={styles.gateBase}></div>

@@ -82,7 +82,9 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
 
         if (isBalanced(nextLeftTotal, nextRightTotal) && !isSolved) {
             setIsSolved(true);
-            onSolve();
+            setTimeout(() => {
+                onSolve();
+            }, 1500); // Wait for the gate animation
         }
     };
 
