@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
 import { isBalanced, calculateTotalWeight } from './BalanceEngine';
 import { GateVisual } from './components/GateVisual';
-import { WeightInventory } from './components/WeightInventory';
 import styles from './BalancePuzzle.module.css';
 
 interface BalancePuzzleProps {
@@ -13,37 +12,26 @@ interface BalancePuzzleProps {
 
 export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
 
+    // Initial full sets of weights
+    const getInitialWeights = (side: 'left' | 'right') => {
+        const initial = side === 'left' ? data.initialLeftWeight : data.initialRightWeight;
+        const options = side === 'left' ? data.leftOptions : data.rightOptions;
+
+        let sideOptions: number[] = [];
+        if (options) {
+            sideOptions = options.map(opt => typeof opt === 'number' ? opt : opt.value);
+        } else if (data.options) {
+            const allOpts = data.options.map(opt => typeof opt === 'number' ? opt : opt.value);
+            const midpoint = Math.ceil(allOpts.length / 2);
+            sideOptions = side === 'left' ? allOpts.slice(0, midpoint) : allOpts.slice(midpoint);
+        }
+
+        return [...(initial ? [initial] : []), ...sideOptions];
+    };
+
     // Current state of weights on plates
-    const [leftWeights, setLeftWeights] = useState<number[]>(() =>
-        data.initialLeftWeight ? [data.initialLeftWeight] : []
-    );
-    const [rightWeights, setRightWeights] = useState<number[]>(() =>
-        data.initialRightWeight ? [data.initialRightWeight] : []
-    );
-
-    // Inventory state (Left vs Right specific inventories)
-    const [leftInventory] = useState<number[]>(() => {
-        if (data.leftOptions) return data.leftOptions.map(opt => typeof opt === 'number' ? opt : opt.value);
-        if (!data.leftOptions && !data.rightOptions && data.options) {
-            const allOpts = data.options.map(opt => typeof opt === 'number' ? opt : opt.value);
-            const midpoint = Math.ceil(allOpts.length / 2);
-            return allOpts.slice(0, midpoint);
-        }
-        return [];
-    });
-    const [rightInventory] = useState<number[]>(() => {
-        if (data.rightOptions) return data.rightOptions.map(opt => typeof opt === 'number' ? opt : opt.value);
-        if (!data.leftOptions && !data.rightOptions && data.options) {
-            const allOpts = data.options.map(opt => typeof opt === 'number' ? opt : opt.value);
-            const midpoint = Math.ceil(allOpts.length / 2);
-            return allOpts.slice(midpoint);
-        }
-        return [];
-    });
-
-    // Track used indices to disable buttons
-    const [usedLeftIndices, setUsedLeftIndices] = useState<number[]>([]);
-    const [usedRightIndices, setUsedRightIndices] = useState<number[]>([]);
+    const [leftWeights, setLeftWeights] = useState<number[]>(() => getInitialWeights('left'));
+    const [rightWeights, setRightWeights] = useState<number[]>(() => getInitialWeights('right'));
 
     const [isSolved, setIsSolved] = useState(false);
 
@@ -51,33 +39,30 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
     const [prevData, setPrevData] = useState(data);
     if (data !== prevData) {
         setPrevData(data);
-        setLeftWeights(data.initialLeftWeight ? [data.initialLeftWeight] : []);
-        setRightWeights(data.initialRightWeight ? [data.initialRightWeight] : []);
-        setUsedLeftIndices([]);
-        setUsedRightIndices([]);
+        setLeftWeights(getInitialWeights('left'));
+        setRightWeights(getInitialWeights('right'));
         setIsSolved(false);
     }
 
     const leftTotal = calculateTotalWeight(leftWeights);
     const rightTotal = calculateTotalWeight(rightWeights);
 
-    const handleAddWeight = (weight: number, index: number, side: 'left' | 'right') => {
+    const handleRemoveWeight = (index: number, side: 'left' | 'right') => {
         if (isSolved) return;
 
-        let nextLeftTotal = leftTotal;
-        let nextRightTotal = rightTotal;
+        let nextLeftWeights = [...leftWeights];
+        let nextRightWeights = [...rightWeights];
 
         if (side === 'left') {
-            if (usedLeftIndices.includes(index)) return;
-            setLeftWeights(prev => [...prev, weight]);
-            setUsedLeftIndices(prev => [...prev, index]);
-            nextLeftTotal += weight;
+            nextLeftWeights.splice(index, 1);
+            setLeftWeights(nextLeftWeights);
         } else {
-            if (usedRightIndices.includes(index)) return;
-            setRightWeights(prev => [...prev, weight]);
-            setUsedRightIndices(prev => [...prev, index]);
-            nextRightTotal += weight;
+            nextRightWeights.splice(index, 1);
+            setRightWeights(nextRightWeights);
         }
+
+        const nextLeftTotal = calculateTotalWeight(nextLeftWeights);
+        const nextRightTotal = calculateTotalWeight(nextRightWeights);
 
         if (isBalanced(nextLeftTotal, nextRightTotal) && !isSolved) {
             setIsSolved(true);
@@ -89,10 +74,8 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
 
     const handleReset = () => {
         if (isSolved) return;
-        setLeftWeights(data.initialLeftWeight ? [data.initialLeftWeight] : []);
-        setRightWeights(data.initialRightWeight ? [data.initialRightWeight] : []);
-        setUsedLeftIndices([]);
-        setUsedRightIndices([]);
+        setLeftWeights(getInitialWeights('left'));
+        setRightWeights(getInitialWeights('right'));
     };
 
     const { t } = useTranslation();
@@ -107,27 +90,9 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                     rightTotal={rightTotal}
                     isSolved={isSolved}
                     onReset={handleReset}
-                    instruction={t('puzzle.balance.instruction', 'Place stones to open the gate!')}
+                    onRemoveWeight={handleRemoveWeight}
+                    instruction={t('puzzle.balance.instruction_remove', 'Remove stones to open the gate!')}
                 />
-
-                <div className={styles.splitInventoryContainer}>
-                    <WeightInventory
-                        title="Left Pile"
-                        side="left"
-                        inventory={leftInventory}
-                        usedIndices={usedLeftIndices}
-                        onAddWeight={handleAddWeight}
-                        isSolved={isSolved}
-                    />
-                    <WeightInventory
-                        title="Right Pile"
-                        side="right"
-                        inventory={rightInventory}
-                        usedIndices={usedRightIndices}
-                        onAddWeight={handleAddWeight}
-                        isSolved={isSolved}
-                    />
-                </div>
             </div>
 
         </div>

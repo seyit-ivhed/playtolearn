@@ -10,6 +10,7 @@ interface GateVisualProps {
     rightTotal: number;
     isSolved: boolean;
     onReset: () => void;
+    onRemoveWeight: (index: number, side: 'left' | 'right') => void;
     instruction: string;
 }
 
@@ -20,6 +21,7 @@ export const GateVisual = ({
     rightTotal,
     isSolved,
     onReset,
+    onRemoveWeight,
     instruction
 }: GateVisualProps) => {
     const { t } = useTranslation();
@@ -46,11 +48,15 @@ export const GateVisual = ({
                     side="left"
                     weights={leftWeights}
                     total={leftTotal}
+                    onRemove={(index) => onRemoveWeight(index, 'left')}
+                    isSolved={isSolved}
                 />
                 <PressurePlate
                     side="right"
                     weights={rightWeights}
                     total={rightTotal}
+                    onRemove={(index) => onRemoveWeight(index, 'right')}
+                    isSolved={isSolved}
                 />
             </div>
 

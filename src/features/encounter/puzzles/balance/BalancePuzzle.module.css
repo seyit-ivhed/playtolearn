@@ -74,7 +74,7 @@
     justify-content: space-between;
     width: 100%;
     /* These values need to be perfect to "touch" the plates in the image */
-    padding: 0 100px 105px 100px;
+    padding: 0 170px 180px 170px;
     position: absolute;
     bottom: 0;
     z-index: 5;
@@ -84,7 +84,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 250px;
+    width: 200px;
     position: relative;
 }
 
@@ -97,6 +97,7 @@
     width: 100%;
     /* Tight stacking */
     margin-bottom: 0;
+    gap: 2px;
 }
 
 /* 4x Larger Magical Stone Block */
@@ -112,7 +113,6 @@
     align-items: center;
     user-select: none;
     position: relative;
-    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.6));
     /* Pull them closer together */
     margin-bottom: -95px;
 }
@@ -136,91 +136,10 @@
     z-index: 10;
 }
 
-/* Split Inventory Layout */
-.splitInventoryContainer {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    gap: 2rem;
-    max-width: 1000px;
-}
-
-.inventoryColumn {
-    flex: 1;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(4px);
-    border-radius: 12px;
-    border: 1px solid rgba(141, 110, 99, 0.2);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.inventoryColumn:hover {
-    background: rgba(0, 0, 0, 0.5);
-    border-color: rgba(141, 110, 99, 0.3);
-}
-
-.inventoryTitle {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #d7ccc8;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    border-bottom: 2px solid rgba(141, 110, 99, 0.3);
-    width: 100%;
-    padding-bottom: 0.8rem;
-}
-
-.weightsGrid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    width: 100%;
-}
-
-.emptySlot {
-    color: rgba(255, 255, 255, 0.2);
-    font-style: italic;
-    padding: 2rem;
-}
-
-/* Weight Items in Inventory - Keep them reasonably sized but larger than before */
-.weightItem {
-    width: 100px;
-    height: 70px;
+.clickableStone {
     cursor: pointer;
-    background-image: url('../../../../assets/images/puzzles/balance/weight.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: transparent;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    outline: none;
 }
 
-.weightItem:hover:not(.used) {
-    transform: translateY(-8px) scale(1.15);
-    filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.6)) brightness(1.2);
-}
-
-.weightItem.used {
-    opacity: 0.2;
-    cursor: not-allowed;
-    filter: grayscale(1) contrast(0.5);
-    transform: scale(0.85);
-}
 
 .weightValue {
     font-size: 1.6rem;
@@ -233,10 +152,6 @@
         2px 2px 0 #000,
         0 0 10px rgba(0, 0, 0, 0.8);
     user-select: none;
-}
-
-.weightItemRight {
-    /* Optional differentiation if needed */
 }
 
 .stoneRight {
