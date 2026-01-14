@@ -17,47 +17,28 @@ export const GateVisual = ({
     rightTotal,
     isSolved
 }: GateVisualProps) => {
-    const diff = rightTotal - leftTotal;
-    // Calculate vertical offset (max +/- 30px)
-    const maxOffset = 30;
-    const sensitivity = 5;
-    const offset = Math.min(Math.max(diff * sensitivity, -maxOffset), maxOffset);
-
-    // If balanced, offset is 0. 
-    // If right is heavier (diff > 0), right goes DOWN (positive Y), left goes UP (negative Y).
-    // Note: In CSS translateY, positive is down.
-    const rightOffsetY = offset;
-    const leftOffsetY = -offset;
-
     return (
         <div className={styles.gateScene}>
-            <div className={styles.gateStructure}>
-                <div className={styles.gateArch}>
-                    <motion.div
-                        className={`${styles.gateDoor} ${isSolved ? styles.solved : ''}`}
-                        animate={{
-                            y: isSolved ? -240 : 0
-                        }}
-                        transition={{ duration: 1.5, ease: "easeInOut" }}
-                    >
+            {/* The background image and vignette are handled in CSS */}
 
-                    </motion.div>
-                </div>
-                <div className={styles.gateBase}></div>
-            </div>
+            {/* Solved overlay/glow */}
+            <motion.div
+                className={styles.solvedOverlay}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isSolved ? 1 : 0 }}
+                transition={{ duration: 2 }}
+            />
 
             <div className={styles.platesWrapper}>
                 <PressurePlate
                     side="left"
                     weights={leftWeights}
                     total={leftTotal}
-                    offsetY={leftOffsetY}
                 />
                 <PressurePlate
                     side="right"
                     weights={rightWeights}
                     total={rightTotal}
-                    offsetY={rightOffsetY}
                 />
             </div>
         </div>
