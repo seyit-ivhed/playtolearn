@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { PuzzleData } from '../../../types/adventure.types';
 import { validateNextStep, isSequenceComplete, generateStarPositions } from './SequenceEngine';
 import styles from './SequencePuzzle.module.css';
+import { PuzzleLayout } from './components/PuzzleLayout';
 
 interface SequencePuzzleProps {
     data: PuzzleData;
@@ -77,11 +78,11 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
     };
 
     return (
-        <div className={styles.container}>
-            <div className={styles.instruction}>
-                {t('puzzle.sequence.instruction', 'Connect the stars in order!')}
-            </div>
-
+        <PuzzleLayout
+            instruction={t('puzzle.sequence.instruction', 'Connect the stars in order!')}
+            onReset={handleReset}
+            isSolved={isSequenceComplete([...path.map(i => numericOptions[i])], targetValue)}
+        >
             <div className={styles.skyMap}>
                 {/* SVG Layer for Drawing Lines */}
                 <svg className={styles.connectionsLayer}>
@@ -145,10 +146,6 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
                     );
                 })}
             </div>
-
-            <button className={styles.resetButton} onClick={handleReset}>
-                {t('puzzle.reset', 'Reset Path')}
-            </button>
-        </div>
+        </PuzzleLayout>
     );
 };

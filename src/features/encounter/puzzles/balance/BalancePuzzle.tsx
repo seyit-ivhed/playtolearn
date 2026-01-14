@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
 import { isBalanced, calculateScaleAngle, calculateTotalWeight } from './BalanceEngine';
 import { ScaleVisual } from './components/ScaleVisual';
 import { WeightInventory } from './components/WeightInventory';
 import styles from './BalancePuzzle.module.css';
+import { PuzzleLayout } from '../components/PuzzleLayout';
 
 interface BalancePuzzleProps {
     data: PuzzleData;
@@ -94,8 +96,14 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
         setUsedRightIndices([]);
     };
 
+    const { t } = useTranslation();
+
     return (
-        <div className={styles.container}>
+        <PuzzleLayout
+            instruction={t('puzzle.balance.instruction', 'Balance the scale!')}
+            onReset={handleReset}
+            isSolved={isSolved}
+        >
             <div className={styles.gameBoard}>
                 <ScaleVisual
                     leftWeights={leftWeights}
@@ -126,13 +134,7 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                         isCuneiform={isCuneiform}
                     />
                 </div>
-
-                <div className={styles.controls}>
-                    <button className={styles.resetBtn} onClick={handleReset} disabled={isSolved}>
-                        Reset Scale
-                    </button>
-                </div>
             </div>
-        </div>
+        </PuzzleLayout>
     );
 };

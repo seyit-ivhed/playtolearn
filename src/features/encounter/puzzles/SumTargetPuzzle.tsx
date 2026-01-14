@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PuzzleType, type PuzzleData, type PuzzleOption } from '../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
 import styles from './SumTargetPuzzle.module.css';
+import { PuzzleLayout } from './components/PuzzleLayout';
 
 interface SumTargetPuzzleProps {
     data: PuzzleData;
@@ -45,17 +46,17 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
         setUsedOptions([]);
     };
 
+    const instructionText = `${isIrrigation ? t('puzzle.irrigation.target', 'Target Litres') : t('puzzle.target')}: ${target}`;
+
     return (
-        <div className={styles.container}>
-            <div className={styles.gameBoard}>
+        <PuzzleLayout
+            instruction={instructionText}
+            onReset={handleReset}
+            isSolved={isSolved}
+        >
+            <div className={styles.boardContent}>
                 {/* Reservoir Visual */}
                 <div className={styles.reservoirContainer}>
-                    <div className={styles.targetMarker} style={{ bottom: '100%' }}>
-                        <span className={styles.targetLabel}>
-                            {isIrrigation ? t('puzzle.irrigation.target', 'Target Litres') : t('puzzle.target')}: {target}
-                        </span>
-                    </div>
-
                     <div className={styles.reservoir}>
                         <motion.div
                             className={styles.liquid}
@@ -70,10 +71,6 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                             {currentSum}
                         </div>
                     </div>
-
-                    <button className={styles.resetBtn} onClick={handleReset} disabled={isSolved}>
-                        {t('puzzle.reset')}
-                    </button>
                 </div>
 
                 {/* Pipes (Inputs) */}
@@ -120,6 +117,6 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </PuzzleLayout>
     );
 };
