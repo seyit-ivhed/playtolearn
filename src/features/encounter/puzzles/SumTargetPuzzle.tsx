@@ -21,6 +21,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
 
     const target = data.targetValue;
     const progress = Math.min(100, Math.max(0, (currentSum / target) * 100));
+    const isOverfilled = currentSum > target;
 
     const handlePipeClick = (option: number | PuzzleOption, index: number) => {
         if (isSolved || usedOptions.includes(index)) return;
@@ -55,7 +56,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
         >
             <div className={styles.boardContent}>
                 {/* Canteen Visual */}
-                <div className={styles.canteenContainer}>
+                <div className={`${styles.canteenContainer} ${isOverfilled ? styles.overfilled : ''}`}>
                     <div className={styles.canteenNeck} />
                     <div className={styles.canteenBody}>
                         <motion.div
