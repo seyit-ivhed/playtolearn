@@ -3,9 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import type { PuzzleData } from '../../../../types/adventure.types';
 import {
-    type GuardianTributePuzzleData,
-    validateGuardianTributeSolution
+    type GuardianTributePuzzleData
 } from '../../../../utils/math/puzzles/guardian-tribute';
+import {
+    calculateTotalDistributed,
+    calculateRemainingGems,
+    isValidAdjustment,
+    validateTribute
+} from './GuardianTributeEngine';
 import { GuardianStatue } from './components/GuardianStatue';
 import { PuzzleLayout } from '../components/PuzzleLayout';
 
@@ -26,8 +31,8 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
     const [showFeedback, setShowFeedback] = useState(false);
 
     // Calculate remaining gems
-    const totalDistributed = guardianValues.reduce((sum, val) => sum + val, 0);
-    const remainingGems = puzzleData.totalGems - totalDistributed;
+    const totalDistributed = calculateTotalDistributed(guardianValues);
+    const remainingGems = calculateRemainingGems(guardianValues, puzzleData.totalGems);
 
     // Handle increment/decrement
     const adjustGuardianValue = (guardianIndex: number, delta: number) => {
@@ -36,26 +41,19 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
         // Clear feedback when user starts adjusting again
         setShowFeedback(false);
 
-        setGuardianValues(prev => {
-            const newValues = [...prev];
-            const newValue = Math.max(0, newValues[guardianIndex] + delta);
-
-            // Don't allow going over total gems
-            const newTotal = newValues.reduce((sum, val, idx) =>
-                idx === guardianIndex ? sum + newValue : sum + val, 0
-            );
-
-            if (newTotal > puzzleData.totalGems) return prev;
-
-            newValues[guardianIndex] = newValue;
-            return newValues;
-        });
+        if (isValidAdjustment(guardianValues, guardianIndex, delta, puzzleData.totalGems)) {
+            setGuardianValues(prev => {
+                const newValues = [...prev];
+                newValues[guardianIndex] += delta;
+                return newValues;
+            });
+        }
     };
 
     const handleOffer = () => {
         if (isSolved) return;
 
-        const validation = validateGuardianTributeSolution(guardianValues, puzzleData);
+        const validation = validateTribute(guardianValues, puzzleData);
         setShowFeedback(true);
 
         if (validation.isValid) {
