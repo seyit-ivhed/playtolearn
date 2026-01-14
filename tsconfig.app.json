@@ -11,8 +11,7 @@
     "module": "ESNext",
     "types": [
       "vite/client",
-      "node",
-      "react"
+      "node"
     ],
     "skipLibCheck": true,
     /* Bundler mode */
@@ -22,7 +21,6 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "react",
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
