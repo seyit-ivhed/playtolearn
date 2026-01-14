@@ -120,7 +120,7 @@ const PuzzlePage = () => {
             </header>
 
             <main className={styles.puzzleContent}>
-                {(puzzleData.puzzleType === PuzzleType.SUM_TARGET || puzzleData.puzzleType === PuzzleType.IRRIGATION) && (
+                {puzzleData.puzzleType === PuzzleType.SUM_TARGET && (
                     <SumTargetPuzzle
                         data={puzzleData}
                         onSolve={handleSolve}

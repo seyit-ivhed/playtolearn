@@ -1,8 +1,7 @@
-
 import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PuzzleType, type PuzzleData, type PuzzleOption } from '../../../types/adventure.types';
+import { type PuzzleData, type PuzzleOption } from '../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
 import styles from './SumTargetPuzzle.module.css';
 import { PuzzleLayout } from './components/PuzzleLayout';
@@ -20,7 +19,6 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     const actionIdCounter = useRef(0);
     const { t } = useTranslation();
 
-    const isIrrigation = data.puzzleType === PuzzleType.IRRIGATION;
     const target = data.targetValue;
     const progress = Math.min(100, Math.max(0, (currentSum / target) * 100));
 
@@ -46,7 +44,8 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
         setUsedOptions([]);
     };
 
-    const instructionText = `${isIrrigation ? t('puzzle.irrigation.target', 'Target Litres') : t('puzzle.target')}: ${target}`;
+    // Instruction Text: "Fill your canteen to exactly {target}"
+    const instructionText = t('puzzle.flask.target', { defaultValue: 'Fill your canteen to exactly {{target}}L', target });
 
     return (
         <PuzzleLayout
@@ -55,9 +54,10 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
             isSolved={isSolved}
         >
             <div className={styles.boardContent}>
-                {/* Reservoir Visual */}
-                <div className={styles.reservoirContainer}>
-                    <div className={styles.reservoir}>
+                {/* Canteen Visual */}
+                <div className={styles.canteenContainer}>
+                    <div className={styles.canteenNeck} />
+                    <div className={styles.canteenBody}>
                         <motion.div
                             className={styles.liquid}
                             initial={{ height: 0 }}
@@ -68,34 +68,45 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                         </motion.div>
 
                         <div className={styles.currentValueOverlay}>
-                            {currentSum}
+                            {currentSum}L
                         </div>
                     </div>
                 </div>
 
-                {/* Pipes (Inputs) */}
-                <div className={styles.pipesGrid}>
+                {/* Water Sources (Scoops) */}
+                <div className={styles.waterSourceGrid}>
                     {data.options.map((option, idx) => {
                         const isObj = typeof option !== 'number';
                         const puzzleOption = isObj ? (option as PuzzleOption) : null;
                         const label = formatActionLabel(option);
-                        let icon = puzzleOption ? (puzzleOption.type === 'MULTIPLY' ? '⚡' : '❄️') : '💧';
 
-                        if (isIrrigation && !isObj) icon = '🏺'; // Clay jar for water in ruins
+                        // Icons for scoops/cups/jars
+                        // Simplification: Use water drops for standard inputs as per user request
+                        let icon = '💧';
+
+                        if (puzzleOption) {
+                            if (puzzleOption.type === 'MULTIPLY') icon = '🌊'; // Surge/Multiply still distinct
+                            if (puzzleOption.type === 'DIVIDE') icon = '🫗'; // Pour out/Divide
+                        } else if (typeof option === 'number') {
+                            if (option < 0) icon = '🫗'; // Empty/Pour out
+                        }
+
+                        // Override for now with consistent water icons for additions
+                        if (!isObj && (option as number) > 0) icon = '💧';
 
                         const isUsed = usedOptions.includes(idx);
 
                         return (
                             <motion.button
                                 key={`${idx}`}
-                                className={`${styles.pipe} ${isUsed ? styles.used : ''}`}
+                                className={`${styles.scoop} ${isUsed ? styles.used : ''}`}
                                 whileHover={isUsed ? {} : { scale: 1.05 }}
                                 whileTap={isUsed ? {} : { scale: 0.95 }}
                                 onClick={() => handlePipeClick(option, idx)}
                                 disabled={isSolved || isUsed}
                             >
-                                <div className={styles.pipeIcon}>{isUsed ? '✅' : icon}</div>
-                                <div className={styles.pipeValue}>{label}</div>
+                                <div className={styles.scoopIcon}>{isUsed ? '✅' : icon}</div>
+                                <div className={styles.scoopValue}>{label}</div>
                             </motion.button>
                         );
                     })}

@@ -25,10 +25,6 @@ const PUZZLE_GENERATORS: Record<PuzzleType, (difficulty: DifficultyLevel) => Puz
     [PuzzleType.SUM_TARGET]: generateSumTargetData,
     [PuzzleType.BALANCE]: generateBalanceData,
     [PuzzleType.SEQUENCE]: generateSequenceData,
-    [PuzzleType.IRRIGATION]: (difficulty) => ({
-        ...generateSumTargetData(difficulty),
-        puzzleType: PuzzleType.IRRIGATION
-    }),
     [PuzzleType.CUNEIFORM]: (difficulty) => ({
         ...generateBalanceData(difficulty),
         puzzleType: PuzzleType.CUNEIFORM

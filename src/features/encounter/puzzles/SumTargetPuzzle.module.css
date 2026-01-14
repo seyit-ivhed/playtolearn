@@ -4,84 +4,172 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding: 2rem;
 }
 
-.pipesGrid {
+/* Water Source Grid (was Pipes) */
+.waterSourceGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
 }
 
-.pipe {
+.scoop {
     width: 100px;
     height: 100px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    background: rgba(59, 130, 246, 0.1);
+    /* Blue tint for water source */
+    border: 2px solid rgba(59, 130, 246, 0.2);
+    border-radius: 50%;
+    /* Rounded for organic feel */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-.pipe:hover:not(:disabled) {
-    background: rgba(251, 191, 36, 0.1);
-    border-color: rgba(251, 191, 36, 0.4);
+.scoop:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
-.pipeIcon {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+.scoopIcon {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-.pipeValue {
-    font-size: 1.5rem;
+.scoopValue {
+    font-size: 1.25rem;
     font-weight: 700;
-    color: #fbbf24;
+    color: #60a5fa;
 }
 
-.pipe.used {
+.scoop.used {
     background: rgba(255, 255, 255, 0.02);
     border-color: rgba(255, 255, 255, 0.05);
     cursor: default;
-    filter: grayscale(1) opacity(0.5);
+    filter: grayscale(1) opacity(0.3);
     pointer-events: none;
+    transform: scale(0.95);
 }
 
-.pipe.used .pipeValue {
+.scoop.used .scoopValue {
     color: #4b5563;
 }
 
-.victoryOverlay {
+/* Canteen / Flask Container */
+.canteenContainer {
+    position: relative;
+    width: 200px;
+    /* Reduced from flexible */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.canteenNeck {
+    width: 60px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    z-index: 2;
+    margin-bottom: -2px;
+    /* Connect to body */
+}
+
+/* Decoration for the canteen cap area */
+.canteenNeck::before {
+    content: '';
     position: absolute;
-    background: rgba(15, 23, 42, 0.9);
-    padding: 3rem 5rem;
-    border-radius: 30px;
-    border: 2px solid #fbbf24;
-    text-align: center;
-    z-index: 100;
-    box-shadow: 0 0 100px rgba(251, 191, 36, 0.3);
+    top: -8px;
+    left: -5px;
+    right: -5px;
+    height: 12px;
+    background: #78350f;
+    /* Leather-ish cap color */
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.victoryTitle {
+.canteenBody {
+    width: 200px;
+    height: 240px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px 40px 60px 60px;
+    /* More flask-like shape */
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+    box-shadow:
+        inset 0 0 20px rgba(255, 255, 255, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Liquid inside the canteen */
+.liquid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+    opacity: 0.9;
+    box-shadow: 0 -5px 10px rgba(96, 165, 250, 0.3);
+}
+
+/* Waves on top of liquid */
+.waves {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 200%;
+    height: 20px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%2360a5fa' opacity='0.4'/%3E%3C/svg%3E");
+    background-size: 50% 100%;
+    animation: wave 4s linear infinite;
+}
+
+@keyframes wave {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.currentValueOverlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 3rem;
-    color: #fbbf24;
-    margin-bottom: 1rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    pointer-events: none;
 }
 
-.victorySub {
-    font-size: 1.5rem;
-    color: #94a3b8;
-}
-
+/* Floating feedback text */
 .floatText {
     position: absolute;
     font-size: 2.5rem;
     font-weight: 800;
-    color: #60a5fa;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: #93c5fd;
+    text-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
     pointer-events: none;
     z-index: 50;
+    white-space: nowrap;
 }

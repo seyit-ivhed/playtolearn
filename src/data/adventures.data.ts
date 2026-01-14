@@ -144,7 +144,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_2',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 100, y: 900 },
-                puzzleData: { puzzleType: PuzzleType.IRRIGATION },
+                puzzleData: { puzzleType: PuzzleType.SUM_TARGET },
                 xpReward: 110
             },
             {
