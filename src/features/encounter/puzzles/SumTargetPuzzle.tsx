@@ -68,7 +68,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                         </motion.div>
 
                         <div className={styles.currentValueOverlay}>
-                            {currentSum}L
+                            {currentSum}/{target}L
                         </div>
                     </div>
                 </div>
