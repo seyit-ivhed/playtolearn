@@ -1,7 +1,7 @@
 
 import { describe, it, expect } from 'vitest';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
-import { type PuzzleOption } from '../../../types/adventure.types';
+import { type PuzzleOption } from '../../../../types/adventure.types';
 
 describe('SumTargetEngine', () => {
     describe('calculateNextSum', () => {

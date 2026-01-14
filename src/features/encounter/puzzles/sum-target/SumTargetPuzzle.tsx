@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { type PuzzleData, type PuzzleOption } from '../../../types/adventure.types';
+import { type PuzzleData, type PuzzleOption } from '../../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
 import styles from './SumTargetPuzzle.module.css';
-import { PuzzleLayout } from './components/PuzzleLayout';
+import { PuzzleLayout } from '../components/PuzzleLayout';
 
 interface SumTargetPuzzleProps {
     data: PuzzleData;

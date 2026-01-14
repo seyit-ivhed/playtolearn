@@ -1,5 +1,5 @@
 
-import { type PuzzleOption } from '../../../types/adventure.types';
+import { type PuzzleOption } from '../../../../types/adventure.types';
 
 /**
  * Core engine for the Sum Target (Water Flow) puzzle.

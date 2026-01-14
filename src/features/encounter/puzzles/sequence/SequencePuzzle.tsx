@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PuzzleData } from '../../../types/adventure.types';
+import type { PuzzleData } from '../../../../types/adventure.types';
 import { validateNextStep, isSequenceComplete, generateStarPositions } from './SequenceEngine';
 import styles from './SequencePuzzle.module.css';
-import { PuzzleLayout } from './components/PuzzleLayout';
+import { PuzzleLayout } from '../components/PuzzleLayout';
 
 interface SequencePuzzleProps {
     data: PuzzleData;
