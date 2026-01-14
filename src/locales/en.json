@@ -1,6 +1,7 @@
 {
     "common": {
-        "continue": "Continue"
+        "continue": "Continue",
+        "start_over": "Start Over"
     },
     "remainder_text": " R ",
     "party_camp": "Party Camp",
@@ -200,6 +201,15 @@
         },
         "sequence": {
             "instruction": "Connect the stars in order!"
+        },
+        "flask": {
+            "target": "Fill your canteen to exactly {{target}}L"
+        },
+        "balance": {
+            "instruction": "Balance the scale!"
+        },
+        "guardian_tribute": {
+            "instruction": "Distribute the gems among the statues"
         }
     },
     "companions": {

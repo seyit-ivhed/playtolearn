@@ -1,6 +1,7 @@
 {
     "common": {
-        "continue": "Fortsätt"
+        "continue": "Fortsätt",
+        "start_over": "Börja om"
     },
     "remainder_text": " rest ",
     "party_camp": "Lägerplats",
@@ -200,6 +201,15 @@
         },
         "sequence": {
             "instruction": "Koppla ihop stjärnorna i rätt ordning!"
+        },
+        "flask": {
+            "target": "Fyll din fältflaska till exakt {{target}}L"
+        },
+        "balance": {
+            "instruction": "Balansera vågen!"
+        },
+        "guardian_tribute": {
+            "instruction": "Fördela ädelstenarna mellan statyerna"
         }
     },
     "companions": {

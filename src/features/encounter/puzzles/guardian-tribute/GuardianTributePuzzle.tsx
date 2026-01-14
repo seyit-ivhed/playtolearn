@@ -72,7 +72,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
 
     return (
         <PuzzleLayout
-            instruction={t('puzzle.guardian_tribute.desc', "Distribute the gems among the statues")}
+            instruction={t('puzzle.guardian_tribute.instruction', "Distribute the gems among the statues")}
             onReset={handleReset}
             isSolved={isSolved}
         >

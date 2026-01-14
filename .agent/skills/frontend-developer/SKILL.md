@@ -7,6 +7,10 @@ description: Implement and maintain frontend code for the game, particularly .ts
 
 When implementing or maintaining frontend code, particularly .tsx, .ts files related to UI, follow the guidelines below:
 
+## When to use this skill
+
+- When implementing or maintaining frontend code, particularly .tsx, .ts files related to UI
+
 ## Guidelines
 
 1. **Localization** Do not hardcode any text, use i18n instead
