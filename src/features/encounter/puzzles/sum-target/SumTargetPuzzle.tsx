@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { type PuzzleData, type PuzzleOption } from '../../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
 import styles from './SumTargetPuzzle.module.css';
-import { PuzzleLayout } from '../components/PuzzleLayout';
 
 interface SumTargetPuzzleProps {
     data: PuzzleData;
@@ -49,11 +48,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
     const instructionText = t('puzzle.flask.target', { defaultValue: 'Fill your canteen to exactly {{target}}L', target });
 
     return (
-        <PuzzleLayout
-            instruction={instructionText}
-            onReset={handleReset}
-            isSolved={isSolved}
-        >
+        <div className={styles.layout}>
             <div className={styles.boardContent}>
                 {/* Canteen Visual */}
                 <div className={`${styles.canteenContainer} ${isOverfilled ? styles.overfilled : ''}`}>
@@ -129,6 +124,19 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </PuzzleLayout>
+
+            {/* Reset Button */}
+            <div className={styles.controls}>
+                <motion.button
+                    className={styles.resetBtn}
+                    onClick={handleReset}
+                    disabled={isSolved}
+                    whileHover={!isSolved ? { scale: 1.05 } : {}}
+                    whileTap={!isSolved ? { scale: 0.95 } : {}}
+                >
+                    {t('common.start_over', 'Start Over')}
+                </motion.button>
+            </div>
+        </div>
     );
 };

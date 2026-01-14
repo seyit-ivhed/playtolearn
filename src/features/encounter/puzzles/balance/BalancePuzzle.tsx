@@ -5,7 +5,6 @@ import { isBalanced, calculateTotalWeight } from './BalanceEngine';
 import { GateVisual } from './components/GateVisual';
 import { WeightInventory } from './components/WeightInventory';
 import styles from './BalancePuzzle.module.css';
-import { PuzzleLayout } from '../components/PuzzleLayout';
 
 interface BalancePuzzleProps {
     data: PuzzleData;
@@ -99,11 +98,7 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
     const { t } = useTranslation();
 
     return (
-        <PuzzleLayout
-            instruction={t('puzzle.balance.instruction', 'Place stones to open the gate!')}
-            onReset={handleReset}
-            isSolved={isSolved}
-        >
+        <div className={styles.layout}>
             <div className={styles.gameBoard}>
                 <GateVisual
                     leftWeights={leftWeights}
@@ -132,6 +127,17 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                     />
                 </div>
             </div>
-        </PuzzleLayout>
+
+            {/* Reset Button */}
+            <div className={styles.controls}>
+                <button
+                    className={styles.resetBtn}
+                    onClick={handleReset}
+                    disabled={isSolved}
+                >
+                    {t('common.start_over', 'Start Over')}
+                </button>
+            </div>
+        </div>
     );
 };

@@ -8,6 +8,7 @@ import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
 import { type DifficultyLevel } from '../../types/math.types';
 import { generatePuzzleData } from '../../utils/math-generator';
+import { motion } from 'framer-motion';
 import { SumTargetPuzzle } from './puzzles/sum-target/SumTargetPuzzle';
 import { BalancePuzzle } from './puzzles/balance/BalancePuzzle';
 import { SequencePuzzle } from './puzzles/sequence/SequencePuzzle';
@@ -108,6 +109,23 @@ const PuzzlePage = () => {
         navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
     };
 
+    const instruction = useMemo(() => {
+        if (!puzzleData) return '';
+        switch (puzzleData.puzzleType) {
+            case PuzzleType.SUM_TARGET:
+                return t('puzzle.flask.target', { target: puzzleData.targetValue });
+            case PuzzleType.BALANCE:
+            case PuzzleType.CUNEIFORM:
+                return t('puzzle.balance.instruction', 'Place stones to open the gate!');
+            case PuzzleType.SEQUENCE:
+                return t('puzzle.sequence.instruction', 'Connect the stars in order!');
+            case PuzzleType.GUARDIAN_TRIBUTE:
+                return t('puzzle.guardian_tribute.instruction', 'Distribute the gems among the statues');
+            default:
+                return '';
+        }
+    }, [puzzleData, t]);
+
     return (
         <div className={styles.puzzlePage}>
             <header className={styles.header}>
@@ -115,6 +133,19 @@ const PuzzlePage = () => {
                     {t('retreat', 'Retreat')}
                 </button>
             </header>
+
+            {instruction && (
+                <motion.div
+                    className={styles.instructionContainer}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <p className={styles.instructionText}>
+                        {instruction}
+                    </p>
+                </motion.div>
+            )}
 
             <main className={styles.puzzleContent}>
                 {puzzleData.puzzleType === PuzzleType.SUM_TARGET && (

@@ -12,7 +12,7 @@ import {
     validateTribute
 } from './GuardianTributeEngine';
 import { GuardianStatue } from './components/GuardianStatue';
-import { PuzzleLayout } from '../components/PuzzleLayout';
+import styles from './GuardianTributePuzzle.module.css';
 
 interface GuardianTributePuzzleProps {
     data: PuzzleData;
@@ -69,35 +69,18 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
     };
 
     return (
-        <PuzzleLayout
-            instruction={t('puzzle.guardian_tribute.instruction', "Distribute the gems among the statues")}
-            onReset={handleReset}
-            isSolved={isSolved}
-        >
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2rem',
-                width: '100%'
-            }}>
+        <div className={styles.layout}>
+            <div className={styles.tributeContainer}>
                 {/* Stats */}
-                <div style={{
-                    fontSize: '2.5rem',
-                    color: totalDistributed === puzzleData.totalGems
-                        ? '#22c55e'
-                        : (showFeedback && remainingGems > 0 ? '#ef4444' : '#fbbf24'),
-                    fontWeight: 'bold',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem',
-                    marginBottom: '1rem',
-                    textShadow: '0 0 20px rgba(0,0,0,0.5)',
-                    position: 'relative'
-                }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div
+                    className={styles.stats}
+                    style={{
+                        color: totalDistributed === puzzleData.totalGems
+                            ? '#22c55e'
+                            : (showFeedback && remainingGems > 0 ? '#ef4444' : '#fbbf24'),
+                    }}
+                >
+                    <div className={styles.statsText}>
                         <span>💎</span>
                         <span>{totalDistributed} / {puzzleData.totalGems}</span>
                     </div>
@@ -105,15 +88,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                         <motion.div
                             initial={{ opacity: 0, y: -5 }}
                             animate={{ opacity: 1, y: 0 }}
-                            style={{
-                                fontSize: '1.2rem',
-                                color: '#ef4444',
-                                fontWeight: '500',
-                                position: 'absolute',
-                                bottom: '-2rem',
-                                width: '100%',
-                                textAlign: 'center'
-                            }}
+                            className={styles.feedbackGems}
                         >
                             {t('encounter.puzzles.guardian_tribute.gems_remaining', 'You still have gems to distribute.')}
                         </motion.div>
@@ -121,12 +96,12 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 </div>
 
                 {/* Guardians Grid */}
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: `repeat(${Math.min(puzzleData.guardians.length, 3)}, 1fr)`,
-                    gap: '2rem',
-                    width: '100%'
-                }}>
+                <div
+                    className={styles.guardiansGrid}
+                    style={{
+                        gridTemplateColumns: `repeat(${Math.min(puzzleData.guardians.length, 3)}, 1fr)`,
+                    }}
+                >
                     {puzzleData.guardians.map((guardian, index) => (
                         <GuardianStatue
                             key={index}
@@ -149,24 +124,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                             whileTap={{ scale: totalDistributed > 0 ? 0.95 : 1 }}
                             onClick={handleOffer}
                             disabled={totalDistributed === 0}
-                            style={{
-                                marginTop: '1rem',
-                                padding: '1rem 3rem',
-                                fontSize: '1.8rem',
-                                fontWeight: 'bold',
-                                color: totalDistributed === 0 ? '#64748b' : '#fff',
-                                background: totalDistributed === 0
-                                    ? 'rgba(71, 85, 105, 0.4)'
-                                    : 'linear-gradient(to bottom, #d4af37 0%, #926239 100%)',
-                                border: '2px solid rgba(212, 175, 55, 0.5)',
-                                borderRadius: '12px',
-                                cursor: totalDistributed === 0 ? 'not-allowed' : 'pointer',
-                                boxShadow: totalDistributed === 0 ? 'none' : '0 4px 15px rgba(212, 175, 55, 0.3)',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.1em',
-                                fontFamily: 'serif',
-                                transition: 'all 0.3s'
-                            }}
+                            className={styles.offerBtn}
                         >
                             {t('encounter.puzzles.guardian_tribute.offer', 'Offer Tribute')}
                         </motion.button>
@@ -176,19 +134,24 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            style={{
-                                fontSize: '1.5rem',
-                                color: '#22c55e',
-                                fontWeight: 'bold',
-                                textAlign: 'center',
-                                marginTop: '1rem'
-                            }}
+                            className={styles.successMessage}
                         >
                             {t('encounter.puzzles.guardian_tribute.success', 'The guardians are satisfied! ✨')}
                         </motion.div>
                     )}
                 </div>
             </div>
-        </PuzzleLayout>
+
+            {/* Reset Button */}
+            <div className={styles.controls}>
+                <button
+                    className={styles.resetBtn}
+                    onClick={handleReset}
+                    disabled={isSolved}
+                >
+                    {t('common.start_over', 'Start Over')}
+                </button>
+            </div>
+        </div>
     );
 };
