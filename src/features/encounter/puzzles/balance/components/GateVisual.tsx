@@ -17,6 +17,18 @@ export const GateVisual = ({
     rightTotal,
     isSolved
 }: GateVisualProps) => {
+    const diff = rightTotal - leftTotal;
+    // Calculate vertical offset (max +/- 30px)
+    const maxOffset = 30;
+    const sensitivity = 5;
+    const offset = Math.min(Math.max(diff * sensitivity, -maxOffset), maxOffset);
+
+    // If balanced, offset is 0. 
+    // If right is heavier (diff > 0), right goes DOWN (positive Y), left goes UP (negative Y).
+    // Note: In CSS translateY, positive is down.
+    const rightOffsetY = offset;
+    const leftOffsetY = -offset;
+
     return (
         <div className={styles.gateScene}>
             <div className={styles.gateStructure}>
@@ -41,11 +53,13 @@ export const GateVisual = ({
                     side="left"
                     weights={leftWeights}
                     total={leftTotal}
+                    offsetY={leftOffsetY}
                 />
                 <PressurePlate
                     side="right"
                     weights={rightWeights}
                     total={rightTotal}
+                    offsetY={rightOffsetY}
                 />
             </div>
         </div>
