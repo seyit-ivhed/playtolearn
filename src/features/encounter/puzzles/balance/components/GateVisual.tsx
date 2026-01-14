@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { PressurePlate } from './PressurePlate';
 import styles from '../BalancePuzzle.module.css';
 
@@ -8,6 +9,8 @@ interface GateVisualProps {
     leftTotal: number;
     rightTotal: number;
     isSolved: boolean;
+    onReset: () => void;
+    instruction: string;
 }
 
 export const GateVisual = ({
@@ -15,10 +18,19 @@ export const GateVisual = ({
     rightWeights,
     leftTotal,
     rightTotal,
-    isSolved
+    isSolved,
+    onReset,
+    instruction
 }: GateVisualProps) => {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.gateScene}>
+            {/* Instruction Overlay */}
+            <div className={styles.instructionOverImage}>
+                {instruction}
+            </div>
+
             {/* The background image and vignette are handled in CSS */}
 
             {/* Solved overlay/glow */}
@@ -41,6 +53,16 @@ export const GateVisual = ({
                     total={rightTotal}
                 />
             </div>
+
+            {/* Reset Button positioned over the image */}
+            {!isSolved && (
+                <button
+                    className={styles.resetBtnOverImage}
+                    onClick={onReset}
+                >
+                    {t('common.start_over', 'Start Over')}
+                </button>
+            )}
         </div>
     );
 };

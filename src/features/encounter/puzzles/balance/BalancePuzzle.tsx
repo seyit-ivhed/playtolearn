@@ -106,6 +106,8 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                     leftTotal={leftTotal}
                     rightTotal={rightTotal}
                     isSolved={isSolved}
+                    onReset={handleReset}
+                    instruction={t('puzzle.balance.instruction', 'Place stones to open the gate!')}
                 />
 
                 <div className={styles.splitInventoryContainer}>
@@ -128,16 +130,6 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                 </div>
             </div>
 
-            {/* Reset Button */}
-            <div className={styles.controls}>
-                <button
-                    className={styles.resetBtn}
-                    onClick={handleReset}
-                    disabled={isSolved}
-                >
-                    {t('common.start_over', 'Start Over')}
-                </button>
-            </div>
         </div>
     );
 };

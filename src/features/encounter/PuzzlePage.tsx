@@ -126,15 +126,17 @@ const PuzzlePage = () => {
         }
     }, [puzzleData, t]);
 
+    const isBalancePuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE || puzzleData?.puzzleType === PuzzleType.CUNEIFORM;
+
     return (
-        <div className={styles.puzzlePage}>
+        <div className={`${styles.puzzlePage} ${isBalancePuzzle ? styles.blackBg : ''}`}>
             <header className={styles.header}>
                 <button className={styles.backButton} onClick={handleBack}>
                     {t('retreat', 'Retreat')}
                 </button>
             </header>
 
-            {instruction && (
+            {instruction && !isBalancePuzzle && (
                 <motion.div
                     className={styles.instructionContainer}
                     initial={{ opacity: 0, y: -20 }}

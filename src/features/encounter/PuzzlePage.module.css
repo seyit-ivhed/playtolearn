@@ -8,6 +8,10 @@
     overflow: hidden;
 }
 
+.blackBg {
+    background: black !important;
+}
+
 .header {
     display: flex;
     align-items: center;
