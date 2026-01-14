@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
-import { isBalanced, calculateScaleAngle, calculateTotalWeight } from './BalanceEngine';
-import { ScaleVisual } from './components/ScaleVisual';
+import { isBalanced, calculateTotalWeight } from './BalanceEngine';
+import { GateVisual } from './components/GateVisual';
 import { WeightInventory } from './components/WeightInventory';
 import styles from './BalancePuzzle.module.css';
 import { PuzzleLayout } from '../components/PuzzleLayout';
@@ -13,7 +13,6 @@ interface BalancePuzzleProps {
 }
 
 export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
-    const isCuneiform = data.puzzleType === PuzzleType.CUNEIFORM;
 
     // Current state of weights on plates
     const [leftWeights, setLeftWeights] = useState<number[]>(() =>
@@ -62,7 +61,6 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
 
     const leftTotal = calculateTotalWeight(leftWeights);
     const rightTotal = calculateTotalWeight(rightWeights);
-    const scaleAngle = calculateScaleAngle(leftTotal, rightTotal);
 
     const handleAddWeight = (weight: number, index: number, side: 'left' | 'right') => {
         if (isSolved) return;
@@ -100,18 +98,17 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
 
     return (
         <PuzzleLayout
-            instruction={t('puzzle.balance.instruction', 'Balance the scale!')}
+            instruction={t('puzzle.balance.instruction', 'Place stones to open the gate!')}
             onReset={handleReset}
             isSolved={isSolved}
         >
             <div className={styles.gameBoard}>
-                <ScaleVisual
+                <GateVisual
                     leftWeights={leftWeights}
                     rightWeights={rightWeights}
                     leftTotal={leftTotal}
                     rightTotal={rightTotal}
-                    scaleAngle={scaleAngle}
-                    isCuneiform={isCuneiform}
+                    isSolved={isSolved}
                 />
 
                 <div className={styles.splitInventoryContainer}>
@@ -122,7 +119,6 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                         usedIndices={usedLeftIndices}
                         onAddWeight={handleAddWeight}
                         isSolved={isSolved}
-                        isCuneiform={isCuneiform}
                     />
                     <WeightInventory
                         title="Right Pile"
@@ -131,7 +127,6 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                         usedIndices={usedRightIndices}
                         onAddWeight={handleAddWeight}
                         isSolved={isSolved}
-                        isCuneiform={isCuneiform}
                     />
                 </div>
             </div>

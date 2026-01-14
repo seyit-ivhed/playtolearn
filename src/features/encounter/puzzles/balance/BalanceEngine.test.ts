@@ -1,6 +1,6 @@
 
 import { describe, it, expect } from 'vitest';
-import { isBalanced, calculateScaleAngle, calculateTotalWeight } from './BalanceEngine';
+import { isBalanced, calculateTotalWeight } from './BalanceEngine';
 
 describe('BalanceEngine', () => {
     describe('isBalanced', () => {
@@ -19,28 +19,7 @@ describe('BalanceEngine', () => {
         });
     });
 
-    describe('calculateScaleAngle', () => {
-        it('should return 0 when balanced', () => {
-            expect(calculateScaleAngle(10, 10)).toBe(0);
-        });
 
-        it('should return positive angle when right is heavier', () => {
-            const angle = calculateScaleAngle(5, 10);
-            expect(angle).toBeGreaterThan(0);
-            expect(angle).toBeLessThanOrEqual(15);
-        });
-
-        it('should return negative angle when left is heavier', () => {
-            const angle = calculateScaleAngle(10, 5);
-            expect(angle).toBeLessThan(0);
-            expect(angle).toBeGreaterThanOrEqual(-15);
-        });
-
-        it('should clamp the angle to max 15 degrees', () => {
-            expect(calculateScaleAngle(0, 100)).toBe(15);
-            expect(calculateScaleAngle(100, 0)).toBe(-15);
-        });
-    });
 
     describe('calculateTotalWeight', () => {
         it('should sum up all weights', () => {
