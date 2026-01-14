@@ -114,9 +114,6 @@ const PuzzlePage = () => {
                 <button className={styles.backButton} onClick={handleBack}>
                     {t('retreat', 'Retreat')}
                 </button>
-                <h1 className={styles.title}>
-                    {t(`adventures.${adventureId}.nodes.${encounter.id}.label`, encounter.label || '')}
-                </h1>
             </header>
 
             <main className={styles.puzzleContent}>
