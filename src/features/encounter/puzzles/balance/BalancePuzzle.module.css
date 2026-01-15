@@ -14,14 +14,13 @@
 /* Container that maintains aspect ratio to keep background and foreground in sync */
 .puzzleWrapper {
     position: relative;
-    width: 100%;
-    max-width: 1200px;
+    width: min(100vw, calc(100vh * 16 / 9));
     aspect-ratio: 16 / 9;
-    /* Adjust based on gate.png original ratio */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+    container-type: inline-size;
 }
 
 .backgroundContainer {
@@ -31,7 +30,7 @@
     width: 100%;
     height: 100%;
     background-image: url('../../../../assets/images/puzzles/balance/gate.png');
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
     z-index: 1;
@@ -82,8 +81,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 250px;
-    /* Base width for stack alignment */
+    width: 35%;
+    /* Relative width within platesContainer */
 }
 
 .weightStack {
@@ -91,16 +90,18 @@
     flex-direction: column-reverse;
     /* Bottom up */
     align-items: center;
-    min-height: 400px;
+    min-height: 250%;
+    /* Allow stack to grow relative to section */
+    width: 100%;
     justify-content: flex-start;
-    padding-bottom: 80px;
-    /* Space for the "plate" area in image */
+    padding-bottom: 25%;
+    /* Relative space for the "plate" area in image */
 }
 
 .weight {
     position: relative;
-    width: 120px;
-    height: 45px;
+    width: 100%;
+    aspect-ratio: 120 / 45;
     background-image: url('../../../../assets/images/puzzles/balance/weight.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -108,23 +109,23 @@
     justify-content: center;
     align-items: center;
     color: #ffffff;
-    font-size: 1.2rem;
+    font-size: 3cqw;
+    /* Proportional font size relative to container */
     font-weight: bold;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     cursor: pointer;
-    margin-bottom: -8px;
-    /* Slight overlap for natural look */
+    margin-bottom: -5%;
+    /* Relative overlap */
 }
 
 .weight:hover {
-    transform: scale(1.1) translateY(-5px);
+    transform: scale(1.2) translateY(-5px);
     filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 211, 42, 0.4));
-    z-index: 10;
 }
 
 .heavyWeight {
-    width: 150px;
-    height: 60px;
+    aspect-ratio: 150 / 60;
+    /* Specific ratio for heavy asset */
     background-image: url('../../../../assets/images/puzzles/balance/heavy-weight.png');
     cursor: default;
     margin-bottom: 0px;
@@ -133,41 +134,41 @@
 .heavyWeight:hover {
     transform: none;
     filter: none;
-    z-index: 1;
 }
 
 .plateInfo {
-    margin-top: 10px;
+    margin-top: 2%;
     background: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(255, 211, 42, 0.3);
     border-radius: 4px;
-    padding: 4px 12px;
+    padding: 2% 6%;
     color: #ffd32a;
-    font-size: 1.4rem;
+    font-size: 3.5cqw;
+    /* Responsive font size relative to container */
     font-weight: bold;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 .controls {
-    margin-top: 40px;
+    margin-top: 5cqw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 2cqw;
 }
 
 .resetBtn {
     background: rgba(0, 0, 0, 0.8);
-    border: 1px solid #ffd32a;
+    border: 0.1cqw solid #ffd32a;
     color: #ffd32a;
-    padding: 10px 30px;
+    padding: 1cqw 3cqw;
     font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
+    font-size: 2cqw;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 0.2cqw;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0.5cqw 2cqw rgba(0, 0, 0, 0.5);
 }
 
 .resetBtn:hover:not(:disabled) {
