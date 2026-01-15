@@ -1,97 +1,169 @@
-import { type DifficultyLevel } from '../../../../types/math.types';
+import type { DifficultyLevel } from '../../../../types/math.types';
 import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
-import { getRandomInt } from '../../../../utils/math/helpers';
+import { getRandomInt, shuffleArray } from '../../../../utils/math/helpers';
+
+export interface Weight {
+    id: string;
+    value: number;
+    isHeavy: boolean;
+    // Helper property to visualize unique weights if needed, 
+    // or we can rely on ID/index for React keys.
+}
+
+export interface BalancePuzzleData extends PuzzleData {
+    leftStack: Weight[];
+    rightStack: Weight[];
+    targetBalance: number; // The sum required on each side to solve (internal target)
+}
 
 /**
- * Core engine for the Balance (Weighing Rocks) puzzle.
- * Encapsulates logic for balancing weights on a scale.
+ * Calculates the total weight of a stack.
  */
+export const calculateTotalWeight = (stack: Weight[]): number => {
+    return stack.reduce((sum, w) => sum + w.value, 0);
+};
 
-export const generateBalanceData = (difficulty: DifficultyLevel): PuzzleData => {
-    // For a true "Balance" feel where user uses both sides:
-    // Determine a Target Total (T) that both sides must reach.
-    // Initialize Left at StartL < T.
-    // Initialize Right at StartR < T.
+/**
+ * Checks if the current state is balanced.
+ */
+export const validateBalance = (
+    leftStack: Weight[],
+    rightStack: Weight[]
+): boolean => {
+    const leftSum = calculateTotalWeight(leftStack);
+    const rightSum = calculateTotalWeight(rightStack);
+    return leftSum === rightSum && leftSum > 0;
+};
 
-    // Target Total e.g. 20-50 range
-    const targetTotal = difficulty * 8 + getRandomInt(10, 20);
+/**
+ * Generates data for the Balance Puzzle.
+ * Strategy:
+ * 1. Determine a "target balanced sum" for each side.
+ * 2. Generate a solution set of weights for Left and Right that sum to Target.
+ * 3. Place a Heavy Weight at the bottom of one stack (included in the solution sum).
+ * 4. Generate "noise" weights (extra weights) and mix them into the solution stacks.
+ * 5. Player must remove the noise weights to return to the balanced state.
+ */
+export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleData => {
+    // 1. Config based on difficulty
+    // Higher difficulty -> Higher values, more weights
+    const minTarget = 10 + (difficulty * 5); // 15, 20, 25...
+    const maxTarget = 20 + (difficulty * 10); // 30, 40, 50...
+    const targetBalance = getRandomInt(minTarget, maxTarget);
 
-    // Initial weights (randomly filled 0-40% of target)
-    const initialLeftWeight = getRandomInt(0, Math.floor(targetTotal * 0.4));
-    const initialRightWeight = getRandomInt(0, Math.floor(targetTotal * 0.4));
+    // Number of required weights per side (solution)
+    const minSolutionWeights = 2 + Math.floor(difficulty / 2);
+    const maxSolutionWeights = 3 + Math.floor(difficulty / 2);
 
-    const neededLeft = targetTotal - initialLeftWeight;
-    const neededRight = targetTotal - initialRightWeight;
+    // Number of noise weights per side
+    const noiseCount = 1 + Math.floor(difficulty / 2);
 
-    // Generate valid weights explicitly for Left
-    const leftOptions: number[] = [];
-    let remLeft = neededLeft;
-    // Simplify: Level 1-2 maybe just 1 big weight needed? Or 2 small?
-    // Let's stick to 2 chunks mostly to encourage addition.
-    const numLeftWeights = neededLeft > 5 ? (difficulty <= 2 ? 1 : 2) : 1;
-
-    for (let i = 0; i < numLeftWeights - 1; i++) {
-        const w = getRandomInt(Math.floor(remLeft / 3), Math.floor(remLeft / 2));
-        if (w > 0) {
-            leftOptions.push(w);
-            remLeft -= w;
-        }
-    }
-    if (remLeft > 0) leftOptions.push(remLeft);
-
-    // Generate valid weights explicitly for Right
-    const rightOptions: number[] = [];
-    let remRight = neededRight;
-    const numRightWeights = neededRight > 5 ? (difficulty <= 2 ? 1 : 2) : 1;
-
-    for (let i = 0; i < numRightWeights - 1; i++) {
-        const w = getRandomInt(Math.floor(remRight / 3), Math.floor(remRight / 2));
-        if (w > 0) {
-            rightOptions.push(w);
-            remRight -= w;
-        }
-    }
-    if (remRight > 0) rightOptions.push(remRight);
-
-    // Add decoys
-    const numDecoys = difficulty <= 2 ? 1 : 2;
-    for (let i = 0; i < numDecoys; i++) {
-        leftOptions.push(getRandomInt(1, Math.floor(targetTotal / 4)));
-        rightOptions.push(getRandomInt(1, Math.floor(targetTotal / 4)));
-    }
-
-    // Shuffle
-    const shuffle = (arr: number[]) => {
-        for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
+    // 2. Generate Heavy Weight
+    // Heavy weight is significantly heavier or just distinct?
+    // Let's make it a substantial part of the weight, e.g., 30-50% of target.
+    const heavyValue = getRandomInt(Math.floor(targetBalance * 0.3), Math.floor(targetBalance * 0.5));
+    const heavyWeight: Weight = {
+        id: `heavy-${Math.random().toString(36).substr(2, 9)}`,
+        value: heavyValue,
+        isHeavy: true
     };
-    shuffle(leftOptions);
-    shuffle(rightOptions);
+
+    // Decide which side gets the heavy weight
+    const heavySide = Math.random() < 0.5 ? 'left' : 'right';
+
+    // 3. Generate Solution Sets
+
+    // Helper to generate weights summing to a remainder
+    const generateComponents = (target: number, count: number): number[] => {
+        if (count <= 1) return [target];
+
+        const result: number[] = [];
+        let remainder = target;
+
+        for (let i = 0; i < count - 1; i++) {
+            // Ensure each weight is at least 1, and leaves room for remaining weights
+            const max = remainder - (count - 1 - i);
+            const val = getRandomInt(1, Math.max(1, Math.ceil(max / 2)));
+            // Random distribution but biased keep numbers reasonable
+            result.push(val);
+            remainder -= val;
+        }
+        result.push(remainder);
+
+        // Shuffle so big numbers aren't always last
+        return shuffleArray(result);
+    };
+
+    const leftSolutionTotal = targetBalance;
+    const rightSolutionTotal = targetBalance;
+
+    let leftSolutionValues: number[] = [];
+    let rightSolutionValues: number[] = [];
+
+    if (heavySide === 'left') {
+        const remaining = leftSolutionTotal - heavyWeight.value;
+        const count = getRandomInt(minSolutionWeights, maxSolutionWeights) - 1; // -1 for heavy
+        leftSolutionValues = generateComponents(remaining, count);
+        // Heavy weight will be added manually later to ensure position
+
+        const rCount = getRandomInt(minSolutionWeights, maxSolutionWeights);
+        rightSolutionValues = generateComponents(rightSolutionTotal, rCount);
+    } else {
+        const lCount = getRandomInt(minSolutionWeights, maxSolutionWeights);
+        leftSolutionValues = generateComponents(leftSolutionTotal, lCount);
+
+        const remaining = rightSolutionTotal - heavyWeight.value;
+        const count = getRandomInt(minSolutionWeights, maxSolutionWeights) - 1;
+        rightSolutionValues = generateComponents(remaining, count);
+    }
+
+    // 4. Generate Noise Weights
+    // Noise weights are random values that don't need to balance
+    const generateNoise = (count: number): number[] => {
+        const noise: number[] = [];
+        for (let i = 0; i < count; i++) {
+            noise.push(getRandomInt(1, Math.floor(targetBalance / 3)));
+        }
+        return noise;
+    };
+
+    const leftNoise = generateNoise(noiseCount);
+    const rightNoise = generateNoise(noiseCount);
+
+    // 5. Construct Final Stacks
+
+    // Convert numbers to Weight objects
+    const createWeights = (values: number[]): Weight[] => {
+        return values.map(v => ({
+            id: `w-${Math.random().toString(36).substr(2, 9)}`,
+            value: v,
+            isHeavy: false
+        }));
+    };
+
+    let leftStack = createWeights([...leftSolutionValues, ...leftNoise]);
+    let rightStack = createWeights([...rightSolutionValues, ...rightNoise]);
+
+    // Shuffle stacks to mix noise and solution (except heavy)
+    leftStack = shuffleArray(leftStack);
+    rightStack = shuffleArray(rightStack);
+
+    // Place Heavy Weight at bottom (index 0 or last depending on UI, 
+    // usually stacks visually build up, so bottom is index 0. 
+    // If we map .reverse() for rendering, index 0 is bottom.
+    // Let's assume array order: index 0 is bottom.
+    if (heavySide === 'left') {
+        leftStack.unshift(heavyWeight);
+    } else {
+        rightStack.unshift(heavyWeight);
+    }
 
     return {
-        puzzleType: PuzzleType.BALANCE,
-        targetValue: targetTotal,
+        puzzleType: PuzzleType.BALANCE, // Assuming this enum exists or mapped to generic
+        targetValue: targetBalance, // Not strictly used for checking, just metadata
         options: [],
-        initialLeftWeight,
-        initialRightWeight,
-        leftOptions,
-        rightOptions
+        leftStack,
+        rightStack,
+        targetBalance
     };
-};
-
-/**
- * Calculates whether the scale is balanced.
- * Both sides must have equal weight.
- */
-export const isBalanced = (leftWeight: number, rightWeight: number): boolean => {
-    return leftWeight === rightWeight && leftWeight > 0;
-};
-
-/**
- * Calculates the total weight of a list of weights.
- */
-export const calculateTotalWeight = (weights: number[]): number => {
-    return weights.reduce((sum, w) => sum + w, 0);
 };

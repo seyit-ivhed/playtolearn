@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
-import { isBalanced, calculateTotalWeight } from './BalanceEngine';
-import { GateVisual } from './components/GateVisual';
+import { motion, AnimatePresence } from 'framer-motion';
+import type { PuzzleData } from '../../../../types/adventure.types';
+import {
+    type BalancePuzzleData,
+    type Weight,
+    calculateTotalWeight,
+    validateBalance
+} from './BalanceEngine';
 import styles from './BalancePuzzle.module.css';
 
 interface BalancePuzzleProps {
@@ -11,90 +16,150 @@ interface BalancePuzzleProps {
 }
 
 export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
+    const { t } = useTranslation();
+    const initialPuzzleData = data as BalancePuzzleData;
 
-    // Initial full sets of weights
-    const getInitialWeights = (side: 'left' | 'right') => {
-        const initial = side === 'left' ? data.initialLeftWeight : data.initialRightWeight;
-        const options = side === 'left' ? data.leftOptions : data.rightOptions;
-
-        let sideOptions: number[] = [];
-        if (options) {
-            sideOptions = options.map(opt => typeof opt === 'number' ? opt : opt.value);
-        } else if (data.options) {
-            const allOpts = data.options.map(opt => typeof opt === 'number' ? opt : opt.value);
-            const midpoint = Math.ceil(allOpts.length / 2);
-            sideOptions = side === 'left' ? allOpts.slice(0, midpoint) : allOpts.slice(midpoint);
-        }
-
-        return [...(initial ? [initial] : []), ...sideOptions];
-    };
-
-    // Current state of weights on plates
-    const [leftWeights, setLeftWeights] = useState<number[]>(() => getInitialWeights('left'));
-    const [rightWeights, setRightWeights] = useState<number[]>(() => getInitialWeights('right'));
-
+    // State for stacks
+    const [leftStack, setLeftStack] = useState<Weight[]>([]);
+    const [rightStack, setRightStack] = useState<Weight[]>([]);
     const [isSolved, setIsSolved] = useState(false);
 
-    // Handle data changes - if data prop changes, we should reset state
-    const [prevData, setPrevData] = useState(data);
-    if (data !== prevData) {
-        setPrevData(data);
-        setLeftWeights(getInitialWeights('left'));
-        setRightWeights(getInitialWeights('right'));
+    // Initialize state from props
+    useEffect(() => {
+        setLeftStack(initialPuzzleData.leftStack);
+        setRightStack(initialPuzzleData.rightStack);
         setIsSolved(false);
-    }
+    }, [initialPuzzleData]);
 
-    const leftTotal = calculateTotalWeight(leftWeights);
-    const rightTotal = calculateTotalWeight(rightWeights);
-
-    const handleRemoveWeight = (index: number, side: 'left' | 'right') => {
+    const handleRemoveWeight = (stackSide: 'left' | 'right', weightId: string) => {
         if (isSolved) return;
 
-        let nextLeftWeights = [...leftWeights];
-        let nextRightWeights = [...rightWeights];
+        const updateStack = (stack: Weight[]) =>
+            stack.filter(w => w.id !== weightId);
 
-        if (side === 'left') {
-            nextLeftWeights.splice(index, 1);
-            setLeftWeights(nextLeftWeights);
+        if (stackSide === 'left') {
+            const newStack = updateStack(leftStack);
+            setLeftStack(newStack);
+            checkSolution(newStack, rightStack);
         } else {
-            nextRightWeights.splice(index, 1);
-            setRightWeights(nextRightWeights);
+            const newStack = updateStack(rightStack);
+            setRightStack(newStack);
+            checkSolution(leftStack, newStack);
         }
+    };
 
-        const nextLeftTotal = calculateTotalWeight(nextLeftWeights);
-        const nextRightTotal = calculateTotalWeight(nextRightWeights);
-
-        if (isBalanced(nextLeftTotal, nextRightTotal) && !isSolved) {
+    const checkSolution = (currentLeft: Weight[], currentRight: Weight[]) => {
+        if (validateBalance(currentLeft, currentRight)) {
             setIsSolved(true);
             setTimeout(() => {
                 onSolve();
-            }, 1500); // Wait for the gate animation
+            }, 2000); // Delay to show success state before closing
         }
     };
 
     const handleReset = () => {
         if (isSolved) return;
-        setLeftWeights(getInitialWeights('left'));
-        setRightWeights(getInitialWeights('right'));
+        setLeftStack(initialPuzzleData.leftStack);
+        setRightStack(initialPuzzleData.rightStack);
     };
 
-    const { t } = useTranslation();
+    const leftTotal = calculateTotalWeight(leftStack);
+    const rightTotal = calculateTotalWeight(rightStack);
 
     return (
         <div className={styles.layout}>
-            <div className={styles.gameBoard}>
-                <GateVisual
-                    leftWeights={leftWeights}
-                    rightWeights={rightWeights}
-                    leftTotal={leftTotal}
-                    rightTotal={rightTotal}
-                    isSolved={isSolved}
-                    onReset={handleReset}
-                    onRemoveWeight={handleRemoveWeight}
-                    instruction={t('puzzle.balance.instruction_remove', 'Remove stones to open the gate!')}
-                />
+            <div className={styles.instructions}>
+                {t('encounter.puzzles.balance.instructions', 'Remove weights to balance the scales. The heavy weights (base) cannot be moved.')}
             </div>
 
+            <div className={styles.puzzleContainer}>
+                {/* Left Scale */}
+                <div className={styles.scaleSide}>
+                    <div className={styles.weightStack}>
+                        <AnimatePresence>
+                            {leftStack.map((weight) => (
+                                <WeightItem
+                                    key={weight.id}
+                                    weight={weight}
+                                    side="left"
+                                    onRemove={handleRemoveWeight}
+                                    disabled={isSolved}
+                                />
+                            ))}
+                        </AnimatePresence>
+                    </div>
+                    <div className={styles.pressurePlate}>
+                        <span className={styles.plateTotal}>{leftTotal}</span>
+                    </div>
+                </div>
+
+                {/* Right Scale */}
+                <div className={styles.scaleSide}>
+                    <div className={styles.weightStack}>
+                        <AnimatePresence>
+                            {rightStack.map((weight) => (
+                                <WeightItem
+                                    key={weight.id}
+                                    weight={weight}
+                                    side="right"
+                                    onRemove={handleRemoveWeight}
+                                    disabled={isSolved}
+                                />
+                            ))}
+                        </AnimatePresence>
+                    </div>
+                    <div className={styles.pressurePlate}>
+                        <span className={styles.plateTotal}>{rightTotal}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.controls}>
+                <div className={styles.feedback}>
+                    <AnimatePresence>
+                        {isSolved && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className={styles.successMessage}
+                            >
+                                {t('encounter.puzzles.balance.success', 'Balanced! The gate opens...')}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+                <button
+                    className={styles.resetBtn}
+                    onClick={handleReset}
+                    disabled={isSolved}
+                >
+                    {t('common.start_over', 'Start Over')}
+                </button>
+            </div>
         </div>
+    );
+};
+
+interface WeightItemProps {
+    weight: Weight;
+    side: 'left' | 'right';
+    onRemove: (side: 'left' | 'right', id: string) => void;
+    disabled: boolean;
+}
+
+const WeightItem = ({ weight, side, onRemove, disabled }: WeightItemProps) => {
+    return (
+        <motion.div
+            layout
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.15 } }}
+            className={`${styles.weight} ${weight.isHeavy ? styles.heavyWeight : ''}`}
+            onClick={() => !weight.isHeavy && !disabled && onRemove(side, weight.id)}
+            whileHover={!weight.isHeavy && !disabled ? { scale: 1.05 } : {}}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        >
+            {weight.value}
+        </motion.div>
     );
 };

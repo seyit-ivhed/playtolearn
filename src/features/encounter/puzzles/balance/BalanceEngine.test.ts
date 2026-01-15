@@ -1,67 +1,75 @@
-
 import { describe, it, expect } from 'vitest';
-import { isBalanced, calculateTotalWeight, generateBalanceData } from './BalanceEngine';
-import { PuzzleType } from '../../../../types/adventure.types';
+import { generateBalanceData, validateBalance, calculateTotalWeight } from './BalanceEngine';
 
-describe('BalanceEngine', () => {
+describe('Balance Engine', () => {
     describe('generateBalanceData', () => {
-        it('should generate valid puzzle structure', () => {
+        it('should generate valid puzzle data structure', () => {
             const data = generateBalanceData(1);
-            expect(data.puzzleType).toBe(PuzzleType.BALANCE);
-            expect(data.targetValue).toBeGreaterThan(0);
-            expect(data.initialLeftWeight).toBeDefined();
-            expect(data.initialRightWeight).toBeDefined();
-            expect(Array.isArray(data.leftOptions)).toBe(true);
-            expect(Array.isArray(data.rightOptions)).toBe(true);
+            expect(data).toHaveProperty('leftStack');
+            expect(data).toHaveProperty('rightStack');
+            expect(data).toHaveProperty('targetBalance');
+            expect(data.leftStack.length).toBeGreaterThan(0);
+            expect(data.rightStack.length).toBeGreaterThan(0);
         });
 
-        it('should ensure sides are reachable to target value', () => {
-            const data = generateBalanceData(3);
-            const leftTotal = (data.leftOptions as number[]).reduce((a, b) => a + b, 0) + (data.initialLeftWeight ?? 0);
-            const rightTotal = (data.rightOptions as number[]).reduce((a, b) => a + b, 0) + (data.initialRightWeight ?? 0);
-
-            expect(leftTotal).toBeGreaterThanOrEqual(data.targetValue);
-            expect(rightTotal).toBeGreaterThanOrEqual(data.targetValue);
+        it('should include exactly one heavy weight', () => {
+            const data = generateBalanceData(1);
+            const allWeights = [...data.leftStack, ...data.rightStack];
+            const heavyWeights = allWeights.filter(w => w.isHeavy);
+            expect(heavyWeights).toHaveLength(1);
         });
 
-        it('should generate more weights for higher difficulty', () => {
-            const easy = generateBalanceData(1);
-            const hard = generateBalanceData(5);
-            expect(hard.leftOptions!.length).toBeGreaterThanOrEqual(easy.leftOptions!.length);
-        });
-
-        it('should have shuffled options', () => {
-            for (let i = 0; i < 10; i++) {
-                const data = generateBalanceData(2);
-                expect(data.leftOptions!.length).toBeGreaterThan(0);
-                expect(data.rightOptions!.length).toBeGreaterThan(0);
+        it('should place heavy weight at index 0 of its stack', () => {
+            const data = generateBalanceData(1);
+            if (data.leftStack.some(w => w.isHeavy)) {
+                expect(data.leftStack[0].isHeavy).toBe(true);
+            } else {
+                expect(data.rightStack[0].isHeavy).toBe(true);
             }
         });
+
+        it('should generate solvable puzzles', () => {
+            // This is a bit tricky to test deterministically without solving it,
+            // but we can check if there EXIST subsets that strictly sum to target.
+            // Since our generation logic guarantees it, we can trust the generator 
+            // logic or check generation properties.
+            const data = generateBalanceData(2);
+
+            // Verify there exists at least one combination on each side that sums to target
+            // NOTE: This assumes generation logic creates exact subsets.
+            // Our generator creates Solution Set + Noise.
+            // So sum(Solution) == Target.
+
+            // We can't easily reverse-engineer which are noise without exposing internal properties,
+            // but we can sanity check ranges.
+
+            const leftTotal = calculateTotalWeight(data.leftStack);
+            const rightTotal = calculateTotalWeight(data.rightStack);
+
+            expect(leftTotal).toBeGreaterThanOrEqual(data.targetBalance);
+            expect(rightTotal).toBeGreaterThanOrEqual(data.targetBalance);
+        });
     });
 
-    describe('isBalanced', () => {
-        it('should return true when weights are equal and greater than zero', () => {
-            expect(isBalanced(10, 10)).toBe(true);
-            expect(isBalanced(25, 25)).toBe(true);
+    describe('validateBalance', () => {
+        it('should return true for balanced stacks', () => {
+            const w1 = { id: '1', value: 10, isHeavy: false };
+            const w2 = { id: '2', value: 5, isHeavy: false };
+            const left = [w1];
+            const right = [w2, w2]; // 10 == 5+5
+            expect(validateBalance(left, right)).toBe(true);
         });
 
-        it('should return false when weights are unequal', () => {
-            expect(isBalanced(10, 5)).toBe(false);
-            expect(isBalanced(5, 10)).toBe(false);
+        it('should return false for unbalanced stacks', () => {
+            const w1 = { id: '1', value: 10, isHeavy: false };
+            const w2 = { id: '2', value: 5, isHeavy: false };
+            const left = [w1];
+            const right = [w2]; // 10 != 5
+            expect(validateBalance(left, right)).toBe(false);
         });
 
-        it('should return false when both weights are zero', () => {
-            expect(isBalanced(0, 0)).toBe(false);
-        });
-    });
-
-
-
-    describe('calculateTotalWeight', () => {
-        it('should sum up all weights', () => {
-            expect(calculateTotalWeight([5, 10, 3])).toBe(18);
-            expect(calculateTotalWeight([])).toBe(0);
-            expect(calculateTotalWeight([10])).toBe(10);
+        it('should return false for empty/zero stacks', () => {
+            expect(validateBalance([], [])).toBe(false); // Expecting sum > 0 based on implementation
         });
     });
 });

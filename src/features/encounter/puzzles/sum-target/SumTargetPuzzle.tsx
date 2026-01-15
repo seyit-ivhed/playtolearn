@@ -44,9 +44,6 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
         setUsedOptions([]);
     };
 
-    // Instruction Text: "Fill your canteen to exactly {target}"
-    const instructionText = t('puzzle.flask.target', { defaultValue: 'Fill your canteen to exactly {{target}}L', target });
-
     return (
         <div className={styles.layout}>
             <div className={styles.boardContent}>
