@@ -63,7 +63,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding-bottom: 8%;
+    padding-bottom: 12%;
     /* Proportional bottom padding */
 }
 
@@ -71,9 +71,9 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 15%;
+    gap: 16%;
     /* Adjust based on gate.png plate distance */
-    width: 55%;
+    width: 50%;
     max-width: 1200px;
 }
 
@@ -128,7 +128,6 @@
     /* Specific ratio for heavy asset */
     background-image: url('../../../../assets/images/puzzles/balance/heavy-weight.png');
     cursor: default;
-    margin-bottom: 0px;
 }
 
 .heavyWeight:hover {
