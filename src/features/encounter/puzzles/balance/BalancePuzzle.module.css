@@ -74,7 +74,7 @@
     align-items: flex-end;
     gap: 15%;
     /* Adjust based on gate.png plate distance */
-    width: 100%;
+    width: 55%;
     max-width: 1200px;
 }
 
@@ -93,7 +93,7 @@
     align-items: center;
     min-height: 400px;
     justify-content: flex-start;
-    padding-bottom: 20px;
+    padding-bottom: 80px;
     /* Space for the "plate" area in image */
 }
 
@@ -114,7 +114,6 @@
     cursor: pointer;
     margin-bottom: -8px;
     /* Slight overlap for natural look */
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.2s;
 }
 
 .weight:hover {
