@@ -61,74 +61,76 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
 
     return (
         <div className={styles.layout}>
-            {/* Immersive Background */}
-            <div className={styles.backgroundContainer} />
-            <div className={styles.vignette} />
+            <div className={styles.puzzleWrapper}>
+                {/* Immersive Background */}
+                <div className={styles.backgroundContainer} />
+                <div className={styles.vignette} />
 
-            {/* Puzzle Content */}
-            <div className={styles.puzzleContent}>
-                <div className={styles.platesContainer}>
-                    {/* Left Plate Area */}
-                    <div className={styles.stackSection}>
-                        <div className={styles.weightStack}>
-                            <AnimatePresence>
-                                {leftStack.map((weight) => (
-                                    <WeightComponent
-                                        key={weight.id}
-                                        weight={weight}
-                                        side="left"
-                                        onRemove={handleRemoveWeight}
-                                        disabled={isSolved}
-                                    />
-                                ))}
-                            </AnimatePresence>
+                {/* Puzzle Content */}
+                <div className={styles.puzzleContent}>
+                    <div className={styles.platesContainer}>
+                        {/* Left Plate Area */}
+                        <div className={styles.stackSection}>
+                            <div className={styles.weightStack}>
+                                <AnimatePresence>
+                                    {leftStack.map((weight) => (
+                                        <WeightComponent
+                                            key={weight.id}
+                                            weight={weight}
+                                            side="left"
+                                            onRemove={handleRemoveWeight}
+                                            disabled={isSolved}
+                                        />
+                                    ))}
+                                </AnimatePresence>
+                            </div>
+                            <div className={styles.plateInfo}>
+                                {leftTotal}
+                            </div>
                         </div>
-                        <div className={styles.plateInfo}>
-                            {leftTotal}
-                        </div>
-                    </div>
 
-                    {/* Controls in between */}
-                    <div className={styles.controls}>
-                        <div className={styles.feedback}>
-                            <AnimatePresence>
-                                {isSolved && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        className={styles.successMsg}
-                                    >
-                                        {t('encounter.puzzles.balance.success', 'Balanced!')}
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                        {/* Controls in between */}
+                        <div className={styles.controls}>
+                            <div className={styles.feedback}>
+                                <AnimatePresence>
+                                    {isSolved && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className={styles.successMsg}
+                                        >
+                                            {t('encounter.puzzles.balance.success', 'Balanced!')}
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                            <button
+                                className={styles.resetBtn}
+                                onClick={handleReset}
+                                disabled={isSolved}
+                            >
+                                {t('common.start_over', 'Start Over')}
+                            </button>
                         </div>
-                        <button
-                            className={styles.resetBtn}
-                            onClick={handleReset}
-                            disabled={isSolved}
-                        >
-                            {t('common.start_over', 'Start Over')}
-                        </button>
-                    </div>
 
-                    {/* Right Plate Area */}
-                    <div className={styles.stackSection}>
-                        <div className={styles.weightStack}>
-                            <AnimatePresence>
-                                {rightStack.map((weight) => (
-                                    <WeightComponent
-                                        key={weight.id}
-                                        weight={weight}
-                                        side="right"
-                                        onRemove={handleRemoveWeight}
-                                        disabled={isSolved}
-                                    />
-                                ))}
-                            </AnimatePresence>
-                        </div>
-                        <div className={styles.plateInfo}>
-                            {rightTotal}
+                        {/* Right Plate Area */}
+                        <div className={styles.stackSection}>
+                            <div className={styles.weightStack}>
+                                <AnimatePresence>
+                                    {rightStack.map((weight) => (
+                                        <WeightComponent
+                                            key={weight.id}
+                                            weight={weight}
+                                            side="right"
+                                            onRemove={handleRemoveWeight}
+                                            disabled={isSolved}
+                                        />
+                                    ))}
+                                </AnimatePresence>
+                            </div>
+                            <div className={styles.plateInfo}>
+                                {rightTotal}
+                            </div>
                         </div>
                     </div>
                 </div>

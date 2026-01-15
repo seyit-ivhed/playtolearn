@@ -11,6 +11,19 @@
     font-family: 'Cinzel', serif;
 }
 
+/* Container that maintains aspect ratio to keep background and foreground in sync */
+.puzzleWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 16 / 9;
+    /* Adjust based on gate.png original ratio */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .backgroundContainer {
     position: absolute;
     top: 0;
@@ -18,20 +31,26 @@
     width: 100%;
     height: 100%;
     background-image: url('../../../../assets/images/puzzles/balance/gate.png');
-    background-size: contain;
-    background-position: center bottom;
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     z-index: 1;
 }
 
-/* Vignette effect to fade sides and corners to black */
+/* Fade effect using multiple gradients to mask edges */
 .vignette {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.6) 70%, #000000 100%);
+    background:
+        /* Top/Bottom fade */
+        linear-gradient(to bottom, #000000 0%, transparent 15%, transparent 85%, #000000 100%),
+        /* Left/Right fade */
+        linear-gradient(to right, #000000 0%, transparent 15%, transparent 85%, #000000 100%),
+        /* Center focus */
+        radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.4) 60%, #000000 100%);
     z-index: 2;
     pointer-events: none;
 }
@@ -45,8 +64,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    /* Align stacks to bottom portion */
-    padding-bottom: 5%;
+    padding-bottom: 8%;
+    /* Proportional bottom padding */
 }
 
 .platesContainer {
