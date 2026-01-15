@@ -95,15 +95,12 @@
     flex-direction: column-reverse;
     align-items: center;
     width: 100%;
-    /* Tight stacking */
-    margin-bottom: 0;
-    gap: 2px;
 }
 
 /* 4x Larger Magical Stone Block */
 .magicalStoneBlock {
-    width: 220px;
-    height: 140px;
+    width: 180px;
+    height: 60px;
     background-image: url('../../../../assets/images/puzzles/balance/weight.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -113,8 +110,7 @@
     align-items: center;
     user-select: none;
     position: relative;
-    /* Pull them closer together */
-    margin-bottom: -95px;
+    margin-top: -10px;
 }
 
 /* Top stone shouldn't have clinical overlap that hides the label if one exists */
@@ -152,10 +148,6 @@
         2px 2px 0 #000,
         0 0 10px rgba(0, 0, 0, 0.8);
     user-select: none;
-}
-
-.stoneRight {
-    /* Optional differentiation if needed */
 }
 
 .layout {
