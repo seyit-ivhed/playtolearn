@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import type { PuzzleData } from '../../../../types/adventure.types';
 import {
-    type GuardianTributePuzzleData
-} from '../../../../utils/math/puzzles/guardian-tribute';
-import {
+    type GuardianTributePuzzleData,
     calculateTotalDistributed,
     calculateRemainingGems,
     isValidAdjustment,

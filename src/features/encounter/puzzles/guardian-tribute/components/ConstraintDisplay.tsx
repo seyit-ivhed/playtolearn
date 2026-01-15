@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import {
     type GuardianConstraint,
     GuardianConstraintType
-} from '../../../../../utils/math/puzzles/guardian-tribute';
+} from '../GuardianTributeEngine';
 import { GUARDIAN_SYMBOLS } from '../constants';
 import { GuardianSymbolBadge } from './GuardianSymbolBadge';
 

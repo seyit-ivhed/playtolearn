@@ -2,7 +2,12 @@ import { describe, it, expect } from 'vitest';
 import {
     calculateTotalDistributed,
     calculateRemainingGems,
-    isValidAdjustment
+    isValidAdjustment,
+    generateGuardianTributeData,
+    validateGuardianConstraint,
+    validateGuardianTributeSolution,
+    GuardianConstraintType,
+    type GuardianConstraint
 } from './GuardianTributeEngine';
 
 describe('GuardianTributeEngine', () => {
@@ -44,6 +49,74 @@ describe('GuardianTributeEngine', () => {
 
         it('should allow increment up to total gems', () => {
             expect(isValidAdjustment([9, 5], 0, 1, totalGems)).toBe(true);
+        });
+    });
+
+    describe('generateGuardianTributeData', () => {
+        it('should generate solutions that satisfy all constraints', () => {
+            for (let difficulty = 1; difficulty <= 5; difficulty++) {
+                const data = generateGuardianTributeData(difficulty as 1 | 2 | 3 | 4 | 5);
+                const solutions = data.guardians.map(g => g.solution);
+
+                data.guardians.forEach((guardian, index) => {
+                    const isValid = validateGuardianConstraint(
+                        solutions[index],
+                        guardian.constraint,
+                        solutions
+                    );
+                    expect(isValid).toBe(true);
+                });
+            }
+        });
+
+        it('should have valid solutions that sum to total gems', () => {
+            for (let difficulty = 1; difficulty <= 5; difficulty++) {
+                const data = generateGuardianTributeData(difficulty as 1 | 2 | 3 | 4 | 5);
+                const sum = data.guardians.reduce((total, g) => total + g.solution, 0);
+                expect(sum).toBe(data.totalGems);
+            }
+        });
+    });
+
+    describe('validateGuardianConstraint', () => {
+        it('should validate EXACT constraint correctly', () => {
+            const constraint: GuardianConstraint = {
+                type: GuardianConstraintType.EXACT,
+                value: 10
+            };
+            expect(validateGuardianConstraint(10, constraint, [])).toBe(true);
+            expect(validateGuardianConstraint(9, constraint, [])).toBe(false);
+        });
+
+        it('should validate MULTIPLIER constraint correctly', () => {
+            const constraint: GuardianConstraint = {
+                type: GuardianConstraintType.MULTIPLIER,
+                multiplier: 2,
+                targetGuardian: 0
+            };
+            const guardianValues = [5, 10, 15];
+            expect(validateGuardianConstraint(10, constraint, guardianValues)).toBe(true);
+            expect(validateGuardianConstraint(9, constraint, guardianValues)).toBe(false);
+        });
+    });
+
+    describe('validateGuardianTributeSolution', () => {
+        it('should validate a correct solution', () => {
+            const data = generateGuardianTributeData(2);
+            const solutions = data.guardians.map(g => g.solution);
+
+            const result = validateGuardianTributeSolution(solutions, data);
+            expect(result.isValid).toBe(true);
+        });
+
+        it('should reject solution with wrong total gems', () => {
+            const data = generateGuardianTributeData(2);
+            const solutions = data.guardians.map(g => g.solution);
+            solutions[0] += 5;
+
+            const result = validateGuardianTributeSolution(solutions, data);
+            expect(result.isValid).toBe(false);
+            expect(result.allGemsDistributed).toBe(false);
         });
     });
 });

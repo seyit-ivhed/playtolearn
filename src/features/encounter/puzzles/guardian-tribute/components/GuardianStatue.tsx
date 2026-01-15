@@ -3,7 +3,7 @@ import { ConstraintDisplay } from './ConstraintDisplay';
 import { GuardianSymbolBadge } from './GuardianSymbolBadge';
 import { GUARDIAN_SYMBOLS } from '../constants';
 import guardianImage from '../../../../../assets/images/puzzles/guardian-statue.png';
-import type { GuardianData } from '../../../../../utils/math/puzzles/guardian-tribute';
+import type { GuardianData } from '../GuardianTributeEngine';
 
 interface GuardianStatueProps {
     index: number;

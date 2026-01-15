@@ -8,15 +8,11 @@ export * from './math/config';
 export * from './math/operations';
 export * from './math/choices';
 export * from './math/validation';
-export * from './math/puzzles/sum-target';
-export * from './math/puzzles/balance';
-export * from './math/puzzles/sequence';
-export * from './math/puzzles/guardian-tribute';
 
-import { generateSumTargetData } from './math/puzzles/sum-target';
-import { generateBalanceData } from './math/puzzles/balance';
-import { generateSequenceData } from './math/puzzles/sequence';
-import { generateGuardianTributeData } from './math/puzzles/guardian-tribute';
+import { generateSumTargetData } from '../features/encounter/puzzles/sum-target/SumTargetEngine';
+import { generateBalanceData } from '../features/encounter/puzzles/balance/BalanceEngine';
+import { generateSequenceData } from '../features/encounter/puzzles/sequence/SequenceEngine';
+import { generateGuardianTributeData } from '../features/encounter/puzzles/guardian-tribute/GuardianTributeEngine';
 
 /**
  * Mapping of puzzle types to their respective data generators

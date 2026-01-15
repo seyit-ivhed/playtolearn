@@ -1,7 +1,7 @@
 
 import { describe, it, expect } from 'vitest';
-import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
-import { type PuzzleOption } from '../../../../types/adventure.types';
+import { calculateNextSum, formatActionLabel, isPuzzleSolved, generateSumTargetData } from './SumTargetEngine';
+import { type PuzzleOption, PuzzleType } from '../../../../types/adventure.types';
 
 describe('SumTargetEngine', () => {
     describe('calculateNextSum', () => {
@@ -57,6 +57,48 @@ describe('SumTargetEngine', () => {
         it('should return false when target is not reached', () => {
             expect(isPuzzleSolved(49, 50)).toBe(false);
             expect(isPuzzleSolved(51, 50)).toBe(false);
+        });
+    });
+
+    describe('generateSumTargetData', () => {
+        it('should generate valid puzzle structure', () => {
+            const data = generateSumTargetData(1);
+            expect(data.puzzleType).toBe(PuzzleType.SUM_TARGET);
+            expect(typeof data.targetValue).toBe('number');
+            expect(Array.isArray(data.options)).toBe(true);
+        });
+
+        it('should scale difficulty with steps', () => {
+            const data = generateSumTargetData(1);
+            expect(data.options.length).toBeGreaterThanOrEqual(2);
+        });
+
+        it('should include both numbers and objects (for higher difficulties)', () => {
+            const data = generateSumTargetData(5);
+            const hasOperations = data.options.some(opt => typeof opt === 'object');
+            expect(data.options.length).toBeGreaterThan(0);
+            expect(typeof hasOperations).toBe('boolean');
+        });
+
+        it('should not have 0 as an option value', () => {
+            for (let i = 0; i < 10; i++) {
+                const data = generateSumTargetData(3);
+                data.options.forEach(opt => {
+                    if (typeof opt === 'number') {
+                        expect(opt).not.toBe(0);
+                    } else {
+                        expect(opt.value).not.toBe(0);
+                    }
+                });
+            }
+        });
+
+        it('should produce a positive target value', () => {
+            for (let i = 0; i < 20; i++) {
+                const difficulty = (Math.floor(Math.random() * 5) + 1) as import('../../../../types/math.types').DifficultyLevel;
+                const data = generateSumTargetData(difficulty);
+                expect(data.targetValue).toBeGreaterThan(0);
+            }
         });
     });
 });
