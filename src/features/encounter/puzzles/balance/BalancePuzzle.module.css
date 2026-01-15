@@ -167,7 +167,6 @@
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.2cqw;
-    transition: all 0.3s ease;
     box-shadow: 0 0.5cqw 2cqw rgba(0, 0, 0, 0.5);
 }
 
