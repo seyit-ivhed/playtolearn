@@ -108,15 +108,17 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
             </div>
 
             {/* Reset Button */}
-            <div className={styles.controls}>
-                <button
-                    className={styles.resetBtn}
-                    onClick={handleReset}
-                    disabled={isSolved}
-                >
-                    {t('common.start_over', 'Start Over')}
-                </button>
-            </div>
+            {!isSolved && (
+                <div className={styles.controls}>
+                    <button
+                        className={styles.resetBtn}
+                        onClick={handleReset}
+                        disabled={isSolved}
+                    >
+                        {t('common.start_over', 'Start Over')}
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
