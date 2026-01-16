@@ -67,6 +67,23 @@
     /* Proportional bottom padding */
 }
 
+.puzzleInstruction {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    width: 80%;
+    text-align: center;
+    color: #ffd32a;
+    font-family: 'Cinzel', serif;
+    font-size: 3.5cqw;
+    letter-spacing: 0.2cqw;
+    text-shadow: 0 0 1.5cqw rgba(0, 0, 0, 0.8), 0 0 0.5cqw rgba(255, 211, 42, 0.3);
+    pointer-events: none;
+    line-height: 1.2;
+}
+
 .platesContainer {
     display: flex;
     justify-content: center;

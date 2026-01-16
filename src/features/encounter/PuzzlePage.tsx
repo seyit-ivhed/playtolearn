@@ -134,19 +134,6 @@ const PuzzlePage = () => {
                 </button>
             </header>
 
-            {instruction && !isBalancePuzzle && (
-                <motion.div
-                    className={styles.instructionContainer}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <p className={styles.instructionText}>
-                        {instruction}
-                    </p>
-                </motion.div>
-            )}
-
             <main className={styles.puzzleContent}>
                 {puzzleData.puzzleType === PuzzleType.SUM_TARGET && (
                     <SumTargetPuzzle
@@ -160,6 +147,7 @@ const PuzzlePage = () => {
                         key={`balance-${adventureId}-${nodeIndex}-${activeEncounterDifficulty}`}
                         data={puzzleData}
                         onSolve={handleSolve}
+                        instruction={instruction}
                     />
                 )}
 

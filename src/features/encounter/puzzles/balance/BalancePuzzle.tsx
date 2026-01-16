@@ -13,9 +13,10 @@ import styles from './BalancePuzzle.module.css';
 interface BalancePuzzleProps {
     data: PuzzleData;
     onSolve: () => void;
+    instruction?: string;
 }
 
-export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
+export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps) => {
     const { t } = useTranslation();
     const initialData = data as BalancePuzzleData;
 
@@ -59,6 +60,13 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                 {/* Immersive Background */}
                 <div className={styles.backgroundContainer} />
                 <div className={styles.vignette} />
+
+                {/* Instructions Overlay */}
+                {instruction && (
+                    <div className={styles.puzzleInstruction}>
+                        "{instruction}"
+                    </div>
+                )}
 
                 {/* Puzzle Content */}
                 <div className={styles.puzzleContent}>
