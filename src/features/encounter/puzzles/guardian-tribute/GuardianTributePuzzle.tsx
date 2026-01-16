@@ -26,7 +26,6 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
         new Array(puzzleData.guardians.length).fill(0)
     );
     const [isSolved, setIsSolved] = useState(false);
-    const [showFeedback, setShowFeedback] = useState(false);
 
     // Calculate remaining gems
     const totalDistributed = calculateTotalDistributed(guardianValues);
@@ -36,34 +35,23 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
     const adjustGuardianValue = (guardianIndex: number, delta: number) => {
         if (isSolved) return;
 
-        // Clear feedback when user starts adjusting again
-        setShowFeedback(false);
-
         if (isValidAdjustment(guardianValues, guardianIndex, delta, puzzleData.totalGems)) {
-            setGuardianValues(prev => {
-                const newValues = [...prev];
-                newValues[guardianIndex] += delta;
-                return newValues;
-            });
-        }
-    };
+            const newValues = [...guardianValues];
+            newValues[guardianIndex] += delta;
+            setGuardianValues(newValues);
 
-    const handleOffer = () => {
-        if (isSolved) return;
-
-        const validation = validateTribute(guardianValues, puzzleData);
-        setShowFeedback(true);
-
-        if (validation.isValid) {
-            setIsSolved(true);
-            setTimeout(() => onSolve(), 3500);
+            // Check if solved
+            const validation = validateTribute(newValues, puzzleData);
+            if (validation.isValid) {
+                setIsSolved(true);
+                setTimeout(() => onSolve(), 3500);
+            }
         }
     };
 
     const handleReset = () => {
         if (isSolved) return;
         setGuardianValues(new Array(puzzleData.guardians.length).fill(0));
-        setShowFeedback(false);
     };
 
     return (
@@ -73,24 +61,15 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 <div
                     className={styles.stats}
                     style={{
-                        color: totalDistributed === puzzleData.totalGems
+                        color: isSolved
                             ? '#22c55e'
-                            : (showFeedback && remainingGems > 0 ? '#ef4444' : '#fbbf24'),
+                            : (remainingGems === 0 ? '#ef4444' : '#fbbf24'),
                     }}
                 >
                     <div className={styles.statsText}>
                         <span>💎</span>
                         <span>{totalDistributed} / {puzzleData.totalGems}</span>
                     </div>
-                    {showFeedback && !isSolved && remainingGems > 0 && (
-                        <motion.div
-                            initial={{ opacity: 0, y: -5 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className={styles.feedbackGems}
-                        >
-                            {t('encounter.puzzles.guardian_tribute.gems_remaining', 'You still have gems to distribute.')}
-                        </motion.div>
-                    )}
                 </div>
 
                 {/* Guardians Grid */}
@@ -108,7 +87,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                             value={guardianValues[index]}
                             remainingGems={remainingGems}
                             isSolved={isSolved}
-                            showFeedback={showFeedback}
+                            showFeedback={remainingGems === 0 && !isSolved}
                             onAdjust={(delta) => adjustGuardianValue(index, delta)}
                         />
                     ))}
@@ -116,18 +95,6 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
 
                 {/* Actions */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-                    {!isSolved && (
-                        <motion.button
-                            whileHover={{ scale: totalDistributed > 0 ? 1.05 : 1 }}
-                            whileTap={{ scale: totalDistributed > 0 ? 0.95 : 1 }}
-                            onClick={handleOffer}
-                            disabled={totalDistributed === 0}
-                            className={styles.offerBtn}
-                        >
-                            {t('encounter.puzzles.guardian_tribute.offer', 'Offer Tribute')}
-                        </motion.button>
-                    )}
-
                     {isSolved && (
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
