@@ -16,6 +16,8 @@ interface BalancePuzzleProps {
     instruction?: string;
 }
 
+const GREEK_RUNES = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ'];
+
 export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps) => {
     const { t } = useTranslation();
     const initialData = data as BalancePuzzleData;
@@ -23,6 +25,9 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
     const [leftStack, setLeftStack] = useState<Weight[]>(initialData.leftStack);
     const [rightStack, setRightStack] = useState<Weight[]>(initialData.rightStack);
     const [isSolved, setIsSolved] = useState(false);
+
+    const leftRunes = GREEK_RUNES.slice(0, 6);
+    const rightRunes = GREEK_RUNES.slice(6, 12);
 
     const handleRemoveWeight = (side: 'left' | 'right', weightId: string) => {
         if (isSolved) return;
@@ -60,6 +65,34 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
                 {/* Immersive Background */}
                 <div className={styles.backgroundContainer} />
                 <div className={styles.vignette} />
+
+                {/* Gate Runes Overlay */}
+                <div className={styles.runesContainer}>
+                    <div className={styles.doorRunesLeft}>
+                        <div className={styles.runeColumn}>
+                            {leftRunes.slice(0, 3).map((r, i) => (
+                                <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
+                            ))}
+                        </div>
+                        <div className={styles.runeColumn}>
+                            {leftRunes.slice(3, 6).map((r, i) => (
+                                <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
+                            ))}
+                        </div>
+                    </div>
+                    <div className={styles.doorRunesRight}>
+                        <div className={styles.runeColumn}>
+                            {rightRunes.slice(0, 3).map((r, i) => (
+                                <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
+                            ))}
+                        </div>
+                        <div className={styles.runeColumn}>
+                            {rightRunes.slice(3, 6).map((r, i) => (
+                                <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
 
                 {/* Instructions Overlay */}
                 {instruction && (

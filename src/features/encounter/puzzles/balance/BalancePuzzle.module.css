@@ -36,6 +36,52 @@
     z-index: 1;
 }
 
+.runesContainer {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.doorRunesLeft,
+.doorRunesRight {
+    display: flex;
+    gap: 2cqw;
+    width: 40%;
+    justify-content: center;
+}
+
+.runeColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 2cqw;
+}
+
+.rune {
+    font-size: 4cqw;
+    color: rgba(0, 0, 0, 0.7);
+    transition: all 1s ease-in-out;
+    font-family: serif;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.runeLit {
+    color: #60a5fa;
+    text-shadow:
+        0 0 1cqw #2563eb,
+        0 0 2cqw #3b82f6,
+        0 0 3cqw #60a5fa;
+    filter: brightness(1.5);
+}
+
 /* Fade effect using multiple gradients to mask edges */
 .vignette {
     position: absolute;
