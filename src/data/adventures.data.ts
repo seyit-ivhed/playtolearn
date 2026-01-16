@@ -224,7 +224,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '2_14',
                 type: EncounterType.ENDING,
-                coordinates: { x: 0, y: 3950 },
+                coordinates: { x: -300, y: 4100 },
                 xpReward: 0,
                 label: 'Journey Onward'
             }
