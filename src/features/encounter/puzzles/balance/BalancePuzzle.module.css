@@ -94,7 +94,7 @@
     /* Allow stack to grow relative to section */
     width: 100%;
     justify-content: flex-start;
-    padding-bottom: 25%;
+    padding-bottom: 20%;
     /* Relative space for the "plate" area in image */
 }
 
@@ -119,7 +119,7 @@
         -1px -1px 0 rgba(0, 0, 0, 0.7),
         1px 1px 0 rgba(255, 255, 255, 0.2);
     cursor: pointer;
-    margin-bottom: -5%;
+    margin-bottom: -10%;
     transition: transform 0.2s ease, filter 0.2s ease;
 }
 
@@ -153,14 +153,19 @@
 }
 
 .controls {
-    margin-top: 5cqw;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2cqw;
+    /* Maintain spacing between plates */
+    min-width: 170px;
 }
 
 .resetBtn {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.8);
     border: 0.1cqw solid #ffd32a;
     color: #ffd32a;
@@ -171,13 +176,14 @@
     text-transform: uppercase;
     letter-spacing: 0.2cqw;
     box-shadow: 0 0.5cqw 2cqw rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 .resetBtn:hover:not(:disabled) {
     background: #ffd32a;
     color: #000000;
     box-shadow: 0 0 20px rgba(255, 211, 42, 0.4);
-    transform: translateY(-2px);
+    transform: translateX(-50%);
 }
 
 .resetBtn:disabled {

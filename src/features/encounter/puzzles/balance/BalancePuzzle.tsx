@@ -89,7 +89,7 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                             </div>
                         </div>
 
-                        {/* Controls in between */}
+                        {/* Controls/Status in between */}
                         <div className={styles.controls}>
                             <div className={styles.feedback}>
                                 <AnimatePresence>
@@ -104,13 +104,6 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                                     )}
                                 </AnimatePresence>
                             </div>
-                            <button
-                                className={styles.resetBtn}
-                                onClick={handleReset}
-                                disabled={isSolved}
-                            >
-                                {t('common.start_over', 'Start Over')}
-                            </button>
                         </div>
 
                         {/* Right Plate Area */}
@@ -133,6 +126,15 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
                             </div>
                         </div>
                     </div>
+
+                    <button
+                        className={styles.resetBtn}
+                        onClick={handleReset}
+                        disabled={isSolved}
+                        data-testid="puzzle-reset-button"
+                    >
+                        {t('common.start_over', 'Start Over')}
+                    </button>
                 </div>
             </div>
         </div>
