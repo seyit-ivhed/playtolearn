@@ -7,6 +7,7 @@ import {
 } from './math-generator';
 import { MathOperation } from '../types/math.types';
 import { PuzzleType } from '../types/adventure.types';
+import { type BalancePuzzleData } from '../features/encounter/puzzles/balance/BalanceEngine';
 
 describe('Math Generator Functionality', () => {
     describe('Basic Math Problems', () => {
@@ -94,12 +95,12 @@ describe('Math Generator Functionality', () => {
         });
 
         it('should generate valid Balance puzzle data', () => {
-            const data = generatePuzzleData(PuzzleType.BALANCE, 2);
+            const data = generatePuzzleData(PuzzleType.BALANCE, 2) as BalancePuzzleData;
             expect(data.puzzleType).toBe(PuzzleType.BALANCE);
-            expect(data.initialLeftWeight).toBeDefined();
-            expect(data.initialRightWeight).toBeDefined();
-            expect(data.leftOptions?.length).toBeGreaterThan(0);
-            expect(data.rightOptions?.length).toBeGreaterThan(0);
+            expect(data.leftStack).toBeDefined();
+            expect(data.rightStack).toBeDefined();
+            expect(data.leftStack.length).toBeGreaterThan(0);
+            expect(data.rightStack.length).toBeGreaterThan(0);
         });
 
         it('should generate valid Sequence puzzle data', () => {
