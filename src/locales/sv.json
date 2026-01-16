@@ -206,7 +206,7 @@
             "target": "Fyll din fältflaska till exakt {{target}}L"
         },
         "balance": {
-            "instruction": "Balansera vågen!"
+            "instruction": "Ta bort stenar tills båda högarna är lika höga!"
         },
         "guardian_tribute": {
             "instruction": "Fördela ädelstenarna mellan statyerna"

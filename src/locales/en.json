@@ -206,7 +206,7 @@
             "target": "Fill your canteen to exactly {{target}}L"
         },
         "balance": {
-            "instruction": "Balance the scale!"
+            "instruction": "Remove stones until both piles are of equal height!"
         },
         "guardian_tribute": {
             "instruction": "Distribute the gems among the statues"

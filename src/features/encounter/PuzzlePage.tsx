@@ -62,7 +62,7 @@ const PuzzlePage = () => {
                 return t('puzzle.flask.target', { target: puzzleData.targetValue });
             case PuzzleType.BALANCE:
             case PuzzleType.CUNEIFORM:
-                return t('puzzle.balance.instruction', 'Place stones to open the gate!');
+                return t('puzzle.balance.instruction', 'Remove stones until both piles are of equal height!');
             case PuzzleType.SEQUENCE:
                 return t('puzzle.sequence.instruction', 'Connect the stars in order!');
             case PuzzleType.GUARDIAN_TRIBUTE:
