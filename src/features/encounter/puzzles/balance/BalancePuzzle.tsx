@@ -134,7 +134,7 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
                                             animate={{ opacity: 1, y: 0 }}
                                             className={styles.successMsg}
                                         >
-                                            {t('encounter.puzzles.balance.success', 'Balanced!')}
+                                            {t('encounter.puzzles.balance.success', 'Success!')}
                                         </motion.div>
                                     )}
                                 </AnimatePresence>

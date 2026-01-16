@@ -180,7 +180,7 @@
             "guardian_tribute": {
                 "description": "Distribute the gems among the statues",
                 "offer": "Offer Tribute",
-                "success": "The guardians are satisfied! ✨",
+                "success": "Success! ✨",
                 "gems_remaining": "You still have gems to distribute.",
                 "constraint": {
                     "exact": "{{value}}",
@@ -190,6 +190,9 @@
                     "halve": "Half of {{symbol}}",
                     "comparison": "{{operator}} than {{symbol}}"
                 }
+            },
+            "balance": {
+                "success": "Success! ✨"
             }
         }
     },

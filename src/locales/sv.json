@@ -180,7 +180,7 @@
             "guardian_tribute": {
                 "description": "Fördela ädelstenarna mellan statyerna",
                 "offer": "Ge gåva",
-                "success": "Väktarna är nöjda! ✨",
+                "success": "Framgång! ✨",
                 "gems_remaining": "Du har fortfarande ädelstenar att fördela.",
                 "constraint": {
                     "exact": "{{value}}",
@@ -190,6 +190,9 @@
                     "halve": "Hälften av {{symbol}}",
                     "comparison": "{{operator}} än {{symbol}}"
                 }
+            },
+            "balance": {
+                "success": "Framgång! ✨"
             }
         }
     },
