@@ -126,19 +126,7 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
 
                         {/* Controls/Status in between */}
                         <div className={styles.controls}>
-                            <div className={styles.feedback}>
-                                <AnimatePresence>
-                                    {isSolved && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            className={styles.successMsg}
-                                        >
-                                            {t('encounter.puzzles.balance.success', 'Success!')}
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
+                            {/* Spacing between plates */}
                         </div>
 
                         {/* Right Plate Area */}
