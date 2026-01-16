@@ -25,7 +25,7 @@ export const COMPANIONS: Record<string, Companion> = {
         initialSpirit: 65,
         evolutions: [
             {
-                atLevel: 5,
+                atLevel: 4,
                 title: 'Jungle Tracker',
                 statsBonus: {
                     maxHealth: 15,
@@ -39,7 +39,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 }
             },
             {
-                atLevel: 10,
+                atLevel: 8,
                 title: 'Apex Stalker',
                 statsBonus: {
                     maxHealth: 20,
@@ -53,7 +53,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 }
             },
             {
-                atLevel: 15,
+                atLevel: 12,
                 title: 'Nature\'s Wrath',
                 statsBonus: {
                     maxHealth: 30,
@@ -92,7 +92,7 @@ export const COMPANIONS: Record<string, Companion> = {
         initialSpirit: 0,
         evolutions: [
             {
-                atLevel: 5,
+                atLevel: 4,
                 title: 'Desert Physician',
                 statsBonus: {
                     maxHealth: 15,
@@ -106,7 +106,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 }
             },
             {
-                atLevel: 10,
+                atLevel: 8,
                 title: 'Master Alchemist',
                 statsBonus: {
                     maxHealth: 20,
@@ -120,7 +120,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 }
             },
             {
-                atLevel: 15,
+                atLevel: 12,
                 title: 'Sage of Sands',
                 statsBonus: {
                     maxHealth: 30,
