@@ -68,7 +68,7 @@ export const GuardianTributePuzzle = ({ data, onSolve }: GuardianTributePuzzlePr
                 >
                     <div className={styles.statsText}>
                         <span>💎</span>
-                        <span>{totalDistributed} / {puzzleData.totalGems}</span>
+                        <span>{puzzleData.totalGems - totalDistributed}</span>
                     </div>
                 </div>
 
