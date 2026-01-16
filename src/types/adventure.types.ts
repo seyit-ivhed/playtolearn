@@ -46,7 +46,6 @@ export const PuzzleType = {
     SUM_TARGET: 'SUM_TARGET',     // Water Flow
     BALANCE: 'BALANCE',           // Weighing Rocks
     SEQUENCE: 'SEQUENCE',          // Star Map
-    CUNEIFORM: 'CUNEIFORM',       // Adventure 2: Symbol Algebra
     GUARDIAN_TRIBUTE: 'GUARDIAN_TRIBUTE' // Adventure 2: Division/Distribution
 } as const;
 

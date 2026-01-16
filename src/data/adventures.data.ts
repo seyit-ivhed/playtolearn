@@ -178,7 +178,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_7',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: -250, y: 2600 },
-                puzzleData: { puzzleType: PuzzleType.CUNEIFORM },
+                puzzleData: { puzzleType: PuzzleType.BALANCE },
                 xpReward: 150
             },
             {

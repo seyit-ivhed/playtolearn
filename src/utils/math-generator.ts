@@ -21,10 +21,6 @@ const PUZZLE_GENERATORS: Record<PuzzleType, (difficulty: DifficultyLevel) => Puz
     [PuzzleType.SUM_TARGET]: generateSumTargetData,
     [PuzzleType.BALANCE]: generateBalanceData,
     [PuzzleType.SEQUENCE]: generateSequenceData,
-    [PuzzleType.CUNEIFORM]: (difficulty) => ({
-        ...generateBalanceData(difficulty),
-        puzzleType: PuzzleType.CUNEIFORM
-    }),
     [PuzzleType.GUARDIAN_TRIBUTE]: generateGuardianTributeData,
 };
 

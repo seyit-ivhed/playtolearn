@@ -60,7 +60,6 @@ const PuzzlePage = () => {
             case PuzzleType.SUM_TARGET:
                 return t('puzzle.flask.target', { target: puzzleData.targetValue });
             case PuzzleType.BALANCE:
-            case PuzzleType.CUNEIFORM:
                 return t('puzzle.balance.instruction', 'Remove stones until both piles are of equal height!');
             case PuzzleType.SEQUENCE:
                 return t('puzzle.sequence.instruction', 'Connect the stars in order!');
@@ -71,7 +70,7 @@ const PuzzlePage = () => {
         }
     }, [puzzleData, t]);
 
-    const isBalancePuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE || puzzleData?.puzzleType === PuzzleType.CUNEIFORM;
+    const isBalancePuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE;
 
     useEffect(() => {
         if (premiumInitialized && adventureId) {
@@ -141,7 +140,7 @@ const PuzzlePage = () => {
                     />
                 )}
 
-                {(puzzleData.puzzleType === PuzzleType.BALANCE || puzzleData.puzzleType === PuzzleType.CUNEIFORM) && (
+                {(puzzleData.puzzleType === PuzzleType.BALANCE) && (
                     <BalancePuzzle
                         key={`balance-${adventureId}-${nodeIndex}-${activeEncounterDifficulty}`}
                         data={puzzleData}
