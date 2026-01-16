@@ -8,7 +8,6 @@ import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
 import { type DifficultyLevel } from '../../types/math.types';
 import { generatePuzzleData } from '../../utils/math-generator';
-import { motion } from 'framer-motion';
 import { SumTargetPuzzle } from './puzzles/sum-target/SumTargetPuzzle';
 import { BalancePuzzle } from './puzzles/balance/BalancePuzzle';
 import { SequencePuzzle } from './puzzles/sequence/SequencePuzzle';

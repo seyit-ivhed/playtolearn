@@ -162,14 +162,20 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
                         </div>
                     </div>
 
-                    <button
-                        className={styles.resetBtn}
-                        onClick={handleReset}
-                        disabled={isSolved}
-                        data-testid="puzzle-reset-button"
-                    >
-                        {t('common.start_over', 'Start Over')}
-                    </button>
+                    <AnimatePresence>
+                        {!isSolved && (
+                            <motion.button
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className={styles.resetBtn}
+                                onClick={handleReset}
+                                data-testid="puzzle-reset-button"
+                            >
+                                {t('common.start_over', 'Start Over')}
+                            </motion.button>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
         </div>
