@@ -108,14 +108,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
-    font-size: 3cqw;
-    /* Proportional font size relative to container */
+    /* Move text 3px downwards */
+    padding-top: 10px;
+    /* Magical cyan glow */
+    color: #a5f3fc;
+    font-family: 'Cinzel', serif;
+    font-size: 3.2cqw;
     font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    text-shadow:
+        -1px -1px 0 rgba(0, 0, 0, 0.7),
+        1px 1px 0 rgba(255, 255, 255, 0.2);
     cursor: pointer;
     margin-bottom: -5%;
-    /* Relative overlap */
+    transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .weight:hover {
@@ -136,16 +141,15 @@
 }
 
 .plateInfo {
-    margin-top: 2%;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 211, 42, 0.3);
-    border-radius: 4px;
-    padding: 2% 6%;
-    color: #ffd32a;
-    font-size: 3.5cqw;
-    /* Responsive font size relative to container */
+    /* Matching magical cyan */
+    color: #7dd3fc;
+    font-family: 'Cinzel', serif;
+    font-size: 4.5cqw;
     font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+    text-shadow:
+        -1px -1px 0 rgba(0, 0, 0, 0.7),
+        1px 1px 0 rgba(255, 255, 255, 0.2);
+    letter-spacing: 3px;
 }
 
 .controls {
