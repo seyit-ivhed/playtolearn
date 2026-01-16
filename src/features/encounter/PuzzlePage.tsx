@@ -55,7 +55,25 @@ const PuzzlePage = () => {
         return generatePuzzleData(pType, currentDifficulty);
     }, [encounter, activeEncounterDifficulty]);
 
-    // Safety gate: Validate premium, progression and node sequence
+    const instruction = useMemo(() => {
+        if (!puzzleData) return '';
+        switch (puzzleData.puzzleType) {
+            case PuzzleType.SUM_TARGET:
+                return t('puzzle.flask.target', { target: puzzleData.targetValue });
+            case PuzzleType.BALANCE:
+            case PuzzleType.CUNEIFORM:
+                return t('puzzle.balance.instruction', 'Place stones to open the gate!');
+            case PuzzleType.SEQUENCE:
+                return t('puzzle.sequence.instruction', 'Connect the stars in order!');
+            case PuzzleType.GUARDIAN_TRIBUTE:
+                return t('puzzle.guardian_tribute.instruction', 'Distribute the gems among the statues');
+            default:
+                return '';
+        }
+    }, [puzzleData, t]);
+
+    const isBalancePuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE || puzzleData?.puzzleType === PuzzleType.CUNEIFORM;
+
     useEffect(() => {
         if (premiumInitialized && adventureId) {
             const access = checkNavigationAccess({
@@ -71,6 +89,23 @@ const PuzzlePage = () => {
             }
         }
     }, [premiumInitialized, adventureId, nodeIndex, isPremiumUnlocked, isProgressionUnlocked, encounterResults, navigate]);
+
+    const handleSolve = () => {
+        setIsCompleted(true);
+    };
+
+    const handleCompletionContinue = () => {
+        if (adventureId) {
+            completeEncounter(adventureId, nodeIndex);
+            navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex + 1 } });
+        } else {
+            navigate('/chronicle');
+        }
+    };
+
+    const handleBack = () => {
+        navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
+    };
 
     if (!encounter || !puzzleData || isLocked) {
         return (
@@ -90,43 +125,6 @@ const PuzzlePage = () => {
             </div>
         );
     }
-
-
-    const handleSolve = () => {
-        setIsCompleted(true);
-    };
-
-    const handleCompletionContinue = () => {
-        if (adventureId) {
-            completeEncounter(adventureId, nodeIndex);
-            navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex + 1 } });
-        } else {
-            navigate('/chronicle');
-        }
-    };
-
-    const handleBack = () => {
-        navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
-    };
-
-    const instruction = useMemo(() => {
-        if (!puzzleData) return '';
-        switch (puzzleData.puzzleType) {
-            case PuzzleType.SUM_TARGET:
-                return t('puzzle.flask.target', { target: puzzleData.targetValue });
-            case PuzzleType.BALANCE:
-            case PuzzleType.CUNEIFORM:
-                return t('puzzle.balance.instruction', 'Place stones to open the gate!');
-            case PuzzleType.SEQUENCE:
-                return t('puzzle.sequence.instruction', 'Connect the stars in order!');
-            case PuzzleType.GUARDIAN_TRIBUTE:
-                return t('puzzle.guardian_tribute.instruction', 'Distribute the gems among the statues');
-            default:
-                return '';
-        }
-    }, [puzzleData, t]);
-
-    const isBalancePuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE || puzzleData?.puzzleType === PuzzleType.CUNEIFORM;
 
     return (
         <div className={`${styles.puzzlePage} ${isBalancePuzzle ? styles.blackBg : ''}`}>
@@ -159,6 +157,7 @@ const PuzzlePage = () => {
 
                 {(puzzleData.puzzleType === PuzzleType.BALANCE || puzzleData.puzzleType === PuzzleType.CUNEIFORM) && (
                     <BalancePuzzle
+                        key={`balance-${adventureId}-${nodeIndex}-${activeEncounterDifficulty}`}
                         data={puzzleData}
                         onSolve={handleSolve}
                     />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { PuzzleData } from '../../../../types/adventure.types';
@@ -19,15 +19,9 @@ export const BalancePuzzle = ({ data, onSolve }: BalancePuzzleProps) => {
     const { t } = useTranslation();
     const initialData = data as BalancePuzzleData;
 
-    const [leftStack, setLeftStack] = useState<Weight[]>([]);
-    const [rightStack, setRightStack] = useState<Weight[]>([]);
+    const [leftStack, setLeftStack] = useState<Weight[]>(initialData.leftStack);
+    const [rightStack, setRightStack] = useState<Weight[]>(initialData.rightStack);
     const [isSolved, setIsSolved] = useState(false);
-
-    useEffect(() => {
-        setLeftStack(initialData.leftStack);
-        setRightStack(initialData.rightStack);
-        setIsSolved(false);
-    }, [initialData]);
 
     const handleRemoveWeight = (side: 'left' | 'right', weightId: string) => {
         if (isSolved) return;
