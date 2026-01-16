@@ -153,7 +153,7 @@ const WeightComponent = ({ weight, side, onRemove, disabled }: WeightComponentPr
             initial={{ opacity: 0, scale: 0.8, y: -50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.5, y: 50 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            transition={{ type: 'tween', ease: 'easeIn', duration: 0.2 }}
             className={`${styles.weight} ${weight.isHeavy ? styles.heavyWeight : ''}`}
             onClick={() => !weight.isHeavy && !disabled && onRemove(side, weight.id)}
         >
