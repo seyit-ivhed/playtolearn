@@ -78,6 +78,7 @@
     font-family: serif;
     font-weight: bold;
     line-height: 1;
+    transition: color 1s ease;
 }
 
 .runeLit {
