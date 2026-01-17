@@ -35,11 +35,11 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 
 #### Evolution Path
 
-| Level | Title | Ability Upgrade | Effect |
+| Evo | Title | Ability Upgrade | Effect |
 |-------|-------|-----------------|--------|
-| **5** | **Jungle Tracker** | **Hunter's Mark** | Deals damage + applies mark. Allies deal **+25% damage** to marked target for 2 rounds. |
-| **10** | **Apex Stalker** | **Twin Shadows** | Now marks **two enemies** instead of one. |
-| **15** | **Nature's Wrath** | **Spirit Release** | If marked target HP < 20%, **purifies them** (Vanquish). |
+| 1 | **Jungle Tracker** | **Hunter's Mark** | Deals damage + applies mark. Allies deal **+25% damage** to marked target for 2 rounds. |
+| 2 | **Apex Stalker** | **Twin Shadows** | Now marks **two enemies** instead of one. |
+| 3 | **Nature's Wrath** | **Spirit Release** | If marked target HP < 20%, **purifies them** (Vanquish). |
 
 ---
 
@@ -66,15 +66,15 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 
 #### Evolution Path
 
-| Level | Title | Ability Upgrade | Effect |
+| Evo | Title | Ability Upgrade | Effect |
 |-------|-------|-----------------|--------|
-| **5** | **Desert Physician** | **Elixir of Renewal** | Heals all allies + Grants **Regeneration** (Restores HP at start of next 2 turns). |
-| **10** | **Master Alchemist** | **Panacea Burst** | Heals all allies + **Cleanses** 1 negative status effect. |
-| **15** | **Sage of Sands** | **Philosopher's Brew** | Massive Heal to all allies + **Revives** one fallen companion with 30% HP. |
+| 1 | **Desert Physician** | **Elixir of Renewal** | Heals all allies + Grants **Regeneration** (Restores HP at start of next 2 turns). |
+| 2 | **Master Alchemist** | **Panacea Burst** | Heals all allies + **Cleanses** 1 negative status effect. |
+| 3 | **Sage of Sands** | **Philosopher's Brew** | Massive Heal to all allies + **Revives** one fallen companion with 30% HP. |
 
 ---
 
-### Zahara — The Savannah Mage (Paid Tier)
+### Zahara — The Savannah Mage (Join Later)
 
 > *"The spirits of the plains answer my call."*
 
@@ -97,7 +97,7 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 
 ---
 
-### Kenji — The Mountain Samurai (Paid Tier)
+### Kenji — The Mountain Samurai (Join Later)
 
 > *"One strike. One truth."*
 

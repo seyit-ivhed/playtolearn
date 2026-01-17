@@ -31,23 +31,6 @@ Companions literally **grow up** through their adventures. Each evolution repres
 
 As Amara and Tariq grow older through their journey, they naturally become mentors to younger companions who join later:
 
-**Early Journey (Adventures 1-2)**:
-- Amara and Tariq are peers, both age 8, discovering the world together
-- Their friendship is the foundation of the group
-- They learn and grow side by side
-
-**Mid Journey (Adventures 3-4)**:
-- Amara and Tariq have matured to early teens (age 13)
-- New companions join as children (age 8)
-- The original duo becomes protective older siblings to newcomers
-- Dynamic: experienced adventurers guiding eager learners
-
-**Late Journey (Adventures 5-6)**:
-- Amara and Tariq reach young adulthood (age 16-18)
-- Earlier companions are catching up (age 13-16)
-- Newest companions are just starting (age 8)
-- Full found family dynamic with multiple age tiers
-
 ### Companion Recruitment
 
 Each new realm introduces companions who:
@@ -83,7 +66,7 @@ The group grows organically, with each new companion adding to the family dynami
 ---
 
 ### Realm 2: [Theme To Be Determined]
-**Adventures 3-4**
+**Adventures 3-5**
 
 **Setting**: [To be designed]
 
@@ -102,7 +85,7 @@ The group grows organically, with each new companion adding to the family dynami
 ---
 
 ### Realm 3: [Theme To Be Determined]
-**Adventures 5-6**
+**Adventures 6-8**
 
 **Setting**: [To be designed]
 
