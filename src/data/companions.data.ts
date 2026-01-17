@@ -1,5 +1,11 @@
 import type { Companion } from '../types/companion.types';
 
+export const EVOLUTION_LEVELS = {
+    STAGE_1: 4,
+    STAGE_2: 8,
+    STAGE_3: 12,
+} as const;
+
 export const COMPANIONS: Record<string, Companion> = {
     'amara': {
         id: 'amara',
@@ -25,7 +31,7 @@ export const COMPANIONS: Record<string, Companion> = {
         initialSpirit: 65,
         evolutions: [
             {
-                atLevel: 4,
+                atLevel: EVOLUTION_LEVELS.STAGE_1,
                 title: 'Jungle Tracker',
                 statsBonus: {
                     maxHealth: 15,
@@ -39,7 +45,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 }
             },
             {
-                atLevel: 8,
+                atLevel: EVOLUTION_LEVELS.STAGE_2,
                 title: 'Apex Stalker',
                 statsBonus: {
                     maxHealth: 20,
@@ -53,7 +59,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 }
             },
             {
-                atLevel: 12,
+                atLevel: EVOLUTION_LEVELS.STAGE_3,
                 title: 'Nature\'s Wrath',
                 statsBonus: {
                     maxHealth: 30,
@@ -92,7 +98,7 @@ export const COMPANIONS: Record<string, Companion> = {
         initialSpirit: 0,
         evolutions: [
             {
-                atLevel: 4,
+                atLevel: EVOLUTION_LEVELS.STAGE_1,
                 title: 'Desert Physician',
                 statsBonus: {
                     maxHealth: 15,
@@ -106,7 +112,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 }
             },
             {
-                atLevel: 8,
+                atLevel: EVOLUTION_LEVELS.STAGE_2,
                 title: 'Master Alchemist',
                 statsBonus: {
                     maxHealth: 20,
@@ -120,7 +126,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 }
             },
             {
-                atLevel: 12,
+                atLevel: EVOLUTION_LEVELS.STAGE_3,
                 title: 'Sage of Sands',
                 statsBonus: {
                     maxHealth: 30,

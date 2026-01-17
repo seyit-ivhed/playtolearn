@@ -17,6 +17,8 @@ const tariqImg = [
     new URL('../assets/images/companions/Tariq/Tariq-3.png', import.meta.url).href,
 ];
 
+import { getCompanionById } from './companions.data';
+
 const COMPANION_SPRITES: Record<string, string[]> = {
     'amara': amaraImg,
     'tariq': tariqImg,
@@ -29,11 +31,12 @@ export const getCompanionSprite = (companionId: string, level: number = 1): stri
     const sprites = COMPANION_SPRITES[companionId];
     if (!sprites) return undefined;
 
-    // Milestone levels: 1-4 (Evo 0), 5-9 (Evo 1), 10-14 (Evo 2), 15+ (Evo 3)
-    let evolutionIndex = 0;
-    if (level >= 15) evolutionIndex = 3;
-    else if (level >= 10) evolutionIndex = 2;
-    else if (level >= 5) evolutionIndex = 1;
+    const data = getCompanionById(companionId);
+
+    // Dynamically calculate evolution index based on milestones in data
+    const evolutionIndex = data
+        ? data.evolutions.filter(evo => level >= evo.atLevel).length
+        : 0;
 
     // Fallback to highest available if index exceeds array length (preventing out of bounds)
     return sprites[evolutionIndex] || sprites[sprites.length - 1];
