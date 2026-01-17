@@ -9,13 +9,21 @@
     justify-content: center;
     overflow: hidden;
     font-family: 'Cinzel', serif;
+    box-sizing: border-box;
+}
+
+.layout * {
+    box-sizing: border-box;
 }
 
 /* Container that maintains aspect ratio to keep background and foreground in sync */
 .puzzleWrapper {
     position: relative;
-    width: min(100vw, calc(100vh * 16 / 9));
+    /* Force 16:9 and fit within the available space */
     aspect-ratio: 16 / 9;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,7 +75,6 @@
 .rune {
     font-size: 4cqw;
     color: rgba(0, 0, 0, 0.7);
-    transition: all 1s ease-in-out;
     font-family: serif;
     font-weight: bold;
     line-height: 1;
@@ -101,7 +108,9 @@
 }
 
 .puzzleContent {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: 3;
     width: 100%;
     height: 100%;
