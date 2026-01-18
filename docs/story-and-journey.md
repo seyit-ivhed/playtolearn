@@ -65,40 +65,41 @@ The group grows organically, with each new companion adding to the family dynami
 
 ---
 
-### Realm 2: [Theme To Be Determined]
-**Adventures 3-5**
+### Realm 2: The Jade Peaks (Premium)
+**Adventures 3-5 | Theme: Misty Mountains & Cherry Blossoms**
 
-**Setting**: [To be designed]
+**Setting**: A vertical world of towering peaks, floating islands, and feudal villages veiled in mist.
 
-**New Companions**: One new companion from this realm
+**New Companion**:
+- **Kenji** (Mountain Samurai): A determined 8-year-old boy from a samurai clan.
 
 **The Story**:
-- Amara and Tariq arrive in a new realm with different culture and challenges
-- They're now older and more experienced
-- They meet a young local child facing problems in their homeland
-- The new companion is inspired by Amara and Tariq's courage and friendship
-- After helping solve the realm's challenges, the new companion join the journey
-- The group dynamic shifts as Amara and Tariq become mentors
+- Passing through the magical gate in the Assyrian city, Amara and Tariq arrive in the Jade Peaks.
+- They discover the **Iron Warlord** is corrupting the land's nature spirits to fuel his war machines.
+- **Adventure 3**: They meet Kenji defending a shrine and discover the **Cloudskimmer**, an ancient flying ship. They repair it to escape.
+- **Adventure 4**: Navigating the ship to the Warlord's fortress. Kenji struggles with his fears but learns that true strength is protecting others.
+- **Adventure 5**: The final assault on the Warlord's fortress. They defeat the Iron Warlord, freeing the spirits. Kenji joins the crew permanently.
 
-**Narrative Arc**: The travelers become guides, learning to lead and teach
+**Narrative Arc**: The travelers gain mobility (The Cloudskimmer) and learn that strength comes from purpose, not just power.
 
 ---
 
-### Realm 3: [Theme To Be Determined]
-**Adventures 6-8**
+### Realm 3: The Sunfire Savannah (Premium)
+**Adventures 6-8 | Theme: Golden Grasslands & Ancestral Spirits**
 
-**Setting**: [To be designed]
+**Setting**: Endless golden plains dotted with massive baobab trees and vibrant, magical sunsets.
 
-**New Companions**: 1-2 new companions from this realm
+**New Companion**:
+- **Zahara** (Savannah Mage): An 8-year-old girl struggling to control her powerful connection to the spirit world.
 
 **The Story**:
-- The group arrives in another new realm
-- Earlier companions have grown significantly
-- A new young companion join, completing the found family
-- The full group works together, each contributing based on their experience
-- The journey that began with two friends has become a family of adventurers
+- Flying on the Cloudskimmer, the group arrives to find the Savannah scorched by unnatural heat.
+- The **Ancestral Spirits** are enraged because a sacred balance has been broken.
+- **Adventure 6**: They land and meet Zahara, whose uncontrolled magic is accidentally fueling wildfires.
+- **Adventure 7**: Traveling to the heart of the disturbance. Zahara tries to commune with the spirits but is overwhelmed. Amara and Tariq help ground her.
+- **Adventure 8**: At the Spirit Tree, they calm the **Raging Spirit King**. Zahara learns to channel her magic to restore balance rather than force it.
 
-**Narrative Arc**: The found family is complete, showcasing the power of friendship and growth
+**Narrative Arc**: The found family is complete. They learn that listening and understanding are as powerful as fighting.
 
 ## Narrative Presence
 

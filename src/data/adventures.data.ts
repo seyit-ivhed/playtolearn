@@ -227,6 +227,36 @@ export const ADVENTURES: Adventure[] = [
                 label: 'Journey Onward'
             }
         ]
+    },
+    {
+        id: '3',
+        volumeId: 'origins',
+        encounters: [] // To be implemented: The Misty Foothills (Free) - Intro to Jade Peaks, meet Kenji, find Cloudskimmer
+    },
+    {
+        id: '4',
+        volumeId: 'origins',
+        encounters: [] // To be implemented: Rise of the Iron Warlord (Premium) - Journey to fortress, Kenji's growth
+    },
+    {
+        id: '5',
+        volumeId: 'origins',
+        encounters: [] // To be implemented: The Summit Showdown (Premium) - Defeat Warlord, Kenji joins
+    },
+    {
+        id: '6',
+        volumeId: 'origins',
+        encounters: [] // To be implemented: The Scorched Plains (Free) - Intro to Savannah, meet Zahara
+    },
+    {
+        id: '7',
+        volumeId: 'origins',
+        encounters: [] // To be implemented: Whispers of the Ancestors (Premium) - Zahara's struggle
+    },
+    {
+        id: '8',
+        volumeId: 'origins',
+        encounters: [] // To be implemented: Harmony Restored (Premium) - Calming Spirit King, Zahara restored
     }
 ];
 
