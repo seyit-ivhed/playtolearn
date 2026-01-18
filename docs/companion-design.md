@@ -74,37 +74,6 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 
 ---
 
-### Zahara — The Savannah Mage (Join Later)
-
-> *"The spirits of the plains answer my call."*
-
-**Theme:** African Savannah
-
-| Stat | Value |
-|------|-------|
-| Max Health | 70 |
-| Ability Damage | 8 |
-| Initial Spirit | 40 |
-
-**Standard Ability:** Attack (8 damage → single enemy)
-
-**Ultimate — Ancestral Storm:**
-- Type: `DAMAGE`
-- Target: `ALL_ENEMIES`
-- Value: 15
-
-**Fantasy:** Area-of-effect powerhouse — clears waves of monsters with ancestral magic.
-
-#### Evolution Path
-
-| Evo | Title | Ability Upgrade | Effect |
-|---|---|---|---|
-| 1 | **Sun Caller** | **Solar Singe** | Deals damage + **Burns** enemies (5 dmg/round) for **1 round**. |
-| 2 | **Ember Weaver** | **Solar Flare** | Deals increased damage + **Burns** enemies (5 dmg/round) for **2 rounds**. |
-| 3 | **Radiant Seer** | **Supernova** | Deals massive damage + **Burns** enemies (8 dmg/round) for **3 rounds**. |
-
----
-
 ### Kenji — The Mountain Samurai (Join Later)
 
 > *"One strike. One truth."*
@@ -133,5 +102,36 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 | 1 | **Ronin Defender** | **Shattering Guard** | **Shields** (15) all allies for 2 rounds + Deals damage to 1 enemy and **Breaks Shield**. |
 | 2 | **Steel Sentinel** | **Breaking Wave** | **Shields** (20) all allies for 2 rounds + Deals increased damage to 1 enemy and **Breaks Shield**. |
 | 3 | **Shogun's Wall** | **Ancestral Fortress** | **Shields** (30) all allies for 2 rounds + Deals massive damage to 1 enemy and **Breaks Shield**. |
+
+---
+
+### Zahara — The Savannah Mage (Join Later)
+
+> *"The spirits of the plains answer my call."*
+
+**Theme:** African Savannah
+
+| Stat | Value |
+|------|-------|
+| Max Health | 70 |
+| Ability Damage | 8 |
+| Initial Spirit | 40 |
+
+**Standard Ability:** Attack (8 damage → single enemy)
+
+**Ultimate — Ancestral Storm:**
+- Type: `DAMAGE`
+- Target: `ALL_ENEMIES`
+- Value: 15
+
+**Fantasy:** Area-of-effect powerhouse — clears waves of monsters with ancestral magic.
+
+#### Evolution Path
+
+| Evo | Title | Ability Upgrade | Effect |
+|---|---|---|---|
+| 1 | **Sun Caller** | **Solar Singe** | Deals damage + **Burns** enemies (5 dmg/round) for **1 round**. |
+| 2 | **Ember Weaver** | **Solar Flare** | Deals increased damage + **Burns** enemies (5 dmg/round) for **2 rounds**. |
+| 3 | **Radiant Seer** | **Supernova** | Deals massive damage + **Burns** enemies (8 dmg/round) for **3 rounds**. |
 
 ---
