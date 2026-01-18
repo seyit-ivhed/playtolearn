@@ -70,14 +70,14 @@ The group grows organically, with each new companion adding to the family dynami
 
 **Setting**: [To be designed]
 
-**New Companions**: 1-2 new companions from this realm
+**New Companions**: One new companion from this realm
 
 **The Story**:
 - Amara and Tariq arrive in a new realm with different culture and challenges
-- They're now older (early teens) and more experienced
-- They meet young local children facing problems in their homeland
-- The new companions are inspired by Amara and Tariq's courage and friendship
-- After helping solve the realm's challenges, the new companions join the journey
+- They're now older and more experienced
+- They meet a young local child facing problems in their homeland
+- The new companion is inspired by Amara and Tariq's courage and friendship
+- After helping solve the realm's challenges, the new companion join the journey
 - The group dynamic shifts as Amara and Tariq become mentors
 
 **Narrative Arc**: The travelers become guides, learning to lead and teach
@@ -93,9 +93,8 @@ The group grows organically, with each new companion adding to the family dynami
 
 **The Story**:
 - The group arrives in another new realm
-- Amara and Tariq are now young adults, seasoned adventurers
 - Earlier companions have grown significantly
-- New young companions join, completing the found family
+- A new young companion join, completing the found family
 - The full group works together, each contributing based on their experience
 - The journey that began with two friends has become a family of adventurers
 

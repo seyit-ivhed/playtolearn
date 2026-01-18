@@ -6,7 +6,6 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '1',
         volumeId: 'origins',
-        difficulty: 1,
         encounters: [
             {
                 id: '1_1',
@@ -131,7 +130,6 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '2',
         volumeId: 'origins',
-        difficulty: 2,
         encounters: [
             {
                 id: '2_1',

@@ -25,7 +25,6 @@ export const resolveVolumeAdventures = (volume: Volume, t: TFunction): Adventure
             id: 'prologue',
             title: t('adventures.prologue.title'),
             storyHook: t('adventures.prologue.story_hook'),
-            difficulty: 0,
             encounters: [],
             volumeId: 'origins'
         };
