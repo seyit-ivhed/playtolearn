@@ -24,12 +24,11 @@ export function applyDamage<T extends DamageableUnit>(
     unit: T,
     damageAmount: number
 ): DamageResult<T> {
-    let remainingDamage = damageAmount;
     let healthDamage = 0;
 
     // Then reduce health
-    healthDamage = Math.min(remainingDamage, unit.currentHealth);
-    const newHealth = Math.max(0, unit.currentHealth - remainingDamage);
+    healthDamage = Math.min(damageAmount, unit.currentHealth);
+    const newHealth = Math.max(0, unit.currentHealth - damageAmount);
 
     return {
         unit: {
