@@ -118,7 +118,6 @@ export class BattleSimulator {
      * Simulate one complete turn (player actions + monster actions)
      */
     private simulateTurn(): void {
-        // Start of Turn: Status Effects & Spirit Regeneration
         const units = this.state.party as unknown as BattleUnit[];
         const processedUnits = CombatEngine.processTurnStart(units);
         this.state.party = CombatEngine.regenerateSpirit(processedUnits) as unknown as SimulationUnit[];

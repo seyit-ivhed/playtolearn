@@ -185,26 +185,6 @@ describe('ability.utils', () => {
             expect(result[0].currentHealth).toBe(0);
             expect(result[1].currentHealth).toBe(75);
         });
-
-        it('should apply regeneration status effect when elixir_of_renewal is used', () => {
-            const allies: EncounterUnit[] = [
-                createMockUnit({ currentHealth: 50, statusEffects: [] })
-            ];
-
-            const ability: SpecialAbility = {
-                id: 'elixir_of_renewal',
-                type: 'HEAL',
-                value: 30,
-                target: 'ALL_ALLIES'
-            };
-
-            const result = executeHealAbility(allies, ability, 30);
-            const updatedAlly = result[0];
-
-            expect(updatedAlly.currentHealth).toBe(80);
-            expect(updatedAlly.statusEffects.some(se => se.id === 'regeneration')).toBe(true);
-            expect(updatedAlly.statusEffects.find(se => se.id === 'regeneration')?.duration).toBe(2);
-        });
     });
 
     describe('executeShieldAbility', () => {

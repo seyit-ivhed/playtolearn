@@ -240,39 +240,68 @@
             "name": "Jaguar Strike",
             "description": "Deals {{value}} damage to a single enemy."
         },
-        "hunters_mark": {
-            "name": "Hunter's Mark",
-            "description": "Deals {{value}} damage and marks the target. Allies deal +25% damage to them."
+        "jaguar_strike_2": {
+            "name": "Jaguar Strike II",
+            "description": "Deals {{value}} damage to a single enemy."
         },
-        "twin_shadows": {
-            "name": "Twin Shadows",
-            "description": "Deals {{value}} damage and marks multiple enemies."
+        "jaguar_strike_3": {
+            "name": "Jaguar Strike III",
+            "description": "Deals {{value}} damage to a single enemy."
         },
-        "spirit_release": {
-            "name": "Spirit Release",
-            "description": "Deals {{value}} damage. Purifies enemies with low health."
+        "jaguar_strike_4": {
+            "name": "Jaguar Strike IV",
+            "description": "Deals {{value}} damage to a single enemy."
         },
         "elixir_of_life": {
             "name": "Elixir of Life",
             "description": "Heals all allies for {{value}} HP."
         },
-        "elixir_of_renewal": {
-            "name": "Elixir of Renewal",
-            "description": "Heals all allies and grants Regeneration (Heals 10% HP each turn)."
+        "elixir_of_life_2": {
+            "name": "Elixir of Life II",
+            "description": "Heals all allies for {{value}} HP."
         },
-        "panacea_burst": {
-            "name": "Panacea Burst",
-            "description": "Major heal and cleanses one negative status effect."
+        "elixir_of_life_3": {
+            "name": "Elixir of Life III",
+            "description": "Heals all allies for {{value}} HP."
         },
-        "philosophers_brew": {
-            "name": "Philosopher's Brew",
-            "description": "Massive heal and revives fallen companions with 30% HP."
+        "elixir_of_life_4": {
+            "name": "Elixir of Life IV",
+            "description": "Heals all allies for {{value}} HP."
+        },
+        "blade_barrier": {
+            "name": "Blade Barrier",
+            "description": "Shields all allies for {{value}} power."
+        },
+        "blade_barrier_2": {
+            "name": "Blade Barrier II",
+            "description": "Shields all allies for {{value}} power."
+        },
+        "blade_barrier_3": {
+            "name": "Blade Barrier III",
+            "description": "Shields all allies for {{value}} power."
+        },
+        "blade_barrier_4": {
+            "name": "Blade Barrier IV",
+            "description": "Shields all allies for {{value}} power."
+        },
+        "ancestral_storm": {
+            "name": "Ancestral Storm",
+            "description": "Deals {{value}} damage to all enemies."
+        },
+        "ancestral_storm_2": {
+            "name": "Ancestral Storm II",
+            "description": "Deals {{value}} damage to all enemies."
+        },
+        "ancestral_storm_3": {
+            "name": "Ancestral Storm III",
+            "description": "Deals {{value}} damage to all enemies."
+        },
+        "ancestral_storm_4": {
+            "name": "Ancestral Storm IV",
+            "description": "Deals {{value}} damage to all enemies."
         }
     },
-    "status_effects": {
-        "marked": "Marked (+25% Damage Taken)",
-        "regeneration": "Regeneration (Healing over time)"
-    },
+    "status_effects": {},
     "monsters": {
         "scorpion_1": {
             "name": "Desert Scorpion"

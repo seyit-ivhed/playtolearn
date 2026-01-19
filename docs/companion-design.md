@@ -27,11 +27,12 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 **Standard Ability:** Attack (10 damage → single enemy)
 
 **Ultimate — Jaguar Strike:**
-- Type: `DAMAGE`
-- Target: `SINGLE_ENEMY`
-- Value: 25
+- Stage 0 (Base): Deals 30 damage (SINGLE_ENEMY)
+- Stage 1 (Jungle Tracker): **Jaguar Strike II** (45 damage)
+- Stage 2 (Apex Stalker): **Jaguar Strike III** (65 damage)
+- Stage 3 (Nature's Wrath): **Jaguar Strike IV** (100 damage)
 
-**Fantasy:** Precision hunter — deals massive single-target damage but is fragile.
+**Fantasy:** Precision hunter — deals massive single-target damage with increasing potency as she matures. Simple and effective for young players.
 
 ---
 
@@ -50,11 +51,12 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 **Standard Ability:** Attack (6 damage → single enemy)
 
 **Ultimate — Elixir of Life:**
-- Type: `HEAL`
-- Target: `ALL_ALLIES`
-- Value: 15
+- Stage 0 (Base): Heals 25 HP (ALL_ALLIES)
+- Stage 1 (Desert Physician): **Elixir of Life II** (35 HP)
+- Stage 2 (Master Alchemist): **Elixir of Life III** (50 HP)
+- Stage 3 (Sage of Sands): **Elixir of Life IV** (80 HP)
 
-**Fantasy:** Protector alchemist — his potions restore the party's health in critical moments.
+**Fantasy:** Protector alchemist — focuses on restoring party health with increasingly potent elixirs.
 
 ---
 
@@ -73,11 +75,12 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 **Standard Ability:** Attack (7 damage → single enemy)
 
 **Ultimate — Blade Barrier:**
-- Type: `SHIELD`
-- Target: `ALL_ALLIES`
-- Value: 12
+- Stage 0 (Base): Shields for 12 power (ALL_ALLIES)
+- Stage 1 (Ronin Defender): **Blade Barrier II** (18 power)
+- Stage 2 (Steel Sentinel): **Blade Barrier III** (25 power)
+- Stage 3 (Shogun's Wall): **Blade Barrier IV** (40 power)
 
-**Fantasy:** Immovable defender — protects the entire party with his disciplined stance.
+**Fantasy:** Immovable defender — protects the entire party with increasingly strong spiritual shields.
 
 ---
 
@@ -96,10 +99,11 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 **Standard Ability:** Attack (8 damage → single enemy)
 
 **Ultimate — Ancestral Storm:**
-- Type: `DAMAGE`
-- Target: `ALL_ENEMIES`
-- Value: 15
+- Stage 0 (Base): Deals 15 damage (ALL_ENEMIES)
+- Stage 1 (Sun Caller): **Ancestral Storm II** (25 damage)
+- Stage 2 (Ember Weaver): **Ancestral Storm III** (40 damage)
+- Stage 3 (Radiant Seer): **Ancestral Storm IV** (65 damage)
 
-**Fantasy:** Area-of-effect powerhouse — clears waves of monsters with ancestral magic.
+**Fantasy:** Area-of-effect powerhouse — clears waves of monsters with increasingly powerful ancestral magic.
 
 ---

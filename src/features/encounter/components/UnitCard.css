@@ -786,16 +786,6 @@
     animation: effect-pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.effect-marked {
-    border-color: #ef4444;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
-}
-
-.effect-regeneration {
-    border-color: #10b981;
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
-}
-
 .effect-duration {
     position: absolute;
     bottom: -2px;

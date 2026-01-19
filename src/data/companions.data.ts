@@ -38,9 +38,9 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 4
                 },
                 newSpecialAbility: {
-                    id: 'hunters_mark',
+                    id: 'jaguar_strike_2',
                     type: 'DAMAGE',
-                    value: 40,
+                    value: 45,
                     target: 'SINGLE_ENEMY'
                 }
             },
@@ -52,10 +52,10 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 6
                 },
                 newSpecialAbility: {
-                    id: 'twin_shadows',
+                    id: 'jaguar_strike_3',
                     type: 'DAMAGE',
-                    value: 35,
-                    target: 'ALL_ENEMIES'
+                    value: 65,
+                    target: 'SINGLE_ENEMY'
                 }
             },
             {
@@ -66,7 +66,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 10
                 },
                 newSpecialAbility: {
-                    id: 'spirit_release',
+                    id: 'jaguar_strike_4',
                     type: 'DAMAGE',
                     value: 100,
                     target: 'SINGLE_ENEMY'
@@ -105,7 +105,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 3
                 },
                 newSpecialAbility: {
-                    id: 'elixir_of_renewal',
+                    id: 'elixir_of_life_2',
                     type: 'HEAL',
                     value: 35,
                     target: 'ALL_ALLIES'
@@ -119,9 +119,9 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 4
                 },
                 newSpecialAbility: {
-                    id: 'panacea_burst',
+                    id: 'elixir_of_life_3',
                     type: 'HEAL',
-                    value: 45,
+                    value: 50,
                     target: 'ALL_ALLIES'
                 }
             },
@@ -133,7 +133,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 6
                 },
                 newSpecialAbility: {
-                    id: 'philosophers_brew',
+                    id: 'elixir_of_life_4',
                     type: 'HEAL',
                     value: 80,
                     target: 'ALL_ALLIES'
@@ -172,9 +172,9 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 3
                 },
                 newSpecialAbility: {
-                    id: 'shattering_guard',
+                    id: 'blade_barrier_2',
                     type: 'SHIELD',
-                    value: 15,
+                    value: 18,
                     target: 'ALL_ALLIES'
                 }
             },
@@ -186,9 +186,9 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 4
                 },
                 newSpecialAbility: {
-                    id: 'breaking_wave',
+                    id: 'blade_barrier_3',
                     type: 'SHIELD',
-                    value: 20,
+                    value: 25,
                     target: 'ALL_ALLIES'
                 }
             },
@@ -200,9 +200,9 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 5
                 },
                 newSpecialAbility: {
-                    id: 'ancestral_fortress',
+                    id: 'blade_barrier_4',
                     type: 'SHIELD',
-                    value: 30,
+                    value: 40,
                     target: 'ALL_ALLIES'
                 }
             }
@@ -239,9 +239,9 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 5
                 },
                 newSpecialAbility: {
-                    id: 'solar_singe',
+                    id: 'ancestral_storm_2',
                     type: 'DAMAGE',
-                    value: 20,
+                    value: 25,
                     target: 'ALL_ENEMIES'
                 }
             },
@@ -253,9 +253,9 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 7
                 },
                 newSpecialAbility: {
-                    id: 'solar_flare',
+                    id: 'ancestral_storm_3',
                     type: 'DAMAGE',
-                    value: 30,
+                    value: 40,
                     target: 'ALL_ENEMIES'
                 }
             },
@@ -267,9 +267,9 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 10
                 },
                 newSpecialAbility: {
-                    id: 'supernova',
+                    id: 'ancestral_storm_4',
                     type: 'DAMAGE',
-                    value: 50,
+                    value: 65,
                     target: 'ALL_ENEMIES'
                 }
             }

@@ -240,39 +240,68 @@
             "name": "Jaguarhugg",
             "description": "Gör {{value}} skada på en enskild fiende."
         },
-        "hunters_mark": {
-            "name": "Jägarens märke",
-            "description": "Gör {{value}} skada och märker målet. Allierade gör +25% skada på dem."
+        "jaguar_strike_2": {
+            "name": "Jaguarhugg II",
+            "description": "Gör {{value}} skada på en enskild fiende."
         },
-        "twin_shadows": {
-            "name": "Tvillingskuggor",
-            "description": "Gör {{value}} skada och märker flera fiender."
+        "jaguar_strike_3": {
+            "name": "Jaguarhugg III",
+            "description": "Gör {{value}} skada på en enskild fiende."
         },
-        "spirit_release": {
-            "name": "Andefrigörelse",
-            "description": "Gör {{value}} skada. Renar fiender med låg hälsa."
+        "jaguar_strike_4": {
+            "name": "Jaguarhugg IV",
+            "description": "Gör {{value}} skada på en enskild fiende."
         },
         "elixir_of_life": {
             "name": "Livselixir",
             "description": "Helar alla allierade med {{value}} HP."
         },
-        "elixir_of_renewal": {
-            "name": "Förnyelsens elixir",
-            "description": "Helar alla allierade och ger Regeneration (Helar 10% HP varje tur)."
+        "elixir_of_life_2": {
+            "name": "Livselixir II",
+            "description": "Helar alla allierade med {{value}} HP."
         },
-        "panacea_burst": {
-            "name": "Panacé-utbrott",
-            "description": "Stor helning och renar en negativ statuseffekt."
+        "elixir_of_life_3": {
+            "name": "Livselixir III",
+            "description": "Helar alla allierade med {{value}} HP."
         },
-        "philosophers_brew": {
-            "name": "De vises brygd",
-            "description": "Massiv helning och återupplivar fallna kamrater med 30% HP."
+        "elixir_of_life_4": {
+            "name": "Livselixir IV",
+            "description": "Helar alla allierade med {{value}} HP."
+        },
+        "blade_barrier": {
+            "name": "Bladbarriär",
+            "description": "Skyddar alla allierade med {{value}} kraft."
+        },
+        "blade_barrier_2": {
+            "name": "Bladbarriär II",
+            "description": "Skyddar alla allierade med {{value}} kraft."
+        },
+        "blade_barrier_3": {
+            "name": "Bladbarriär III",
+            "description": "Skyddar alla allierade med {{value}} kraft."
+        },
+        "blade_barrier_4": {
+            "name": "Bladbarriär IV",
+            "description": "Skyddar alla allierade med {{value}} kraft."
+        },
+        "ancestral_storm": {
+            "name": "Urgammal storm",
+            "description": "Gör {{value}} skada på alla fiender."
+        },
+        "ancestral_storm_2": {
+            "name": "Urgammal storm II",
+            "description": "Gör {{value}} skada på alla fiender."
+        },
+        "ancestral_storm_3": {
+            "name": "Urgammal storm III",
+            "description": "Gör {{value}} skada på alla fiender."
+        },
+        "ancestral_storm_4": {
+            "name": "Urgammal storm IV",
+            "description": "Gör {{value}} skada på alla fiender."
         }
     },
-    "status_effects": {
-        "marked": "Markerad (+25% skada tagen)",
-        "regeneration": "Regeneration (Helning över tid)"
-    },
+    "status_effects": {},
     "monsters": {
         "scorpion_1": {
             "name": "Ökenskorpion"

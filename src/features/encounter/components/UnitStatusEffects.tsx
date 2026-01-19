@@ -19,7 +19,7 @@ export const UnitStatusEffects = ({ statusEffects }: UnitStatusEffectsProps) => 
                     className={`status-effect-icon effect-${effect.id}`}
                     title={t(`status_effects.${effect.id}`, effect.id)}
                 >
-                    {effect.id === 'marked' ? '🎯' : effect.id === 'regeneration' ? '🧪' : '✨'}
+                    ✨
                     <span className="effect-duration">{effect.duration}</span>
                 </div>
             ))}

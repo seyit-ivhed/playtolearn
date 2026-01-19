@@ -16,12 +16,6 @@ export interface DamageResult<T extends DamageableUnit> {
     healthDamage: number;
 }
 
-// ... (existing imports if any)
-
-export interface UnitWithStatusEffects {
-    statusEffects?: { id: string; duration: number; type?: string }[];
-}
-
 /**
  * Apply damage to a unit, handling shield absorption
  * 
@@ -63,14 +57,4 @@ export function applyDamage<T extends DamageableUnit>(
         shieldDamage,
         healthDamage
     };
-}
-
-/**
- * Get damage multiplier based on unit status effects
- * Move here to avoid circular dependency between ability.utils and combat-engine
- */
-export function getTargetDamageMultiplier(unit: UnitWithStatusEffects): number {
-    if (!unit.statusEffects) return 1.0;
-    const isMarked = unit.statusEffects.some(se => se.id === 'marked');
-    return isMarked ? 1.25 : 1.0;
 }

@@ -1,6 +1,6 @@
 import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit, StatusEffect } from '../../types/encounter.types';
-import { applyDamage, getTargetDamageMultiplier } from './damage.utils';
+import { applyDamage } from './damage.utils';
 import { executeDamageAbility, executeHealAbility, executeShieldAbility, type HealableUnit, type ShieldableUnit } from './ability.utils';
 
 /**
@@ -123,10 +123,8 @@ export class CombatEngine {
 
         const target = targets[targetIndex];
         const damage = attacker.damage || 0;
-        const multiplier = getTargetDamageMultiplier(target as unknown as EncounterUnit);
-        const finalDamage = Math.floor(damage * multiplier);
 
-        const result = applyDamage(target as unknown as EncounterUnit, finalDamage);
+        const result = applyDamage(target as unknown as EncounterUnit, damage);
 
         logs.push({
             message: `${attacker.name} attacked ${target.name} for ${result.damageDealt} damage!`,
@@ -159,10 +157,8 @@ export class CombatEngine {
 
         const target = livingParty[targetIdx];
         const damage = attacker.damage || 0;
-        const multiplier = getTargetDamageMultiplier(target as unknown as EncounterUnit);
-        const finalDamage = Math.floor(damage * multiplier);
 
-        const result = applyDamage(target as unknown as EncounterUnit, finalDamage);
+        const result = applyDamage(target as unknown as EncounterUnit, damage);
 
         logs.push({
             message: `${attacker.name} attacked ${target.name} for ${result.damageDealt} damage!`,
@@ -196,13 +192,6 @@ export class CombatEngine {
         return units.map(unit => {
             if (unit.isDead || !unit.statusEffects) return unit;
 
-            // Handle Regeneration
-            let currentHealth = unit.currentHealth;
-            if (unit.statusEffects.some(se => se.id === 'regeneration')) {
-                const healAmount = Math.floor(unit.maxHealth * 0.1);
-                currentHealth = Math.min(unit.maxHealth, currentHealth + healAmount);
-            }
-
             // Decrement duration and filter expired
             const newEffects = unit.statusEffects
                 .map(se => ({ ...se, duration: se.duration - 1 }))
@@ -210,7 +199,6 @@ export class CombatEngine {
 
             return {
                 ...unit,
-                currentHealth,
                 statusEffects: newEffects
             };
         });
@@ -226,12 +214,7 @@ export class CombatEngine {
         };
     }
 
-    /**
-     * Get damage multiplier based on unit status effects
-     */
-    static getTargetDamageMultiplier(unit: EncounterUnit): number {
-        return getTargetDamageMultiplier(unit);
-    }
+
 
     /**
      * Select random living target from array

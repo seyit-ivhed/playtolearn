@@ -5,7 +5,7 @@
 
 import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit } from '../../types/encounter.types';
-import { applyDamage, getTargetDamageMultiplier } from './damage.utils';
+import { applyDamage } from './damage.utils';
 
 export interface HealableUnit {
     currentHealth: number;
@@ -34,14 +34,7 @@ export function executeDamageAbility(
     if (ability.target === 'ALL_ENEMIES') {
         return targets.map(t => {
             if (t.isDead) return t;
-            const multiplier = getTargetDamageMultiplier(t);
-            const actualDamage = Math.floor(abilityValue * multiplier);
-            let result = applyDamage(t, actualDamage).unit;
-
-            if (ability.id === 'hunters_mark') {
-                result = applyMarked(result);
-            }
-            return result;
+            return applyDamage(t, abilityValue).unit;
         });
     } else if (ability.target === 'SINGLE_ENEMY') {
         const targetIndex = targets.findIndex(t => !t.isDead);
@@ -49,14 +42,8 @@ export function executeDamageAbility(
 
         const newTargets = [...targets];
         const target = targets[targetIndex];
-        const multiplier = getTargetDamageMultiplier(target);
-        const actualDamage = Math.floor(abilityValue * multiplier);
 
-        let result = applyDamage(target, actualDamage).unit;
-
-        if (ability.id === 'hunters_mark') {
-            result = applyMarked(result);
-        }
+        const result = applyDamage(target, abilityValue).unit;
 
         newTargets[targetIndex] = result;
         return newTargets;
@@ -64,24 +51,7 @@ export function executeDamageAbility(
     return targets;
 }
 
-function applyMarked(unit: EncounterUnit): EncounterUnit {
-    const alreadyMarked = unit.statusEffects.some(se => se.id === 'marked');
-    if (alreadyMarked) {
-        return {
-            ...unit,
-            statusEffects: unit.statusEffects.map(se =>
-                se.id === 'marked' ? { ...se, duration: 2 } : se
-            )
-        };
-    }
-    return {
-        ...unit,
-        statusEffects: [
-            ...unit.statusEffects,
-            { id: 'marked', type: 'DEBUFF', duration: 2 }
-        ]
-    };
-}
+
 
 /**
  * Execute heal ability on targets
@@ -101,31 +71,10 @@ export function executeHealAbility<T extends HealableUnit>(
             if (t.isDead) return t;
 
             // Base Heal
-            let updatedUnit = {
+            return {
                 ...t,
                 currentHealth: Math.min(t.maxHealth, t.currentHealth + abilityValue)
             };
-
-            // Apply Regeneration for Elixir of Renewal
-            if (ability.id === 'elixir_of_renewal' && 'statusEffects' in updatedUnit) {
-                const unitWithEffects = updatedUnit as unknown as EncounterUnit;
-                const newEffects = [...unitWithEffects.statusEffects];
-
-                // Refresh existing or add new
-                const existingIdx = newEffects.findIndex(se => se.id === 'regeneration');
-                if (existingIdx >= 0) {
-                    newEffects[existingIdx] = { ...newEffects[existingIdx], duration: 2 };
-                } else {
-                    newEffects.push({ id: 'regeneration', type: 'BUFF', duration: 2 });
-                }
-
-                updatedUnit = {
-                    ...updatedUnit,
-                    statusEffects: newEffects
-                };
-            }
-
-            return updatedUnit;
         });
     } else if (ability.target === 'SINGLE_ALLY') {
         // Heal lowest health ally

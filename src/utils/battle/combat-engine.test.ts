@@ -54,13 +54,6 @@ describe('CombatEngine', () => {
             // No change expected
             expect(result.updatedTargets[0].currentHealth).toBe(0);
         });
-        it('should deal increased damage to marked targets (1.25x)', () => {
-            const markedEnemy = { ...mockEnemy, statusEffects: [{ id: 'marked', duration: 2, type: 'DEBUFF' as const }] };
-            const result = CombatEngine.executeStandardAttack(mockAttacker, [markedEnemy]);
-            // Damage 10 * 1.25 = 12.5 -> floor(12.5) = 12
-            // Health 100 - 12 = 88
-            expect(result.updatedTargets[0].currentHealth).toBe(88);
-        });
     });
 
     describe('executeSpecialAbility', () => {
@@ -143,19 +136,7 @@ describe('CombatEngine', () => {
             expect(updated[0].statusEffects!.length).toBe(0);
         });
 
-        it('should heal unit over time when regeneration is active', () => {
-            const unit: BattleUnit = {
-                ...mockAttacker,
-                currentHealth: 50,
-                maxHealth: 100,
-                statusEffects: [{ id: 'regeneration', duration: 2, type: 'BUFF' as const }]
-            };
-            const updated = CombatEngine.processTurnStart([unit]);
 
-            // Should heal 10% of 100 = 10 HP
-            expect(updated[0].currentHealth).toBe(60);
-            expect(updated[0].statusEffects![0].duration).toBe(1);
-        });
     });
 
     describe('consumeSpiritCost', () => {
@@ -252,15 +233,5 @@ describe('CombatEngine', () => {
         });
     });
 
-    describe('getTargetDamageMultiplier', () => {
-        it('should return 1.0 for no status effects', () => {
-            const unit = { ...mockAttacker, statusEffects: [], maxShield: 0 };
-            expect(CombatEngine.getTargetDamageMultiplier(unit as unknown as BattleUnit)).toBe(1.0);
-        });
 
-        it('should return 1.25 for marked status', () => {
-            const unit = { ...mockAttacker, statusEffects: [{ id: 'marked', duration: 1, type: 'DEBUFF' as const }], maxShield: 0 };
-            expect(CombatEngine.getTargetDamageMultiplier(unit as unknown as BattleUnit)).toBe(1.25);
-        });
-    });
 });
