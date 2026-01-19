@@ -33,14 +33,6 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 
 **Fantasy:** Precision hunter — deals massive single-target damage but is fragile.
 
-#### Evolution Path
-
-| Evo | Title | Ability Upgrade | Effect |
-|-------|-------|-----------------|--------|
-| 1 | **Jungle Tracker** | **Hunter's Mark** | Deals damage + applies mark. Allies deal **+25% damage** to marked target for 2 rounds. |
-| 2 | **Apex Stalker** | **Twin Shadows** | Now marks **two enemies** instead of one. |
-| 3 | **Nature's Wrath** | **Spirit Release** | If marked target HP < 20%, **purifies them** (Vanquish). |
-
 ---
 
 ### Tariq — The Desert Alchemist (Starter)
@@ -63,14 +55,6 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 - Value: 15
 
 **Fantasy:** Protector alchemist — his potions restore the party's health in critical moments.
-
-#### Evolution Path
-
-| Evo | Title | Ability Upgrade | Effect |
-|-------|-------|-----------------|--------|
-| 1 | **Desert Physician** | **Elixir of Renewal** | Heals all allies + Grants **Regeneration** (Restores HP at start of next 2 turns). |
-| 2 | **Master Alchemist** | **Panacea Burst** | Heals all allies + **Cleanses** 1 negative status effect. |
-| 3 | **Sage of Sands** | **Philosopher's Brew** | Massive Heal to all allies + **Revives** one fallen companion with 30% HP. |
 
 ---
 
@@ -95,14 +79,6 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 
 **Fantasy:** Immovable defender — protects the entire party with his disciplined stance.
 
-#### Evolution Path
-
-| Evo | Title | Ability Upgrade | Effect |
-|---|---|---|---|
-| 1 | **Ronin Defender** | **Shattering Guard** | **Shields** (15) all allies for 2 rounds + Deals damage to 1 enemy and **Breaks Shield**. |
-| 2 | **Steel Sentinel** | **Breaking Wave** | **Shields** (20) all allies for 2 rounds + Deals increased damage to 1 enemy and **Breaks Shield**. |
-| 3 | **Shogun's Wall** | **Ancestral Fortress** | **Shields** (30) all allies for 2 rounds + Deals massive damage to 1 enemy and **Breaks Shield**. |
-
 ---
 
 ### Zahara — The Savannah Mage (Join Later)
@@ -125,13 +101,5 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 - Value: 15
 
 **Fantasy:** Area-of-effect powerhouse — clears waves of monsters with ancestral magic.
-
-#### Evolution Path
-
-| Evo | Title | Ability Upgrade | Effect |
-|---|---|---|---|
-| 1 | **Sun Caller** | **Solar Singe** | Deals damage + **Burns** enemies (5 dmg/round) for **1 round**. |
-| 2 | **Ember Weaver** | **Solar Flare** | Deals increased damage + **Burns** enemies (5 dmg/round) for **2 rounds**. |
-| 3 | **Radiant Seer** | **Supernova** | Deals massive damage + **Burns** enemies (8 dmg/round) for **3 rounds**. |
 
 ---
