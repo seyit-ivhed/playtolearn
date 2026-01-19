@@ -64,8 +64,7 @@ export class BattleSimulator {
                     hasActed: false,
                     currentSpirit: companionData.initialSpirit || 0,
                     maxSpirit: 100,
-                    spiritGain: stats.spiritGain || 0,
-                    statusEffects: []
+                    spiritGain: stats.spiritGain || 0
                 };
             })
             .filter((unit) => unit !== null) as SimulationUnit[];
@@ -85,8 +84,7 @@ export class BattleSimulator {
             hasActed: false,
             currentSpirit: 0,
             maxSpirit: 100,
-            spiritGain: 0,
-            statusEffects: []
+            spiritGain: 0
         }));
 
         return {
@@ -119,8 +117,7 @@ export class BattleSimulator {
      */
     private simulateTurn(): void {
         const units = this.state.party as unknown as BattleUnit[];
-        const processedUnits = CombatEngine.processTurnStart(units);
-        this.state.party = CombatEngine.regenerateSpirit(processedUnits) as unknown as SimulationUnit[];
+        this.state.party = CombatEngine.regenerateSpirit(units) as unknown as SimulationUnit[];
 
         // Player turn
         this.executePlayerTurn();

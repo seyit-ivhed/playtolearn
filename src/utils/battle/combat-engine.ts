@@ -1,5 +1,5 @@
 import type { SpecialAbility } from '../../types/companion.types';
-import type { EncounterUnit, StatusEffect } from '../../types/encounter.types';
+import type { EncounterUnit } from '../../types/encounter.types';
 import { applyDamage } from './damage.utils';
 import { executeDamageAbility, executeHealAbility, executeShieldAbility, type HealableUnit, type ShieldableUnit } from './ability.utils';
 
@@ -29,7 +29,6 @@ export interface BattleUnit extends HealableUnit, ShieldableUnit {
 
     // State
     hasActed: boolean;
-    statusEffects: StatusEffect[]; // Simplified for now
 }
 
 export class CombatEngine {
@@ -186,25 +185,6 @@ export class CombatEngine {
     }
 
     /**
-     * Process turn start for units (status effects)
-     */
-    static processTurnStart(units: BattleUnit[]): BattleUnit[] {
-        return units.map(unit => {
-            if (unit.isDead || !unit.statusEffects) return unit;
-
-            // Decrement duration and filter expired
-            const newEffects = unit.statusEffects
-                .map(se => ({ ...se, duration: se.duration - 1 }))
-                .filter(se => se.duration > 0);
-
-            return {
-                ...unit,
-                statusEffects: newEffects
-            };
-        });
-    }
-
-    /**
      * Consume ability cost (spirit)
      */
     static consumeSpiritCost(unit: BattleUnit): BattleUnit {
@@ -213,8 +193,6 @@ export class CombatEngine {
             currentSpirit: 0
         };
     }
-
-
 
     /**
      * Select random living target from array

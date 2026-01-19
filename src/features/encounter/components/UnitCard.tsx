@@ -15,7 +15,6 @@ import { UnitCardShield } from './UnitCardShield';
 import { UnitCardVFX } from './UnitCardVFX';
 import { UnitLevelBadge } from './UnitLevelBadge';
 import { useUnitCardAnimations } from '../hooks/useUnitCardAnimations';
-import { UnitStatusEffects } from './UnitStatusEffects';
 import { RestingIndicator } from './RestingIndicator';
 
 interface UnitCardProps {
@@ -119,8 +118,6 @@ export const UnitCard = ({
         >
             <FloatingTextOverlay floatingTexts={floatingTexts} />
             <UnitNameBadge displayName={displayName} />
-
-            <UnitStatusEffects statusEffects={unit.statusEffects} />
 
             {!isMonster && !isFlipped && <UnitLevelBadge level={level} />}
 

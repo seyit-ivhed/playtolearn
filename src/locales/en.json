@@ -301,7 +301,6 @@
             "description": "Deals {{value}} damage to all enemies."
         }
     },
-    "status_effects": {},
     "monsters": {
         "scorpion_1": {
             "name": "Desert Scorpion"

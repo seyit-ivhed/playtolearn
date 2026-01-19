@@ -17,8 +17,7 @@ describe('CombatEngine', () => {
         currentSpirit: 100,
         spiritGain: 10,
         hasActed: false,
-        isDead: false,
-        statusEffects: []
+        isDead: false
     };
 
     const mockEnemy: BattleUnit = {
@@ -35,8 +34,7 @@ describe('CombatEngine', () => {
         currentSpirit: 0,
         spiritGain: 0,
         hasActed: false,
-        isDead: false,
-        statusEffects: []
+        isDead: false
     };
 
     describe('executeStandardAttack', () => {
@@ -116,29 +114,6 @@ describe('CombatEngine', () => {
             expect(updated[0].currentSpirit).toBe(100);
         });
     });
-
-    describe('processTurnStart', () => {
-        it('should decrement status effect duration', () => {
-            const unit: BattleUnit = {
-                ...mockAttacker,
-                statusEffects: [{ id: 'poison', duration: 2, type: 'DEBUFF' as const }]
-            };
-            const updated = CombatEngine.processTurnStart([unit]);
-            expect(updated[0].statusEffects![0].duration).toBe(1);
-        });
-
-        it('should remove expired status effects', () => {
-            const unit: BattleUnit = {
-                ...mockAttacker,
-                statusEffects: [{ id: 'stun', duration: 1, type: 'DEBUFF' as const }]
-            };
-            const updated = CombatEngine.processTurnStart([unit]);
-            expect(updated[0].statusEffects!.length).toBe(0);
-        });
-
-
-    });
-
     describe('consumeSpiritCost', () => {
         it('should reset spirit to 0', () => {
             const unit = { ...mockAttacker, currentSpirit: 50 };

@@ -43,8 +43,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     currentSpirit: data.initialSpirit || 0,
                     maxSpirit: 100,
                     spiritGain: calculatedStats.spiritGain || 0,
-                    image: getCompanionSprite(id, stats.level),
-                    statusEffects: []
+                    image: getCompanionSprite(id, stats.level)
                 };
             });
 
@@ -66,8 +65,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 currentSpirit: 0,
                 maxSpirit: 100,
                 spiritGain: 20,
-                isBoss: enemy.isBoss,
-                statusEffects: []
+                isBoss: enemy.isBoss
             };
         });
 
@@ -125,11 +123,6 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 // All monsters have attacked - prepare for next player turn
 
                 let newParty = currentParty.map(u => ({ ...u, hasActed: false }));
-                const newMonsters = currentMonsters;
-
-                // Decrement and filter status effects for all units via CombatEngine
-                newParty = CombatEngine.processTurnStart(newParty as unknown as BattleUnit[]) as unknown as EncounterUnit[];
-                const decayedMonsters = CombatEngine.processTurnStart(newMonsters as unknown as BattleUnit[]) as unknown as EncounterUnit[];
 
                 // Passive Charge at start of Player Turn via CombatEngine
                 newParty = CombatEngine.regenerateSpirit(newParty as unknown as BattleUnit[]) as unknown as EncounterUnit[];
@@ -138,7 +131,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 setTimeout(() => {
                     set(state => ({
                         party: newParty,
-                        monsters: decayedMonsters,
+                        monsters: currentMonsters,
                         phase: EncounterPhase.PLAYER_TURN,
                         turnCount: state.turnCount + 1,
                         encounterLog: [...state.encounterLog, ...logs] // logs might be empty here as we pushed them incrementally? NO, we push them in the attack steps

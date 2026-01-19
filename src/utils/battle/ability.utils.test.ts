@@ -23,7 +23,6 @@ const createMockUnit = (overrides: Partial<EncounterUnit> = {}): EncounterUnit =
     currentSpirit: 0,
     maxSpirit: 100,
     spiritGain: 10,
-    statusEffects: [],
     ...overrides
 });
 
