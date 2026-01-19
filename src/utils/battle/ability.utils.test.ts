@@ -2,9 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
     executeDamageAbility,
     executeHealAbility,
-    executeShieldAbility,
-    type HealableUnit,
-    type ShieldableUnit
+    type HealableUnit
 } from './ability.utils';
 import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit } from '../../types/encounter.types';
@@ -16,8 +14,6 @@ const createMockUnit = (overrides: Partial<EncounterUnit> = {}): EncounterUnit =
     isPlayer: false,
     maxHealth: 100,
     currentHealth: 100,
-    maxShield: 0,
-    currentShield: 0,
     isDead: false,
     hasActed: false,
     currentSpirit: 0,
@@ -30,9 +26,9 @@ describe('ability.utils', () => {
     describe('executeDamageAbility', () => {
         it('should damage all enemies when target is ALL_ENEMIES', () => {
             const enemies: EncounterUnit[] = [
-                createMockUnit({ currentHealth: 100, currentShield: 0, isDead: false }),
-                createMockUnit({ currentHealth: 80, currentShield: 0, isDead: false }),
-                createMockUnit({ currentHealth: 60, currentShield: 0, isDead: false })
+                createMockUnit({ currentHealth: 100, isDead: false }),
+                createMockUnit({ currentHealth: 80, isDead: false }),
+                createMockUnit({ currentHealth: 60, isDead: false })
             ];
 
             const ability: SpecialAbility = {
@@ -51,8 +47,8 @@ describe('ability.utils', () => {
 
         it('should damage single enemy when target is SINGLE_ENEMY', () => {
             const enemies: EncounterUnit[] = [
-                createMockUnit({ currentHealth: 100, currentShield: 0, isDead: false }),
-                createMockUnit({ currentHealth: 80, currentShield: 0, isDead: false })
+                createMockUnit({ currentHealth: 100, isDead: false }),
+                createMockUnit({ currentHealth: 80, isDead: false })
             ];
 
             const ability: SpecialAbility = {
@@ -70,8 +66,8 @@ describe('ability.utils', () => {
 
         it('should skip dead enemies when damaging all', () => {
             const enemies: EncounterUnit[] = [
-                createMockUnit({ currentHealth: 0, currentShield: 0, isDead: true }),
-                createMockUnit({ currentHealth: 80, currentShield: 0, isDead: false })
+                createMockUnit({ currentHealth: 0, isDead: true }),
+                createMockUnit({ currentHealth: 80, isDead: false })
             ];
 
             const ability: SpecialAbility = {
@@ -90,8 +86,8 @@ describe('ability.utils', () => {
 
         it('should target first living enemy when some are dead', () => {
             const enemies: EncounterUnit[] = [
-                createMockUnit({ currentHealth: 0, currentShield: 0, isDead: true }),
-                createMockUnit({ currentHealth: 80, currentShield: 0, isDead: false })
+                createMockUnit({ currentHealth: 0, isDead: true }),
+                createMockUnit({ currentHealth: 80, isDead: false })
             ];
 
             const ability: SpecialAbility = {
@@ -183,46 +179,6 @@ describe('ability.utils', () => {
 
             expect(result[0].currentHealth).toBe(0);
             expect(result[1].currentHealth).toBe(75);
-        });
-    });
-
-    describe('executeShieldAbility', () => {
-        it('should add shield to all allies when target is ALL_ALLIES', () => {
-            const allies: ShieldableUnit[] = [
-                { currentShield: 10, isDead: false },
-                { currentShield: 0, isDead: false }
-            ];
-
-            const ability: SpecialAbility = {
-                id: 'test',
-                type: 'SHIELD',
-                value: 20,
-                target: 'ALL_ALLIES'
-            };
-
-            const result = executeShieldAbility(allies, ability, 20);
-
-            expect(result[0].currentShield).toBe(30);
-            expect(result[1].currentShield).toBe(20);
-        });
-
-        it('should skip dead allies when shielding', () => {
-            const allies: ShieldableUnit[] = [
-                { currentShield: 0, isDead: true },
-                { currentShield: 10, isDead: false }
-            ];
-
-            const ability: SpecialAbility = {
-                id: 'test',
-                type: 'SHIELD',
-                value: 20,
-                target: 'ALL_ALLIES'
-            };
-
-            const result = executeShieldAbility(allies, ability, 20);
-
-            expect(result[0].currentShield).toBe(0);
-            expect(result[1].currentShield).toBe(30);
         });
     });
 });

@@ -53,7 +53,7 @@ describe('encounter-flow.slice', () => {
 
             const partyIds = ['c1', 'c2'];
             const enemies = [
-                { id: 'm1', name: 'Monster 1', maxHealth: 50, attack: 10, sprite: 'm1.png', maxShield: 5 },
+                { id: 'm1', name: 'Monster 1', maxHealth: 50, attack: 10, sprite: 'm1.png' },
                 { id: 'm2', name: 'Monster 2', maxHealth: 60, attack: 12, sprite: 'm2.png' }
             ];
 
@@ -84,7 +84,6 @@ describe('encounter-flow.slice', () => {
                 name: 'Monster 1',
                 maxHealth: 50,
                 currentHealth: 50,
-                maxShield: 5,
                 damage: 10,
                 isPlayer: false
             });
@@ -208,28 +207,6 @@ describe('encounter-flow.slice', () => {
             // Verify spirit regeneration (Passive Charge)
             // Initial spirit was 0. +35 = 35.
             expect(state.party[0].currentSpirit).toBe(35);
-        });
-
-        it('should handle shield damage correctly', () => {
-            const { initializeEncounter, processMonsterTurn } = useTestStore.getState();
-            initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 50, attack: 20, sprite: '' }], 0, 0, 0, {});
-
-            // Give player some shield
-            useTestStore.setState((state) => {
-                const newParty = [...state.party];
-                newParty[0].currentShield = 15;
-                return { party: newParty };
-            });
-
-            processMonsterTurn();
-
-            const state = useTestStore.getState();
-            // Damage 20. Shield 15.
-            // Shield absorbs 15, breaks. Remaining 5 damage to Health.
-            // Health 100 -> 95.
-            expect(state.party[0].currentShield).toBe(0);
-            expect(state.party[0].currentHealth).toBe(95);
-            expect(state.encounterLog).toContain('M1 attacked Companion c1 for 20 damage!');
         });
 
         it('should handle player death and defeat condition', () => {

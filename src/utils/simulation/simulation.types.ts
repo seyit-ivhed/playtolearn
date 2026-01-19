@@ -19,11 +19,9 @@ export interface SimulationUnit {
     // Stats
     maxHealth: number;
     currentHealth: number;
-    maxShield: number;
-    currentShield: number;
     damage: number;
     specialAbilityId?: string;
-    specialAbilityType?: 'DAMAGE' | 'SHIELD' | 'HEAL';
+    specialAbilityType?: 'DAMAGE' | 'HEAL' | 'SHIELD';
     specialAbilityValue?: number;
     specialAbilityTarget?: 'SINGLE_ENEMY' | 'ALL_ENEMIES' | 'SINGLE_ALLY' | 'ALL_ALLIES' | 'SELF' | 'RANDOM_ENEMY';
 

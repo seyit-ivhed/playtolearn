@@ -1,6 +1,6 @@
 /**
  * Ability Execution Utilities
- * Pure functions for executing special abilities (damage, heal, shield)
+ * Pure functions for executing special abilities (damage, heal)
  */
 
 import type { SpecialAbility } from '../../types/companion.types';
@@ -10,11 +10,6 @@ import { applyDamage } from './damage.utils';
 export interface HealableUnit {
     currentHealth: number;
     maxHealth: number;
-    isDead: boolean;
-}
-
-export interface ShieldableUnit {
-    currentShield: number;
     isDead: boolean;
 }
 
@@ -95,31 +90,6 @@ export function executeHealAbility<T extends HealableUnit>(
 
         newTargets[lowestHealthIndex] = target;
         return newTargets;
-    }
-    return targets;
-}
-
-/**
- * Execute shield ability on targets
- * 
- * @param targets - Array of ally units
- * @param ability - The special ability being executed
- * @param abilityValue - The shield value to apply
- * @returns Updated array of targets
- */
-export function executeShieldAbility<T extends ShieldableUnit>(
-    targets: T[],
-    ability: SpecialAbility,
-    abilityValue: number
-): T[] {
-    if (ability.target === 'ALL_ALLIES') {
-        return targets.map(t => {
-            if (t.isDead) return t;
-            return {
-                ...t,
-                currentShield: t.currentShield + abilityValue
-            };
-        });
     }
     return targets;
 }

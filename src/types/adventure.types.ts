@@ -27,7 +27,6 @@ export interface AdventureMonster {
     id: string;
     name?: string;
     maxHealth: number;
-    maxShield?: number;
     attack: number;
 
     sprite?: string;

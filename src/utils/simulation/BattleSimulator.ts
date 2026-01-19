@@ -50,8 +50,6 @@ export class BattleSimulator {
                     isPlayer: true,
                     maxHealth: stats.maxHealth,
                     currentHealth: stats.maxHealth,
-                    maxShield: 0,
-                    currentShield: 0,
                     damage: stats.abilityDamage || 10,
 
                     // Evolution details
@@ -77,8 +75,6 @@ export class BattleSimulator {
             isPlayer: false,
             maxHealth: enemy.maxHealth,
             currentHealth: enemy.maxHealth,
-            maxShield: enemy.maxShield || 0,
-            currentShield: 0,
             damage: enemy.attack,
             isDead: false,
             hasActed: false,

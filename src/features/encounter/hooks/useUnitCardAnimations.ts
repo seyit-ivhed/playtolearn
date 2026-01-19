@@ -4,11 +4,10 @@ import type { EncounterUnit } from '../../../types/encounter.types';
 export const useUnitCardAnimations = (unit: EncounterUnit, isMonster: boolean) => {
     const [animationClass, setAnimationClass] = useState('');
     const [shieldAnimClass, setShieldAnimClass] = useState('');
-    const [floatingTexts, setFloatingTexts] = useState<{ id: number; text: string; type: 'damage' | 'heal' | 'shield-damage' }[]>([]);
+    const [floatingTexts, setFloatingTexts] = useState<{ id: number; text: string; type: 'damage' | 'heal' }[]>([]);
 
     // Track previous values in refs for effect-based change detection
     const prevHealthRef = useRef(unit.currentHealth);
-    const prevShieldRef = useRef(unit.currentShield);
     const prevHasActedRef = useRef(unit.hasActed);
     const textIdCounter = useRef(0);
 
@@ -33,23 +32,6 @@ export const useUnitCardAnimations = (unit: EncounterUnit, isMonster: boolean) =
             }, 0);
         }
 
-        // Shield changes
-        if (unit.currentShield !== prevShieldRef.current) {
-            const shieldDiff = unit.currentShield - prevShieldRef.current;
-            prevShieldRef.current = unit.currentShield;
-
-            if (shieldDiff < 0) {
-                setTimeout(() => {
-                    const id = textIdCounter.current++;
-                    const text = `${shieldDiff}`;
-                    const type = 'shield-damage';
-
-                    setFloatingTexts(prev => [...prev, { id, text, type }]);
-                    setShieldAnimClass('shield-absorb-anim');
-                }, 0);
-            }
-        }
-
         // Monster attack lunge
         if (isMonster && unit.hasActed !== prevHasActedRef.current) {
             prevHasActedRef.current = unit.hasActed;
@@ -59,7 +41,7 @@ export const useUnitCardAnimations = (unit: EncounterUnit, isMonster: boolean) =
                 }, 0);
             }
         }
-    }, [unit.currentHealth, unit.currentShield, unit.hasActed, unit.isDead, isMonster]);
+    }, [unit.currentHealth, unit.hasActed, unit.isDead, isMonster]);
 
     // Effect for cleanup and timeouts only
     useEffect(() => {
@@ -87,10 +69,9 @@ export const useUnitCardAnimations = (unit: EncounterUnit, isMonster: boolean) =
         // Cleanup floating texts
         if (floatingTexts.length > 0) {
             const timers = floatingTexts.map(ft => {
-                const delay = ft.type === 'shield-damage' ? 1000 : 1500;
                 return setTimeout(() => {
                     setFloatingTexts(prev => prev.filter(item => item.id !== ft.id));
-                }, delay);
+                }, 1500);
             });
             return () => timers.forEach(t => clearTimeout(t));
         }

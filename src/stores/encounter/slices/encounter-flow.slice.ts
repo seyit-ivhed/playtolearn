@@ -31,8 +31,6 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     isPlayer: true,
                     maxHealth: calculatedStats.maxHealth,
                     currentHealth: calculatedStats.maxHealth,
-                    maxShield: 0,
-                    currentShield: 0,
                     damage: calculatedStats.abilityDamage || 0,
                     specialAbilityId: calculatedStats.specialAbilityId,
                     specialAbilityType: calculatedStats.specialAbilityType,
@@ -55,9 +53,6 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 isPlayer: false,
                 maxHealth: enemy.maxHealth,
                 currentHealth: enemy.maxHealth,
-                maxShield: enemy.maxShield || 0,
-                currentShield: 0,
-                // Map 'attack' to 'damage' for now, or ensure types align
                 damage: enemy.attack,
                 image: getMonsterSprite(enemy.id),
                 isDead: false,

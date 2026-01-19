@@ -1,7 +1,7 @@
 import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit } from '../../types/encounter.types';
 import { applyDamage } from './damage.utils';
-import { executeDamageAbility, executeHealAbility, executeShieldAbility, type HealableUnit, type ShieldableUnit } from './ability.utils';
+import { executeDamageAbility, executeHealAbility, type HealableUnit } from './ability.utils';
 
 /**
  * Unified Combat Engine
@@ -14,13 +14,12 @@ export interface CombatLog {
 }
 
 // Generic interface to cover both EncounterUnit and SimulationUnit
-export interface BattleUnit extends HealableUnit, ShieldableUnit {
+export interface BattleUnit extends HealableUnit {
     id: string;
     templateId: string;
     name: string;
     isPlayer: boolean;
     damage?: number;
-    maxShield: number;
 
     // Stats
     maxSpirit: number;
@@ -90,17 +89,6 @@ export class CombatEngine {
 
             logs.push({ message: `Healed allies for ${abilityValue}`, type: 'EFFECT' });
 
-        } else if (ability.type === 'SHIELD') {
-            const targets = allies;
-            const result = executeShieldAbility(targets, ability, abilityValue);
-
-            updatedUnits = updatedUnits.map(u => {
-                if (!u.isPlayer) return u;
-                const updated = result.find(t => t.id === u.id);
-                return updated ? (updated as BattleUnit) : u;
-            });
-
-            logs.push({ message: `Shielded allies for ${abilityValue}`, type: 'EFFECT' });
         }
 
         return { updatedUnits, logs };

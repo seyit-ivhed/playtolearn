@@ -11,8 +11,6 @@ describe('CombatEngine', () => {
         damage: 10,
         maxHealth: 100,
         currentHealth: 100,
-        maxShield: 0,
-        currentShield: 0,
         maxSpirit: 100,
         currentSpirit: 100,
         spiritGain: 10,
@@ -28,8 +26,6 @@ describe('CombatEngine', () => {
         damage: 5,
         maxHealth: 100,
         currentHealth: 100,
-        maxShield: 0,
-        currentShield: 0,
         maxSpirit: 100,
         currentSpirit: 0,
         spiritGain: 0,
@@ -84,20 +80,6 @@ describe('CombatEngine', () => {
 
             expect(healedHero?.currentHealth).toBe(70);
             expect(result.logs.find(l => l.type === 'EFFECT')).toBeTruthy();
-        });
-
-        it('should execute SHIELD ability', () => {
-            const ability: SpecialAbility = {
-                id: 'shield',
-                type: 'SHIELD',
-                value: 15,
-                target: 'ALL_ALLIES'
-            };
-
-            const result = CombatEngine.executeSpecialAbility(mockAttacker, [mockAttacker, mockEnemy], ability, 15);
-            const shieldedHero = result.updatedUnits.find(u => u.id === mockAttacker.id);
-
-            expect(shieldedHero?.currentShield).toBe(15);
         });
     });
 

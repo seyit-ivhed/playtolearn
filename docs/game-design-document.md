@@ -129,7 +129,6 @@ Each **Adventure** consists of:
 
 - **Monster Turn**:
   - **Sequential Attacks**: Monsters attack one by one to a random companion.
-  - **Shield Mechanics**: Shields provide a temporary health pool that absorbs damage before HP is touched.
 
 
 ### 2.5 Progression System

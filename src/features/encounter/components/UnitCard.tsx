@@ -162,7 +162,7 @@ export const UnitCard = ({
             </div>
 
             <UnitCardShield
-                currentShield={unit.currentShield}
+                currentShield={0}
                 animationClass={shieldAnimClass}
             />
 
