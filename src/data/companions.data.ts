@@ -159,7 +159,7 @@ export const COMPANIONS: Record<string, Companion> = {
         specialAbility: {
             id: 'blade_barrier',
             type: 'SHIELD',
-            value: 12,
+            value: 20,
             target: 'ALL_ALLIES'
         },
         initialSpirit: 60,
@@ -174,7 +174,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 newSpecialAbility: {
                     id: 'blade_barrier_2',
                     type: 'SHIELD',
-                    value: 18,
+                    value: 35,
                     target: 'ALL_ALLIES'
                 }
             },
@@ -188,7 +188,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 newSpecialAbility: {
                     id: 'blade_barrier_3',
                     type: 'SHIELD',
-                    value: 25,
+                    value: 50,
                     target: 'ALL_ALLIES'
                 }
             },
@@ -202,7 +202,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 newSpecialAbility: {
                     id: 'blade_barrier_4',
                     type: 'SHIELD',
-                    value: 40,
+                    value: 65,
                     target: 'ALL_ALLIES'
                 }
             }
