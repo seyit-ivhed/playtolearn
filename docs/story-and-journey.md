@@ -23,8 +23,8 @@ The player is **not a character in the story**. Instead, they are reading "The C
 Companions literally **grow up** through their adventures. Each evolution represents them aging and maturing:
 
 - **Age 8** (Evo 0): Young children, just starting their journey
-- **Age 13** (Evo 1): Early teens, becoming capable
-- **Age 16** (Evo 2): Mid-teens, experienced adventurers
+- **Age 12** (Evo 1): Pre-teens, becoming capable
+- **Age 15** (Evo 2): Teens, experienced adventurers
 - **Age 18** (Evo 3): Young adults, fully matured
 
 ### The Mentorship Dynamic
