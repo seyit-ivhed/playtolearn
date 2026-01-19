@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import type { Volume, AdventureId, AdventureStatus } from '../../../types/adventure.types';
+import { resolveVolumeAdventures } from '../utils/chronicle.utils';
 import './TableOfContents.css';
 
 interface TableOfContentsProps {
@@ -40,7 +41,8 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                             </h3>
 
                             <ul className="chapters-list">
-                                {volume.adventureIds.map((adventureId, index) => {
+                                {resolveVolumeAdventures(volume, t).map((adventure, index) => {
+                                    const adventureId = adventure.id;
                                     const status = adventureStatuses[adventureId] || 'LOCKED';
                                     const isPrologue = adventureId === 'prologue';
                                     const isAvailable = isPrologue || (status !== 'LOCKED' && !volume.isLocked);

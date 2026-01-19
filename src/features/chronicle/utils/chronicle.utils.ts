@@ -11,14 +11,19 @@ export const resolveCurrentVolume = (adventureId?: string): Volume => {
     if (!adventureId) return VOLUMES[0];
     if (adventureId === 'prologue') return VOLUMES[0];
 
-    return VOLUMES.find(v => v.adventureIds.includes(adventureId)) || VOLUMES[0];
+    const adventure = ADVENTURES.find(a => a.id === adventureId);
+    if (!adventure?.volumeId) return VOLUMES[0];
+
+    return VOLUMES.find(v => v.id === adventure.volumeId) || VOLUMES[0];
 };
 
 /**
  * Gets the list of adventures for a volume, including the special prologue for the 'origins' volume.
  */
 export const resolveVolumeAdventures = (volume: Volume, t: TFunction): Adventure[] => {
-    const filtered = ADVENTURES.filter(a => volume.adventureIds.includes(a.id));
+    // Filter adventures that belong to this volume using volumeId from the adventure data
+    // This makes adventures.data.ts the source of truth
+    const filtered = ADVENTURES.filter(a => a.volumeId === volume.id);
 
     if (volume.id === 'origins') {
         const prologue: Adventure = {

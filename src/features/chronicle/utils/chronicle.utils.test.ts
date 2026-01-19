@@ -22,9 +22,9 @@ describe('chronicle.utils', () => {
     });
 
     describe('resolveCurrentVolume', () => {
-        it('should return the volume containing the adventure', () => {
+        it('should return origins volume for adventure 4', () => {
             const result = resolveCurrentVolume('4');
-            expect(result.id).toBe('baobab');
+            expect(result.id).toBe('origins');
         });
 
         it('should return the first volume for the prologue', () => {
@@ -52,17 +52,10 @@ describe('chronicle.utils', () => {
             expect(result[0].title).toBe('Prologue Title');
 
             const expectedAdventureIds = ADVENTURES
-                .filter(a => originsVolume.adventureIds.includes(a.id))
+                .filter(a => a.volumeId === originsVolume.id)
                 .map(a => a.id);
 
             expect(result.slice(1).map(a => a.id)).toEqual(expectedAdventureIds);
-        });
-
-        it('should not include prologue for other volumes', () => {
-            const baobabVolume = VOLUMES.find(v => v.id === 'baobab')!;
-            const result = resolveVolumeAdventures(baobabVolume, mockT as unknown as TFunction);
-
-            expect(result.find(a => a.id === 'prologue')).toBeUndefined();
         });
     });
 

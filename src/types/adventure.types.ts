@@ -123,6 +123,5 @@ export interface Volume {
     coverImage?: string;
     isLocked: boolean;
     price?: number;
-    adventureIds: AdventureId[];
 }
 

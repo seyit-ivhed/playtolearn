@@ -41,65 +41,36 @@ Each new realm introduces companions who:
 
 The group grows organically, with each new companion adding to the family dynamic.
 
-## The Three Realms (MVP Scope)
+## The Journey: Volume 1 - The World of Origins
 
-### Realm 1: The Desert and Ancient City
-**Adventures 1-2 | Theme: Middle Eastern Desert & Assyrian Ruins**
+The journey is presented as a single cohesive volume consisting of 6 adventures and a prologue, spanning three distinct environments.
 
-**Setting**: Sun-baked deserts and a vast subterranean Assyrian city
+### Prologue: The Meeting
+Amara and Tariq meet and decide to explore the world together.
 
-**Companions**:
-- **Amara** (South African-inspired Ranger): A young traveler from distant southern lands, visiting this region
-- **Tariq** (Middle Eastern-inspired Alchemist): A local boy from the Assyrian city
+### The Desert & Ancient City (Adventures 1-2)
+**Theme: Middle Eastern Desert & Assyrian Ruins**
 
-**The Story**:
-- Amara is visiting Tariq's homeland when strange events begin
-- Together, they investigate mysterious sightings near ancient ruins
-- They discover hidden caves and a subterranean city
-- Through their adventures, they become close friends
-- Inspired by their experiences, they decide to explore the world together
-- **Adventure 1** (Free): Their first adventure together, discovering the hidden entrance
-- **Adventure 2** (Premium): Exploring the ruins of Ashur, cementing their friendship
+- **Adventure 1: The Oasis Quest**
+  Amara and Tariq's first adventure together, investigating mysteries near the oasis.
+- **Adventure 2: The Ruins of Ashur**
+  Exploring the subterranean city and finding the magical gate that allows travel to distant lands.
 
-**Narrative Arc**: The beginning of a friendship that will change their lives
+### The Jade Peaks (Adventures 3-4)
+**Theme: Misty Mountains & Cherry Blossoms**
 
----
+- **Adventure 3: The Misty Foothills**
+  Arriving in the Jade Peaks, they meet **Kenji** and discover the Iron Warlord's corruption.
+- **Adventure 4: The Iron Warlord's Fortress**
+  The team confronts the Warlord to free the nature spirits. Kenji fully joins the group.
 
-### Realm 2: The Jade Peaks (Premium)
-**Adventures 3-5 | Theme: Misty Mountains & Cherry Blossoms**
+### The Sunfire Savannah (Adventures 5-6)
+**Theme: Golden Grasslands & Ancestral Spirits**
 
-**Setting**: A vertical world of towering peaks, floating islands, and feudal villages veiled in mist.
-
-**New Companion**:
-- **Kenji** (Mountain Samurai): A determined 8-year-old boy from a samurai clan.
-
-**The Story**:
-- Passing through the magical gate in the Assyrian city, Amara and Tariq arrive in the Jade Peaks.
-- They discover the **Iron Warlord** is corrupting the land's nature spirits to fuel his war machines.
-- **Adventure 3**: They meet Kenji defending a shrine and discover the **Cloudskimmer**, an ancient flying ship. They repair it to escape.
-- **Adventure 4**: Navigating the ship to the Warlord's fortress. Kenji struggles with his fears but learns that true strength is protecting others.
-- **Adventure 5**: The final assault on the Warlord's fortress. They defeat the Iron Warlord, freeing the spirits. Kenji joins the crew permanently.
-
-**Narrative Arc**: The travelers gain mobility (The Cloudskimmer) and learn that strength comes from purpose, not just power.
-
----
-
-### Realm 3: The Sunfire Savannah (Premium)
-**Adventures 6-8 | Theme: Golden Grasslands & Ancestral Spirits**
-
-**Setting**: Endless golden plains dotted with massive baobab trees and vibrant, magical sunsets.
-
-**New Companion**:
-- **Zahara** (Savannah Mage): An 8-year-old girl struggling to control her powerful connection to the spirit world.
-
-**The Story**:
-- Flying on the Cloudskimmer, the group arrives to find the Savannah scorched by unnatural heat.
-- The **Ancestral Spirits** are enraged because a sacred balance has been broken.
-- **Adventure 6**: They land and meet Zahara, whose uncontrolled magic is accidentally fueling wildfires.
-- **Adventure 7**: Traveling to the heart of the disturbance. Zahara tries to commune with the spirits but is overwhelmed. Amara and Tariq help ground her.
-- **Adventure 8**: At the Spirit Tree, they calm the **Raging Spirit King**. Zahara learns to channel her magic to restore balance rather than force it.
-
-**Narrative Arc**: The found family is complete. They learn that listening and understanding are as powerful as fighting.
+- **Adventure 5: The Scorched Plains**
+  Traveling to the Savannah, they meet **Zahara** and encounter out-of-control elemental magic.
+- **Adventure 6: Harmony Restored**
+  At the Spirit Tree, they help Zahara calm the Raging Spirit King and restore balance to the land.
 
 ## Narrative Presence
 
@@ -133,7 +104,7 @@ The narrative framework supports both minimal and expanded storytelling without 
 
 ## Design Philosophy
 
-- **No "Big Bad" Villain**: Each realm has self-contained challenges and conflicts
+- **No "Big Bad" Villain**: Each region has self-contained challenges and conflicts
 - **Wholesome Tone**: Child-friendly, positive, focused on friendship and growth
 - **Educational Alignment**: Learning through adventure and problem-solving
 - **Emotional Resonance**: Watching characters literally grow up over the journey
