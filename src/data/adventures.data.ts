@@ -236,27 +236,17 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '4',
         volumeId: 'origins',
-        encounters: [] // To be implemented: Rise of the Iron Warlord (Premium) - Journey to fortress, Kenji's growth
+        encounters: [] // To be implemented: Rise of the Iron Warlord (Premium) - Journey to fortress, Defeat the Iron Warlord
     },
     {
         id: '5',
         volumeId: 'origins',
-        encounters: [] // To be implemented: The Summit Showdown (Premium) - Defeat Warlord, Kenji joins
+        encounters: [] // To be implemented: The Scorched Plains (Free) - Intro to Savannah, meet Zahara
     },
     {
         id: '6',
         volumeId: 'origins',
-        encounters: [] // To be implemented: The Scorched Plains (Free) - Intro to Savannah, meet Zahara
-    },
-    {
-        id: '7',
-        volumeId: 'origins',
-        encounters: [] // To be implemented: Whispers of the Ancestors (Premium) - Zahara's struggle
-    },
-    {
-        id: '8',
-        volumeId: 'origins',
-        encounters: [] // To be implemented: Harmony Restored (Premium) - Calming Spirit King, Zahara restored
+        encounters: [] // To be implemented: Harmony Restored (Premium) - Calming Spirit King
     }
 ];
 
