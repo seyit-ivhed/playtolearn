@@ -17,11 +17,19 @@ const tariqImg = [
     new URL('../assets/images/companions/Tariq/Tariq-3.png', import.meta.url).href,
 ];
 
+const kenjiImg = [
+    new URL('../assets/images/companions/Kenji/Kenji-0.png', import.meta.url).href,
+    new URL('../assets/images/companions/Kenji/Kenji-1.png', import.meta.url).href,
+    new URL('../assets/images/companions/Kenji/Kenji-2.png', import.meta.url).href,
+    new URL('../assets/images/companions/Kenji/Kenji-3.png', import.meta.url).href,
+];
+
 import { getCompanionById } from './companions.data';
 
 const COMPANION_SPRITES: Record<string, string[]> = {
     'amara': amaraImg,
     'tariq': tariqImg,
+    'kenji': kenjiImg,
 };
 
 /**
