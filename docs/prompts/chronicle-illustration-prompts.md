@@ -59,3 +59,13 @@ A breathtaking view of the subterranean city, filled with ancient wonder and ban
 1. **Aspect Ratio:** Ensure you specify `--ar 16:9` if the generator supports parameters.
 2. **Adversarial Balance:** For Chronicles, keep the focus on the **journey and discovery** rather than a specific battle.
 3. **Consistency:** Use "Hand-painted digital illustration" as the leading style keyword to ensure it blends well with character portraits.
+
+---
+
+## Adventure 3: The Misty Foothills
+
+### Concept
+Amara and Tariq arriving to meet Kenji in the snowy foothills of the Jade Peaks.
+
+### Primary Prompt
+> A beautiful storybook illustration of two young adventurers, Amara and Tariq, arriving at the snowy foothills of the Jade Peaks. They have just emerged from a shimmering magical portal. Through the thick, swirling mountain mists, they discover a young boy named Kenji dressed in traditional blue samurai armor, looking determined yet weary. Amara with warm brown skin and curly hair, Tariq with olive skin and desert gear. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, magical atmosphere. High quality, wide shot. No text. 16:9 aspect ratio.
