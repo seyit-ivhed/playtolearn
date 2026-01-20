@@ -58,8 +58,8 @@ export const MONSTERS = {
         maxHealth: 65,
         attack: 15,
     },
-    MOUNTAIN_GOLEM: {
-        id: 'mountain_golem',
+    IRON_MINION: {
+        id: 'iron_minion',
         maxHealth: 120,
         attack: 22,
     },
