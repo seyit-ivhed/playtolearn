@@ -53,4 +53,20 @@ export const MONSTERS = {
         attack: 40,
         isBoss: true,
     },
+    MIST_STALKER: {
+        id: 'mist_stalker',
+        maxHealth: 65,
+        attack: 15,
+    },
+    MOUNTAIN_GOLEM: {
+        id: 'mountain_golem',
+        maxHealth: 120,
+        attack: 22,
+    },
+    IRON_WARLORD_ENFORCER: {
+        id: 'iron_warlord_enforcer',
+        maxHealth: 350,
+        attack: 45,
+        isBoss: true,
+    },
 } as const satisfies Record<string, AdventureMonster>;

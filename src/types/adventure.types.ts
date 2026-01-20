@@ -45,7 +45,9 @@ export const PuzzleType = {
     SUM_TARGET: 'SUM_TARGET',     // Water Flow
     BALANCE: 'BALANCE',           // Weighing Rocks
     SEQUENCE: 'SEQUENCE',          // Star Map
-    GUARDIAN_TRIBUTE: 'GUARDIAN_TRIBUTE' // Adventure 2: Division/Distribution
+    GUARDIAN_TRIBUTE: 'GUARDIAN_TRIBUTE', // Adventure 2: Division/Distribution
+    SYMMETRY: 'SYMMETRY',         // Adventure 3: Mirror Mist
+    LATIN_SQUARE: 'LATIN_SQUARE'  // Adventure 3: Keystone Cipher
 } as const;
 
 export type PuzzleType = typeof PuzzleType[keyof typeof PuzzleType];

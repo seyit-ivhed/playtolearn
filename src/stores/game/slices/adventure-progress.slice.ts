@@ -6,7 +6,13 @@ import { EncounterType } from '../../../types/adventure.types';
 
 export const createAdventureProgressSlice: StateCreator<GameStore, [], [], AdventureProgressSlice> = (set, get) => ({
     completeEncounter: (adventureId, nodeIndex) => {
-        const { addXpToPool, encounterResults } = get();
+        const { addXpToPool, encounterResults, addCompanionToParty } = get();
+
+        // Permanent joining logic for Kenji
+        if (adventureId === '3' && nodeIndex === 1) {
+            addCompanionToParty('kenji');
+        }
+
         const adventure = ADVENTURES.find(a => a.id === adventureId);
 
         if (!adventure) return;
@@ -72,10 +78,10 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
             const isLocked = !isCompleted && !lastUnlockedNodeCompleted;
 
             if (node.type !== EncounterType.CAMP && node.type !== EncounterType.ENDING) {
-                 // This is a "blocker" node. If it's not completed, the *next* node will be locked.
-                 lastUnlockedNodeCompleted = isCompleted;
-            } 
-            
+                // This is a "blocker" node. If it's not completed, the *next* node will be locked.
+                lastUnlockedNodeCompleted = isCompleted;
+            }
+
             return {
                 ...node,
                 isLocked,

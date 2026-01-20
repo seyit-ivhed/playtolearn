@@ -40,6 +40,7 @@ export interface AdventureStatusSlice {
 export interface ProgressionSlice {
     addXpToPool: (amount: number) => void;
     levelUpCompanion: (companionId: string) => void;
+    addCompanionToParty: (companionId: string) => void;
 }
 
 // Debug & Reset Actions

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
@@ -29,7 +29,8 @@ const AdventurePage = () => {
         completeEncounter,
         completeAdventure,
         unlockAdventure,
-        isAdventureUnlocked: isProgressionUnlocked
+        isAdventureUnlocked: isProgressionUnlocked,
+        addCompanionToParty
     } = useGameStore();
     const { initializeEncounter } = useEncounterStore();
     const {
@@ -57,6 +58,13 @@ const AdventurePage = () => {
             return null;
         }
     }
+
+    // Add Kenji automatically for Adventure 3
+    useEffect(() => {
+        if (adventureId === '3' && !party.includes('kenji')) {
+            addCompanionToParty('kenji');
+        }
+    }, [adventureId, party, addCompanionToParty]);
 
     if (!adventure || !adventureId) {
         return <div>{t('adventure.not_found', 'Adventure not found')}</div>;

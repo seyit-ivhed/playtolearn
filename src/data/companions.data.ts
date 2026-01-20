@@ -158,9 +158,9 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         specialAbility: {
             id: 'blade_barrier',
-            type: 'SHIELD',
+            type: 'DAMAGE',
             value: 20,
-            target: 'ALL_ALLIES'
+            target: 'SINGLE_ENEMY'
         },
         initialSpirit: 60,
         evolutions: [
