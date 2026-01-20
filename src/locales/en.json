@@ -79,7 +79,7 @@
                     "label": "Water Network"
                 },
                 "2_3": {
-                    "label": "Patrolling Bandits"
+                    "label": "Common Area"
                 },
                 "2_5": {
                     "label": "Bandit Camp"
@@ -101,6 +101,45 @@
                 },
                 "2_13": {
                     "label": "The Stone Emperor"
+                }
+            }
+        },
+        "3": {
+            "title": "The Misty Foothills",
+            "description": "Traveling from the ancient ruins through a shimmering portal, Amara and Tariq emerge in the breath-taking Jade Peaks where they discover a young warrior named Kenji struggling against the thick mountain mists.",
+            "story_hook": "As the portal shimmered and faded behind them, the sweltering heat of the ruins was replaced by the crisp, biting air of the Jade Peaks. Towering mountains rose like giants around Amara and Tariq, their peaks hidden by thick, swirling mists. Suddenly, a figure emerged from the fog—a young boy named Kenji, his blue samurai armor glinting as he fended off shadowy shapes lurking in the mist. He looked weary, but his gaze was as resolute as the mountains themselves.",
+            "completion_summary": "The Iron Warlord's enforcer has been driven back, and the mists have momentarily parted. Kenji, impressed by the newcomers' bravery and wisdom, wipes his brow and offers a formal bow. The path to the peaks is dangerous, but with new allies, the journey upward has just begun.",
+            "mystery_path": "The trail leads higher into the frozen heights...",
+            "nodes": {
+                "3_1": {
+                    "label": "First Contact"
+                },
+                "3_2": {
+                    "label": "The Mist Thickens"
+                },
+                "3_4": {
+                    "label": "The Mirror Mist"
+                },
+                "3_5": {
+                    "label": "Stone Guardian"
+                },
+                "3_6": {
+                    "label": "Ambuscade"
+                },
+                "3_8": {
+                    "label": "The Keystone Cipher"
+                },
+                "3_9": {
+                    "label": "Heavy Resistance"
+                },
+                "3_10": {
+                    "label": "The Star Path"
+                },
+                "3_12": {
+                    "label": "The Iron Warlord Enforcer"
+                },
+                "3_13": {
+                    "label": "Journey to Jade Peaks"
                 }
             }
         }
