@@ -31,3 +31,18 @@ At the very bottom, a grand, expansive chamber houses the throne room or central
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 
 Try to make it as long as possible.
+
+## Adventure 3 Map Background
+
+**Prompt:**
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts an ascent into the misty Jade Peaks, flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
+
+At the top, the terrain features lush foothills with dense bamboo groves and small stone shrines, partially veiled in light, morning mist.
+
+Moving downwards, the path climbs steeply. The map shows winding ancient stone staircases carved into mountain ridges, surrounded by thick, swirling clouds and jagged peaks. Hints of Iron Warlord banners and watchtowers appear among the rocks.
+
+At the very bottom, the map culminates in a narrow, formidable mountain pass guarded by a massive iron-reinforced fortress gate—the stronghold of the Iron Warlord Enforcer.
+
+The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
+
+Try to make it as long as possible.

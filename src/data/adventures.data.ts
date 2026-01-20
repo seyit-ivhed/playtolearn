@@ -231,8 +231,6 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '3',
         volumeId: 'origins',
-        title: 'The Misty Foothills',
-        description: 'The journey to the Jade Peaks begins here. Meet Kenji and face the Iron Warlord\'s forces.',
         encounters: [
             {
                 id: '3_1',
