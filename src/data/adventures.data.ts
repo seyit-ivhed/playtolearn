@@ -267,7 +267,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1900 },
-                enemies: [MONSTERS.MOUNTAIN_GOLEM],
+                enemies: [MONSTERS.IRON_MINION],
                 xpReward: 200,
                 label: 'Stone Guardian'
             },
@@ -275,7 +275,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_6',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 2200 },
-                enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.MOUNTAIN_GOLEM],
+                enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.IRON_MINION],
                 xpReward: 220,
                 label: 'Ambuscade'
             },
@@ -298,7 +298,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_9',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -100, y: 3100 },
-                enemies: [MONSTERS.MOUNTAIN_GOLEM, MONSTERS.MOUNTAIN_GOLEM],
+                enemies: [MONSTERS.IRON_MINION, MONSTERS.IRON_MINION],
                 xpReward: 270,
                 label: 'Heavy Resistance'
             },
