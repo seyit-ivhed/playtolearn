@@ -231,7 +231,110 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '3',
         volumeId: 'origins',
-        encounters: [] // To be implemented: The Misty Foothills (Free) - Intro to Jade Peaks, meet Kenji, find Cloudskimmer
+        title: 'The Misty Foothills',
+        description: 'The journey to the Jade Peaks begins here. Meet Kenji and face the Iron Warlord\'s forces.',
+        encounters: [
+            {
+                id: '3_1',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -200, y: 800 },
+                enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER],
+                xpReward: 150,
+                label: 'First Contact'
+            },
+            {
+                id: '3_2',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 150, y: 1000 },
+                enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER],
+                xpReward: 160,
+                label: 'The Mist Thickens'
+            },
+            {
+                id: '3_3',
+                type: EncounterType.CAMP,
+                coordinates: { x: -50, y: 1300 },
+                xpReward: 0,
+                label: 'Resting Place'
+            },
+            {
+                id: '3_4',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: -250, y: 1600 },
+                puzzleData: { puzzleType: PuzzleType.SYMMETRY },
+                xpReward: 180,
+                label: 'The Mirror Mist'
+            },
+            {
+                id: '3_5',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 200, y: 1900 },
+                enemies: [MONSTERS.MOUNTAIN_GOLEM],
+                xpReward: 200,
+                label: 'Stone Guardian'
+            },
+            {
+                id: '3_6',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -150, y: 2200 },
+                enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.MOUNTAIN_GOLEM],
+                xpReward: 220,
+                label: 'Ambuscade'
+            },
+            {
+                id: '3_7',
+                type: EncounterType.CAMP,
+                coordinates: { x: 50, y: 2500 },
+                xpReward: 0,
+                label: 'Foothold'
+            },
+            {
+                id: '3_8',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 300, y: 2800 },
+                puzzleData: { puzzleType: PuzzleType.LATIN_SQUARE },
+                xpReward: 250,
+                label: 'The Keystone Cipher'
+            },
+            {
+                id: '3_9',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -100, y: 3100 },
+                enemies: [MONSTERS.MOUNTAIN_GOLEM, MONSTERS.MOUNTAIN_GOLEM],
+                xpReward: 270,
+                label: 'Heavy Resistance'
+            },
+            {
+                id: '3_10',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 250, y: 3400 },
+                puzzleData: { puzzleType: PuzzleType.SEQUENCE },
+                xpReward: 280,
+                label: 'The Star Path'
+            },
+            {
+                id: '3_11',
+                type: EncounterType.CAMP,
+                coordinates: { x: 0, y: 3700 },
+                xpReward: 0,
+                label: 'Last Stand Prep'
+            },
+            {
+                id: '3_12',
+                type: EncounterType.BOSS,
+                coordinates: { x: 0, y: 4100 },
+                enemies: [MONSTERS.IRON_WARLORD_ENFORCER],
+                xpReward: 500,
+                label: 'The Iron Warlord Enforcer'
+            },
+            {
+                id: '3_13',
+                type: EncounterType.ENDING,
+                coordinates: { x: -300, y: 4400 },
+                xpReward: 0,
+                label: 'To the Jade Peaks'
+            }
+        ]
     },
     {
         id: '4',

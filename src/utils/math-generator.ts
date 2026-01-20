@@ -13,6 +13,8 @@ import { generateSumTargetData } from '../features/encounter/puzzles/sum-target/
 import { generateBalanceData } from '../features/encounter/puzzles/balance/BalanceEngine';
 import { generateSequenceData } from '../features/encounter/puzzles/sequence/SequenceEngine';
 import { generateGuardianTributeData } from '../features/encounter/puzzles/guardian-tribute/GuardianTributeEngine';
+import { generateSymmetryData } from '../features/encounter/puzzles/symmetry/SymmetryEngine';
+import { generateLatinSquareData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
 
 /**
  * Mapping of puzzle types to their respective data generators
@@ -22,6 +24,8 @@ const PUZZLE_GENERATORS: Record<PuzzleType, (difficulty: DifficultyLevel) => Puz
     [PuzzleType.BALANCE]: generateBalanceData,
     [PuzzleType.SEQUENCE]: generateSequenceData,
     [PuzzleType.GUARDIAN_TRIBUTE]: generateGuardianTributeData,
+    [PuzzleType.SYMMETRY]: generateSymmetryData,
+    [PuzzleType.LATIN_SQUARE]: generateLatinSquareData,
 };
 
 /**

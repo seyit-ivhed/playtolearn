@@ -27,4 +27,14 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
 
         PersistenceService.sync(get());
     },
+
+    addCompanionToParty: (companionId: string) => {
+        const { activeParty } = get();
+
+        if (activeParty.includes(companionId)) return;
+
+        set({ activeParty: [...activeParty, companionId] });
+
+        PersistenceService.sync(get());
+    },
 });
