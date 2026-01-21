@@ -23,9 +23,9 @@ export default defineConfig({
           'vendor-react': ['react', 'react-dom'],
           'vendor-router': ['react-router-dom'],
           'vendor-supabase': ['@supabase/supabase-js'],
-          'vendor-utils': ['framer-motion', 'zustand', 'i18next', 'react-i18next', 'react-hook-form'],
+          'vendor-utils': ['framer-motion', 'zustand', 'i18next', 'react-i18next'],
           'vendor-ui': ['lucide-react'],
-          'vendor-particles': ['tsparticles', '@tsparticles/react', '@tsparticles/slim'],
+          'vendor-particles': ['tsparticles', '@tsparticles/react', '@tsparticles/engine'],
         },
       },
       onwarn(warning) {
