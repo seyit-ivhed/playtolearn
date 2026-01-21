@@ -103,6 +103,45 @@
                     "label": "Stenkejsaren"
                 }
             }
+        },
+        "3": {
+            "title": "De dimmiga fotbergen",
+            "description": "När de reser från de uråldriga ruinerna genom en skimrande portal, dyker Amara och Tariq upp i de hisnande Jade-topparna där de upptäcker en ung krigare vid namn Kenji som kämpar mot den tjocka bergsdimman.",
+            "story_hook": "När portalen skimrade och bleknade bakom dem, ersattes ruinernas kvävande hetta av Jade-topparnas krispiga, bitande luft. Tornhöga berg reste sig som jättar runt Amara och Tariq, deras toppar dolda av tjock, virvlande dimma. Plötsligt dök en gestalt upp ur dimman—en ung pojke vid namn Kenji, hans blå samurajrustning glimmade när han värjde sig mot skugglika gestalter som lurade i dimman. Han såg trött ut, men hans blick var lika beslutsam som bergen själva.",
+            "completion_summary": "Järnkriggherrens hantlangare har drivits tillbaka och dimman har tillfälligt skingrats. Kenji, imponerad av nykomlingarnas mod och visdom, torkar pannan och bugar formellt. Vägen till topparna är farlig, men med nya allierade har resan uppåt precis börjat.",
+            "mystery_path": "Stigen leder högre upp i de frusna höjderna...",
+            "nodes": {
+                "3_1": {
+                    "label": "Första kontakten"
+                },
+                "3_2": {
+                    "label": "Dimman tätnar"
+                },
+                "3_4": {
+                    "label": "Spegeldimman"
+                },
+                "3_5": {
+                    "label": "Stenväktare"
+                },
+                "3_6": {
+                    "label": "Bakhåll"
+                },
+                "3_8": {
+                    "label": "Slutstenschiffret"
+                },
+                "3_9": {
+                    "label": "Hårt motstånd"
+                },
+                "3_10": {
+                    "label": "Stjärnvägen"
+                },
+                "3_12": {
+                    "label": "Järnkriggherrens hantlangare"
+                },
+                "3_13": {
+                    "label": "Resan till Jade-topparna"
+                }
+            }
         }
     },
     "chronicle": {
