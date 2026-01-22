@@ -41,7 +41,10 @@ export const CompanionTooltip: React.FC<CompanionTooltipProps> = ({ companionId,
                     <span>{t(`abilities.${calculatedStats.specialAbilityId || data.specialAbility.id}.name`)}</span>
                 </div>
                 <p className={styles.abilityText}>
-                    {t(`abilities.${calculatedStats.specialAbilityId || data.specialAbility.id}.description`, { value: calculatedStats.specialAbilityValue || data.specialAbility.value })}
+                    {t(`abilities.${calculatedStats.specialAbilityId || data.specialAbility.id}.description`, {
+                        ...calculatedStats.specialAbilityVariables,
+                        value: Object.values(calculatedStats.specialAbilityVariables || {})[0] // Fallback for single value
+                    })}
                 </p>
             </div>
         </div>

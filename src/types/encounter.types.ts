@@ -8,6 +8,33 @@ export const EncounterPhase = {
 
 export type EncounterPhase = typeof EncounterPhase[keyof typeof EncounterPhase];
 
+export interface CombatLog {
+    message: string;
+    type: 'ATTACK' | 'ABILITY' | 'EFFECT' | 'INFO';
+}
+
+/**
+ * Generic interface for combat participants
+ */
+export interface BattleUnit {
+    id: string;
+    templateId: string;
+    name: string;
+    isPlayer: boolean;
+    damage?: number;
+    currentHealth: number;
+    maxHealth: number;
+    isDead: boolean;
+
+    // Stats
+    maxSpirit: number;
+    currentSpirit: number;
+    spiritGain: number;
+
+    // State
+    hasActed: boolean;
+}
+
 export interface EncounterUnit {
     id: string; // Unique Instance ID
     templateId: string; // Reference to Companion/Monster ID
@@ -20,9 +47,7 @@ export interface EncounterUnit {
     currentHealth: number;
     damage?: number;
     specialAbilityId?: string;
-    specialAbilityType?: 'DAMAGE' | 'HEAL' | 'SHIELD';
-    specialAbilityValue?: number;
-    specialAbilityTarget?: 'SINGLE_ENEMY' | 'ALL_ENEMIES' | 'SINGLE_ALLY' | 'ALL_ALLIES' | 'SELF' | 'RANDOM_ENEMY';
+    specialAbilityVariables?: Record<string, number>;
 
     // Visuals
     image?: string;

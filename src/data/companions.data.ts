@@ -24,9 +24,7 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         specialAbility: {
             id: 'jaguar_strike',
-            type: 'DAMAGE',
-            value: 30,
-            target: 'SINGLE_ENEMY'
+            variables: { damage: 30 }
         },
         initialSpirit: 65,
         evolutions: [
@@ -39,9 +37,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'jaguar_strike_2',
-                    type: 'DAMAGE',
-                    value: 45,
-                    target: 'SINGLE_ENEMY'
+                    variables: { damage: 45 }
                 }
             },
             {
@@ -53,9 +49,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'jaguar_strike_3',
-                    type: 'DAMAGE',
-                    value: 65,
-                    target: 'SINGLE_ENEMY'
+                    variables: { damage: 65 }
                 }
             },
             {
@@ -67,9 +61,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'jaguar_strike_4',
-                    type: 'DAMAGE',
-                    value: 100,
-                    target: 'SINGLE_ENEMY'
+                    variables: { damage: 100 }
                 }
             }
         ]
@@ -91,9 +83,7 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         specialAbility: {
             id: 'elixir_of_life',
-            type: 'HEAL',
-            value: 25,
-            target: 'ALL_ALLIES'
+            variables: { heal: 25 }
         },
         initialSpirit: 0,
         evolutions: [
@@ -106,9 +96,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'elixir_of_life_2',
-                    type: 'HEAL',
-                    value: 35,
-                    target: 'ALL_ALLIES'
+                    variables: { heal: 35 }
                 }
             },
             {
@@ -120,9 +108,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'elixir_of_life_3',
-                    type: 'HEAL',
-                    value: 50,
-                    target: 'ALL_ALLIES'
+                    variables: { heal: 50 }
                 }
             },
             {
@@ -134,9 +120,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'elixir_of_life_4',
-                    type: 'HEAL',
-                    value: 80,
-                    target: 'ALL_ALLIES'
+                    variables: { heal: 80 }
                 }
             }
         ]
@@ -158,9 +142,7 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         specialAbility: {
             id: 'blade_barrier',
-            type: 'DAMAGE',
-            value: 20,
-            target: 'SINGLE_ENEMY'
+            variables: { damage: 20 }
         },
         initialSpirit: 60,
         evolutions: [
@@ -173,9 +155,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'blade_barrier_2',
-                    type: 'SHIELD',
-                    value: 35,
-                    target: 'ALL_ALLIES'
+                    variables: { heal: 35 } // Plan said SHIELD, library maps heal to SHIELD-like effect for now
                 }
             },
             {
@@ -187,9 +167,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'blade_barrier_3',
-                    type: 'SHIELD',
-                    value: 50,
-                    target: 'ALL_ALLIES'
+                    variables: { heal: 50 }
                 }
             },
             {
@@ -201,9 +179,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'blade_barrier_4',
-                    type: 'SHIELD',
-                    value: 65,
-                    target: 'ALL_ALLIES'
+                    variables: { heal: 65 }
                 }
             }
         ]
@@ -225,9 +201,7 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         specialAbility: {
             id: 'ancestral_storm',
-            type: 'DAMAGE',
-            value: 15,
-            target: 'ALL_ENEMIES'
+            variables: { damage: 15 }
         },
         initialSpirit: 40,
         evolutions: [
@@ -240,9 +214,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'ancestral_storm_2',
-                    type: 'DAMAGE',
-                    value: 25,
-                    target: 'ALL_ENEMIES'
+                    variables: { damage: 25 }
                 }
             },
             {
@@ -254,9 +226,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'ancestral_storm_3',
-                    type: 'DAMAGE',
-                    value: 40,
-                    target: 'ALL_ENEMIES'
+                    variables: { damage: 40 }
                 }
             },
             {
@@ -268,9 +238,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'ancestral_storm_4',
-                    type: 'DAMAGE',
-                    value: 65,
-                    target: 'ALL_ENEMIES'
+                    variables: { damage: 65 }
                 }
             }
         ]

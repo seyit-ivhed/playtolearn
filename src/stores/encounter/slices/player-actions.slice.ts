@@ -1,8 +1,8 @@
 import type { StateCreator } from 'zustand';
 import type { EncounterStore, PlayerActionsSlice } from '../interfaces';
 import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.types';
-import { CombatEngine, type BattleUnit } from '../../../utils/battle/combat-engine';
-import type { SpecialAbility } from '../../../types/companion.types';
+import { CombatEngine } from '../../../utils/battle/combat-engine';
+import type { BattleUnit } from '../../../types/encounter.types';
 
 export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => ({
     selectUnit: (unitId) => set({ selectedUnitId: unitId }),
@@ -22,9 +22,6 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         set({ party: newParty });
 
         // Execute Standard Attack via Combat Engine
-        // (Assuming performAction is always standard attack for now as per previous logic)
-        // Previous logic called performWarriorAction which did damage.
-
         const allUnits = [...newParty, ...monsters];
         const result = CombatEngine.executeStandardAttack(
             unit as unknown as BattleUnit,
@@ -70,20 +67,10 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         if (unitIndex === -1) return;
 
         const unit = party[unitIndex];
-        // Construct ability object with fallbacks
-        // Note: unit.specialAbilityTarget should be populated now, but we keep fallback logic just in case for older saves/states (though state resets on reload)
-        const abilityId = unit.specialAbilityId || 'attack';
-        const abilityType = unit.specialAbilityType || 'DAMAGE';
-        const abilityValue = unit.specialAbilityValue || 10;
-        const abilityTarget = unit.specialAbilityTarget ||
-            (unit.templateId === 'amara' && unit.specialAbilityId === 'twin_shadows' ? 'ALL_ENEMIES' : 'SINGLE_ENEMY');
+        const abilityId = unit.specialAbilityId;
+        const variables = unit.specialAbilityVariables || {};
 
-        const inputAbility: SpecialAbility = {
-            id: abilityId,
-            type: abilityType,
-            value: abilityValue,
-            target: abilityTarget
-        };
+        if (!abilityId) return;
 
         if (success) {
             // EXECUTE ABILITY LOGIC via CombatEngine
@@ -92,19 +79,12 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
             const result = CombatEngine.executeSpecialAbility(
                 unit as unknown as BattleUnit,
                 allUnits as unknown as BattleUnit[],
-                inputAbility,
-                abilityValue
+                abilityId,
+                variables
             );
 
             // Map logs
             const updatedLogs = result.logs.map(l => l.message);
-
-            // Update State
-            // Note: consume charge & mark acted is handled manually below because CombatEngine is pure 
-            // and doesn't know about "consuming charge" mechanic specifically for the UI state flow (Unit state update)
-            // ACTUALLY CombatEngine updates unit state if we pass it, but specific "Acted" flag management might be UI specific?
-            // CombatEngine result uses the units passed in.
-            // We need to ensure the attacker has spirit 0 and hasActed = true.
 
             let finalUnits = result.updatedUnits as unknown as EncounterUnit[];
 

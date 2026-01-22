@@ -1,8 +1,8 @@
 import type { AdventureMonster } from '../../types/adventure.types';
-import type { SpecialAbility } from '../../types/companion.types';
 import { getCompanionById } from '../../data/companions.data';
 import { getStatsForLevel } from '../progression.utils';
-import { CombatEngine, type BattleUnit } from '../battle/combat-engine';
+import { CombatEngine } from '../battle/combat-engine';
+import type { BattleUnit } from '../../types/encounter.types';
 import type {
     SimulationUnit,
     BattleState,
@@ -54,9 +54,7 @@ export class BattleSimulator {
 
                     // Evolution details
                     specialAbilityId: stats.specialAbilityId,
-                    specialAbilityType: stats.specialAbilityType,
-                    specialAbilityValue: stats.specialAbilityValue || undefined,
-                    specialAbilityTarget: stats.specialAbilityTarget,
+                    specialAbilityVariables: stats.specialAbilityVariables,
 
                     isDead: false,
                     hasActed: false,
@@ -203,31 +201,28 @@ export class BattleSimulator {
         }
 
         // Construct ability object from Unit state (evolved data)
-        if (!attacker.specialAbilityId || !attacker.specialAbilityType) {
+        const abilityId = attacker.specialAbilityId;
+        const variables = attacker.specialAbilityVariables || {};
+
+        if (!abilityId) {
             // Fallback to companion data if for some reason missing (shouldn't happen with new init)
             const companionData = getCompanionById(attacker.templateId);
             if (companionData) {
-                const ability = companionData.specialAbility;
-                this.runAbilityExecution(attacker, ability, attacker.specialAbilityValue || ability.value);
+                const companionStats = getStatsForLevel(companionData, 1); // Simple fallback
+                this.runAbilityExecution(attacker, companionStats.specialAbilityId!, companionStats.specialAbilityVariables || {});
             }
         } else {
-            const ability: SpecialAbility = {
-                id: attacker.specialAbilityId,
-                type: attacker.specialAbilityType,
-                value: attacker.specialAbilityValue || 0,
-                target: attacker.specialAbilityTarget || 'SINGLE_ENEMY' // Default fallback
-            };
-            this.runAbilityExecution(attacker, ability, ability.value);
+            this.runAbilityExecution(attacker, abilityId, variables);
         }
     }
 
-    private runAbilityExecution(attacker: SimulationUnit, ability: SpecialAbility, value: number) {
+    private runAbilityExecution(attacker: SimulationUnit, abilityId: string, variables: Record<string, number>): void {
         const allUnits = [...this.state.party, ...this.state.monsters] as unknown as BattleUnit[];
         const result = CombatEngine.executeSpecialAbility(
             attacker as unknown as BattleUnit,
             allUnits,
-            ability,
-            value
+            abilityId,
+            variables
         );
 
         this.updateStateFromCombatResult(result.updatedUnits);

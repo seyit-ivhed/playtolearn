@@ -5,7 +5,8 @@ import { getCompanionById } from '../../../data/companions.data';
 import { getStatsForLevel } from '../../../utils/progression.utils';
 import { getMonsterSprite } from '../../../data/monster-sprites';
 import { getCompanionSprite } from '../../../data/companion-sprites';
-import { CombatEngine, type BattleUnit } from '../../../utils/battle/combat-engine';
+import { CombatEngine } from '../../../utils/battle/combat-engine';
+import type { BattleUnit } from '../../../types/encounter.types';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
     initializeEncounter: (partyIds, enemies, xpReward, nodeIndex, difficulty, companionStats) => {
@@ -33,9 +34,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     currentHealth: calculatedStats.maxHealth,
                     damage: calculatedStats.abilityDamage || 0,
                     specialAbilityId: calculatedStats.specialAbilityId,
-                    specialAbilityType: calculatedStats.specialAbilityType,
-                    specialAbilityValue: calculatedStats.specialAbilityValue || 0,
-                    specialAbilityTarget: calculatedStats.specialAbilityTarget,
+                    specialAbilityVariables: calculatedStats.specialAbilityVariables,
                     isDead: false,
                     hasActed: false,
                     currentSpirit: data.initialSpirit || 0,

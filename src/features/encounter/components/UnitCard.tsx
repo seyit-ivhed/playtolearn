@@ -142,7 +142,10 @@ export const UnitCard = ({
                             }
                             abilityDescription={
                                 isUltimateReady && unit.specialAbilityId
-                                    ? t(`abilities.${unit.specialAbilityId}.description`, { value: unit.specialAbilityValue })
+                                    ? t(`abilities.${unit.specialAbilityId}.description`, {
+                                        ...unit.specialAbilityVariables,
+                                        value: Object.values(unit.specialAbilityVariables || {})[0]
+                                    })
                                     : ''
                             }
                             progress={unit.currentSpirit}

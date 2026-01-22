@@ -30,8 +30,8 @@ export const generateSymmetryData = (difficulty: DifficultyLevel): PuzzleData =>
         puzzleType: PuzzleType.SYMMETRY,
         targetValue: gridSize, // misused as grid size for simplicity in data passing
         options: [],
-        leftOptions: leftPattern as any,
-        rightOptions: rightPattern as any
+        leftOptions: leftPattern as unknown as PuzzleData['leftOptions'],
+        rightOptions: rightPattern as unknown as PuzzleData['rightOptions']
     } as PuzzleData;
 };
 

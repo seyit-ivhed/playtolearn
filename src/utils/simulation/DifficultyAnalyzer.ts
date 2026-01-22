@@ -22,7 +22,7 @@ export class DifficultyAnalyzer {
             throw new Error(`Encounter ${encounterId} has no enemies defined`);
         }
 
-        // Run simulations with all ultimates succeeding (5 times)
+        // Run simulations with all ultimates succeeding (10 times)
         const allSuccessResults = this.runBatchSimulations(
             partyConfig,
             encounter.enemies,
@@ -30,7 +30,7 @@ export class DifficultyAnalyzer {
             10
         );
 
-        // Run simulations with all ultimates failing (5 times)
+        // Run simulations with all ultimates failing (20 times)
         const allFailResults = this.runBatchSimulations(
             partyConfig,
             encounter.enemies,
@@ -38,7 +38,7 @@ export class DifficultyAnalyzer {
             20
         );
 
-        // Run simulations with random ultimate success (20 times)
+        // Run simulations with random ultimate success (200 times)
         const randomResults = this.runBatchSimulations(
             partyConfig,
             encounter.enemies,

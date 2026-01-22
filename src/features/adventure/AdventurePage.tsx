@@ -41,6 +41,13 @@ const AdventurePage = () => {
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
     const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
 
+    // Add Kenji automatically for Adventure 3
+    useEffect(() => {
+        if (adventureId === '3' && !party.includes('kenji')) {
+            addCompanionToParty('kenji');
+        }
+    }, [adventureId, party, addCompanionToParty]);
+
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === adventureId);
 
@@ -58,13 +65,6 @@ const AdventurePage = () => {
             return null;
         }
     }
-
-    // Add Kenji automatically for Adventure 3
-    useEffect(() => {
-        if (adventureId === '3' && !party.includes('kenji')) {
-            addCompanionToParty('kenji');
-        }
-    }, [adventureId, party, addCompanionToParty]);
 
     if (!adventure || !adventureId) {
         return <div>{t('adventure.not_found', 'Adventure not found')}</div>;

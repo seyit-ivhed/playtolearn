@@ -21,9 +21,7 @@ export interface SimulationUnit {
     currentHealth: number;
     damage: number;
     specialAbilityId?: string;
-    specialAbilityType?: 'DAMAGE' | 'HEAL' | 'SHIELD';
-    specialAbilityValue?: number;
-    specialAbilityTarget?: 'SINGLE_ENEMY' | 'ALL_ENEMIES' | 'SINGLE_ALLY' | 'ALL_ALLIES' | 'SELF' | 'RANDOM_ENEMY';
+    specialAbilityVariables?: Record<string, number>;
 
     // State
     isDead: boolean;

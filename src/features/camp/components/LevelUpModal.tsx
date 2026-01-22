@@ -51,9 +51,12 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
 
     const companionImage = showEvolution ? newImage : oldImage;
     const abilityId = newStats.specialAbilityId || companion.specialAbility.id;
-    const abilityValue = newStats.specialAbilityValue || companion.specialAbility.value;
+    const abilityVariables = newStats.specialAbilityVariables || companion.specialAbility.variables || {};
     const abilityName = t(`abilities.${abilityId}.name`);
-    const abilityDescription = t(`abilities.${abilityId}.description`, { value: abilityValue });
+    const abilityDescription = t(`abilities.${abilityId}.description`, {
+        ...abilityVariables,
+        value: Object.values(abilityVariables)[0]
+    });
 
     return (
         <div className={styles.overlay}>

@@ -1,9 +1,6 @@
 export interface SpecialAbility {
-    id: string; // Used for translation key and VFX lookup
-    type: 'DAMAGE' | 'HEAL' | 'SHIELD';
-    value: number;
-    target: 'SINGLE_ENEMY' | 'ALL_ENEMIES' | 'SINGLE_ALLY' | 'ALL_ALLIES' | 'SELF' | 'RANDOM_ENEMY';
-
+    id: string; // Used for translation key, VFX lookup, and implementation registry
+    variables?: Record<string, number>; // Flexible numerical parameters for the ability implementation
 }
 
 export interface CompanionStats {
@@ -11,9 +8,7 @@ export interface CompanionStats {
     title?: string;
     abilityDamage?: number;
     specialAbilityId?: string;
-    specialAbilityType?: 'DAMAGE' | 'HEAL' | 'SHIELD';
-    specialAbilityValue?: number;
-    specialAbilityTarget?: 'SINGLE_ENEMY' | 'ALL_ENEMIES' | 'SINGLE_ALLY' | 'ALL_ALLIES' | 'SELF' | 'RANDOM_ENEMY';
+    specialAbilityVariables?: Record<string, number>;
     spiritGain?: number;
 }
 

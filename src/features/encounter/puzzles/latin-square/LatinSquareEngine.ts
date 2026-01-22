@@ -40,7 +40,7 @@ export const generateLatinSquareData = (difficulty: DifficultyLevel): PuzzleData
     return {
         puzzleType: PuzzleType.LATIN_SQUARE,
         targetValue: 4,
-        options: puzzleGrid as any,
+        options: puzzleGrid as unknown as PuzzleData['options'],
         rules: fixedIndices.map(f => `${f.row},${f.col}`)
     } as PuzzleData;
 };

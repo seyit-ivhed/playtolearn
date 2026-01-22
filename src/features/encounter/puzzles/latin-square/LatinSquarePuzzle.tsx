@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { LatinSquareEngine, type LatinSquareElement } from './LatinSquareEngine';
 import styles from './LatinSquarePuzzle.module.css';
 import { type PuzzleData } from '../../../../types/adventure.types';
@@ -9,19 +9,14 @@ interface LatinSquarePuzzleProps {
 }
 
 export const LatinSquarePuzzle: React.FC<LatinSquarePuzzleProps> = ({ data, onSolve }) => {
-    const [grid, setGrid] = useState<LatinSquareElement[][]>([]);
-    const [fixedIndices, setFixedIndices] = useState<{ row: number, col: number }[]>([]);
-    const [isSolved, setIsSolved] = useState(false);
-
-    useEffect(() => {
-        const initialGrid = (data.options as unknown) as LatinSquareElement[][];
-        const fixed = (data.rules || []).map(r => {
+    const [grid, setGrid] = useState<LatinSquareElement[][]>(() => (data.options as unknown) as LatinSquareElement[][]);
+    const [fixedIndices] = useState<{ row: number, col: number }[]>(() => {
+        return (data.rules || []).map(r => {
             const [row, col] = r.split(',').map(Number);
             return { row, col };
         });
-        setGrid(initialGrid);
-        setFixedIndices(fixed);
-    }, [data]);
+    });
+    const [isSolved, setIsSolved] = useState(false);
 
     const handleCellClick = (row: number, col: number) => {
         if (isSolved || fixedIndices.some(idx => idx.row === row && idx.col === col)) return;

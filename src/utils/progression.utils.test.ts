@@ -15,7 +15,7 @@ describe('progression.utils', () => {
             },
             specialAbility: {
                 id: 'test_ultimate',
-                value: 50
+                variables: { damage: 50 }
             },
             evolutions: []
         } as unknown as Companion;
@@ -24,7 +24,7 @@ describe('progression.utils', () => {
             const stats = getStatsForLevel(mockCompanion, 1);
             expect(stats.maxHealth).toBe(100);
             expect(stats.abilityDamage).toBe(10);
-            expect(stats.specialAbilityValue).toBe(50);
+            expect(stats.specialAbilityVariables!.damage).toBe(50);
         });
 
         it('should scale stats linearly (10% per level)', () => {
@@ -32,7 +32,7 @@ describe('progression.utils', () => {
             // 1 + (2-1)*0.1 = 1.1
             expect(stats.maxHealth).toBe(110);
             expect(stats.abilityDamage).toBe(11);
-            expect(stats.specialAbilityValue).toBe(55);
+            expect(stats.specialAbilityVariables!.damage).toBe(55);
         });
 
         it('should handle level 10 scaling', () => {
@@ -40,7 +40,7 @@ describe('progression.utils', () => {
             // 1 + (10-1)*0.1 = 1.9
             expect(stats.maxHealth).toBe(190);
             expect(stats.abilityDamage).toBe(19);
-            expect(stats.specialAbilityValue).toBe(95);
+            expect(stats.specialAbilityVariables!.damage).toBe(95);
         });
 
         it('should apply evolution bonuses', () => {

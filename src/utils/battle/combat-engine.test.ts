@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { CombatEngine, type BattleUnit } from './combat-engine';
-import type { SpecialAbility } from '../../types/companion.types';
 
 describe('CombatEngine', () => {
     const mockAttacker: BattleUnit = {
@@ -51,31 +50,27 @@ describe('CombatEngine', () => {
     });
 
     describe('executeSpecialAbility', () => {
-        it('should execute DAMAGE ability on single enemy', () => {
-            const ability: SpecialAbility = {
-                id: 'smash',
-                type: 'DAMAGE',
-                value: 20,
-                target: 'SINGLE_ENEMY'
-            };
-
-            const result = CombatEngine.executeSpecialAbility(mockAttacker, [mockAttacker, mockEnemy], ability, 20);
+        it('should execute DAMAGE ability on single enemy', async () => {
+            const result = await CombatEngine.executeSpecialAbility(
+                mockAttacker,
+                [mockAttacker, mockEnemy],
+                'jaguar_strike',
+                { damage: 20 }
+            );
             const damagedEnemy = result.updatedUnits.find(u => u.id === mockEnemy.id);
 
             expect(damagedEnemy?.currentHealth).toBe(80);
             expect(result.logs[0].type).toBe('ABILITY');
         });
 
-        it('should execute HEAL ability on self/allies', () => {
+        it('should execute HEAL ability on self/allies', async () => {
             const damagedHero: BattleUnit = { ...mockAttacker, currentHealth: 50 };
-            const ability: SpecialAbility = {
-                id: 'heal',
-                type: 'HEAL',
-                value: 20,
-                target: 'ALL_ALLIES'
-            };
-
-            const result = CombatEngine.executeSpecialAbility(mockAttacker, [damagedHero, mockEnemy], ability, 20);
+            const result = await CombatEngine.executeSpecialAbility(
+                mockAttacker,
+                [damagedHero, mockEnemy],
+                'elixir_of_life',
+                { heal: 20 }
+            );
             const healedHero = result.updatedUnits.find(u => u.id === mockAttacker.id);
 
             expect(healedHero?.currentHealth).toBe(70);

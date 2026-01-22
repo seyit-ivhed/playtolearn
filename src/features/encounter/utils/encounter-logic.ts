@@ -12,7 +12,10 @@ export const getVFXDetails = (unitId: string, party: EncounterUnit[], monsters: 
     const effectName = companion?.specialAbility?.id || 'Generic';
 
     let targetId: string | undefined;
-    if (effectName === 'jaguar_strike' || companion?.specialAbility?.target === 'SINGLE_ENEMY') {
+    // Single target abilities need a target ID for VFX targeting
+    const singleTargetAbilities = ['jaguar_strike', 'jaguar_strike_2', 'jaguar_strike_3', 'jaguar_strike_4', 'blade_barrier'];
+
+    if (singleTargetAbilities.some(id => effectName.startsWith(id))) {
         const target = monsters.filter(m => !m.isDead)[0];
         if (target) {
             targetId = target.id;

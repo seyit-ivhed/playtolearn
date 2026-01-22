@@ -176,5 +176,82 @@
         ]
       }
     }
+  },
+  {
+    "adventureId": "3",
+    "encounters": {
+      "3_1": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 6
+          },
+          {
+            "companionId": "tariq",
+            "level": 6
+          }
+        ]
+      },
+      "3_2": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 6
+          },
+          {
+            "companionId": "tariq",
+            "level": 6
+          }
+        ]
+      },
+      "3_5": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 6
+          },
+          {
+            "companionId": "tariq",
+            "level": 6
+          }
+        ]
+      },
+      "3_6": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 6
+          },
+          {
+            "companionId": "tariq",
+            "level": 6
+          }
+        ]
+      },
+      "3_9": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 7
+          },
+          {
+            "companionId": "tariq",
+            "level": 7
+          }
+        ]
+      },
+      "3_12": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 8
+          },
+          {
+            "companionId": "tariq",
+            "level": 8
+          }
+        ]
+      }
+    }
   }
 ]

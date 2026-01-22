@@ -1,34 +1,13 @@
-import type { SpecialAbility } from '../../types/companion.types';
 import type { EncounterUnit } from '../../types/encounter.types';
 import { applyDamage } from './damage.utils';
-import { executeDamageAbility, executeHealAbility, type HealableUnit } from './ability.utils';
+import { executeAbility } from '../../features/encounter/abilities/registry';
 
 /**
  * Unified Combat Engine
  * Source of truth for all battle mechanics (Simulation & UI)
  */
 
-export interface CombatLog {
-    message: string;
-    type: 'ATTACK' | 'ABILITY' | 'EFFECT' | 'INFO';
-}
-
-// Generic interface to cover both EncounterUnit and SimulationUnit
-export interface BattleUnit extends HealableUnit {
-    id: string;
-    templateId: string;
-    name: string;
-    isPlayer: boolean;
-    damage?: number;
-
-    // Stats
-    maxSpirit: number;
-    currentSpirit: number;
-    spiritGain: number;
-
-    // State
-    hasActed: boolean;
-}
+import type { BattleUnit, CombatLog } from '../../types/encounter.types';
 
 export class CombatEngine {
 
@@ -38,60 +17,25 @@ export class CombatEngine {
     static executeSpecialAbility(
         attacker: BattleUnit,
         allUnits: BattleUnit[],
-        ability: SpecialAbility,
-        abilityValue: number
+        abilityId: string,
+        variables: Record<string, number> = {}
     ): { updatedUnits: BattleUnit[], logs: CombatLog[] } {
-        const logs: CombatLog[] = [];
-        logs.push({ message: `${attacker.name} used ${ability.id}!`, type: 'ABILITY' });
+        const result = executeAbility(abilityId, {
+            attacker,
+            allUnits,
+            variables
+        });
 
-        let updatedUnits = [...allUnits];
-
-        // Filter targets based on ability target type
-        const enemies = updatedUnits.filter(u => !u.isPlayer && !u.isDead);
-        const allies = updatedUnits.filter(u => u.isPlayer && !u.isDead);
-
-        // We cast to any to satisfy the utility functions which might expect slightly different types
-        // but are structurally compatible for the fields they use.
-        // In a strict refactor, we would unify the Unit interfaces completely.
-
-        if (ability.type === 'DAMAGE') {
-            const targets = enemies as unknown as EncounterUnit[];
-            const result = executeDamageAbility(targets, ability, abilityValue);
-
-            // Map results back to updatedUnits
-            updatedUnits = updatedUnits.map(u => {
-                if (u.isPlayer) return u;
-                const updated = result.find(t => t.id === u.id);
-                return updated ? (updated as unknown as BattleUnit) : u;
-            });
-
-            // Generate logs
-            // Ideally executeDamageAbility would return logs, but for now we infer
-            updatedUnits.filter(u => !u.isPlayer).forEach(u => {
-                const prev = allUnits.find(p => p.id === u.id);
-                if (prev && prev.currentHealth > u.currentHealth) {
-                    logs.push({
-                        message: `Dealt ${prev.currentHealth - u.currentHealth} damage to ${u.name}`,
-                        type: 'ATTACK'
-                    });
-                }
-            });
-
-        } else if (ability.type === 'HEAL') {
-            const targets = allies;
-            const result = executeHealAbility(targets, ability, abilityValue);
-
-            updatedUnits = updatedUnits.map(u => {
-                if (!u.isPlayer) return u;
-                const updated = result.find(t => t.id === u.id);
-                return updated ? (updated as BattleUnit) : u;
-            });
-
-            logs.push({ message: `Healed allies for ${abilityValue}`, type: 'EFFECT' });
-
+        // Add intro log if not already present
+        const logs = [...result.logs];
+        if (!logs.some(l => l.message.includes(`${attacker.name} used`))) {
+            logs.unshift({ message: `${attacker.name} used ${abilityId}!`, type: 'ABILITY' });
         }
 
-        return { updatedUnits, logs };
+        return {
+            updatedUnits: result.updatedUnits,
+            logs
+        };
     }
 
     /**

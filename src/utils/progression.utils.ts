@@ -37,16 +37,20 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
         }
     });
 
-    const baseAbilityValue = evolvedAbility.value;
+    // Scale variables if they exist
+    const scaledVariables: Record<string, number> = {};
+    if (evolvedAbility.variables) {
+        Object.entries(evolvedAbility.variables).forEach(([key, value]) => {
+            scaledVariables[key] = Math.floor(value * scalingFactor);
+        });
+    }
 
     return {
         maxHealth: Math.floor(companion.baseStats.maxHealth * scalingFactor) + (evolutionBonus.maxHealth || 0),
         title: currentEvolution ? currentEvolution.title : companion.title,
         abilityDamage: companion.baseStats.abilityDamage ? Math.floor(companion.baseStats.abilityDamage * scalingFactor) + (evolutionBonus.abilityDamage || 0) : undefined,
         specialAbilityId: evolvedAbility.id,
-        specialAbilityType: evolvedAbility.type,
-        specialAbilityValue: baseAbilityValue ? Math.floor(baseAbilityValue * scalingFactor) : undefined,
-        specialAbilityTarget: evolvedAbility.target,
+        specialAbilityVariables: scaledVariables,
         spiritGain: companion.baseStats.spiritGain,
     };
 };
