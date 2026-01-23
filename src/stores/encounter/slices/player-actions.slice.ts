@@ -4,150 +4,129 @@ import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.typ
 import { CombatEngine } from '../../../utils/battle/combat-engine';
 import type { BattleUnit } from '../../../types/encounter.types';
 
-export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => ({
-    selectUnit: (unitId) => set({ selectedUnitId: unitId }),
+export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => {
+    /**
+     * Shared helper to process results of an action:
+     * - Updates party and monsters
+     * - Appends to encounter log
+     * - Checks for victory
+     * - Checks for turn end
+     */
+    const finalizeActionResult = (updatedUnits: EncounterUnit[], logs: string[]) => {
+        const finalParty = updatedUnits.filter(u => u.isPlayer);
+        const finalMonsters = updatedUnits.filter(u => !u.isPlayer);
 
-    performAction: (unitId) => {
-        const { party, monsters } = get();
-        const unitIndex = party.findIndex(u => u.id === unitId);
-        if (unitIndex === -1) return;
-
-        const unit = party[unitIndex];
-
-        if (unit.hasActed) return;
-
-        // consume energy & mark acted
-        const newParty = [...party];
-        newParty[unitIndex] = { ...unit, hasActed: true };
-        set({ party: newParty });
-
-        // Execute Standard Attack via Combat Engine
-        const allUnits = [...newParty, ...monsters];
-        const result = CombatEngine.executeStandardAttack(
-            unit as unknown as BattleUnit,
-            allUnits as unknown as BattleUnit[]
-        );
-
-        // Update State
-        const updatedLogs = result.logs.map(l => l.message);
         set(state => ({
-            encounterLog: [...state.encounterLog, ...updatedLogs]
-        }));
-
-        // Split results back
-        const resultUnits = result.updatedTargets as unknown as EncounterUnit[];
-        const finalParty = resultUnits.filter(u => u.isPlayer);
-        const finalMonsters = resultUnits.filter(u => !u.isPlayer);
-
-        set({
             party: finalParty,
-            monsters: finalMonsters
-        });
+            monsters: finalMonsters,
+            encounterLog: [...state.encounterLog, ...logs]
+        }));
 
         // Check Victory
         if (finalMonsters.every(m => m.isDead)) {
             setTimeout(() => {
-                set({ phase: EncounterPhase.VICTORY, encounterLog: [...get().encounterLog, 'Victory!'] });
+                set(state => ({
+                    phase: EncounterPhase.VICTORY,
+                    encounterLog: [...state.encounterLog, 'Victory!']
+                }));
             }, 1500);
             return;
         }
 
         // Check End Turn Condition (All living party members acted)
-        // Use latest state
-        const currentParty = get().party;
-        const allActed = currentParty.every(p => p.isDead || p.hasActed);
-        if (allActed) {
+        if (finalParty.every(p => p.isDead || p.hasActed)) {
             get().endPlayerTurn();
         }
-    },
+    };
 
-    resolveSpecialAttack: (unitId, success) => {
-        const { party, monsters } = get();
-        const unitIndex = party.findIndex(u => u.id === unitId);
-        if (unitIndex === -1) return;
+    return {
+        selectUnit: (unitId) => set({ selectedUnitId: unitId }),
 
-        const unit = party[unitIndex];
-        const abilityId = unit.specialAbilityId;
-        const variables = unit.specialAbilityVariables || {};
+        performAction: (unitId) => {
+            const { party, monsters } = get();
+            const unitIndex = party.findIndex(u => u.id === unitId);
+            if (unitIndex === -1) return;
 
-        if (!abilityId) return;
+            const unit = party[unitIndex];
+            if (unit.hasActed) return;
 
-        if (success) {
-            // EXECUTE ABILITY LOGIC via CombatEngine
-            const allUnits = [...party, ...monsters];
+            // Mark acted and prepare updated set for the engine
+            const actingUnit = { ...unit, hasActed: true };
+            const updatedParty = [...party];
+            updatedParty[unitIndex] = actingUnit;
 
-            const result = CombatEngine.executeSpecialAbility(
-                unit as unknown as BattleUnit,
-                allUnits as unknown as BattleUnit[],
-                abilityId,
-                variables
+            const allUnits = [...updatedParty, ...monsters];
+
+            // Execute Standard Attack via Combat Engine
+            const result = CombatEngine.executeStandardAttack(
+                actingUnit as unknown as BattleUnit,
+                allUnits as unknown as BattleUnit[]
             );
 
-            // Map logs
-            const updatedLogs = result.logs.map(l => l.message);
+            finalizeActionResult(
+                result.updatedTargets as unknown as EncounterUnit[],
+                result.logs.map(l => l.message)
+            );
+        },
 
-            let finalUnits = result.updatedUnits as unknown as EncounterUnit[];
+        resolveSpecialAttack: (unitId, success) => {
+            const { party, monsters } = get();
+            const unitIndex = party.findIndex(u => u.id === unitId);
+            if (unitIndex === -1) return;
 
-            // Force reset spirit and acted for attacker in the result set
-            finalUnits = finalUnits.map(u => {
-                if (u.id === unitId) {
-                    const consumed = CombatEngine.consumeSpiritCost(u as unknown as BattleUnit);
-                    return { ...(consumed as unknown as EncounterUnit), hasActed: true };
-                }
-                return u;
-            });
+            const unit = party[unitIndex];
+            const abilityId = unit.specialAbilityId;
+            const variables = unit.specialAbilityVariables || {};
 
-            const finalParty = finalUnits.filter(u => u.isPlayer);
-            const finalMonsters = finalUnits.filter(u => !u.isPlayer);
+            if (!abilityId) return;
 
-            set(state => ({
-                party: finalParty,
-                monsters: finalMonsters,
-                encounterLog: [...state.encounterLog, ...updatedLogs]
-            }));
+            if (success) {
+                // EXECUTE ABILITY LOGIC via CombatEngine
+                const allUnits = [...party, ...monsters];
 
-            // Check Victory
-            if (finalMonsters.every(m => m.isDead)) {
-                setTimeout(() => {
-                    set({ phase: EncounterPhase.VICTORY, encounterLog: [...get().encounterLog, 'Victory!'] });
-                }, 1500);
-                return;
-            }
+                const result = CombatEngine.executeSpecialAbility(
+                    unit as unknown as BattleUnit,
+                    allUnits as unknown as BattleUnit[],
+                    abilityId,
+                    variables
+                );
 
-            // Check End Turn Condition
-            if (finalParty.every(p => p.isDead || p.hasActed)) {
-                get().endPlayerTurn();
-            }
+                // Map logs
+                const logs = result.logs.map(l => l.message);
 
-        } else {
-            // Fail: Drain meter AND Mark as Acted
-            const currentParty = get().party;
-            const currentUnitIndex = currentParty.findIndex(u => u.id === unitId);
-
-            if (currentUnitIndex !== -1) {
-                const newParty = [...currentParty];
-                const consumed = CombatEngine.consumeSpiritCost(newParty[currentUnitIndex] as unknown as BattleUnit);
-                newParty[currentUnitIndex] = { ...(consumed as unknown as EncounterUnit), hasActed: true };
-                set({
-                    party: newParty,
-                    encounterLog: [...get().encounterLog, `${unit.name}'s ability FAILED! Charge lost.`]
+                // Force reset spirit and acted for attacker in the result set
+                const finalUnits = (result.updatedUnits as unknown as EncounterUnit[]).map(u => {
+                    if (u.id === unitId) {
+                        const consumed = CombatEngine.consumeSpiritCost(u as unknown as BattleUnit);
+                        return { ...(consumed as unknown as EncounterUnit), hasActed: true };
+                    }
+                    return u;
                 });
-            }
 
-            // Check End Turn Condition
-            if (get().party.every(p => p.isDead || p.hasActed)) {
-                get().endPlayerTurn();
+                finalizeActionResult(finalUnits, logs);
+
+            } else {
+                // Fail: Drain meter AND Mark as Acted
+                const updatedParty = party.map(u => {
+                    if (u.id === unitId) {
+                        const consumed = CombatEngine.consumeSpiritCost(u as unknown as BattleUnit);
+                        return { ...(consumed as unknown as EncounterUnit), hasActed: true };
+                    }
+                    return u;
+                });
+
+                finalizeActionResult([...updatedParty, ...monsters], [`${unit.name}'s ability FAILED! Charge lost.`]);
             }
+        },
+
+        consumeSpirit: (unitId) => {
+            const { party } = get();
+            const unitIndex = party.findIndex(u => u.id === unitId);
+            if (unitIndex === -1) return;
+
+            const newParty = [...party];
+            newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
+            set({ party: newParty });
         }
-    },
-
-    consumeSpirit: (unitId) => {
-        const { party } = get();
-        const unitIndex = party.findIndex(u => u.id === unitId);
-        if (unitIndex === -1) return;
-
-        const newParty = [...party];
-        newParty[unitIndex] = { ...newParty[unitIndex], currentSpirit: 0 };
-        set({ party: newParty });
-    }
-});
+    };
+};
