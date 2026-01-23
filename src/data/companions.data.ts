@@ -138,13 +138,13 @@ export const COMPANIONS: Record<string, Companion> = {
         stats: {
             maxHealth: 100,
             abilityDamage: 7,
-            spiritGain: 35
+            spiritGain: 30
         },
         specialAbility: {
             id: 'blade_barrier',
             variables: { damage: 20, duration: 2, reduction: 50 }
         },
-        initialSpirit: 60,
+        initialSpirit: 50,
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
