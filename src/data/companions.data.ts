@@ -14,19 +14,14 @@ export const COMPANIONS: Record<string, Companion> = {
         level: 1,
         baseStats: {
             maxHealth: 75,
-            abilityDamage: 8,
-            spiritGain: 35
-        },
-        stats: {
-            maxHealth: 75,
-            abilityDamage: 8,
-            spiritGain: 35
+            abilityDamage: 8
         },
         specialAbility: {
             id: 'jaguar_strike',
             variables: { damage: 30 }
         },
         initialSpirit: 65,
+        spiritGain: 35,
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
@@ -73,19 +68,14 @@ export const COMPANIONS: Record<string, Companion> = {
         level: 1,
         baseStats: {
             maxHealth: 85,
-            abilityDamage: 5,
-            spiritGain: 35
-        },
-        stats: {
-            maxHealth: 85,
-            abilityDamage: 5,
-            spiritGain: 35
+            abilityDamage: 5
         },
         specialAbility: {
             id: 'elixir_of_life',
             variables: { heal: 25 }
         },
         initialSpirit: 0,
+        spiritGain: 35,
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
@@ -132,19 +122,14 @@ export const COMPANIONS: Record<string, Companion> = {
         level: 1,
         baseStats: {
             maxHealth: 100,
-            abilityDamage: 7,
-            spiritGain: 35
-        },
-        stats: {
-            maxHealth: 100,
-            abilityDamage: 7,
-            spiritGain: 30
+            abilityDamage: 7
         },
         specialAbility: {
             id: 'blade_barrier',
             variables: { damage: 20, duration: 2, reduction: 50 }
         },
         initialSpirit: 100,
+        spiritGain: 20,
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
@@ -191,19 +176,14 @@ export const COMPANIONS: Record<string, Companion> = {
         level: 1,
         baseStats: {
             maxHealth: 70,
-            abilityDamage: 8,
-            spiritGain: 35
-        },
-        stats: {
-            maxHealth: 70,
-            abilityDamage: 8,
-            spiritGain: 35
+            abilityDamage: 8
         },
         specialAbility: {
             id: 'ancestral_storm',
             variables: { damage: 15 }
         },
         initialSpirit: 40,
+        spiritGain: 35,
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,

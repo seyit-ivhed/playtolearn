@@ -9,8 +9,9 @@ vi.mock('../../../data/companions.data', () => ({
     getCompanionById: (id: string) => ({
         id,
         name: `Companion ${id}`,
-        stats: { maxHealth: 100, spiritGain: 35 },
-        baseStats: { maxHealth: 100, spiritGain: 35 },
+        stats: { maxHealth: 100 },
+        baseStats: { maxHealth: 100 },
+        spiritGain: 35,
         initialSpirit: 0,
         evolutions: [],
         specialAbility: { id: 'sa', value: 10 }

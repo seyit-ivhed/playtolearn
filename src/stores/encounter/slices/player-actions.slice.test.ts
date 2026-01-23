@@ -10,7 +10,8 @@ vi.mock('../../../data/companions.data', () => ({
             return {
                 id,
                 name: 'Warrior',
-                stats: { abilityDamage: 10 },
+                baseStats: { abilityDamage: 10 },
+                spiritGain: 35,
                 specialAbility: { id: 'jaguar_strike', variables: { damage: 20 } }
             };
         }
@@ -19,7 +20,8 @@ vi.mock('../../../data/companions.data', () => ({
             return {
                 id,
                 name: 'Guardian',
-                stats: {},
+                baseStats: {},
+                spiritGain: 35,
                 specialAbility: { id: 'elixir_of_life', variables: { heal: 15 } }
             };
         }
@@ -28,14 +30,16 @@ vi.mock('../../../data/companions.data', () => ({
             return {
                 id,
                 name: 'Mage',
-                stats: { abilityDamage: 10 },
+                baseStats: { abilityDamage: 10 },
+                spiritGain: 35,
                 specialAbility: { id: 'ancestral_storm', variables: { damage: 10 } }
             };
         }
 
         return {
             id,
-            stats: {}
+            baseStats: {},
+            spiritGain: 35,
         };
     }
 }));

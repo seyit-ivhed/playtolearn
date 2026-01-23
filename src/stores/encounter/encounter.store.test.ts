@@ -12,13 +12,12 @@ vi.mock('../../data/companions.data', () => ({
         maxHealth: 100,
         icon: 'test-icon',
         color: 'red',
-        stats: {
-            maxHealth: 100
-        },
         baseStats: {
             maxHealth: 100,
             abilityDamage: 10
         },
+        spiritGain: 35,
+        initialSpirit: 0,
         evolutions: [],
         // Adding properties to satisfy the slice usage, even if not in interface yet
         abilityName: 'Test Attack',

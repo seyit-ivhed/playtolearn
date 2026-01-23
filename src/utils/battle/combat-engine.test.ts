@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { CombatEngine, type BattleUnit } from './combat-engine';
+import { CombatEngine } from './combat-engine';
+import type { BattleUnit } from '../../types/encounter.types';
 
 describe('CombatEngine', () => {
     const mockAttacker: BattleUnit = {
@@ -179,7 +180,8 @@ describe('CombatEngine', () => {
                 { id: 'u1', isPlayer: true, isDead: false },
                 { id: 'u2', isPlayer: true, isDead: false }
             ];
-
+            const index = CombatEngine.findFirstValidEnemy(attacker, targets);
+            expect(index).toBe(-1);
         });
     });
 

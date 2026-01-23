@@ -39,7 +39,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     hasActed: false,
                     currentSpirit: data.initialSpirit || 0,
                     maxSpirit: 100,
-                    spiritGain: calculatedStats.spiritGain || 0,
+                    spiritGain: data.spiritGain || 0,
                     image: getCompanionSprite(id, stats.level)
                 };
             });

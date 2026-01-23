@@ -54,8 +54,7 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
         title: currentEvolution ? currentEvolution.title : companion.title,
         abilityDamage: companion.baseStats.abilityDamage ? Math.floor(companion.baseStats.abilityDamage * scalingFactor) + (evolutionBonus.abilityDamage || 0) : undefined,
         specialAbilityId: evolvedAbility.id,
-        specialAbilityVariables: scaledVariables,
-        spiritGain: companion.baseStats.spiritGain,
+        specialAbilityVariables: scaledVariables
     };
 };
 

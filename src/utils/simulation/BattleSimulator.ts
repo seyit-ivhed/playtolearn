@@ -60,7 +60,7 @@ export class BattleSimulator {
                     hasActed: false,
                     currentSpirit: companionData.initialSpirit || 0,
                     maxSpirit: 100,
-                    spiritGain: stats.spiritGain || 0
+                    spiritGain: companionData.spiritGain || 0
                 };
             })
             .filter((unit) => unit !== null) as SimulationUnit[];

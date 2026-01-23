@@ -9,7 +9,6 @@ export interface CompanionStats {
     abilityDamage?: number;
     specialAbilityId?: string;
     specialAbilityVariables?: Record<string, number>;
-    spiritGain?: number;
 }
 
 export interface CompanionEvolution {
@@ -31,7 +30,7 @@ export interface Companion {
 
     // Stats
     baseStats: CompanionStats;
-    stats: CompanionStats; // Current calculated stats
+    stats?: CompanionStats; // Current calculated stats (optional as it can be derived)
 
     // Special Ability
     specialAbility: SpecialAbility;
@@ -41,6 +40,7 @@ export interface Companion {
 
     // Configuration
     initialSpirit: number;
+    spiritGain: number;
 
     evolutions: CompanionEvolution[];
 }
