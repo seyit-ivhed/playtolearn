@@ -107,7 +107,7 @@
         "3": {
             "title": "The Misty Foothills",
             "description": "Traveling from the ancient ruins through a shimmering portal, Amara and Tariq emerge in the breath-taking Jade Peaks where they discover a young warrior named Kenji struggling against the thick mountain mists.",
-            "story_hook": "As the portal shimmered and faded behind them, the sweltering heat of the ruins was replaced by the crisp, biting air of the Jade Peaks. Towering mountains rose like giants around Amara and Tariq, their peaks hidden by thick, swirling mists. Suddenly, a figure emerged from the fog—a young boy named Kenji, his blue samurai armor glinting as he fended off shadowy shapes lurking in the mist. He looked weary, but his gaze was as resolute as the mountains themselves.",
+            "story_hook": "As the portal faded, the biting air of the Jade Peaks greeted Amara and Tariq. Shrouded in mist, a young boy named Kenji sat on a rock, clutching an oversized wooden sword. His eyes widened with excitement and surprise at their arrival. 'Who are you?' he asked, before hurriedly explaining how the Iron Warlord's forces had begun to invade his mountains, spreading a dark, unnatural mist across the land.",
             "completion_summary": "The Iron Warlord's enforcer has been driven back, and the mists have momentarily parted. Kenji, impressed by the newcomers' bravery and wisdom, wipes his brow and offers a formal bow. The path to the peaks is dangerous, but with new allies, the journey upward has just begun.",
             "mystery_path": "The trail leads higher into the frozen heights...",
             "nodes": {
