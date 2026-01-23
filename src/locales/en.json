@@ -309,19 +309,19 @@
         },
         "blade_barrier": {
             "name": "Blade Barrier",
-            "description": "Shields all allies for {{value}} power."
+            "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
         },
         "blade_barrier_2": {
             "name": "Blade Barrier II",
-            "description": "Shields all allies for {{value}} power."
+            "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
         },
         "blade_barrier_3": {
             "name": "Blade Barrier III",
-            "description": "Shields all allies for {{value}} power."
+            "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
         },
         "blade_barrier_4": {
             "name": "Blade Barrier IV",
-            "description": "Shields all allies for {{value}} power."
+            "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
         },
         "ancestral_storm": {
             "name": "Ancestral Storm",

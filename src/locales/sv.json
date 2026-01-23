@@ -309,19 +309,19 @@
         },
         "blade_barrier": {
             "name": "Bladbarriär",
-            "description": "Skyddar alla allierade med {{value}} kraft."
+            "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
         },
         "blade_barrier_2": {
             "name": "Bladbarriär II",
-            "description": "Skyddar alla allierade med {{value}} kraft."
+            "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
         },
         "blade_barrier_3": {
             "name": "Bladbarriär III",
-            "description": "Skyddar alla allierade med {{value}} kraft."
+            "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
         },
         "blade_barrier_4": {
             "name": "Bladbarriär IV",
-            "description": "Skyddar alla allierade med {{value}} kraft."
+            "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
         },
         "ancestral_storm": {
             "name": "Urgammal storm",
