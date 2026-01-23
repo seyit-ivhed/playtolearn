@@ -164,8 +164,9 @@ export const UnitCard = ({
                 </div>
             </div>
 
+            {/* Shield Indicator (Remaining Turns) */}
             <UnitCardShield
-                currentShield={0}
+                currentShield={(unit.statusEffects?.find(e => e.type === 'SHIELD')?.state.duration as number) || 0}
                 animationClass={shieldAnimClass}
             />
 

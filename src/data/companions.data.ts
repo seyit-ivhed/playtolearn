@@ -142,7 +142,7 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         specialAbility: {
             id: 'blade_barrier',
-            variables: { damage: 20 }
+            variables: { damage: 20, duration: 2, reduction: 50 }
         },
         initialSpirit: 60,
         evolutions: [
@@ -155,7 +155,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'blade_barrier_2',
-                    variables: { heal: 35 } // Plan said SHIELD, library maps heal to SHIELD-like effect for now
+                    variables: { damage: 30, duration: 2, reduction: 50 }
                 }
             },
             {
@@ -167,7 +167,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'blade_barrier_3',
-                    variables: { heal: 50 }
+                    variables: { damage: 45, duration: 2, reduction: 50 }
                 }
             },
             {
@@ -179,7 +179,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'blade_barrier_4',
-                    variables: { heal: 65 }
+                    variables: { damage: 65, duration: 2, reduction: 50 }
                 }
             }
         ]

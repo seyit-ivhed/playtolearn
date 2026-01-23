@@ -100,14 +100,6 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
 
         // Process each monster attack sequentially with delays
         const processMonsterAttack = (monsterIndex: number) => {
-            // Re-fetch state at start of each execution to get latest updates
-            // But we actually modify local copies and push updates...
-            // Standard reducer pattern usually simpler, but we have async delays.
-            // We'll rely on get() inside the loop if we were doing single steps,
-            // but here we are using recursion.
-
-            // Actually, we must fetch state LATEST inside the recursion to be safe because
-            // previous timeouts might have committed state.
             const currentStore = get();
             const currentMonsters = currentStore.monsters;
             const currentParty = currentStore.party;
@@ -117,6 +109,9 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 // All monsters have attacked - prepare for next player turn
 
                 let newParty = currentParty.map(u => ({ ...u, hasActed: false }));
+
+                // Tick Status Effects (e.g. Shield duration)
+                newParty = CombatEngine.tickStatusEffects(newParty as unknown as BattleUnit[]) as unknown as EncounterUnit[];
 
                 // Passive Charge at start of Player Turn via CombatEngine
                 newParty = CombatEngine.regenerateSpirit(newParty as unknown as BattleUnit[]) as unknown as EncounterUnit[];

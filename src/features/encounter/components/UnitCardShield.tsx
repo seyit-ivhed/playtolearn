@@ -6,7 +6,7 @@ interface UnitCardShieldProps {
 }
 
 export const UnitCardShield: React.FC<UnitCardShieldProps> = ({ currentShield, animationClass }) => {
-    if (currentShield <= 0) return null;
+    if (!currentShield || currentShield <= 0) return null;
 
     return (
         <div className={`shield-overlay-container ${animationClass}`}>

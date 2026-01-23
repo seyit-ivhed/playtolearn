@@ -9,7 +9,19 @@ import { executeAbility } from '../../features/encounter/abilities/registry';
 
 import type { BattleUnit, CombatLog } from '../../types/encounter.types';
 
+import { processEffectTick } from '../../features/encounter/effects/registry';
+
 export class CombatEngine {
+
+    /**
+     * Ticks status effects for all units in the array
+     */
+    static tickStatusEffects(units: BattleUnit[]): BattleUnit[] {
+        return units.map(unit => ({
+            ...unit,
+            statusEffects: processEffectTick(unit.statusEffects)
+        }));
+    }
 
     /**
      * Execute a specific ability from an attacker

@@ -16,6 +16,12 @@ export interface CombatLog {
 /**
  * Generic interface for combat participants
  */
+export interface StatusEffectData {
+    id: string; // Unique instance ID
+    type: string; // Type identifier (e.g., 'SHIELD')
+    state: Record<string, number | string | boolean>; // Persistent state
+}
+
 export interface BattleUnit {
     id: string;
     templateId: string;
@@ -33,6 +39,7 @@ export interface BattleUnit {
 
     // State
     hasActed: boolean;
+    statusEffects?: StatusEffectData[];
 }
 
 export interface EncounterUnit {
@@ -59,6 +66,7 @@ export interface EncounterUnit {
     maxSpirit: number;     // 100
     spiritGain: number;
     isBoss?: boolean;
+    statusEffects?: StatusEffectData[];
 }
 
 export interface EncounterState {

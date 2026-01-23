@@ -5,7 +5,10 @@ interface UnitCardVFXProps {
 }
 
 export const UnitCardVFX: React.FC<UnitCardVFXProps> = ({ activeVisualEffect }) => {
-    if (!activeVisualEffect || (!activeVisualEffect.includes('protective_stance') && !activeVisualEffect.includes('village_squire'))) {
+    if (!activeVisualEffect || (
+        !activeVisualEffect.includes('protective_stance') &&
+        !activeVisualEffect.includes('blade_barrier')
+    )) {
         return null;
     }
 

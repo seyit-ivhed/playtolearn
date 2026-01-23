@@ -1,11 +1,10 @@
-/**
- * Damage Calculation Utilities
- * Pure functions for applying damage
- */
+import { applyDamageModifiers } from '../../features/encounter/effects/registry';
+import { type StatusEffectData } from '../../types/encounter.types';
 
 export interface DamageableUnit {
     currentHealth: number;
     isDead: boolean;
+    statusEffects?: StatusEffectData[];
 }
 
 export interface DamageResult<T extends DamageableUnit> {
@@ -13,22 +12,16 @@ export interface DamageResult<T extends DamageableUnit> {
     damageDealt: number;
 }
 
-/**
- * Apply damage to a unit
- * 
- * @param unit - The unit to damage
- * @param damageAmount - Amount of damage to apply
- * @returns Updated unit and damage breakdown
- */
 export function applyDamage<T extends DamageableUnit>(
     unit: T,
     damageAmount: number
 ): DamageResult<T> {
-    let healthDamage = 0;
+    // Apply status effect modifiers first
+    const finalDamageAmount = applyDamageModifiers(damageAmount, unit.statusEffects);
 
     // Then reduce health
-    healthDamage = Math.min(damageAmount, unit.currentHealth);
-    const newHealth = Math.max(0, unit.currentHealth - damageAmount);
+    const healthDamage = Math.min(finalDamageAmount, unit.currentHealth);
+    const newHealth = Math.max(0, unit.currentHealth - finalDamageAmount);
 
     return {
         unit: {

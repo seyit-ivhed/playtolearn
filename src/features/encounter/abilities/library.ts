@@ -36,19 +36,45 @@ export const elixir_of_life: AbilityImplementation = ({ allUnits, variables }): 
     };
 };
 
-// Kenji: Blade Barrier - Shield/Protect (Currently mapped to Damage/Shield in dummy logic)
-// Plan said Kenji uses SHIELD, this is a temp implementation.
+// Kenji: Blade Barrier - Shield/Protect
 export const blade_barrier: AbilityImplementation = ({ allUnits, variables }): AbilityResult => {
     const damage = variables.damage || 0;
+    const duration = variables.duration || 2;
+    const reduction = variables.reduction || 50;
 
     let updatedUnits = allUnits;
     const logs: CombatLog[] = [];
 
+    // 1. Single target damage to first enemy
     if (damage > 0) {
         const damageResult = applyDamageEffect(updatedUnits, 'SINGLE_ENEMY', damage);
         updatedUnits = damageResult.updatedUnits;
         logs.push(...damageResult.logs);
     }
+
+    // 2. Apply shield to all living companions
+    updatedUnits = updatedUnits.map(unit => {
+        if (unit.isPlayer && !unit.isDead) {
+            const existingEffects = unit.statusEffects || [];
+
+            // Remove existing SHIELD if any (refreshing)
+            const otherEffects = existingEffects.filter(e => e.type !== 'SHIELD');
+
+            const shieldEffect = {
+                id: `shield_${unit.id}_${Date.now()}`,
+                type: 'SHIELD',
+                state: { duration, reduction }
+            };
+
+            return {
+                ...unit,
+                statusEffects: [...otherEffects, shieldEffect]
+            };
+        }
+        return unit;
+    });
+
+    logs.push({ message: `Blade Barrier protects the party! (Reduction: ${reduction}%, Duration: ${duration} turns)`, type: 'EFFECT' });
 
     return { updatedUnits, logs };
 };

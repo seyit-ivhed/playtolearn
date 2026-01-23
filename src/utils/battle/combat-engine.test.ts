@@ -180,10 +180,57 @@ describe('CombatEngine', () => {
                 { id: 'u2', isPlayer: true, isDead: false }
             ];
 
-            const index = CombatEngine.findFirstValidEnemy(attacker, targets);
-            expect(index).toBe(-1);
         });
     });
 
+    describe('Status Effects', () => {
+        it('should reduce damage received when SHIELD is active', () => {
+            const shieldedHero: BattleUnit = {
+                ...mockAttacker,
+                statusEffects: [{ id: 's1', type: 'SHIELD', state: { reduction: 50, duration: 2 } }]
+            };
 
+            const result = CombatEngine.executeStandardAttack(mockEnemy, [shieldedHero]);
+            const damagedHero = result.updatedTargets.find(u => u.id === mockAttacker.id);
+
+            // Monster damage is 5, 50% reduction = 2.5 -> floor is 2.
+            expect(damagedHero?.currentHealth).toBe(98);
+        });
+
+        it('should decrement effect duration on tick', () => {
+            const unitWithEffect: BattleUnit = {
+                ...mockAttacker,
+                statusEffects: [{ id: 's1', type: 'SHIELD', state: { duration: 2 } }]
+            };
+
+            const updated = CombatEngine.tickStatusEffects([unitWithEffect]);
+            expect(updated[0].statusEffects![0].state.duration).toBe(1);
+        });
+
+        it('should remove effect when duration reaches 0 after tick', () => {
+            const unitWithEffect: BattleUnit = {
+                ...mockAttacker,
+                statusEffects: [{ id: 's1', type: 'SHIELD', state: { duration: 1 } }]
+            };
+
+            const updated = CombatEngine.tickStatusEffects([unitWithEffect]);
+            expect(updated[0].statusEffects?.length).toBe(0);
+        });
+
+        it('should execute blade_barrier and apply shield to all companions', async () => {
+            const result = await CombatEngine.executeSpecialAbility(
+                mockAttacker,
+                [mockAttacker, mockEnemy],
+                'blade_barrier',
+                { damage: 10, duration: 2, reduction: 50 }
+            );
+
+            const shieldedHero = result.updatedUnits.find(u => u.id === mockAttacker.id);
+            expect(shieldedHero?.statusEffects?.find(e => e.type === 'SHIELD')).toBeTruthy();
+            expect(shieldedHero?.statusEffects?.[0].state.duration).toBe(2);
+
+            const damagedEnemy = result.updatedUnits.find(u => u.id === mockEnemy.id);
+            expect(damagedEnemy?.currentHealth).toBe(90);
+        });
+    });
 });

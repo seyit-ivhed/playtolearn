@@ -41,7 +41,11 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
     const scaledVariables: Record<string, number> = {};
     if (evolvedAbility.variables) {
         Object.entries(evolvedAbility.variables).forEach(([key, value]) => {
-            scaledVariables[key] = Math.floor(value * scalingFactor);
+            if (key === 'duration' || key === 'reduction') {
+                scaledVariables[key] = value;
+            } else {
+                scaledVariables[key] = Math.floor(value * scalingFactor);
+            }
         });
     }
 

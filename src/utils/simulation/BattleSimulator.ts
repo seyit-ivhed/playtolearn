@@ -129,6 +129,10 @@ export class BattleSimulator {
             return;
         }
 
+        // Tick Status Effects
+        this.state.party = CombatEngine.tickStatusEffects(this.state.party as unknown as BattleUnit[]) as unknown as SimulationUnit[];
+        this.state.monsters = CombatEngine.tickStatusEffects(this.state.monsters as unknown as BattleUnit[]) as unknown as SimulationUnit[];
+
         // Increment turn counter
         this.state.turnCount++;
 
