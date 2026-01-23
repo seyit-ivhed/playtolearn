@@ -21,13 +21,13 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
     }, [onComplete]);
 
     const renderEffect = () => {
-        if (effectType === 'protective_stance') {
+        if (effectType.startsWith('protective_stance')) {
             // Updated: Return null to hide global overlay (handled by per-card VFX now)
             // The useEffect timer still runs to trigger onComplete!
             return null;
         }
 
-        if (effectType === 'piercing_shot') {
+        if (effectType.startsWith('piercing_shot')) {
             return (
                 <div className="vfx-arrow-container">
                     <div className="vfx-impact-flash" />
@@ -36,7 +36,7 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
             );
         }
 
-        if (effectType === 'jaguar_strike') {
+        if (effectType.startsWith('jaguar_strike')) {
             const style: React.CSSProperties = {};
 
             if (targetId) {
@@ -68,7 +68,7 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
             );
         }
 
-        if (effectType === 'elixir_of_life') {
+        if (effectType.startsWith('elixir_of_life')) {
             return (
                 <div className="vfx-heal-container">
                     <div className="vfx-heal-glow" />
@@ -82,7 +82,39 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
             );
         }
 
+        if (effectType.startsWith('blade_barrier')) {
+            const style: React.CSSProperties = {};
+
+            if (targetId) {
+                const targetElement = document.querySelector(`[data-unit-id="${targetId}"]`);
+                if (targetElement) {
+                    const rect = targetElement.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+
+                    style.position = 'fixed';
+                    style.left = `${centerX}px`;
+                    style.top = `${centerY}px`;
+                    style.transform = 'translate(-50%, -50%)';
+                    style.zIndex = 9999;
+                    style.width = '0px';
+                    style.height = '0px';
+                    style.overflow = 'visible';
+                }
+            }
+
+            return (
+                <div className="vfx-kenji-blade-container" style={style}>
+                    <div className="vfx-kenji-blade-slash vfx-kenji-blade-slash-1" />
+                    <div className="vfx-kenji-blade-slash vfx-kenji-blade-slash-2" />
+                    <div className="vfx-kenji-blade-slash vfx-kenji-blade-slash-3" />
+                </div>
+            );
+
+        }
+
         return null;
+
     };
 
     return (

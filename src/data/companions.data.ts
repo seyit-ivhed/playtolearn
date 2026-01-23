@@ -144,7 +144,7 @@ export const COMPANIONS: Record<string, Companion> = {
             id: 'blade_barrier',
             variables: { damage: 20, duration: 2, reduction: 50 }
         },
-        initialSpirit: 50,
+        initialSpirit: 100,
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,

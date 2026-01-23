@@ -40,7 +40,11 @@ export const Battlefield = ({
                                 unit={unit}
                                 phase={phase}
                                 onAct={() => onUnitAction(unit.id)}
-                                activeVisualEffect={activeVFXType}
+                                activeVisualEffect={
+                                    activeVFXType?.startsWith('blade_barrier')
+                                        ? 'blade_barrier'
+                                        : activeVFXType
+                                }
                                 disableInteraction={isEncounterOver || !!activeChallengeUnitId || isVFXActive}
                             />
                         </div>

@@ -9,21 +9,17 @@ export const getVFXDetails = (unitId: string, party: EncounterUnit[], monsters: 
     if (!unit) return { type: 'Generic', targetId: undefined };
 
     const companion = getCompanionById(unit.templateId);
-    const effectName = companion?.specialAbility?.id || 'Generic';
+    const effectName = unit.specialAbilityId || companion?.specialAbility?.id || 'Generic';
 
     let targetId: string | undefined;
-    // Single target abilities need a target ID for VFX targeting
-    const singleTargetAbilities = ['jaguar_strike', 'jaguar_strike_2', 'jaguar_strike_3', 'jaguar_strike_4', 'blade_barrier'];
-
-    if (singleTargetAbilities.some(id => effectName.startsWith(id))) {
-        const target = monsters.filter(m => !m.isDead)[0];
-        if (target) {
-            targetId = target.id;
-        }
+    const target = monsters.filter(m => !m.isDead)[0];
+    if (target) {
+        targetId = target.id;
     }
 
     return { type: effectName, targetId };
 };
+
 
 /**
  * Checks if the encounter is effectively over (all monsters dead).
