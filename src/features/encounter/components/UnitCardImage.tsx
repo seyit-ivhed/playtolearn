@@ -1,5 +1,5 @@
 import type { Companion } from '../../../types/companion.types';
-import { getCompanionSprite } from '../../../data/companion-sprites';
+import { getCompanionCardImage } from '../../../data/companion-sprites';
 
 interface UnitCardImageProps {
     isMonster: boolean;
@@ -20,7 +20,7 @@ export const UnitCardImage = ({
         <div className="unit-card-bg">
             {(!isMonster && (image || companionData)) || (isMonster && image) ? (
                 <img
-                    src={image || (companionData ? getCompanionSprite(companionData.id, level) : '')}
+                    src={image || (companionData ? getCompanionCardImage(companionData.id, level) : '')}
                     alt={displayName}
                     className="unit-card-image"
                     draggable={false}

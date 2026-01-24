@@ -4,7 +4,7 @@ import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.typ
 import { getCompanionById } from '../../../data/companions.data';
 import { getStatsForLevel } from '../../../utils/progression.utils';
 import { getMonsterSprite } from '../../../data/monster-sprites';
-import { getCompanionSprite } from '../../../data/companion-sprites';
+import { getCompanionCardImage } from '../../../data/companion-sprites';
 import { CombatEngine } from '../../../utils/battle/combat-engine';
 import type { BattleUnit } from '../../../types/encounter.types';
 
@@ -40,7 +40,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     currentSpirit: data.initialSpirit || 0,
                     maxSpirit: 100,
                     spiritGain: data.spiritGain || 0,
-                    image: getCompanionSprite(id, stats.level)
+                    image: getCompanionCardImage(id, stats.level)
                 };
             });
 
