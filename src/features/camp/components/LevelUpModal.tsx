@@ -4,7 +4,7 @@ import { Heart, Swords, ArrowRight } from 'lucide-react';
 import type { Companion, CompanionStats } from '../../../types/companion.types';
 import { GameParticles } from '../../../components/ui/GameParticles';
 import { CONFETTI_OPTIONS } from '../../../components/ui/GameParticles.constants';
-import { getCompanionSprite } from '../../../data/companion-sprites';
+import { getCompanionLevelUpImage } from '../../../data/companion-sprites';
 import styles from './LevelUpModal.module.css';
 
 interface LevelUpModalProps {
@@ -25,8 +25,8 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
     onClose
 }) => {
     const { t } = useTranslation();
-    const oldImage = getCompanionSprite(companion.id, oldLevel);
-    const newImage = getCompanionSprite(companion.id, newLevel);
+    const oldImage = getCompanionLevelUpImage(companion.id, oldLevel);
+    const newImage = getCompanionLevelUpImage(companion.id, newLevel);
     const isEvolution = oldImage !== newImage;
 
     // State for evolution sequence

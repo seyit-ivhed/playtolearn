@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getCompanionById } from '../../../data/companions.data';
-import { getCompanionSprite } from '../../../data/companion-sprites';
+import { getCompanionCampImage } from '../../../data/companion-sprites';
 import { getXpForNextLevel, getEvolutionAtLevel } from '../../../utils/progression.utils';
 import { CompanionTooltip } from './CompanionTooltip';
 import styles from './CompanionSeat.module.css';
@@ -45,7 +45,7 @@ export const CompanionSeat: React.FC<CompanionSeatProps> = ({
             >
                 <div className={styles.miniLevel}>Lv {currentStats.level}</div>
                 <div className={styles.avatarWrapper}>
-                    <img src={getCompanionSprite(companionId, currentStats.level)} alt={data.name} className={styles.largeAvatar} />
+                    <img src={getCompanionCampImage(companionId, currentStats.level)} alt={data.name} className={styles.largeAvatar} />
                 </div>
                 <div className={styles.miniName}>{data.name}</div>
             </div>
