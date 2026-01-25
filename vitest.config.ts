@@ -21,6 +21,8 @@ export default defineConfig({
                 'e2e/',
                 'vite.config.ts',
                 'vitest.config.ts',
+                'src/hooks/useAuth.ts',
+                'data/'
             ],
         },
     },

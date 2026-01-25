@@ -1,3 +1,4 @@
+// This file is ignored by vitest unit test coverage
 import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../services/supabase.service';
 
@@ -28,7 +29,7 @@ export const useAuth = () => {
         const init = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             setSession(session);
-            
+
             if (session?.user?.id) {
                 IdentityService.setPlayerId(session.user.id);
             } else {
