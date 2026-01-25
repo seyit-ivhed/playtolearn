@@ -114,7 +114,7 @@
             "title": "The Misty Foothills",
             "description": "Traveling from the ancient ruins through a shimmering portal, Amara and Tariq emerge in the breath-taking Jade Peaks where they discover a young warrior named Kenji struggling against the thick mountain mists.",
             "story_hook": "As the portal faded, the biting air of the Jade Peaks greeted Amara and Tariq. Shrouded in mist, a young boy named Kenji sat on a rock, clutching an oversized wooden sword. His eyes widened with excitement and surprise at their arrival. 'Who are you?' he asked, before hurriedly explaining how the Iron Warlord's forces had begun to invade his mountains, spreading a dark, unnatural mist across the land.",
-            "completion_summary": "The Iron Warlord's enforcer has been driven back, and the mists have momentarily parted. Kenji, impressed by the newcomers' bravery and wisdom, wipes his brow and offers a formal bow. The path to the peaks is dangerous, but with new allies, the journey upward has just begun.",
+            "completion_summary": "The Iron Enforcer has been driven back, and the mists have momentarily parted. Kenji, impressed by the newcomers' bravery and wisdom, wipes his brow and offers a formal bow. The path to the peaks is dangerous, but with new allies, the journey upward has just begun.",
             "mystery_path": "The trail leads higher into the frozen heights...",
             "nodes": {
                 "3_1": {
@@ -151,7 +151,7 @@
                     "label": "Last Stand Prep"
                 },
                 "3_12": {
-                    "label": "The Iron Warlord Enforcer"
+                    "label": "The Iron Enforcer"
                 },
                 "3_13": {
                     "label": "To the Jade Peaks"
@@ -383,7 +383,7 @@
             "name": "Iron Minion"
         },
         "iron_warlord_enforcer": {
-            "name": "The Iron Warlord Enforcer"
+            "name": "The Iron Enforcer"
         }
     },
     "premium": {

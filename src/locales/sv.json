@@ -114,7 +114,7 @@
             "title": "De dimmiga fotbergen",
             "description": "När de reser från de uråldriga ruinerna genom en skimrande portal, dyker Amara och Tariq upp i de hisnande Jade-topparna där de upptäcker en ung krigare vid namn Kenji som kämpar mot den tjocka bergsdimman.",
             "story_hook": "När portalen bleknade möttes Amara och Tariq av den bitande luften i Jade-topparna. Höljd i dimma satt en ung pojke vid namn Kenji på en sten, kramande ett alldeles för stort träsvärd. Hans ögon spärrades upp av entusiasm och förvåning vid deras ankomst. 'Vilka är ni?' frågade han, innan han snabbt förklarade hur Järnkriggherrens styrkor börjat invadera hans berg och sprida en mörk, onaturlig dimma över landet.",
-            "completion_summary": "Järnkriggherrens hantlangare har drivits tillbaka och dimman har tillfälligt skingrats. Kenji, imponerad av nykomlingarnas mod och visdom, torkar pannan och bugar formellt. Vägen till topparna är farlig, men med nya allierade har resan uppåt precis börjat.",
+            "completion_summary": "Järnhantlangaren har drivits tillbaka och dimman har tillfälligt skingrats. Kenji, imponerad av nykomlingarnas mod och visdom, torkar pannan och bugar formellt. Vägen till topparna är farlig, men med nya allierade har resan uppåt precis börjat.",
             "mystery_path": "Stigen leder högre upp i de frusna höjderna...",
             "nodes": {
                 "3_1": {
@@ -151,7 +151,7 @@
                     "label": "Sista förberedelsen"
                 },
                 "3_12": {
-                    "label": "Järnkriggherrens hantlangare"
+                    "label": "Järnhantlangaren"
                 },
                 "3_13": {
                     "label": "Till Jade-topparna"
@@ -383,7 +383,7 @@
             "name": "Järnhantlangare"
         },
         "iron_warlord_enforcer": {
-            "name": "Järnkriggherrens hantlangare"
+            "name": "Järnhantlangaren"
         }
     },
     "premium": {
