@@ -26,7 +26,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
 }) => {
     const { t } = useTranslation();
     const nodeStep = index + 1;
-   
+
     const { isLocked, stars } = node;
     const isCompleted = stars > 0;
     const isCurrent = nodeStep === currentNode;
@@ -103,10 +103,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
 
             {/* Label */}
             <div className={labelClasses}>
-                {isCamp
-                    ? t('party_camp')
-                    : t(`adventures.${adventureId}.nodes.${node.id}.label`, node.label || '') as string
-                }
+                {t(`adventures.${adventureId}.nodes.${node.id}.label`, isCamp ? t('party_camp') : (node.label || '')) as string}
             </div>
         </div>
     );

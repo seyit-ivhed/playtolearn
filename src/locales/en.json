@@ -62,6 +62,9 @@
                 },
                 "1_13": {
                     "label": "The Sand Colossus"
+                },
+                "1_14": {
+                    "label": "To the Ruins"
                 }
             }
         },
@@ -101,6 +104,9 @@
                 },
                 "2_13": {
                     "label": "The Stone Emperor"
+                },
+                "2_14": {
+                    "label": "Journey Onward"
                 }
             }
         },
@@ -117,14 +123,20 @@
                 "3_2": {
                     "label": "The Mist Thickens"
                 },
+                "3_3": {
+                    "label": "Resting Place"
+                },
                 "3_4": {
                     "label": "The Mirror Mist"
                 },
                 "3_5": {
-                    "label": "Stone Guardian"
+                    "label": "Iron Guardian"
                 },
                 "3_6": {
                     "label": "Ambuscade"
+                },
+                "3_7": {
+                    "label": "Foothold"
                 },
                 "3_8": {
                     "label": "The Keystone Cipher"
@@ -135,11 +147,14 @@
                 "3_10": {
                     "label": "The Star Path"
                 },
+                "3_11": {
+                    "label": "Last Stand Prep"
+                },
                 "3_12": {
                     "label": "The Iron Warlord Enforcer"
                 },
                 "3_13": {
-                    "label": "Journey to Jade Peaks"
+                    "label": "To the Jade Peaks"
                 }
             }
         }
@@ -370,6 +385,15 @@
         },
         "bandit_leader": {
             "name": "Bandit Leader"
+        },
+        "mist_stalker": {
+            "name": "Mist Stalker"
+        },
+        "iron_minion": {
+            "name": "Iron Minion"
+        },
+        "iron_warlord_enforcer": {
+            "name": "The Iron Warlord Enforcer"
         }
     },
     "premium": {

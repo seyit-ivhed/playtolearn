@@ -62,6 +62,9 @@
                 },
                 "1_13": {
                     "label": "Sandkolossen"
+                },
+                "1_14": {
+                    "label": "Till ruinerna"
                 }
             }
         },
@@ -101,6 +104,9 @@
                 },
                 "2_13": {
                     "label": "Stenkejsaren"
+                },
+                "2_14": {
+                    "label": "Res vidare"
                 }
             }
         },
@@ -117,14 +123,20 @@
                 "3_2": {
                     "label": "Dimman tätnar"
                 },
+                "3_3": {
+                    "label": "Viloplats"
+                },
                 "3_4": {
                     "label": "Spegeldimman"
                 },
                 "3_5": {
-                    "label": "Stenväktare"
+                    "label": "Järnväktare"
                 },
                 "3_6": {
                     "label": "Bakhåll"
+                },
+                "3_7": {
+                    "label": "Fäste"
                 },
                 "3_8": {
                     "label": "Slutstenschiffret"
@@ -135,11 +147,14 @@
                 "3_10": {
                     "label": "Stjärnvägen"
                 },
+                "3_11": {
+                    "label": "Sista förberedelsen"
+                },
                 "3_12": {
                     "label": "Järnkriggherrens hantlangare"
                 },
                 "3_13": {
-                    "label": "Resan till Jade-topparna"
+                    "label": "Till Jade-topparna"
                 }
             }
         }
@@ -370,6 +385,15 @@
         },
         "bandit_leader": {
             "name": "Banditledare"
+        },
+        "mist_stalker": {
+            "name": "Dimmvandrare"
+        },
+        "iron_minion": {
+            "name": "Järnhantlangare"
+        },
+        "iron_warlord_enforcer": {
+            "name": "Järnkriggherrens hantlangare"
         }
     },
     "premium": {

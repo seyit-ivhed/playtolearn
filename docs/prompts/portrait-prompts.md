@@ -91,3 +91,13 @@ Monster portraits use a consistent style: **Stylized 3D digital illustration, ch
 
 **The Stone Emperor (THE_STONE_EMPEROR - Boss)**
 > Portrait of The Stone Emperor, a grand and intimidating ruler made of polished black obsidian and gold-veined marble. Sitting on a floating stone throne in the heart of the subterranean Assyrian capital. Wearing a massive jeweled headdress. Deep glowing purple eyes and a regal, yet stern adversarial expression. Controlling the surrounding stone debris and floating stalactites with magical gestures. Set in a magnificent cavernous throne room with glowing purple crystals and ancient hanging gardens. Stylized 3D digital illustration, child-friendly, majestic dark and gold colors, soft purple glow lighting. Safe for children.
+### Adventure 3: The Misty Foothills
+
+**Mist Stalker (MIST_STALKER)**
+> Portrait of a Mist Stalker, sneaky and ethereal, a creature made of swirling soft white and grey mist with large, wide-set glowing light-blue eyes. Having thin, whispy tendrils that act like arms and a trail of vapor instead of legs. Looking mischievous, peeking out from behind a stylized misty mountain rock with a sneaky smirk. Set in a thick, swirling mountain mist among ancient pine trees and jagged rocks. Stylized 3D digital illustration, child-friendly, cool misty colors, soft glow lighting. Safe for children.
+
+**Iron Minion (IRON_MINION)**
+> Portrait of an Iron Minion, clunky and territorial, a small rounded soldier made of overlapping plates of grey iron and bronze. Glowing orange energy visible between the armor joints and through a narrow T-shaped visor. Having thick, stubby limbs and holding a large, rounded iron shield. Standing in a defensive, grumpy posture on a narrow, winding mountain pass with a steep drop-off and distant snowy peaks. Stylized 3D digital illustration, child-friendly, metallic colors with orange glow, soft lighting. Safe for children.
+
+**Iron Warlord Enforcer (IRON_WARLORD_ENFORCER - Boss)**
+> Portrait of an Iron Warlord Enforcer, massive and intimidating, a large warrior clad in heavy, dark gunmetal-grey iron armor with glowing crimson runes etched into the surface. Wearing a large helmet with a glowing red visor and broad spiked pauldrons. Carrying a massive, blunt iron hammer over one shoulder. Standing tall and adversarial at the entrance of a massive, dark iron fortress built into the side of a mountain peak, with heavy snow falling and a commanding, stern gaze. Stylized 3D digital illustration, child-friendly, dark metallic and crimson colors, soft lighting. Safe for children.

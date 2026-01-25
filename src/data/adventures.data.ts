@@ -122,8 +122,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '1_14',
                 type: EncounterType.ENDING,
                 coordinates: { x: -300, y: 3850 },
-                xpReward: 0,
-                label: 'To the Ruins'
+                xpReward: 0
             }
         ]
     },
@@ -223,8 +222,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_14',
                 type: EncounterType.ENDING,
                 coordinates: { x: -300, y: 4100 },
-                xpReward: 0,
-                label: 'Journey Onward'
+                xpReward: 0
             }
         ]
     },
@@ -237,100 +235,87 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 800 },
                 enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER],
-                xpReward: 150,
-                label: 'First Contact'
+                xpReward: 150
             },
             {
                 id: '3_2',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 150, y: 1000 },
                 enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER],
-                xpReward: 160,
-                label: 'The Mist Thickens'
+                xpReward: 160
             },
             {
                 id: '3_3',
                 type: EncounterType.CAMP,
                 coordinates: { x: -50, y: 1300 },
-                xpReward: 0,
-                label: 'Resting Place'
+                xpReward: 0
             },
             {
                 id: '3_4',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: -250, y: 1600 },
                 puzzleData: { puzzleType: PuzzleType.SYMMETRY },
-                xpReward: 180,
-                label: 'The Mirror Mist'
+                xpReward: 180
             },
             {
                 id: '3_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1900 },
                 enemies: [MONSTERS.IRON_MINION],
-                xpReward: 200,
-                label: 'Stone Guardian'
+                xpReward: 200
             },
             {
                 id: '3_6',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 2200 },
                 enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.IRON_MINION],
-                xpReward: 220,
-                label: 'Ambuscade'
+                xpReward: 220
             },
             {
                 id: '3_7',
                 type: EncounterType.CAMP,
                 coordinates: { x: 50, y: 2500 },
-                xpReward: 0,
-                label: 'Foothold'
+                xpReward: 0
             },
             {
                 id: '3_8',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 300, y: 2800 },
                 puzzleData: { puzzleType: PuzzleType.LATIN_SQUARE },
-                xpReward: 250,
-                label: 'The Keystone Cipher'
+                xpReward: 250
             },
             {
                 id: '3_9',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -100, y: 3100 },
                 enemies: [MONSTERS.IRON_MINION, MONSTERS.IRON_MINION],
-                xpReward: 270,
-                label: 'Heavy Resistance'
+                xpReward: 270
             },
             {
                 id: '3_10',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 250, y: 3400 },
                 puzzleData: { puzzleType: PuzzleType.SEQUENCE },
-                xpReward: 280,
-                label: 'The Star Path'
+                xpReward: 280
             },
             {
                 id: '3_11',
                 type: EncounterType.CAMP,
                 coordinates: { x: 0, y: 3700 },
-                xpReward: 0,
-                label: 'Last Stand Prep'
+                xpReward: 0
             },
             {
                 id: '3_12',
                 type: EncounterType.BOSS,
                 coordinates: { x: 0, y: 4100 },
                 enemies: [MONSTERS.IRON_WARLORD_ENFORCER],
-                xpReward: 500,
-                label: 'The Iron Warlord Enforcer'
+                xpReward: 500
             },
             {
                 id: '3_13',
                 type: EncounterType.ENDING,
                 coordinates: { x: -300, y: 4400 },
-                xpReward: 0,
-                label: 'To the Jade Peaks'
+                xpReward: 0
             }
         ]
     },
