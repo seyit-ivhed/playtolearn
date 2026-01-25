@@ -19,23 +19,28 @@ export const generateLatinSquareData = (difficulty: DifficultyLevel): PuzzleData
 
     LatinSquareEngine.shuffle(solution);
 
-    const grid: LatinSquareElement[][] = solution.map(row => [...row]);
-    const fixedIndices: { row: number, col: number }[] = [];
-
-    const totalToKeep = Math.max(4, 10 - difficulty * 2);
-    let kept = 0;
-
     const puzzleGrid: LatinSquareElement[][] = Array.from({ length: 4 }, () => Array(4).fill(null));
 
-    while (kept < totalToKeep) {
-        const row = Math.floor(Math.random() * 4);
-        const col = Math.floor(Math.random() * 4);
-        if (puzzleGrid[row][col] === null) {
-            puzzleGrid[row][col] = grid[row][col];
-            fixedIndices.push({ row, col });
-            kept++;
+    // Create a list of all possible cell indices
+    const candidates: { row: number, col: number }[] = [];
+    for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 4; col++) {
+            candidates.push({ row, col });
         }
     }
+
+    // Shuffle candidates to pick random ones without replacement
+    for (let i = candidates.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+    }
+
+    const totalToKeep = Math.min(16, Math.max(4, 10 - difficulty * 2));
+    const fixedIndices = candidates.slice(0, totalToKeep);
+
+    fixedIndices.forEach(({ row, col }) => {
+        puzzleGrid[row][col] = solution[row][col];
+    });
 
     return {
         puzzleType: PuzzleType.LATIN_SQUARE,
