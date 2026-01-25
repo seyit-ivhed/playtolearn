@@ -47,7 +47,7 @@ export const UnitCard = ({
 
     const displayName = isMonster
         ? t(`monsters.${unit.templateId}.name`, unit.name)
-        : t(`companions.${unit.templateId}.name`, unit.name);
+        : unit.name;
 
     const {
         animationClass,
@@ -174,7 +174,7 @@ export const UnitCard = ({
                 mathProblem && onMathAnswer && (
                     <MathCardFace
                         problem={mathProblem}
-                        abilityName={companionData?.specialAbility ? t(`companions.${unit.templateId}.special_ability_name`) : t('companions.stats.attack')}
+                        abilityName={unit.specialAbilityId ? t(`abilities.${unit.specialAbilityId}.name`) : t('companions.stats.attack')}
                         onAnswer={onMathAnswer}
                     />
                 )

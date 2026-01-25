@@ -277,16 +277,6 @@
             "spirit": "Spirit",
             "attack": "Attack",
             "shield": "Shield"
-        },
-        "amara": {
-            "name": "Amara",
-            "special_ability_name": "Jaguar Strike",
-            "special_ability_description": "Deals {{value}} damage to a single enemy."
-        },
-        "tariq": {
-            "name": "Tariq",
-            "special_ability_name": "Elixir of Life",
-            "special_ability_description": "Heals all allies for {{value}} HP."
         }
     },
     "abilities": {

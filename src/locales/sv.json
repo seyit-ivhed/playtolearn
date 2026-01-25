@@ -277,16 +277,6 @@
             "spirit": "Ande",
             "attack": "Attack",
             "shield": "Sköld"
-        },
-        "amara": {
-            "name": "Amara",
-            "special_ability_name": "Jaguarhugg",
-            "special_ability_description": "Gör {{value}} skada på en enskild fiende."
-        },
-        "tariq": {
-            "name": "Tariq",
-            "special_ability_name": "Livselixir",
-            "special_ability_description": "Helar alla allierade med {{value}} HP."
         }
     },
     "abilities": {
