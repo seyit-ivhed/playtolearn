@@ -14,8 +14,8 @@
     "test:e2e": "playwright test",
     "project:start": "bash scripts/start-project.sh",
     "project:complete": "bash scripts/complete-project.sh",
-    "simulate-difficulty": "tsx scripts/simulate-difficulty.ts",
-    "analyze-progression": "tsx scripts/analyze-progression.ts",
+    "simulate:difficulty": "tsx scripts/simulate-difficulty.ts",
+    "simulate:progression": "tsx scripts/analyze-progression.ts",
     "supabase:deploy": "bash scripts/deploy-supabase.sh",
     "stripe-local": "stripe listen --forward-to localhost:54321/functions/v1/stripe-webhook"
   },
