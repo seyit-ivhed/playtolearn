@@ -189,6 +189,10 @@
           {
             "companionId": "tariq",
             "level": 6
+          },
+          {
+            "companionId": "kenji",
+            "level": 1
           }
         ]
       },
@@ -201,6 +205,10 @@
           {
             "companionId": "tariq",
             "level": 6
+          },
+          {
+            "companionId": "kenji",
+            "level": 1
           }
         ]
       },
@@ -213,6 +221,10 @@
           {
             "companionId": "tariq",
             "level": 6
+          },
+          {
+            "companionId": "kenji",
+            "level": 3
           }
         ]
       },
@@ -225,6 +237,10 @@
           {
             "companionId": "tariq",
             "level": 6
+          },
+          {
+            "companionId": "kenji",
+            "level": 3
           }
         ]
       },
@@ -237,6 +253,10 @@
           {
             "companionId": "tariq",
             "level": 7
+          },
+          {
+            "companionId": "kenji",
+            "level": 4
           }
         ]
       },
@@ -244,11 +264,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 8
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 8
+            "level": 7
+          },
+          {
+            "companionId": "kenji",
+            "level": 5
           }
         ]
       }

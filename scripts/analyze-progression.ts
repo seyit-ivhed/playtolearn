@@ -8,6 +8,7 @@ import type { AdventureSimulationConfig } from '../src/utils/simulation/simulati
 
 // Types
 interface SimCompanion {
+    id: string;
     name: string;
     level: number;
     currentXp: number;
@@ -15,7 +16,13 @@ interface SimCompanion {
 
 interface Scenario {
     name: string;
-    ratioA: number; // Ratio for Companion A (0-1)
+    favoredRatio: number; // Ratio for the favored companion (usually the first one)
+}
+
+interface CompanionSnapshot {
+    id: string;
+    level: number;
+    xp: number;
 }
 
 interface EncounterState {
@@ -24,16 +31,15 @@ interface EncounterState {
     type: EncounterType;
     scenarioStates: {
         scenarioName: string;
-        compA: { level: number; xp: number };
-        compB: { level: number; xp: number };
+        companions: CompanionSnapshot[];
     }[];
 }
 
 // Configuration
 const SCENARIOS: Scenario[] = [
-    { name: 'Equal', ratioA: 0.5 },
-    { name: 'Favored (65/35)', ratioA: 0.65 },
-    { name: 'Exclusive', ratioA: 1.0 },
+    { name: 'Equal', favoredRatio: 0 }, // 0 means split equally
+    { name: 'Favored (65/35)', favoredRatio: 0.65 },
+    { name: 'Exclusive', favoredRatio: 1.0 },
 ];
 
 /**
@@ -56,17 +62,16 @@ function addXpToCompanion(companion: SimCompanion, amount: number): SimCompanion
     return { ...companion, level, currentXp };
 }
 
-async function runAnalysis() {
+export async function runAnalysis() {
     const reportData: EncounterState[] = [];
-
-    // Pre-calculate all encounters linear list for easier iteration if needed, 
-    // but nested is fine since we just want to track state.
 
     // Initialize simulation state for each scenario
     const simulations = SCENARIOS.map(scenario => ({
         scenario,
-        compA: { name: 'Comp A', level: 1, currentXp: 0 } as SimCompanion,
-        compB: { name: 'Comp B', level: 1, currentXp: 0 } as SimCompanion,
+        party: [
+            { id: 'amara', name: 'Amara', level: 1, currentXp: 0 },
+            { id: 'tariq', name: 'Tariq', level: 1, currentXp: 0 },
+        ] as SimCompanion[],
         pendingXp: 0
     }));
 
@@ -82,17 +87,52 @@ async function runAnalysis() {
             };
 
             for (const sim of simulations) {
+                // Check if Kenji joins (Adventure 3)
+                if (adventure.id === '3' && !sim.party.find(c => c.id === 'kenji')) {
+                    sim.party.push({ id: 'kenji', name: 'Kenji', level: 1, currentXp: 0 });
+                }
+
                 // Add XP to pending pool
                 sim.pendingXp += xpReward;
 
                 // Check if distribution happens (CAMP)
                 if (encounter.type === EncounterType.CAMP) {
                     const totalDistribute = sim.pendingXp;
-                    const xpA = Math.floor(totalDistribute * sim.scenario.ratioA);
-                    const xpB = totalDistribute - xpA; // Ensure no XP loss due to rounding
+                    const numCompanions = sim.party.length;
 
-                    sim.compA = addXpToCompanion(sim.compA, xpA);
-                    sim.compB = addXpToCompanion(sim.compB, xpB);
+                    if (sim.scenario.favoredRatio === 0) {
+                        // Equal distribution
+                        const xpPerComp = Math.floor(totalDistribute / numCompanions);
+                        let remainder = totalDistribute % numCompanions;
+
+                        sim.party = sim.party.map(c => {
+                            const xpToAdd = xpPerComp + (remainder > 0 ? 1 : 0);
+                            if (remainder > 0) remainder--;
+                            return addXpToCompanion(c, xpToAdd);
+                        });
+                    } else {
+                        // Favored/Exclusive distribution
+                        // First companion is favored
+                        const xpFavored = Math.floor(totalDistribute * sim.scenario.favoredRatio);
+                        const xpOthersTotal = totalDistribute - xpFavored;
+
+                        if (numCompanions > 1) {
+                            const xpPerOther = Math.floor(xpOthersTotal / (numCompanions - 1));
+                            let remainder = xpOthersTotal % (numCompanions - 1);
+
+                            sim.party = sim.party.map((c, index) => {
+                                if (index === 0) {
+                                    return addXpToCompanion(c, xpFavored);
+                                } else {
+                                    const xpToAdd = xpPerOther + (remainder > 0 ? 1 : 0);
+                                    if (remainder > 0) remainder--;
+                                    return addXpToCompanion(c, xpToAdd);
+                                }
+                            });
+                        } else {
+                            sim.party[0] = addXpToCompanion(sim.party[0], totalDistribute);
+                        }
+                    }
 
                     sim.pendingXp = 0;
                 }
@@ -100,8 +140,7 @@ async function runAnalysis() {
                 // Record state
                 stateSnapshot.scenarioStates.push({
                     scenarioName: sim.scenario.name,
-                    compA: { level: sim.compA.level, xp: sim.compA.currentXp },
-                    compB: { level: sim.compB.level, xp: sim.compB.currentXp }
+                    companions: sim.party.map(c => ({ id: c.id, level: c.level, xp: c.currentXp }))
                 });
             }
             reportData.push(stateSnapshot);
@@ -114,12 +153,12 @@ async function runAnalysis() {
 
 function generateMarkdownReport(data: EncounterState[]) {
     console.log('# Companion Progression Analysis Report\n');
-    console.log('| Adventure | Encounter | Type | Equal (A/B) | Favored 65/35 (A/B) | Exclusive (A/B) |');
+    console.log('| Adventure | Encounter | Type | Equal | Favored 65/35 | Exclusive |');
     console.log('|---|---|---|---|---|---|');
 
     data.forEach(row => {
         const scenarioCols = row.scenarioStates.map(s =>
-            `Lvl ${s.compA.level} / Lvl ${s.compB.level}`
+            s.companions.map(c => `L${c.level}`).join('/')
         ).join(' | ');
 
         console.log(`| ${row.adventureId} | ${row.encounterId} | ${row.type} | ${scenarioCols} |`);
@@ -127,7 +166,6 @@ function generateMarkdownReport(data: EncounterState[]) {
 }
 
 function generateSimulationConfigs(data: EncounterState[]) {
-    // Group by Scenario -> Adventure
     const scenarios = ['Equal', 'Favored (65/35)', 'Exclusive'];
     const outputDir = path.resolve(process.cwd(), 'configs/difficulty-testing');
 
@@ -137,8 +175,6 @@ function generateSimulationConfigs(data: EncounterState[]) {
 
     scenarios.forEach(scenarioName => {
         const adventureConfigs: AdventureSimulationConfig[] = [];
-
-        // Find all adventures
         const adventureIds = Array.from(new Set(data.map(d => d.adventureId)));
 
         adventureIds.forEach(advId => {
@@ -147,17 +183,19 @@ function generateSimulationConfigs(data: EncounterState[]) {
                 encounters: {}
             };
 
-            // Get all encounters for this adventure where we have data
-            const encounters = data.filter(d => d.adventureId === advId && (d.type === EncounterType.BATTLE || d.type === EncounterType.BOSS));
+            const encounters = data.filter(d =>
+                d.adventureId === advId &&
+                (d.type === EncounterType.BATTLE || d.type === EncounterType.BOSS)
+            );
 
             encounters.forEach(enc => {
                 const state = enc.scenarioStates.find(s => s.scenarioName === scenarioName);
                 if (state) {
                     advConfig.encounters[enc.encounterId] = {
-                        party: [
-                            { companionId: 'amara', level: state.compA.level },
-                            { companionId: 'tariq', level: state.compB.level }
-                        ]
+                        party: state.companions.map(c => ({
+                            companionId: c.id,
+                            level: c.level
+                        }))
                     };
                 }
             });
@@ -167,7 +205,6 @@ function generateSimulationConfigs(data: EncounterState[]) {
             }
         });
 
-        // Determine filename safe scenario name
         let safeName = 'equal';
         if (scenarioName.includes('Favored')) safeName = 'favored';
         if (scenarioName.includes('Exclusive')) safeName = 'exclusive';
@@ -177,5 +214,6 @@ function generateSimulationConfigs(data: EncounterState[]) {
         console.log(`Generated config: ${filePath}`);
     });
 }
+
 
 runAnalysis();
