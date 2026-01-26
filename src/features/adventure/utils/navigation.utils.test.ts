@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { getHighestUnlockedAdventure, getFocalNodeIndex } from './navigation.utils';
-import { AdventureStatus } from '../../../types/adventure.types';
+import { AdventureStatus, type AdventureId } from '../../../types/adventure.types';
+import type { EncounterResult } from '../../../stores/game/interfaces';
 
 // Mock ADVENTURES data to have a controlled test environment
 vi.mock('../../../data/adventures.data', () => ({
@@ -35,7 +36,7 @@ describe('navigation.utils', () => {
                 'prologue': AdventureStatus.COMPLETED,
                 '1': AdventureStatus.AVAILABLE,
                 '2': AdventureStatus.LOCKED,
-            } as any;
+            } as Record<AdventureId, AdventureStatus>;
 
             const result = getHighestUnlockedAdventure(statuses);
             expect(result).toEqual({ volumeId: 'origins', adventureId: '1' });
@@ -46,7 +47,7 @@ describe('navigation.utils', () => {
                 'prologue': AdventureStatus.COMPLETED,
                 '1': AdventureStatus.LOCKED,
                 '2': AdventureStatus.AVAILABLE,
-            } as any;
+            } as Record<AdventureId, AdventureStatus>;
 
             const result = getHighestUnlockedAdventure(statuses);
             expect(result).toEqual({ volumeId: 'origins', adventureId: '2' });
@@ -55,7 +56,7 @@ describe('navigation.utils', () => {
         it('should treat COMPLETED and AVAILABLE as unlocked', () => {
             const statuses = {
                 'prologue': AdventureStatus.COMPLETED,
-            } as any;
+            } as Record<AdventureId, AdventureStatus>;
 
             const result = getHighestUnlockedAdventure(statuses);
             expect(result.adventureId).toBe('prologue');
@@ -67,7 +68,7 @@ describe('navigation.utils', () => {
                 '1': AdventureStatus.COMPLETED,
                 '2': AdventureStatus.COMPLETED,
                 '3': AdventureStatus.AVAILABLE,
-            } as any;
+            } as Record<AdventureId, AdventureStatus>;
 
             const result = getHighestUnlockedAdventure(statuses);
             expect(result.volumeId).toBe('volume_2');
@@ -78,14 +79,14 @@ describe('navigation.utils', () => {
                 'prologue': AdventureStatus.COMPLETED,
                 '1': AdventureStatus.COMPLETED,
                 '2': AdventureStatus.AVAILABLE,
-            } as any;
+            } as Record<AdventureId, AdventureStatus>;
 
             const result = getHighestUnlockedAdventure(statuses);
             expect(result.volumeId).toBe('origins');
         });
 
         it('should default to prologue if no adventures are found in status record', () => {
-            const result = getHighestUnlockedAdventure({} as any);
+            const result = getHighestUnlockedAdventure({} as Record<AdventureId, AdventureStatus>);
             expect(result).toEqual({ volumeId: 'origins', adventureId: 'prologue' });
         });
     });
@@ -97,7 +98,7 @@ describe('navigation.utils', () => {
             const encounterResults = {
                 'other_adv_1': mockEncounterResult
             };
-            const result = getFocalNodeIndex('1', encounterResults as any);
+            const result = getFocalNodeIndex('1', encounterResults as Record<string, EncounterResult>);
             expect(result).toBe(1);
         });
 
@@ -105,7 +106,7 @@ describe('navigation.utils', () => {
             const encounterResults = {
                 '1_1': mockEncounterResult
             };
-            const result = getFocalNodeIndex('1', encounterResults as any);
+            const result = getFocalNodeIndex('1', encounterResults as Record<string, EncounterResult>);
             expect(result).toBe(2);
         });
 
@@ -114,7 +115,7 @@ describe('navigation.utils', () => {
                 '2_1': mockEncounterResult,
                 '2_2': mockEncounterResult
             };
-            const result = getFocalNodeIndex('2', encounterResults as any);
+            const result = getFocalNodeIndex('2', encounterResults as Record<string, EncounterResult>);
             expect(result).toBe(3);
         });
 
@@ -124,7 +125,7 @@ describe('navigation.utils', () => {
                 '1_2': mockEncounterResult
             };
             // Adventure '1' has 2 encounters in mock
-            const result = getFocalNodeIndex('1', encounterResults as any);
+            const result = getFocalNodeIndex('1', encounterResults as Record<string, EncounterResult>);
             expect(result).toBe(2);
         });
 
@@ -133,7 +134,7 @@ describe('navigation.utils', () => {
                 '2_1': mockEncounterResult,
                 '2_3': mockEncounterResult
             };
-            const result = getFocalNodeIndex('2', encounterResults as any);
+            const result = getFocalNodeIndex('2', encounterResults as Record<string, EncounterResult>);
             expect(result).toBe(3); // Adventure '2' has 3 encounters, so 3+1 would be 4, clamped to 3
         });
 
@@ -148,7 +149,7 @@ describe('navigation.utils', () => {
                 '1_2': mockEncounterResult,
                 'random_key': mockEncounterResult
             };
-            const result = getFocalNodeIndex('1', encounterResults as any);
+            const result = getFocalNodeIndex('1', encounterResults as Record<string, EncounterResult>);
             expect(result).toBe(2); // Since 1_2 is the only valid number index found
         });
     });

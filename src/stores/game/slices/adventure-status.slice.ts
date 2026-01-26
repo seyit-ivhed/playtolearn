@@ -36,12 +36,13 @@ export const createAdventureStatusSlice: StateCreator<GameStore, [], [], Adventu
     },
 
     unlockAdventure: (id: AdventureId) => {
-        set((state) => ({
+        const { adventureStatuses } = get();
+        set({
             adventureStatuses: {
-                ...state.adventureStatuses,
+                ...adventureStatuses,
                 [id]: AdventureStatus.AVAILABLE
             }
-        }));
+        });
         PersistenceService.sync(get());
     },
 

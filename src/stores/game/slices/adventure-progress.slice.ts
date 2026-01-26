@@ -38,19 +38,16 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
             const shouldUpdateResult = !existingResult || newStars > existingResult.stars;
 
             if (shouldUpdateResult) {
-                set((state) => {
-                    const newResults = {
-                        ...state.encounterResults,
+                const { encounterResults, activeEncounterDifficulty } = get();
+                set({
+                    encounterResults: {
+                        ...encounterResults,
                         [encounterKey]: {
                             stars: newStars,
                             difficulty: activeEncounterDifficulty,
                             completedAt: Date.now(),
                         }
-                    };
-
-                    return {
-                        encounterResults: newResults,
-                    };
+                    }
                 });
             }
         }

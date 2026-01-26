@@ -53,18 +53,18 @@ describe('adventure-status.slice', () => {
 
         slice.unlockAdventure('2');
 
-        expect(mockSet).toHaveBeenCalled();
-        const setter = vi.mocked(mockSet).mock.calls[0][0];
-        // @ts-ignore
-        const newState = setter({ adventureStatuses: {} });
-        expect(newState.adventureStatuses['2']).toBe(AdventureStatus.AVAILABLE);
+        expect(mockSet).toHaveBeenCalledWith(expect.objectContaining({
+            adventureStatuses: expect.objectContaining({
+                '2': AdventureStatus.AVAILABLE
+            })
+        }));
     });
 
     it('should correctly report if an adventure is unlocked', () => {
         const slice = setupSlice({
             '1': AdventureStatus.AVAILABLE,
             '2': AdventureStatus.COMPLETED,
-            '3': AdventureStatus.LOCKED as any // Assuming not in Record means LOCKED
+            '3': AdventureStatus.LOCKED as AdventureStatus // Assuming not in Record means LOCKED
         });
 
         expect(slice.isAdventureUnlocked('1')).toBe(true);

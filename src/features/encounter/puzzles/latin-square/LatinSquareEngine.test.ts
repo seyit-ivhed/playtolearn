@@ -54,7 +54,7 @@ describe('LatinSquareEngine', () => {
                 ['FIRE', 'WATER', 'EARTH'],
                 ['EARTH', 'AIR', 'FIRE'],
                 ['WATER', 'FIRE', 'AIR']
-            ] as any;
+            ] as LatinSquareElement[][];
             expect(LatinSquareEngine.checkSolution(smallGrid)).toBe(false);
         });
     });
@@ -93,7 +93,7 @@ describe('LatinSquareEngine', () => {
             expect(data.targetValue).toBe(4);
             expect(Array.isArray(data.options)).toBe(true);
             expect(data.options).toHaveLength(4); // 4 rows
-            expect((data.options as any)[0]).toHaveLength(4); // 4 cols
+            expect((data.options as unknown as LatinSquareElement[][])[0]).toHaveLength(4); // 4 cols
         });
 
         it('should have correct number of fixed elements based on difficulty', () => {

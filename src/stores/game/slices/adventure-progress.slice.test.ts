@@ -61,11 +61,11 @@ describe('adventure-progress.slice - completeEncounter', () => {
 
         slice.completeEncounter(adventureId, 1);
 
-        expect(mockSet).toHaveBeenCalled();
-        const setter = vi.mocked(mockSet).mock.calls[0][0];
-        // @ts-ignore
-        const newState = setter({ encounterResults: { [encounterKey]: initialResult } });
-        expect(newState.encounterResults[encounterKey].stars).toBe(3);
+        expect(mockSet).toHaveBeenCalledWith(expect.objectContaining({
+            encounterResults: expect.objectContaining({
+                [encounterKey]: expect.objectContaining({ stars: 3 })
+            })
+        }));
     });
 
     it('should recruit Kenji when completing Adventure 3, Node 1', () => {

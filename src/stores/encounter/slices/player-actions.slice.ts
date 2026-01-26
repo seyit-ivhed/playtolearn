@@ -10,7 +10,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         const finalParty = updatedUnits.filter(u => u.isPlayer);
         const finalMonsters = updatedUnits.filter(u => !u.isPlayer);
 
-        set(_state => ({
+        set(() => ({
             party: finalParty,
             monsters: finalMonsters
         }));
@@ -18,7 +18,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
         // Check Victory
         if (finalMonsters.every(m => m.isDead)) {
             setTimeout(() => {
-                set(_state => ({
+                set(() => ({
                     phase: EncounterPhase.VICTORY
                 }));
             }, 1500);

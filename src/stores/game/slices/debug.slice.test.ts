@@ -23,11 +23,7 @@ describe('debug.slice', () => {
 
         slice.debugAddXp(100);
 
-        expect(mockSet).toHaveBeenCalled();
-        const setter = vi.mocked(mockSet).mock.calls[0][0];
-        // @ts-ignore
-        const newState = setter({ xpPool: 10 });
-        expect(newState.xpPool).toBe(110);
+        expect(mockSet).toHaveBeenCalledWith({ xpPool: 110 });
     });
 
     it('should reset XP pool via debugResetXpPool', () => {
@@ -68,11 +64,11 @@ describe('debug.slice', () => {
 
         slice.debugSetCompanionLevel('c1', 5);
 
-        expect(mockSet).toHaveBeenCalled();
-        const setter = vi.mocked(mockSet).mock.calls[0][0];
-        // @ts-ignore
-        const newState = setter({ companionStats: { 'c1': { level: 1 } } });
-        expect(newState.companionStats['c1'].level).toBe(5);
+        expect(mockSet).toHaveBeenCalledWith({
+            companionStats: expect.objectContaining({
+                'c1': { level: 5 }
+            })
+        });
     });
 
     it('should set encounter stars via debugSetEncounterStars', () => {
@@ -81,10 +77,10 @@ describe('debug.slice', () => {
 
         slice.debugSetEncounterStars('1', 1, 3);
 
-        expect(mockSet).toHaveBeenCalled();
-        const setter = vi.mocked(mockSet).mock.calls[0][0];
-        // @ts-ignore
-        const newState = setter({ encounterResults: {} });
-        expect(newState.encounterResults['1_1'].stars).toBe(3);
+        expect(mockSet).toHaveBeenCalledWith({
+            encounterResults: expect.objectContaining({
+                '1_1': expect.objectContaining({ stars: 3 })
+            })
+        });
     });
 });

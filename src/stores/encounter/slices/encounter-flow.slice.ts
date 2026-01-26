@@ -148,7 +148,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             );
 
             // Add logs and update state
-            set(state => ({
+            set(() => ({
                 party: result.updatedParty as unknown as EncounterUnit[]
             }));
 

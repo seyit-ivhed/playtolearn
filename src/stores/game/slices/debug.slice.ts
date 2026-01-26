@@ -2,10 +2,10 @@ import type { StateCreator } from 'zustand';
 import type { GameStore, DebugSlice } from '../interfaces';
 import { COMPANIONS } from '../../../data/companions.data';
 
-export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (set) => ({
-    
+export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (set, get) => ({
 
-    debugAddXp: (amount) => set((state) => ({ xpPool: state.xpPool + amount })),
+
+    debugAddXp: (amount) => set({ xpPool: get().xpPool + amount }),
 
     debugResetXpPool: () => set({ xpPool: 0 }),
 
@@ -20,27 +20,31 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
 
     debugResetEncounterResults: () => set({ encounterResults: {} }),
 
-    debugSetCompanionLevel: (companionId, level) => set((state) => ({
-        companionStats: {
-            ...state.companionStats,
-            [companionId]: {
-                level
+    debugSetCompanionLevel: (companionId, level) => {
+        const { companionStats } = get();
+        set({
+            companionStats: {
+                ...companionStats,
+                [companionId]: {
+                    level
+                }
             }
-        }
-    })),
+        });
+    },
 
-    debugSetEncounterStars: (adventureId, nodeIndex, stars) => set((state) => {
+    debugSetEncounterStars: (adventureId, nodeIndex, stars) => {
+        const { encounterResults } = get();
         const key = `${adventureId}_${nodeIndex}`;
-        const existing = state.encounterResults[key];
-        return {
+        const existing = encounterResults[key];
+        set({
             encounterResults: {
-                ...state.encounterResults,
+                ...encounterResults,
                 [key]: {
                     stars,
                     difficulty: existing?.difficulty ?? 1,
                     completedAt: existing?.completedAt ?? Date.now()
                 }
             }
-        };
-    })
+        });
+    }
 });

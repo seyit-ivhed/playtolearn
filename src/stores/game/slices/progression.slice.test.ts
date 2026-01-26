@@ -32,11 +32,7 @@ describe('progression.slice', () => {
 
         slice.addXpToPool(50);
 
-        expect(mockSet).toHaveBeenCalled();
-        const setter = vi.mocked(mockSet).mock.calls[0][0];
-        // @ts-ignore
-        const newState = setter({ xpPool: 10 });
-        expect(newState.xpPool).toBe(60);
+        expect(mockSet).toHaveBeenCalledWith({ xpPool: 60 });
     });
 
     describe('levelUpCompanion', () => {
