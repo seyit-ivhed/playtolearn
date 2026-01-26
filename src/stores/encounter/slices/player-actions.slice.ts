@@ -5,29 +5,21 @@ import { CombatEngine } from '../../../utils/battle/combat-engine';
 import type { BattleUnit } from '../../../types/encounter.types';
 
 export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => {
-    /**
-     * Shared helper to process results of an action:
-     * - Updates party and monsters
-     * - Appends to encounter log
-     * - Checks for victory
-     * - Checks for turn end
-     */
-    const finalizeActionResult = (updatedUnits: EncounterUnit[], logs: string[]) => {
+
+    const finalizeActionResult = (updatedUnits: EncounterUnit[]) => {
         const finalParty = updatedUnits.filter(u => u.isPlayer);
         const finalMonsters = updatedUnits.filter(u => !u.isPlayer);
 
-        set(state => ({
+        set(_state => ({
             party: finalParty,
-            monsters: finalMonsters,
-            encounterLog: [...state.encounterLog, ...logs]
+            monsters: finalMonsters
         }));
 
         // Check Victory
         if (finalMonsters.every(m => m.isDead)) {
             setTimeout(() => {
-                set(state => ({
-                    phase: EncounterPhase.VICTORY,
-                    encounterLog: [...state.encounterLog, 'Victory!']
+                set(_state => ({
+                    phase: EncounterPhase.VICTORY
                 }));
             }, 1500);
             return;
@@ -64,8 +56,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
             );
 
             finalizeActionResult(
-                result.updatedTargets as unknown as EncounterUnit[],
-                result.logs.map(l => l.message)
+                result.updatedTargets as unknown as EncounterUnit[]
             );
         },
 
@@ -91,9 +82,6 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
                     variables
                 );
 
-                // Map logs
-                const logs = result.logs.map(l => l.message);
-
                 // Force reset spirit and acted for attacker in the result set
                 const finalUnits = (result.updatedUnits as unknown as EncounterUnit[]).map(u => {
                     if (u.id === unitId) {
@@ -103,7 +91,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
                     return u;
                 });
 
-                finalizeActionResult(finalUnits, logs);
+                finalizeActionResult(finalUnits);
 
             } else {
                 // Fail: Drain meter AND Mark as Acted
@@ -115,7 +103,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
                     return u;
                 });
 
-                finalizeActionResult([...updatedParty, ...monsters], [`${unit.name}'s ability FAILED! Charge lost.`]);
+                finalizeActionResult([...updatedParty, ...monsters]);
             }
         },
 

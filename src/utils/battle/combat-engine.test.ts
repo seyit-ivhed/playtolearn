@@ -39,7 +39,6 @@ describe('CombatEngine', () => {
             const damagedEnemy = result.updatedTargets.find(u => u.id === mockEnemy.id);
 
             expect(damagedEnemy?.currentHealth).toBe(90);
-            expect(result.logs.length).toBeGreaterThan(0);
         });
 
         it('should not deal damage if target is dead', () => {
@@ -51,8 +50,8 @@ describe('CombatEngine', () => {
     });
 
     describe('executeSpecialAbility', () => {
-        it('should execute DAMAGE ability on single enemy', async () => {
-            const result = await CombatEngine.executeSpecialAbility(
+        it('should execute DAMAGE ability on single enemy', () => {
+            const result = CombatEngine.executeSpecialAbility(
                 mockAttacker,
                 [mockAttacker, mockEnemy],
                 'jaguar_strike',
@@ -61,12 +60,11 @@ describe('CombatEngine', () => {
             const damagedEnemy = result.updatedUnits.find(u => u.id === mockEnemy.id);
 
             expect(damagedEnemy?.currentHealth).toBe(80);
-            expect(result.logs[0].type).toBe('ABILITY');
         });
 
-        it('should execute HEAL ability on self/allies', async () => {
+        it('should execute HEAL ability on self/allies', () => {
             const damagedHero: BattleUnit = { ...mockAttacker, currentHealth: 50 };
-            const result = await CombatEngine.executeSpecialAbility(
+            const result = CombatEngine.executeSpecialAbility(
                 mockAttacker,
                 [damagedHero, mockEnemy],
                 'elixir_of_life',
@@ -75,7 +73,6 @@ describe('CombatEngine', () => {
             const healedHero = result.updatedUnits.find(u => u.id === mockAttacker.id);
 
             expect(healedHero?.currentHealth).toBe(70);
-            expect(result.logs.find(l => l.type === 'EFFECT')).toBeTruthy();
         });
     });
 
@@ -219,8 +216,8 @@ describe('CombatEngine', () => {
             expect(updated[0].statusEffects?.length).toBe(0);
         });
 
-        it('should execute blade_barrier and apply shield to all companions', async () => {
-            const result = await CombatEngine.executeSpecialAbility(
+        it('should execute blade_barrier and apply shield to all companions', () => {
+            const result = CombatEngine.executeSpecialAbility(
                 mockAttacker,
                 [mockAttacker, mockEnemy],
                 'blade_barrier',

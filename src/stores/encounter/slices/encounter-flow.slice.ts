@@ -69,7 +69,6 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             party,
             monsters,
             selectedUnitId: null,
-            encounterLog: ['Encounter Started!'],
             xpReward,
             nodeIndex,
             difficulty
@@ -96,7 +95,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
 
         if (activeMonsters.length === 0) return; // Should be victory already
 
-        const logs: string[] = [];
+
 
         // Process each monster attack sequentially with delays
         const processMonsterAttack = (monsterIndex: number) => {
@@ -123,11 +122,10 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                         monsters: currentMonsters,
                         phase: EncounterPhase.PLAYER_TURN,
                         turnCount: state.turnCount + 1,
-                        encounterLog: [...state.encounterLog, ...logs] // logs might be empty here as we pushed them incrementally? NO, we push them in the attack steps
                     }));
 
                     if (newParty.every(p => p.isDead)) {
-                        set({ phase: EncounterPhase.DEFEAT, encounterLog: [...get().encounterLog, 'Party Defeated...'] });
+                        set({ phase: EncounterPhase.DEFEAT });
                     }
                 }, 500); // 0.5s cooldown before player turn
                 return;
@@ -136,7 +134,6 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             const monster = currentActiveMonsters[monsterIndex];
 
             // Mark monster as acted
-            // Need to find index in the MAIN array
             const monsterMainIndex = currentMonsters.findIndex(m => m.id === monster.id);
             if (monsterMainIndex !== -1) {
                 const updatedMonsters = [...currentMonsters];
@@ -151,11 +148,8 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             );
 
             // Add logs and update state
-            const newLogs = result.logs.map(l => l.message);
-
             set(state => ({
-                party: result.updatedParty as unknown as EncounterUnit[],
-                encounterLog: [...state.encounterLog, ...newLogs]
+                party: result.updatedParty as unknown as EncounterUnit[]
             }));
 
             // Wait 1s before the next monster attacks

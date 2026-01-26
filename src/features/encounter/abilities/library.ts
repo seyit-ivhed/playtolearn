@@ -1,5 +1,5 @@
 import { type AbilityImplementation, type AbilityResult } from './types';
-import type { CombatLog } from '../../../types/encounter.types';
+
 import { applyDamageEffect } from './helpers';
 
 // Amara: Jaguar Strike - Single Target Damage
@@ -31,8 +31,7 @@ export const elixir_of_life: AbilityImplementation = ({ allUnits, variables }): 
     });
 
     return {
-        updatedUnits,
-        logs: [{ message: `Healed allies for ${heal}`, type: 'EFFECT' }]
+        updatedUnits
     };
 };
 
@@ -43,13 +42,11 @@ export const blade_barrier: AbilityImplementation = ({ allUnits, variables }): A
     const reduction = variables.reduction || 50;
 
     let updatedUnits = allUnits;
-    const logs: CombatLog[] = [];
 
     // 1. Single target damage to first enemy
     if (damage > 0) {
         const damageResult = applyDamageEffect(updatedUnits, 'SINGLE_ENEMY', damage);
         updatedUnits = damageResult.updatedUnits;
-        logs.push(...damageResult.logs);
     }
 
     // 2. Apply shield to all living companions
@@ -74,9 +71,7 @@ export const blade_barrier: AbilityImplementation = ({ allUnits, variables }): A
         return unit;
     });
 
-    logs.push({ message: `Blade Barrier protects the party! (Reduction: ${reduction}%, Duration: ${duration} turns)`, type: 'EFFECT' });
-
-    return { updatedUnits, logs };
+    return { updatedUnits };
 };
 
 // Zahara: Ancestral Storm - All Enemies Damage

@@ -8,11 +8,6 @@ export const EncounterPhase = {
 
 export type EncounterPhase = typeof EncounterPhase[keyof typeof EncounterPhase];
 
-export interface CombatLog {
-    message: string;
-    type: 'ATTACK' | 'ABILITY' | 'EFFECT' | 'INFO';
-}
-
 /**
  * Generic interface for combat participants
  */
@@ -79,9 +74,6 @@ export interface EncounterState {
 
     // Selection
     selectedUnitId: string | null;
-
-    // Logs
-    encounterLog: string[];
 
     // Rewards
     xpReward: number;

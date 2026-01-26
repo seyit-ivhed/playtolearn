@@ -31,7 +31,7 @@ export function executeAbility(id: string, context: AbilityContext): AbilityResu
     const implementation = AbilityRegistry[id];
     if (!implementation) {
         console.error(`Ability implementation not found for ID: ${id}`);
-        return { updatedUnits: context.allUnits, logs: [{ message: `Failed to use ${id}`, type: 'INFO' }] };
+        return { updatedUnits: context.allUnits };
     }
     return implementation(context);
 }

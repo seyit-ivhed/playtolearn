@@ -29,7 +29,7 @@ describe('encounter-flow.slice', () => {
             monsters: [],
             phase: EncounterPhase.INIT,
             turnCount: 0,
-            encounterLog: [],
+
             selectedUnitId: null,
             xpReward: 0,
             nodeIndex: 0,
@@ -66,7 +66,7 @@ describe('encounter-flow.slice', () => {
             expect(state.turnCount).toBe(1);
             expect(state.party).toHaveLength(2);
             expect(state.monsters).toHaveLength(2);
-            expect(state.encounterLog).toEqual(['Encounter Started!']);
+
 
             // Verify Party
             expect(state.party[0]).toMatchObject({
@@ -152,7 +152,7 @@ describe('encounter-flow.slice', () => {
 
             processMonsterTurn();
 
-            // Initial logs might be empty or cleared? The slice appends to `encounterLog`.
+
             // Wait for first attack (immediate in this implementation? No, recursively delayed? 
             // Looking at code: `processMonsterAttack(0)` is called immediately.
             // Inside `processMonsterAttack`:
@@ -166,7 +166,7 @@ describe('encounter-flow.slice', () => {
             expect(state.party[0].currentHealth).toBe(90);
             expect(state.monsters[0].hasActed).toBe(true);
             expect(state.monsters[1].hasActed).toBe(false);
-            expect(state.encounterLog).toContain('M1 attacked Companion c1 for 10 damage!');
+
 
             // Advance time for next monster (1000ms)
             vi.advanceTimersByTime(1000);
@@ -175,7 +175,7 @@ describe('encounter-flow.slice', () => {
             // Player HP: 90 - 5 = 85
             expect(state.party[0].currentHealth).toBe(85);
             expect(state.monsters[1].hasActed).toBe(true);
-            expect(state.encounterLog).toContain('M2 attacked Companion c1 for 5 damage!');
+
 
             // Advance time for turn end (another 1000ms delay inside the index check block? 
             // No, the check `if (monsterIndex >= activeMonsters.length)` happens *after* the last one finishes?
@@ -226,7 +226,7 @@ describe('encounter-flow.slice', () => {
 
             const finalState = useTestStore.getState();
             expect(finalState.phase).toBe(EncounterPhase.DEFEAT);
-            expect(finalState.encounterLog).toContain('Party Defeated...');
+
         });
     });
 });

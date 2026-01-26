@@ -49,8 +49,7 @@ describe('Player Actions Slice', () => {
         useEncounterStore.setState(initialEncounterState);
         useEncounterStore.setState({
             party: [],
-            monsters: [],
-            encounterLog: []
+            monsters: []
         });
         vi.useFakeTimers();
     });

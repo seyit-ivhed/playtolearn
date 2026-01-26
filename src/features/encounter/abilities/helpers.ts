@@ -1,4 +1,4 @@
-import { type BattleUnit, type CombatLog } from '../../../types/encounter.types';
+import { type BattleUnit } from '../../../types/encounter.types';
 import { applyDamage } from '../../../utils/battle/damage.utils';
 import { type EncounterUnit } from '../../../types/encounter.types';
 
@@ -6,7 +6,7 @@ export function applyDamageEffect(
     units: BattleUnit[],
     targetType: 'SINGLE_ENEMY' | 'ALL_ENEMIES',
     value: number
-): { updatedUnits: BattleUnit[], logs: CombatLog[] } {
+): { updatedUnits: BattleUnit[] } {
     let targets: BattleUnit[] = [];
     const enemies = units.filter(u => !u.isPlayer && !u.isDead);
 
@@ -26,17 +26,6 @@ export function applyDamageEffect(
         return u;
     });
 
-    const logs: CombatLog[] = [];
-    updatedUnits.forEach(u => {
-        const prev = units.find(p => p.id === u.id);
-        if (prev && prev.currentHealth > u.currentHealth && !u.isPlayer) {
-            logs.push({
-                message: `Dealt ${prev.currentHealth - u.currentHealth} damage to ${u.name}`,
-                type: 'ATTACK'
-            });
-        }
-    });
-
-    return { updatedUnits, logs };
+    return { updatedUnits };
 }
 

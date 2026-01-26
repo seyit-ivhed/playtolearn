@@ -6,6 +6,6 @@ export const initialEncounterState: EncounterState = {
     party: [],
     monsters: [],
     selectedUnitId: null,
-    encounterLog: [],
+
     xpReward: 0,
 };

@@ -1,4 +1,4 @@
-import type { BattleUnit, CombatLog } from '../../../types/encounter.types';
+import type { BattleUnit } from '../../../types/encounter.types';
 
 export interface AbilityContext {
     attacker: BattleUnit;
@@ -8,7 +8,6 @@ export interface AbilityContext {
 
 export interface AbilityResult {
     updatedUnits: BattleUnit[];
-    logs: CombatLog[];
 }
 
 export type AbilityImplementation = (context: AbilityContext) => AbilityResult;
