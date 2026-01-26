@@ -16,7 +16,6 @@ export interface GameState {
     activeParty: string[];
     encounterResults: Record<string, EncounterResult>;
     activeEncounterDifficulty: number;
-    xpPool: number;
     companionStats: Record<string, { level: number }>;
     adventureStatuses: Record<AdventureId, AdventureStatus>;
 }
@@ -35,18 +34,14 @@ export interface AdventureStatusSlice {
     isAdventureUnlocked: (id: AdventureId) => boolean;
 }
 
-
 // XP & Leveling
 export interface ProgressionSlice {
-    addXpToPool: (amount: number) => void;
     levelUpCompanion: (companionId: string) => void;
     addCompanionToParty: (companionId: string) => void;
 }
 
 // Debug & Reset Actions
 export interface DebugSlice {
-    debugAddXp: (amount: number) => void;
-    debugResetXpPool: () => void;
     debugResetCompanions: () => void;
     debugResetEncounterResults: () => void;
     debugSetCompanionLevel: (companionId: string, level: number) => void;

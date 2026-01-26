@@ -9,7 +9,7 @@ import { CombatEngine } from '../../../utils/battle/combat-engine';
 import type { BattleUnit } from '../../../types/encounter.types';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
-    initializeEncounter: (partyIds, enemies, xpReward, nodeIndex, difficulty, companionStats) => {
+    initializeEncounter: (partyIds, enemies, nodeIndex, difficulty, companionStats) => {
         const party: EncounterUnit[] = partyIds
             .filter(id => {
                 const data = getCompanionById(id);
@@ -69,7 +69,6 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
             party,
             monsters,
             selectedUnitId: null,
-            xpReward,
             nodeIndex,
             difficulty
         });

@@ -17,23 +17,7 @@ describe('debug.slice', () => {
         return slice;
     };
 
-    it('should add XP via debugAddXp', () => {
-        vi.mocked(mockSet).mockClear();
-        const slice = setupSlice({ xpPool: 10 });
 
-        slice.debugAddXp(100);
-
-        expect(mockSet).toHaveBeenCalledWith({ xpPool: 110 });
-    });
-
-    it('should reset XP pool via debugResetXpPool', () => {
-        vi.mocked(mockSet).mockClear();
-        const slice = setupSlice();
-
-        slice.debugResetXpPool();
-
-        expect(mockSet).toHaveBeenCalledWith({ xpPool: 0 });
-    });
 
     it('should reset companions to level 1 via debugResetCompanions', () => {
         vi.mocked(mockSet).mockClear();

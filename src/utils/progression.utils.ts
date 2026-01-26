@@ -58,13 +58,6 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
     };
 };
 
-// XP Formula Constants
-const BASE_XP_REQUIREMENT = 30;
-const XP_SCALING_EXPONENT = 1.5;
-
-export const getXpForNextLevel = (currentLevel: number): number => {
-    return Math.floor(BASE_XP_REQUIREMENT * Math.pow(currentLevel, XP_SCALING_EXPONENT));
-};
 
 export const getEvolutionAtLevel = (companion: Companion, level: number) => {
     // Find the highest evolution milestone passed

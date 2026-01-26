@@ -14,10 +14,8 @@ describe('adventure-progress.slice - completeEncounter', () => {
         const slice = createAdventureProgressSlice(
             mockSet,
             mockGet({
-                xpPool: 0,
                 encounterResults: {},
                 activeEncounterDifficulty: 1,
-                addXpToPool: vi.fn(),
                 addCompanionToParty: vi.fn(),
                 ...state
             }),
@@ -28,27 +26,7 @@ describe('adventure-progress.slice - completeEncounter', () => {
 
     const adventureId = ADVENTURES[0].id;
 
-    it('should grant XP only for the first time completion', () => {
-        const addXpToPool = vi.fn();
-        const slice = setupSlice({ addXpToPool });
 
-        // First completion
-        slice.completeEncounter(adventureId, 1);
-        const xpReward = ADVENTURES[0].encounters[0].xpReward;
-        expect(addXpToPool).toHaveBeenCalledWith(xpReward);
-
-        // Second completion
-        const encounterKey = `${adventureId}_1`;
-        const sliceWithResult = setupSlice({
-            addXpToPool,
-            encounterResults: {
-                [encounterKey]: { stars: 3, difficulty: 1, completedAt: Date.now() }
-            }
-        });
-        addXpToPool.mockClear();
-        sliceWithResult.completeEncounter(adventureId, 1);
-        expect(addXpToPool).not.toHaveBeenCalled();
-    });
 
     it('should update stars if new performance is better', () => {
         vi.mocked(mockSet).mockClear();

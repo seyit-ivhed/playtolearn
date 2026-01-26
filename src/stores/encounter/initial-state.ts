@@ -5,7 +5,5 @@ export const initialEncounterState: EncounterState = {
     turnCount: 0,
     party: [],
     monsters: [],
-    selectedUnitId: null,
-
-    xpReward: 0,
+    selectedUnitId: null
 };

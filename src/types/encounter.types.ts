@@ -75,9 +75,6 @@ export interface EncounterState {
     // Selection
     selectedUnitId: string | null;
 
-    // Rewards
-    xpReward: number;
-
     // Progression
     nodeIndex?: number;
     difficulty?: number; // 1-5

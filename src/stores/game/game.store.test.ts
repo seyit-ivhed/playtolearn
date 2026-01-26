@@ -7,26 +7,22 @@ vi.mock('../data/adventures.data', () => ({
         {
             id: 'origins_prologue',
             encounters: [
-                { id: 'p_1', xpReward: 5 }
+                { id: 'p_1' }
             ]
         },
         {
             id: '1',
             encounters: [
-                { id: '1_1', xpReward: 10 },
-                { id: '1_2', xpReward: 20 },
-                { id: '1_3', xpReward: 30 }
             ],
         },
         {
             id: '2',
             encounters: [
-                { id: '2_1', xpReward: 110 }
             ],
         }
     ],
     getAdventureById: vi.fn((id) => {
-        if (id === '1') return { id: '1', encounters: [{ xpReward: 10 }, { xpReward: 20 }, { xpReward: 30 }] };
+        if (id === '1') return { id: '1', encounters: [{}, {}, {}] };
         return undefined;
     }),
 }));
@@ -53,7 +49,7 @@ describe('useGameStore', () => {
             activeParty: ['c1', 'c2'],
             encounterResults: {},
             activeEncounterDifficulty: 1,
-            xpPool: 0,
+
             companionStats: {
                 'c1': { level: 1 },
                 'c2': { level: 1 },
@@ -68,7 +64,7 @@ describe('useGameStore', () => {
     it('should initialize with default state', () => {
         const state = useGameStore.getState();
         expect(state.activeParty).toEqual(['c1', 'c2']);
-        expect(state.xpPool).toBe(0);
+
         expect(state.encounterResults).toEqual({});
     });
 
@@ -81,20 +77,6 @@ describe('useGameStore', () => {
             expect(results['1_1'].stars).toBe(3);
         });
 
-        it('should grant XP based on encounter data', () => {
-            useGameStore.getState().completeEncounter('1', 1);
-            expect(useGameStore.getState().xpPool).toBe(10);
 
-            useGameStore.getState().completeEncounter('1', 2);
-            expect(useGameStore.getState().xpPool).toBe(10 + 20);
-        });
-
-        it('should NOT grant XP if encounter already completed', () => {
-            useGameStore.getState().completeEncounter('1', 1);
-            expect(useGameStore.getState().xpPool).toBe(10);
-
-            useGameStore.getState().completeEncounter('1', 1);
-            expect(useGameStore.getState().xpPool).toBe(10); // Still 10
-        });
     });
 });

@@ -4,11 +4,6 @@ import { COMPANIONS } from '../../../data/companions.data';
 
 export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (set, get) => ({
 
-
-    debugAddXp: (amount) => set({ xpPool: get().xpPool + amount }),
-
-    debugResetXpPool: () => set({ xpPool: 0 }),
-
     debugResetCompanions: () => {
         set({
             companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {

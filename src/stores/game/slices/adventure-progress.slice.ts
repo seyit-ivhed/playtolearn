@@ -6,7 +6,7 @@ import { EncounterType } from '../../../types/adventure.types';
 
 export const createAdventureProgressSlice: StateCreator<GameStore, [], [], AdventureProgressSlice> = (set, get) => ({
     completeEncounter: (adventureId, nodeIndex) => {
-        const { addXpToPool, encounterResults, addCompanionToParty } = get();
+        const { encounterResults, addCompanionToParty } = get();
 
         // Permanent joining logic for Kenji
         if (adventureId === '3' && nodeIndex === 1) {
@@ -22,12 +22,6 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
         // Unique key for this encounter
         const encounterKey = `${adventureId}_${nodeIndex}`;
         const existingResult = encounterResults[encounterKey];
-
-        // Grant dynamic XP only if first time completion
-        if (!existingResult) {
-            const xpReward = encounter?.xpReward ?? 0;
-            addXpToPool(xpReward);
-        }
 
         // Update encounter results ONLY for rated types (Battle, Boss, Puzzle)
         const isRatedType = encounter?.type !== EncounterType.CAMP && encounter?.type !== EncounterType.ENDING;

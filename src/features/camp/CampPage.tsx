@@ -8,7 +8,7 @@ import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { CampfireScene } from './components/CampfireScene';
 import { LevelUpModal } from './components/LevelUpModal';
 import { getCompanionById } from '../../data/companions.data';
-import { getXpForNextLevel, getStatsForLevel } from '../../utils/progression.utils';
+import { getStatsForLevel } from '../../utils/progression.utils';
 import camp1 from '../../assets/images/camps/camp-1.png';
 import camp2 from '../../assets/images/camps/camp-2.png';
 import type { Companion, CompanionStats } from '../../types/companion.types';
@@ -35,7 +35,7 @@ const CampPage = () => {
     } | null>(null);
     const {
         activeParty,
-        xpPool,
+
         companionStats,
         completeEncounter,
         levelUpCompanion
@@ -101,14 +101,12 @@ const CampPage = () => {
     };
 
     // New logic: check if ANY companion can level up
+    // Since leveling is free now, this logic might need adjustment, or just always be true/false based on game design.
+    // For now, let's say "true" if max level not reached.
     const canLevelAny = slots.some(compId => {
         if (!compId) return false;
         const stats = companionStats[compId] || { level: 1 };
-        const data = getCompanionById(compId);
-        if (!data) return false;
-        return typeof xpPool === 'number' &&
-            xpPool >= getXpForNextLevel(stats.level) &&
-            stats.level < 10;
+        return stats.level < 10;
     });
 
     const backgroundUrl = adventureId ? CAMP_BACKGROUNDS[adventureId] : null;
@@ -122,16 +120,13 @@ const CampPage = () => {
         >
             <div className={styles.headerSection}>
                 <h1 className={styles.simpleTitle} data-testid="camp-title">{t('party_camp')}</h1>
-                <div className={styles.xpPoolDisplay}>
-                    <span className={styles.xpLabel}>{t('shared_xp')}</span>
-                    <span className={styles.xpValue} data-testid="xp-value">{xpPool}</span>
-                </div>
+
             </div>
 
             <div className={styles.content}>
                 <CampfireScene
                     slots={slots}
-                    xpPool={xpPool}
+
                     companionStats={companionStats}
                     onLevelUp={handleLevelUp}
                 />

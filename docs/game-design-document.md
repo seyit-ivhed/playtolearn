@@ -87,7 +87,6 @@ Each **Adventure** consists of:
 - **Contextual Integration**: Math naturally woven into story scenarios or displayed as part of ultimate ability system
   - "The merchant needs 7 potions but only has 3. How many more should we buy?"
   - "There are goblins hiding behind rocks. Count them before they attack!"
-  - "We found 24 gold coins. Split them fairly among your 4 companions."
   - "The bridge can hold 50 people. We have 32. How many more allies can cross?"
 - **Multiple Choice**: For younger players
 - **Free Input**: For older/advanced players  
@@ -164,15 +163,6 @@ Each realm contains multiple adventures:
   - **No Gameplay Constraints**: Pure artistic expression (e.g., placing a Goblin on a cloud).
 - **Party Setup**: Accessed via a dedicated menu button, separating utility from creativity.
 - **Adventure Map**: Accessible via the "Portal" icon.
-
-### 4.2 Party Management Interface (The Roster)
-- **Access**: Access through Camp encounter sites
-- **Functionality**:
-  - **Team Selection**: Drag-and-drop interface to choose the 4 active companions.
-  - **Companion Details**: Hover any companion to view their "Card" (Stats, Abilities, Lore).
-  - **Growth Visualization**: 
-    - XP bars and "Next Level" previews.
-    - "Evolution" animations play here when a companion levels up.
 
 ### 4.3 Visual Design Principles
 - **Child-Friendly**: Bright colors, clear icons, friendly characters

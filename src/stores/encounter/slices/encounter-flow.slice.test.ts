@@ -31,7 +31,7 @@ describe('encounter-flow.slice', () => {
             turnCount: 0,
 
             selectedUnitId: null,
-            xpReward: 0,
+
             nodeIndex: 0,
             // Add stubs for missing methods from other slices
             selectUnit: (unitId: string | null) => set({ selectedUnitId: unitId }),
@@ -58,7 +58,7 @@ describe('encounter-flow.slice', () => {
                 { id: 'm2', name: 'Monster 2', maxHealth: 60, attack: 12, sprite: 'm2.png' }
             ];
 
-            initializeEncounter(partyIds, enemies, 0, 0, 0, {});
+            initializeEncounter(partyIds, enemies, 0, 0, {});
 
             const state = useTestStore.getState();
 
@@ -95,7 +95,7 @@ describe('encounter-flow.slice', () => {
         it('should transition to monster turn and schedule processMonsterTurn', () => {
             const { initializeEncounter, endPlayerTurn } = useTestStore.getState();
             // Setup initial state
-            initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 10, attack: 1, sprite: '' }], 0, 0, 0, {});
+            initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 10, attack: 1, sprite: '' }], 0, 0, {});
 
 
             // We need to re-bind or just spy on the method if it's called via get().processMonsterTurn() which calls the implementation in the store.
@@ -125,7 +125,7 @@ describe('encounter-flow.slice', () => {
 
         it('should reset monster acted flags', () => {
             const { initializeEncounter, endPlayerTurn } = useTestStore.getState();
-            initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 10, attack: 1, sprite: '' }], 0, 0, 0, {});
+            initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 10, attack: 1, sprite: '' }], 0, 0, {});
 
             // Manually set a monster to have acted
             useTestStore.setState((state) => ({
@@ -148,7 +148,7 @@ describe('encounter-flow.slice', () => {
             initializeEncounter(['c1'], [
                 { id: 'm1', name: 'M1', maxHealth: 50, attack: 10, sprite: '' },
                 { id: 'm2', name: 'M2', maxHealth: 50, attack: 5, sprite: '' }
-            ], 0, 0, 0, {});
+            ], 0, 0, {});
 
             processMonsterTurn();
 
@@ -212,7 +212,7 @@ describe('encounter-flow.slice', () => {
 
         it('should handle player death and defeat condition', () => {
             const { initializeEncounter, processMonsterTurn } = useTestStore.getState();
-            initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 50, attack: 200, sprite: '' }], 0, 0, 0, {}); // Overkill
+            initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 50, attack: 200, sprite: '' }], 0, 0, {}); // Overkill
 
             processMonsterTurn();
 

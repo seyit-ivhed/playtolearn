@@ -4,14 +4,14 @@ import styles from './CampfireScene.module.css';
 
 interface CampfireSceneProps {
     slots: (string | null)[];
-    xpPool: number;
+
     companionStats: Record<string, { level: number }>;
     onLevelUp?: (id: string) => void;
 }
 
 export const CampfireScene: React.FC<CampfireSceneProps> = ({
     slots,
-    xpPool,
+
     companionStats,
     onLevelUp
 }) => {
@@ -23,7 +23,7 @@ export const CampfireScene: React.FC<CampfireSceneProps> = ({
                         key={companionId!}
                         companionId={companionId!}
                         stats={companionStats[companionId!]}
-                        xpPool={xpPool}
+
                         onLevelUp={onLevelUp}
                     />
                 ))}

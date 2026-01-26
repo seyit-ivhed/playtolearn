@@ -8,8 +8,8 @@ interface EncounterCompletionModalProps {
     result: 'VICTORY' | 'DEFEAT';
     onContinue: () => void;
     difficulty: number;
-    isFirstTime: boolean;
-    xpReward?: number;
+
+
     customMessage?: string;
 }
 
@@ -17,8 +17,8 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
     result,
     onContinue,
     difficulty,
-    isFirstTime,
-    xpReward,
+
+
     customMessage
 }) => {
     const { t } = useTranslation();
@@ -100,24 +100,7 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                         </p>
                     </motion.div>
 
-                    {isVictory && isFirstTime && xpReward !== undefined && (
-                        <motion.div
-                            className="reward-section"
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.6 }}
-                        >
-                            <span className="reward-label">{t('rewards.gained', 'XP Gained:')}</span>
-                            <motion.span
-                                className="reward-value"
-                                initial={{ scale: 1 }}
-                                animate={{ scale: [1, 1.2, 1] }}
-                                transition={{ repeat: Infinity, duration: 2 }}
-                            >
-                                +{xpReward}
-                            </motion.span>
-                        </motion.div>
-                    )}
+
 
                     <motion.div
                         className="completion-actions"

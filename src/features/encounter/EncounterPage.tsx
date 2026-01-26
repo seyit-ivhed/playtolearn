@@ -29,7 +29,6 @@ const EncounterPage = () => {
         phase, party, monsters,
         performAction,
         resolveSpecialAttack,
-        xpReward,
         difficulty
     } = useEncounterStore();
 
@@ -38,8 +37,8 @@ const EncounterPage = () => {
     const isProgressionUnlocked = useGameStore(state => state.isAdventureUnlocked);
     const { isAdventureUnlocked: isPremiumUnlocked, initialized: premiumInitialized } = usePremiumStore();
 
-    const encounterKey = `${adventureId}_${nodeIndex}`;
-    const isFirstTime = !encounterResults[encounterKey];
+
+
 
     const [activeChallenge, setActiveChallenge] = useState<{
         type: 'SPECIAL';
@@ -209,9 +208,9 @@ const EncounterPage = () => {
                 <EncounterCompletionModal
                     result={phase === EncounterPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
                     onContinue={handleCompletionContinue}
-                    xpReward={xpReward}
+
                     difficulty={difficulty || 1}
-                    isFirstTime={isFirstTime}
+
                 />
             )}
         </div>

@@ -40,12 +40,11 @@ const PuzzlePage = () => {
     // Progression and premium gates are handled above
     const isLocked = false;
 
-    // Use XP reward from encounter data
-    const xpReward = encounter?.xpReward ?? 0;
+
 
     // Check if this is the first time completing this node
-    const encounterKey = `${adventureId}_${nodeIndex}`;
-    const isFirstTime = !encounterResults[encounterKey];
+
+
 
     // Dynamically generate puzzle values based on difficulty
     const puzzleData = useMemo(() => {
@@ -189,9 +188,9 @@ const PuzzlePage = () => {
                 <EncounterCompletionModal
                     result="VICTORY"
                     onContinue={handleCompletionContinue}
-                    xpReward={xpReward}
+
                     difficulty={activeEncounterDifficulty as number}
-                    isFirstTime={isFirstTime}
+
                 />
             )}
         </div>

@@ -52,19 +52,7 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
             log(`Progressed to encounter ${targetNode} in adventure ${advId}.`);
         }
     },
-    xp: {
-        name: 'xp',
-        description: 'Add XP to pool (xp <amount>)',
-        execute: (parts, { log, stores }) => {
-            const amount = parseInt(parts[1]);
-            if (!isNaN(amount)) {
-                stores.game.debugAddXp(amount);
-                log(`Added ${amount} XP to pool.`);
-            } else {
-                log('Error: Invalid amount. Usage: xp <amount>');
-            }
-        }
-    },
+
     level: {
         name: 'level',
         description: 'Set companion level (level <id> <v>)',

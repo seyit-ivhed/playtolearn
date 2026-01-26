@@ -113,12 +113,11 @@ const AdventurePage = () => {
 
         if (selectedEncounter.type === EncounterType.BATTLE || selectedEncounter.type === EncounterType.BOSS) {
             if (selectedEncounter.enemies && selectedEncounter.enemies.length > 0) {
-                const xpReward = selectedEncounter.xpReward;
                 const localizedEnemies = selectedEncounter.enemies.map((enemy: AdventureMonster) => ({
                     ...enemy,
                     name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)
                 }));
-                initializeEncounter(party, localizedEnemies, xpReward, nodeStep, difficulty, companionStats);
+                initializeEncounter(party, localizedEnemies, nodeStep, difficulty, companionStats);
                 navigate(`/encounter/${adventureId}/${nodeStep}`);
             }
         } else if (selectedEncounter.type === EncounterType.PUZZLE) {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getXpForNextLevel, getStatsForLevel, calculateAdventureStars } from './progression.utils';
+import { getStatsForLevel, calculateAdventureStars } from './progression.utils';
 import type { Companion } from '../types/companion.types';
 import { EncounterType, type Encounter } from '../types/adventure.types';
 import type { EncounterResult } from '../stores/game/interfaces';
@@ -71,32 +71,7 @@ describe('progression.utils', () => {
         });
     });
 
-    describe('getXpForNextLevel', () => {
-        it('should return 30 XP for level 1', () => {
-            expect(getXpForNextLevel(1)).toBe(30);
-        });
 
-        it('should return 84 XP for level 2', () => {
-            expect(getXpForNextLevel(2)).toBe(84);
-        });
-
-        it('should return 155 XP for level 3', () => {
-            expect(getXpForNextLevel(3)).toBe(155);
-        });
-
-        it('should return 810 XP for level 9', () => {
-            expect(getXpForNextLevel(9)).toBe(810);
-        });
-
-        it('should increase XP requirement as level increases', () => {
-            const xp1 = getXpForNextLevel(1);
-            const xp2 = getXpForNextLevel(2);
-            const xp3 = getXpForNextLevel(3);
-
-            expect(xp2).toBeGreaterThan(xp1);
-            expect(xp3).toBeGreaterThan(xp2);
-        });
-    });
 
     describe('calculateAdventureStars', () => {
         const mockEncounters = [
