@@ -261,7 +261,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1900 },
-                enemies: [MONSTERS.IRON_MINION],
+                enemies: [MONSTERS.IRON_MINION, MONSTERS.IRON_MINION],
                 xpReward: 200
             },
             {

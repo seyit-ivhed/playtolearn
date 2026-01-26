@@ -55,13 +55,13 @@ export const MONSTERS = {
     },
     MIST_STALKER: {
         id: 'mist_stalker',
-        maxHealth: 65,
-        attack: 15,
+        maxHealth: 125,
+        attack: 30,
     },
     IRON_MINION: {
         id: 'iron_minion',
-        maxHealth: 120,
-        attack: 22,
+        maxHealth: 140,
+        attack: 35,
     },
     IRON_WARLORD_ENFORCER: {
         id: 'iron_warlord_enforcer',
