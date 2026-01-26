@@ -153,6 +153,20 @@ button:disabled {
   border-color: transparent;
 }
 
+.btn-primary {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-md);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-brand-primary);
+  border: 2px solid var(--color-brand-primary);
+  border-radius: var(--radius-md);
+}
+
 .hidden {
   display: none;
 }

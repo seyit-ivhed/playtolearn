@@ -11,20 +11,34 @@ import Layout from './components/Layout';
 import { useInitializeGame } from './hooks/useInitializeGame';
 import { useAnonymousLoginTrigger } from './hooks/useAnonymousLoginTrigger';
 import { LoadingScreen } from './components/LoadingScreen';
+import { LandingPage } from './features/landing/LandingPage';
+import { useGameStore } from './stores/game/store';
+import { useAuth } from './hooks/useAuth';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
-  
+  const { isAuthenticated } = useAuth();
+  const encounterResults = useGameStore(state => state.encounterResults);
+
   useAnonymousLoginTrigger();
 
   if (isInitializing || error) {
     return <LoadingScreen error={error} onRetry={retry} />;
   }
 
+  const hasProgress = Object.keys(encounterResults).length > 0;
+  const showLanding = !isAuthenticated && !hasProgress;
+
   return (
     <Routes>
+      {showLanding && (
+        <Route path="/" element={<LandingPage />} />
+      )}
+
       <Route element={<Layout />}>
-        <Route path="/" element={<Navigate to="/chronicle" replace />} />
+        {!showLanding && (
+          <Route path="/" element={<Navigate to="/chronicle" replace />} />
+        )}
 
         {/* 0. The Chronicle (Adventure Selection) */}
         <Route path="/chronicle" element={<ChronicleBook />} />

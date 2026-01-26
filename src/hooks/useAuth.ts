@@ -79,11 +79,29 @@ export const useAuth = () => {
         }
     };
 
+    const signIn = async (email: string, password: string) => {
+        try {
+            setLoading(true);
+            const { error, data } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+            if (error) throw error;
+            return data;
+        } catch (error) {
+            console.error('Error signing in:', error);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return {
         session,
         user,
         isAuthenticated: !!session,
         loading,
+        signIn,
         signInAnonymously,
         refreshSession
     };
