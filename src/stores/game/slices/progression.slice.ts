@@ -50,7 +50,7 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
     addCompanionExperience: (companionId: string, amount: number) => {
         const state = get();
 
-        let stats = state.companionStats[companionId];
+        const stats = state.companionStats[companionId];
 
         if (!stats) {
             // Check if it's a valid companion ID from our data
