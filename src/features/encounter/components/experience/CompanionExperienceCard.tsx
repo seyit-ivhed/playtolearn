@@ -33,13 +33,15 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
     // Animation State
     const [displayXp, setDisplayXp] = useState(startXp);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [showLevelUpVisual, setShowLevelUpVisual] = useState(false);
 
     useEffect(() => {
         // If the new XP is lower than what we're currently displaying (depletion/level up reset)
-        // snap immediately and don't trigger the "isAnimating" transition
+        // snap immediately and don't trigger the transitions
         if (currentXp < displayXp) {
             setIsAnimating(false);
             setDisplayXp(currentXp);
+            setShowLevelUpVisual(false);
             return;
         }
 
@@ -47,21 +49,30 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
         const timer = setTimeout(() => {
             setIsAnimating(true);
             setDisplayXp(currentXp);
-        }, 1000);
-        return () => clearTimeout(timer);
-    }, [currentXp, displayXp]);
 
-    // Check if ready to level up based on REAL store state
+            // After the filling animation (matches CSS transition 2.5s), show level up if ready
+            if (currentXp >= requiredXp) {
+                const visualTimer = setTimeout(() => {
+                    setShowLevelUpVisual(true);
+                }, 2500);
+                return () => clearTimeout(visualTimer);
+            }
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, [currentXp, displayXp, requiredXp]);
+
+    // logical check for interactions
     const canLevelUp = (currentXp >= requiredXp);
 
     const fillPercentage = Math.min((displayXp / requiredXp) * 100, 100);
 
     return (
         <div
-            className={`${styles.card} ${canLevelUp ? styles.canLevelUp : ''}`}
-            onClick={canLevelUp ? onLevelUpClick : undefined}
-            role={canLevelUp ? "button" : undefined}
-            tabIndex={canLevelUp ? 0 : undefined}
+            className={`${styles.card} ${canLevelUp && showLevelUpVisual ? styles.canLevelUp : ''}`}
+            onClick={canLevelUp && showLevelUpVisual ? onLevelUpClick : undefined}
+            role={canLevelUp && showLevelUpVisual ? "button" : undefined}
+            tabIndex={canLevelUp && showLevelUpVisual ? 0 : undefined}
         >
             {/* Top Name Badge */}
             <div className={styles.nameBadge}>
@@ -77,8 +88,8 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                 />
             </div>
 
-            {/* Bottom Content overlay - hidden if leveling up */}
-            {!canLevelUp && (
+            {/* Bottom Content overlay - hidden only after animation finishes if leveling up */}
+            {!showLevelUpVisual && (
                 <div className={styles.cardContent}>
                     <div className={styles.xpContainer}>
                         <div className={styles.xpBarBg}>
@@ -100,8 +111,8 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                 </div>
             )}
 
-            {/* Huge Arrow Overlay when Level Up is possible */}
-            {canLevelUp && (
+            {/* Huge Arrow Overlay when Level Up is possible and animation is done */}
+            {canLevelUp && showLevelUpVisual && (
                 <div className={styles.levelUpOverlay}>
                     <ArrowUp className={styles.hugeArrow} />
                     <div className={styles.overlayLevelUpText}>
