@@ -58,7 +58,6 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
                 console.error(`Companion stats not found for invalid ID ${companionId}`);
                 return;
             }
-            stats = { level: 1, experience: 0 };
         }
 
         const level = stats.level;

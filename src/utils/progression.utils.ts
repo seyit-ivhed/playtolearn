@@ -1,4 +1,5 @@
 import type { Companion, CompanionStats } from '../types/companion.types';
+import { EXPERIENCE_CONFIG } from '../data/experience.data';
 import { EncounterType, type Encounter } from '../types/adventure.types';
 import type { EncounterResult } from '../stores/game/interfaces';
 
@@ -9,8 +10,8 @@ import type { EncounterResult } from '../stores/game/interfaces';
  * @returns Calculated CompanionStats
  */
 export const getStatsForLevel = (companion: Companion, level: number): CompanionStats => {
-    // Basic linear scaling for now: 10% increase per level from base
-    const scalingFactor = 1 + (level - 1) * 0.1;
+    // Basic linear scaling: 10% increase per level from base
+    const scalingFactor = 1 + (level - 1) * EXPERIENCE_CONFIG.STAT_SCALING_FACTOR;
 
     // Check for evolutions up to this level
     const evolutionBonus: CompanionStats = {
