@@ -29,18 +29,19 @@
     padding: 1.2rem 4.5rem;
     font-family: 'Cinzel', serif;
     font-size: 1.6rem;
-    color: #fff;
-    background: linear-gradient(45deg, #4a90e2, #003366);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    color: #ffd700;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #ffd700;
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
-    animation: slideUp 0.6s ease-out 1s forwards;
+    animation: slideUp 0.6s ease-out 2s forwards;
     pointer-events: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    font-weight: 900;
 }
 
 .continueButton.visible {
@@ -50,39 +51,44 @@
 
 .continueButton:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
-    background: linear-gradient(45deg, #5ba4ff, #004080);
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+    background: #ffd700;
+    color: #000;
 }
 
-/* Card Styles - Based on UnitCard */
+/* Card Styles */
 .card {
     position: relative;
-    width: 220px;
-    height: 350px;
-    background-color: #1f2937;
+    width: 240px;
+    height: 380px;
+    background-color: #1a1a1a;
     border: 4px solid #3f2e22;
-    /* Brown border like player cards */
-    border-radius: 24px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.6);
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
     border-color: #5d4632;
 }
 
-.card.glow {
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+.card.canLevelUp {
+    cursor: pointer;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 20px 40px rgba(0, 0, 0, 0.6);
     border-color: #ffd700;
 }
 
-/* Integrated Name Header */
+.card.canLevelUp:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.5), 0 30px 60px rgba(0, 0, 0, 0.8);
+}
+
 .nameBadge {
     pointer-events: none;
     position: absolute;
@@ -91,7 +97,7 @@
     right: 0;
     height: 60px;
     z-index: 20;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,42 +108,31 @@
     font-family: 'Cinzel', serif;
     font-weight: 700;
     font-size: 16px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(4px);
     width: 85%;
     text-align: center;
-    padding: 4px 0;
-    border-radius: 12px;
+    padding: 6px 0;
+    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 1);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-/* Portrait Area */
 .portraitContainer {
     position: absolute;
     inset: 0;
     z-index: 0;
-    background-color: #111827;
 }
 
 .portrait {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
 }
 
-.card:hover .portrait {
-    transform: scale(1.1);
-}
-
-/* Bottom Content Panel */
 .cardContent {
     position: absolute;
     bottom: 0;
@@ -146,8 +141,8 @@
     z-index: 10;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 70%, transparent);
-    padding: 40px 12px 12px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0.8) 70%, transparent);
+    padding: 40px 16px 20px;
 }
 
 .xpContainer {
@@ -155,92 +150,134 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
 }
 
 .xpBarBg {
     width: 100%;
-    height: 10px;
-    background-color: rgba(31, 41, 55, 0.8);
-    border-radius: 5px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
     overflow: hidden;
-    border: 1px solid rgba(255, 252, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .xpBarFill {
     height: 100%;
-    background: linear-gradient(90deg, #ffd700, #ffa500);
-    transition: width 1s cubic-bezier(0.1, 0, 0.1, 1);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    background: linear-gradient(90deg, #ffd700, #ff8c00);
+    width: 0%;
+    position: relative;
 }
 
-.xpTextNumbers {
+.xpBarFill.isAnimating {
+    transition: width 2.5s cubic-bezier(0.1, 0.5, 0.2, 1);
+}
+
+.xpBarFill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 100%;
+    background: #fff;
+    filter: blur(5px);
+    box-shadow: 0 0 10px #fff, 0 0 20px #ffd700;
+}
+
+.companionTitle {
     color: #ffd700;
-    font-family: 'Outfit', sans-serif;
-    font-size: 12px;
-    font-weight: 800;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-    letter-spacing: 0.5px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.9;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .levelLabel {
-    color: #ffffff;
-    font-family: 'Cinzel', serif;
-    font-size: 15px;
-    font-weight: 900;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-top: 2px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-top: 4px;
 }
 
-.levelUpButton {
-    margin-top: 12px;
-    background: linear-gradient(45deg, #ffd700, #ffa500);
-    border: none;
-    border-radius: 8px;
-    padding: 10px;
+.lvlPrefix {
+    color: #888;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.lvlValue {
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Level Up Overlay */
+.levelUpOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    animation: cardPulse 2s infinite;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-    transition: all 0.3s ease;
+    animation: overlayFadeIn 0.3s ease-out;
 }
 
-.levelUpButton:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg, #fff200, #ff8c00);
-}
-
-.levelUpIcon {
-    width: 20px;
-    height: 20px;
-    color: #000;
+.hugeArrow {
+    width: 120px;
+    height: 120px;
+    color: #ffd700;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+    animation: arrowFloat 1.5s infinite ease-in-out;
     stroke-width: 3;
 }
 
-.levelUpText {
-    color: #000;
+.overlayLevelUpText {
+    margin-top: 1.5rem;
+    color: #ffd700;
     font-family: 'Cinzel', serif;
-    font-weight: 800;
-    font-size: 13px;
-    text-transform: uppercase;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
 }
 
-@keyframes cardPulse {
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+    }
+
+    to {
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+    }
+}
+
+@keyframes arrowFloat {
 
     0%,
     100% {
-        transform: scale(1);
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        transform: translateY(0);
+        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
     }
 
     50% {
-        transform: scale(1.03);
-        box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+        transform: translateY(-20px);
+        filter: drop-shadow(0 0 40px rgba(255, 215, 0, 1));
     }
 }
 
@@ -267,33 +304,32 @@
     }
 }
 
-/* Modal Styles preserved and updated */
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.92);
+    background: rgba(0, 0, 0, 0.95);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 200;
     animation: fadeIn 0.3s ease-out;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
 }
 
 .modalContent {
     width: 90%;
     max-width: 1100px;
     height: 85vh;
-    background: radial-gradient(circle at center, #1a1a2e 0%, #000 100%);
-    border: 1px solid rgba(255, 215, 0, 0.4);
-    border-radius: 16px;
+    background: #000;
+    border: 2px solid #ffd700;
+    border-radius: 12px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     overflow: hidden;
-    box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 100px rgba(255, 215, 0, 0.1);
 }
 
 .imageSection {
@@ -301,7 +337,6 @@
     height: 100%;
     background-size: cover;
     background-position: center;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .imageOverlay {
@@ -309,25 +344,22 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 60%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+    height: 50%;
+    background: linear-gradient(to top, #000, transparent);
 }
 
 .evolutionBadge {
     position: absolute;
     top: 2.5rem;
     left: 2.5rem;
-    background: rgba(255, 215, 0, 0.2);
-    border: 2px solid #ffd700;
-    color: #ffd700;
+    background: #ffd700;
+    color: #000;
     padding: 0.6rem 1.4rem;
-    border-radius: 4px;
+    border-radius: 2px;
     font-family: 'Cinzel', serif;
     font-size: 1.4rem;
-    font-weight: bold;
-    backdrop-filter: blur(6px);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    font-weight: 900;
+    text-transform: uppercase;
 }
 
 .detailsSection {
@@ -339,7 +371,7 @@
 
 .levelUpHeader {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .levelUpTitle {
@@ -349,7 +381,6 @@
     margin-bottom: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 4px;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
 }
 
 .levelChange {
@@ -365,24 +396,23 @@
 .statsGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-    margin-bottom: 3rem;
+    gap: 2rem;
 }
 
 .statBox {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.05);
     padding: 2rem;
-    border-radius: 12px;
+    border-radius: 4px;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .statLabel {
-    color: #aaa;
-    font-size: 1rem;
+    color: #666;
+    font-size: 0.9rem;
     text-transform: uppercase;
     margin-bottom: 0.8rem;
     letter-spacing: 2px;
+    font-weight: 700;
 }
 
 .statValue {
@@ -402,47 +432,41 @@
 }
 
 .evoSection {
-    background: rgba(255, 215, 0, 0.08);
-    border: 1px solid rgba(255, 215, 0, 0.25);
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid #ffd700;
     padding: 2rem;
-    border-radius: 12px;
+    border-radius: 4px;
     text-align: center;
-    margin-bottom: 3rem;
-    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.05);
 }
 
 .evoTitle {
     font-family: 'Cinzel', serif;
     color: #ffd700;
-    font-size: 2rem;
-    margin-bottom: 0.8rem;
+    font-size: 1.8rem;
     text-transform: uppercase;
+    margin-bottom: 0.5rem;
 }
 
 .evoDesc {
-    color: #eee;
-    font-size: 1.1rem;
-    line-height: 1.6;
+    color: #ccc;
+    font-size: 1rem;
 }
 
 .confirmButton {
     width: 100%;
     padding: 1.8rem;
-    background: linear-gradient(45deg, #ffd700, #ffa500);
+    background: #ffd700;
     color: #000;
     border: none;
     font-family: 'Cinzel', serif;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 900;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+    transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
 }
 
 .confirmButton:hover {
-    transform: scale(1.03) translateY(-2px);
-    box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
-    background: linear-gradient(45deg, #fff200, #ff8c00);
+    background: #fff;
 }

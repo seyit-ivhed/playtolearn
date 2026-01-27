@@ -8,6 +8,7 @@ import styles from './ExperienceDistributionScreen.module.css';
 import { COMPANIONS } from '../../../../data/companions.data';
 import type { Companion } from '../../../../types/companion.types';
 import { getStatsForLevel } from '../../../../utils/progression.utils';
+import { getRequiredXpForNextLevel } from '../../../../data/experience.data';
 
 interface ExperienceDistributionScreenProps {
     partyIds: string[];
@@ -53,12 +54,19 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
         setSelectedCompanionId(companionId);
     };
 
+
+
     const handleConfirmLevelUp = () => {
         if (selectedCompanionId) {
             levelUpCompanion(selectedCompanionId);
             setSelectedCompanionId(null);
         }
     };
+
+    const anyCanLevelUp = partyCompanionsData.some(({ companion, experience }) => {
+        const requiredXp = getRequiredXpForNextLevel(companion.level);
+        return experience >= requiredXp;
+    });
 
     return (
         <div className={styles.container}>
@@ -77,12 +85,14 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
                 ))}
             </div>
 
-            <button
-                className={`${styles.continueButton} ${styles.visible}`}
-                onClick={onContinue}
-            >
-                {t('continue')}
-            </button>
+            {!anyCanLevelUp && (
+                <button
+                    className={`${styles.continueButton} ${styles.visible}`}
+                    onClick={onContinue}
+                >
+                    {t('continue')}
+                </button>
+            )}
 
             {selectedCompanionId && (
                 <LevelUpModal

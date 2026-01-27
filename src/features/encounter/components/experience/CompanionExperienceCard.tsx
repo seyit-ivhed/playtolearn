@@ -32,12 +32,14 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
 
     // Animation State
     const [displayXp, setDisplayXp] = useState(startXp);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
-        // Trigger animation after mount
+        // Wait 1 second before starting the animation
         const timer = setTimeout(() => {
+            setIsAnimating(true);
             setDisplayXp(currentXp);
-        }, 300);
+        }, 1000);
         return () => clearTimeout(timer);
     }, [currentXp]);
 
@@ -47,8 +49,13 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
     const fillPercentage = Math.min((displayXp / requiredXp) * 100, 100);
 
     return (
-        <div className={`${styles.card} ${canLevelUp ? styles.glow : ''}`}>
-            {/* Top Name Badge - mimicking battle style */}
+        <div
+            className={`${styles.card} ${canLevelUp ? styles.canLevelUp : ''}`}
+            onClick={canLevelUp ? onLevelUpClick : undefined}
+            role={canLevelUp ? "button" : undefined}
+            tabIndex={canLevelUp ? 0 : undefined}
+        >
+            {/* Top Name Badge */}
             <div className={styles.nameBadge}>
                 <h3 className={styles.nameText}>{companion.name}</h3>
             </div>
@@ -62,36 +69,38 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                 />
             </div>
 
-            {/* Bottom Content overlay */}
-            <div className={styles.cardContent}>
-                <div className={styles.xpContainer}>
-                    <div className={styles.xpBarBg}>
-                        <div
-                            className={styles.xpBarFill}
-                            style={{ width: `${fillPercentage}%` }}
-                        />
-                    </div>
-                    {/* XP Numbers */}
-                    <div className={styles.xpTextNumbers}>
-                        {Math.floor(displayXp)} / {requiredXp} XP
-                    </div>
-                    {/* Level just below XP bar */}
-                    <div className={styles.levelLabel}>
-                        {t('lvl')} {currentLevel}
+            {/* Bottom Content overlay - hidden if leveling up */}
+            {!canLevelUp && (
+                <div className={styles.cardContent}>
+                    <div className={styles.xpContainer}>
+                        <div className={styles.xpBarBg}>
+                            <div
+                                className={`${styles.xpBarFill} ${isAnimating ? styles.isAnimating : ''}`}
+                                style={{ width: `${fillPercentage}%` }}
+                            />
+                        </div>
+
+                        <div className={styles.companionTitle}>
+                            {t(companion.title)}
+                        </div>
+
+                        <div className={styles.levelLabel}>
+                            <span className={styles.lvlPrefix}>{t('lvl')}</span>
+                            <span className={styles.lvlValue}>{currentLevel}</span>
+                        </div>
                     </div>
                 </div>
+            )}
 
-                {canLevelUp && (
-                    <button
-                        className={styles.levelUpButton}
-                        onClick={onLevelUpClick}
-                        aria-label={t('levelUp')}
-                    >
-                        <ArrowUp className={styles.levelUpIcon} />
-                        <span className={styles.levelUpText}>{t('levelUp')}</span>
-                    </button>
-                )}
-            </div>
+            {/* Huge Arrow Overlay when Level Up is possible */}
+            {canLevelUp && (
+                <div className={styles.levelUpOverlay}>
+                    <ArrowUp className={styles.hugeArrow} />
+                    <div className={styles.overlayLevelUpText}>
+                        {t('levelUp').toUpperCase()}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
