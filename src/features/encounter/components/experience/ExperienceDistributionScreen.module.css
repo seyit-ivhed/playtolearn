@@ -220,7 +220,7 @@
     text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
-/* Level Up Overlay */
+/* Level Up Overlay Card */
 .levelUpOverlay {
     position: absolute;
     inset: 0;
@@ -253,35 +253,153 @@
     text-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
 }
 
-@keyframes overlayFadeIn {
-    from {
-        opacity: 0;
-        background: rgba(0, 0, 0, 0);
-        backdrop-filter: blur(0px);
-    }
-
-    to {
-        opacity: 1;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
-    }
+/* CINEMATIC FULL SCREEN LEVEL UP MODAL */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.98);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(15px);
 }
 
-@keyframes arrowFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
-    }
-
-    50% {
-        transform: translateY(-20px);
-        filter: drop-shadow(0 0 40px rgba(255, 215, 0, 1));
-    }
+.levelUpFullScreen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Center main content */
+    padding: 2rem;
+    overflow: hidden;
 }
 
-/* Modal and Animations */
+.fullScreenBg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+    filter: brightness(0.6);
+}
+
+.fullScreenOverlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.85) 100%);
+    z-index: -1;
+}
+
+.mainLevelUpRow {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    z-index: 10;
+}
+
+.levelStompContainer {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    text-shadow: 0 0 60px rgba(255, 215, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.levelLabelText {
+    color: #ffd700;
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    letter-spacing: 8px;
+    font-weight: 900;
+}
+
+.statPulseBox {
+    background: rgba(0, 0, 0, 0.65);
+    border: 1px solid rgba(255, 215, 0, 0.25);
+    padding: 1.2rem 2.5rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 180px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.statIconHP {
+    color: #ff4757;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.5));
+}
+
+.statIconATK {
+    color: #f9ca24;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 10px rgba(249, 202, 36, 0.5));
+}
+
+.statAmount {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.statName {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #aaa;
+    letter-spacing: 3px;
+}
+
+.modalFooter {
+    z-index: 10;
+}
+
+.modalContinueButtonSmall {
+    background: transparent;
+    color: #ffd700;
+    border: 1px solid #ffd700;
+    padding: 0.8rem 3rem;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.modalContinueButtonSmall:hover {
+    background: #ffd700;
+    color: #000;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.flairContainer {
+    position: absolute;
+    bottom: 25%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    opacity: 0.15;
+}
+
+.horizontalLine {
+    width: 70%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ffd700, transparent);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -302,171 +420,4 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 200;
-    animation: fadeIn 0.3s ease-out;
-    backdrop-filter: blur(10px);
-}
-
-.modalContent {
-    width: 90%;
-    max-width: 1100px;
-    height: 85vh;
-    background: #000;
-    border: 2px solid #ffd700;
-    border-radius: 12px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    overflow: hidden;
-    box-shadow: 0 0 100px rgba(255, 215, 0, 0.1);
-}
-
-.imageSection {
-    position: relative;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-}
-
-.imageOverlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background: linear-gradient(to top, #000, transparent);
-}
-
-.evolutionBadge {
-    position: absolute;
-    top: 2.5rem;
-    left: 2.5rem;
-    background: #ffd700;
-    color: #000;
-    padding: 0.6rem 1.4rem;
-    border-radius: 2px;
-    font-family: 'Cinzel', serif;
-    font-size: 1.4rem;
-    font-weight: 900;
-    text-transform: uppercase;
-}
-
-.detailsSection {
-    padding: 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.levelUpHeader {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.levelUpTitle {
-    font-family: 'Cinzel', serif;
-    font-size: 3.5rem;
-    color: #fff;
-    margin-bottom: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-}
-
-.levelChange {
-    font-size: 2rem;
-    color: #ffd700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    font-family: 'Cinzel', serif;
-}
-
-.statsGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.statBox {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 4px;
-    text-align: center;
-}
-
-.statLabel {
-    color: #666;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-    letter-spacing: 2px;
-    font-weight: 700;
-}
-
-.statValue {
-    font-size: 2.5rem;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
-    font-family: 'Cinzel', serif;
-}
-
-.statIncrease {
-    color: #4cd137;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.evoSection {
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid #ffd700;
-    padding: 2rem;
-    border-radius: 4px;
-    text-align: center;
-}
-
-.evoTitle {
-    font-family: 'Cinzel', serif;
-    color: #ffd700;
-    font-size: 1.8rem;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-}
-
-.evoDesc {
-    color: #ccc;
-    font-size: 1rem;
-}
-
-.confirmButton {
-    width: 100%;
-    padding: 1.8rem;
-    background: #ffd700;
-    color: #000;
-    border: none;
-    font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
-    font-weight: 900;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.confirmButton:hover {
-    background: #fff;
 }
