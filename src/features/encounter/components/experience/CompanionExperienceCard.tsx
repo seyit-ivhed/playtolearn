@@ -35,15 +35,17 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
     const [isAnimating, setIsAnimating] = useState(false);
     const [showLevelUpVisual, setShowLevelUpVisual] = useState(false);
 
+    // If the new XP is lower than what we're currently displaying (depletion/level up reset)
+    // snap immediately by adjusting state during render (React recommended pattern)
+    if (currentXp < displayXp) {
+        setIsAnimating(false);
+        setDisplayXp(currentXp);
+        setShowLevelUpVisual(false);
+    }
+
     useEffect(() => {
-        // If the new XP is lower than what we're currently displaying (depletion/level up reset)
-        // snap immediately and don't trigger the transitions
-        if (currentXp < displayXp) {
-            setIsAnimating(false);
-            setDisplayXp(currentXp);
-            setShowLevelUpVisual(false);
-            return;
-        }
+        // Only trigger filling animation if we are below the target XP
+        if (displayXp >= currentXp) return;
 
         // Wait 1 second before starting the animation for increases
         const timer = setTimeout(() => {

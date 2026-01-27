@@ -1,7 +1,9 @@
 {
     "common": {
         "continue": "Continue",
-        "start_over": "Start Over"
+        "start_over": "Start Over",
+        "level": "Level",
+        "lvl": "Lvl"
     },
     "remainder_text": " R ",
     "adventure": {
