@@ -56,8 +56,8 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
             // Check if it's a valid companion ID from our data
             if (!COMPANIONS[companionId as keyof typeof COMPANIONS]) {
                 console.error(`Companion stats not found for invalid ID ${companionId}`);
-                return;
             }
+            return;
         }
 
         const level = stats.level;

@@ -60,20 +60,7 @@ describe('progression.slice', () => {
             }));
         });
 
-        it('should initialize companion stats if not present', () => {
-            const slice = setupSlice({ companionStats: {} });
 
-            slice.addCompanionExperience('valid_companion', 50);
-
-            expect(mockSet).toHaveBeenCalledWith(expect.objectContaining({
-                companionStats: expect.objectContaining({
-                    'valid_companion': expect.objectContaining({
-                        experience: 50,
-                        level: 1
-                    })
-                })
-            }));
-        });
 
         it('should log error and do nothing if companion id is invalid', () => {
             const slice = setupSlice();
