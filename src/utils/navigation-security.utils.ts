@@ -12,15 +12,6 @@ interface NavigationAccessParams {
     encounterResults: Record<string, EncounterResult>;
 }
 
-/**
- * Centrally validates if a player can access a specific adventure or a specific node within it.
- * 
- * Rules:
- * 1. Adventure must exist in ADVENTURES data.
- * 2. Player must have premium access (or it must be a free chapter like Prologue/Ady 1).
- * 3. Player must have unlocked the adventure through progression.
- * 4. If nodeIndex is provided, all previous gating encounters (Battle, Boss, Puzzle, Camp) must be completed.
- */
 export const checkNavigationAccess = ({
     adventureId,
     nodeIndex,

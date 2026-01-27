@@ -1,7 +1,6 @@
 import { type Adventure, EncounterType, PuzzleType } from '../types/adventure.types';
 import { MONSTERS } from './monsters.data';
 
-
 export const ADVENTURES: Adventure[] = [
     {
         id: '1',
@@ -31,11 +30,6 @@ export const ADVENTURES: Adventure[] = [
             },
             {
                 id: '1_4',
-                type: EncounterType.CAMP,
-                coordinates: { x: 50, y: 1300 },
-            },
-            {
-                id: '1_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 1600 },
                 enemies: [
@@ -45,7 +39,7 @@ export const ADVENTURES: Adventure[] = [
                 ],
             },
             {
-                id: '1_6',
+                id: '1_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 0, y: 1800 },
                 enemies: [
@@ -54,20 +48,16 @@ export const ADVENTURES: Adventure[] = [
                 ],
             },
             {
-                id: '1_7',
+                id: '1_6',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 250, y: 2000 },
                 puzzleData: {
                     puzzleType: PuzzleType.BALANCE
                 },
             },
+
             {
-                id: '1_8',
-                type: EncounterType.CAMP,
-                coordinates: { x: 50, y: 2300 },
-            },
-            {
-                id: '1_9',
+                id: '1_7',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -100, y: 2700 },
                 enemies: [
@@ -77,7 +67,7 @@ export const ADVENTURES: Adventure[] = [
                 ],
             },
             {
-                id: '1_10',
+                id: '1_8',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 0, y: 2950 },
                 puzzleData: {
@@ -85,7 +75,7 @@ export const ADVENTURES: Adventure[] = [
                 },
             },
             {
-                id: '1_11',
+                id: '1_9',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 3200 },
                 enemies: [
@@ -94,19 +84,15 @@ export const ADVENTURES: Adventure[] = [
                     MONSTERS.SCORPION_1
                 ],
             },
+
             {
-                id: '1_12',
-                type: EncounterType.CAMP,
-                coordinates: { x: 80, y: 3450 },
-            },
-            {
-                id: '1_13',
+                id: '1_10',
                 type: EncounterType.BOSS,
                 coordinates: { x: -100, y: 3850 },
                 enemies: [MONSTERS.SAND_COLOSSUS],
             },
             {
-                id: '1_14',
+                id: '1_11',
                 type: EncounterType.ENDING,
                 coordinates: { x: -300, y: 3850 },
             }
@@ -134,65 +120,53 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: 170, y: 1150 },
                 enemies: [MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
             },
+
             {
                 id: '2_4',
-                type: EncounterType.CAMP,
-                coordinates: { x: -80, y: 1520 },
-            },
-            {
-                id: '2_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1950 },
                 enemies: [MONSTERS.BANDIT_LEADER, MONSTERS.BANDIT_RAIDER, MONSTERS.BANDIT_RAIDER],
             },
             {
-                id: '2_6',
+                id: '2_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -220, y: 1950 },
                 enemies: [MONSTERS.STONE_GUARDIAN, MONSTERS.STONE_GUARDIAN],
             },
             {
-                id: '2_7',
+                id: '2_6',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: -250, y: 2600 },
                 puzzleData: { puzzleType: PuzzleType.BALANCE },
             },
+
             {
-                id: '2_8',
-                type: EncounterType.CAMP,
-                coordinates: { x: -150, y: 2950 },
-            },
-            {
-                id: '2_9',
+                id: '2_7',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 180, y: 2800 },
                 enemies: [MONSTERS.ASSYRIAN_GUARDIAN, MONSTERS.STONE_GUARDIAN],
             },
             {
-                id: '2_10',
+                id: '2_8',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 350, y: 3000 },
                 puzzleData: { puzzleType: PuzzleType.GUARDIAN_TRIBUTE },
             },
             {
-                id: '2_11',
+                id: '2_9',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 300, y: 4050 },
                 enemies: [MONSTERS.ASSYRIAN_GUARDIAN, MONSTERS.ASSYRIAN_GUARDIAN],
             },
+
             {
-                id: '2_12',
-                type: EncounterType.CAMP,
-                coordinates: { x: 0, y: 4300 },
-            },
-            {
-                id: '2_13',
+                id: '2_10',
                 type: EncounterType.BOSS,
                 coordinates: { x: 0, y: 3700 },
                 enemies: [MONSTERS.THE_STONE_EMPEROR],
             },
             {
-                id: '2_14',
+                id: '2_11',
                 type: EncounterType.ENDING,
                 coordinates: { x: -300, y: 4100 },
             }
@@ -214,65 +188,53 @@ export const ADVENTURES: Adventure[] = [
                 coordinates: { x: 150, y: 1000 },
                 enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER],
             },
+
             {
                 id: '3_3',
-                type: EncounterType.CAMP,
-                coordinates: { x: -50, y: 1300 },
-            },
-            {
-                id: '3_4',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: -250, y: 1600 },
                 puzzleData: { puzzleType: PuzzleType.SYMMETRY },
             },
             {
-                id: '3_5',
+                id: '3_4',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1900 },
                 enemies: [MONSTERS.IRON_MINION, MONSTERS.IRON_MINION],
             },
             {
-                id: '3_6',
+                id: '3_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 2200 },
                 enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.IRON_MINION],
             },
+
             {
-                id: '3_7',
-                type: EncounterType.CAMP,
-                coordinates: { x: 50, y: 2500 },
-            },
-            {
-                id: '3_8',
+                id: '3_6',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 300, y: 2800 },
                 puzzleData: { puzzleType: PuzzleType.LATIN_SQUARE },
             },
             {
-                id: '3_9',
+                id: '3_7',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -100, y: 3100 },
                 enemies: [MONSTERS.IRON_MINION, MONSTERS.IRON_MINION, MONSTERS.IRON_MINION],
             },
             {
-                id: '3_10',
+                id: '3_8',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 250, y: 3400 },
                 puzzleData: { puzzleType: PuzzleType.SEQUENCE },
             },
+
             {
-                id: '3_11',
-                type: EncounterType.CAMP,
-                coordinates: { x: 0, y: 3700 },
-            },
-            {
-                id: '3_12',
+                id: '3_9',
                 type: EncounterType.BOSS,
                 coordinates: { x: 0, y: 4100 },
                 enemies: [MONSTERS.IRON_WARLORD_ENFORCER],
             },
             {
-                id: '3_13',
+                id: '3_10',
                 type: EncounterType.ENDING,
                 coordinates: { x: -300, y: 4400 },
             }

@@ -71,8 +71,7 @@ export async function runAnalysis() {
         party: [
             { id: 'amara', name: 'Amara', level: 1, currentXp: 0 },
             { id: 'tariq', name: 'Tariq', level: 1, currentXp: 0 },
-        ] as SimCompanion[],
-        pendingXp: 0
+        ] as SimCompanion[]
     }));
 
     for (const adventure of ADVENTURES) {
@@ -92,12 +91,9 @@ export async function runAnalysis() {
                     sim.party.push({ id: 'kenji', name: 'Kenji', level: 1, currentXp: 0 });
                 }
 
-                // Add XP to pending pool
-                sim.pendingXp += xpReward;
-
-                // Check if distribution happens (CAMP)
-                if (encounter.type === EncounterType.CAMP) {
-                    const totalDistribute = sim.pendingXp;
+                // Distribute XP immediately (since camps are gone)
+                if (xpReward > 0) {
+                    const totalDistribute = xpReward;
                     const numCompanions = sim.party.length;
 
                     if (sim.scenario.favoredRatio === 0) {
@@ -133,8 +129,6 @@ export async function runAnalysis() {
                             sim.party[0] = addXpToCompanion(sim.party[0], totalDistribute);
                         }
                     }
-
-                    sim.pendingXp = 0;
                 }
 
                 // Record state

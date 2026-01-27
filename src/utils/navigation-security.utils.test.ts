@@ -8,7 +8,7 @@ vi.mock('../data/adventures.data', () => ({
             id: 'prologue',
             encounters: [
                 { id: 'p1', type: 'BATTLE' },
-                { id: 'p2', type: 'CAMP' },
+                { id: 'p2', type: 'PUZZLE' },
                 { id: 'p3', type: 'ENDING' }
             ]
         },
@@ -125,20 +125,6 @@ describe('navigation-security.utils', () => {
             encounterResults: {
                 'prologue_1': { stars: 3, difficulty: 1, completedAt: 123 },
                 'prologue_2': { stars: 3, difficulty: 1, completedAt: 124 }
-            }
-        });
-        expect(result.allowed).toBe(true);
-    });
-
-    it('should allow access even if a CAMP in the middle is not completed', () => {
-        const result = checkNavigationAccess({
-            adventureId: 'prologue',
-            nodeIndex: 3, // ENDING
-            isPremiumUnlocked: mockIsPremiumUnlocked,
-            isProgressionUnlocked: mockIsProgressionUnlocked,
-            encounterResults: {
-                'prologue_1': { stars: 3, difficulty: 1, completedAt: 123 }
-                // prologue_2 (CAMP) missing - should be fine now
             }
         });
         expect(result.allowed).toBe(true);

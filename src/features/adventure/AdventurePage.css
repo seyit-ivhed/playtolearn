@@ -190,13 +190,6 @@
     /* Base slate color */
 }
 
-.node-container.camp {
-    background: linear-gradient(135deg, #059669, #064e3b);
-    /* Green */
-    border-color: #10b981;
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-}
-
 .node-container.default {
     background: linear-gradient(135deg, #d97706, #78350f);
     /* Yellow/Amber */
@@ -348,18 +341,12 @@
     animation: bounce 1s infinite;
 }
 
-.node-container.current.camp,
 .node-container.current.default,
 .node-container.current.puzzle,
 .node-container.current.boss,
 .node-container.current.ending {
     box-shadow: 0 0 0 4px white, 0 0 40px currentColor;
     animation: bounce 1s infinite, pulse 2s infinite;
-}
-
-.node-container.current.camp {
-    border-color: #34d399;
-    color: #10b981;
 }
 
 .node-container.current.default {
@@ -411,10 +398,7 @@
     white-space: nowrap;
 }
 
-.node-label.camp {
-    /* Removed specific size/spacing overrides to unify with other labels */
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
-}
+
 
 /* Label Colors */
 .node-label.locked {
@@ -435,14 +419,7 @@
     /* text-yellow-100 */
 }
 
-.node-label.current.camp {
-    background-color: rgba(6, 78, 59, 0.95);
-    /* bg-emerald-900/95 */
-    border-color: #34d399;
-    /* border-emerald-400 */
-    color: #d1fae5;
-    /* text-emerald-100 */
-}
+
 
 .node-label.current.ending {
     background-color: rgba(107, 33, 168, 0.95);

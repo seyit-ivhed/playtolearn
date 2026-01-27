@@ -4,7 +4,6 @@
         "start_over": "Start Over"
     },
     "remainder_text": " R ",
-    "party_camp": "Party Camp",
     "adventure": {
         "title": "Adventures",
         "start": "Start Adventure",
@@ -16,7 +15,6 @@
         "nodes": {
             "battle": "Battle",
             "puzzle": "Puzzle",
-            "camp": "Camp",
             "boss": "Boss"
         }
     },
@@ -42,28 +40,28 @@
                 "1_3": {
                     "label": "Water Flow Puzzle"
                 },
-                "1_5": {
+                "1_4": {
                     "label": "Bandit Scouts"
                 },
-                "1_6": {
+                "1_5": {
                     "label": "Bandit Leader"
                 },
-                "1_7": {
+                "1_6": {
                     "label": "Weighing Rocks"
                 },
-                "1_9": {
+                "1_7": {
                     "label": "Echoes of the Sand"
                 },
-                "1_10": {
+                "1_8": {
                     "label": "Star Map"
                 },
-                "1_11": {
+                "1_9": {
                     "label": "Guardian Spirits"
                 },
-                "1_13": {
+                "1_10": {
                     "label": "The Sand Colossus"
                 },
-                "1_14": {
+                "1_11": {
                     "label": "To the Ruins"
                 }
             }
@@ -84,28 +82,28 @@
                 "2_3": {
                     "label": "Common Area"
                 },
-                "2_5": {
+                "2_4": {
                     "label": "Bandit Camp"
                 },
-                "2_6": {
+                "2_5": {
                     "label": "Awakened Guardians"
                 },
-                "2_7": {
+                "2_6": {
                     "label": "Symbol Algebra"
                 },
-                "2_9": {
+                "2_7": {
                     "label": "Guardians of the Hall"
                 },
-                "2_10": {
+                "2_8": {
                     "label": "The Statues' Tribute"
                 },
-                "2_11": {
+                "2_9": {
                     "label": "Inner Sanctum Guards"
                 },
-                "2_13": {
+                "2_10": {
                     "label": "The Stone Emperor"
                 },
-                "2_14": {
+                "2_11": {
                     "label": "Journey Onward"
                 }
             }
@@ -124,36 +122,27 @@
                     "label": "The Mist Thickens"
                 },
                 "3_3": {
-                    "label": "Resting Place"
-                },
-                "3_4": {
                     "label": "The Mirror Mist"
                 },
-                "3_5": {
+                "3_4": {
                     "label": "Iron Guardian"
                 },
-                "3_6": {
+                "3_5": {
                     "label": "Ambuscade"
                 },
-                "3_7": {
-                    "label": "Foothold"
-                },
-                "3_8": {
+                "3_6": {
                     "label": "The Keystone Cipher"
                 },
-                "3_9": {
+                "3_7": {
                     "label": "Heavy Resistance"
                 },
-                "3_10": {
+                "3_8": {
                     "label": "The Star Path"
                 },
-                "3_11": {
-                    "label": "Last Stand Prep"
-                },
-                "3_12": {
+                "3_9": {
                     "label": "The Iron Enforcer"
                 },
-                "3_13": {
+                "3_10": {
                     "label": "To the Jade Peaks"
                 }
             }

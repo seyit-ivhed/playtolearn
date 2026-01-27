@@ -51,11 +51,6 @@ src/
 │   │   ├── AdventurePage.tsx
 │   │   └── AdventurePage.module.css
 │   │
-│   ├── camp/
-│   │   ├── components/    # Camp-specific components
-│   │   ├── CampPage.tsx
-│   │   └── CampPage.module.css
-│   │
 │   ├── encounter/
 │   │   ├── components/    # Encounter-specific components
 │   │   ├── EncounterPage.tsx
@@ -175,7 +170,6 @@ feature-name/
 **Current Features**:
 
 - `adventure/` - Adventure map and navigation
-- `camp/` - Party camp and companion management
 - `encounter/` - Combat encounters and battles
 - `combat/` - Combat mechanics and UI
 - `chronicle/` - Story progression and book interface

@@ -6,9 +6,9 @@ export const initialGameState: GameState = {
     encounterResults: {},
     activeEncounterDifficulty: 1,
     companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
-        acc[id] = { level: 1 };
+        acc[id] = { level: 1, experience: 0 };
         return acc;
-    }, {} as Record<string, { level: number }>),
+    }, {} as Record<string, { level: number; experience: number }>),
     adventureStatuses: {}
 };
 

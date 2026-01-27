@@ -60,7 +60,6 @@ Each **Adventure** consists of:
 - **Battle Encounters**: Turn-based battle against monsters
 - **Puzzle Encounters**: Logic and math puzzles to solve (future feature)
 - **Boss Fights**: Epic battle against powerful enemies at the end of each adventure
-- **Camp Encounters**: Rest stops where players can adjust their party
 
 ### 2.2 Math Challenge System
 

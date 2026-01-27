@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest';
 import type { StoreApi } from 'zustand';
 import { createAdventureProgressSlice } from './adventure-progress.slice';
 import { ADVENTURES } from '../../../data/adventures.data';
-import { EncounterType } from '../../../types/adventure.types';
 import type { GameStore, EncounterResult } from '../interfaces';
 
 // Mock get() function for Zustand
@@ -119,30 +118,7 @@ describe('adventure-progress.slice - getAdventureNodes', () => {
         expect(nodes[1].stars).toBe(2);
     });
 
-    it('should unlock a node if the previous node was a Camp and the one before that was completed', () => {
-        const adventureWithCamp = ADVENTURES.find(a => a.encounters.some(e => e.type === EncounterType.CAMP));
-        if (!adventureWithCamp) return;
 
-        const campIndex = adventureWithCamp.encounters.findIndex(e => e.type === EncounterType.CAMP);
-        const prevIndex = campIndex - 1;
-
-        if (prevIndex < 0) return;
-
-        const prevNodeKey = `${adventureWithCamp.id}_${prevIndex + 1}`;
-        const encounterResults = {
-            [prevNodeKey]: { stars: 3, difficulty: 1, completedAt: 123 }
-        };
-
-        const slice = setupSlice(encounterResults);
-        const nodes = slice.getAdventureNodes(adventureWithCamp.id);
-
-        expect(nodes[campIndex].isLocked).toBe(false);
-
-        const nextIndex = campIndex + 1;
-        if (nextIndex < nodes.length) {
-            expect(nodes[nextIndex].isLocked).toBe(false);
-        }
-    });
 
     it('should correct the bug: Replaying Node 1 should not lock Node 3 if Node 2 is completed', () => {
         const node3Key = `${adventureId}_3`;

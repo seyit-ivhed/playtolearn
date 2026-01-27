@@ -77,11 +77,6 @@ const AdventurePage = () => {
     const { encounters } = adventure;
 
     const handleNodeClick = (encounter: typeof encounters[0]) => {
-        if (encounter.type === EncounterType.CAMP) {
-            navigate(`/camp/${adventureId}/${encounters.findIndex(e => e.id === encounter.id) + 1}`);
-            return;
-        }
-
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS || encounter.type === EncounterType.PUZZLE) {
             setSelectedEncounter(encounter);
             setIsDifficultyModalOpen(true);

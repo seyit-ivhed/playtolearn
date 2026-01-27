@@ -24,7 +24,7 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
         const existingResult = encounterResults[encounterKey];
 
         // Update encounter results ONLY for rated types (Battle, Boss, Puzzle)
-        const isRatedType = encounter?.type !== EncounterType.CAMP && encounter?.type !== EncounterType.ENDING;
+        const isRatedType = encounter?.type !== EncounterType.ENDING;
 
         if (isRatedType) {
             const { activeEncounterDifficulty } = get();
@@ -68,7 +68,7 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
             const isCompleted = stars > 0;
             const isLocked = !isCompleted && !lastUnlockedNodeCompleted;
 
-            if (node.type !== EncounterType.CAMP && node.type !== EncounterType.ENDING) {
+            if (node.type !== EncounterType.ENDING) {
                 // This is a "blocker" node. If it's not completed, the *next* node will be locked.
                 lastUnlockedNodeCompleted = isCompleted;
             }

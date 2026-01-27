@@ -2,6 +2,7 @@ import type { StateCreator } from 'zustand';
 import type { GameStore, ProgressionSlice } from '../interfaces';
 import { PersistenceService } from '../../../services/persistence.service';
 import { EXPERIENCE_CONFIG, getRequiredXpForNextLevel } from '../../../data/experience.data';
+import { COMPANIONS } from '../../../data/companions.data';
 
 export const createProgressionSlice: StateCreator<GameStore, [], [], ProgressionSlice> = (set, get) => ({
     levelUpCompanion: (companionId: string) => {
@@ -49,16 +50,15 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
     addCompanionExperience: (companionId: string, amount: number) => {
         const state = get();
 
-        const stats = state.companionStats[companionId];
+        let stats = state.companionStats[companionId];
 
         if (!stats) {
-            console.error(`Companion stats not found for ${companionId}`);
-            return;
-        }
-
-        if (typeof stats.level !== 'number') {
-            console.error(`Invalid level for companion ${companionId}`);
-            return;
+            // Check if it's a valid companion ID from our data
+            if (!COMPANIONS[companionId as keyof typeof COMPANIONS]) {
+                console.error(`Companion stats not found for invalid ID ${companionId}`);
+                return;
+            }
+            stats = { level: 1, experience: 0 };
         }
 
         const level = stats.level;

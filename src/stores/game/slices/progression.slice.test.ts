@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { StoreApi } from 'zustand';
 import { createProgressionSlice } from './progression.slice';
 import type { GameStore } from '../interfaces';
@@ -16,10 +16,11 @@ vi.mock('../../../services/persistence.service', () => ({
 
 vi.mock('../../../data/companions.data', () => ({
     getCompanionById: vi.fn((id) => id === 'valid_companion' ? { id: 'valid_companion' } : undefined),
+    COMPANIONS: { 'valid_companion': { id: 'valid_companion' } }
 }));
 
 describe('progression.slice', () => {
-    let consoleErrorSpy: any;
+    let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
     beforeEach(() => {
         vi.clearAllMocks();

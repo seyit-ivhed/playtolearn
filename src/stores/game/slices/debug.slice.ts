@@ -7,9 +7,9 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
     debugResetCompanions: () => {
         set({
             companionStats: Object.keys(COMPANIONS).reduce((acc, id) => {
-                acc[id] = { level: 1 };
+                acc[id] = { level: 1, experience: 0 };
                 return acc;
-            }, {} as Record<string, { level: number }>)
+            }, {} as Record<string, { level: number; experience: number }>)
         });
     },
 
@@ -21,6 +21,7 @@ export const createDebugSlice: StateCreator<GameStore, [], [], DebugSlice> = (se
             companionStats: {
                 ...companionStats,
                 [companionId]: {
+                    ...companionStats[companionId],
                     level
                 }
             }

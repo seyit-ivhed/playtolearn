@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Swords, Tent, Puzzle, Star, BookOpen } from 'lucide-react';
+import { Swords, Puzzle, Star, BookOpen } from 'lucide-react';
 import { EncounterType, type Encounter } from '../../../types/adventure.types';
 
 import { type EncounterWithStatus } from '../../../stores/game/interfaces';
@@ -31,7 +31,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
     const isCompleted = stars > 0;
     const isCurrent = nodeStep === currentNode;
 
-    const isCamp = node.type === EncounterType.CAMP;
+
     const isBoss = node.type === EncounterType.BOSS;
     const isPuzzle = node.type === EncounterType.PUZZLE;
     const isEnding = node.type === EncounterType.ENDING;
@@ -46,7 +46,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
     // CSS Classes Construction
     const nodeContainerClasses = [
         'node-container',
-        isCamp ? 'camp' : isBoss ? 'boss' : isPuzzle ? 'puzzle' : isEnding ? 'ending' : 'default',
+        isBoss ? 'boss' : isPuzzle ? 'puzzle' : isEnding ? 'ending' : 'default',
         isLocked ? 'locked' : '',
         isCurrent ? 'current' : '',
         isCompleted ? 'completed' : ''
@@ -54,7 +54,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
 
     const labelClasses = [
         'node-label',
-        isCamp ? 'camp' : '',
+
         isLocked ? 'locked' : '',
         isCurrent ? 'current' : '',
         isCompleted ? 'completed' : ''
@@ -68,7 +68,6 @@ export const MapNode: React.FC<MapNodeProps> = ({
         };
 
         if (isBoss) return <Swords {...iconProps} />;
-        if (isCamp) return <Tent {...iconProps} />;
         if (isPuzzle) return <Puzzle {...iconProps} />;
         if (isEnding) return <BookOpen {...iconProps} />;
         return <Swords {...iconProps} />;
@@ -82,7 +81,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
             onClick={() => !isLocked && onNodeClick(node)}
         >
             {/* Stars Display */}
-            {!isCamp && !isEnding && !isLocked && (
+            {!isEnding && !isLocked && (
                 <div className="node-stars">
                     {[...Array(5)].map((_, i) => (
                         <Star
@@ -103,7 +102,7 @@ export const MapNode: React.FC<MapNodeProps> = ({
 
             {/* Label */}
             <div className={labelClasses}>
-                {t(`adventures.${adventureId}.nodes.${node.id}.label`, isCamp ? t('party_camp') : (node.label || '')) as string}
+                {t(`adventures.${adventureId}.nodes.${node.id}.label`, (node.label || '')) as string}
             </div>
         </div>
     );
