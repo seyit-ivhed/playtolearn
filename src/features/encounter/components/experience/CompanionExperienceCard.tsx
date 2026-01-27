@@ -28,7 +28,6 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
     const currentXp = currentExperience;
 
     const startXp = previousStats?.experience ?? (currentXp - gainedXp);
-
     const requiredXp = getRequiredXpForNextLevel(currentLevel);
 
     // Animation State
@@ -49,21 +48,22 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
 
     return (
         <div className={`${styles.card} ${canLevelUp ? styles.glow : ''}`}>
+            {/* Top Name Badge - mimicking battle style */}
+            <div className={styles.nameBadge}>
+                <h3 className={styles.nameText}>{companion.name}</h3>
+            </div>
+
+            {/* Full-fill portrait background */}
             <div className={styles.portraitContainer}>
                 <img
                     src={getCompanionCardImage(companion.id, currentLevel) || ''}
                     alt={companion.name}
                     className={styles.portrait}
                 />
-                <div className={styles.levelBadge}>
-                    {t('lvl')} {currentLevel}
-                </div>
             </div>
 
+            {/* Bottom Content overlay */}
             <div className={styles.cardContent}>
-                <h3 className={styles.name}>{companion.name}</h3>
-                <div className={styles.titleText}>{t(companion.title)}</div>
-
                 <div className={styles.xpContainer}>
                     <div className={styles.xpBarBg}>
                         <div
@@ -71,8 +71,13 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                             style={{ width: `${fillPercentage}%` }}
                         />
                     </div>
-                    <div className={styles.xpText}>
+                    {/* XP Numbers */}
+                    <div className={styles.xpTextNumbers}>
                         {Math.floor(displayXp)} / {requiredXp} XP
+                    </div>
+                    {/* Level just below XP bar */}
+                    <div className={styles.levelLabel}>
+                        {t('lvl')} {currentLevel}
                     </div>
                 </div>
 
@@ -83,6 +88,7 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                         aria-label={t('levelUp')}
                     >
                         <ArrowUp className={styles.levelUpIcon} />
+                        <span className={styles.levelUpText}>{t('levelUp')}</span>
                     </button>
                 )}
             </div>
