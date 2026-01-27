@@ -62,7 +62,7 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>{t('experienceGained')}</h1>
+
 
             <div className={styles.cardsContainer}>
                 {partyCompanionsData.map(({ companion, experience }) => (
