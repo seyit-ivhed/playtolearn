@@ -16,7 +16,7 @@ export interface GameState {
     activeParty: string[];
     encounterResults: Record<string, EncounterResult>;
     activeEncounterDifficulty: number;
-    companionStats: Record<string, { level: number }>;
+    companionStats: Record<string, { level: number; experience: number }>;
     adventureStatuses: Record<AdventureId, AdventureStatus>;
 }
 
@@ -37,6 +37,7 @@ export interface AdventureStatusSlice {
 // XP & Leveling
 export interface ProgressionSlice {
     levelUpCompanion: (companionId: string) => void;
+    addCompanionExperience: (companionId: string, amount: number) => void;
     addCompanionToParty: (companionId: string) => void;
 }
 
