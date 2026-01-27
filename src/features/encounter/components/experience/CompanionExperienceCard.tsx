@@ -85,7 +85,7 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                         </div>
 
                         <div className={styles.levelLabel}>
-                            <span className={styles.lvlPrefix}>{t('lvl')}</span>
+                            <span className={styles.lvlPrefix}>{t('level').toUpperCase()}</span>
                             <span className={styles.lvlValue}>{currentLevel}</span>
                         </div>
                     </div>

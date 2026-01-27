@@ -70,7 +70,8 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
                                 damping: 12
                             }}
                         >
-                            <span className={styles.levelLabelText}>{t('lvl').toUpperCase()}{nextLevel}</span>
+                            <span className={styles.levelLabelPrefix}>{t('level').toUpperCase()}</span>
+                            <span className={styles.levelValueLarge}>{nextLevel}</span>
                         </motion.div>
 
                         <motion.div
