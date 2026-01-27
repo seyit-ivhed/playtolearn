@@ -18,6 +18,10 @@ import { useDelayedUnitRemoval } from './hooks/useDelayedUnitRemoval';
 import { getVFXDetails, checkIsEncounterOver } from './utils/encounter-logic';
 import styles from './EncounterPage.module.css';
 import './EncounterPage.css';
+import { ADVENTURES } from '../../data/adventures.data';
+import { EXPERIENCE_CONFIG } from '../../data/experience.data';
+import { ExperienceDistributionScreen } from './components/experience/ExperienceDistributionScreen';
+import { EncounterType } from '../../types/adventure.types';
 
 const EncounterPage = () => {
     const { t } = useTranslation();
@@ -36,9 +40,10 @@ const EncounterPage = () => {
 
     const isProgressionUnlocked = useGameStore(state => state.isAdventureUnlocked);
     const { isAdventureUnlocked: isPremiumUnlocked, initialized: premiumInitialized } = usePremiumStore();
+    const { addCompanionExperience, companionStats, activeParty } = useGameStore();
 
-
-
+    const [showExperienceScreen, setShowExperienceScreen] = useState(false);
+    const [previousCompanionStats, setPreviousCompanionStats] = useState<Record<string, { experience?: number; level?: number }>>({});
 
     const [activeChallenge, setActiveChallenge] = useState<{
         type: 'SPECIAL';
@@ -140,6 +145,36 @@ const EncounterPage = () => {
         }
 
         if (phase === EncounterPhase.VICTORY) {
+            // Check if we should show XP screen
+            if (!showExperienceScreen) {
+                const adventure = ADVENTURES.find(a => a.id === adventureId);
+                const encounter = adventure?.encounters.find(e => e.id === `${adventureId}_${nodeIndex}`);
+
+                if (encounter && encounter.type !== EncounterType.ENDING) {
+                    // 1. Capture snapshots of CURRENT stats (before adding XP)
+                    // We need to look up stats from the Game Store (companionStats), not the local encounter party
+                    // because local party might be slightly drifted? Actually GameStore is the source of truth for progression.
+                    const statsSnapshot: Record<string, { experience?: number; level?: number }> = {};
+
+                    activeParty.forEach(id => {
+                        if (companionStats[id]) {
+                            statsSnapshot[id] = { ...companionStats[id] };
+                        }
+                    });
+                    setPreviousCompanionStats(statsSnapshot);
+
+                    // 2. Add Experience
+                    activeParty.forEach(id => {
+                        addCompanionExperience(id, EXPERIENCE_CONFIG.ENCOUNTER_XP_REWARD);
+                    });
+
+                    // 3. Show Screen
+                    setShowExperienceScreen(true);
+                    return; // Stop here, don't navigate yet
+                }
+            }
+
+            // Normal Navigation Logic (called when showExperienceScreen is true and we click continue on that, OR if we skipped it)
             completeEncounter(adventureId, nodeIndex);
 
             // Check if this was a BOSS encounter
@@ -204,13 +239,21 @@ const EncounterPage = () => {
                 />
             )}
 
-            {(phase === EncounterPhase.VICTORY || phase === EncounterPhase.DEFEAT) && (
+            {(phase === EncounterPhase.VICTORY || phase === EncounterPhase.DEFEAT) && !showExperienceScreen && (
                 <EncounterCompletionModal
                     result={phase === EncounterPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
                     onContinue={handleCompletionContinue}
 
                     difficulty={difficulty || 1}
 
+                />
+            )}
+
+            {showExperienceScreen && (
+                <ExperienceDistributionScreen
+                    partyIds={activeParty}
+                    previousStats={previousCompanionStats}
+                    onContinue={handleCompletionContinue}
                 />
             )}
         </div>
