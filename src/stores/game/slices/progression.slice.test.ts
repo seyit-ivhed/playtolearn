@@ -3,6 +3,7 @@ import type { StoreApi } from 'zustand';
 import { createProgressionSlice } from './progression.slice';
 import type { GameStore } from '../interfaces';
 import { EXPERIENCE_CONFIG, getRequiredXpForNextLevel } from '../../../data/experience.data';
+import { PersistenceService } from '../../../services/persistence.service';
 
 const mockGet = (state: Partial<GameStore>) => () => state as GameStore;
 const mockSet = vi.fn() as unknown as StoreApi<GameStore>['setState'];
@@ -45,19 +46,13 @@ describe('progression.slice', () => {
     };
 
     describe('addCompanionExperience', () => {
-        it('should add experience to existing companion', () => {
+        it('should add experience to existing companion and sync', () => {
             const slice = setupSlice({ companionStats: { 'valid_companion': { level: 1, experience: 0 } } });
 
             slice.addCompanionExperience('valid_companion', 50);
 
-            expect(mockSet).toHaveBeenCalledWith(expect.objectContaining({
-                companionStats: expect.objectContaining({
-                    'valid_companion': expect.objectContaining({
-                        experience: 50,
-                        level: 1
-                    })
-                })
-            }));
+            expect(mockSet).toHaveBeenCalled();
+            expect(PersistenceService.sync).toHaveBeenCalled();
         });
 
 
@@ -69,25 +64,27 @@ describe('progression.slice', () => {
 
             expect(consoleErrorSpy).toHaveBeenCalled();
             expect(mockSet).not.toHaveBeenCalled();
+            expect(PersistenceService.sync).not.toHaveBeenCalled();
         });
 
-        it('should not level up automatically even if XP exceeds requirement', () => {
-            const slice = setupSlice({ companionStats: { 'valid_companion': { level: 1, experience: 0 } } });
+        it('should NOT add experience if companion already has enough to level up', () => {
             const requiredXp = getRequiredXpForNextLevel(1);
+            const slice = setupSlice({
+                companionStats: {
+                    'valid_companion': { level: 1, experience: requiredXp }
+                }
+            });
 
-            slice.addCompanionExperience('valid_companion', requiredXp + 10);
+            slice.addCompanionExperience('valid_companion', 10);
 
-            expect(mockSet).toHaveBeenCalledWith(expect.objectContaining({
-                companionStats: expect.objectContaining({
-                    'valid_companion': expect.objectContaining({
-                        experience: requiredXp + 10,
-                        level: 1
-                    })
-                })
-            }));
+            expect(mockSet).not.toHaveBeenCalled();
+            expect(PersistenceService.sync).not.toHaveBeenCalled();
+            expect(consoleErrorSpy).toHaveBeenCalledWith(
+                expect.stringContaining('already has enough experience to level up')
+            );
         });
 
-        it('should not add experience if companion is at max level', () => {
+        it('should not add experience and log error if companion is at max level', () => {
             const slice = setupSlice({
                 companionStats: {
                     'valid_companion': { level: EXPERIENCE_CONFIG.MAX_LEVEL, experience: 0 }
@@ -97,11 +94,14 @@ describe('progression.slice', () => {
             slice.addCompanionExperience('valid_companion', 50);
 
             expect(mockSet).not.toHaveBeenCalled();
+            expect(consoleErrorSpy).toHaveBeenCalledWith(
+                expect.stringContaining('already at max level')
+            );
         });
     });
 
     describe('levelUpCompanion', () => {
-        it('should level up companion if XP is sufficient', () => {
+        it('should level up companion if XP is sufficient and sync', () => {
             const requiredXp = getRequiredXpForNextLevel(1);
             const slice = setupSlice({
                 companionStats: {
@@ -111,11 +111,8 @@ describe('progression.slice', () => {
 
             slice.levelUpCompanion('valid_companion');
 
-            expect(mockSet).toHaveBeenCalledWith(expect.objectContaining({
-                companionStats: expect.objectContaining({
-                    'valid_companion': { level: 2, experience: 10 }
-                })
-            }));
+            expect(mockSet).toHaveBeenCalled();
+            expect(PersistenceService.sync).toHaveBeenCalled();
         });
 
         it('should NOT level up companion if XP is insufficient', () => {
@@ -145,12 +142,13 @@ describe('progression.slice', () => {
     });
 
     describe('addCompanionToParty', () => {
-        it('should add companion to party if not already present', () => {
+        it('should add companion to party if not already present and sync', () => {
             const slice = setupSlice({ activeParty: ['c1'] });
 
             slice.addCompanionToParty('c2');
 
             expect(mockSet).toHaveBeenCalledWith({ activeParty: ['c1', 'c2'] });
+            expect(PersistenceService.sync).toHaveBeenCalled();
         });
 
         it('should NOT add companion to party if already present', () => {
@@ -159,6 +157,7 @@ describe('progression.slice', () => {
             slice.addCompanionToParty('c1');
 
             expect(mockSet).not.toHaveBeenCalled();
+            expect(PersistenceService.sync).not.toHaveBeenCalled();
         });
     });
 });

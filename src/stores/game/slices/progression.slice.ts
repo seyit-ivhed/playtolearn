@@ -8,8 +8,13 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
         const state = get();
         const stats = state.companionStats[companionId];
 
-        if (typeof stats?.level !== 'number') {
-            console.error(`Invalid level for companion ${companionId}`);
+        if (!stats) {
+            console.error(`Companion stats not found for ${companionId} in levelUpCompanion`);
+            return;
+        }
+
+        if (typeof stats.level !== 'number') {
+            console.error(`Invalid level for companion ${companionId} in levelUpCompanion`);
             return;
         }
 
@@ -43,17 +48,32 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
 
     addCompanionExperience: (companionId: string, amount: number) => {
         const state = get();
-
         const stats = state.companionStats[companionId];
 
-        if (typeof stats?.level !== 'number') {
-            console.error(`Invalid level for companion ${companionId}`);
+        if (!stats) {
+            console.error(`Companion stats not found for ${companionId} in addCompanionExperience`);
+            return;
+        }
+
+        if (typeof stats.level !== 'number') {
+            console.error(`Invalid level for companion ${companionId} in addCompanionExperience`);
             return;
         }
 
         const level = stats.level;
 
-        if (level >= EXPERIENCE_CONFIG.MAX_LEVEL) return;
+        if (level >= EXPERIENCE_CONFIG.MAX_LEVEL) {
+            console.error(`Companion ${companionId} is already at max level`);
+            return;
+        }
+
+        const requiredXp = getRequiredXpForNextLevel(level);
+        const currentXp = stats.experience || 0;
+
+        if (currentXp >= requiredXp) {
+            console.error(`Companion ${companionId} already has enough experience to level up. Current: ${currentXp}, Required: ${requiredXp}`);
+            return;
+        }
 
         set({
             companionStats: {
@@ -61,7 +81,7 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
                 [companionId]: {
                     ...stats,
                     level,
-                    experience: (stats.experience || 0) + amount
+                    experience: currentXp + amount
                 }
             }
         });
@@ -72,7 +92,9 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
     addCompanionToParty: (companionId: string) => {
         const { activeParty } = get();
 
-        if (activeParty.includes(companionId)) return;
+        if (activeParty.includes(companionId)) {
+            return;
+        }
 
         set({ activeParty: [...activeParty, companionId] });
 
