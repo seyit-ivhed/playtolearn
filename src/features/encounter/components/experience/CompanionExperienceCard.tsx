@@ -40,28 +40,22 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
     const [showLevelUpVisual, setShowLevelUpVisual] = useState(false);
 
     // If the new XP is lower than what we're currently displaying (depletion/level up reset)
-    // snap immediately by adjusting state during render (React recommended pattern)
+    // or if we are at max level or already have enough XP to level up without animation,
+    // adjust state during render (React recommended pattern)
     if (currentXp < displayXp) {
         setIsAnimating(false);
         setDisplayXp(currentXp);
         setShowLevelUpVisual(false);
+    } else if (isMaxLevel && showLevelUpVisual) {
+        setShowLevelUpVisual(false);
+    } else if (!showLevelUpVisual && !isMaxLevel && currentXp >= requiredXp && displayXp >= currentXp && !isAnimating) {
+        // If we are already at or above requirements and not currently animating, show visual immediately
+        setShowLevelUpVisual(true);
     }
 
     useEffect(() => {
-        // Max level companions shouldn't show level up visual
-        if (isMaxLevel) {
-            setShowLevelUpVisual(false);
-            return;
-        }
-
-        // If we are already at or above requirements and not animating, show visual
-        if (currentXp >= requiredXp && displayXp >= currentXp) {
-            setShowLevelUpVisual(true);
-            return;
-        }
-
-        // Only trigger filling animation if we are below the target XP
-        if (displayXp >= currentXp) {
+        // Animation logic only for non-max level companions and if target not yet reached
+        if (isMaxLevel || displayXp >= currentXp) {
             return;
         }
 
