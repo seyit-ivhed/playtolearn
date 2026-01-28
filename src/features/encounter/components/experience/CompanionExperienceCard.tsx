@@ -108,7 +108,7 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                         </div>
 
                         <div className={styles.levelLabel}>
-                            <span className={styles.lvlPrefix}>{t('level').toUpperCase()}</span>
+                            <span className={styles.lvlPrefix}>{t('common.level').toUpperCase()}</span>
                             <span className={styles.lvlValue}>{currentLevel}</span>
                         </div>
                     </div>
@@ -120,7 +120,7 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                 <div className={styles.levelUpOverlay} data-testid="level-up-indicator">
                     <ArrowUp className={styles.hugeArrow} />
                     <div className={styles.overlayLevelUpText}>
-                        {t('levelUp').toUpperCase()}
+                        {t('companions.level_up').toUpperCase()}
                     </div>
                 </div>
             )}

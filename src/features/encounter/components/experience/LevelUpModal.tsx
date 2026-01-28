@@ -70,7 +70,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
                                 damping: 12
                             }}
                         >
-                            <span className={styles.levelLabelPrefix}>{t('level').toUpperCase()}</span>
+                            <span className={styles.levelLabelPrefix}>{t('common.level').toUpperCase()}</span>
                             <span className={styles.levelValueLarge}>{nextLevel}</span>
                         </motion.div>
 
@@ -81,7 +81,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
                             transition={{ delay: 1.2, duration: 0.5 }}
                         >
                             <button className={styles.modalContinueButtonSmall} onClick={onConfirm} data-testid="modal-continue-button">
-                                {t('continue').toUpperCase()}
+                                {t('common.continue').toUpperCase()}
                             </button>
                         </motion.div>
                     </div>

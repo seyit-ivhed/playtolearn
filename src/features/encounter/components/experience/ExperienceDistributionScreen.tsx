@@ -91,7 +91,7 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
                     data-testid="continue-button"
                     onClick={onContinue}
                 >
-                    {t('continue')}
+                    {t('common.continue')}
                 </button>
             )}
 

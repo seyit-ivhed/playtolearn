@@ -1,7 +1,9 @@
 {
     "common": {
         "continue": "Fortsätt",
-        "start_over": "Börja om"
+        "start_over": "Börja om",
+        "level": "Nivå",
+        "lvl": "Nivå"
     },
     "remainder_text": " rest ",
     "adventure": {
