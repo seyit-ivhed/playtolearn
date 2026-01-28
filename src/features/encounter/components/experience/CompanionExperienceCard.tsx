@@ -44,8 +44,16 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
     }
 
     useEffect(() => {
+        // If we are already at or above requirements and not animating, show visual
+        if (currentXp >= requiredXp && displayXp >= currentXp) {
+            setShowLevelUpVisual(true);
+            return;
+        }
+
         // Only trigger filling animation if we are below the target XP
-        if (displayXp >= currentXp) return;
+        if (displayXp >= currentXp) {
+            return;
+        }
 
         // Wait 1 second before starting the animation for increases
         const timer = setTimeout(() => {
@@ -57,11 +65,15 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                 const visualTimer = setTimeout(() => {
                     setShowLevelUpVisual(true);
                 }, 2500);
-                return () => clearTimeout(visualTimer);
+                return () => {
+                    clearTimeout(visualTimer);
+                };
             }
         }, 1000);
 
-        return () => clearTimeout(timer);
+        return () => {
+            clearTimeout(timer);
+        };
     }, [currentXp, displayXp, requiredXp]);
 
     // logical check for interactions
