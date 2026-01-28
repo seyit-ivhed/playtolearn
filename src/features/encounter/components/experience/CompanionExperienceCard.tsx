@@ -30,6 +30,10 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
     const startXp = previousStats?.experience ?? (currentXp - gainedXp);
     const requiredXp = getRequiredXpForNextLevel(currentLevel);
 
+    // logical check for interactions
+    const isMaxLevel = currentLevel >= EXPERIENCE_CONFIG.MAX_LEVEL;
+    const canLevelUp = !isMaxLevel && (currentXp >= requiredXp);
+
     // Animation State
     const [displayXp, setDisplayXp] = useState(startXp);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -44,6 +48,12 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
     }
 
     useEffect(() => {
+        // Max level companions shouldn't show level up visual
+        if (isMaxLevel) {
+            setShowLevelUpVisual(false);
+            return;
+        }
+
         // If we are already at or above requirements and not animating, show visual
         if (currentXp >= requiredXp && displayXp >= currentXp) {
             setShowLevelUpVisual(true);
@@ -74,11 +84,7 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
         return () => {
             clearTimeout(timer);
         };
-    }, [currentXp, displayXp, requiredXp]);
-
-    // logical check for interactions
-    const isMaxLevel = currentLevel >= EXPERIENCE_CONFIG.MAX_LEVEL;
-    const canLevelUp = !isMaxLevel && (currentXp >= requiredXp);
+    }, [currentXp, displayXp, requiredXp, isMaxLevel]);
 
     const fillPercentage = isMaxLevel ? 100 : Math.min((displayXp / requiredXp) * 100, 100);
 
