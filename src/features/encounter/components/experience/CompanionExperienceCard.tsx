@@ -114,12 +114,14 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
             {!showLevelUpVisual && (
                 <div className={styles.cardContent}>
                     <div className={styles.xpContainer}>
-                        <div className={styles.xpBarBg}>
-                            <div
-                                className={`${styles.xpBarFill} ${isAnimating ? styles.isAnimating : ''}`}
-                                style={{ width: `${fillPercentage}%` }}
-                            />
-                        </div>
+                        {!isMaxLevel && (
+                            <div className={styles.xpBarBg}>
+                                <div
+                                    className={`${styles.xpBarFill} ${isAnimating ? styles.isAnimating : ''}`}
+                                    style={{ width: `${fillPercentage}%` }}
+                                />
+                            </div>
+                        )}
 
                         <div className={styles.companionTitle}>
                             {t(companion.title)}
