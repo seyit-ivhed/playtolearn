@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ArrowUp } from 'lucide-react';
 import styles from './ExperienceDistributionScreen.module.css';
 import type { Companion } from '../../../../types/companion.types';
-import { getRequiredXpForNextLevel } from '../../../../data/experience.data';
+import { getRequiredXpForNextLevel, EXPERIENCE_CONFIG } from '../../../../data/experience.data';
 import { getCompanionCardImage } from '../../../../data/companion-sprites';
 
 interface CompanionExperienceCardProps {
@@ -65,9 +65,10 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
     }, [currentXp, displayXp, requiredXp]);
 
     // logical check for interactions
-    const canLevelUp = (currentXp >= requiredXp);
+    const isMaxLevel = currentLevel >= EXPERIENCE_CONFIG.MAX_LEVEL;
+    const canLevelUp = !isMaxLevel && (currentXp >= requiredXp);
 
-    const fillPercentage = Math.min((displayXp / requiredXp) * 100, 100);
+    const fillPercentage = isMaxLevel ? 100 : Math.min((displayXp / requiredXp) * 100, 100);
 
     return (
         <div

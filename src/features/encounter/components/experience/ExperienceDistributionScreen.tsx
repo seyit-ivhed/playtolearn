@@ -63,6 +63,7 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
     };
 
     const anyCanLevelUp = partyCompanionsData.some(({ companion, experience }) => {
+        if (companion.level >= EXPERIENCE_CONFIG.MAX_LEVEL) return false;
         const requiredXp = getRequiredXpForNextLevel(companion.level);
         return experience >= requiredXp;
     });
@@ -88,6 +89,7 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
                 <button
                     className={`${styles.continueButton} ${styles.visible}`}
                     data-testid="continue-button"
+                    onClick={onContinue}
                 >
                     {t('continue')}
                 </button>
