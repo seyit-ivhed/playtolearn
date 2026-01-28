@@ -46,11 +46,11 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
 
         const flashTimer = setTimeout(() => {
             setEvolutionStage('flash');
-        }, 2500);
+        }, 3000);
 
         const postTimer = setTimeout(() => {
             setEvolutionStage('post');
-        }, 2700);
+        }, 3200);
 
         return () => {
             clearTimeout(textTimer);
@@ -84,13 +84,13 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
                         <motion.div
                             key="evolution-text"
                             className={styles.evolutionText}
-                            initial={{ scale: 0.5, opacity: 0 }}
+                            initial={{ scale: 1, opacity: 0 }}
                             animate={{
-                                scale: [0.5, 1.2, 1],
+                                scale: 1.2,
                                 opacity: 1,
                             }}
-                            exit={{ opacity: 0, scale: 1.5 }}
-                            transition={{ duration: 0.5 }}
+                            exit={{ opacity: 0, scale: 1.4 }}
+                            transition={{ duration: 1 }}
                         >
                             {t('companions.evolution')}
                         </motion.div>
