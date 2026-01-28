@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Sword } from 'lucide-react';
-import styles from './ExperienceDistributionScreen.module.css';
+import styles from './LevelUpModal.module.css';
 import type { Companion } from '../../../../types/companion.types';
 import { getStatsForLevel } from '../../../../utils/progression.utils';
 import { getCompanionLevelUpImage } from '../../../../data/companion-sprites';

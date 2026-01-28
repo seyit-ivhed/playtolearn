@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowUp } from 'lucide-react';
-import styles from './ExperienceDistributionScreen.module.css';
+import styles from './CompanionExperienceCard.module.css';
 import type { Companion } from '../../../../types/companion.types';
 import { getRequiredXpForNextLevel, EXPERIENCE_CONFIG } from '../../../../data/experience.data';
 import { getCompanionCardImage } from '../../../../data/companion-sprites';
