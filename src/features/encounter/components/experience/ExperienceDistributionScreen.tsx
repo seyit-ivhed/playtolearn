@@ -25,14 +25,15 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
     const { companionStats, levelUpCompanion } = useGameStore();
     const [selectedCompanionId, setSelectedCompanionId] = useState<string | null>(null);
 
-
-
     // Merge static data with dynamic stats
     const partyCompanionsData = partyIds.map(id => {
         const base = COMPANIONS[id]; // Static data
         const stats = companionStats[id]; // Dynamic stats
 
-        if (!base || !stats) return null;
+        if (!base || !stats) {
+            if (!stats) console.error(`Companion stats not found in ExperienceDistributionScreen for ${id}`);
+            return null;
+        }
 
         // Calculate full derived stats for the current level
         const calculatedStats = getStatsForLevel(base, stats.level);
@@ -53,8 +54,6 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
     const handleLevelUpClick = (companionId: string) => {
         setSelectedCompanionId(companionId);
     };
-
-
 
     const handleConfirmLevelUp = () => {
         if (selectedCompanionId) {

@@ -29,9 +29,9 @@
     padding: 1.2rem 4.5rem;
     font-family: 'Cinzel', serif;
     font-size: 1.6rem;
-    color: #ffd700;
+    color: var(--color-brand-accent);
     background: rgba(0, 0, 0, 0.6);
-    border: 2px solid #ffd700;
+    border: 2px solid var(--color-brand-accent);
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -52,7 +52,7 @@
 .continueButton:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
-    background: #ffd700;
+    background: var(--color-brand-accent);
     color: #000;
 }
 
@@ -81,7 +81,7 @@
 .card.canLevelUp {
     cursor: pointer;
     box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), 0 20px 40px rgba(0, 0, 0, 0.6);
-    border-color: #ffd700;
+    border-color: var(--color-brand-accent);
 }
 
 .card.canLevelUp:hover {
@@ -165,7 +165,7 @@
 
 .xpBarFill {
     height: 100%;
-    background: linear-gradient(90deg, #ffd700, #ff8c00);
+    background: linear-gradient(90deg, var(--color-brand-accent), #ff8c00);
     width: 0%;
     position: relative;
 }
@@ -183,11 +183,11 @@
     height: 100%;
     background: #fff;
     filter: blur(5px);
-    box-shadow: 0 0 10px #fff, 0 0 20px #ffd700;
+    box-shadow: 0 0 10px #fff, 0 0 20px var(--color-brand-accent);
 }
 
 .companionTitle {
-    color: #ffd700;
+    color: var(--color-brand-accent);
     font-family: 'Cinzel', serif;
     font-size: 11px;
     font-weight: 700;
@@ -212,7 +212,7 @@
 }
 
 .lvlValue {
-    color: #fff;
+    color: var(--color-text-inverse);
     font-family: 'Outfit', sans-serif;
     font-size: 32px;
     font-weight: 900;
@@ -237,7 +237,7 @@
 .hugeArrow {
     width: 120px;
     height: 120px;
-    color: #ffd700;
+    color: var(--color-brand-accent);
     filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
     animation: arrowFloat 1.5s infinite ease-in-out;
     stroke-width: 3;
@@ -245,7 +245,7 @@
 
 .overlayLevelUpText {
     margin-top: 1.5rem;
-    color: #ffd700;
+    color: var(--color-brand-accent);
     font-family: 'Cinzel', serif;
     font-size: 2rem;
     font-weight: 900;
@@ -337,7 +337,7 @@
 }
 
 .levelValueLarge {
-    color: #ffd700;
+    color: var(--color-brand-accent);
     font-family: 'Cinzel', serif;
     font-size: 4.5rem;
     font-weight: 900;
@@ -359,13 +359,13 @@
 }
 
 .statIconHP {
-    color: #ff4757;
+    color: var(--color-danger);
     margin-bottom: 0.5rem;
     filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.5));
 }
 
 .statIconATK {
-    color: #f9ca24;
+    color: var(--color-brand-accent);
     margin-bottom: 0.5rem;
     filter: drop-shadow(0 0 10px rgba(249, 202, 36, 0.5));
 }
@@ -374,7 +374,7 @@
     font-family: 'Outfit', sans-serif;
     font-size: 2.2rem;
     font-weight: 900;
-    color: #fff;
+    color: var(--color-text-inverse);
 }
 
 .statName {
@@ -390,8 +390,8 @@
 
 .modalContinueButtonSmall {
     background: rgba(0, 0, 0, 0.6);
-    color: #ffd700;
-    border: 2px solid #ffd700;
+    color: var(--color-brand-accent);
+    border: 2px solid var(--color-brand-accent);
     padding: 1.2rem 4rem;
     font-family: 'Cinzel', serif;
     font-size: 1.4rem;
@@ -404,7 +404,7 @@
 }
 
 .modalContinueButtonSmall:hover {
-    background: #ffd700;
+    background: var(--color-brand-accent);
     color: #000;
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
 }
@@ -422,7 +422,7 @@
 .horizontalLine {
     width: 70%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    background: linear-gradient(90deg, transparent, var(--color-brand-accent), transparent);
 }
 
 @keyframes fadeIn {
