@@ -22,14 +22,17 @@ const EncounterPage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { adventureId, nodeIndex: nodeIndexParam } = useParams<{ adventureId: string; nodeIndex: string }>();
-    const nodeIndex = parseInt(nodeIndexParam || '1', 10);
+    const parsedNodeIndex = parseInt(nodeIndexParam || '1', 10);
+    const nodeIndex = isNaN(parsedNodeIndex) ? 1 : parsedNodeIndex;
 
     const {
         phase, party, monsters,
         performAction,
         resolveSpecialAttack,
-        difficulty
+        difficulty: rawDifficulty
     } = useEncounterStore();
+
+    const difficulty = typeof rawDifficulty === 'number' ? rawDifficulty : 1;
 
     const [activeChallenge, setActiveChallenge] = useState<{
         type: 'SPECIAL';
@@ -66,7 +69,7 @@ const EncounterPage = () => {
 
         // Check for Ultimate (Spirit >= 100)
         if (unit.currentSpirit >= 100) {
-            const currentDifficulty = (difficulty || 1) as DifficultyLevel;
+            const currentDifficulty = difficulty as DifficultyLevel;
             const allowedOps = getAllowedOperations(currentDifficulty);
             const op = allowedOps[Math.floor(Math.random() * allowedOps.length)];
             const problem = generateProblem(op, currentDifficulty);
@@ -165,7 +168,7 @@ const EncounterPage = () => {
                 <EncounterCompletionModal
                     result={phase === EncounterPhase.VICTORY ? 'VICTORY' : 'DEFEAT'}
                     onContinue={handleCompletionContinue}
-                    difficulty={difficulty || 1}
+                    difficulty={difficulty}
                 />
             )}
 

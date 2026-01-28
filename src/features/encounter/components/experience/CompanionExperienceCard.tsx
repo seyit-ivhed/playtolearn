@@ -75,6 +75,7 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
             onClick={canLevelUp && showLevelUpVisual ? onLevelUpClick : undefined}
             role={canLevelUp && showLevelUpVisual ? "button" : undefined}
             tabIndex={canLevelUp && showLevelUpVisual ? 0 : undefined}
+            data-testid={`companion-card-${companion.id}`}
         >
             {/* Top Name Badge */}
             <div className={styles.nameBadge}>
@@ -115,7 +116,7 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
 
             {/* Huge Arrow Overlay when Level Up is possible and animation is done */}
             {canLevelUp && showLevelUpVisual && (
-                <div className={styles.levelUpOverlay}>
+                <div className={styles.levelUpOverlay} data-testid="level-up-indicator">
                     <ArrowUp className={styles.hugeArrow} />
                     <div className={styles.overlayLevelUpText}>
                         {t('levelUp').toUpperCase()}

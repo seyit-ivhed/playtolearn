@@ -28,7 +28,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
     const atkIncrease = (nextStats.abilityDamage || 0) - (currentStats.abilityDamage || 0);
 
     return (
-        <div className={styles.modalOverlay}>
+        <div className={styles.modalOverlay} data-testid="level-up-modal">
             <motion.div
                 className={styles.levelUpFullScreen}
                 initial={{ opacity: 0 }}
@@ -80,7 +80,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 1.2, duration: 0.5 }}
                         >
-                            <button className={styles.modalContinueButtonSmall} onClick={onConfirm}>
+                            <button className={styles.modalContinueButtonSmall} onClick={onConfirm} data-testid="modal-continue-button">
                                 {t('continue').toUpperCase()}
                             </button>
                         </motion.div>

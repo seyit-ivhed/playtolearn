@@ -68,7 +68,7 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
     });
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} data-testid="experience-screen">
 
 
             <div className={styles.cardsContainer}>
@@ -87,7 +87,7 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
             {!anyCanLevelUp && (
                 <button
                     className={`${styles.continueButton} ${styles.visible}`}
-                    onClick={onContinue}
+                    data-testid="continue-button"
                 >
                     {t('continue')}
                 </button>
