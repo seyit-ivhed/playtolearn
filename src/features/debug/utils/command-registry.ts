@@ -83,6 +83,20 @@ export const DEBUG_COMMANDS: Record<string, DebugCommand> = {
             }
         }
     },
+    addxp: {
+        name: 'addxp',
+        description: 'Add XP to companion (addxp <id> <amount>)',
+        execute: (parts, { log, stores }) => {
+            const id = parts[1];
+            const amount = parseInt(parts[2]);
+            if (id && !isNaN(amount)) {
+                stores.game.addCompanionExperience(id, amount);
+                log(`Added ${amount} XP to companion "${id}".`);
+            } else {
+                log('Error: Invalid arguments. Usage: addxp <companionId> <amount>');
+            }
+        }
+    },
     clear: {
         name: 'clear',
         description: 'Clear console history',
