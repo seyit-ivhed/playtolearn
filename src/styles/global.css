@@ -1,49 +1,49 @@
 /* Global Variables */
 :root {
-  /* Color Palette - Cartoon Fantasy */
-  --color-bg-primary: #fdf6e3;
-  /* Parchment / Light Cream */
-  --color-bg-secondary: #e6dac3;
-  /* Darker Parchment / Map BG */
-  --color-bg-tertiary: #d4c5a9;
-  /* Stone / Card BG */
-  --color-bg-overlay: rgba(0, 0, 0, 0.4);
+  /* Color Palette - Fantasy Realm (Math Quest Adventures) */
+  --color-bg-primary: #1a0b2e;
+  /* Deep Indigo Void */
+  --color-bg-secondary: #2d1b4e;
+  /* Dark Mystic Purple */
+  --color-bg-tertiary: #4a235a;
+  /* Magical Stone/Button Background */
+  --color-bg-overlay: rgba(0, 0, 0, 0.85);
 
   /* Primary Brand Colors */
   --color-brand-primary: #3498db;
   /* Hero Blue */
   --color-brand-secondary: #9b59b6;
   /* Magic Purple */
-  --color-brand-accent: #f1c40f;
-  /* Gold / Highlight */
+  --color-brand-accent: #ffa502;
+  /* Treasure Gold */
 
   /* Functional Colors */
-  --color-success: #2ecc71;
-  /* Emerald Green */
-  --color-danger: #e74c3c;
+  --color-success: #2ed573;
+  /* Emerald Guard */
+  --color-danger: #ff4757;
   /* Dragon Red */
-  --color-warning: #e67e22;
-  /* Carrot Orange */
-  --color-info: #34495e;
-  /* Slate */
+  --color-warning: #ffa502;
+  /* Treasure Gold */
+  --color-info: #1e90ff;
+  /* Mana Blue */
 
   /* Text Colors */
-  --color-text-primary: #2c3e50;
-  /* Dark Ink */
-  --color-text-secondary: #7f8c8d;
-  /* Grey Info */
+  --color-text-primary: #f1f2f6;
+  /* White Mist */
+  --color-text-secondary: #ced6e0;
+  /* Light Grey */
   --color-text-inverse: #ffffff;
   /* White Text on Buttons */
 
   /* UI Tokens */
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 20px;
+  --radius-lg: 16px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
 
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -52,17 +52,17 @@
   --spacing-xl: 32px;
 
   /* Typography */
-  --font-display: 'Fredoka', 'Comic Sans MS', 'Chalkboard SE', sans-serif;
-  /* Playful Headings */
+  --font-display: 'Fredoka', 'Cinzel', system-ui, sans-serif;
+  /* Friendly & Adventurous */
   --font-body: 'Nunito', system-ui, sans-serif;
-  /* Readable Body */
+  /* Readable Round */
 
   /* Global Defaults */
   font-family: var(--font-body);
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light;
+  color-scheme: dark;
   color: var(--color-text-primary);
   background-color: var(--color-bg-primary);
 
