@@ -262,6 +262,7 @@
     "companions": {
         "unlock": "Ny följeslagare upplåst!",
         "level_up": "Nivå upp!",
+        "evolution": "Evolution",
         "stats": {
             "hp": "HP",
             "spirit": "Ande",

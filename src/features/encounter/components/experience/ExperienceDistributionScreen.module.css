@@ -435,6 +435,45 @@
     }
 }
 
+.evolutionText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-brand-accent);
+    font-family: var(--font-display);
+    font-size: 8rem;
+    font-weight: 900;
+    letter-spacing: 1.5rem;
+    text-transform: uppercase;
+    text-shadow: 0 0 50px rgba(255, 215, 0, 0.8), 0 0 100px rgba(255, 215, 0, 0.4);
+    z-index: 50;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.flashOverlay {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    z-index: 60;
+    pointer-events: none;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 @keyframes slideUp {
     from {
         opacity: 0;

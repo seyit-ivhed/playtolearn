@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Sword } from 'lucide-react';
 import styles from './ExperienceDistributionScreen.module.css';
 import type { Companion } from '../../../../types/companion.types';
@@ -12,20 +12,54 @@ interface LevelUpModalProps {
     onConfirm: () => void;
 }
 
+type EvolutionStage = 'idle' | 'pre' | 'text' | 'flash' | 'post';
+
 export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm }) => {
     const { t } = useTranslation();
     const currentLevel = companion.level;
     const nextLevel = currentLevel + 1;
 
+    // Detect evolution
+    const isEvolution = true; // FORCE FOR TESTING
+    const [evolutionStage, setEvolutionStage] = useState<EvolutionStage>(isEvolution ? 'pre' : 'post');
+
     // Stats calculation
     const currentStats = companion.stats || getStatsForLevel(companion, currentLevel);
     const nextStats = getStatsForLevel(companion, nextLevel);
 
-    // Image source - full background level-up image
-    const imageSrc = getCompanionLevelUpImage(companion.id, nextLevel) || '';
+    // Image sources
+    const preImageSrc = getCompanionLevelUpImage(companion.id, currentLevel) || '';
+    const nextImageSrc = getCompanionLevelUpImage(companion.id, nextLevel) || '';
 
     const hpIncrease = nextStats.maxHealth - currentStats.maxHealth;
     const atkIncrease = (nextStats.abilityDamage || 0) - (currentStats.abilityDamage || 0);
+
+    useEffect(() => {
+        if (!isEvolution) {
+            return;
+        }
+
+        // Evolution Sequence
+        const textTimer = setTimeout(() => {
+            setEvolutionStage('text');
+        }, 1000);
+
+        const flashTimer = setTimeout(() => {
+            setEvolutionStage('flash');
+        }, 2500);
+
+        const postTimer = setTimeout(() => {
+            setEvolutionStage('post');
+        }, 2700);
+
+        return () => {
+            clearTimeout(textTimer);
+            clearTimeout(flashTimer);
+            clearTimeout(postTimer);
+        };
+    }, [isEvolution]);
+
+    const showHUD = evolutionStage === 'post';
 
     return (
         <div className={styles.modalOverlay} data-testid="level-up-modal">
@@ -35,74 +69,122 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
             >
-                {/* Full Screen Background Image */}
-                <div
+                {/* Background Image - Switch based on stage */}
+                <motion.div
+                    key={evolutionStage === 'post' ? 'next' : 'pre'}
                     className={styles.fullScreenBg}
-                    style={{ backgroundImage: `url(${imageSrc})` }}
+                    initial={{ opacity: isEvolution && evolutionStage === 'post' ? 0 : 1 }}
+                    animate={{ opacity: 1 }}
+                    style={{ backgroundImage: `url(${evolutionStage === 'post' ? nextImageSrc : preImageSrc})` }}
                 />
+
+                {/* Evolution Text */}
+                <AnimatePresence>
+                    {(evolutionStage === 'text' || evolutionStage === 'flash') && (
+                        <motion.div
+                            key="evolution-text"
+                            className={styles.evolutionText}
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            animate={{
+                                scale: [0.5, 1.2, 1],
+                                opacity: 1,
+                            }}
+                            exit={{ opacity: 0, scale: 1.5 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            {t('companions.evolution')}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+                {/* Flash Effect */}
+                <AnimatePresence>
+                    {evolutionStage === 'flash' && (
+                        <motion.div
+                            key="flash-overlay"
+                            className={styles.flashOverlay}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                        />
+                    )}
+                </AnimatePresence>
 
                 {/* Vignette Overlay */}
                 <div className={styles.fullScreenOverlay} />
 
                 {/* Bottom HUD: 3 Columns anchored to bottom */}
-                <div className={styles.bottomActionsRow}>
-                    {/* Left Column: HP Increase */}
-                    <motion.div
-                        className={styles.statPulseBox}
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.8, duration: 0.6 }}
-                    >
-                        <Heart className={styles.statIconHP} size={32} />
-                        <div className={styles.statAmount}>+{hpIncrease}</div>
-                    </motion.div>
-
-                    {/* Center Column: Level Display (Top) + Continue Button (Bottom) */}
-                    <div className={styles.centerActionsColumn}>
+                <AnimatePresence>
+                    {showHUD && (
                         <motion.div
-                            className={styles.levelStompContainer}
-                            initial={{ scale: 2, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{
-                                delay: 0.2,
-                                duration: 0.5,
-                                type: "spring",
-                                damping: 12
-                            }}
-                        >
-                            <span className={styles.levelLabelPrefix}>{t('common.level').toUpperCase()}</span>
-                            <span className={styles.levelValueLarge}>{nextLevel}</span>
-                        </motion.div>
-
-                        <motion.div
-                            className={styles.modalFooter}
-                            initial={{ opacity: 0, y: 20 }}
+                            className={styles.bottomActionsRow}
+                            initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.2, duration: 0.5 }}
+                            transition={{ duration: 0.6 }}
                         >
-                            <button className={styles.modalContinueButtonSmall} onClick={onConfirm} data-testid="modal-continue-button">
-                                {t('common.continue').toUpperCase()}
-                            </button>
-                        </motion.div>
-                    </div>
+                            {/* Left Column: HP Increase */}
+                            <motion.div
+                                className={styles.statPulseBox}
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.5, duration: 0.6 }}
+                            >
+                                <Heart className={styles.statIconHP} size={32} />
+                                <div className={styles.statAmount}>+{hpIncrease}</div>
+                            </motion.div>
 
-                    {/* Right Column: ATK Increase */}
-                    <motion.div
-                        className={styles.statPulseBox}
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.8, duration: 0.6 }}
-                    >
-                        <Sword className={styles.statIconATK} size={32} />
-                        <div className={styles.statAmount}>+{atkIncrease}</div>
-                    </motion.div>
-                </div>
+                            {/* Center Column: Level Display (Top) + Continue Button (Bottom) */}
+                            <div className={styles.centerActionsColumn}>
+                                <motion.div
+                                    className={styles.levelStompContainer}
+                                    initial={{ scale: 2, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{
+                                        delay: 0.2,
+                                        duration: 0.5,
+                                        type: "spring",
+                                        damping: 12
+                                    }}
+                                >
+                                    <span className={styles.levelLabelPrefix}>{t('common.level').toUpperCase()}</span>
+                                    <span className={styles.levelValueLarge}>{nextLevel}</span>
+                                </motion.div>
+
+                                <motion.div
+                                    className={styles.modalFooter}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.8, duration: 0.5 }}
+                                >
+                                    <button className={styles.modalContinueButtonSmall} onClick={onConfirm} data-testid="modal-continue-button">
+                                        {t('common.continue').toUpperCase()}
+                                    </button>
+                                </motion.div>
+                            </div>
+
+                            {/* Right Column: ATK Increase */}
+                            <motion.div
+                                className={styles.statPulseBox}
+                                initial={{ opacity: 0, x: 50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.5, duration: 0.6 }}
+                            >
+                                <Sword className={styles.statIconATK} size={32} />
+                                <div className={styles.statAmount}>+{atkIncrease}</div>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 {/* Visual Flair Lines */}
-                <div className={styles.flairContainer}>
-                    <div className={styles.horizontalLine} />
-                </div>
+                {showHUD && (
+                    <div className={styles.flairContainer}>
+                        <div className={styles.horizontalLine} />
+                    </div>
+                )}
             </motion.div>
         </div>
     );
 };
+
