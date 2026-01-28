@@ -10,7 +10,7 @@ export const COMPANIONS: Record<string, Companion> = {
     'amara': {
         id: 'amara',
         name: 'Amara',
-        title: 'The Jungle Ranger',
+        title: 'companions.amara.title',
         level: 1,
         baseStats: {
             maxHealth: 75,
@@ -25,7 +25,7 @@ export const COMPANIONS: Record<string, Companion> = {
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
-                title: 'Jungle Tracker',
+                title: 'companions.amara.evolution_1',
                 statsBonus: {
                     maxHealth: 15,
                     abilityDamage: 4
@@ -37,7 +37,7 @@ export const COMPANIONS: Record<string, Companion> = {
             },
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_2,
-                title: 'Apex Stalker',
+                title: 'companions.amara.evolution_2',
                 statsBonus: {
                     maxHealth: 20,
                     abilityDamage: 6
@@ -49,7 +49,7 @@ export const COMPANIONS: Record<string, Companion> = {
             },
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_3,
-                title: 'Nature\'s Wrath',
+                title: 'companions.amara.evolution_3',
                 statsBonus: {
                     maxHealth: 30,
                     abilityDamage: 10
@@ -64,7 +64,7 @@ export const COMPANIONS: Record<string, Companion> = {
     'tariq': {
         id: 'tariq',
         name: 'Tariq',
-        title: 'The Desert Alchemist',
+        title: 'companions.tariq.title',
         level: 1,
         baseStats: {
             maxHealth: 85,
@@ -79,7 +79,7 @@ export const COMPANIONS: Record<string, Companion> = {
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
-                title: 'Desert Physician',
+                title: 'companions.tariq.evolution_1',
                 statsBonus: {
                     maxHealth: 15,
                     abilityDamage: 3
@@ -91,7 +91,7 @@ export const COMPANIONS: Record<string, Companion> = {
             },
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_2,
-                title: 'Master Alchemist',
+                title: 'companions.tariq.evolution_2',
                 statsBonus: {
                     maxHealth: 20,
                     abilityDamage: 4
@@ -103,7 +103,7 @@ export const COMPANIONS: Record<string, Companion> = {
             },
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_3,
-                title: 'Sage of Sands',
+                title: 'companions.tariq.evolution_3',
                 statsBonus: {
                     maxHealth: 30,
                     abilityDamage: 6
@@ -118,7 +118,7 @@ export const COMPANIONS: Record<string, Companion> = {
     'kenji': {
         id: 'kenji',
         name: 'Kenji',
-        title: 'The Mountain Samurai',
+        title: 'companions.kenji.title',
         level: 1,
         baseStats: {
             maxHealth: 100,
@@ -133,7 +133,7 @@ export const COMPANIONS: Record<string, Companion> = {
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
-                title: 'Ronin Defender',
+                title: 'companions.kenji.evolution_1',
                 statsBonus: {
                     maxHealth: 20,
                     abilityDamage: 3
@@ -145,7 +145,7 @@ export const COMPANIONS: Record<string, Companion> = {
             },
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_2,
-                title: 'Steel Sentinel',
+                title: 'companions.kenji.evolution_2',
                 statsBonus: {
                     maxHealth: 25,
                     abilityDamage: 4
@@ -157,7 +157,7 @@ export const COMPANIONS: Record<string, Companion> = {
             },
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_3,
-                title: 'Shogun\'s Wall',
+                title: 'companions.kenji.evolution_3',
                 statsBonus: {
                     maxHealth: 35,
                     abilityDamage: 5
@@ -172,7 +172,7 @@ export const COMPANIONS: Record<string, Companion> = {
     'zahara': {
         id: 'zahara',
         name: 'Zahara',
-        title: 'The Savannah Mage',
+        title: 'companions.zahara.title',
         level: 1,
         baseStats: {
             maxHealth: 70,
@@ -187,7 +187,7 @@ export const COMPANIONS: Record<string, Companion> = {
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
-                title: 'Sun Caller',
+                title: 'companions.zahara.evolution_1',
                 statsBonus: {
                     maxHealth: 10,
                     abilityDamage: 5
@@ -199,7 +199,7 @@ export const COMPANIONS: Record<string, Companion> = {
             },
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_2,
-                title: 'Ember Weaver',
+                title: 'companions.zahara.evolution_2',
                 statsBonus: {
                     maxHealth: 15,
                     abilityDamage: 7
@@ -211,7 +211,7 @@ export const COMPANIONS: Record<string, Companion> = {
             },
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_3,
-                title: 'Radiant Seer',
+                title: 'companions.zahara.evolution_3',
                 statsBonus: {
                     maxHealth: 20,
                     abilityDamage: 10

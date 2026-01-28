@@ -124,7 +124,7 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
                         )}
 
                         <div className={styles.companionTitle}>
-                            {t(companion.title)}
+                            {t(companion.stats?.title || companion.title)}
                         </div>
 
                         <div className={styles.levelLabel}>

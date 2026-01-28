@@ -268,6 +268,30 @@
             "spirit": "Spirit",
             "attack": "Attack",
             "shield": "Shield"
+        },
+        "amara": {
+            "title": "The Jungle Ranger",
+            "evolution_1": "Jungle Tracker",
+            "evolution_2": "Apex Stalker",
+            "evolution_3": "Nature's Wrath"
+        },
+        "tariq": {
+            "title": "The Desert Alchemist",
+            "evolution_1": "Desert Physician",
+            "evolution_2": "Master Alchemist",
+            "evolution_3": "Sage of Sands"
+        },
+        "kenji": {
+            "title": "The Mountain Samurai",
+            "evolution_1": "Ronin Defender",
+            "evolution_2": "Steel Sentinel",
+            "evolution_3": "Shogun's Wall"
+        },
+        "zahara": {
+            "title": "The Savannah Mage",
+            "evolution_1": "Sun Caller",
+            "evolution_2": "Ember Weaver",
+            "evolution_3": "Radiant Seer"
         }
     },
     "abilities": {
