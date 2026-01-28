@@ -20,7 +20,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
     const nextLevel = currentLevel + 1;
 
     // Detect evolution
-    const isEvolution = true; // FORCE FOR TESTING
+    const isEvolution = !!companion.evolutions.find(e => e.atLevel === nextLevel);
     const [evolutionStage, setEvolutionStage] = useState<EvolutionStage>(isEvolution ? 'pre' : 'post');
 
     // Stats calculation
