@@ -3,6 +3,13 @@ import { EXPERIENCE_CONFIG, getRequiredXpForNextLevel } from '../src/data/experi
 /**
  * Script to calculate how many encounters it takes to reach the maximum level 
  * based on the current configuration in experience.data.ts.
+ * 
+ * NOTE: This calculates THEORETICAL progression where a companion receives
+ * full XP (150) every single encounter without any restrictions.
+ * 
+ * In the actual game (see analyze-progression.ts), adventures have level caps
+ * that prevent companions from earning XP once they exceed the adventure's
+ * maxLevel. This means actual progression will be SLOWER than calculated here.
  */
 function calculateEncountersToMaxLevel() {
     let level = 1;

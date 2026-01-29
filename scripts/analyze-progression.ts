@@ -42,8 +42,8 @@ export async function runAnalysis() {
     const adventureConfigs: AdventureSimulationConfig[] = [];
 
     console.log('# Companion Progression Analysis\n');
-    console.log('| Adventure | Encounter | Type | Party Levels |');
-    console.log('|---|---|---|---|');
+    console.log('| Adventure | Encounter | Type | Max Lvl | Party Levels | XP Blocked |');
+    console.log('|---|---|---|---|---|---|');
 
     for (const adventure of ADVENTURES) {
         const advConfig: AdventureSimulationConfig = {
@@ -65,10 +65,15 @@ export async function runAnalysis() {
                 const xpReward = EXPERIENCE_CONFIG.ENCOUNTER_XP_REWARD;
                 const maxLevel = adventure.levelRange?.[1] || EXPERIENCE_CONFIG.MAX_LEVEL;
 
+                // Track which companions are blocked
+                const blockedCompanions: string[] = [];
+
                 // Distribute XP to all eligible companions
                 for (let i = 0; i < party.length; i++) {
                     if (canEarnExperience(party[i].level, maxLevel)) {
                         party[i] = addXpToCompanion(party[i], xpReward);
+                    } else {
+                        blockedCompanions.push(party[i].id);
                     }
                 }
 
@@ -83,7 +88,10 @@ export async function runAnalysis() {
                 }
 
                 const partyStatus = party.map(c => `${c.id}: L${c.level}`).join(', ');
-                console.log(`| ${adventure.id} | ${encounter.id} | ${encounter.type} | ${partyStatus} |`);
+                const blockedStatus = blockedCompanions.length > 0
+                    ? blockedCompanions.join(', ')
+                    : '-';
+                console.log(`| ${adventure.id} | ${encounter.id} | ${encounter.type} | ${maxLevel} | ${partyStatus} | ${blockedStatus} |`);
             }
         }
 
