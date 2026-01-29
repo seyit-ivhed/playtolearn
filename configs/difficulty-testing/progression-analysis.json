@@ -66,11 +66,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 4
+            "level": 5
           },
           {
             "companionId": "tariq",
-            "level": 4
+            "level": 5
           }
         ]
       },
@@ -78,11 +78,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 4
+            "level": 5
           },
           {
             "companionId": "tariq",
-            "level": 4
+            "level": 5
           }
         ]
       }
@@ -95,11 +95,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 4
+            "level": 5
           },
           {
             "companionId": "tariq",
-            "level": 4
+            "level": 5
           }
         ]
       },
@@ -131,11 +131,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 5
+            "level": 6
           },
           {
             "companionId": "tariq",
-            "level": 5
+            "level": 6
           }
         ]
       },
@@ -167,11 +167,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 6
+            "level": 7
           }
         ]
       }
@@ -184,11 +184,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "kenji",
@@ -200,11 +200,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "kenji",
@@ -216,11 +216,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "kenji",
@@ -248,11 +248,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "tariq",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "kenji",
@@ -264,11 +264,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "tariq",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "kenji",

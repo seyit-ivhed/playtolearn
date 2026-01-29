@@ -5,7 +5,7 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '1',
         volumeId: 'origins',
-        levelRange: [1, 4],
+        levelRange: [1, 5],
         encounters: [
             {
                 id: '1_1',
@@ -102,7 +102,7 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '2',
         volumeId: 'origins',
-        levelRange: [3, 6],
+        levelRange: [4, 7],
         encounters: [
             {
                 id: '2_1',
@@ -177,7 +177,7 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '3',
         volumeId: 'origins',
-        levelRange: [5, 8],
+        levelRange: [6, 9],
         encounters: [
             {
                 id: '3_1',
