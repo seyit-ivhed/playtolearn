@@ -75,7 +75,7 @@ export const calculateAdventureStars = (
     encounters: Encounter[],
     encounterResults: Record<string, EncounterResult>
 ): number => {
-    let minStars = 5;
+    let minStars = 3;
     let hasScorableEncounters = false;
 
     encounters.forEach((encounter, index) => {

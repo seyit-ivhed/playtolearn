@@ -80,30 +80,30 @@ describe('progression.utils', () => {
             { id: '3', type: EncounterType.BOSS }
         ] as unknown as Encounter[];
 
-        it('should return 5 stars if all scorable encounters have 5 stars', () => {
+        it('should return 3 stars if all scorable encounters have 3 stars', () => {
             const results = {
-                'adv1_1': { stars: 5 },
-                'adv1_2': { stars: 5 },
-                'adv1_3': { stars: 5 }
-            } as unknown as Record<string, EncounterResult>;
-            const result = calculateAdventureStars('adv1', mockEncounters, results);
-            expect(result).toBe(5);
-        });
-
-        it('should return the minimum stars among scorable encounters', () => {
-            const results = {
-                'adv1_1': { stars: 5 },
+                'adv1_1': { stars: 3 },
                 'adv1_2': { stars: 3 },
-                'adv1_3': { stars: 5 }
+                'adv1_3': { stars: 3 }
             } as unknown as Record<string, EncounterResult>;
             const result = calculateAdventureStars('adv1', mockEncounters, results);
             expect(result).toBe(3);
         });
 
+        it('should return the minimum stars among scorable encounters', () => {
+            const results = {
+                'adv1_1': { stars: 3 },
+                'adv1_2': { stars: 2 },
+                'adv1_3': { stars: 3 }
+            } as unknown as Record<string, EncounterResult>;
+            const result = calculateAdventureStars('adv1', mockEncounters, results);
+            expect(result).toBe(2);
+        });
+
         it('should return 0 stars if a scorable encounter is missing from results (uncompleted)', () => {
             const results = {
-                'adv1_1': { stars: 5 },
-                'adv1_3': { stars: 5 }
+                'adv1_1': { stars: 3 },
+                'adv1_3': { stars: 3 }
                 // adv1_2 is missing
             } as unknown as Record<string, EncounterResult>;
             const result = calculateAdventureStars('adv1', mockEncounters, results);

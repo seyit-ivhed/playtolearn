@@ -62,7 +62,7 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
 
                     {isVictory && (
                         <div className="stars-earned arc">
-                            {[...Array(5)].map((_, i) => (
+                            {[...Array(3)].map((_, i) => (
                                 <div key={i} className="star-wrapper">
                                     <motion.div
                                         initial={{ scale: 0, rotate: -180 }}

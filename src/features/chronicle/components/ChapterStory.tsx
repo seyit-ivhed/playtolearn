@@ -46,7 +46,7 @@ export const ChapterStory: React.FC<ChapterStoryProps> = ({
             {!isPrologue && (
                 <div className="completion-stats" style={{ visibility: isCompleted ? 'visible' : 'hidden' }}>
                     <div className="stars-earned">
-                        {Array.from({ length: 5 }).map((_, i) => (
+                        {Array.from({ length: 3 }).map((_, i) => (
                             <span key={i} className={`star ${i < stars ? 'filled' : ''}`}>⭐</span>
                         ))}
                     </div>
