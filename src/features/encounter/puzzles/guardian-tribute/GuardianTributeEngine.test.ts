@@ -54,8 +54,8 @@ describe('GuardianTributeEngine', () => {
 
     describe('generateGuardianTributeData', () => {
         it('should generate solutions that satisfy all constraints', () => {
-            for (let difficulty = 1; difficulty <= 5; difficulty++) {
-                const data = generateGuardianTributeData(difficulty as 1 | 2 | 3 | 4 | 5);
+            for (let difficulty = 1; difficulty <= 3; difficulty++) {
+                const data = generateGuardianTributeData(difficulty as 1 | 2 | 3);
                 const solutions = data.guardians.map(g => g.solution);
 
                 data.guardians.forEach((guardian, index) => {
@@ -70,8 +70,8 @@ describe('GuardianTributeEngine', () => {
         });
 
         it('should have valid solutions that sum to total gems', () => {
-            for (let difficulty = 1; difficulty <= 5; difficulty++) {
-                const data = generateGuardianTributeData(difficulty as 1 | 2 | 3 | 4 | 5);
+            for (let difficulty = 1; difficulty <= 3; difficulty++) {
+                const data = generateGuardianTributeData(difficulty as 1 | 2 | 3);
                 const sum = data.guardians.reduce((total, g) => total + g.solution, 0);
                 expect(sum).toBe(data.totalGems);
             }

@@ -10,7 +10,6 @@ export const GuardianConstraintType = {
     MULTIPLIER: 'MULTIPLIER',       // Requires N× as many gems as another guardian
     ADDITION: 'ADDITION',           // Requires X more/less gems than another guardian
     RANGE: 'RANGE',                 // Requires between X and Y gems
-    HALVE: 'HALVE',                 // Requires half as many gems as another guardian
     COMPARISON: 'COMPARISON'        // Requires more/less than another guardian
 } as const;
 
@@ -99,11 +98,7 @@ export const validateGuardianConstraint = (
             if (constraint.min === undefined || constraint.max === undefined) return false;
             return value >= constraint.min && value <= constraint.max;
 
-        case GuardianConstraintType.HALVE: {
-            if (constraint.targetGuardian === undefined) return false;
-            const sourceValue = guardianValues[constraint.targetGuardian];
-            return value === sourceValue / 2;
-        }
+
 
         case GuardianConstraintType.COMPARISON: {
             if (constraint.targetGuardian === undefined || constraint.operator === undefined) return false;
@@ -204,8 +199,8 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
     } else {
         // Level 3: Age 8 (Adventurer) - 3 guardians, introduce Halve + Addition
         // Target Sum: ~20-30
-        const g1Value = getRandomInt(4, 6) * 2; // Must be even for HALVE to be clean
-        const g2Value = g1Value / 2;
+        const g1Value = getRandomInt(8, 12);
+        const g2Value = getRandomInt(4, 7);
         const additionValue = getRandomInt(3, 7);
         const g3Value = g1Value + additionValue;
 
@@ -215,15 +210,15 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
                 solution: g1Value
             },
             {
-                constraint: { type: GuardianConstraintType.HALVE, targetGuardian: 0 },
-                solution: g2Value
+                constraint: { type: GuardianConstraintType.ADDITION, value: -g2Value, targetGuardian: 0 },
+                solution: g1Value - g2Value
             },
             {
                 constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
                 solution: g3Value
             }
         ];
-        totalGems = g1Value + g2Value + g3Value;
+        totalGems = g1Value + (g1Value - g2Value) + g3Value;
     }
 
     return {

@@ -55,13 +55,7 @@ export const ConstraintDisplay = ({ constraint }: ConstraintDisplayProps) => {
                     {t('encounter.puzzles.guardian_tribute.constraint.range', { min: constraint.min, max: constraint.max })}
                 </>
             );
-        case GuardianConstraintType.HALVE:
-            return (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', justifyContent: 'center' }}>
-                    <span style={{ fontSize: '1.2rem', color: '#ffd700', fontWeight: 'bold' }}>½</span>
-                    {Badge}
-                </div>
-            );
+
         case GuardianConstraintType.COMPARISON: {
             const op = constraint.operator === 'greater' ? '>' : '<';
             return (
