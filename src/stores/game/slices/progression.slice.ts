@@ -67,13 +67,7 @@ export const createProgressionSlice: StateCreator<GameStore, [], [], Progression
             return;
         }
 
-        const requiredXp = getRequiredXpForNextLevel(level);
         const currentXp = stats.experience || 0;
-
-        if (currentXp >= requiredXp) {
-            console.error(`Companion ${companionId} already has enough experience to level up. Current: ${currentXp}, Required: ${requiredXp}`);
-            return;
-        }
 
         set({
             companionStats: {
