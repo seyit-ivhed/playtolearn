@@ -10,25 +10,11 @@ export const UltimateStrategy = {
 
 export type UltimateStrategy = typeof UltimateStrategy[keyof typeof UltimateStrategy];
 
-export interface SimulationUnit {
-    id: string;
-    templateId: string;
-    name: string;
-    isPlayer: boolean;
+import type { BattleUnit } from '../../types/encounter.types';
 
-    // Stats
-    maxHealth: number;
-    currentHealth: number;
-    damage: number;
+export interface SimulationUnit extends BattleUnit {
     specialAbilityId?: string;
     specialAbilityVariables?: Record<string, number>;
-
-    // State
-    isDead: boolean;
-    hasActed: boolean;
-    currentSpirit: number;
-    maxSpirit: number;
-    spiritGain: number;
 }
 
 export interface BattleState {

@@ -51,12 +51,12 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
 
             // Execute Standard Attack via Combat Engine
             const result = CombatEngine.executeStandardAttack(
-                actingUnit as unknown as BattleUnit,
-                allUnits as unknown as BattleUnit[]
+                actingUnit,
+                allUnits
             );
 
             finalizeActionResult(
-                result.updatedTargets as unknown as EncounterUnit[]
+                result.updatedTargets as EncounterUnit[]
             );
         },
 
@@ -76,8 +76,8 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
                 const allUnits = [...party, ...monsters];
 
                 const result = CombatEngine.executeSpecialAbility(
-                    unit as unknown as BattleUnit,
-                    allUnits as unknown as BattleUnit[],
+                    unit,
+                    allUnits,
                     abilityId,
                     variables
                 );
@@ -97,7 +97,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
                 // Fail: Drain meter AND Mark as Acted
                 const updatedParty = party.map(u => {
                     if (u.id === unitId) {
-                        const consumed = CombatEngine.consumeSpiritCost(u as unknown as BattleUnit);
+                        const consumed = CombatEngine.consumeSpiritCost(u);
                         return { ...(consumed as unknown as EncounterUnit), hasActed: true };
                     }
                     return u;

@@ -37,31 +37,14 @@ export interface BattleUnit {
     statusEffects?: StatusEffectData[];
 }
 
-export interface EncounterUnit {
-    id: string; // Unique Instance ID
-    templateId: string; // Reference to Companion/Monster ID
-    name: string;
+export interface EncounterUnit extends BattleUnit {
     title?: string;
-    isPlayer: boolean;
-
-    // Stats
-    maxHealth: number;
-    currentHealth: number;
-    damage?: number;
     specialAbilityId?: string;
     specialAbilityVariables?: Record<string, number>;
 
     // Visuals
     image?: string;
-
-    // State
-    isDead: boolean;
-    hasActed: boolean;
-    currentSpirit: number; // 0-100
-    maxSpirit: number;     // 100
-    spiritGain: number;
     isBoss?: boolean;
-    statusEffects?: StatusEffectData[];
 }
 
 export interface EncounterState {

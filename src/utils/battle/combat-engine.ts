@@ -58,10 +58,10 @@ export class CombatEngine {
         const target = targets[targetIndex];
         const damage = attacker.damage || 0;
 
-        const result = applyDamage(target as unknown as EncounterUnit, damage);
+        const result = applyDamage(target as EncounterUnit, damage);
 
         const updatedTargets = targets.map(t =>
-            t.id === target.id ? (result.unit as unknown as BattleUnit) : t
+            t.id === target.id ? (result.unit as BattleUnit) : t
         );
 
         return { updatedTargets };
@@ -86,10 +86,10 @@ export class CombatEngine {
         const target = livingParty[targetIdx];
         const damage = attacker.damage || 0;
 
-        const result = applyDamage(target as unknown as EncounterUnit, damage);
+        const result = applyDamage(target as EncounterUnit, damage);
 
         const updatedParty = playerParty.map(p =>
-            p.id === target.id ? (result.unit as unknown as BattleUnit) : p
+            p.id === target.id ? (result.unit as BattleUnit) : p
         );
 
         return { updatedParty };

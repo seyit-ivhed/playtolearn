@@ -110,8 +110,8 @@ export class BattleSimulator {
      * Simulate one complete turn (player actions + monster actions)
      */
     private simulateTurn(): void {
-        const units = this.state.party as unknown as BattleUnit[];
-        this.state.party = CombatEngine.regenerateSpirit(units) as unknown as SimulationUnit[];
+        const units = this.state.party;
+        this.state.party = CombatEngine.regenerateSpirit(units) as SimulationUnit[];
 
         // Player turn
         this.executePlayerTurn();
@@ -130,8 +130,8 @@ export class BattleSimulator {
         }
 
         // Tick Status Effects
-        this.state.party = CombatEngine.tickStatusEffects(this.state.party as unknown as BattleUnit[]) as unknown as SimulationUnit[];
-        this.state.monsters = CombatEngine.tickStatusEffects(this.state.monsters as unknown as BattleUnit[]) as unknown as SimulationUnit[];
+        this.state.party = CombatEngine.tickStatusEffects(this.state.party) as SimulationUnit[];
+        this.state.monsters = CombatEngine.tickStatusEffects(this.state.monsters) as SimulationUnit[];
 
         // Increment turn counter
         this.state.turnCount++;
@@ -184,8 +184,8 @@ export class BattleSimulator {
      * Execute standard attack
      */
     private executeStandardAttack(attacker: SimulationUnit): void {
-        const allUnits = [...this.state.party, ...this.state.monsters] as unknown as BattleUnit[];
-        const result = CombatEngine.executeStandardAttack(attacker as unknown as BattleUnit, allUnits);
+        const allUnits = [...this.state.party, ...this.state.monsters];
+        const result = CombatEngine.executeStandardAttack(attacker, allUnits);
 
         this.updateStateFromCombatResult(result.updatedTargets);
     }
@@ -198,8 +198,8 @@ export class BattleSimulator {
             // Reset spirit on failure
             const partyIndex = this.state.party.findIndex(p => p.id === attacker.id);
             if (partyIndex !== -1) {
-                const updatedUnit = CombatEngine.consumeSpiritCost(this.state.party[partyIndex] as unknown as BattleUnit);
-                this.state.party[partyIndex] = updatedUnit as unknown as SimulationUnit;
+                const updatedUnit = CombatEngine.consumeSpiritCost(this.state.party[partyIndex]);
+                this.state.party[partyIndex] = updatedUnit as SimulationUnit;
             }
             return;
         }
@@ -221,9 +221,9 @@ export class BattleSimulator {
     }
 
     private runAbilityExecution(attacker: SimulationUnit, abilityId: string, variables: Record<string, number>): void {
-        const allUnits = [...this.state.party, ...this.state.monsters] as unknown as BattleUnit[];
+        const allUnits = [...this.state.party, ...this.state.monsters];
         const result = CombatEngine.executeSpecialAbility(
-            attacker as unknown as BattleUnit,
+            attacker,
             allUnits,
             abilityId,
             variables
@@ -234,8 +234,8 @@ export class BattleSimulator {
         // Reset spirit after success
         const partyIndex = this.state.party.findIndex(p => p.id === attacker.id);
         if (partyIndex !== -1) {
-            const updatedUnit = CombatEngine.consumeSpiritCost(this.state.party[partyIndex] as unknown as BattleUnit);
-            this.state.party[partyIndex] = updatedUnit as unknown as SimulationUnit;
+            const updatedUnit = CombatEngine.consumeSpiritCost(this.state.party[partyIndex]);
+            this.state.party[partyIndex] = updatedUnit as SimulationUnit;
         }
     }
 
@@ -250,13 +250,13 @@ export class BattleSimulator {
 
         for (const monster of activeMonsters) {
             const result = CombatEngine.processMonsterAction(
-                monster as unknown as BattleUnit,
-                this.state.party as unknown as BattleUnit[]
+                monster,
+                this.state.party
             );
 
             // Updates party state
             // We need to match back to SimulationUnit
-            this.state.party = result.updatedParty as unknown as SimulationUnit[];
+            this.state.party = result.updatedParty as SimulationUnit[];
 
             // Check defeat after each attack
             if (this.isDefeat()) {
@@ -267,8 +267,8 @@ export class BattleSimulator {
 
     private updateStateFromCombatResult(units: BattleUnit[]) {
         // Split back into party and monsters
-        this.state.party = units.filter(u => u.isPlayer) as unknown as SimulationUnit[];
-        this.state.monsters = units.filter(u => !u.isPlayer) as unknown as SimulationUnit[];
+        this.state.party = units.filter(u => u.isPlayer) as SimulationUnit[];
+        this.state.monsters = units.filter(u => !u.isPlayer) as SimulationUnit[];
     }
 
     /**

@@ -20,8 +20,8 @@ export function applyDamageEffect(
     const updatedUnits = units.map(u => {
         const isTarget = targets.some(t => t.id === u.id);
         if (isTarget) {
-            const { unit: updated } = applyDamage(u as unknown as EncounterUnit, value);
-            return updated as unknown as BattleUnit;
+            const { unit: updated } = applyDamage(u as EncounterUnit, value);
+            return updated as BattleUnit;
         }
         return u;
     });
