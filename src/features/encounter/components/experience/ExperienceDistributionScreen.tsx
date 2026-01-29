@@ -31,7 +31,9 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
         const stats = companionStats[id]; // Dynamic stats
 
         if (!base || !stats) {
-            if (!stats) console.error(`Companion stats not found in ExperienceDistributionScreen for ${id}`);
+            if (!stats) {
+                console.error(`Companion stats not found in ExperienceDistributionScreen for ${id}`);
+            }
             return null;
         }
 
@@ -112,12 +114,18 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
                 </button>
             )}
 
-            {selectedCompanionId && (
-                <LevelUpModal
-                    companion={partyCompanionsData.find(c => c.companion.id === selectedCompanionId)!.companion}
-                    onConfirm={handleConfirmLevelUp}
-                />
-            )}
+            {selectedCompanionId && (() => {
+                const selectedData = partyCompanionsData.find(c => c.companion.id === selectedCompanionId);
+                if (!selectedData) {
+                    return null;
+                }
+                return (
+                    <LevelUpModal
+                        companion={selectedData.companion}
+                        onConfirm={handleConfirmLevelUp}
+                    />
+                );
+            })()}
         </div>
     );
 };

@@ -4,8 +4,8 @@
     padding: 2rem;
     padding-bottom: 0.5rem;
     height: 100%;
-    color: #4a3721;
-    font-family: 'Inter', sans-serif;
+    color: var(--color-chronicle-text);
+    font-family: var(--font-body);
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
@@ -17,7 +17,7 @@
 }
 
 .chapter-number {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-size: 1.2rem;
@@ -25,10 +25,10 @@
 }
 
 .chapter-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-size: 2.5rem;
     margin-top: 0.5rem;
-    color: #2c1e11;
+    color: var(--color-chronicle-text-dark);
 }
 
 .chapter-content {
@@ -48,11 +48,11 @@
 .illustration-container {
     width: 100%;
     height: 250px;
-    background: #e9dcc9;
-    border-radius: 12px;
+    background: var(--color-chronicle-bg);
+    border-radius: var(--radius-md);
     overflow: hidden;
     position: relative;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
 }
 
 .chapter-illustration {
@@ -64,7 +64,7 @@
 .illustration-placeholder {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #e9dcc9 0%, #dcd0bc 100%);
+    background: linear-gradient(135deg, var(--color-chronicle-bg) 0%, #dcd0bc 100%);
 }
 
 .lock-icon {
@@ -96,13 +96,13 @@
     gap: 0.5rem;
     background: rgba(74, 55, 33, 0.1);
     padding: 0.4rem 0.8rem;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     margin-bottom: 1.5rem;
     border: 1px solid rgba(74, 55, 33, 0.2);
 }
 
 .level-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -111,10 +111,10 @@
 }
 
 .level-value {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 700;
-    color: #4a3721;
+    color: var(--color-chronicle-text);
 }
 
 /* Removed .chapter-meta styles */
@@ -147,14 +147,14 @@
 }
 
 .wax-seal {
-    background: #8b0000;
-    color: #fff;
+    background: var(--color-chronicle-seal);
+    color: var(--color-text-inverse);
     padding: 0.5rem 1rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     transform: rotate(-5deg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-sm);
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -171,7 +171,7 @@
 
 .page-indicator-bottom {
     font-size: 0.85rem;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
     opacity: 0.3;
     letter-spacing: 0.05em;
 }
@@ -200,7 +200,7 @@
     /* Override global button background */
     box-shadow: none !important;
     /* Override global button shadow */
-    color: #4a3721 !important;
+    color: var(--color-chronicle-text) !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -229,42 +229,42 @@
 
 .book-btn {
     padding: 0.8rem 2rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: 600;
     border: none;
-    border-radius: 50px;
+    border-radius: var(--radius-full);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
     min-width: 240px;
     /* Ensure consistent width for Begin/Replay/Next buttons */
     text-align: center;
 }
 
 .begin-btn {
-    background: linear-gradient(135deg, #4a3721 0%, #2c1e11 100%);
-    color: #e9dcc9;
+    background: linear-gradient(135deg, var(--color-chronicle-text) 0%, var(--color-chronicle-text-dark) 100%);
+    color: var(--color-chronicle-bg);
 }
 
 .begin-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-md);
 }
 
 .replay-btn {
-    background: #e9dcc9;
-    color: #4a3721;
-    border: 2px solid #4a3721;
+    background: var(--color-chronicle-bg);
+    color: var(--color-chronicle-text);
+    border: 2px solid var(--color-chronicle-text);
 }
 
 .replay-btn:hover {
-    background: #4a3721;
-    color: #e9dcc9;
+    background: var(--color-chronicle-text);
+    color: var(--color-chronicle-bg);
 }
 
 .locked-msg {
-    color: #8b6532;
+    color: var(--color-chronicle-accent);
     font-weight: 600;
     opacity: 0.6;
 }

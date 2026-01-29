@@ -35,6 +35,19 @@
   --color-text-inverse: #ffffff;
   /* White Text on Buttons */
 
+  /* Chronicle/Book Theme Colors */
+  --color-chronicle-text: #4a3721;
+  /* Dark Brown Text */
+  --color-chronicle-text-dark: #2c1e11;
+  /* Darker Brown */
+  --color-chronicle-bg: #e9dcc9;
+  /* Parchment Background */
+  --color-chronicle-accent: #8b6532;
+  /* Aged Gold */
+  --color-chronicle-seal: #8b0000;
+  /* Dark Red Wax */
+
+
   /* UI Tokens */
   --radius-sm: 8px;
   --radius-md: 12px;
