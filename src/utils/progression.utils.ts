@@ -98,3 +98,13 @@ export const calculateAdventureStars = (
 
     return hasScorableEncounters ? minStars : 0;
 };
+
+/**
+ * Checks if a companion should earn experience in a given adventure.
+ * @param currentLevel The companion's current level
+ * @param adventureMaxLevel The maximum level for the adventure
+ * @returns true if the companion should earn experience
+ */
+export const canEarnExperience = (currentLevel: number, adventureMaxLevel: number): boolean => {
+    return currentLevel < adventureMaxLevel;
+};

@@ -108,12 +108,18 @@ export const CompanionExperienceCard: React.FC<CompanionExperienceCardProps> = (
             {!showLevelUpVisual && (
                 <div className={styles.cardContent}>
                     <div className={styles.xpContainer}>
-                        {!isMaxLevel && (
+                        {!isMaxLevel && gainedXp > 0 && (
                             <div className={styles.xpBarBg}>
                                 <div
                                     className={`${styles.xpBarFill} ${isAnimating ? styles.isAnimating : ''}`}
                                     style={{ width: `${fillPercentage}%` }}
                                 />
+                            </div>
+                        )}
+
+                        {!isMaxLevel && gainedXp === 0 && (
+                            <div className={styles.tooEasyMsg}>
+                                {t('companions.too_easy')}
                             </div>
                         )}
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getStatsForLevel, calculateAdventureStars } from './progression.utils';
+import { getStatsForLevel, calculateAdventureStars, canEarnExperience } from './progression.utils';
 import type { Companion } from '../types/companion.types';
 import { EncounterType, type Encounter } from '../types/adventure.types';
 import type { EncounterResult } from '../stores/game/interfaces';
@@ -108,6 +108,22 @@ describe('progression.utils', () => {
             } as unknown as Record<string, EncounterResult>;
             const result = calculateAdventureStars('adv1', mockEncounters, results);
             expect(result).toBe(0);
+        });
+    });
+
+    describe('canEarnExperience', () => {
+        it('should return true if companion level is below adventure max level', () => {
+            expect(canEarnExperience(1, 5)).toBe(true);
+            expect(canEarnExperience(4, 5)).toBe(true);
+        });
+
+        it('should return false if companion level is at adventure max level', () => {
+            expect(canEarnExperience(5, 5)).toBe(false);
+        });
+
+        it('should return false if companion level is above adventure max level', () => {
+            expect(canEarnExperience(6, 5)).toBe(false);
+            expect(canEarnExperience(10, 5)).toBe(false);
         });
     });
 });

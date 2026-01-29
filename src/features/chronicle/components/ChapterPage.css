@@ -90,6 +90,33 @@
     hyphens: auto;
 }
 
+.level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(74, 55, 33, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(74, 55, 33, 0.2);
+}
+
+.level-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    opacity: 0.6;
+}
+
+.level-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #4a3721;
+}
+
 /* Removed .chapter-meta styles */
 
 .completion-stats {

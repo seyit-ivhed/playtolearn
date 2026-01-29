@@ -73,16 +73,33 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
 
 
             <div className={styles.cardsContainer}>
-                {partyCompanionsData.map(({ companion, experience }) => (
-                    <CompanionExperienceCard
-                        key={companion.id}
-                        companion={companion}
-                        currentExperience={experience}
-                        previousStats={previousStats[companion.id]}
-                        gainedXp={EXPERIENCE_CONFIG.ENCOUNTER_XP_REWARD}
-                        onLevelUpClick={() => handleLevelUpClick(companion.id)}
-                    />
-                ))}
+                {partyCompanionsData.map(({ companion, experience }) => {
+                    const prev = previousStats[companion.id];
+                    // If level increased, it's more complex, but we only cap if level is HIGH.
+                    // If level stayed same, gained = current - prev.
+                    // If level increased, gained = (req - prev) + current.
+                    let actualGainedXp = 0;
+                    if (prev) {
+                        if (prev.level === companion.level) {
+                            actualGainedXp = (experience || 0) - (prev.experience || 0);
+                        } else if ((prev.level || 0) < companion.level) {
+                            // Level up happened
+                            const req = getRequiredXpForNextLevel(prev.level || 1);
+                            actualGainedXp = (req - (prev.experience || 0)) + (experience || 0);
+                        }
+                    }
+
+                    return (
+                        <CompanionExperienceCard
+                            key={companion.id}
+                            companion={companion}
+                            currentExperience={experience}
+                            previousStats={prev}
+                            gainedXp={actualGainedXp}
+                            onLevelUpClick={() => handleLevelUpClick(companion.id)}
+                        />
+                    );
+                })}
             </div>
 
             {!anyCanLevelUp && (

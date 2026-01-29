@@ -9,6 +9,7 @@ import { EncounterPhase } from '../../../types/encounter.types';
 import { ADVENTURES } from '../../../data/adventures.data';
 import { EXPERIENCE_CONFIG } from '../../../data/experience.data';
 import { EncounterType } from '../../../types/adventure.types';
+import { canEarnExperience } from '../../../utils/progression.utils';
 
 interface UseEncounterNavigationProps {
     adventureId?: string;
@@ -74,8 +75,13 @@ export const useEncounterNavigation = ({
                     setPreviousCompanionStats(statsSnapshot);
 
                     // 2. Add Experience
+                    const maxLevel = adventure?.levelRange?.[1] || EXPERIENCE_CONFIG.MAX_LEVEL;
+
                     activeParty.forEach(id => {
-                        addCompanionExperience(id, EXPERIENCE_CONFIG.ENCOUNTER_XP_REWARD);
+                        const stats = companionStats[id];
+                        if (stats && canEarnExperience(stats.level, maxLevel)) {
+                            addCompanionExperience(id, EXPERIENCE_CONFIG.ENCOUNTER_XP_REWARD);
+                        }
                     });
 
                     // 3. Show Screen

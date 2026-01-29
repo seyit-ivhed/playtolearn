@@ -262,6 +262,7 @@
     "companions": {
         "unlock": "Ny följeslagare upplåst!",
         "level_up": "Nivå upp!",
+        "too_easy": "För enkelt...",
         "evolution": "Växer upp",
         "stats": {
             "hp": "HP",

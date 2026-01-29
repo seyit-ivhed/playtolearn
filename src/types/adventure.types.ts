@@ -109,6 +109,7 @@ export interface Adventure {
     mapImage?: string;     // The background image for the adventure map
     volumeId?: string;    // The volume (realm) this adventure belongs to
     encounters: Encounter[]; // The sequence of nodes for this adventure
+    levelRange?: [number, number]; // Recommended level range [min, max]
     requirements?: {
         minLevel?: number;
         previousAdventureId?: AdventureId;
