@@ -53,8 +53,8 @@ export type PuzzleType = typeof PuzzleType[keyof typeof PuzzleType];
 
 export interface PuzzleOption {
     value: number;
-    type: 'ADD' | 'MULTIPLY' | 'DIVIDE';
-    label?: string; // e.g. "x2", "+5", "÷3"
+    type: 'ADD' | 'MULTIPLY';
+    label?: string; // e.g. "x2", "+5"
 }
 
 

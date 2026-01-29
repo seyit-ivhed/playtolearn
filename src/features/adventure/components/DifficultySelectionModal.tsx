@@ -40,26 +40,22 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
 
     if (!isOpen) return null;
 
-    const difficulties = [1, 2, 3, 4, 5];
+    const difficulties = [1, 2, 3];
 
     const getDifficultyLabel = (level: number) => {
         switch (level) {
-            case 1: return t('difficulty.apprentice', 'Apprentice');
-            case 2: return t('difficulty.scout', 'Scout');
-            case 3: return t('difficulty.adventurer', 'Adventurer');
-            case 4: return t('difficulty.veteran', 'Veteran');
-            case 5: return t('difficulty.master', 'Master');
+            case 1: return t('difficulty.apprentice', 'Apprentice (Age 6)');
+            case 2: return t('difficulty.scout', 'Scout (Age 7)');
+            case 3: return t('difficulty.adventurer', 'Adventurer (Age 8)');
             default: return '';
         }
     };
 
     const getDifficultyDescription = (level: number) => {
         switch (level) {
-            case 1: return t('difficulty.desc_1', 'Basic addition (0-10)');
-            case 2: return t('difficulty.desc_2', 'Addition and basic subtraction');
-            case 3: return t('difficulty.desc_3', 'Multiplication and harder arithmetic');
-            case 4: return t('difficulty.desc_4', 'Division and multi-digit numbers');
-            case 5: return t('difficulty.desc_5', 'Complex challenges and remainders');
+            case 1: return t('difficulty.desc_1', 'Addition and subtraction up to 10');
+            case 2: return t('difficulty.desc_2', 'Addition and subtraction up to 20, intro to x2');
+            case 3: return t('difficulty.desc_3', 'Arithmetic up to 100 and multiplication tables');
             default: return '';
         }
     };

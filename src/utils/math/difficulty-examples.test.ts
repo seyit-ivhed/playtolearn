@@ -14,7 +14,6 @@ const parseExample = (example: string) => {
         case '+': operation = MathOperation.ADD; break;
         case '-': operation = MathOperation.SUBTRACT; break;
         case '×': operation = MathOperation.MULTIPLY; break;
-        case '÷': operation = MathOperation.DIVIDE; break;
         default: throw new Error(`Unknown operation symbol: ${symbol}`);
     }
 
@@ -26,7 +25,7 @@ const parseExample = (example: string) => {
 };
 
 describe('Difficulty Examples Boundary Check', () => {
-    const levels: DifficultyLevel[] = [1, 2, 3, 4, 5];
+    const levels: DifficultyLevel[] = [1, 2, 3];
 
     levels.forEach((level) => {
         describe(`Level ${level}`, () => {
@@ -42,7 +41,6 @@ describe('Difficulty Examples Boundary Check', () => {
                         case MathOperation.ADD: opConfig = levelConfig.addition; break;
                         case MathOperation.SUBTRACT: opConfig = levelConfig.subtraction; break;
                         case MathOperation.MULTIPLY: opConfig = levelConfig.multiplication; break;
-                        case MathOperation.DIVIDE: opConfig = levelConfig.division; break;
                         default: throw new Error('Unsupported operation');
                     }
 

@@ -1,5 +1,4 @@
 import type { MathProblem } from '../../../types/math.types';
-import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
 interface MathCardFaceProps {
@@ -9,10 +8,9 @@ interface MathCardFaceProps {
 }
 
 export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFaceProps) => {
-    const { t } = useTranslation();
-    const [selected, setSelected] = useState<number | string | null>(null);
+    const [selected, setSelected] = useState<number | null>(null);
 
-    const handleAnswer = (choice: number | string) => {
+    const handleAnswer = (choice: number) => {
         if (selected !== null) return; // Prevent double click
         setSelected(choice);
         const isCorrect = choice === problem.correctAnswer;
@@ -23,7 +21,7 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
         }, 800);
     };
 
-    const getBtnClass = (choice: number | string) => {
+    const getBtnClass = (choice: number) => {
         if (selected === null) return 'math-choice-btn';
         if (choice === problem.correctAnswer) return 'math-choice-btn correct';
         if (choice === selected && choice !== problem.correctAnswer) return 'math-choice-btn wrong';
@@ -33,26 +31,10 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
     const operationMap = {
         'ADD': '+',
         'SUBTRACT': '-',
-        'MULTIPLY': '×',
-        'DIVIDE': '÷'
+        'MULTIPLY': '×'
     } as const;
 
-    const formatAnswer = (answer: number | string) => {
-        if (typeof answer !== 'string') return answer;
 
-        // Parse "Q R r" format
-        const match = answer.match(/^(\d+)\s*R\s*(\d+)$/);
-        if (match) {
-            return (
-                <span>
-                    {match[1]}
-                    <span className="math-remainder-text">{t('remainder_text')}</span>
-                    {match[2]}
-                </span>
-            );
-        }
-        return answer;
-    };
 
     return (
         <div
@@ -69,14 +51,14 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
                 <span className="question-mark">?</span>
             </div>
 
-            <div className={`math-choices-grid ${typeof problem.correctAnswer === 'string' ? 'single-col' : ''}`}>
+            <div className="math-choices-grid">
                 {problem.choices?.map((choice, idx) => (
                     <button
                         key={`${choice}-${idx}`}
                         className={getBtnClass(choice)}
                         onClick={(e) => { e.stopPropagation(); handleAnswer(choice); }}
                     >
-                        {formatAnswer(choice)}
+                        {choice}
                     </button>
                 ))}
             </div>

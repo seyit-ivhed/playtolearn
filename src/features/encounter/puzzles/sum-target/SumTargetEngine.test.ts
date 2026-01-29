@@ -19,12 +19,6 @@ describe('SumTargetEngine', () => {
             const option: PuzzleOption = { value: 2, type: 'MULTIPLY' };
             expect(calculateNextSum(10, option)).toBe(20);
         });
-
-        it('should handle DIVIDE operation with flooring', () => {
-            const option: PuzzleOption = { value: 2, type: 'DIVIDE' };
-            expect(calculateNextSum(10, option)).toBe(5);
-            expect(calculateNextSum(11, option)).toBe(5); // Math.floor(5.5)
-        });
     });
 
     describe('formatActionLabel', () => {
@@ -41,11 +35,6 @@ describe('SumTargetEngine', () => {
         it('should format MULTIPLY type correctly', () => {
             const option: PuzzleOption = { value: 3, type: 'MULTIPLY' };
             expect(formatActionLabel(option)).toBe('x3');
-        });
-
-        it('should format DIVIDE type correctly', () => {
-            const option: PuzzleOption = { value: 2, type: 'DIVIDE' };
-            expect(formatActionLabel(option)).toBe('÷2');
         });
     });
 
@@ -73,8 +62,8 @@ describe('SumTargetEngine', () => {
             expect(data.options.length).toBeGreaterThanOrEqual(2);
         });
 
-        it('should include both numbers and objects (for higher difficulties)', () => {
-            const data = generateSumTargetData(5);
+        it('should include both numbers and objects (for level 3)', () => {
+            const data = generateSumTargetData(3);
             const hasOperations = data.options.some(opt => typeof opt === 'object');
             expect(data.options.length).toBeGreaterThan(0);
             expect(typeof hasOperations).toBe('boolean');
@@ -95,7 +84,7 @@ describe('SumTargetEngine', () => {
 
         it('should produce a positive target value', () => {
             for (let i = 0; i < 20; i++) {
-                const difficulty = (Math.floor(Math.random() * 5) + 1) as import('../../../../types/math.types').DifficultyLevel;
+                const difficulty = (Math.floor(Math.random() * 3) + 1) as import('../../../../types/math.types').DifficultyLevel;
                 const data = generateSumTargetData(difficulty);
                 expect(data.targetValue).toBeGreaterThan(0);
             }

@@ -14,7 +14,7 @@ const MathTestPage: React.FC = () => {
         setFeedback(''); // Reset feedback
     };
 
-    const handleChoiceClick = (choice: number | string) => {
+    const handleChoiceClick = (choice: number) => {
         if (!problem) return;
         const result = validateAnswer(choice, problem.correctAnswer);
         setFeedback(result.isCorrect ? 'Correct!' : `Incorrect. Expected: ${problem.correctAnswer}`);
@@ -32,7 +32,7 @@ const MathTestPage: React.FC = () => {
                         onChange={(e) => setDifficulty(Number(e.target.value) as DifficultyLevel)}
                         style={{ padding: '5px', borderRadius: '4px' }}
                     >
-                        {[1, 2, 3, 4, 5].map(level => (
+                        {[1, 2, 3].map(level => (
                             <option key={level} value={level}>Level {level}</option>
                         ))}
                     </select>
@@ -71,8 +71,7 @@ const MathTestPage: React.FC = () => {
                 <div style={{ border: '1px solid #444', padding: '20px', borderRadius: '8px', backgroundColor: '#333' }}>
                     <h2 style={{ fontSize: '2em' }}>
                         {problem.operand1} {problem.operation === MathOperation.MULTIPLY ? '×' :
-                            problem.operation === MathOperation.DIVIDE ? '÷' :
-                                problem.operation === MathOperation.ADD ? '+' : '-'} {problem.operand2} = ?
+                            problem.operation === MathOperation.ADD ? '+' : '-'} {problem.operand2} = ?
                     </h2>
 
                     <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>

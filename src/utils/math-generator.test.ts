@@ -15,6 +15,7 @@ describe('Math Generator Functionality', () => {
             const problem = generateProblem(MathOperation.ADD, 1);
             expect(problem.operation).toBe(MathOperation.ADD);
             expect(problem.correctAnswer).toBe(problem.operand1 + problem.operand2);
+            expect(problem.operand1).toBeLessThanOrEqual(10);
         });
 
         it('should generate valid subtraction problems with non-negative results', () => {
@@ -28,20 +29,7 @@ describe('Math Generator Functionality', () => {
             const problem = generateProblem(MathOperation.MULTIPLY, 3);
             expect(problem.operation).toBe(MathOperation.MULTIPLY);
             expect(problem.correctAnswer).toBe(problem.operand1 * problem.operand2);
-        });
-
-        it('should generate valid division problems (whole number)', () => {
-            const problem = generateProblem(MathOperation.DIVIDE, 4);
-            expect(problem.operation).toBe(MathOperation.DIVIDE);
-            expect(typeof problem.correctAnswer).toBe('number');
-            expect(problem.operand1 / problem.operand2).toBe(problem.correctAnswer);
-        });
-
-        it('should generate valid division problems with remainders at higher difficulty', () => {
-            const problem = generateProblem(MathOperation.DIVIDE, 5);
-            expect(problem.operation).toBe(MathOperation.DIVIDE);
-            expect(typeof problem.correctAnswer).toBe('string');
-            expect(problem.correctAnswer).toMatch(/\d+ R \d+/);
+            expect(problem.operand2).toBeLessThanOrEqual(5); // x2 to x5 in level 3
         });
     });
 
@@ -53,16 +41,6 @@ describe('Math Generator Functionality', () => {
 
         it('should validate incorrect numeric answers', () => {
             const result = validateAnswer(9, 10);
-            expect(result.isCorrect).toBe(false);
-        });
-
-        it('should validate correct string answers (remainders)', () => {
-            const result = validateAnswer('5 R 2', '5 R 2');
-            expect(result.isCorrect).toBe(true);
-        });
-
-        it('should validate incorrect string answers', () => {
-            const result = validateAnswer('5 R 1', '5 R 2');
             expect(result.isCorrect).toBe(false);
         });
     });

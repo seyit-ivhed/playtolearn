@@ -79,7 +79,6 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
 
                         if (puzzleOption) {
                             if (puzzleOption.type === 'MULTIPLY') icon = '🌊'; // Surge/Multiply still distinct
-                            if (puzzleOption.type === 'DIVIDE') icon = '🫗'; // Pour out/Divide
                         } else if (typeof option === 'number') {
                             if (option < 0) icon = '🫗'; // Empty/Pour out
                         }

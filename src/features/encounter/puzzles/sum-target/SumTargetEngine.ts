@@ -14,35 +14,37 @@ export const generateSumTargetData = (difficulty: DifficultyLevel): PuzzleData =
 
     // 1. Choose number of solution steps based on difficulty
     let steps = 2;
-    if (difficulty === 2) steps = getRandomInt(2, 3);
-    else if (difficulty === 3) steps = 3;
-    else if (difficulty === 4) steps = getRandomInt(3, 4);
-    else if (difficulty === 5) steps = getRandomInt(4, 5);
+    if (difficulty === 2) {
+        steps = getRandomInt(2, 3);
+    } else if (difficulty === 3) {
+        steps = 3;
+    }
 
     // 2. Build the solution path
     // Initial step: Always addition to get a base value
-    const firstVal = (difficulty <= 2) ? getRandomInt(5, 10) : getRandomInt(10, 25);
+    const firstVal = (difficulty === 1) ? getRandomInt(3, 8) : getRandomInt(10, 20);
     current = firstVal;
     solutionPipes.push(firstVal);
 
     for (let i = 1; i < steps; i++) {
         const pool: ('ADD' | 'SUB' | 'MUL' | 'DIV')[] = ['ADD'];
-        if (difficulty >= 2) pool.push('SUB');
-        if (difficulty >= 4) {
-            pool.push('MUL');
-            if (current > 1 && current % 2 === 0) pool.push('DIV');
+        if (difficulty >= 2) {
+            pool.push('SUB');
+        }
+        if (difficulty === 3) {
+            pool.push('MUL'); // Intro to simple multiplication
         }
 
         const opType = pool[getRandomInt(0, pool.length - 1)];
 
         if (opType === 'ADD') {
-            const val = (difficulty <= 2) ? getRandomInt(2, 5) : getRandomInt(5, 20);
+            const val = (difficulty === 1) ? getRandomInt(1, 4) : getRandomInt(5, 15);
             current += val;
             solutionPipes.push(val);
         } else if (opType === 'SUB') {
-            const val = (difficulty <= 2) ? getRandomInt(1, 3) : getRandomInt(5, 15);
+            const val = (difficulty === 1) ? getRandomInt(1, 3) : getRandomInt(2, 10);
             // Non-destructive check to keep target positive and interesting
-            if (current - val >= 2) {
+            if (current - val >= 1) {
                 current -= val;
                 solutionPipes.push(-val);
             } else {
@@ -51,40 +53,25 @@ export const generateSumTargetData = (difficulty: DifficultyLevel): PuzzleData =
                 solutionPipes.push(fallback);
             }
         } else if (opType === 'MUL') {
-            const factor = difficulty === 4 ? 2 : getRandomInt(2, 3);
-            if (current * factor <= 300) {
+            const factor = 2; // Keep it at doubling for age 8 in this complex puzzle
+            if (current * factor <= 100) {
                 current *= factor;
                 solutionPipes.push({ value: factor, type: 'MULTIPLY', label: `x${factor}` });
             } else {
-                const subFallback = 10;
+                const subFallback = 5;
                 current -= subFallback;
                 solutionPipes.push(-subFallback);
-            }
-        } else if (opType === 'DIV') {
-            const divisor = 2;
-            if (current > 0 && current % divisor === 0) {
-                current /= divisor;
-                solutionPipes.push({ value: divisor, type: 'DIVIDE', label: `÷${divisor}` });
-            } else {
-                const addFallback = 4;
-                current += addFallback;
-                solutionPipes.push(addFallback);
             }
         }
     }
 
     // 3. Add decoy pipes to increase challenge
-    const decoyCount = difficulty <= 2 ? 1 : 2;
+    const decoyCount = difficulty === 1 ? 1 : 2;
     for (let i = 0; i < decoyCount; i++) {
-        if (difficulty <= 2) {
-            decoyPipes.push(getRandomInt(1, 5));
+        if (difficulty === 1) {
+            decoyPipes.push(getRandomInt(1, 4));
         } else {
-            const isObj = Math.random() > 0.7;
-            if (!isObj) {
-                decoyPipes.push(Math.random() > 0.5 ? getRandomInt(1, 10) : -getRandomInt(1, 5));
-            } else {
-                decoyPipes.push({ value: 2, type: 'MULTIPLY', label: 'x2' });
-            }
+            decoyPipes.push(Math.random() > 0.5 ? getRandomInt(1, 10) : -getRandomInt(1, 5));
         }
     }
 
@@ -116,9 +103,6 @@ export const calculateNextSum = (currentSum: number, option: number | PuzzleOpti
     switch (type) {
         case 'MULTIPLY':
             return currentSum * value;
-        case 'DIVIDE':
-            // Using Math.floor to ensure whole numbers in the reservoir
-            return Math.floor(currentSum / value);
         case 'ADD':
         default:
             return currentSum + value;
@@ -126,7 +110,7 @@ export const calculateNextSum = (currentSum: number, option: number | PuzzleOpti
 };
 
 /**
- * Formats the action label for feedback (e.g. "+5", "x2", "÷2")
+ * Formats the action label for feedback (e.g. "+5", "x2")
  */
 export const formatActionLabel = (option: number | PuzzleOption): string => {
     if (typeof option === 'number') {
@@ -139,8 +123,6 @@ export const formatActionLabel = (option: number | PuzzleOption): string => {
     switch (type) {
         case 'MULTIPLY':
             return `x${value}`;
-        case 'DIVIDE':
-            return `÷${value}`;
         case 'ADD':
         default:
             return value > 0 ? `+${value}` : `${value}`;

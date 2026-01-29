@@ -147,44 +147,31 @@ export const generateSequenceData = (difficulty: DifficultyLevel): PuzzleData =>
     let startValue: number;
     let count: number;
 
-    if (difficulty <= 2) {
+    if (difficulty === 1) {
         // Simple arithmetic: +1 or +2
         ruleType = 'ADD';
-        step = difficulty; // 1 or 2
-        startValue = 1;
-        count = 10;
-    } else if (difficulty === 3) {
-        // Skip counting: +2, +3, +5
+        step = getRandomInt(1, 2);
+        startValue = getRandomInt(1, 5);
+        count = 6;
+    } else if (difficulty === 2) {
+        // Skip counting: +2, +5, +10
         ruleType = 'ADD';
-        const options = [2, 3, 5];
+        const options = [2, 5, 10];
         step = options[getRandomInt(0, options.length - 1)];
         startValue = step; // Start at the step value for cleaner sequences
-        count = 8;
-    } else if (difficulty === 4) {
-        // More complex skip counting or introduce multiplication
-        const useMultiply = Math.random() > 0.7;
+        count = 7;
+    } else {
+        // Level 3: More skip counting or intro multiplication
+        const useMultiply = Math.random() > 0.8;
         if (useMultiply) {
             ruleType = 'MULTIPLY';
             step = 2; // Doubling
             startValue = 1;
-            count = 6; // Geometric grows fast: 1, 2, 4, 8, 16, 32
+            count = 5; // 1, 2, 4, 8, 16
         } else {
             ruleType = 'ADD';
-            step = getRandomInt(3, 7);
-            startValue = step;
-            count = 8;
-        }
-    } else {
-        // Level 5: Geometric sequences or complex arithmetic
-        const useMultiply = Math.random() > 0.5;
-        if (useMultiply) {
-            ruleType = 'MULTIPLY';
-            step = getRandomInt(2, 3); // x2 or x3
-            startValue = 1;
-            count = step === 2 ? 7 : 5; // Adjust count based on growth rate
-        } else {
-            ruleType = 'ADD';
-            step = getRandomInt(5, 10);
+            const options = [3, 4, 5, 10];
+            step = options[getRandomInt(0, options.length - 1)];
             startValue = step;
             count = 8;
         }

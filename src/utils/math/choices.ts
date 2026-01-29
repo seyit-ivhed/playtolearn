@@ -5,46 +5,9 @@ import { getRandomInt } from './helpers';
  * @param correctAnswer The correct answer to include
  * @param count Total number of choices (default 4)
  */
-export const generateMultipleChoices = (correctAnswer: number | string, count: number = 4): (number | string)[] => {
-    if (typeof correctAnswer === 'string') {
-        const choices = new Set<string>();
-        choices.add(correctAnswer);
-
-        // Expect format "Q R r"
-        const match = correctAnswer.match(/^(\d+)\s*R\s*(\d+)$/);
-        if (!match) {
-            // Fallback for unexpected string format
-            while (choices.size < count) {
-                choices.add(`${correctAnswer} ${choices.size}`);
-            }
-            return Array.from(choices);
-        }
-
-        const q = parseInt(match[1]);
-        const r = parseInt(match[2]);
-
-        while (choices.size < count) {
-            // Generate wrong answers by varying Q and R
-            const qVar = getRandomInt(-2, 2);
-            const rVar = getRandomInt(-2, 2);
-
-            // Skip no-op
-            if (qVar === 0 && rVar === 0) continue;
-
-            const newQ = Math.abs(q + qVar);
-            const newR = Math.abs(r + rVar); // Keep positive
-
-            const wrongAnswer = `${newQ} R ${newR}`;
-
-            choices.add(wrongAnswer);
-        }
-
-        // Sort strings naturally or just random. Let's sort to keep UI consistent
-        return Array.from(choices).sort();
-    }
-
+export const generateMultipleChoices = (correctAnswer: number, count: number = 4): number[] => {
     const choices = new Set<number>();
-    choices.add(correctAnswer as number);
+    choices.add(correctAnswer);
 
     // Generate plausible wrong answers
     // Strategy: +/- 1, +/- 2, +/- 10, random close numbers

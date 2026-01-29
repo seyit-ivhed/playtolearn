@@ -47,16 +47,16 @@ export const validateBalance = (
 export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleData => {
     // 1. Config based on difficulty
     // Higher difficulty -> Higher values, more weights
-    const minTarget = 4 + (difficulty * 2); // 15, 20, 25...
-    const maxTarget = 10 + (difficulty * 5); // 30, 40, 50...
+    const minTarget = difficulty === 1 ? 5 : difficulty === 2 ? 10 : 15;
+    const maxTarget = difficulty === 1 ? 10 : difficulty === 2 ? 20 : 35;
     const targetBalance = getRandomInt(minTarget, maxTarget);
 
     // Number of required weights per side (solution)
-    const minSolutionWeights = 1 + Math.floor(difficulty / 4);
-    const maxSolutionWeights = 2 + Math.floor(difficulty / 4);
+    const minSolutionWeights = 1;
+    const maxSolutionWeights = difficulty === 1 ? 2 : 3;
 
     // Number of noise weights per side
-    const noiseCount = 1 + Math.floor(difficulty / 2);
+    const noiseCount = difficulty === 1 ? 1 : 2;
 
     // 2. Generate Heavy Weight
     // Heavy weight is significantly heavier or just distinct?

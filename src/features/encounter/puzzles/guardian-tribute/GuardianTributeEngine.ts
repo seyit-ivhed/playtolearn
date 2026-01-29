@@ -162,8 +162,8 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
     // Determine number of guardians and constraints based on difficulty
     if (difficulty === 1) {
         // Level 1: Age 6 (Apprentice) - 2 guardians, simple addition/exact
-        // Target Sum: 10-15
-        const g1Value = getRandomInt(5, 8);
+        // Target Sum: 8-12
+        const g1Value = getRandomInt(3, 5);
         const additionValue = getRandomInt(1, 3);
         const g2Value = g1Value + additionValue;
 
@@ -180,10 +180,10 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
         totalGems = g1Value + g2Value;
     } else if (difficulty === 2) {
         // Level 2: Age 7 (Scout) - 3 guardians, exact + multiplier + addition
-        // Target Sum: 20-30
-        const g1Value = getRandomInt(4, 6);
+        // Target Sum: 15-20
+        const g1Value = getRandomInt(3, 4);
         const g2Value = g1Value * 2;
-        const additionValue = getRandomInt(4, 6);
+        const additionValue = getRandomInt(2, 4);
         const g3Value = g2Value + additionValue;
 
         guardians = [
@@ -201,12 +201,12 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
             }
         ];
         totalGems = g1Value + g2Value + g3Value;
-    } else if (difficulty === 3) {
+    } else {
         // Level 3: Age 8 (Adventurer) - 3 guardians, introduce Halve + Addition
-        // Target Sum: ~25-45
-        const g1Value = getRandomInt(4, 7) * 2; // Must be even
+        // Target Sum: ~20-30
+        const g1Value = getRandomInt(4, 6) * 2; // Must be even for HALVE to be clean
         const g2Value = g1Value / 2;
-        const additionValue = getRandomInt(4, 6);
+        const additionValue = getRandomInt(3, 7);
         const g3Value = g1Value + additionValue;
 
         guardians = [
@@ -220,51 +220,6 @@ export const generateGuardianTributeData = (difficulty: DifficultyLevel): Guardi
             },
             {
                 constraint: { type: GuardianConstraintType.ADDITION, value: additionValue, targetGuardian: 0 },
-                solution: g3Value
-            }
-        ];
-        totalGems = g1Value + g2Value + g3Value;
-    } else if (difficulty === 4) {
-        // Level 4: Age 9 (Veteran) - 3 guardians, complex mix
-        // Target Sum: ~35-45
-        const g1Value = getRandomInt(4, 5);
-        const g2Value = g1Value * 3;
-        const g3Value = g2Value + getRandomInt(5, 10);
-
-        guardians = [
-            {
-                constraint: { type: GuardianConstraintType.EXACT, value: g1Value },
-                solution: g1Value
-            },
-            {
-                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 3, targetGuardian: 0 },
-                solution: g2Value
-            },
-            {
-                constraint: { type: GuardianConstraintType.COMPARISON, operator: 'greater', targetGuardian: 1 },
-                solution: g3Value
-            }
-        ];
-        totalGems = g1Value + g2Value + g3Value;
-    } else {
-        // Level 5: Age 10 (Master) - 3 guardians, complex mix (max 50)
-        const g1Min = 10;
-        const g1Max = 12;
-        const g1Value = getRandomInt(g1Min, g1Max);
-        const g2Value = g1Value * 2;
-        const g3Value = g2Value / 2;
-
-        guardians = [
-            {
-                constraint: { type: GuardianConstraintType.RANGE, min: g1Min, max: g1Max },
-                solution: g1Value
-            },
-            {
-                constraint: { type: GuardianConstraintType.MULTIPLIER, multiplier: 2, targetGuardian: 0 },
-                solution: g2Value
-            },
-            {
-                constraint: { type: GuardianConstraintType.HALVE, targetGuardian: 1 },
                 solution: g3Value
             }
         ];
