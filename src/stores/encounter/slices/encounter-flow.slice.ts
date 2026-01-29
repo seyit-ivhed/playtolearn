@@ -6,7 +6,6 @@ import { getStatsForLevel } from '../../../utils/progression.utils';
 import { getMonsterSprite } from '../../../data/monster-sprites';
 import { getCompanionCardImage } from '../../../data/companion-sprites';
 import { CombatEngine } from '../../../utils/battle/combat-engine';
-import type { BattleUnit } from '../../../types/encounter.types';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
     initializeEncounter: (partyIds, enemies, nodeIndex, difficulty, companionStats) => {
