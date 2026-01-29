@@ -69,8 +69,25 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
         }
 
         if (effectType.startsWith('elixir_of_life')) {
+            const style: React.CSSProperties = {};
+            const partyGrid = document.querySelector('.party-grid');
+            if (partyGrid) {
+                const rect = partyGrid.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                style.position = 'fixed';
+                style.left = `${centerX}px`;
+                style.top = `${centerY}px`;
+                style.transform = 'translate(-50%, -50%)';
+                style.zIndex = 9999;
+                style.width = '400px';
+                style.height = '400px';
+                style.overflow = 'visible';
+            }
+
             return (
-                <div className="vfx-heal-container">
+                <div className="vfx-heal-container" style={style}>
                     <div className="vfx-heal-glow" />
                     <div className="vfx-heal-particles">
                         {[...Array(12)].map((_, i) => (
