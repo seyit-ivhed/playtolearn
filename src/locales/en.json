@@ -201,9 +201,9 @@
     },
     "difficulty": {
         "start": "Start",
-        "apprentice": "Apprentice (Age 6)",
-        "scout": "Scout (Age 7)",
-        "adventurer": "Adventurer (Age 8)",
+        "apprentice": "Apprentice",
+        "scout": "Scout",
+        "adventurer": "Adventurer",
         "desc_1": "Addition and subtraction up to 10",
         "desc_2": "Addition and subtraction up to 20, intro to multiplication",
         "desc_3": "Arithmetic up to 100 and multiplication tables"
