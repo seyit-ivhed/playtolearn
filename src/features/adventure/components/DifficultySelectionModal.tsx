@@ -44,18 +44,18 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
 
     const getDifficultyLabel = (level: number) => {
         switch (level) {
-            case 1: return t('difficulty.apprentice', 'Apprentice (Age 6)');
-            case 2: return t('difficulty.scout', 'Scout (Age 7)');
-            case 3: return t('difficulty.adventurer', 'Adventurer (Age 8)');
+            case 1: return t('difficulty.apprentice');
+            case 2: return t('difficulty.scout');
+            case 3: return t('difficulty.adventurer');
             default: return '';
         }
     };
 
     const getDifficultyDescription = (level: number) => {
         switch (level) {
-            case 1: return t('difficulty.desc_1', 'Addition and subtraction up to 10');
-            case 2: return t('difficulty.desc_2', 'Addition and subtraction up to 20, intro to x2');
-            case 3: return t('difficulty.desc_3', 'Arithmetic up to 100 and multiplication tables');
+            case 1: return t('difficulty.desc_1');
+            case 2: return t('difficulty.desc_2');
+            case 3: return t('difficulty.desc_3');
             default: return '';
         }
     };
@@ -151,7 +151,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
 
                 <div className="modal-footer">
                     <button className="start-button" data-testid="difficulty-start-btn" onClick={() => onStart(selectedDifficulty)}>
-                        {t('difficulty.start', 'Start')}
+                        {t('difficulty.start')}
                     </button>
                 </div>
             </div>

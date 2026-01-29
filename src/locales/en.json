@@ -201,16 +201,12 @@
     },
     "difficulty": {
         "start": "Start",
-        "apprentice": "Apprentice",
-        "scout": "Scout",
-        "adventurer": "Adventurer",
-        "veteran": "Veteran",
-        "master": "Master",
-        "desc_1": "Basic addition (0-10)",
-        "desc_2": "Addition and basic subtraction",
-        "desc_3": "Multiplication and harder arithmetic",
-        "desc_4": "Division and multi-digit numbers",
-        "desc_5": "Complex challenges and remainders"
+        "apprentice": "Apprentice (Age 6)",
+        "scout": "Scout (Age 7)",
+        "adventurer": "Adventurer (Age 8)",
+        "desc_1": "Addition and subtraction up to 10",
+        "desc_2": "Addition and subtraction up to 20, intro to x2",
+        "desc_3": "Arithmetic up to 100 and multiplication tables"
     },
     "encounter": {
         "victory": "Victory!",

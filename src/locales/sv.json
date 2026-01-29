@@ -201,16 +201,12 @@
     },
     "difficulty": {
         "start": "Börja",
-        "apprentice": "Lärling",
-        "scout": "Spanare",
-        "adventurer": "Äventyrare",
-        "veteran": "Veteran",
-        "master": "Mästare",
-        "desc_1": "Grundläggande addition (0-10)",
-        "desc_2": "Addition och grundläggande subtraktion",
-        "desc_3": "Multiplikation och svårare aritmetik",
-        "desc_4": "Division och flersiffriga tal",
-        "desc_5": "Komplexa utmaningar och rester"
+        "apprentice": "Lärling (6 år)",
+        "scout": "Spanare (7 år)",
+        "adventurer": "Äventyrare (8 år)",
+        "desc_1": "Addition och subtraktion upp till 10",
+        "desc_2": "Addition och subtraktion upp till 20, introduktion till x2",
+        "desc_3": "Aritmetik upp till 100 och multiplikationstabeller"
     },
     "encounter": {
         "victory": "Seger!",
