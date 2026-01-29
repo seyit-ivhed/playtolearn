@@ -205,7 +205,7 @@
         "scout": "Scout (Age 7)",
         "adventurer": "Adventurer (Age 8)",
         "desc_1": "Addition and subtraction up to 10",
-        "desc_2": "Addition and subtraction up to 20, intro to x2",
+        "desc_2": "Addition and subtraction up to 20, intro to multiplication",
         "desc_3": "Arithmetic up to 100 and multiplication tables"
     },
     "encounter": {
