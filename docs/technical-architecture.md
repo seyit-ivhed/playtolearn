@@ -188,7 +188,6 @@ feature-name/
 - Companion definitions
 - Adventure definitions
 - Enemy/monster data
-- Item data
 - Configuration constants
 
 **Rules**:

@@ -4,7 +4,7 @@
 
 **Game Title:** Math Quest Adventures (working title)
 
-**Target Audience:** Children ages 6-10
+**Target Audience:** Children ages 6-8
 
 **Platform:** Web Browser (Desktop & Tablet)
 
@@ -30,10 +30,10 @@ Math Quest Adventures transforms math practicing into an exciting fantasy **Jour
 
 ### 1.3 Key Features
 - **Epic Journey**: Progress through multiple themed adventures, each with unique stories and maps
-- **Selectable Math Curriculum**: Players can select which math curriculum to practice
+- **Selectable Math Difficulty**: Players can select which math difficulty to practice
 - **Companion Collection**: Recruit diverse heroes, each with unique abilities
 - **Party Customization**: Choose 4 companions to take on each encounter
-- **Companion Growth System**: Companions learn upgrade their unique skills as they gain experience
+- **Companion Growth System**: Companions upgrade their unique skills as they gain experience
 - **Linear Adventure Maps**: Each adventure features a sequence of encounters leading to a boss fight
 - **Encounter Variety**: Face monster battles and solve puzzles
 - **Boss Fights**: Epic climactic battles at the end of each adventure
@@ -54,7 +54,6 @@ Each **Adventure** consists of:
 - **Linear Map**: A path of connected nodes representing encounters
 - **Encounters**: Individual challenges along the path (battles against monsters or puzzles to solve)
 - **Boss Fight**: The final, climactic encounter that must be defeated to complete the adventure
-- **Completion Reward**: A new companion can join the party or new styling options for Magical Canvas becomes available
 
 #### Encounter Types
 - **Battle Encounters**: Turn-based battle against monsters
@@ -62,18 +61,6 @@ Each **Adventure** consists of:
 - **Boss Fights**: Epic battle against powerful enemies at the end of each adventure
 
 ### 2.2 Math Challenge System
-
-#### Two-Dimensional Difficulty System
-
-**Dimension 1: Math Skill** (determines which companion skill is enhanced)
-- Addition
-- Subtraction
-- Multiplication
-- Division
-- Fractions
-- Decimals
-- Algebra basics
-- Geometry basics
 
 **Dimension 2: Difficulty Level** (determines companion growth level)
 - **Level 1**: Small numbers (e.g., single-digit)
@@ -87,11 +74,10 @@ Each **Adventure** consists of:
   - "The merchant needs 7 potions but only has 3. How many more should we buy?"
   - "There are goblins hiding behind rocks. Count them before they attack!"
   - "The bridge can hold 50 people. We have 32. How many more allies can cross?"
-- **Multiple Choice**: For younger players
-- **Free Input**: For older/advanced players  
+- **Multiple Choice**: For younger players and easier for touch screen
 
 #### Player-Controlled Difficulty
-- Players choose both the math skill and difficulty level for each adventure
+- Players can choose both the math difficulty level for each encounter
 - Game encourages players to increase difficulty when they perform well using a star system
 - No forced adjustments - player always has final choice
 - Progress tracking shows performance by skill and difficulty to help inform choices
@@ -102,14 +88,14 @@ Each **Adventure** consists of:
 - **Permanent Companions**: Once unlocked, companions are yours forever
 - **No Equipment**: Companions upgrade directly (simpler for children)
 - **Party Selection**: Choose which 4 companions to bring on each encounter
-- **Diverse Heroes**: Each companion has unique personality, appearance, and abilities
+- **Diverse Heroes**: Each companion has unique personality, appearance, and an ability
 
 ### 2.4 Encounter System
 
 #### Encounter Flow
 1. **Meeting**: Player meets monster or monster group
 2. **Action Phase**: Turn-based encounter begins
-3. **Victory/Defeat**: Unlock new content or retry option
+3. **Victory/Defeat**: Gain companion experience, stars for recognition or retry option
 
 #### Encounter Mechanics (Turn-Based)
 - **Player Turn**:
@@ -134,9 +120,9 @@ Each **Adventure** consists of:
 #### Journey Progression Through Realms
 Each realm contains multiple adventures:
 - Unique visual theme
-- Specific math focus areas
 - New monster types
-- New companions to unlock through adventure completion
+- New kinds of puzzles
+- New companions to unlock
 - Final adventure with a boss fight that must be defeated to unlock next realm
 
 ---
@@ -144,7 +130,7 @@ Each realm contains multiple adventures:
 ## 3. Reward System
 
 ### 3.1 Encounter Rewards
-- **Encounter XP**: Completing each encounter grants scaling XP rewards based on the encounter's position in the adventure (e.g., $10 \times i$ XP).
+- **Encounter XP**: Completing each encounter grants a fixed XP reward for all companions participated in the encounter
 - **Companion Unlocks**: Completing an entire adventure unlocks a new companion who joins your party.
   - Example: Complete "The Oasis Quest" adventure → Unlock Tariq (Level 1)
 ---
@@ -186,11 +172,6 @@ Each realm contains multiple adventures:
 - Incorrect answers: Show correct solution, offer retry
 - No punishment, only learning opportunities
 
-**Scaffolding**
-- New concepts introduced gradually
-- Build on previously mastered skills
-- Provide support that fades as mastery increases
-
 **Intrinsic Motivation**
 - Progress is visible and meaningful
 - Rewards are immediately useful
@@ -200,22 +181,17 @@ Each realm contains multiple adventures:
 
 ## 7. Business Model & Meta Game
 
-### 7.1 "The Chronicles of Realms" (Free Trial + DLC)
+### 7.1 "The Chronicles of Realms" (Freemium + DLC)
 - **Core Philosophy**: Honest, high-value content purchases. No ads, no predatory microtransactions for consumables.
 - **Free Trial (The Hook)**:
-    - Includes "Realm 1: The World of Origins" - First Adventure: "The Oasis Quest".
-    - Full access to "The Magical Canvas" with a starter sticker set.
-    - Full access to core math curriculum (Grades 1-2).
+    - Includes First Adventure: "The Oasis Quest".
+    - Full access to core math curriculum
+- **Premium Version (One-time Purchase)**:
+    - Includes 5 more adventures and 2 more companions
 - **Expansion Packs (Paid DLCs)**:
     - **Content**: Unlocks subsequent content as separate DLCs (e.g., "The Steam Canyons", "The Crystal Peaks") or as a bundle.
     - **Value**: Each DLC contains several adventures (10-15 encounters each), 2 new Unique Companions, new Monsters, and new Math Mechanics.
-    - **Bonus**: Exclusive themed Sticker Sets for the Magical Canvas.
 
 ### 7.2 Engagement Loops
 - **Map Progression**: Progress through the story, unlock new monsters and maps, and feel a sense of achievement through overcoming challenges.
 - **Companion Progression**: Acquire new companions and watch them grow and evolve as they level up.
-- **Magical Canvas**: Unlock new styling options to enable creative self-expression in the Magical Canvas.
-
-### 7.3 Content Strategy
-- **AI-Assisted Production**: Leveraging AI to generate "filler" content (flavor text, math variations, basic balance curves) allows for a steady stream of content from a small team.
-- **Human-Crafted Quality**: Key art, boss mechanics, and companion personalities are hand-crafted to ensure soul and quality.
