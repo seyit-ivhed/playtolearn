@@ -19,7 +19,7 @@
     border-radius: 24px;
     padding: 40px;
     width: 95%;
-    max-width: 480px;
+    max-width: 520px;
     position: relative;
     box-shadow:
         0 25px 50px -12px rgba(0, 0, 0, 0.7),
@@ -203,28 +203,27 @@
 .difficulty-explanation-box {
     background: rgba(0, 0, 0, 0.4);
     border-radius: 16px;
-    padding: 24px;
+    padding: 20px 24px;
     text-align: left;
-    min-height: 100px;
-    display: flex;
-    align-items: center;
     border: 1px solid rgba(179, 155, 86, 0.2);
     box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .explanation-content {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    gap: 20px;
-    align-items: center;
+    gap: 16px;
 }
 
 .explanation-left {
-    flex: 1;
+    width: 100%;
 }
 
 .explanation-right {
-    flex: 1;
+    width: 100%;
+    border-top: 1px solid rgba(179, 155, 86, 0.1);
+    padding-top: 12px;
 }
 
 .explanation-text {
@@ -238,9 +237,9 @@
 }
 
 .examples-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .example-tag {
