@@ -9,7 +9,7 @@ export const getDifficultyExamples = (level: number): string[] => {
     switch (level) {
         case 1: return ['3 + 3', '7 + 2', '8 - 3'];
         case 2: return ['12 + 6', '18 - 5', '4 × 2'];
-        case 3: return ['45 + 32', '88 - 44', '5 × 4'];
+        case 3: return ['45 + 32', '48 - 14', '5 × 4'];
         default: return [];
     }
 };
