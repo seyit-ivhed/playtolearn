@@ -1,9 +1,9 @@
 export const EXPERIENCE_CONFIG = {
     XP_BASE: 100,
-    XP_COEFFICIENT: 1.2,
-    MAX_LEVEL: 12,
+    XP_COEFFICIENT: 1.1,
+    MAX_LEVEL: 15,
     STAT_SCALING_FACTOR: 0.1,
-    ENCOUNTER_XP_REWARD: 100,
+    ENCOUNTER_XP_REWARD: 150,
 } as const;
 
 export const getRequiredXpForNextLevel = (currentLevel: number): number => {

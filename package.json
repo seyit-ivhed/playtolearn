@@ -16,6 +16,7 @@
     "project:complete": "bash scripts/complete-project.sh",
     "simulate:difficulty": "tsx scripts/simulate-difficulty.ts",
     "simulate:progression": "tsx scripts/analyze-progression.ts",
+    "simulate:max-level": "tsx scripts/calculate-max-level-encounters.ts",
     "supabase:deploy": "bash scripts/deploy-supabase.sh",
     "stripe-local": "stripe listen --forward-to localhost:54321/functions/v1/stripe-webhook"
   },
