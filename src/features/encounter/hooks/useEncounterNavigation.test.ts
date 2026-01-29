@@ -6,7 +6,6 @@ import { usePremiumStore } from '../../../stores/premium.store';
 import { useEncounterStore } from '../../../stores/encounter/store';
 import { checkNavigationAccess } from '../../../utils/navigation-security.utils';
 import { EncounterPhase } from '../../../types/encounter.types';
-import { EncounterType } from '../../../types/adventure.types';
 import { useNavigate } from 'react-router-dom';
 
 // Mocks
@@ -39,23 +38,23 @@ describe('useEncounterNavigation', () => {
             },
             activeParty: ['amara', 'tariq'],
             isAdventureUnlocked: vi.fn().mockReturnValue(true),
-        } as any);
+        } as ReturnType<typeof useGameStore>);
 
         // Default Premium Store Mock
         vi.mocked(usePremiumStore).mockReturnValue({
             isAdventureUnlocked: vi.fn().mockReturnValue(true),
             initialized: true,
-        } as any);
+        } as ReturnType<typeof usePremiumStore>);
 
         // Default Encounter Store Mock
-        (useEncounterStore.getState as any) = vi.fn().mockReturnValue({
+        (useEncounterStore.getState as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
             monsters: [{ id: 'm1', isBoss: false }]
         });
     });
 
     describe('Safety Gate', () => {
         it('should redirect to chronicle if access is denied', () => {
-            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: false, reason: 'LOCKED' } as any);
+            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: false, reason: 'LOCKED' } as ReturnType<typeof checkNavigationAccess>);
 
             renderHook(() => useEncounterNavigation({
                 adventureId: '1',
@@ -67,7 +66,7 @@ describe('useEncounterNavigation', () => {
         });
 
         it('should NOT redirect if access is allowed', () => {
-            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as any);
+            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as ReturnType<typeof checkNavigationAccess>);
 
             renderHook(() => useEncounterNavigation({
                 adventureId: '1',
@@ -81,7 +80,7 @@ describe('useEncounterNavigation', () => {
 
     describe('handleCompletionContinue - Victory', () => {
         it('should show experience screen and award XP for normal encounters', () => {
-            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as any);
+            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as ReturnType<typeof checkNavigationAccess>);
 
             const { result } = renderHook(() => useEncounterNavigation({
                 adventureId: '1',
@@ -110,7 +109,7 @@ describe('useEncounterNavigation', () => {
         });
 
         it('should skip experience screen for ENDING nodes', () => {
-            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as any);
+            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as ReturnType<typeof checkNavigationAccess>);
 
             // Node 1_11 is ENDING in adventure 1
             const { result } = renderHook(() => useEncounterNavigation({
@@ -129,10 +128,10 @@ describe('useEncounterNavigation', () => {
         });
 
         it('should navigate to map with adventureCompleted state on boss victory', () => {
-            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as any);
+            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as ReturnType<typeof checkNavigationAccess>);
 
             // Mock boss in store
-            (useEncounterStore.getState as any).mockReturnValue({
+            (useEncounterStore.getState as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
                 monsters: [{ id: 'boss', isBoss: true }]
             });
 
@@ -162,7 +161,7 @@ describe('useEncounterNavigation', () => {
 
     describe('handleCompletionContinue - Defeat', () => {
         it('should navigate back to the same node on map', () => {
-            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as any);
+            vi.mocked(checkNavigationAccess).mockReturnValue({ allowed: true } as ReturnType<typeof checkNavigationAccess>);
 
             const { result } = renderHook(() => useEncounterNavigation({
                 adventureId: '1',
