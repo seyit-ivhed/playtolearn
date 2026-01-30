@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
+
 import { useGameStore } from '../../stores/game/store';
+import { useAuth } from '../../hooks/useAuth';
 import { VOLUMES } from '../../data/volumes.data';
 import { calculateAdventureStars } from '../../utils/progression.utils';
 import { ChapterPage } from './components/ChapterPage';
@@ -12,13 +13,27 @@ import { useChronicleNavigation } from './hooks/useChronicleNavigation';
 import { useChronicleKeyboardShortcuts } from './hooks/useChronicleKeyboardShortcuts';
 import styles from './ChronicleBook.module.css';
 
+// New Book Components
+import { BookLayout } from './components/Book/BookLayout';
+import { BookPage } from './components/Book/BookPage';
+import { BookCover } from './components/Book/BookCover';
+import { BookLogin } from './components/Book/BookLogin';
+
 export const ChronicleBook: React.FC = () => {
     const { t } = useTranslation();
-    const { adventureStatuses, isAdventureUnlocked } = useGameStore();
+    const { adventureStatuses, isAdventureUnlocked, encounterResults } = useGameStore();
+    const { isAuthenticated } = useAuth();
+
+    // Check if user has any progress to decide initial state
+    const hasAnyProgress = Object.keys(encounterResults).length > 0;
+    const shouldShowCover = !isAuthenticated && !hasAnyProgress;
 
     // UI State
     const [isTocOpen, setIsTocOpen] = useState(false);
     const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
+    const [bookState, setBookState] = useState<'COVER' | 'LOGIN' | 'ADVENTURE'>(
+        shouldShowCover ? 'COVER' : 'ADVENTURE'
+    );
 
     // Hooks
     const {
@@ -26,7 +41,6 @@ export const ChronicleBook: React.FC = () => {
         currentAdventureIndex,
         currentAdventure,
         adventureTitles,
-        encounterResults,
         setActiveAdventureId
     } = useChronicleData();
 
@@ -47,27 +61,74 @@ export const ChronicleBook: React.FC = () => {
 
     useChronicleKeyboardShortcuts({
         isTocOpen,
-        handleNext,
-        handlePrev,
-        setIsTocOpen
+        handleNext: bookState === 'ADVENTURE' ? handleNext : () => { },
+        handlePrev: bookState === 'ADVENTURE' ? handlePrev : () => { },
+        setIsTocOpen: bookState === 'ADVENTURE' ? setIsTocOpen : () => { }
     });
 
-    if (!currentAdventure) return null;
+    // Handlers for Cover Interactions
+    const handleStartNewGame = () => {
+        setBookState('ADVENTURE');
+    };
+
+    const handleGoToLogin = () => {
+        setBookState('LOGIN');
+    };
+
+    const handleBackToCover = () => {
+        setBookState('COVER');
+    };
+
+    const handleLoginSuccess = () => {
+        setBookState('ADVENTURE');
+    };
+
+    if (!currentAdventure && bookState === 'ADVENTURE') return null;
+
+    // Calculate z-indices and states for 3D pages
+    const coverState = bookState === 'COVER' ? 'active' : 'flipped';
+    const loginState = bookState === 'LOGIN' ? 'active' : (bookState === 'COVER' ? 'upcoming' : 'flipped');
+    // const adventureState = bookState === 'ADVENTURE' ? 'active' : 'upcoming';
 
     return (
-        <div className={styles.chronicleWrapper} data-testid="chronicle-page">
-            <div className={styles.bookContainer} data-testid="chronicle-book">
-                <div className={styles.bookSpine}></div>
-                <div className={styles.bookPage}>
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={currentAdventure.id}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            transition={{ duration: 0.3 }}
-                            className={styles.pageMotionWrapper}
-                        >
+        <BookLayout>
+            {/* COVER PAGE */}
+            <BookPage
+                state={coverState}
+                zIndex={bookState === 'COVER' ? 30 : 10}
+                isCover
+            >
+                <BookCover
+                    onStart={handleStartNewGame}
+                    onLogin={handleGoToLogin}
+                />
+            </BookPage>
+
+            {/* LOGIN PAGE */}
+            <BookPage
+                state={loginState}
+                zIndex={bookState === 'LOGIN' ? 25 : 5}
+            >
+                <BookLogin
+                    onBack={handleBackToCover}
+                    onSuccess={handleLoginSuccess}
+                />
+            </BookPage>
+
+            {/* ADVENTURE ITEM PAGE (The main content) */}
+            {/* In a real book, we might have multiple pages. Here we keep the 'stack' illusion 
+                by having the Adventure page sit 'under' the cover/login pages until they flip open.
+            */}
+            <div
+                className={styles.bookPage}
+                style={{
+                    zIndex: 20,
+                    transform: 'rotateY(0deg)' // Always flat, cover flips reveals it
+                }}
+            >
+                <div className={styles.pageFront}>
+                    {bookState === 'ADVENTURE' && currentAdventure && (
+                        <div className={styles.pageMotionWrapper}>
                             <ChapterPage
                                 adventure={currentAdventure}
                                 status={adventureStatuses[currentAdventure.id] || 'LOCKED'}
@@ -84,37 +145,39 @@ export const ChronicleBook: React.FC = () => {
                                 isPremiumLocked={!isAdventureUnlocked(currentAdventure.id)}
                                 hasProgress={Object.keys(encounterResults).some(key => key.startsWith(`${currentAdventure.id}_`))}
                             />
-
-                        </motion.div>
-                    </AnimatePresence>
+                        </div>
+                    )}
                 </div>
-
-                <PremiumStoreModal
-                    isOpen={isPremiumModalOpen}
-                    onClose={() => setIsPremiumModalOpen(false)}
-                />
-
-
-                {/* TOC Button Overlay */}
-                <button
-                    className={styles.tocTrigger}
-                    onClick={() => setIsTocOpen(true)}
-                    data-testid="toc-trigger-btn"
-                >
-                    {t('chronicle.contents')}
-                </button>
             </div>
 
-            {isTocOpen && (
-                <TableOfContents
-                    volumes={VOLUMES}
-                    adventureStatuses={adventureStatuses}
-                    adventureTitles={adventureTitles}
-                    activeAdventureId={currentAdventure.id}
-                    onJumpToChapter={handleJumpToChapter}
-                    onClose={() => setIsTocOpen(false)}
-                />
+            <PremiumStoreModal
+                isOpen={isPremiumModalOpen}
+                onClose={() => setIsPremiumModalOpen(false)}
+            />
+
+            {bookState === 'ADVENTURE' && (
+                <>
+                    {/* TOC Button Overlay */}
+                    <button
+                        className={styles.tocTrigger}
+                        onClick={() => setIsTocOpen(true)}
+                        data-testid="toc-trigger-btn"
+                    >
+                        {t('chronicle.contents')}
+                    </button>
+
+                    {isTocOpen && currentAdventure && (
+                        <TableOfContents
+                            volumes={VOLUMES}
+                            adventureStatuses={adventureStatuses}
+                            adventureTitles={adventureTitles}
+                            activeAdventureId={currentAdventure.id}
+                            onJumpToChapter={handleJumpToChapter}
+                            onClose={() => setIsTocOpen(false)}
+                        />
+                    )}
+                </>
             )}
-        </div>
+        </BookLayout>
     );
 };

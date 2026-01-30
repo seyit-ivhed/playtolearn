@@ -8,14 +8,11 @@ import Layout from './components/Layout';
 import { useInitializeGame } from './hooks/useInitializeGame';
 import { useAnonymousLoginTrigger } from './hooks/useAnonymousLoginTrigger';
 import { LoadingScreen } from './components/LoadingScreen';
-import { LandingPage } from './features/landing/LandingPage';
-import { useGameStore } from './stores/game/store';
-import { useAuth } from './hooks/useAuth';
+
+// LandingPage is now integrated into ChronicleBook
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
-  const { isAuthenticated } = useAuth();
-  const encounterResults = useGameStore(state => state.encounterResults);
 
   useAnonymousLoginTrigger();
 
@@ -23,21 +20,15 @@ function AppContent() {
     return <LoadingScreen error={error} onRetry={retry} />;
   }
 
-  const hasProgress = Object.keys(encounterResults).length > 0;
-  const showLanding = !isAuthenticated && !hasProgress;
-
   return (
     <Routes>
-      {showLanding && (
-        <Route path="/" element={<LandingPage />} />
-      )}
-
       <Route element={<Layout />}>
-        {!showLanding && (
-          <Route path="/" element={<Navigate to="/chronicle" replace />} />
-        )}
+        {/* Unified Entry Point */}
+        <Route path="/" element={<ChronicleBook />} />
 
-        <Route path="/chronicle" element={<ChronicleBook />} />
+        {/* Legacy redirect, or if we want to keep /chronicle as valid */}
+        <Route path="/chronicle" element={<Navigate to="/" replace />} />
+
         <Route path="/map/:adventureId" element={<AdventurePage />} />
         <Route path="/encounter/:adventureId/:nodeIndex" element={<EncounterPage />} />
         <Route path="/puzzle/:adventureId/:nodeIndex" element={<PuzzlePage />} />
