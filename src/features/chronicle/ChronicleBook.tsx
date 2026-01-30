@@ -92,7 +92,7 @@ export const ChronicleBook: React.FC = () => {
             {/* COVER PAGE */}
             <BookPage
                 state={coverState}
-                zIndex={bookState === 'COVER' ? 30 : 10}
+                zIndex={bookState === 'COVER' ? 30 : 5}
                 isCover
             >
                 <BookCover
@@ -104,7 +104,7 @@ export const ChronicleBook: React.FC = () => {
             {/* LOGIN PAGE */}
             <BookPage
                 state={loginState}
-                zIndex={bookState === 'LOGIN' ? 25 : 5}
+                zIndex={bookState === 'ADVENTURE' ? 6 : 25}
             >
                 <BookLogin
                     onBack={handleBackToCover}
