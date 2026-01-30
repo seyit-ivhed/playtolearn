@@ -4,11 +4,9 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 2rem 1rem;
-    /* More padding top/bottom */
     box-sizing: border-box;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
+    /* Prevent page-level scroll */
     /* Typography inheritance */
     font-family: var(--font-body, serif);
     color: #4a3721;
@@ -22,7 +20,7 @@
 /* Header Styles */
 .chapter-header {
     text-align: center;
-    margin-bottom: 1.5rem;
+    padding: 2rem 1.5rem 1rem;
     flex-shrink: 0;
 }
 
@@ -48,8 +46,10 @@
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
-    margin-bottom: 2rem;
     width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 1.5rem 1.5rem;
 }
 
 /* Illustration Styles - Fixed */
@@ -133,12 +133,41 @@
 
 /* Footer & Actions */
 .chapter-footer {
-    padding-top: 1rem;
+    padding: 1.5rem 1.5rem 2rem;
     border-top: 1px solid rgba(74, 55, 33, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    margin-top: auto;
+    width: 100%;
+}
+
+.main-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 240px;
+    height: 3.5rem;
+    /* Fixed height to match buttons */
+}
+
+.locked-msg {
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    color: #8c7b66;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.page-indicator-bottom {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: #4a3721;
+    opacity: 0.6;
+    margin-top: 0.25rem;
 }
 
 .footer-controls {
@@ -201,16 +230,16 @@
     background: rgba(74, 55, 33, 0.05);
 }
 
-/* Scrollbar styling */
-.chapter-page::-webkit-scrollbar {
+/* Scrollbar styling - now for content */
+.chapter-content::-webkit-scrollbar {
     width: 6px;
 }
 
-.chapter-page::-webkit-scrollbar-track {
+.chapter-content::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.chapter-page::-webkit-scrollbar-thumb {
-    background-color: rgba(74, 55, 33, 0.3);
+.chapter-content::-webkit-scrollbar-thumb {
+    background-color: rgba(74, 55, 33, 0.2);
     border-radius: 3px;
 }
