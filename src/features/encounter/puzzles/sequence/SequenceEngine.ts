@@ -169,7 +169,7 @@ export const generateSequenceData = (difficulty: DifficultyLevel): PuzzleData =>
             ruleType = 'MULTIPLY';
             step = 2; // Doubling
             startValue = 1;
-            count = 5; // 1, 2, 4, 8, 16
+            count = 7; // 1, 2, 4, 8, 16, 32, 64
         } else {
             ruleType = 'ADD';
             const options = [3, 4, 5, 10];

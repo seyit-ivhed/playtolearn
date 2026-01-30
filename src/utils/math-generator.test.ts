@@ -8,6 +8,9 @@ import {
 import { MathOperation } from '../types/math.types';
 import { PuzzleType } from '../types/adventure.types';
 import { type BalancePuzzleData } from '../features/encounter/puzzles/balance/BalanceEngine';
+import { type GuardianTributePuzzleData } from '../features/encounter/puzzles/guardian-tribute/GuardianTributeEngine';
+import { type SymmetryPuzzleData } from '../features/encounter/puzzles/symmetry/SymmetryEngine';
+import { type LatinSquarePuzzleData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
 
 describe('Math Generator Functionality', () => {
     describe('Basic Math Problems', () => {
@@ -87,6 +90,46 @@ describe('Math Generator Functionality', () => {
             expect(data.targetValue).toBeDefined();
             expect(data.rules).toBeDefined();
             expect(data.options.length).toBeGreaterThan(0);
+        });
+
+        it('should generate valid Guardian Tribute puzzle data', () => {
+            const data = generatePuzzleData(PuzzleType.GUARDIAN_TRIBUTE, 1) as GuardianTributePuzzleData;
+            expect(data.puzzleType).toBe(PuzzleType.GUARDIAN_TRIBUTE);
+            expect(data.guardians).toBeDefined();
+            expect(data.guardians.length).toBeGreaterThan(0);
+            expect(data.totalGems).toBeGreaterThan(0);
+        });
+
+        it('should generate valid Symmetry puzzle data', () => {
+            const data = generatePuzzleData(PuzzleType.SYMMETRY, 1) as SymmetryPuzzleData;
+            expect(data.puzzleType).toBe(PuzzleType.SYMMETRY);
+            expect(data.targetValue).toBe(3); // Level 1 -> 3x3
+            expect(data.leftOptions).toBeDefined();
+            expect(data.rightOptions).toBeDefined();
+        });
+
+        it('should generate valid Latin Square puzzle data', () => {
+            const data = generatePuzzleData(PuzzleType.LATIN_SQUARE, 2) as LatinSquarePuzzleData;
+            expect(data.puzzleType).toBe(PuzzleType.LATIN_SQUARE);
+            expect(data.targetValue).toBe(4);
+            expect(data.options).toBeDefined();
+        });
+    });
+
+    describe('Error Handling', () => {
+        it('should throw error if puzzle type is missing', () => {
+            // @ts-expect-error - Testing invalid input
+            expect(() => generatePuzzleData(null, 1)).toThrow('Puzzle type is required');
+        });
+
+        it('should throw error if difficulty is missing', () => {
+            // @ts-expect-error - Testing invalid input
+            expect(() => generatePuzzleData(PuzzleType.SUM_TARGET, null)).toThrow('Valid difficulty level is required');
+        });
+
+        it('should throw error for unsupported puzzle type', () => {
+            // @ts-expect-error - Testing invalid input
+            expect(() => generatePuzzleData('INVALID_TYPE', 1)).toThrow('Unsupported puzzle type: INVALID_TYPE');
         });
     });
 });
