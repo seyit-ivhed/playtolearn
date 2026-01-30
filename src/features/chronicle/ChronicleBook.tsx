@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { useGameStore } from '../../stores/game/store';
 import { useAuth } from '../../hooks/useAuth';
 import { VOLUMES } from '../../data/volumes.data';
@@ -12,8 +11,6 @@ import { useChronicleData } from './hooks/useChronicleData';
 import { useChronicleNavigation } from './hooks/useChronicleNavigation';
 import { useChronicleKeyboardShortcuts } from './hooks/useChronicleKeyboardShortcuts';
 import styles from './ChronicleBook.module.css';
-
-// New Book Components
 import { BookLayout } from './components/Book/BookLayout';
 import { BookPage } from './components/Book/BookPage';
 import { BookCover } from './components/Book/BookCover';
@@ -115,40 +112,48 @@ export const ChronicleBook: React.FC = () => {
                 />
             </BookPage>
 
-            {/* ADVENTURE ITEM PAGE (The main content) */}
-            {/* In a real book, we might have multiple pages. Here we keep the 'stack' illusion 
-                by having the Adventure page sit 'under' the cover/login pages until they flip open.
-            */}
-            <div
-                className={styles.bookPage}
-                style={{
-                    zIndex: 20,
-                    transform: 'rotateY(0deg)' // Always flat, cover flips reveals it
-                }}
-            >
-                <div className={styles.pageFront}>
-                    {bookState === 'ADVENTURE' && currentAdventure && (
+            {/* ADVENTURE ITEM PAGES (The main content) */}
+            {volumeAdventures.map((adventure, index) => {
+                // Only render current, previous (flipped), and next (upcoming) to optimize
+                const isVisible = Math.abs(index - currentAdventureIndex) <= 1;
+                if (!isVisible) {
+                    return null;
+                }
+
+                const state = index < currentAdventureIndex ? 'flipped' :
+                    index === currentAdventureIndex ? 'active' : 'upcoming';
+
+                // Calculate z-index: active is 20, flipped are 10+index, upcoming are 10-index
+                const zIndex = index === currentAdventureIndex ? 20 :
+                    index < currentAdventureIndex ? 10 + index : 10 - index;
+
+                return (
+                    <BookPage
+                        key={adventure.id}
+                        state={state}
+                        zIndex={zIndex}
+                    >
                         <div className={styles.pageMotionWrapper}>
                             <ChapterPage
-                                adventure={currentAdventure}
-                                status={adventureStatuses[currentAdventure.id] || 'LOCKED'}
-                                stars={calculateAdventureStars(currentAdventure.id, currentAdventure.encounters, encounterResults)}
+                                adventure={adventure}
+                                status={adventureStatuses[adventure.id] || 'LOCKED'}
+                                stars={calculateAdventureStars(adventure.id, adventure.encounters, encounterResults)}
                                 onBegin={handleBegin}
                                 onReplay={handleBegin}
                                 onNext={handleNext}
                                 onPrev={handlePrev}
-                                canNext={currentAdventureIndex < volumeAdventures.length - 1}
-                                canPrev={currentAdventureIndex > 0}
-                                currentPage={currentAdventureIndex + 1}
+                                canNext={index < volumeAdventures.length - 1}
+                                canPrev={index > 0}
+                                currentPage={index + 1}
                                 totalPages={volumeAdventures.length}
-                                isJustCompleted={isJustCompleted}
-                                isPremiumLocked={!isAdventureUnlocked(currentAdventure.id)}
-                                hasProgress={Object.keys(encounterResults).some(key => key.startsWith(`${currentAdventure.id}_`))}
+                                isJustCompleted={isJustCompleted && adventure.id === currentAdventure?.id}
+                                isPremiumLocked={!isAdventureUnlocked(adventure.id)}
+                                hasProgress={Object.keys(encounterResults).some(key => key.startsWith(`${adventure.id}_`))}
                             />
                         </div>
-                    )}
-                </div>
-            </div>
+                    </BookPage>
+                );
+            })}
 
             <PremiumStoreModal
                 isOpen={isPremiumModalOpen}
