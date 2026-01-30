@@ -114,12 +114,6 @@ export const ChronicleBook: React.FC = () => {
 
             {/* ADVENTURE ITEM PAGES (The main content) */}
             {volumeAdventures.map((adventure, index) => {
-                // Only render current, previous (flipped), and next (upcoming) to optimize
-                const isVisible = Math.abs(index - currentAdventureIndex) <= 1;
-                if (!isVisible) {
-                    return null;
-                }
-
                 const state = index < currentAdventureIndex ? 'flipped' :
                     index === currentAdventureIndex ? 'active' : 'upcoming';
 
