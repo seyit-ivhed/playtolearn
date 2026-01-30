@@ -118,7 +118,9 @@ export const formatActionLabel = (option: number | PuzzleOption): string => {
     }
 
     const { value, type, label } = option;
-    if (label) return label;
+    if (label) {
+        return label;
+    }
 
     switch (type) {
         case 'MULTIPLY':

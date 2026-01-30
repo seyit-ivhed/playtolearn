@@ -39,6 +39,10 @@ export interface GuardianTributePuzzleData extends PuzzleData {
  * Calculates the total number of gems currently distributed among guardians.
  */
 export const calculateTotalDistributed = (guardianValues: number[]): number => {
+    if (!guardianValues) {
+        console.error('guardianValues is missing in calculateTotalDistributed');
+        return 0;
+    }
     return guardianValues.reduce((sum, val) => sum + val, 0);
 };
 
@@ -61,7 +65,9 @@ export const isValidAdjustment = (
     totalGems: number
 ): boolean => {
     const newValue = currentValues[guardianIndex] + delta;
-    if (newValue < 0) return false;
+    if (newValue < 0) {
+        return false;
+    }
 
     const newTotal = currentValues.reduce((sum, val, idx) =>
         idx === guardianIndex ? sum + newValue : sum + val, 0
@@ -83,25 +89,33 @@ export const validateGuardianConstraint = (
             return value === constraint.value;
 
         case GuardianConstraintType.MULTIPLIER: {
-            if (constraint.targetGuardian === undefined || constraint.multiplier === undefined) return false;
+            if (constraint.targetGuardian === undefined || constraint.multiplier === undefined) {
+                return false;
+            }
             const targetValue = guardianValues[constraint.targetGuardian];
             return value === targetValue * constraint.multiplier;
         }
 
         case GuardianConstraintType.ADDITION: {
-            if (constraint.targetGuardian === undefined || constraint.value === undefined) return false;
+            if (constraint.targetGuardian === undefined || constraint.value === undefined) {
+                return false;
+            }
             const baseValue = guardianValues[constraint.targetGuardian];
             return value === baseValue + constraint.value;
         }
 
         case GuardianConstraintType.RANGE:
-            if (constraint.min === undefined || constraint.max === undefined) return false;
+            if (constraint.min === undefined || constraint.max === undefined) {
+                return false;
+            }
             return value >= constraint.min && value <= constraint.max;
 
 
 
         case GuardianConstraintType.COMPARISON: {
-            if (constraint.targetGuardian === undefined || constraint.operator === undefined) return false;
+            if (constraint.targetGuardian === undefined || constraint.operator === undefined) {
+                return false;
+            }
             const compareValue = guardianValues[constraint.targetGuardian];
             return constraint.operator === 'greater' ? value > compareValue : value < compareValue;
         }

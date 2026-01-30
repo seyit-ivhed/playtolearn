@@ -10,6 +10,15 @@ import type { EncounterResult } from '../stores/game/interfaces';
  * @returns Calculated CompanionStats
  */
 export const getStatsForLevel = (companion: Companion, level: number): CompanionStats => {
+    if (!companion) {
+        console.error('Companion is missing in getStatsForLevel');
+        throw new Error('Companion is required');
+    }
+    if (typeof level !== 'number') {
+        console.error(`Invalid level type: ${typeof level} in getStatsForLevel`);
+        throw new Error('Level must be a number');
+    }
+
     // Basic linear scaling: 10% increase per level from base
     const scalingFactor = 1 + (level - 1) * EXPERIENCE_CONFIG.STAT_SCALING_FACTOR;
 
@@ -75,6 +84,19 @@ export const calculateAdventureStars = (
     encounters: Encounter[],
     encounterResults: Record<string, EncounterResult>
 ): number => {
+    if (!adventureId) {
+        console.error('adventureId is missing in calculateAdventureStars');
+        return 0;
+    }
+    if (!encounters) {
+        console.error('encounters missing in calculateAdventureStars');
+        return 0;
+    }
+    if (!encounterResults) {
+        console.error('encounterResults missing in calculateAdventureStars');
+        return 0;
+    }
+
     let minStars = 3;
     let hasScorableEncounters = false;
 

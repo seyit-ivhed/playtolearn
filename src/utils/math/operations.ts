@@ -87,8 +87,11 @@ export const getAllowedOperations = (difficulty: DifficultyLevel): MathOperation
         ops.push(MathOperation.MULTIPLY);
     }
 
-    // Default to ADD if no operations are found (safety fallback)
-    return ops.length > 0 ? ops : [MathOperation.ADD];
+    if (ops.length === 0) {
+        console.error(`No allowed operations found for difficulty: ${difficulty}`);
+        return [MathOperation.ADD];
+    }
+    return ops;
 };
 
 /**
@@ -111,8 +114,8 @@ export const generateProblem = (
             problem = generateMultiplicationProblem(difficulty);
             break;
         default:
-            // Fallback to addition if something goes wrong
-            problem = generateAdditionProblem(difficulty);
+            console.error(`Unsupported math operation: ${operation}`);
+            throw new Error(`Unsupported math operation: ${operation}`);
     }
 
     // Add multiple choices

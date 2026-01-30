@@ -67,9 +67,15 @@ export const MapNode: React.FC<MapNodeProps> = ({
             className: 'node-icon'
         };
 
-        if (isBoss) return <Swords {...iconProps} />;
-        if (isPuzzle) return <Puzzle {...iconProps} />;
-        if (isEnding) return <BookOpen {...iconProps} />;
+        if (isBoss) {
+            return <Swords {...iconProps} />;
+        }
+        if (isPuzzle) {
+            return <Puzzle {...iconProps} />;
+        }
+        if (isEnding) {
+            return <BookOpen {...iconProps} />;
+        }
         return <Swords {...iconProps} />;
     };
 

@@ -38,7 +38,9 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    if (!isOpen) return null;
+    if (!isOpen) {
+        return null;
+    }
 
     const difficulties = [1, 2, 3];
 

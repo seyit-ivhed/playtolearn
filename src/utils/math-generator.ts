@@ -35,16 +35,22 @@ export const generatePuzzleData = (
     puzzleType: PuzzleType,
     difficulty: DifficultyLevel
 ): PuzzleData => {
+    if (!puzzleType) {
+        console.error('Puzzle type is missing in generatePuzzleData');
+        throw new Error('Puzzle type is required');
+    }
+
+    if (!difficulty || typeof difficulty !== 'number') {
+        console.error(`Invalid difficulty level: ${difficulty}`);
+        throw new Error('Valid difficulty level is required');
+    }
+
     const generator = PUZZLE_GENERATORS[puzzleType];
 
     if (generator) {
         return generator(difficulty);
     }
 
-    // Default fallback if type is not recognized
-    return {
-        puzzleType: PuzzleType.SUM_TARGET,
-        targetValue: 10,
-        options: [2, 3, 5]
-    };
+    console.error(`No generator found for puzzle type: ${puzzleType}`);
+    throw new Error(`Unsupported puzzle type: ${puzzleType}`);
 };

@@ -11,7 +11,9 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
     const [selected, setSelected] = useState<number | null>(null);
 
     const handleAnswer = (choice: number) => {
-        if (selected !== null) return; // Prevent double click
+        if (selected !== null) {
+            return;
+        }
         setSelected(choice);
         const isCorrect = choice === problem.correctAnswer;
 
@@ -22,9 +24,15 @@ export const MathCardFace = ({ problem, abilityName, onAnswer }: MathCardFacePro
     };
 
     const getBtnClass = (choice: number) => {
-        if (selected === null) return 'math-choice-btn';
-        if (choice === problem.correctAnswer) return 'math-choice-btn correct';
-        if (choice === selected && choice !== problem.correctAnswer) return 'math-choice-btn wrong';
+        if (selected === null) {
+            return 'math-choice-btn';
+        }
+        if (choice === problem.correctAnswer) {
+            return 'math-choice-btn correct';
+        }
+        if (choice === selected && choice !== problem.correctAnswer) {
+            return 'math-choice-btn wrong';
+        }
         return 'math-choice-btn dimmed';
     };
 

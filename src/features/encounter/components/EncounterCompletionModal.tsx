@@ -77,8 +77,8 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                                     >
                                         <Star
                                             size={54}
-                                            fill={i < difficulty ? "#FFD700" : "transparent"}
-                                            color={i < difficulty ? "#FFD700" : "rgba(255,255,255,0.2)"}
+                                            fill={i < difficulty ? "var(--color-brand-accent)" : "transparent"}
+                                            color={i < difficulty ? "var(--color-brand-accent)" : "rgba(255,255,255,0.2)"}
                                             className={i < difficulty ? "star-earned glow" : "star-earned"}
                                         />
                                     </motion.div>

@@ -84,7 +84,9 @@ export const isSequenceComplete = (
     currentValues: number[],
     targetValue: number
 ): boolean => {
-    if (currentValues.length === 0) return false;
+    if (currentValues.length === 0) {
+        return false;
+    }
     const lastValue = currentValues[currentValues.length - 1];
     return lastValue >= targetValue;
 };

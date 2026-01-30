@@ -75,7 +75,9 @@ export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleD
 
     // Helper to generate weights summing to a remainder
     const generateComponents = (target: number, count: number): number[] => {
-        if (count <= 1) return [target];
+        if (count <= 1) {
+            return [target];
+        }
 
         const result: number[] = [];
         let remainder = target;

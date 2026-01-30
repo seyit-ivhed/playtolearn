@@ -17,12 +17,16 @@ export const generateMultipleChoices = (correctAnswer: number, count: number = 4
         let wrongAnswer = (correctAnswer as number) + (variance * direction);
 
         // Ensure positive answers for this age group (mostly)
-        if (wrongAnswer < 0) wrongAnswer = Math.abs(wrongAnswer);
+        if (wrongAnswer < 0) {
+            wrongAnswer = Math.abs(wrongAnswer);
+        }
 
         // If we generated the correct answer or a duplicate, try a random offset
         if (choices.has(wrongAnswer)) {
             wrongAnswer = (correctAnswer as number) + getRandomInt(-10, 10);
-            if (wrongAnswer < 0) wrongAnswer = 0;
+            if (wrongAnswer < 0) {
+                wrongAnswer = 0;
+            }
         }
 
         // Fallback if we're stuck (e.g. answer is 0 or 1)
