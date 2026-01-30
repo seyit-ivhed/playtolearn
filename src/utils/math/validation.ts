@@ -7,12 +7,14 @@ export const validateAnswer = (
     userAnswer: number | string,
     correctAnswer: number | string
 ): ValidationResult => {
-    const isCorrect = userAnswer === correctAnswer;
+    const numUserAnswer = typeof userAnswer === 'string' ? Number(userAnswer) : userAnswer;
+    const numCorrectAnswer = typeof correctAnswer === 'string' ? Number(correctAnswer) : correctAnswer;
+    const isCorrect = numUserAnswer === numCorrectAnswer;
 
     return {
         isCorrect,
-        userAnswer,
-        correctAnswer,
+        userAnswer: numUserAnswer,
+        correctAnswer: numCorrectAnswer,
         feedback: isCorrect ? 'correct' : 'incorrect',
     };
 };
