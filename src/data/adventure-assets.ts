@@ -4,7 +4,6 @@
  * Kept separate from data files to avoid Node.js import issues with image assets.
  */
 
-const prologueIllustration = new URL('../assets/images/chapters/prologue.png', import.meta.url).href;
 const chapter1Illustration = new URL('../assets/images/chapters/chapter-1.png', import.meta.url).href;
 const chapter2Illustration = new URL('../assets/images/chapters/chapter-2.png', import.meta.url).href;
 const chapter3Illustration = new URL('../assets/images/chapters/chapter-3.png', import.meta.url).href;
@@ -13,7 +12,6 @@ const adventure2Map = new URL('../assets/images/maps/adventure-2.png', import.me
 const adventure3Map = new URL('../assets/images/maps/adventure-3.png', import.meta.url).href;
 
 const ADVENTURE_ILLUSTRATIONS: Record<string, string> = {
-    'prologue': prologueIllustration,
     '1': chapter1Illustration,
     '2': chapter2Illustration,
     '3': chapter3Illustration,

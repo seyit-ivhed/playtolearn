@@ -5,22 +5,40 @@ import type { EncounterResult } from '../../../stores/game/interfaces';
 /**
  * Finds the highest ranked adventure the player has unlocked.
  * Starts from the end of the ADVENTURES list and returns the first one with AVAILABLE or COMPLETED status.
- * Defaults to 'prologue' if no adventures are unlocked.
+ * Defaults to the first adventure if no progress is found.
  */
 export const getHighestUnlockedAdventure = (
     adventureStatuses: Record<AdventureId, AdventureStatus>
-): { volumeId: string; adventureId: AdventureId } => {
+): { volumeId: string; adventureId: AdventureId } | undefined => {
     // Search backwards through adventures to find the furthest unlocked one
     for (let i = ADVENTURES.length - 1; i >= 0; i--) {
         const adventure = ADVENTURES[i];
         const status = adventureStatuses[adventure.id];
         if (status === AdventureStatus.AVAILABLE || status === AdventureStatus.COMPLETED) {
-            return { volumeId: adventure.volumeId || 'origins', adventureId: adventure.id };
+            if (!adventure.volumeId) {
+                console.error(`Volume ID missing for adventure ${adventure.id}`);
+                return;
+            }
+            return { volumeId: adventure.volumeId, adventureId: adventure.id };
         }
     }
 
-    // Default to prologue
-    return { volumeId: 'origins', adventureId: 'prologue' };
+    // Default to the first adventure
+    const firstAdventure = ADVENTURES[0];
+    if (!firstAdventure) {
+        console.error('No adventures found in ADVENTURES data');
+        return;
+    }
+
+    if (!firstAdventure.volumeId) {
+        console.error(`Volume ID missing for adventure ${firstAdventure.id}`);
+        return;
+    }
+
+    return {
+        volumeId: firstAdventure.volumeId,
+        adventureId: firstAdventure.id
+    };
 };
 
 /**

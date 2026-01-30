@@ -5,14 +5,6 @@ import { checkNavigationAccess } from './navigation-security.utils';
 vi.mock('../data/adventures.data', () => ({
     ADVENTURES: [
         {
-            id: 'prologue',
-            encounters: [
-                { id: 'p1', type: 'BATTLE' },
-                { id: 'p2', type: 'PUZZLE' },
-                { id: 'p3', type: 'ENDING' }
-            ]
-        },
-        {
             id: '1',
             encounters: [
                 { id: '1_1', type: 'BATTLE' },
@@ -37,7 +29,7 @@ describe('navigation-security.utils', () => {
 
     it('should allow access to available adventure', () => {
         const result = checkNavigationAccess({
-            adventureId: 'prologue',
+            adventureId: '1',
             isPremiumUnlocked: mockIsPremiumUnlocked,
             isProgressionUnlocked: mockIsProgressionUnlocked,
             encounterResults: {}
@@ -110,21 +102,6 @@ describe('navigation-security.utils', () => {
             encounterResults: {
                 '1_1': { stars: 3, difficulty: 1, completedAt: 123 },
                 '1_2': { stars: 3, difficulty: 1, completedAt: 124 }
-            }
-        });
-        expect(result.allowed).toBe(true);
-    });
-
-    it('should allow access through non-gating nodes (if any, though ending isnt gating for next node access but it is a node)', () => {
-        // ENDING nodes are not in my check list by default but they are nodes.
-        const result = checkNavigationAccess({
-            adventureId: 'prologue',
-            nodeIndex: 3, // ENDING
-            isPremiumUnlocked: mockIsPremiumUnlocked,
-            isProgressionUnlocked: mockIsProgressionUnlocked,
-            encounterResults: {
-                'prologue_1': { stars: 3, difficulty: 1, completedAt: 123 },
-                'prologue_2': { stars: 3, difficulty: 1, completedAt: 124 }
             }
         });
         expect(result.allowed).toBe(true);

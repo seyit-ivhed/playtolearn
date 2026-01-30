@@ -51,8 +51,6 @@ export const useChronicleNavigation = ({
     }, [setActiveAdventureId, setIsTocOpen]);
 
     const handleBegin = useCallback((id: string) => {
-        if (id === 'prologue') return;
-
         if (!isAdventureUnlocked(id)) {
             setIsPremiumModalOpen(true);
             return;

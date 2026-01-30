@@ -42,8 +42,7 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     isPremiumLocked,
     hasProgress
 }) => {
-    const isPrologue = adventure.id === 'prologue';
-    const isProgressionLocked = !isPrologue && status === AdventureStatus.LOCKED;
+    const isProgressionLocked = status === AdventureStatus.LOCKED;
     const isLocked = isProgressionLocked || isPremiumLocked;
     const isCompleted = status === AdventureStatus.COMPLETED;
     const illustration = getAdventureIllustration(adventure.id);
@@ -53,7 +52,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
             <ChapterHeader
                 adventureId={adventure.id}
                 adventureTitle={adventure.title}
-                isPrologue={isPrologue}
             />
 
             <div className="chapter-content">
@@ -68,7 +66,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     adventureStoryHook={adventure.storyHook}
                     adventureDescription={adventure.description}
                     isLocked={isLocked}
-                    isPrologue={isPrologue}
                     isCompleted={isCompleted}
                     isJustCompleted={isJustCompleted}
                     stars={stars}
@@ -84,7 +81,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                 onPrev={onPrev}
                 canNext={canNext}
                 canPrev={canPrev}
-                isPrologue={isPrologue}
                 isLocked={isLocked}
                 isPremiumLocked={isPremiumLocked}
                 isProgressionLocked={isProgressionLocked}

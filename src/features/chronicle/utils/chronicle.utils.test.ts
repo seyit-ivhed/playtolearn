@@ -12,8 +12,6 @@ import type { Adventure } from '../../../types/adventure.types';
 
 describe('chronicle.utils', () => {
     const mockT = vi.fn((key: string) => {
-        if (key === 'adventures.prologue.title') return 'Prologue Title';
-        if (key === 'adventures.prologue.story_hook') return 'Prologue Hook';
         if (key.startsWith('adventures.') && key.endsWith('.title')) {
             const id = key.split('.')[1];
             return `Title ${id}`;
@@ -24,11 +22,6 @@ describe('chronicle.utils', () => {
     describe('resolveCurrentVolume', () => {
         it('should return origins volume for adventure 4', () => {
             const result = resolveCurrentVolume('4');
-            expect(result.id).toBe('origins');
-        });
-
-        it('should return the first volume for the prologue', () => {
-            const result = resolveCurrentVolume('prologue');
             expect(result.id).toBe('origins');
         });
 
@@ -44,31 +37,27 @@ describe('chronicle.utils', () => {
     });
 
     describe('resolveVolumeAdventures', () => {
-        it('should include prologue for origins volume', () => {
+        it('should return adventures for volume', () => {
             const originsVolume = VOLUMES.find(v => v.id === 'origins')!;
             const result = resolveVolumeAdventures(originsVolume, mockT as unknown as TFunction);
-
-            expect(result[0].id).toBe('prologue');
-            expect(result[0].title).toBe('Prologue Title');
 
             const expectedAdventureIds = ADVENTURES
                 .filter(a => a.volumeId === originsVolume.id)
                 .map(a => a.id);
 
-            expect(result.slice(1).map(a => a.id)).toEqual(expectedAdventureIds);
+            expect(result.map(a => a.id)).toEqual(expectedAdventureIds);
         });
     });
 
     describe('resolveCurrentAdventureIndex', () => {
         const mockAdventures = [
-            { id: 'prologue' },
             { id: '1' },
             { id: '2' }
         ] as unknown as Adventure[];
 
         it('should return correct index if found', () => {
-            expect(resolveCurrentAdventureIndex(mockAdventures, '1')).toBe(1);
-            expect(resolveCurrentAdventureIndex(mockAdventures, 'prologue')).toBe(0);
+            expect(resolveCurrentAdventureIndex(mockAdventures, '1')).toBe(0);
+            expect(resolveCurrentAdventureIndex(mockAdventures, '2')).toBe(1);
         });
 
         it('should return 0 if not found', () => {
@@ -81,13 +70,13 @@ describe('chronicle.utils', () => {
     });
 
     describe('generateAdventureTitles', () => {
-        it('should generate a map of titles including prologue', () => {
+        it('should generate a map of titles', () => {
             const result = generateAdventureTitles(mockT as unknown as TFunction);
 
-            expect(result['prologue']).toBe('Prologue Title');
             ADVENTURES.forEach(a => {
                 expect(result[a.id]).toBe(`Title ${a.id}`);
             });
+            expect(result['prologue']).toBeUndefined();
         });
     });
 });

@@ -1,15 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useGameStore } from './store';
+import { AdventureStatus } from '../../types/adventure.types';
 
 // Mock dependencies
 vi.mock('../data/adventures.data', () => ({
     ADVENTURES: [
-        {
-            id: 'origins_prologue',
-            encounters: [
-                { id: 'p_1' }
-            ]
-        },
         {
             id: '1',
             encounters: [
@@ -49,13 +44,15 @@ describe('useGameStore', () => {
             activeParty: ['c1', 'c2'],
             encounterResults: {},
             activeEncounterDifficulty: 1,
-
+            adventureStatuses: {
+                '1': AdventureStatus.AVAILABLE
+            },
             companionStats: {
-                'c1': { level: 1 },
-                'c2': { level: 1 },
-                'c3': { level: 1 },
-                'c4': { level: 1 },
-                'c5': { level: 1 }
+                'c1': { level: 1, experience: 0 },
+                'c2': { level: 1, experience: 0 },
+                'c3': { level: 1, experience: 0 },
+                'c4': { level: 1, experience: 0 },
+                'c5': { level: 1, experience: 0 }
             }
         });
         vi.clearAllMocks();

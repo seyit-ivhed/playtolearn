@@ -11,7 +11,6 @@ interface ChapterActionsProps {
     onPrev: () => void;
     canNext: boolean;
     canPrev: boolean;
-    isPrologue: boolean;
     isLocked: boolean | undefined;
     isPremiumLocked: boolean | undefined;
     isProgressionLocked: boolean;
@@ -30,7 +29,6 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
     onPrev,
     canNext,
     canPrev,
-    isPrologue,
     isLocked,
     isPremiumLocked,
     isProgressionLocked,
@@ -58,17 +56,7 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                 </motion.button>
 
                 <div className="main-action">
-                    {isPrologue ? (
-                        <motion.button
-                            className="book-btn begin-btn"
-                            onClick={onNext}
-                            data-testid="next-chapter-btn"
-                            whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            {t('chronicle.next_chapter', 'Next Chapter')}
-                        </motion.button>
-                    ) : !isLocked ? (
+                    {!isLocked ? (
                         isJustCompleted && canNext ? (
                             <motion.button
                                 className="book-btn begin-btn"
@@ -82,7 +70,9 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                         ) : isCompleted ? (
                             <motion.button
                                 className="book-btn replay-btn"
-                                onClick={() => onReplay(adventureId)}
+                                onClick={() => {
+                                    onReplay(adventureId);
+                                }}
                                 data-testid="replay-chapter-btn"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -92,7 +82,9 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                         ) : (
                             <motion.button
                                 className="book-btn begin-btn"
-                                onClick={() => onBegin(adventureId)}
+                                onClick={() => {
+                                    onBegin(adventureId);
+                                }}
                                 data-testid="begin-chapter-btn"
                                 whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
                                 whileTap={{ scale: 0.95 }}
@@ -103,7 +95,9 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                     ) : isPremiumLocked && !isProgressionLocked ? (
                         <motion.button
                             className="book-btn premium-btn"
-                            onClick={() => onBegin(adventureId)}
+                            onClick={() => {
+                                onBegin(adventureId);
+                            }}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >

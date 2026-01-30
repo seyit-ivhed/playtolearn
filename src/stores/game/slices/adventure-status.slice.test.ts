@@ -21,7 +21,6 @@ describe('adventure-status.slice', () => {
     it('should initialize with default adventure statuses', () => {
         const slice = setupSlice();
         expect(slice.adventureStatuses).toEqual({
-            'prologue': AdventureStatus.AVAILABLE,
             '1': AdventureStatus.AVAILABLE
         });
     });

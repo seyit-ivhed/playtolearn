@@ -5,7 +5,6 @@ import { ADVENTURES } from '../../../data/adventures.data';
 import { PersistenceService } from '../../../services/persistence.service';
 
 const INITIAL_ADVENTURE_STATUSES: Record<AdventureId, AdventureStatus> = {
-    'prologue': AdventureStatus.AVAILABLE,
     '1': AdventureStatus.AVAILABLE
 };
 

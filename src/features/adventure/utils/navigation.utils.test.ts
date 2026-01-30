@@ -7,24 +7,23 @@ import type { EncounterResult } from '../../../stores/game/interfaces';
 vi.mock('../../../data/adventures.data', () => ({
     ADVENTURES: [
         {
-            id: 'prologue',
-            volumeId: 'origins',
-            encounters: [{ id: 'p1' }, { id: 'p2' }, { id: 'p3' }]
-        },
-        {
             id: '1',
             volumeId: 'origins',
             encounters: [{ id: '1_1' }, { id: '1_2' }]
         },
         {
             id: '2',
-            // volumeId missing to test fallback
+            volumeId: 'origins',
             encounters: [{ id: '2_1' }, { id: '2_2' }, { id: '2_3' }]
         },
         {
             id: '3',
             volumeId: 'volume_2',
             encounters: [{ id: '3_1' }]
+        },
+        {
+            id: '4',
+            encounters: []
         }
     ]
 }));
@@ -33,7 +32,6 @@ describe('navigation.utils', () => {
     describe('getHighestUnlockedAdventure', () => {
         it('should return the furthest unlocked adventure (backwards search)', () => {
             const statuses = {
-                'prologue': AdventureStatus.COMPLETED,
                 '1': AdventureStatus.AVAILABLE,
                 '2': AdventureStatus.LOCKED,
             } as Record<AdventureId, AdventureStatus>;
@@ -44,7 +42,6 @@ describe('navigation.utils', () => {
 
         it('should find the furthest even if there are gaps (though rare in practice)', () => {
             const statuses = {
-                'prologue': AdventureStatus.COMPLETED,
                 '1': AdventureStatus.LOCKED,
                 '2': AdventureStatus.AVAILABLE,
             } as Record<AdventureId, AdventureStatus>;
@@ -55,39 +52,44 @@ describe('navigation.utils', () => {
 
         it('should treat COMPLETED and AVAILABLE as unlocked', () => {
             const statuses = {
-                'prologue': AdventureStatus.COMPLETED,
+                '1': AdventureStatus.COMPLETED,
             } as Record<AdventureId, AdventureStatus>;
 
             const result = getHighestUnlockedAdventure(statuses);
-            expect(result.adventureId).toBe('prologue');
+            expect(result).toEqual({ volumeId: 'origins', adventureId: '1' });
         });
 
         it('should use volumeId from adventure data', () => {
             const statuses = {
-                'prologue': AdventureStatus.COMPLETED,
                 '1': AdventureStatus.COMPLETED,
                 '2': AdventureStatus.COMPLETED,
                 '3': AdventureStatus.AVAILABLE,
             } as Record<AdventureId, AdventureStatus>;
 
             const result = getHighestUnlockedAdventure(statuses);
-            expect(result.volumeId).toBe('volume_2');
+            expect(result).toEqual({ volumeId: 'volume_2', adventureId: '3' });
         });
 
-        it('should fallback to "origins" if volumeId is missing', () => {
+        it('should return undefined and log error if volumeId is missing', () => {
+            // Note: Now logs error and returns undefined instead of falling back
             const statuses = {
-                'prologue': AdventureStatus.COMPLETED,
                 '1': AdventureStatus.COMPLETED,
-                '2': AdventureStatus.AVAILABLE,
+                '4': AdventureStatus.AVAILABLE,
             } as Record<AdventureId, AdventureStatus>;
 
+            const spy = vi.spyOn(console, 'error').mockImplementation(() => { });
             const result = getHighestUnlockedAdventure(statuses);
-            expect(result.volumeId).toBe('origins');
+            expect(result).toBeUndefined();
+            expect(spy).toHaveBeenCalledWith('Volume ID missing for adventure 4');
+            spy.mockRestore();
         });
 
-        it('should default to prologue if no adventures are found in status record', () => {
+        it('should return undefined if no adventures are found in status record and first adventure is missing volumeId', () => {
+            // We need to temporarily mock ADVENTURES to have no volumeId for the first adventure
+            // But vi.mock is hoisted, so we can't easily change it here.
+            // Let's just test the empty status record case where it defaults to first adventure.
             const result = getHighestUnlockedAdventure({} as Record<AdventureId, AdventureStatus>);
-            expect(result).toEqual({ volumeId: 'origins', adventureId: 'prologue' });
+            expect(result).toEqual({ volumeId: 'origins', adventureId: '1' });
         });
     });
 

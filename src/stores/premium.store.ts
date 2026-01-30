@@ -75,14 +75,18 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
     isAdventureUnlocked: (adventureId: string) => {
         const { entitlements } = get();
 
-        // Prologue and Adventure 1 are free
-        if (adventureId === 'prologue' || adventureId === '1') return true;
+        // Adventure 1 is free
+        if (adventureId === '1') {
+            return true;
+        }
 
         // Check for 'premium_base' pack which covers Adventures 2-6 in the MVP
         if (entitlements.includes('premium_base')) {
             const idNum = parseInt(adventureId);
             // All initial premium content is unlocked by the base pack
-            if (idNum >= 2 && idNum <= 6) return true;
+            if (idNum >= 2 && idNum <= 6) {
+                return true;
+            }
         }
 
         // Future DLCs would be checked here:

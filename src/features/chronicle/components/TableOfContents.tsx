@@ -44,19 +44,24 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                                 {resolveVolumeAdventures(volume, t).map((adventure, index) => {
                                     const adventureId = adventure.id;
                                     const status = adventureStatuses[adventureId] || 'LOCKED';
-                                    const isPrologue = adventureId === 'prologue';
-                                    const isAvailable = isPrologue || (status !== 'LOCKED' && !volume.isLocked);
+                                    const isAvailable = status !== 'LOCKED' && !volume.isLocked;
 
                                     return (
                                         <li
                                             key={adventureId}
                                             className={`chapter-item ${!isAvailable ? 'disabled' : ''} ${activeAdventureId === adventureId ? 'active' : ''}`}
-                                            onClick={() => isAvailable && onJumpToChapter(volume.id, adventureId)}
+                                            onClick={() => {
+                                                if (isAvailable) {
+                                                    onJumpToChapter(volume.id, adventureId);
+                                                }
+                                            }}
                                             data-testid={`toc-chapter-item-${adventureId}`}
                                         >
-                                            {activeAdventureId === adventureId && <div className="bookmark-ribbon" title="Active Adventure" data-testid="bookmark-ribbon" />}
+                                            {activeAdventureId === adventureId && (
+                                                <div className="bookmark-ribbon" title="Active Adventure" data-testid="bookmark-ribbon" />
+                                            )}
                                             <span className="chapter-marker">
-                                                {isPrologue ? '⭐' : (status === 'COMPLETED' ? '✓' : index)}
+                                                {status === 'COMPLETED' ? '✓' : index + 1}
                                             </span>
                                             <span className="chapter-link">
                                                 {adventureTitles[adventureId] || `Chapter ${adventureId}`}
