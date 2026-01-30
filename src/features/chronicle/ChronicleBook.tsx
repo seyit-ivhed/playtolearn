@@ -91,7 +91,7 @@ export const ChronicleBook: React.FC = () => {
     // const adventureState = bookState === 'ADVENTURE' ? 'active' : 'upcoming';
 
     return (
-        <BookLayout>
+        <BookLayout isOpen={bookState !== 'COVER'}>
             {/* COVER PAGE */}
             <BookPage
                 state={coverState}

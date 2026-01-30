@@ -33,12 +33,10 @@ export const BookPage: React.FC<BookPageProps> = ({
         // So to move RIGHT, we need negative X translation.
 
         if (state === 'active' || state === 'upcoming') {
-            transformStyle = { transform: `rotateY(0deg) translateX(0)` };
+            transformStyle = { transform: `rotateY(0deg)` };
         } else {
             // 'flipped' or 'past'
-            // We rotate -180 (flip) and translate -100% (move back to overlap spine)
-            // Z-index controls layering (passed from parent)
-            transformStyle = { transform: `rotateY(-180deg) translateX(-100%)` };
+            transformStyle = { transform: `rotateY(-180deg)` };
         }
     }
 
