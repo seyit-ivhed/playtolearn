@@ -202,7 +202,9 @@
         "adventurer": "Äventyrare",
         "desc_1": "Addition och subtraktion upp till 10",
         "desc_2": "Addition och subtraktion upp till 20, introduktion till x2",
-        "desc_3": "Aritmetik upp till 100 och multiplikationstabeller"
+        "desc_3": "Aritmetik upp till 100 och multiplikationstabeller",
+        "select_title": "Välj matematisk nivå",
+        "change_later_subtitle": "Du kan alltid ändra detta senare i spelet"
     },
     "encounter": {
         "victory": "Seger!",

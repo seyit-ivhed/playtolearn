@@ -106,9 +106,9 @@
     gap: 8px;
     color: #665;
     font-family: 'Cinzel', serif;
-    margin-bottom: 20px;
-    padding: 0;
-    align-self: flex-start;
+    margin-top: auto;
+    align-self: center;
+    margin-bottom: 0;
 }
 
 .backBtn:hover {

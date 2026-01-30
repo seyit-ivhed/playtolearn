@@ -34,14 +34,10 @@ export const BookDifficulty: React.FC<BookDifficultyProps> = ({ onSelect, onBack
 
     return (
         <div className={styles.container}>
-            <button className={styles.backBtn} onClick={onBack}>
-                <ChevronLeft size={16} />
-                {t('common.back', 'Back')}
-            </button>
 
             <div className={styles.header}>
-                <h2 className={styles.title}>{t('landing.start_game', 'Start New Game')}</h2>
-                <p className={styles.subtitle}>{t('difficulty.select_title', 'Select your challenge level')}</p>
+                <h2 className={styles.title}>{t('difficulty.select_title', 'Select Math Level')}</h2>
+                <p className={styles.subtitle}>{t('difficulty.change_later_subtitle', 'You can always change this in the game')}</p>
             </div>
 
             <div className={styles.cardsContainer}>
@@ -73,6 +69,12 @@ export const BookDifficulty: React.FC<BookDifficultyProps> = ({ onSelect, onBack
                     </div>
                 ))}
             </div>
+
+            <button className={styles.backBtn} onClick={onBack}>
+                <ChevronLeft size={16} />
+                {t('common.back', 'Back')}
+            </button>
+
         </div>
     );
 };
