@@ -43,8 +43,8 @@ export const useChronicleData = () => {
         , [activeAdventureId]);
 
     const volumeAdventures = useMemo(() =>
-        resolveVolumeAdventures(currentVolume, t)
-        , [currentVolume, t]);
+        resolveVolumeAdventures(currentVolume)
+        , [currentVolume]);
 
     const currentAdventureIndex = useMemo(() =>
         resolveCurrentAdventureIndex(volumeAdventures, activeAdventureId)

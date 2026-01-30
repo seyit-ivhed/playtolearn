@@ -42,7 +42,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                             </h3>
 
                             <ul className="chapters-list">
-                                {resolveVolumeAdventures(volume, t).map((adventure, index) => {
+                                {resolveVolumeAdventures(volume).map((adventure, index) => {
                                     const adventureId = adventure.id;
                                     const status = adventureStatuses[adventureId] || AdventureStatus.LOCKED;
                                     const isAvailable = status !== AdventureStatus.LOCKED && !volume.isLocked;

@@ -39,7 +39,7 @@ describe('chronicle.utils', () => {
     describe('resolveVolumeAdventures', () => {
         it('should return adventures for volume', () => {
             const originsVolume = VOLUMES.find(v => v.id === 'origins')!;
-            const result = resolveVolumeAdventures(originsVolume, mockT as unknown as TFunction);
+            const result = resolveVolumeAdventures(originsVolume);
 
             const expectedAdventureIds = ADVENTURES
                 .filter(a => a.volumeId === originsVolume.id)

@@ -23,7 +23,7 @@ export const resolveCurrentVolume = (adventureId?: string): Volume => {
 /**
  * Gets the list of adventures for a volume.
  */
-export const resolveVolumeAdventures = (volume: Volume, _t: TFunction): Adventure[] => {
+export const resolveVolumeAdventures = (volume: Volume): Adventure[] => {
     // Filter adventures that belong to this volume using volumeId from the adventure data
     // This makes adventures.data.ts the source of truth
     return ADVENTURES.filter(a => a.volumeId === volume.id);
