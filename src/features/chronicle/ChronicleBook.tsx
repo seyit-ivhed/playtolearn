@@ -14,11 +14,13 @@ import styles from './ChronicleBook.module.css';
 import { BookLayout } from './components/Book/BookLayout';
 import { BookPage } from './components/Book/BookPage';
 import { BookCover } from './components/Book/BookCover';
+
 import { BookLogin } from './components/Book/BookLogin';
+import { BookDifficulty } from './components/Book/BookDifficulty';
 
 export const ChronicleBook: React.FC = () => {
     const { t } = useTranslation();
-    const { adventureStatuses, isAdventureUnlocked, encounterResults } = useGameStore();
+    const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
     const { isAuthenticated } = useAuth();
 
     // Check if user has any progress to decide initial state
@@ -28,7 +30,7 @@ export const ChronicleBook: React.FC = () => {
     // UI State
     const [isTocOpen, setIsTocOpen] = useState(false);
     const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
-    const [bookState, setBookState] = useState<'COVER' | 'LOGIN' | 'ADVENTURE'>(
+    const [bookState, setBookState] = useState<'COVER' | 'LOGIN' | 'DIFFICULTY' | 'ADVENTURE'>(
         shouldShowCover ? 'COVER' : 'ADVENTURE'
     );
 
@@ -65,6 +67,12 @@ export const ChronicleBook: React.FC = () => {
 
     // Handlers for Cover Interactions
     const handleStartNewGame = () => {
+        setBookState('DIFFICULTY');
+    };
+
+    const handleDifficultySelected = (difficulty: number) => {
+        setEncounterDifficulty(difficulty);
+        setActiveAdventureId('1');
         setBookState('ADVENTURE');
     };
 
@@ -86,8 +94,12 @@ export const ChronicleBook: React.FC = () => {
 
     // Calculate z-indices and states for 3D pages
     const coverState = bookState === 'COVER' ? 'active' : 'flipped';
+    // Login and Difficulty conceptually sit "on top" of adventures but "under" cover when cover is closed.
+    // When cover opens, if we are in LOGIN or DIFFICULTY, that page is active.
+    // Order: Cover -> Login / Difficulty -> Adventure Pages
+
     const loginState = bookState === 'LOGIN' ? 'active' : (bookState === 'COVER' ? 'upcoming' : 'flipped');
-    // const adventureState = bookState === 'ADVENTURE' ? 'active' : 'upcoming';
+    const difficultyState = bookState === 'DIFFICULTY' ? 'active' : (bookState === 'COVER' || bookState === 'LOGIN' ? 'upcoming' : 'flipped');
 
     return (
         <BookLayout isOpen={bookState !== 'COVER'}>
@@ -106,11 +118,22 @@ export const ChronicleBook: React.FC = () => {
             {/* LOGIN PAGE */}
             <BookPage
                 state={loginState}
-                zIndex={bookState === 'ADVENTURE' ? 6 : 25}
+                zIndex={bookState === 'LOGIN' ? 25 : (bookState === 'COVER' ? 5 : 6)}
             >
                 <BookLogin
                     onBack={handleBackToCover}
                     onSuccess={handleLoginSuccess}
+                />
+            </BookPage>
+
+            {/* DIFFICULTY SELECTION PAGE */}
+            <BookPage
+                state={difficultyState}
+                zIndex={bookState === 'DIFFICULTY' ? 24 : (bookState === 'COVER' || bookState === 'LOGIN' ? 4 : 7)}
+            >
+                <BookDifficulty
+                    onSelect={handleDifficultySelected}
+                    onBack={handleBackToCover}
                 />
             </BookPage>
 
