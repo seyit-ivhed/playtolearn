@@ -17,12 +17,6 @@
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.bookScene.isOpen {
-    /* When open, shift the whole book right so the spine is centered or both pages are visible */
-    /* If the page flips left, we move the scene right by half a page width */
-    transform: translateX(calc(var(--book-width, 500px) / 2));
-}
-
 /* Container for all book pages/cover */
 .bookContainer {
     width: 100%;
@@ -45,12 +39,6 @@
     box-shadow: inset 4px 0 10px rgba(0, 0, 0, 0.05), 5px 5px 15px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     /* Ensure content doesn't bleed out during flip */
-}
-
-/* Specific state styles for the magazine roll effect */
-.bookPage.flipped {
-    /* When flipped, it should slide behind */
-    /* We use transform in JS, but maybe we add a class helper here? */
 }
 
 .pageFront,
