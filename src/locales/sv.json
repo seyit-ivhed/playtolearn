@@ -430,5 +430,22 @@
             "verification_timeout": "Betalningen lyckades, men vi behandlar fortfarande din åtkomst. Den kommer att dyka upp på ditt konto inom kort.",
             "total_amount": "Totalt belopp"
         }
+    },
+    "landing": {
+        "start_game": "Starta nytt spel",
+        "login": "Logga in",
+        "first_edition": "Första upplagan",
+        "title": "Spela för att lära",
+        "subtitle": "Ge dig ut på en episk resa av kunskap och äventyr."
+    },
+    "login": {
+        "member_access": "Medlemsåtkomst",
+        "back_to_cover": "Tillbaka till omslaget",
+        "email_label": "E-postadress",
+        "email_placeholder": "namn@exempel.se",
+        "password_label": "Lösenord",
+        "password_placeholder": "••••••••",
+        "open_journal": "Öppna loggboken",
+        "invalid_credentials": "Ogiltig e-post eller lösenord"
     }
 }

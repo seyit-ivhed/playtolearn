@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../../hooks/useAuth';
 import { Mail, Lock, ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
 import styles from '../../ChronicleBook.module.css';
@@ -9,6 +10,7 @@ interface BookLoginProps {
 }
 
 export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess }) => {
+    const { t } = useTranslation();
     const { signIn } = useAuth();
 
     // Login Form State
@@ -27,7 +29,7 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess }) => {
             onSuccess();
         } catch (err: unknown) {
             console.error('Failed to sign in:', err);
-            setError(err instanceof Error ? err.message : 'Invalid email or password');
+            setError(err instanceof Error ? err.message : t('login.invalid_credentials'));
         } finally {
             setLoading(false);
         }
@@ -35,51 +37,57 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess }) => {
 
     return (
         <div className={styles.loginPageContent}>
-            <button className={styles.backBtn} onClick={onBack}>
+            <button
+                className={styles.backBtn}
+                onClick={onBack}
+                data-testid="login-back-btn"
+            >
                 <ArrowLeft size={16} />
-                <span>Back to Cover</span>
+                <span>{t('login.back_to_cover')}</span>
             </button>
 
             <header className={styles.pageHeader}>
-                <h2 className={styles.pageTitle}>Member Access</h2>
+                <h2 className={styles.pageTitle}>{t('login.member_access')}</h2>
                 <div className={styles.divider} />
             </header>
 
-            <form onSubmit={handleLogInSubmit} className={styles.loginForm}>
+            <form onSubmit={handleLogInSubmit} className={styles.loginForm} data-testid="login-form">
                 <div className={styles.inputGroup}>
                     <label htmlFor="email">
                         <Mail size={14} />
-                        Email Address
+                        {t('login.email_label')}
                     </label>
                     <input
                         id="email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="name@example.com"
+                        placeholder={t('login.email_placeholder')}
                         required
                         disabled={loading}
+                        data-testid="login-email-input"
                     />
                 </div>
 
                 <div className={styles.inputGroup}>
                     <label htmlFor="password">
                         <Lock size={14} />
-                        Password
+                        {t('login.password_label')}
                     </label>
                     <input
                         id="password"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="••••••••"
+                        placeholder={t('login.password_placeholder')}
                         required
                         disabled={loading}
+                        data-testid="login-password-input"
                     />
                 </div>
 
                 {error && (
-                    <div className={styles.errorAlert}>
+                    <div className={styles.errorAlert} data-testid="login-error-alert">
                         <AlertCircle size={14} />
                         <span>{error}</span>
                     </div>
@@ -89,8 +97,9 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess }) => {
                     type="submit"
                     className={`${styles.bookBtn} ${styles.btnPrimary} ${styles.fullWidth}`}
                     disabled={loading}
+                    data-testid="login-submit-btn"
                 >
-                    {loading ? <Loader2 className={styles.spinner} /> : 'Open Journal'}
+                    {loading ? <Loader2 className={styles.spinner} /> : t('login.open_journal')}
                 </button>
             </form>
         </div>

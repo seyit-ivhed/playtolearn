@@ -8,8 +8,8 @@
     overflow: hidden;
     /* Prevent page-level scroll */
     /* Typography inheritance */
-    font-family: var(--font-body, serif);
-    color: #4a3721;
+    font-family: var(--font-body);
+    color: var(--color-chronicle-text);
 }
 
 .chapter-page.locked {
@@ -25,7 +25,7 @@
 }
 
 .chapter-number {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     text-transform: uppercase;
     font-size: 0.9rem;
     opacity: 0.6;
@@ -33,10 +33,10 @@
 }
 
 .chapter-title {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: 1.8rem;
-    color: #2c1e11;
-    margin: 0.5rem 0 0 0;
+    color: var(--color-chronicle-text-dark);
+    margin-bottom: 0.5rem;
     line-height: 1.2;
 }
 
@@ -121,11 +121,11 @@
 }
 
 .wax-seal {
-    font-family: 'Cinzel', serif;
-    color: #c0392b;
+    font-family: var(--font-display);
+    color: var(--color-chronicle-seal);
     font-weight: bold;
     font-size: 0.9rem;
-    border: 2px solid #c0392b;
+    border: 2px solid var(--color-chronicle-seal);
     padding: 4px 8px;
     border-radius: 4px;
     transform: rotate(-5deg);
@@ -197,20 +197,20 @@
 
 .book-btn {
     padding: 0.8rem 2.5rem;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: 1rem;
     font-weight: bold;
     border: none;
-    border-radius: 50px;
+    border-radius: var(--radius-full);
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 .begin-btn {
-    background: #4a3721;
-    color: #fdf6e3;
-    border: 1px solid #2c1e11;
+    background: var(--color-chronicle-text);
+    color: var(--color-chronicle-bg);
+    border: 1px solid var(--color-chronicle-text-dark);
 }
 
 .begin-btn:hover {
@@ -221,8 +221,8 @@
 
 .replay-btn {
     background: transparent;
-    color: #4a3721;
-    border: 2px solid #4a3721;
+    color: var(--color-chronicle-text);
+    border: 2px solid var(--color-chronicle-text);
 }
 
 .replay-btn:hover {

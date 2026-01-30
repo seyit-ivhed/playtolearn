@@ -12,8 +12,8 @@ interface BookCoverProps {
 export const BookCover: React.FC<BookCoverProps> = ({
     onStart,
     onLogin,
-    title = "Play to Learn",
-    subtitle = "Embark on an epic journey of knowledge and adventure."
+    title,
+    subtitle
 }) => {
     const { t } = useTranslation();
 
@@ -27,8 +27,8 @@ export const BookCover: React.FC<BookCoverProps> = ({
             </div>
 
             <header className={styles.coverHeader}>
-                <h1 className={styles.coverTitle}>{title}</h1>
-                <p className={styles.coverSubtitle}>{subtitle}</p>
+                <h1 className={styles.coverTitle}>{title || t('landing.title')}</h1>
+                <p className={styles.coverSubtitle}>{subtitle || t('landing.subtitle')}</p>
             </header>
 
             <div className={styles.coverActions}>
@@ -37,7 +37,7 @@ export const BookCover: React.FC<BookCoverProps> = ({
                     onClick={onStart}
                     data-testid="cover-start-btn"
                 >
-                    {t('landing.start_game', 'Start New Game')}
+                    {t('landing.start_game')}
                 </button>
 
                 <button
@@ -45,12 +45,12 @@ export const BookCover: React.FC<BookCoverProps> = ({
                     onClick={onLogin}
                     data-testid="cover-login-btn"
                 >
-                    {t('landing.login', 'Log In')}
+                    {t('landing.login')}
                 </button>
             </div>
 
             <footer className={styles.coverFooter}>
-                <span className={styles.editionLabel}>First Edition</span>
+                <span className={styles.editionLabel}>{t('landing.first_edition')}</span>
             </footer>
         </div>
     );

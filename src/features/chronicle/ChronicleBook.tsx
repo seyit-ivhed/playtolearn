@@ -80,7 +80,9 @@ export const ChronicleBook: React.FC = () => {
         setBookState('ADVENTURE');
     };
 
-    if (!currentAdventure && bookState === 'ADVENTURE') return null;
+    if (!currentAdventure && bookState === 'ADVENTURE') {
+        return null;
+    }
 
     // Calculate z-indices and states for 3D pages
     const coverState = bookState === 'COVER' ? 'active' : 'flipped';

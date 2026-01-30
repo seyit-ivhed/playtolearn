@@ -430,5 +430,22 @@
             "verification_timeout": "Payment succeeded, but we are still processing your access. It will appear in your account shortly.",
             "total_amount": "Total Amount"
         }
+    },
+    "landing": {
+        "start_game": "Start New Game",
+        "login": "Log In",
+        "first_edition": "First Edition",
+        "title": "Play to Learn",
+        "subtitle": "Embark on an epic journey of knowledge and adventure."
+    },
+    "login": {
+        "member_access": "Member Access",
+        "back_to_cover": "Back to Cover",
+        "email_label": "Email Address",
+        "email_placeholder": "name@example.com",
+        "password_label": "Password",
+        "password_placeholder": "••••••••",
+        "open_journal": "Open Journal",
+        "invalid_credentials": "Invalid email or password"
     }
 }
