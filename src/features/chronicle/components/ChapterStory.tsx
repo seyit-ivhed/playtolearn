@@ -10,7 +10,6 @@ interface ChapterStoryProps {
     isCompleted: boolean;
     isJustCompleted?: boolean;
     stars: number;
-    levelRange?: [number, number];
 }
 
 export const ChapterStory: React.FC<ChapterStoryProps> = ({
@@ -20,8 +19,7 @@ export const ChapterStory: React.FC<ChapterStoryProps> = ({
     isLocked,
     isCompleted,
     isJustCompleted,
-    stars,
-    levelRange
+    stars
 }) => {
     const { t } = useTranslation();
 
@@ -33,13 +31,6 @@ export const ChapterStory: React.FC<ChapterStoryProps> = ({
                     : t(`adventures.${adventureId}.story_hook`, adventureStoryHook || adventureDescription || '')
                 }
             </p>
-
-            {!isLocked && levelRange && (
-                <div className="level-badge">
-                    <span className="level-label">{t('common.level')}</span>
-                    <span className="level-value">{levelRange[0]}-{levelRange[1]}</span>
-                </div>
-            )}
 
             <div className="completion-stats" style={{ visibility: isCompleted ? 'visible' : 'hidden' }}>
                 <div className="stars-earned">

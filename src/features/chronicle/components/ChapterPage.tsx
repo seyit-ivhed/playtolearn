@@ -69,7 +69,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     isCompleted={isCompleted}
                     isJustCompleted={isJustCompleted}
                     stars={stars}
-                    levelRange={adventure.levelRange}
                 />
             </div>
 
