@@ -139,12 +139,20 @@ export const ChronicleBook: React.FC = () => {
 
             {/* ADVENTURE ITEM PAGES (The main content) */}
             {volumeAdventures.map((adventure, index) => {
-                const state = index < currentAdventureIndex ? 'flipped' :
-                    index === currentAdventureIndex ? 'active' : 'upcoming';
+                const isCurrentAdventure = index === currentAdventureIndex;
+                const isPastAdventure = index < currentAdventureIndex;
+
+                // Only mark as 'active' if we are actually in ADVENTURE mode
+                const state = (bookState === 'ADVENTURE')
+                    ? (isPastAdventure ? 'flipped' : isCurrentAdventure ? 'active' : 'upcoming')
+                    : 'upcoming';
 
                 // Calculate z-index: active is 20, flipped are 10+index, upcoming are 10-index
-                const zIndex = index === currentAdventureIndex ? 20 :
-                    index < currentAdventureIndex ? 10 + index : 10 - index;
+                // If not in ADVENTURE mode, keep them all below Login/Difficulty (which are 20-25)
+                const baseZIndex = isCurrentAdventure ? 20 :
+                    isPastAdventure ? 10 + index : 10 - index;
+
+                const zIndex = bookState === 'ADVENTURE' ? baseZIndex : 1;
 
                 return (
                     <BookPage
