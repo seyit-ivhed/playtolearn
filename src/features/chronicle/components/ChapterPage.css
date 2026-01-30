@@ -49,7 +49,7 @@
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 0 1.5rem 1.5rem;
+    padding: 0 1.5rem 0;
 }
 
 /* Illustration Styles - Fixed */
@@ -133,7 +133,7 @@
 
 /* Footer & Actions */
 .chapter-footer {
-    padding: 1.5rem 1.5rem 2rem;
+    padding: 1rem;
     border-top: 1px solid rgba(74, 55, 33, 0.1);
     display: flex;
     flex-direction: column;
@@ -167,7 +167,6 @@
     font-size: 0.85rem;
     color: #4a3721;
     opacity: 0.6;
-    margin-top: 0.25rem;
 }
 
 .footer-controls {
