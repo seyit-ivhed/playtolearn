@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
-import type { Volume, AdventureId, AdventureStatus } from '../../../types/adventure.types';
+import type { Volume, AdventureId } from '../../../types/adventure.types';
+import { AdventureStatus } from '../../../types/adventure.types';
 import { resolveVolumeAdventures } from '../utils/chronicle.utils';
 import './TableOfContents.css';
 
@@ -43,8 +44,8 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                             <ul className="chapters-list">
                                 {resolveVolumeAdventures(volume, t).map((adventure, index) => {
                                     const adventureId = adventure.id;
-                                    const status = adventureStatuses[adventureId] || 'LOCKED';
-                                    const isAvailable = status !== 'LOCKED' && !volume.isLocked;
+                                    const status = adventureStatuses[adventureId] || AdventureStatus.LOCKED;
+                                    const isAvailable = status !== AdventureStatus.LOCKED && !volume.isLocked;
 
                                     return (
                                         <li
@@ -61,12 +62,12 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
                                                 <div className="bookmark-ribbon" title="Active Adventure" data-testid="bookmark-ribbon" />
                                             )}
                                             <span className="chapter-marker">
-                                                {status === 'COMPLETED' ? '✓' : index + 1}
+                                                {status === AdventureStatus.COMPLETED ? '✓' : index + 1}
                                             </span>
                                             <span className="chapter-link">
                                                 {adventureTitles[adventureId] || `Chapter ${adventureId}`}
                                             </span>
-                                            {status === 'COMPLETED' && <span className="stars-mini">⭐⭐⭐</span>}
+                                            {status === AdventureStatus.COMPLETED && <span className="stars-mini">⭐⭐⭐</span>}
                                         </li>
                                     );
                                 })}

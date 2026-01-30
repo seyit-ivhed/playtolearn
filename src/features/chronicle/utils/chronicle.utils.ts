@@ -42,7 +42,7 @@ export const resolveCurrentAdventureIndex = (adventures: Adventure[], adventureI
  */
 export const generateAdventureTitles = (t: TFunction): Record<string, string> => {
     return ADVENTURES.reduce((acc, a) => {
-        acc[a.id] = t(`adventures.${a.id}.title`, { defaultValue: a.title || `Adventure ${a.id}` });
+        acc[a.id] = t(`adventures.${a.id}.title`, { defaultValue: a.title || t('chronicle.adventure_fallback', { id: a.id }) });
         return acc;
     }, {} as Record<string, string>);
 };

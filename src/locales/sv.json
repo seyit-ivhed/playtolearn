@@ -157,7 +157,8 @@
         "locked": "Låst",
         "page_x_of_y": "{{current}} av {{total}}",
         "next_chapter": "Nästa kapitel",
-        "subtitle": "Din resa genom tidsåldrarna"
+        "subtitle": "Din resa genom tidsåldrarna",
+        "adventure_fallback": "Äventyr {{id}}"
     },
     "volumes": {
         "origins": {

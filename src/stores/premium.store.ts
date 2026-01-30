@@ -22,16 +22,16 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
     initialized: false,
 
     initialize: async (force = false, profileData?: { id: string }) => {
-        if (get().initialized && !force) return;
+        if (get().initialized && !force) {
+            return;
+        }
 
-        console.log('Initializing premium store (force:', force, ')');
         set({ isLoading: true });
         try {
             let playerId: string | undefined = profileData?.id;
 
             if (!playerId) {
                 const { data: { user } } = await supabase.auth.getUser();
-                console.log('Premium store: Current Auth User ID:', user?.id);
 
                 if (!user) {
                     console.warn('Premium store: No user found in Auth');
@@ -44,7 +44,6 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
             }
 
             if (playerId) {
-                console.log('Premium store: Initializing for profile', playerId);
                 // Fetch entitlements from the player_entitlements table
                 const { data: entitlementsData, error: entitlementsError } = await supabase
                     .from('player_entitlements')
@@ -57,7 +56,6 @@ export const usePremiumStore = create<PremiumState>((set, get) => ({
                 }
 
                 const entitlements = entitlementsData?.map(e => e.content_pack_id) || [];
-                console.log('Premium store: Fetched entitlements:', entitlements);
 
                 set({
                     entitlements,

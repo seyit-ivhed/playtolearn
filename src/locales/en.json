@@ -157,7 +157,8 @@
         "locked": "Locked",
         "page_x_of_y": "{{current}} of {{total}}",
         "next_chapter": "Next Chapter",
-        "subtitle": "Your Journey Through the Ages"
+        "subtitle": "Your Journey Through the Ages",
+        "adventure_fallback": "Adventure {{id}}"
     },
     "volumes": {
         "origins": {
