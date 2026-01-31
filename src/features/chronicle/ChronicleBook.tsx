@@ -168,9 +168,15 @@ export const ChronicleBook: React.FC = () => {
                                 onBegin={handleBegin}
                                 onReplay={handleBegin}
                                 onNext={handleNext}
-                                onPrev={handlePrev}
+                                onPrev={() => {
+                                    if (index === 0) {
+                                        setBookState('DIFFICULTY');
+                                    } else {
+                                        handlePrev();
+                                    }
+                                }}
                                 canNext={index < volumeAdventures.length - 1}
-                                canPrev={index > 0}
+                                canPrev={true}
                                 currentPage={index + 1}
                                 totalPages={volumeAdventures.length}
                                 isJustCompleted={isJustCompleted && adventure.id === currentAdventure?.id}
