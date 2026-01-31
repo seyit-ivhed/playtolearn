@@ -25,7 +25,8 @@ export const ChronicleBook: React.FC = () => {
 
     // Check if user has any progress to decide initial state
     const hasAnyProgress = Object.keys(encounterResults).length > 0;
-    const shouldShowCover = !isAuthenticated && !hasAnyProgress;
+    // Always show cover if not authenticated, even if there is local progress
+    const shouldShowCover = !isAuthenticated;
 
     // UI State
     const [isTocOpen, setIsTocOpen] = useState(false);
@@ -67,7 +68,11 @@ export const ChronicleBook: React.FC = () => {
 
     // Handlers for Cover Interactions
     const handleStartNewGame = () => {
-        setBookState('DIFFICULTY');
+        if (hasAnyProgress) {
+            setBookState('ADVENTURE');
+        } else {
+            setBookState('DIFFICULTY');
+        }
     };
 
     const handleDifficultySelected = (difficulty: number) => {
@@ -112,6 +117,7 @@ export const ChronicleBook: React.FC = () => {
                 <BookCover
                     onStart={handleStartNewGame}
                     onLogin={handleGoToLogin}
+                    hasProgress={hasAnyProgress}
                 />
             </BookPage>
 

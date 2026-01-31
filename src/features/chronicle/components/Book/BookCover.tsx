@@ -5,6 +5,7 @@ import styles from '../../ChronicleBook.module.css';
 interface BookCoverProps {
     onStart: () => void;
     onLogin: () => void;
+    hasProgress?: boolean;
     title?: string;
     subtitle?: string;
 }
@@ -12,6 +13,7 @@ interface BookCoverProps {
 export const BookCover: React.FC<BookCoverProps> = ({
     onStart,
     onLogin,
+    hasProgress = false,
     title,
     subtitle
 }) => {
@@ -37,7 +39,7 @@ export const BookCover: React.FC<BookCoverProps> = ({
                     onClick={onStart}
                     data-testid="cover-start-btn"
                 >
-                    {t('landing.start_game')}
+                    {hasProgress ? t('landing.continue_journey') : t('landing.start_game')}
                 </button>
 
                 <button
@@ -49,9 +51,6 @@ export const BookCover: React.FC<BookCoverProps> = ({
                 </button>
             </div>
 
-            <footer className={styles.coverFooter}>
-                <span className={styles.editionLabel}>{t('landing.first_edition')}</span>
-            </footer>
         </div>
     );
 };

@@ -434,7 +434,8 @@
         }
     },
     "landing": {
-        "start_game": "Start New Game",
+        "start_game": "Start New Journey",
+        "continue_journey": "Continue Journey",
         "login": "Log In",
         "first_edition": "First Edition",
         "title": "Play to Learn",

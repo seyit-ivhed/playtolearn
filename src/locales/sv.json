@@ -434,7 +434,8 @@
         }
     },
     "landing": {
-        "start_game": "Starta nytt spel",
+        "start_game": "Börja ny resa",
+        "continue_journey": "Fortsätt resa",
         "login": "Logga in",
         "first_edition": "Första upplagan",
         "title": "Spela för att lära",
