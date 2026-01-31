@@ -10,13 +10,15 @@ import {
     generateAdventureTitles
 } from '../utils/chronicle.utils';
 
-export const useChronicleData = () => {
+export const useChronicleData = (overrideAdventureId?: string) => {
     const { encounterResults, adventureStatuses } = useGameStore();
     const { t } = useTranslation();
 
     // For new players (no progress), default to first adventure
     // For returning players, show their highest unlocked adventure
     const initialAdventure = useMemo(() => {
+        if (overrideAdventureId) return overrideAdventureId;
+
         const hasProgress = Object.keys(encounterResults).length > 0;
         if (hasProgress) {
             const highestUnlocked = getHighestUnlockedAdventure(adventureStatuses);
@@ -34,9 +36,20 @@ export const useChronicleData = () => {
         }
 
         return firstAdventure.id;
-    }, [adventureStatuses, encounterResults]);
+    }, [adventureStatuses, encounterResults, overrideAdventureId]);
 
-    const [activeAdventureId, setActiveAdventureId] = useState<string>(initialAdventure);
+    // Internal state for when no URL param is present
+    const [internalActiveAdventureId, setInternalActiveAdventureId] = useState<string>(initialAdventure);
+
+    // If override is provided (from URL), usage that. Otherwise use internal state.
+    // Note: We sync internal state to override if it changes, to keep them consistent if we switch back to uncontrolled? 
+    // Actually simpler: 
+    const activeAdventureId = overrideAdventureId || internalActiveAdventureId;
+
+    // We expose a setter that updates internal state. 
+    // The consumer (ChronicleBook) must assume responsibility for navigation if they provided an override.
+    const setActiveAdventureId = setInternalActiveAdventureId;
+
 
     const currentVolume = useMemo(() =>
         resolveCurrentVolume(activeAdventureId)

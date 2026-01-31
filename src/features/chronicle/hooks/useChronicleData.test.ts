@@ -51,5 +51,23 @@ describe('useChronicleData', () => {
             // Should show adventure 2 (highest unlocked)
             expect(result.current.activeAdventureId).toBe('2');
         });
+
+        it('should respect overrideAdventureId regardless of progress', () => {
+            // Mock returning player state
+            vi.mocked(useGameStore).mockReturnValue({
+                encounterResults: {
+                    '1_1': { stars: 3, difficulty: 1, completedAt: Date.now() },
+                },
+                adventureStatuses: {
+                    '1': AdventureStatus.COMPLETED,
+                    '2': AdventureStatus.AVAILABLE,
+                },
+            } as ReturnType<typeof useGameStore>);
+
+            // Pass override '1' even though '2' is available
+            const { result } = renderHook(() => useChronicleData('1'));
+
+            expect(result.current.activeAdventureId).toBe('1');
+        });
     });
 });

@@ -24,10 +24,11 @@ function AppContent() {
     <Routes>
       <Route element={<Layout />}>
         {/* Unified Entry Point */}
-        <Route path="/" element={<ChronicleBook />} />
+        <Route path="/" element={<Navigate to="/chronicle" replace />} />
 
-        {/* Legacy redirect, or if we want to keep /chronicle as valid */}
-        <Route path="/chronicle" element={<Navigate to="/" replace />} />
+        {/* Chronicle Routes */}
+        <Route path="/chronicle" element={<ChronicleBook />} />
+        <Route path="/chronicle/:pageId" element={<ChronicleBook />} />
 
         <Route path="/map/:adventureId" element={<AdventurePage />} />
         <Route path="/encounter/:adventureId/:nodeIndex" element={<EncounterPage />} />

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import { useAuth } from '../../hooks/useAuth';
@@ -22,18 +23,27 @@ export const ChronicleBook: React.FC = () => {
     const { t } = useTranslation();
     const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
     const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+    const { pageId } = useParams<{ pageId: string }>();
 
     // Check if user has any progress to decide initial state
     const hasAnyProgress = Object.keys(encounterResults).length > 0;
-    // Always show cover if not authenticated, even if there is local progress
-    const shouldShowCover = !isAuthenticated;
+
+    // Determine Book State from URL
+    const getBookStateFromUrl = (): 'COVER' | 'LOGIN' | 'DIFFICULTY' | 'ADVENTURE' => {
+        if (!pageId || pageId === 'cover') return 'COVER';
+        if (pageId === 'login') return 'LOGIN';
+        if (pageId === 'difficulty') return 'DIFFICULTY';
+        if (!isNaN(Number(pageId))) return 'ADVENTURE';
+        return 'COVER';
+    };
+
+    const bookState = getBookStateFromUrl();
+    const urlAdventureId = bookState === 'ADVENTURE' ? pageId : undefined;
 
     // UI State
-    const [isTocOpen, setIsTocOpen] = useState(false);
-    const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
-    const [bookState, setBookState] = useState<'COVER' | 'LOGIN' | 'DIFFICULTY' | 'ADVENTURE'>(
-        shouldShowCover ? 'COVER' : 'ADVENTURE'
-    );
+    const [isTocOpen, setIsTocOpen] = React.useState(false);
+    const [isPremiumModalOpen, setIsPremiumModalOpen] = React.useState(false);
 
     // Hooks
     const {
@@ -41,8 +51,30 @@ export const ChronicleBook: React.FC = () => {
         currentAdventureIndex,
         currentAdventure,
         adventureTitles,
-        setActiveAdventureId
-    } = useChronicleData();
+        activeAdventureId // This comes from useChronicleData (either override or internal default)
+    } = useChronicleData(urlAdventureId);
+
+    // Redirect Logic
+    useEffect(() => {
+        // If at root /chronicle (pageId undefined), decide where to go
+        if (!pageId) {
+            if (hasAnyProgress) {
+                // If user has progress, go to their active adventure
+                if (activeAdventureId) {
+                    navigate(`/chronicle/${activeAdventureId}`, { replace: true });
+                }
+            } else {
+                // No progress -> Cover
+                navigate('/chronicle/cover', { replace: true });
+            }
+        }
+    }, [pageId, hasAnyProgress, activeAdventureId, navigate]);
+
+
+    // Wrapper to navigate instead of setting internal state
+    const handleSetActiveAdventureId = (id: string) => {
+        navigate(`/chronicle/${id}`);
+    };
 
     const {
         handleNext,
@@ -54,7 +86,7 @@ export const ChronicleBook: React.FC = () => {
         currentAdventureIndex,
         volumeAdventures,
         currentAdventure,
-        setActiveAdventureId,
+        setActiveAdventureId: handleSetActiveAdventureId,
         setIsPremiumModalOpen,
         setIsTocOpen
     });
@@ -69,28 +101,32 @@ export const ChronicleBook: React.FC = () => {
     // Handlers for Cover Interactions
     const handleStartNewGame = () => {
         if (hasAnyProgress) {
-            setBookState('ADVENTURE');
+            // Continue game (go to current adventure)
+            // activeAdventureId already holds the "highest unlocked" or "current" adventure logic from useChronicleData
+            navigate(`/chronicle/${activeAdventureId}`);
         } else {
-            setBookState('DIFFICULTY');
+            navigate('/chronicle/difficulty');
         }
     };
 
     const handleDifficultySelected = (difficulty: number) => {
         setEncounterDifficulty(difficulty);
-        setActiveAdventureId('1');
-        setBookState('ADVENTURE');
+        // Start at adventure 1
+        navigate('/chronicle/1');
     };
 
     const handleGoToLogin = () => {
-        setBookState('LOGIN');
+        navigate('/chronicle/login');
     };
 
     const handleBackToCover = () => {
-        setBookState('COVER');
+        navigate('/chronicle/cover');
     };
 
     const handleLoginSuccess = () => {
-        setBookState('ADVENTURE');
+        // Login success -> Go to adventure (will use default logic to pick right one)
+        // Navigate to root /chronicle and let the redirect logic pick the best adventure
+        navigate('/chronicle', { replace: true });
     };
 
     if (!currentAdventure && bookState === 'ADVENTURE') {
@@ -99,9 +135,6 @@ export const ChronicleBook: React.FC = () => {
 
     // Calculate z-indices and states for 3D pages
     const coverState = bookState === 'COVER' ? 'active' : 'flipped';
-    // Login and Difficulty conceptually sit "on top" of adventures but "under" cover when cover is closed.
-    // When cover opens, if we are in LOGIN or DIFFICULTY, that page is active.
-    // Order: Cover -> Login / Difficulty -> Adventure Pages
 
     const loginState = bookState === 'LOGIN' ? 'active' : (bookState === 'COVER' ? 'upcoming' : 'flipped');
     const difficultyState = bookState === 'DIFFICULTY' ? 'active' : (bookState === 'COVER' || bookState === 'LOGIN' ? 'upcoming' : 'flipped');
@@ -176,7 +209,7 @@ export const ChronicleBook: React.FC = () => {
                                 onNext={handleNext}
                                 onPrev={() => {
                                     if (index === 0) {
-                                        setBookState('DIFFICULTY');
+                                        navigate('/chronicle/difficulty');
                                     } else {
                                         handlePrev();
                                     }

@@ -141,7 +141,7 @@ const AdventurePage = () => {
                 <AdventureHeader
                     adventureId={adventure.id}
                     adventureTitle={adventure.title || 'Adventure'}
-                    onBack={() => navigate('/chronicle')}
+                    onBack={() => navigate(`/chronicle/${adventureId}`)}
                 />
 
                 <FantasyMap
