@@ -238,7 +238,12 @@
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.7);
     font-family: 'Lato', sans-serif;
+    color: var(--color-chronicle-text-dark, #2c1e11);
     transition: border-color 0.2s;
+}
+
+.inputGroup input::placeholder {
+    color: #887;
 }
 
 .inputGroup input:focus {
