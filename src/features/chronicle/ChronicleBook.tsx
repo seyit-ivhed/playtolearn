@@ -133,9 +133,21 @@ export const ChronicleBook: React.FC = () => {
         return null;
     }
 
+    // Unified stacking logic: lower position = closer to front in a closed book.
+    const calculatePageZIndex = (state: 'active' | 'flipped' | 'upcoming', position: number) => {
+        if (state === 'active') {
+            return 100;
+        }
+        if (state === 'flipped') {
+            // Most recently flipped (highest position) should be on top of left stack.
+            return 10 + position;
+        }
+        // Next up in line (lowest position) should be on top of right stack.
+        return 50 - position;
+    };
+
     // Calculate z-indices and states for 3D pages
     const coverState = bookState === 'COVER' ? 'active' : 'flipped';
-
     const loginState = bookState === 'LOGIN' ? 'active' : (bookState === 'COVER' ? 'upcoming' : 'flipped');
     const difficultyState = bookState === 'DIFFICULTY' ? 'active' : (bookState === 'COVER' || bookState === 'LOGIN' ? 'upcoming' : 'flipped');
 
@@ -144,7 +156,7 @@ export const ChronicleBook: React.FC = () => {
             {/* COVER PAGE */}
             <BookPage
                 state={coverState}
-                zIndex={bookState === 'COVER' ? 30 : 5}
+                zIndex={calculatePageZIndex(coverState, 0)}
                 isCover
             >
                 <BookCover
@@ -157,7 +169,7 @@ export const ChronicleBook: React.FC = () => {
             {/* LOGIN PAGE */}
             <BookPage
                 state={loginState}
-                zIndex={bookState === 'LOGIN' ? 25 : (bookState === 'COVER' ? 5 : 6)}
+                zIndex={calculatePageZIndex(loginState, 1)}
             >
                 <BookLogin
                     onBack={handleBackToCover}
@@ -168,7 +180,7 @@ export const ChronicleBook: React.FC = () => {
             {/* DIFFICULTY SELECTION PAGE */}
             <BookPage
                 state={difficultyState}
-                zIndex={bookState === 'DIFFICULTY' ? 24 : (bookState === 'COVER' || bookState === 'LOGIN' ? 4 : 7)}
+                zIndex={calculatePageZIndex(difficultyState, 2)}
             >
                 <BookDifficulty
                     onSelect={handleDifficultySelected}
@@ -186,18 +198,13 @@ export const ChronicleBook: React.FC = () => {
                     ? (isPastAdventure ? 'flipped' : isCurrentAdventure ? 'active' : 'upcoming')
                     : 'upcoming';
 
-                // Calculate z-index: active is 20, flipped are 10+index, upcoming are 10-index
-                // If not in ADVENTURE mode, keep them all below Login/Difficulty (which are 20-25)
-                const baseZIndex = isCurrentAdventure ? 20 :
-                    isPastAdventure ? 10 + index : 10 - index;
-
-                const zIndex = bookState === 'ADVENTURE' ? baseZIndex : 1;
+                const position = 3 + index;
 
                 return (
                     <BookPage
                         key={adventure.id}
                         state={state}
-                        zIndex={zIndex}
+                        zIndex={calculatePageZIndex(state, position)}
                     >
                         <div className={styles.pageMotionWrapper}>
                             <ChapterPage
