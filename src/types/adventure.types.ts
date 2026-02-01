@@ -46,7 +46,8 @@ export const PuzzleType = {
     SEQUENCE: 'SEQUENCE',          // Star Map
     GUARDIAN_TRIBUTE: 'GUARDIAN_TRIBUTE', // Adventure 2: Division/Distribution
     SYMMETRY: 'SYMMETRY',         // Adventure 3: Mirror Mist
-    LATIN_SQUARE: 'LATIN_SQUARE'  // Adventure 3: Keystone Cipher
+    LATIN_SQUARE: 'LATIN_SQUARE',  // Adventure 3: Keystone Cipher
+    GEOMETRY: 'GEOMETRY'          // Adventure 4: Shape Identification
 } as const;
 
 export type PuzzleType = typeof PuzzleType[keyof typeof PuzzleType];

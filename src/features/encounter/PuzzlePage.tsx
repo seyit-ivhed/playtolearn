@@ -14,6 +14,7 @@ import { SequencePuzzle } from './puzzles/sequence/SequencePuzzle';
 import { GuardianTributePuzzle } from './puzzles/guardian-tribute/GuardianTributePuzzle';
 import { SymmetryPuzzle } from './puzzles/symmetry/SymmetryPuzzle';
 import { LatinSquarePuzzle } from './puzzles/latin-square/LatinSquarePuzzle';
+import { GeometryPuzzle } from './puzzles/geometry/GeometryPuzzle';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import styles from './PuzzlePage.module.css';
 
@@ -70,6 +71,8 @@ const PuzzlePage = () => {
                 return t('puzzle.symmetry.instruction', 'Mirror the pattern on the right side!');
             case PuzzleType.LATIN_SQUARE:
                 return t('puzzle.latin_square.instruction', 'Place elemental runes so each appears exactly once in every row and column.');
+            case PuzzleType.GEOMETRY:
+                return t('puzzle.geometry.instruction', 'Find the correct shape!');
             default:
                 return '';
         }
@@ -175,8 +178,15 @@ const PuzzlePage = () => {
                     />
                 )}
 
-                {puzzleData.puzzleType === PuzzleType.LATIN_SQUARE && (
+                {(puzzleData.puzzleType === PuzzleType.LATIN_SQUARE) && (
                     <LatinSquarePuzzle
+                        data={puzzleData}
+                        onSolve={handleSolve}
+                    />
+                )}
+
+                {(puzzleData.puzzleType === PuzzleType.GEOMETRY) && (
+                    <GeometryPuzzle
                         data={puzzleData}
                         onSolve={handleSolve}
                     />

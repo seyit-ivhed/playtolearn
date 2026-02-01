@@ -15,6 +15,7 @@ import { generateSequenceData } from '../features/encounter/puzzles/sequence/Seq
 import { generateGuardianTributeData } from '../features/encounter/puzzles/guardian-tribute/GuardianTributeEngine';
 import { generateSymmetryData } from '../features/encounter/puzzles/symmetry/SymmetryEngine';
 import { generateLatinSquareData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
+import { generateGeometryData } from '../features/encounter/puzzles/geometry/GeometryEngine';
 
 /**
  * Mapping of puzzle types to their respective data generators
@@ -26,6 +27,7 @@ const PUZZLE_GENERATORS: Record<PuzzleType, (difficulty: DifficultyLevel) => Puz
     [PuzzleType.GUARDIAN_TRIBUTE]: generateGuardianTributeData,
     [PuzzleType.SYMMETRY]: generateSymmetryData,
     [PuzzleType.LATIN_SQUARE]: generateLatinSquareData,
+    [PuzzleType.GEOMETRY]: generateGeometryData,
 };
 
 /**

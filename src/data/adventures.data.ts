@@ -248,7 +248,56 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '4',
         volumeId: 'origins',
-        encounters: [] // To be implemented: Rise of the Iron Warlord (Premium) - Journey to fortress, Defeat the Iron Warlord
+        levelRange: [8, 10],
+        encounters: [
+            {
+                id: '4_1',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -200, y: 800 },
+                enemies: [MONSTERS.IRON_MINION, MONSTERS.IRON_MINION],
+            },
+            {
+                id: '4_2',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 100, y: 1100 },
+                puzzleData: { puzzleType: PuzzleType.GEOMETRY },
+            },
+            {
+                id: '4_3',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 200, y: 1500 },
+                enemies: [MONSTERS.IRON_MINION, MONSTERS.MIST_STALKER],
+            },
+            {
+                id: '4_4',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: -150, y: 1900 },
+                puzzleData: { puzzleType: PuzzleType.SYMMETRY },
+            },
+            {
+                id: '4_5',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 50, y: 2300 },
+                enemies: [MONSTERS.IRON_MINION, MONSTERS.IRON_MINION, MONSTERS.IRON_MINION],
+            },
+            {
+                id: '4_6',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 250, y: 2700 },
+                puzzleData: { puzzleType: PuzzleType.GUARDIAN_TRIBUTE },
+            },
+            {
+                id: '4_7',
+                type: EncounterType.BOSS,
+                coordinates: { x: 0, y: 3200 },
+                enemies: [MONSTERS.IRON_WARLORD_ENFORCER], // Placeholder as Iron Warlord might be the volume boss
+            },
+            {
+                id: '4_8',
+                type: EncounterType.ENDING,
+                coordinates: { x: -300, y: 3600 },
+            }
+        ]
     },
     {
         id: '5',

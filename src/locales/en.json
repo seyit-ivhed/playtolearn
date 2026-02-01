@@ -144,6 +144,39 @@
                     "label": "To the Jade Peaks"
                 }
             }
+        },
+        "4": {
+            "title": "Rise of the Iron Warlord",
+            "description": "Amara and Tariq must journey to the Iron Fortress to confront the leader of the mechanical army.",
+            "story_hook": "The mists have cleared, revealing a path heavily guarded by iron constructs. The Iron Warlord awaits in his fortress, plotting to expand his dominion. Our heroes must stealthily navigate through the enemy lines and solve the ancient geometry puzzles that lock the fortress gates.",
+            "completion_summary": "The Iron Warlord's outer defenses have fallen! But the Warlord himself has retreated deeper into the fortress. Use your wits to unlock the path ahead.",
+            "mystery_path": "The fortress looms large ahead...",
+            "nodes": {
+                "4_1": {
+                    "label": "Iron Outpost"
+                },
+                "4_2": {
+                    "label": "Shape Lock"
+                },
+                "4_3": {
+                    "label": "Patrol Ambush"
+                },
+                "4_4": {
+                    "label": "Mirror Gate"
+                },
+                "4_5": {
+                    "label": "Fortress Guards"
+                },
+                "4_6": {
+                    "label": "Guardian Statues"
+                },
+                "4_7": {
+                    "label": "The Iron Warlord"
+                },
+                "4_8": {
+                    "label": "The Inner Keep"
+                }
+            }
         }
     },
     "chronicle": {
@@ -252,204 +285,215 @@
         },
         "guardian_tribute": {
             "instruction": "Distribute the gems among the statues"
-        }
-    },
-    "companions": {
-        "unlock": "New Companion Unlocked!",
-        "level_up": "Level Up!",
-        "too_easy": "Too Easy...",
-        "evolution": "Growing Up",
-        "stats": {
-            "hp": "HP",
-            "spirit": "Spirit",
-            "attack": "Attack",
-            "shield": "Shield"
         },
-        "amara": {
-            "title": "The Jungle Ranger",
-            "evolution_1": "Jungle Tracker",
-            "evolution_2": "Apex Stalker",
-            "evolution_3": "Nature's Wrath"
+        "geometry": {
+            "instruction": "Find the correct shape!",
+            "find_shape": "Find the {{shape}}!",
+            "shapes": {
+                "triangle": "Triangle",
+                "square": "Square",
+                "circle": "Circle",
+                "pentagon": "Pentagon",
+                "hexagon": "Hexagon"
+            }
         },
-        "tariq": {
-            "title": "The Desert Alchemist",
-            "evolution_1": "Desert Physician",
-            "evolution_2": "Master Alchemist",
-            "evolution_3": "Sage of Sands"
-        },
-        "kenji": {
-            "title": "The Mountain Samurai",
-            "evolution_1": "Ronin Defender",
-            "evolution_2": "Steel Sentinel",
-            "evolution_3": "Shogun's Wall"
-        },
-        "zahara": {
-            "title": "The Savannah Mage",
-            "evolution_1": "Sun Caller",
-            "evolution_2": "Ember Weaver",
-            "evolution_3": "Radiant Seer"
-        }
-    },
-    "abilities": {
-        "jaguar_strike": {
-            "name": "Jaguar Strike",
-            "description": "Deals {{value}} damage to a single enemy."
-        },
-        "jaguar_strike_2": {
-            "name": "Jaguar Strike II",
-            "description": "Deals {{value}} damage to a single enemy."
-        },
-        "jaguar_strike_3": {
-            "name": "Jaguar Strike III",
-            "description": "Deals {{value}} damage to a single enemy."
-        },
-        "jaguar_strike_4": {
-            "name": "Jaguar Strike IV",
-            "description": "Deals {{value}} damage to a single enemy."
-        },
-        "elixir_of_life": {
-            "name": "Elixir of Life",
-            "description": "Heals all allies for {{value}} HP."
-        },
-        "elixir_of_life_2": {
-            "name": "Elixir of Life II",
-            "description": "Heals all allies for {{value}} HP."
-        },
-        "elixir_of_life_3": {
-            "name": "Elixir of Life III",
-            "description": "Heals all allies for {{value}} HP."
-        },
-        "elixir_of_life_4": {
-            "name": "Elixir of Life IV",
-            "description": "Heals all allies for {{value}} HP."
-        },
-        "blade_barrier": {
-            "name": "Blade Barrier",
-            "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
-        },
-        "blade_barrier_2": {
-            "name": "Blade Barrier II",
-            "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
-        },
-        "blade_barrier_3": {
-            "name": "Blade Barrier III",
-            "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
-        },
-        "blade_barrier_4": {
-            "name": "Blade Barrier IV",
-            "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
-        },
-        "ancestral_storm": {
-            "name": "Ancestral Storm",
-            "description": "Deals {{value}} damage to all enemies."
-        },
-        "ancestral_storm_2": {
-            "name": "Ancestral Storm II",
-            "description": "Deals {{value}} damage to all enemies."
-        },
-        "ancestral_storm_3": {
-            "name": "Ancestral Storm III",
-            "description": "Deals {{value}} damage to all enemies."
-        },
-        "ancestral_storm_4": {
-            "name": "Ancestral Storm IV",
-            "description": "Deals {{value}} damage to all enemies."
-        }
-    },
-    "monsters": {
-        "scorpion_1": {
-            "name": "Desert Scorpion"
-        },
-        "tiny_scorpion": {
-            "name": "Tiny Scorpion"
-        },
-        "desert_scavenger": {
-            "name": "Desert Scavenger"
-        },
-        "sand_spirit_1": {
-            "name": "Sand Spirit"
-        },
-        "sand_colossus": {
-            "name": "The Sand Colossus"
-        },
-        "bandit_raider": {
-            "name": "Bandit Raider"
-        },
-        "stone_guardian": {
-            "name": "Stone Guardian"
-        },
-        "assyrian_guardian": {
-            "name": "Assyrian Guardian"
-        },
-        "the_stone_emperor": {
-            "name": "The Stone Emperor"
-        },
-        "bandit_leader": {
-            "name": "Bandit Leader"
-        },
-        "mist_stalker": {
-            "name": "Mist Stalker"
-        },
-        "iron_minion": {
-            "name": "Iron Minion"
-        },
-        "iron_warlord_enforcer": {
-            "name": "The Iron Enforcer"
-        }
-    },
-    "premium": {
-        "store": {
-            "title": "Unlock the Full Adventure",
-            "description": "Continue the journey with Amara and Tariq. Unlock all 6 adventures, companion evolutions, and future realms.",
-            "features": {
-                "adventures": "Unlock All 6 Adventures",
-                "evolutions": "Unlock Companion Evolutions",
-                "realms": "Future Realm Access",
-                "support": "Support Solo Development"
+        "companions": {
+            "unlock": "New Companion Unlocked!",
+            "level_up": "Level Up!",
+            "too_easy": "Too Easy...",
+            "evolution": "Growing Up",
+            "stats": {
+                "hp": "HP",
+                "spirit": "Spirit",
+                "attack": "Attack",
+                "shield": "Shield"
             },
-            "price": "89 SEK",
-            "buy_now": "Unlock Premium",
-            "account": {
-                "title": "Secure Your Progress",
-                "subtitle": "Create an account to save your purchase and play on any device.",
-                "email_label": "Email Address",
-                "email_placeholder": "your@email.com",
-                "confirm_email_label": "Confirm Email Address",
-                "password_label": "Password",
-                "password_placeholder": "Choose a strong password",
-                "continue_btn": "Continue with purchase",
-                "already_registered": "Already have an account? Sign In",
-                "errors": {
-                    "invalid_email": "Please enter a valid email.",
-                    "emails_dont_match": "Email addresses do not match.",
-                    "weak_password": "Password must be at least 6 characters.",
-                    "already_exists": "This email is already registered. Please sign in."
-                }
+            "amara": {
+                "title": "The Jungle Ranger",
+                "evolution_1": "Jungle Tracker",
+                "evolution_2": "Apex Stalker",
+                "evolution_3": "Nature's Wrath"
             },
-            "success_title": "Premium Unlocked!",
-            "success_message": "Thank you for your support!",
-            "processing_payment": "Securing your adventure...",
-            "verifying_access": "Verifying your new content...",
-            "verification_timeout": "Payment succeeded, but we are still processing your access. It will appear in your account shortly.",
-            "total_amount": "Total Amount"
+            "tariq": {
+                "title": "The Desert Alchemist",
+                "evolution_1": "Desert Physician",
+                "evolution_2": "Master Alchemist",
+                "evolution_3": "Sage of Sands"
+            },
+            "kenji": {
+                "title": "The Mountain Samurai",
+                "evolution_1": "Ronin Defender",
+                "evolution_2": "Steel Sentinel",
+                "evolution_3": "Shogun's Wall"
+            },
+            "zahara": {
+                "title": "The Savannah Mage",
+                "evolution_1": "Sun Caller",
+                "evolution_2": "Ember Weaver",
+                "evolution_3": "Radiant Seer"
+            }
+        },
+        "abilities": {
+            "jaguar_strike": {
+                "name": "Jaguar Strike",
+                "description": "Deals {{value}} damage to a single enemy."
+            },
+            "jaguar_strike_2": {
+                "name": "Jaguar Strike II",
+                "description": "Deals {{value}} damage to a single enemy."
+            },
+            "jaguar_strike_3": {
+                "name": "Jaguar Strike III",
+                "description": "Deals {{value}} damage to a single enemy."
+            },
+            "jaguar_strike_4": {
+                "name": "Jaguar Strike IV",
+                "description": "Deals {{value}} damage to a single enemy."
+            },
+            "elixir_of_life": {
+                "name": "Elixir of Life",
+                "description": "Heals all allies for {{value}} HP."
+            },
+            "elixir_of_life_2": {
+                "name": "Elixir of Life II",
+                "description": "Heals all allies for {{value}} HP."
+            },
+            "elixir_of_life_3": {
+                "name": "Elixir of Life III",
+                "description": "Heals all allies for {{value}} HP."
+            },
+            "elixir_of_life_4": {
+                "name": "Elixir of Life IV",
+                "description": "Heals all allies for {{value}} HP."
+            },
+            "blade_barrier": {
+                "name": "Blade Barrier",
+                "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
+            },
+            "blade_barrier_2": {
+                "name": "Blade Barrier II",
+                "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
+            },
+            "blade_barrier_3": {
+                "name": "Blade Barrier III",
+                "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
+            },
+            "blade_barrier_4": {
+                "name": "Blade Barrier IV",
+                "description": "Deals {{damage}} damage and shields all allies for {{duration}} turns."
+            },
+            "ancestral_storm": {
+                "name": "Ancestral Storm",
+                "description": "Deals {{value}} damage to all enemies."
+            },
+            "ancestral_storm_2": {
+                "name": "Ancestral Storm II",
+                "description": "Deals {{value}} damage to all enemies."
+            },
+            "ancestral_storm_3": {
+                "name": "Ancestral Storm III",
+                "description": "Deals {{value}} damage to all enemies."
+            },
+            "ancestral_storm_4": {
+                "name": "Ancestral Storm IV",
+                "description": "Deals {{value}} damage to all enemies."
+            }
+        },
+        "monsters": {
+            "scorpion_1": {
+                "name": "Desert Scorpion"
+            },
+            "tiny_scorpion": {
+                "name": "Tiny Scorpion"
+            },
+            "desert_scavenger": {
+                "name": "Desert Scavenger"
+            },
+            "sand_spirit_1": {
+                "name": "Sand Spirit"
+            },
+            "sand_colossus": {
+                "name": "The Sand Colossus"
+            },
+            "bandit_raider": {
+                "name": "Bandit Raider"
+            },
+            "stone_guardian": {
+                "name": "Stone Guardian"
+            },
+            "assyrian_guardian": {
+                "name": "Assyrian Guardian"
+            },
+            "the_stone_emperor": {
+                "name": "The Stone Emperor"
+            },
+            "bandit_leader": {
+                "name": "Bandit Leader"
+            },
+            "mist_stalker": {
+                "name": "Mist Stalker"
+            },
+            "iron_minion": {
+                "name": "Iron Minion"
+            },
+            "iron_warlord_enforcer": {
+                "name": "The Iron Enforcer"
+            }
+        },
+        "premium": {
+            "store": {
+                "title": "Unlock the Full Adventure",
+                "description": "Continue the journey with Amara and Tariq. Unlock all 6 adventures, companion evolutions, and future realms.",
+                "features": {
+                    "adventures": "Unlock All 6 Adventures",
+                    "evolutions": "Unlock Companion Evolutions",
+                    "realms": "Future Realm Access",
+                    "support": "Support Solo Development"
+                },
+                "price": "89 SEK",
+                "buy_now": "Unlock Premium",
+                "account": {
+                    "title": "Secure Your Progress",
+                    "subtitle": "Create an account to save your purchase and play on any device.",
+                    "email_label": "Email Address",
+                    "email_placeholder": "your@email.com",
+                    "confirm_email_label": "Confirm Email Address",
+                    "password_label": "Password",
+                    "password_placeholder": "Choose a strong password",
+                    "continue_btn": "Continue with purchase",
+                    "already_registered": "Already have an account? Sign In",
+                    "errors": {
+                        "invalid_email": "Please enter a valid email.",
+                        "emails_dont_match": "Email addresses do not match.",
+                        "weak_password": "Password must be at least 6 characters.",
+                        "already_exists": "This email is already registered. Please sign in."
+                    }
+                },
+                "success_title": "Premium Unlocked!",
+                "success_message": "Thank you for your support!",
+                "processing_payment": "Securing your adventure...",
+                "verifying_access": "Verifying your new content...",
+                "verification_timeout": "Payment succeeded, but we are still processing your access. It will appear in your account shortly.",
+                "total_amount": "Total Amount"
+            }
+        },
+        "landing": {
+            "start_game": "Start New Journey",
+            "continue_journey": "Continue Journey",
+            "login": "Log In",
+            "first_edition": "First Edition",
+            "title": "Play to Learn",
+            "subtitle": "Embark on an epic journey of knowledge and adventure."
+        },
+        "login": {
+            "member_access": "Member Access",
+            "back_to_cover": "Back to Cover",
+            "email_label": "Email Address",
+            "email_placeholder": "name@example.com",
+            "password_label": "Password",
+            "password_placeholder": "••••••••",
+            "open_journal": "Open Journal",
+            "invalid_credentials": "Invalid email or password"
         }
-    },
-    "landing": {
-        "start_game": "Start New Journey",
-        "continue_journey": "Continue Journey",
-        "login": "Log In",
-        "first_edition": "First Edition",
-        "title": "Play to Learn",
-        "subtitle": "Embark on an epic journey of knowledge and adventure."
-    },
-    "login": {
-        "member_access": "Member Access",
-        "back_to_cover": "Back to Cover",
-        "email_label": "Email Address",
-        "email_placeholder": "name@example.com",
-        "password_label": "Password",
-        "password_placeholder": "••••••••",
-        "open_journal": "Open Journal",
-        "invalid_credentials": "Invalid email or password"
     }
 }
