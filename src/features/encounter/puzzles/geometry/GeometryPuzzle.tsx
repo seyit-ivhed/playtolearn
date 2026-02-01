@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './GeometryPuzzle.module.css';
 import { type PuzzleData } from '../../../../types/adventure.types';
 import { useTranslation } from 'react-i18next';
+import { type GeometryPuzzleData } from './GeometryEngine';
 
 interface GeometryPuzzleProps {
     data: PuzzleData;
@@ -10,15 +11,31 @@ interface GeometryPuzzleProps {
 
 export const GeometryPuzzle: React.FC<GeometryPuzzleProps> = ({ data, onSolve }) => {
     const { t } = useTranslation();
+    const geometryData = data as GeometryPuzzleData;
     const [isSolved, setIsSolved] = useState(false);
     const [wrongAttempt, setWrongAttempt] = useState<string | null>(null);
+
+    if (!geometryData.targetShapeType) {
+        console.error('GeometryPuzzle: targetShapeType is missing in puzzle data');
+        return null;
+    }
+
+    if (!geometryData.shapes || geometryData.shapes.length === 0) {
+        console.error('GeometryPuzzle: shapes are missing or empty in puzzle data');
+        return null;
+    }
+
+    if (!geometryData.correctShapeId) {
+        console.error('GeometryPuzzle: correctShapeId is missing in puzzle data');
+        return null;
+    }
 
     const handleShapeClick = (shapeId: string) => {
         if (isSolved) {
             return;
         }
 
-        if (shapeId === data.correctShapeId) {
+        if (shapeId === geometryData.correctShapeId) {
             setIsSolved(true);
             setTimeout(() => {
                 onSolve();
@@ -56,8 +73,7 @@ export const GeometryPuzzle: React.FC<GeometryPuzzleProps> = ({ data, onSolve })
     };
 
     // Construct the question
-    // We need to make sure we have translations for these shapes or fallback
-    const targetShapeType = data.targetShapeType || 'triangle';
+    const targetShapeType = geometryData.targetShapeType;
     const shapeName = t(`puzzle.geometry.shapes.${targetShapeType}`, targetShapeType.toUpperCase());
 
     return (
@@ -67,7 +83,7 @@ export const GeometryPuzzle: React.FC<GeometryPuzzleProps> = ({ data, onSolve })
             </div>
 
             <div className={styles.shapesGrid} data-testid="geometry-shapes-grid">
-                {data.shapes?.map((shape) => (
+                {geometryData.shapes?.map((shape) => (
                     <button
                         key={shape.id}
                         data-testid={`geometry-shape-${shape.id}`}
