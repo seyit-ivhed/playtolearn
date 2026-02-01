@@ -48,5 +48,5 @@ export const generateGeometryData = (difficulty: DifficultyLevel): PuzzleData =>
         correctShapeId: correctShape.id,
         questionKey,
         targetShapeType: correctShape.type // Helper for the UI to know what to ask for
-    } as unknown as PuzzleData;
+    };
 };

@@ -11,19 +11,21 @@ interface GeometryPuzzleProps {
 
 export const GeometryPuzzle: React.FC<GeometryPuzzleProps> = ({ data, onSolve }) => {
     const { t } = useTranslation();
-    const puzzleData = data as unknown as GeometryPuzzleData;
-    const [isSolved, setIsSolved] = useState(false);
-    const [wrongAttempt, setWrongAttempt] = useState<string | null>(null);
-
     const handleShapeClick = (shapeId: string) => {
-        if (isSolved) return;
+        if (isSolved) {
+            return;
+        }
 
-        if (shapeId === puzzleData.correctShapeId) {
+        if (shapeId === data.correctShapeId) {
             setIsSolved(true);
-            setTimeout(() => onSolve(), 1000);
+            setTimeout(() => {
+                onSolve();
+            }, 1000);
         } else {
             setWrongAttempt(shapeId);
-            setTimeout(() => setWrongAttempt(null), 500);
+            setTimeout(() => {
+                setWrongAttempt(null);
+            }, 500);
         }
     };
 
@@ -53,21 +55,24 @@ export const GeometryPuzzle: React.FC<GeometryPuzzleProps> = ({ data, onSolve })
 
     // Construct the question
     // We need to make sure we have translations for these shapes or fallback
-    const targetShapeType = (puzzleData as any).targetShapeType || 'triangle';
+    const targetShapeType = data.targetShapeType || 'triangle';
     const shapeName = t(`puzzle.geometry.shapes.${targetShapeType}`, targetShapeType.toUpperCase());
 
     return (
-        <div className={styles.container}>
-            <div className={styles.question}>
-                {t(puzzleData.questionKey, `Find the ${shapeName}!`)}
+        <div className={styles.container} data-testid="geometry-puzzle">
+            <div className={styles.question} data-testid="geometry-question">
+                {t(data.questionKey || 'puzzle.geometry.find_shape', `Find the ${shapeName}!`)}
             </div>
 
-            <div className={styles.shapesGrid}>
-                {puzzleData.shapes.map((shape) => (
+            <div className={styles.shapesGrid} data-testid="geometry-shapes-grid">
+                {data.shapes?.map((shape) => (
                     <button
                         key={shape.id}
+                        data-testid={`geometry-shape-${shape.id}`}
                         className={styles.shapeButton}
-                        onClick={() => handleShapeClick(shape.id)}
+                        onClick={() => {
+                            handleShapeClick(shape.id);
+                        }}
                         style={{
                             opacity: wrongAttempt === shape.id ? 0.5 : 1,
                             transform: wrongAttempt === shape.id ? 'translateX(5px)' : 'none'
@@ -79,7 +84,14 @@ export const GeometryPuzzle: React.FC<GeometryPuzzleProps> = ({ data, onSolve })
                     </button>
                 ))}
             </div>
-            {isSolved && <div style={{ fontSize: '2rem', marginTop: '1rem' }}>✨</div>}
+            {isSolved && (
+                <div
+                    data-testid="geometry-success"
+                    style={{ fontSize: '2rem', marginTop: '1rem' }}
+                >
+                    ✨
+                </div>
+            )}
         </div>
     );
 };

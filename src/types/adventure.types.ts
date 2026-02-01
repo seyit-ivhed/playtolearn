@@ -82,6 +82,11 @@ export interface PuzzleData extends Required<Pick<PuzzleConfig, 'puzzleType'>> {
     // Guardian Tribute specific fields
     guardians?: unknown[]; // Actual type defined in guardian-tribute.ts to avoid circular dependency
     totalGems?: number;
+    // Geometry Puzzle specific fields
+    shapes?: any[]; // Should be GeometryShape[] but defined in GeometryEngine to avoid circular dep
+    correctShapeId?: string;
+    questionKey?: string;
+    targetShapeType?: string;
 }
 
 // Concept: An encounter is a single node on the map
