@@ -58,6 +58,26 @@ export const MONSTERS = {
         maxHealth: 120,
         attack: 25,
     },
+    CLOCKWORK_SCOUT: {
+        id: 'clockwork_scout',
+        maxHealth: 110,
+        attack: 28,
+    },
+    STEAM_VANGUARD: {
+        id: 'steam_vanguard',
+        maxHealth: 200,
+        attack: 22,
+    },
+    IRON_GRENADIER: {
+        id: 'iron_grenadier',
+        maxHealth: 140,
+        attack: 35,
+    },
+    MECHANICAL_HOUND: {
+        id: 'mechanical_hound',
+        maxHealth: 130,
+        attack: 32,
+    },
     IRON_MINION: {
         id: 'iron_minion',
         maxHealth: 160,
@@ -67,6 +87,12 @@ export const MONSTERS = {
         id: 'iron_warlord_enforcer',
         maxHealth: 500,
         attack: 60,
+        isBoss: true,
+    },
+    IRON_WARLORD: {
+        id: 'iron_warlord',
+        maxHealth: 800,
+        attack: 85,
         isBoss: true,
     },
 } as const satisfies Record<string, AdventureMonster>;

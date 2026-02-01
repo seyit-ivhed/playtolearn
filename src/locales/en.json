@@ -156,24 +156,36 @@
                     "label": "Iron Outpost"
                 },
                 "4_2": {
-                    "label": "Shape Lock"
-                },
-                "4_3": {
                     "label": "Patrol Ambush"
                 },
+                "4_3": {
+                    "label": "Steam Vanguard"
+                },
                 "4_4": {
-                    "label": "Mirror Gate"
+                    "label": "Shape Lock"
                 },
                 "4_5": {
-                    "label": "Fortress Guards"
+                    "label": "Heavy Guard"
                 },
                 "4_6": {
-                    "label": "Guardian Statues"
+                    "label": "Mirror Gate"
                 },
                 "4_7": {
-                    "label": "The Iron Warlord"
+                    "label": "Hound Pack"
                 },
                 "4_8": {
+                    "label": "Steam Barrier"
+                },
+                "4_9": {
+                    "label": "The Gem Tribute"
+                },
+                "4_10": {
+                    "label": "Elite Guard"
+                },
+                "4_11": {
+                    "label": "The Iron Warlord"
+                },
+                "4_12": {
                     "label": "The Inner Keep"
                 }
             }
@@ -433,11 +445,26 @@
             "mist_stalker": {
                 "name": "Mist Stalker"
             },
+            "clockwork_scout": {
+                "name": "Clockwork Scout"
+            },
+            "steam_vanguard": {
+                "name": "Steam Vanguard"
+            },
+            "iron_grenadier": {
+                "name": "Iron Grenadier"
+            },
+            "mechanical_hound": {
+                "name": "Mechanical Hound"
+            },
             "iron_minion": {
                 "name": "Iron Minion"
             },
             "iron_warlord_enforcer": {
                 "name": "The Iron Enforcer"
+            },
+            "iron_warlord": {
+                "name": "The Iron Warlord"
             }
         },
         "premium": {
