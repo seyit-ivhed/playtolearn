@@ -301,25 +301,25 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '4_9',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: -100, y: 3800 },
+                coordinates: { x: 250, y: 3800 },
                 puzzleData: { puzzleType: PuzzleType.GUARDIAN_TRIBUTE },
             },
             {
                 id: '4_10',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 200, y: 4200 },
+                coordinates: { x: -150, y: 4000 },
                 enemies: [MONSTERS.IRON_GRENADIER, MONSTERS.STEAM_VANGUARD, MONSTERS.CLOCKWORK_SCOUT],
             },
             {
                 id: '4_11',
                 type: EncounterType.BOSS,
-                coordinates: { x: 0, y: 4600 },
+                coordinates: { x: 0, y: 3500 },
                 enemies: [MONSTERS.IRON_WARLORD],
             },
             {
                 id: '4_12',
                 type: EncounterType.ENDING,
-                coordinates: { x: -300, y: 5000 },
+                coordinates: { x: 0, y: 3000 },
             }
         ]
     },
