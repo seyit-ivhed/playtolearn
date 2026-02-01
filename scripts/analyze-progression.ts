@@ -57,12 +57,13 @@ export async function runAnalysis() {
                 party.push({ id: 'kenji', level: 1, currentXp: 0 });
             }
 
-            const isScorable = encounter.type === EncounterType.BATTLE ||
-                encounter.type === EncounterType.BOSS ||
-                encounter.type === EncounterType.PUZZLE;
+            const isXpGranting = encounter.type === EncounterType.BATTLE ||
+                encounter.type === EncounterType.BOSS;
+
+            const isScorable = isXpGranting || encounter.type === EncounterType.PUZZLE;
 
             if (isScorable) {
-                const xpReward = EXPERIENCE_CONFIG.ENCOUNTER_XP_REWARD;
+                const xpReward = isXpGranting ? EXPERIENCE_CONFIG.ENCOUNTER_XP_REWARD : 0;
                 const maxLevel = adventure.levelRange?.[1] || EXPERIENCE_CONFIG.MAX_LEVEL;
 
                 // Track which companions are blocked
