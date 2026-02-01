@@ -87,6 +87,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                         ref={dropdownRef}
                         onMouseEnter={() => !isDropdownOpen && setHoveredDifficulty(selectedDifficulty)}
                         onMouseLeave={() => !isDropdownOpen && setHoveredDifficulty(null)}
+                        data-testid="difficulty-dropdown"
                     >
                         <div
                             className={`dropdown-header ${isDropdownOpen ? 'open' : ''}`}
@@ -116,6 +117,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                                         }}
                                         onMouseEnter={() => setHoveredDifficulty(level)}
                                         onMouseLeave={() => setHoveredDifficulty(null)}
+                                        data-testid={`difficulty-dropdown-option-${level}`}
                                     >
                                         <div className="item-content">
                                             <span className="item-label">{getDifficultyLabel(level)}</span>

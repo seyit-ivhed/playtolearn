@@ -51,10 +51,18 @@ export const generateAdventureTitles = (t: TFunction): Record<string, string> =>
  * Determines the book state based on the URL pageId parameter.
  */
 export const getBookStateFromUrl = (pageId?: string): 'COVER' | 'LOGIN' | 'DIFFICULTY' | 'ADVENTURE' => {
-    if (!pageId || pageId === 'cover') { return 'COVER'; }
-    if (pageId === 'login') { return 'LOGIN'; }
-    if (pageId === 'difficulty') { return 'DIFFICULTY'; }
-    if (!isNaN(Number(pageId))) { return 'ADVENTURE'; }
+    if (!pageId || pageId === 'cover') {
+        return 'COVER';
+    }
+    if (pageId === 'login') {
+        return 'LOGIN';
+    }
+    if (pageId === 'difficulty') {
+        return 'DIFFICULTY';
+    }
+    if (!isNaN(Number(pageId))) {
+        return 'ADVENTURE';
+    }
     return 'COVER';
 };
 

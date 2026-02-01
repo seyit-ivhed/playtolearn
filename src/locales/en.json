@@ -2,6 +2,7 @@
     "common": {
         "continue": "Continue",
         "start_over": "Start Over",
+        "back": "Back",
         "level": "Level",
         "lvl": "Lvl"
     },

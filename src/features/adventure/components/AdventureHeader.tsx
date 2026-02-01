@@ -15,7 +15,7 @@ export const AdventureHeader: React.FC<AdventureHeaderProps> = ({ adventureId, a
             <button
                 className="header-back-button"
                 onClick={onBack}
-                title="Back to Chronicle"
+                title={t('common.back')}
                 data-testid="back-to-chronicle"
             >
                 📖

@@ -70,9 +70,13 @@ export const BookDifficulty: React.FC<BookDifficultyProps> = ({ onSelect, onBack
                 ))}
             </div>
 
-            <button className={styles.backBtn} onClick={onBack}>
+            <button
+                className={styles.backBtn}
+                onClick={onBack}
+                data-testid="difficulty-back-btn"
+            >
                 <ChevronLeft size={16} />
-                {t('common.back', 'Back')}
+                {t('common.back')}
             </button>
 
         </div>

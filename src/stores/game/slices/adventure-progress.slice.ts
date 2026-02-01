@@ -15,7 +15,9 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
 
         const adventure = ADVENTURES.find(a => a.id === adventureId);
 
-        if (!adventure) return;
+        if (!adventure) {
+            return;
+        }
 
         const encounter = adventure.encounters[nodeIndex - 1];
 
@@ -50,7 +52,13 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
         PersistenceService.sync(get());
     },
 
-    setEncounterDifficulty: (difficulty) => set({ activeEncounterDifficulty: difficulty }),
+    setEncounterDifficulty: (difficulty) => {
+        if (typeof difficulty !== 'number') {
+            console.error('Invalid difficulty provided to setEncounterDifficulty');
+            return;
+        }
+        set({ activeEncounterDifficulty: difficulty });
+    },
 
     getAdventureNodes: (adventureId) => {
         const { encounterResults } = get();
