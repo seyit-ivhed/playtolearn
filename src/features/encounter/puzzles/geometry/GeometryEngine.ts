@@ -36,7 +36,7 @@ export const generateGeometryData = (difficulty: DifficultyLevel): PuzzleData =>
     const correctShape = shapes[correctIndex];
 
     // Determine question based on difficulty
-    let questionKey = 'puzzle.geometry.find_shape'; // Default
+    const questionKey = 'puzzle.geometry.find_shape'; // Default
     // For now, let's keep it simple: "Find the [Shape]"
     // In a real implementation we might have "Find the shape with X sides" for higher difficulty
 
