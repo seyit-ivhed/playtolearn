@@ -295,6 +295,9 @@
         "balance": {
             "instruction": "Ta bort stenar tills båda högarna är lika höga!"
         },
+        "guardian_tribute": {
+            "instruction": "Fördela ädelstenarna mellan statyerna"
+        },
         "geometry": {
             "instruction": "Hitta den rätta formen!",
             "find_shape": "Hitta {{shape}}!",
