@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from './GeometryPuzzle.module.css';
 import { type PuzzleData } from '../../../../types/adventure.types';
-import { type GeometryPuzzleData } from './GeometryEngine';
 import { useTranslation } from 'react-i18next';
 
 interface GeometryPuzzleProps {
@@ -11,6 +10,9 @@ interface GeometryPuzzleProps {
 
 export const GeometryPuzzle: React.FC<GeometryPuzzleProps> = ({ data, onSolve }) => {
     const { t } = useTranslation();
+    const [isSolved, setIsSolved] = useState(false);
+    const [wrongAttempt, setWrongAttempt] = useState<string | null>(null);
+
     const handleShapeClick = (shapeId: string) => {
         if (isSolved) {
             return;
@@ -61,7 +63,7 @@ export const GeometryPuzzle: React.FC<GeometryPuzzleProps> = ({ data, onSolve })
     return (
         <div className={styles.container} data-testid="geometry-puzzle">
             <div className={styles.question} data-testid="geometry-question">
-                {t(data.questionKey || 'puzzle.geometry.find_shape', `Find the ${shapeName}!`)}
+                {t('puzzle.geometry.find_shape', { shape: shapeName })}
             </div>
 
             <div className={styles.shapesGrid} data-testid="geometry-shapes-grid">

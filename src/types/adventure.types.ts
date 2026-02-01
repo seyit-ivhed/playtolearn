@@ -9,8 +9,6 @@ export const AdventureStatus = {
 
 export type AdventureStatus = typeof AdventureStatus[keyof typeof AdventureStatus];
 
-
-
 // Encounter Types (for future expansion)
 export const EncounterType = {
     BATTLE: 'BATTLE',      // Turn-based combat against monsters
@@ -83,7 +81,7 @@ export interface PuzzleData extends Required<Pick<PuzzleConfig, 'puzzleType'>> {
     guardians?: unknown[]; // Actual type defined in guardian-tribute.ts to avoid circular dependency
     totalGems?: number;
     // Geometry Puzzle specific fields
-    shapes?: any[]; // Should be GeometryShape[] but defined in GeometryEngine to avoid circular dep
+    shapes?: unknown[]; // GeometryShape[] - defined in GeometryEngine to avoid circular dependency
     correctShapeId?: string;
     questionKey?: string;
     targetShapeType?: string;
