@@ -12,7 +12,8 @@ To maintain consistency with the *Math Quest Adventures* aesthetic, use the foll
 - **Lighting:** `Dramatic lighting`, `atmospheric shading`, `cinematic composition`.
 - **Colors:** `Warm vibrant colors`, `regal jewel tones`.
 - **Target:** `Google Nano Banana` (or other high-quality SDXL-based generators).
-- **Aspect Ratio:** `16:9` or `3:2` (recommended for the `ChronicleBook` UI).
+- **Aspect Ratio:** `16:9` (required by UI).
+- **Resolution:** Recommended `1920x1080` (Full HD) or at least `1024x576`. The UI displays these at ~450px width, so `900px` width is ideal for retina displays.
 
 ---
 
@@ -68,4 +69,15 @@ A breathtaking view of the subterranean city, filled with ancient wonder and ban
 Amara and Tariq arriving to meet Kenji in the snowy foothills of the Jade Peaks.
 
 ### Primary Prompt
-> A beautiful storybook illustration of two young adventurers, Amara and Tariq, arriving at the snowy foothills of the Jade Peaks. They have just emerged from a shimmering magical portal. Through the thick, swirling mountain mists, they discover a young 8-year-old boy named Kenji dressed in a simple light grey cotton kimono with a small cherry blossom pattern and a rope belt. He wears a small jade pendant and holds a wooden practice daito that looks too large for him. Amara with warm brown skin and curly hair, Tariq with olive skin and desert gear. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, magical atmosphere. High quality, wide shot. No text. 16:9 aspect ratio.
+> A beautiful storybook illustration of two young adventurers, Amara and Tariq, arriving at the snowy foothills of the Jade Peaks. They have just emerged from a shimmering magical portal. Through the thick, swirling mountain mists, they discover a young 8-year-old boy named Kenji dressed in a simple light grey cotton kimono with a small jade pendant. He holds an oversized wooden practice sword. The setting is ethereal, with pine trees fading into the white mist. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, magical atmosphere. High quality, wide shot. No text. 16:9 aspect ratio.
+
+---
+
+## Adventure 4: Rise of the Iron Warlord
+
+### Concept
+The approach to the Iron Fortress, a mechanical stronghold amidst the mountains.
+
+
+### Primary Prompt
+> A dramatic storybook illustration of the Iron Fortress, a massive, imposing citadel of dark metal and stone, rising from the jagged rocks of a mountain pass. The fortress is surrounded by a forest of sharp iron spikes and watchtowers, dominating the landscape. The atmosphere is tense and foreboding, with steam venting from the fortress machinery and a dark, stormy sky. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, industrial fantasy aesthetic. High quality, wide shot. No text. 16:9 aspect ratio.
