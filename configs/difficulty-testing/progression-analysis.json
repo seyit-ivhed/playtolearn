@@ -277,5 +277,138 @@
         ]
       }
     }
+  },
+  {
+    "adventureId": "4",
+    "encounters": {
+      "4_1": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 8
+          },
+          {
+            "companionId": "tariq",
+            "level": 8
+          },
+          {
+            "companionId": "kenji",
+            "level": 5
+          }
+        ]
+      },
+      "4_2": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 8
+          },
+          {
+            "companionId": "tariq",
+            "level": 8
+          },
+          {
+            "companionId": "kenji",
+            "level": 5
+          }
+        ]
+      },
+      "4_3": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 8
+          },
+          {
+            "companionId": "tariq",
+            "level": 8
+          },
+          {
+            "companionId": "kenji",
+            "level": 5
+          }
+        ]
+      },
+      "4_5": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 9
+          },
+          {
+            "companionId": "tariq",
+            "level": 9
+          },
+          {
+            "companionId": "kenji",
+            "level": 6
+          }
+        ]
+      },
+      "4_7": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 9
+          },
+          {
+            "companionId": "tariq",
+            "level": 9
+          },
+          {
+            "companionId": "kenji",
+            "level": 6
+          }
+        ]
+      },
+      "4_8": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 9
+          },
+          {
+            "companionId": "tariq",
+            "level": 9
+          },
+          {
+            "companionId": "kenji",
+            "level": 6
+          }
+        ]
+      },
+      "4_10": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 9
+          },
+          {
+            "companionId": "tariq",
+            "level": 9
+          },
+          {
+            "companionId": "kenji",
+            "level": 7
+          }
+        ]
+      },
+      "4_11": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 9
+          },
+          {
+            "companionId": "tariq",
+            "level": 9
+          },
+          {
+            "companionId": "kenji",
+            "level": 7
+          }
+        ]
+      }
+    }
   }
 ]

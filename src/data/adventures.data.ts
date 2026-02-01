@@ -260,13 +260,13 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_2',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 100, y: 1100 },
-                enemies: [MONSTERS.IRON_MINION, MONSTERS.MECHANICAL_HOUND],
+                enemies: [MONSTERS.CLOCKWORK_SCOUT, MONSTERS.CLOCKWORK_SCOUT, MONSTERS.MECHANICAL_HOUND],
             },
             {
                 id: '4_3',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1500 },
-                enemies: [MONSTERS.STEAM_VANGUARD, MONSTERS.CLOCKWORK_SCOUT],
+                enemies: [MONSTERS.STEAM_VANGUARD, MONSTERS.MECHANICAL_HOUND],
             },
             {
                 id: '4_4',
@@ -278,7 +278,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 50, y: 2300 },
-                enemies: [MONSTERS.IRON_GRENADIER, MONSTERS.IRON_GRENADIER, MONSTERS.IRON_MINION],
+                enemies: [MONSTERS.IRON_GRENADIER, MONSTERS.STEAM_VANGUARD],
             },
             {
                 id: '4_6',
@@ -296,7 +296,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_8',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 150, y: 3400 },
-                enemies: [MONSTERS.STEAM_VANGUARD, MONSTERS.IRON_GRENADIER],
+                enemies: [MONSTERS.IRON_GRENADIER, MONSTERS.IRON_GRENADIER],
             },
             {
                 id: '4_9',
