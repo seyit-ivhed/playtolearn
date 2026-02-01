@@ -46,3 +46,30 @@ export const generateAdventureTitles = (t: TFunction): Record<string, string> =>
         return acc;
     }, {} as Record<string, string>);
 };
+
+/**
+ * Determines the book state based on the URL pageId parameter.
+ */
+export const getBookStateFromUrl = (pageId?: string): 'COVER' | 'LOGIN' | 'DIFFICULTY' | 'ADVENTURE' => {
+    if (!pageId || pageId === 'cover') { return 'COVER'; }
+    if (pageId === 'login') { return 'LOGIN'; }
+    if (pageId === 'difficulty') { return 'DIFFICULTY'; }
+    if (!isNaN(Number(pageId))) { return 'ADVENTURE'; }
+    return 'COVER';
+};
+
+/**
+ * Calculates the z-index for pages in the 3D book view.
+ * Unified stacking logic: lower position = closer to front in a closed book.
+ */
+export const calculatePageZIndex = (state: 'active' | 'flipped' | 'upcoming', position: number): number => {
+    if (state === 'active') {
+        return 100;
+    }
+    if (state === 'flipped') {
+        // Most recently flipped (highest position) should be on top of left stack.
+        return 10 + position;
+    }
+    // Next up in line (lowest position) should be on top of right stack.
+    return 50 - position;
+};

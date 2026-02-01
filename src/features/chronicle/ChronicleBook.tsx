@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
-import { useAuth } from '../../hooks/useAuth';
 import { VOLUMES } from '../../data/volumes.data';
 import { calculateAdventureStars } from '../../utils/progression.utils';
 import { ChapterPage } from './components/ChapterPage';
@@ -18,11 +17,11 @@ import { BookCover } from './components/Book/BookCover';
 
 import { BookLogin } from './components/Book/BookLogin';
 import { BookDifficulty } from './components/Book/BookDifficulty';
+import { getBookStateFromUrl, calculatePageZIndex } from './utils/chronicle.utils';
 
 export const ChronicleBook: React.FC = () => {
     const { t } = useTranslation();
     const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
-    const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
     const { pageId } = useParams<{ pageId: string }>();
 
@@ -30,15 +29,7 @@ export const ChronicleBook: React.FC = () => {
     const hasAnyProgress = Object.keys(encounterResults).length > 0;
 
     // Determine Book State from URL
-    const getBookStateFromUrl = (): 'COVER' | 'LOGIN' | 'DIFFICULTY' | 'ADVENTURE' => {
-        if (!pageId || pageId === 'cover') return 'COVER';
-        if (pageId === 'login') return 'LOGIN';
-        if (pageId === 'difficulty') return 'DIFFICULTY';
-        if (!isNaN(Number(pageId))) return 'ADVENTURE';
-        return 'COVER';
-    };
-
-    const bookState = getBookStateFromUrl();
+    const bookState = getBookStateFromUrl(pageId);
     const urlAdventureId = bookState === 'ADVENTURE' ? pageId : undefined;
 
     // UI State
@@ -133,135 +124,121 @@ export const ChronicleBook: React.FC = () => {
         return null;
     }
 
-    // Unified stacking logic: lower position = closer to front in a closed book.
-    const calculatePageZIndex = (state: 'active' | 'flipped' | 'upcoming', position: number) => {
-        if (state === 'active') {
-            return 100;
-        }
-        if (state === 'flipped') {
-            // Most recently flipped (highest position) should be on top of left stack.
-            return 10 + position;
-        }
-        // Next up in line (lowest position) should be on top of right stack.
-        return 50 - position;
-    };
-
     // Calculate z-indices and states for 3D pages
     const coverState = bookState === 'COVER' ? 'active' : 'flipped';
     const loginState = bookState === 'LOGIN' ? 'active' : (bookState === 'COVER' ? 'upcoming' : 'flipped');
     const difficultyState = bookState === 'DIFFICULTY' ? 'active' : (bookState === 'COVER' || bookState === 'LOGIN' ? 'upcoming' : 'flipped');
 
-    return (
-        <BookLayout isOpen={bookState !== 'COVER'}>
-            {/* COVER PAGE */}
-            <BookPage
-                state={coverState}
-                zIndex={calculatePageZIndex(coverState, 0)}
-                isCover
-            >
-                <BookCover
-                    onStart={handleStartNewGame}
-                    onLogin={handleGoToLogin}
-                    hasProgress={hasAnyProgress}
-                />
-            </BookPage>
-
-            {/* LOGIN PAGE */}
-            <BookPage
-                state={loginState}
-                zIndex={calculatePageZIndex(loginState, 1)}
-            >
-                <BookLogin
-                    onBack={handleBackToCover}
-                    onSuccess={handleLoginSuccess}
-                />
-            </BookPage>
-
-            {/* DIFFICULTY SELECTION PAGE */}
-            <BookPage
-                state={difficultyState}
-                zIndex={calculatePageZIndex(difficultyState, 2)}
-            >
-                <BookDifficulty
-                    onSelect={handleDifficultySelected}
-                    onBack={handleBackToCover}
-                />
-            </BookPage>
-
-            {/* ADVENTURE ITEM PAGES (The main content) */}
-            {volumeAdventures.map((adventure, index) => {
-                const isCurrentAdventure = index === currentAdventureIndex;
-                const isPastAdventure = index < currentAdventureIndex;
-
-                // Only mark as 'active' if we are actually in ADVENTURE mode
-                const state = (bookState === 'ADVENTURE')
-                    ? (isPastAdventure ? 'flipped' : isCurrentAdventure ? 'active' : 'upcoming')
-                    : 'upcoming';
-
-                const position = 3 + index;
-
-                return (
-                    <BookPage
-                        key={adventure.id}
-                        state={state}
-                        zIndex={calculatePageZIndex(state, position)}
-                    >
-                        <div className={styles.pageMotionWrapper}>
-                            <ChapterPage
-                                adventure={adventure}
-                                status={adventureStatuses[adventure.id] || 'LOCKED'}
-                                stars={calculateAdventureStars(adventure.id, adventure.encounters, encounterResults)}
-                                onBegin={handleBegin}
-                                onReplay={handleBegin}
-                                onNext={handleNext}
-                                onPrev={() => {
-                                    if (index === 0) {
-                                        navigate('/chronicle/difficulty');
-                                    } else {
-                                        handlePrev();
-                                    }
-                                }}
-                                canNext={index < volumeAdventures.length - 1}
-                                canPrev={true}
-                                currentPage={index + 1}
-                                totalPages={volumeAdventures.length}
-                                isJustCompleted={isJustCompleted && adventure.id === currentAdventure?.id}
-                                isPremiumLocked={!isAdventureUnlocked(adventure.id)}
-                                hasProgress={Object.keys(encounterResults).some(key => key.startsWith(`${adventure.id}_`))}
-                            />
-                        </div>
-                    </BookPage>
-                );
-            })}
-
-            <PremiumStoreModal
-                isOpen={isPremiumModalOpen}
-                onClose={() => setIsPremiumModalOpen(false)}
+    return (<BookLayout isOpen={bookState !== 'COVER'}>
+        {/* COVER PAGE */}
+        <BookPage
+            state={coverState}
+            zIndex={calculatePageZIndex(coverState, 0)}
+            isCover
+        >
+            <BookCover
+                onStart={handleStartNewGame}
+                onLogin={handleGoToLogin}
+                hasProgress={hasAnyProgress}
             />
+        </BookPage>
 
-            {bookState === 'ADVENTURE' && (
-                <>
-                    {/* TOC Button Overlay */}
-                    <button
-                        className={styles.tocTrigger}
-                        onClick={() => setIsTocOpen(true)}
-                        data-testid="toc-trigger-btn"
-                    >
-                        {t('chronicle.contents')}
-                    </button>
+        {/* LOGIN PAGE */}
+        <BookPage
+            state={loginState}
+            zIndex={calculatePageZIndex(loginState, 1)}
+        >
+            <BookLogin
+                onBack={handleBackToCover}
+                onSuccess={handleLoginSuccess}
+            />
+        </BookPage>
 
-                    {isTocOpen && currentAdventure && (
-                        <TableOfContents
-                            volumes={VOLUMES}
-                            adventureStatuses={adventureStatuses}
-                            adventureTitles={adventureTitles}
-                            activeAdventureId={currentAdventure.id}
-                            onJumpToChapter={handleJumpToChapter}
-                            onClose={() => setIsTocOpen(false)}
+        {/* DIFFICULTY SELECTION PAGE */}
+        <BookPage
+            state={difficultyState}
+            zIndex={calculatePageZIndex(difficultyState, 2)}
+        >
+            <BookDifficulty
+                onSelect={handleDifficultySelected}
+                onBack={handleBackToCover}
+            />
+        </BookPage>
+
+        {/* ADVENTURE ITEM PAGES (The main content) */}
+        {volumeAdventures.map((adventure, index) => {
+            const isCurrentAdventure = index === currentAdventureIndex;
+            const isPastAdventure = index < currentAdventureIndex;
+
+            // Only mark as 'active' if we are actually in ADVENTURE mode
+            const state = (bookState === 'ADVENTURE')
+                ? (isPastAdventure ? 'flipped' : isCurrentAdventure ? 'active' : 'upcoming')
+                : 'upcoming';
+
+            const position = 3 + index;
+
+            return (
+                <BookPage
+                    key={adventure.id}
+                    state={state}
+                    zIndex={calculatePageZIndex(state, position)}
+                >
+                    <div className={styles.pageMotionWrapper}>
+                        <ChapterPage
+                            adventure={adventure}
+                            status={adventureStatuses[adventure.id] || 'LOCKED'}
+                            stars={calculateAdventureStars(adventure.id, adventure.encounters, encounterResults)}
+                            onBegin={handleBegin}
+                            onReplay={handleBegin}
+                            onNext={handleNext}
+                            onPrev={() => {
+                                if (index === 0) {
+                                    navigate('/chronicle/difficulty');
+                                } else {
+                                    handlePrev();
+                                }
+                            }}
+                            canNext={index < volumeAdventures.length - 1}
+                            canPrev={true}
+                            currentPage={index + 1}
+                            totalPages={volumeAdventures.length}
+                            isJustCompleted={isJustCompleted && adventure.id === currentAdventure?.id}
+                            isPremiumLocked={!isAdventureUnlocked(adventure.id)}
+                            hasProgress={Object.keys(encounterResults).some(key => key.startsWith(`${adventure.id}_`))}
                         />
-                    )}
-                </>
-            )}
-        </BookLayout>
+                    </div>
+                </BookPage>
+            );
+        })}
+
+        <PremiumStoreModal
+            isOpen={isPremiumModalOpen}
+            onClose={() => setIsPremiumModalOpen(false)}
+        />
+
+        {bookState === 'ADVENTURE' && (
+            <>
+                {/* TOC Button Overlay */}
+                <button
+                    className={styles.tocTrigger}
+                    onClick={() => setIsTocOpen(true)}
+                    data-testid="toc-trigger-btn"
+                >
+                    {t('chronicle.contents')}
+                </button>
+
+                {isTocOpen && currentAdventure && (
+                    <TableOfContents
+                        volumes={VOLUMES}
+                        adventureStatuses={adventureStatuses}
+                        adventureTitles={adventureTitles}
+                        activeAdventureId={currentAdventure.id}
+                        onJumpToChapter={handleJumpToChapter}
+                        onClose={() => setIsTocOpen(false)}
+                    />
+                )}
+            </>
+        )}
+    </BookLayout>
     );
 };

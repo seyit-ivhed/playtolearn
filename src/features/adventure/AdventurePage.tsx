@@ -101,7 +101,9 @@ const AdventurePage = () => {
     };
 
     const handleStartEncounter = (difficulty: number) => {
-        if (!selectedEncounter) return;
+        if (!selectedEncounter) {
+            return;
+        }
 
         const nodeStep = encounters.findIndex(e => e.id === selectedEncounter.id) + 1;
         setEncounterDifficulty(difficulty);
@@ -129,7 +131,9 @@ const AdventurePage = () => {
     };
 
     const getCurrentStars = (encounter: Encounter | null) => {
-        if (!encounter || !adventureId) return 0;
+        if (!encounter || !adventureId) {
+            return 0;
+        }
         const nodeStep = encounters.findIndex(e => e.id === encounter.id) + 1;
         const encounterKey = `${adventureId}_${nodeStep}`;
         return encounterResults[encounterKey]?.stars || 0;
@@ -140,7 +144,7 @@ const AdventurePage = () => {
             <main className="adventure-content">
                 <AdventureHeader
                     adventureId={adventure.id}
-                    adventureTitle={adventure.title || 'Adventure'}
+                    adventureTitle={adventure.title || t('common.adventure', 'Adventure')}
                     onBack={() => navigate(`/chronicle/${adventureId}`)}
                 />
 

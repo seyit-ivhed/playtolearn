@@ -3,7 +3,9 @@ import {
     resolveCurrentVolume,
     resolveVolumeAdventures,
     resolveCurrentAdventureIndex,
-    generateAdventureTitles
+    generateAdventureTitles,
+    getBookStateFromUrl,
+    calculatePageZIndex
 } from './chronicle.utils';
 import { VOLUMES } from '../../../data/volumes.data';
 import { ADVENTURES } from '../../../data/adventures.data';
@@ -77,6 +79,51 @@ describe('chronicle.utils', () => {
                 expect(result[a.id]).toBe(`Title ${a.id}`);
             });
             expect(result['prologue']).toBeUndefined();
+        });
+    });
+
+    describe('getBookStateFromUrl', () => {
+        it('should return COVER when pageId is undefined', () => {
+            expect(getBookStateFromUrl(undefined)).toBe('COVER');
+        });
+
+        it('should return COVER when pageId is "cover"', () => {
+            expect(getBookStateFromUrl('cover')).toBe('COVER');
+        });
+
+        it('should return LOGIN when pageId is "login"', () => {
+            expect(getBookStateFromUrl('login')).toBe('LOGIN');
+        });
+
+        it('should return DIFFICULTY when pageId is "difficulty"', () => {
+            expect(getBookStateFromUrl('difficulty')).toBe('DIFFICULTY');
+        });
+
+        it('should return ADVENTURE when pageId is a number', () => {
+            expect(getBookStateFromUrl('1')).toBe('ADVENTURE');
+            expect(getBookStateFromUrl('123')).toBe('ADVENTURE');
+        });
+
+        it('should return COVER for unknown strings', () => {
+            expect(getBookStateFromUrl('unknown')).toBe('COVER');
+            expect(getBookStateFromUrl('abc')).toBe('COVER');
+        });
+    });
+
+    describe('calculatePageZIndex', () => {
+        it('should return 100 for active state', () => {
+            expect(calculatePageZIndex('active', 0)).toBe(100);
+            expect(calculatePageZIndex('active', 5)).toBe(100);
+        });
+
+        it('should return 10 + position for flipped state', () => {
+            expect(calculatePageZIndex('flipped', 0)).toBe(10);
+            expect(calculatePageZIndex('flipped', 5)).toBe(15);
+        });
+
+        it('should return 50 - position for upcoming state', () => {
+            expect(calculatePageZIndex('upcoming', 0)).toBe(50);
+            expect(calculatePageZIndex('upcoming', 5)).toBe(45);
         });
     });
 });

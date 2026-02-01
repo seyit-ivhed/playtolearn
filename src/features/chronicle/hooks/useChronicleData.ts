@@ -17,7 +17,9 @@ export const useChronicleData = (overrideAdventureId?: string) => {
     // For new players (no progress), default to first adventure
     // For returning players, show their highest unlocked adventure
     const initialAdventure = useMemo(() => {
-        if (overrideAdventureId) return overrideAdventureId;
+        if (overrideAdventureId) {
+            return overrideAdventureId;
+        }
 
         const hasProgress = Object.keys(encounterResults).length > 0;
         if (hasProgress) {
