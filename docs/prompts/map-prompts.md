@@ -46,3 +46,18 @@ At the very bottom, the map culminates in a narrow, formidable mountain pass gua
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 
 Try to make it as long as possible.
+
+## Adventure 4 Map Background
+
+**Prompt:**
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts the approach and infiltration of the formidable Iron Fortress, flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
+
+At the top, the path emerges from the misty peaks, transitioning from natural rock to fortified stone ramparts. Scattered iron debris and abandoned siege equipment suggest a history of conflict.
+
+Moving downwards, the landscape becomes dominated by the imposing outer walls of the fortress. A heavily guarded, winding road leads up to a massive gate mechanism, featuring sharp geometric patterns and cold, hard lines. Watchtowers and iron barricades line the ascent.
+
+At the very bottom, the map reveals the inner keep of the Iron Warlord—a towering, impregnable citadel of dark metal and stone, bristling with spikes and defensive machinery, radiating an aura of oppressive power.
+
+The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
+
+Try to make it as long as possible.
