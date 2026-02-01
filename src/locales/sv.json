@@ -144,6 +144,51 @@
                     "label": "Till Jade-topparna"
                 }
             }
+        },
+        "4": {
+            "title": "Järnkrigsherrens uppgång",
+            "description": "Amara och Tariq måste resa till Järnfästningen för att konfrontera ledaren för den mekaniska armén.",
+            "story_hook": "Dimman har skingrats och avslöjat en väg som vaktas tungt av järnkonstruktioner. Järnkrigsherren väntar i sin fästning och planerar att utöka sitt herravälde. Våra hjältar måste smyga genom fiendens linjer och lösa de uråldriga geometripussel som låser fästningens portar.",
+            "completion_summary": "Järnkrigsherrens yttre försvar har fallit! Men krigsherren själv har dragit sig djupare in i fästningen. Använd ditt förstånd för att låsa upp vägen framåt.",
+            "mystery_path": "Fästningen tornar upp sig framför er...",
+            "nodes": {
+                "4_1": {
+                    "label": "Järnutpost"
+                },
+                "4_2": {
+                    "label": "Patrullbakhåll"
+                },
+                "4_3": {
+                    "label": "Ångförtrupp"
+                },
+                "4_4": {
+                    "label": "Formlås"
+                },
+                "4_5": {
+                    "label": "Tung vakt"
+                },
+                "4_6": {
+                    "label": "Spegelport"
+                },
+                "4_7": {
+                    "label": "Hundflock"
+                },
+                "4_8": {
+                    "label": "Ångbarriär"
+                },
+                "4_9": {
+                    "label": "Ädelstenshyllningen"
+                },
+                "4_10": {
+                    "label": "Elitvakt"
+                },
+                "4_11": {
+                    "label": "Järnkrigsherren"
+                },
+                "4_12": {
+                    "label": "Det inre tornet"
+                }
+            }
         }
     },
     "chronicle": {
@@ -250,8 +295,16 @@
         "balance": {
             "instruction": "Ta bort stenar tills båda högarna är lika höga!"
         },
-        "guardian_tribute": {
-            "instruction": "Fördela ädelstenarna mellan statyerna"
+        "geometry": {
+            "instruction": "Hitta den rätta formen!",
+            "find_shape": "Hitta {{shape}}!",
+            "shapes": {
+                "triangle": "Triangel",
+                "square": "Kvadrat",
+                "circle": "Cirkel",
+                "pentagon": "Pentagon",
+                "hexagon": "Hexagon"
+            }
         }
     },
     "companions": {
@@ -390,11 +443,26 @@
         "mist_stalker": {
             "name": "Dimmvandrare"
         },
+        "clockwork_scout": {
+            "name": "Urverksspanare"
+        },
+        "steam_vanguard": {
+            "name": "Ångförtrupp"
+        },
+        "iron_grenadier": {
+            "name": "Järngrenadjär"
+        },
+        "mechanical_hound": {
+            "name": "Mekanisk hund"
+        },
         "iron_minion": {
             "name": "Järnhantlangare"
         },
         "iron_warlord_enforcer": {
             "name": "Järnhantlangaren"
+        },
+        "iron_warlord": {
+            "name": "Järnkrigsherren"
         }
     },
     "premium": {
