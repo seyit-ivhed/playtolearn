@@ -164,7 +164,7 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
     };
 
     return (
-        <div className="vfx-overlay-container">
+        <div className="vfx-overlay-container" data-testid="visual-effect-overlay">
             {renderEffect()}
         </div>
     );

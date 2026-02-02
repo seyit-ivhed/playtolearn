@@ -143,7 +143,7 @@ const AdventurePage = () => {
             <main className="adventure-content">
                 <AdventureHeader
                     adventureId={adventure.id}
-                    adventureTitle={adventure.title || t('common.adventure', 'Adventure')}
+                    adventureTitle={t(`adventures.${adventureId}.title`, adventure.title || t('common.adventure', 'Adventure'))}
                     onBack={() => navigate(`/chronicle/${adventureId}`)}
                 />
 
