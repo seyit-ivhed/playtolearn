@@ -130,6 +130,35 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
 
         }
 
+        if (effectType.startsWith('ancestral_storm')) {
+            const style: React.CSSProperties = {};
+            const monsterGrid = document.querySelector('.monster-grid');
+            if (monsterGrid) {
+                const rect = monsterGrid.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                style.position = 'fixed';
+                style.left = `${centerX}px`;
+                style.top = `${centerY}px`;
+                style.transform = 'translate(-50%, -50%)';
+                style.zIndex = 9999;
+                style.width = '500px';
+                style.height = '400px';
+                style.overflow = 'visible';
+            }
+
+            return (
+                <div className="vfx-storm-container" style={style}>
+                    <div className="vfx-storm-cloud" />
+                    {[...Array(5)].map((_, i) => (
+                        <div key={i} className={`vfx-storm-bolt vfx-storm-bolt-${i + 1}`} />
+                    ))}
+                    <div className="vfx-storm-impact" />
+                </div>
+            );
+        }
+
         return null;
 
     };

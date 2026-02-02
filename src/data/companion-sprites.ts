@@ -26,6 +26,13 @@ const kenjiCardImg = [
     new URL('../assets/images/companions/Kenji/unit-card/kenji-3.jpg', import.meta.url).href,
 ];
 
+const zaharaCardImg = [
+    new URL('../assets/images/companions/Zahara/unit-card/zahara-0.jpg', import.meta.url).href,
+    new URL('../assets/images/companions/Zahara/unit-card/zahara-1.jpg', import.meta.url).href,
+    new URL('../assets/images/companions/Zahara/unit-card/zahara-2.jpg', import.meta.url).href,
+    new URL('../assets/images/companions/Zahara/unit-card/zahara-3.jpg', import.meta.url).href,
+];
+
 // Level Up Images
 const amaraLevelUpImg = [
     new URL('../assets/images/companions/Amara/level-up/amara-0.jpg', import.meta.url).href,
@@ -48,18 +55,27 @@ const kenjiLevelUpImg = [
     new URL('../assets/images/companions/Kenji/level-up/kenji-3.jpg', import.meta.url).href,
 ];
 
+const zaharaLevelUpImg = [
+    new URL('../assets/images/companions/Zahara/level-up/zahara-0.jpg', import.meta.url).href,
+    new URL('../assets/images/companions/Zahara/level-up/zahara-1.jpg', import.meta.url).href,
+    new URL('../assets/images/companions/Zahara/level-up/zahara-2.jpg', import.meta.url).href,
+    new URL('../assets/images/companions/Zahara/level-up/zahara-3.jpg', import.meta.url).href,
+];
+
 import { getCompanionById } from './companions.data';
 
 const COMPANION_CARD_IMAGES: Record<string, string[]> = {
     'amara': amaraCardImg,
     'tariq': tariqCardImg,
     'kenji': kenjiCardImg,
+    'zahara': zaharaCardImg,
 };
 
 const COMPANION_LEVEL_UP_IMAGES: Record<string, string[]> = {
     'amara': amaraLevelUpImg,
     'tariq': tariqLevelUpImg,
     'kenji': kenjiLevelUpImg,
+    'zahara': zaharaLevelUpImg,
 };
 
 /**

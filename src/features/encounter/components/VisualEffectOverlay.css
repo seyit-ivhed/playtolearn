@@ -576,3 +576,82 @@
         height: 4px;
     }
 }
+
+/* --- Zahara: ANCESTRAL STORM --- */
+.vfx-storm-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+.vfx-storm-cloud {
+    position: absolute;
+    inset: -100px;
+    background: radial-gradient(circle, rgba(88, 28, 135, 0.4) 0%, rgba(30, 58, 138, 0.2) 60%, transparent 100%);
+    opacity: 0;
+    animation: storm-cloud-fade 1.2s ease-out forwards;
+}
+
+.vfx-storm-bolt {
+    position: absolute;
+    width: 4px;
+    height: 300px;
+    background: linear-gradient(to bottom, #fff, #a855f7, #6366f1);
+    box-shadow: 0 0 20px #a855f7, 0 0 40px #6366f1;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    filter: blur(0.5px);
+}
+
+.vfx-storm-bolt-1 { left: 10%; animation: storm-bolt 0.4s ease-in 0.1s forwards; }
+.vfx-storm-bolt-2 { left: 30%; animation: storm-bolt 0.4s ease-in 0.3s forwards; }
+.vfx-storm-bolt-3 { left: 50%; animation: storm-bolt 0.4s ease-in 0.2s forwards; }
+.vfx-storm-bolt-4 { left: 70%; animation: storm-bolt 0.4s ease-in 0.4s forwards; }
+.vfx-storm-bolt-5 { left: 90%; animation: storm-bolt 0.4s ease-in 0.25s forwards; }
+
+.vfx-storm-impact {
+    position: absolute;
+    width: 600px;
+    height: 200px;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.5) 0%, transparent 70%);
+    opacity: 0;
+    animation: storm-impact-glow 0.8s ease-out 0.4s forwards;
+}
+
+@keyframes storm-cloud-fade {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes storm-bolt {
+    0% {
+        opacity: 0;
+        transform: scaleY(0.1) translateY(-100px);
+    }
+    10% {
+        opacity: 1;
+        transform: scaleY(1) translateY(0);
+    }
+    20% {
+        opacity: 1;
+        filter: brightness(3);
+    }
+    100% {
+        opacity: 0;
+        transform: scaleY(1.5) translateY(50px);
+    }
+}
+
+@keyframes storm-impact-glow {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.8; transform: scale(1.2); }
+    100% { opacity: 0; transform: scale(1.5); }
+}
