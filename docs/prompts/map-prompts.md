@@ -61,3 +61,18 @@ At the very bottom, the map reveals the inner keep of the Iron Warlord—a tower
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 
 Try to make it as long as possible.
+
+## Adventure 5 Map Background
+
+**Prompt:**
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a journey through the "Scorched Plains," flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
+
+At the top, the path descends from the jagged, iron-spiked foothills of the Iron Mountains, with the landscape transitioning from grey rock to parched earth and tall, dry golden grass.
+
+Moving downwards, the map opens into the vast savannah. Scorched trees with flat canopies (acacias) are scattered across the plains. Ancient, weathered bones of giant creatures half-buried in the sand hint at the harshness of the land. Subtle, swirling heat mirage patterns are visible in the lower-middle section.
+
+At the very bottom, the plains lead into a final, desolate "Volcanic Rim." The earth here is cracked and blackened, with glowing veins of heat running through the fissures. The path terminates at a massive, sun-blasted rocky arena where the ground itself seems to smolder, the domain of the Inferno Mane.
+
+The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
+
+Try to make it as long as possible.

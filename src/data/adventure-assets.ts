@@ -8,16 +8,19 @@ const chapter1Illustration = new URL('../assets/images/chapters/chapter-1.jpg', 
 const chapter2Illustration = new URL('../assets/images/chapters/chapter-2.jpg', import.meta.url).href;
 const chapter3Illustration = new URL('../assets/images/chapters/chapter-3.jpg', import.meta.url).href;
 const chapter4Illustration = new URL('../assets/images/chapters/chapter-4.jpg', import.meta.url).href;
+const chapter5Illustration = new URL('../assets/images/chapters/chapter-5.jpg', import.meta.url).href;
 const adventure1Map = new URL('../assets/images/maps/adventure-1.png', import.meta.url).href;
 const adventure2Map = new URL('../assets/images/maps/adventure-2.png', import.meta.url).href;
 const adventure3Map = new URL('../assets/images/maps/adventure-3.png', import.meta.url).href;
 const adventure4Map = new URL('../assets/images/maps/adventure-4.png', import.meta.url).href;
+const adventure5Map = new URL('../assets/images/maps/adventure-5.png', import.meta.url).href;
 
 const ADVENTURE_ILLUSTRATIONS: Record<string, string> = {
     '1': chapter1Illustration,
     '2': chapter2Illustration,
     '3': chapter3Illustration,
     '4': chapter4Illustration,
+    '5': chapter5Illustration,
 };
 
 const ADVENTURE_MAP_IMAGES: Record<string, string> = {
@@ -25,6 +28,7 @@ const ADVENTURE_MAP_IMAGES: Record<string, string> = {
     '2': adventure2Map,
     '3': adventure3Map,
     '4': adventure4Map,
+    '5': adventure5Map,
 };
 
 /**

@@ -81,3 +81,14 @@ The approach to the Iron Fortress, a mechanical stronghold amidst the mountains.
 
 ### Primary Prompt
 > A dramatic storybook illustration of the Iron Fortress, a massive, imposing citadel of dark metal and stone, rising from the jagged rocks of a mountain pass. The fortress is surrounded by a forest of sharp iron spikes and watchtowers, dominating the landscape. The atmosphere is tense and foreboding, with steam venting from the fortress machinery and a dark, stormy sky. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, industrial fantasy aesthetic. High quality, wide shot. No text. 16:9 aspect ratio.
+
+---
+
+## Adventure 5: The Scorched Plains
+
+### Concept
+Amara, Tariq, and Kenji arriving at the edge of the Scorched Plains and meeting Zahara.
+
+### Primary Prompt
+> A beautiful storybook illustration of three young adventurers standing at the edge of a vast, scorched savanna. They have just emerged from a mountain pass into the blazing sunlight. **Amara (15-year-old South American Indigenous girl) is in her pathfinder gear with elaborate warrior braids and a recursion bow. Tariq (15-year-old Middle-Eastern boy) wears rich purple silk explorer robes with alchemical potion bandoliers. Kenji (12-year-old Japanese boy) is slightly younger, wearing travel-worn grey and navy robes with his hair in a short ponytail and a katana at his hip.** In front of them, meeting their gaze, is an 8-year-old East African-inspired girl named Zahara with deep ebony skin and tightly coiled black hair in Bantu knots. She wears a simple amber gold wrap and holds a dry acacia branch that glows with a soft, warm light. Behind her, the landscape is a sea of golden grass and scattered flat-topped acacia trees under a brilliant, shimmering orange sky. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, magical atmosphere. High quality, wide shot. No text. 16:9 aspect ratio.
+
