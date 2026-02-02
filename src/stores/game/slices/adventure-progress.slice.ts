@@ -6,12 +6,7 @@ import { EncounterType } from '../../../types/adventure.types';
 
 export const createAdventureProgressSlice: StateCreator<GameStore, [], [], AdventureProgressSlice> = (set, get) => ({
     completeEncounter: (adventureId, nodeIndex) => {
-        const { encounterResults, addCompanionToParty } = get();
-
-        // Permanent joining logic for Kenji
-        if (adventureId === '3' && nodeIndex === 1) {
-            addCompanionToParty('kenji');
-        }
+        const { encounterResults } = get();
 
         const adventure = ADVENTURES.find(a => a.id === adventureId);
 
@@ -50,6 +45,20 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
 
         // Trigger cloud sync
         PersistenceService.sync(get());
+    },
+
+    notifyEncounterStarted: (adventureId, nodeIndex) => {
+        const { addCompanionToParty } = get();
+        const adventure = ADVENTURES.find(a => a.id === adventureId);
+        if (!adventure) {
+            console.error(`Adventure not found: ${adventureId} in notifyEncounterStarted`);
+            return;
+        }
+
+        const encounter = adventure.encounters[nodeIndex - 1];
+        if (encounter?.unlocksCompanion) {
+            addCompanionToParty(encounter.unlocksCompanion);
+        }
     },
 
     setEncounterDifficulty: (difficulty) => {

@@ -45,13 +45,48 @@ describe('adventure-progress.slice - completeEncounter', () => {
         }));
     });
 
-    it('should recruit Kenji when completing Adventure 3, Node 1', () => {
+});
+
+describe('adventure-progress.slice - notifyEncounterStarted', () => {
+    const setupSlice = (state: Partial<GameStore> = {}) => {
+        const slice = createAdventureProgressSlice(
+            mockSet,
+            mockGet({
+                encounterResults: {},
+                activeEncounterDifficulty: 1,
+                addCompanionToParty: vi.fn(),
+                ...state
+            }),
+            {} as StoreApi<GameStore>
+        );
+        return slice;
+    };
+
+    it('should recruit Kenji when starting Adventure 3, Node 1', () => {
         const addCompanionToParty = vi.fn();
         const slice = setupSlice({ addCompanionToParty });
 
-        slice.completeEncounter('3', 1);
+        slice.notifyEncounterStarted('3', 1);
 
         expect(addCompanionToParty).toHaveBeenCalledWith('kenji');
+    });
+
+    it('should recruit Zahara when starting Adventure 5, Node 1', () => {
+        const addCompanionToParty = vi.fn();
+        const slice = setupSlice({ addCompanionToParty });
+
+        slice.notifyEncounterStarted('5', 1);
+
+        expect(addCompanionToParty).toHaveBeenCalledWith('zahara');
+    });
+
+    it('should not recruit anyone if encounter has no unlocksCompanion', () => {
+        const addCompanionToParty = vi.fn();
+        const slice = setupSlice({ addCompanionToParty });
+
+        slice.notifyEncounterStarted('1', 1);
+
+        expect(addCompanionToParty).not.toHaveBeenCalled();
     });
 });
 

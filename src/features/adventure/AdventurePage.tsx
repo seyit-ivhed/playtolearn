@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
@@ -21,7 +21,6 @@ const AdventurePage = () => {
     const { adventureId } = useParams<{ adventureId: string }>();
 
     const {
-        activeParty: party,
         companionStats,
         encounterResults,
         setEncounterDifficulty,
@@ -30,7 +29,7 @@ const AdventurePage = () => {
         completeAdventure,
         unlockAdventure,
         isAdventureUnlocked: isProgressionUnlocked,
-        addCompanionToParty
+        notifyEncounterStarted
     } = useGameStore();
     const { initializeEncounter } = useEncounterStore();
     const {
@@ -41,12 +40,6 @@ const AdventurePage = () => {
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
     const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
 
-    // Add Kenji automatically for Adventure 3
-    useEffect(() => {
-        if (adventureId === '3' && !party.includes('kenji')) {
-            addCompanionToParty('kenji');
-        }
-    }, [adventureId, party, addCompanionToParty]);
 
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === adventureId);
@@ -108,13 +101,19 @@ const AdventurePage = () => {
         const nodeStep = encounters.findIndex(e => e.id === selectedEncounter.id) + 1;
         setEncounterDifficulty(difficulty);
 
+        // Notify store encounter started (handles data-driven companion joins)
+        notifyEncounterStarted(adventureId, nodeStep);
+
         if (selectedEncounter.type === EncounterType.BATTLE || selectedEncounter.type === EncounterType.BOSS) {
             if (selectedEncounter.enemies && selectedEncounter.enemies.length > 0) {
                 const localizedEnemies = selectedEncounter.enemies.map((enemy: AdventureMonster) => ({
                     ...enemy,
                     name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)
                 }));
-                initializeEncounter(party, localizedEnemies, nodeStep, difficulty, companionStats);
+
+                // Use the latest party from the store to ensure it includes any companion that just joined
+                const latestParty = useGameStore.getState().activeParty;
+                initializeEncounter(latestParty, localizedEnemies, nodeStep, difficulty, companionStats);
                 navigate(`/encounter/${adventureId}/${nodeStep}`);
             }
         } else if (selectedEncounter.type === EncounterType.PUZZLE) {

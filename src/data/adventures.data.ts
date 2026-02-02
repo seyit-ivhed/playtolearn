@@ -186,6 +186,7 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 800 },
                 enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER],
+                unlocksCompanion: 'kenji',
             },
             {
                 id: '3_2',
@@ -333,6 +334,7 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 800 },
                 enemies: [MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+                unlocksCompanion: 'zahara',
             },
             {
                 id: '5_2',

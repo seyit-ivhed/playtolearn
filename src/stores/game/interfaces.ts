@@ -23,6 +23,7 @@ export interface GameState {
 // Adventure & Encounter Management
 export interface AdventureProgressSlice {
     completeEncounter: (adventureId: string, nodeIndex: number) => void;
+    notifyEncounterStarted: (adventureId: string, nodeIndex: number) => void;
     setEncounterDifficulty: (difficulty: number) => void;
     getAdventureNodes: (adventureId: string) => EncounterWithStatus[];
 }
