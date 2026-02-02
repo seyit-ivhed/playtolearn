@@ -18,11 +18,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 2
+            "level": 3
           },
           {
             "companionId": "tariq",
-            "level": 2
+            "level": 3
           }
         ]
       },
@@ -42,11 +42,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 3
+            "level": 4
           },
           {
             "companionId": "tariq",
-            "level": 3
+            "level": 4
           }
         ]
       },
@@ -66,11 +66,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 4
+            "level": 5
           },
           {
             "companionId": "tariq",
-            "level": 4
+            "level": 5
           }
         ]
       },
@@ -78,11 +78,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 4
+            "level": 5
           },
           {
             "companionId": "tariq",
-            "level": 4
+            "level": 5
           }
         ]
       }
@@ -95,11 +95,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 4
+            "level": 5
           },
           {
             "companionId": "tariq",
-            "level": 4
+            "level": 5
           }
         ]
       },
@@ -119,11 +119,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 5
+            "level": 6
           },
           {
             "companionId": "tariq",
-            "level": 5
+            "level": 6
           }
         ]
       },
@@ -131,11 +131,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 5
+            "level": 6
           },
           {
             "companionId": "tariq",
-            "level": 5
+            "level": 6
           }
         ]
       },
@@ -143,11 +143,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 5
+            "level": 6
           },
           {
             "companionId": "tariq",
-            "level": 5
+            "level": 6
           }
         ]
       },
@@ -155,11 +155,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 5
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 5
+            "level": 7
           }
         ]
       },
@@ -167,11 +167,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 6
+            "level": 7
           }
         ]
       }
@@ -184,11 +184,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "kenji",
@@ -200,15 +200,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "kenji",
-            "level": 2
+            "level": 3
           }
         ]
       },
@@ -216,11 +216,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "kenji",
@@ -232,15 +232,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "tariq",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "kenji",
-            "level": 3
+            "level": 4
           }
         ]
       },
@@ -248,11 +248,11 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "tariq",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "kenji",
@@ -264,15 +264,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "tariq",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "kenji",
-            "level": 4
+            "level": 5
           }
         ]
       }
@@ -285,15 +285,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "tariq",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "kenji",
-            "level": 4
+            "level": 5
           }
         ]
       },
@@ -301,15 +301,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "tariq",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "kenji",
-            "level": 4
+            "level": 5
           }
         ]
       },
@@ -317,15 +317,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 7
+            "level": 9
           },
           {
             "companionId": "tariq",
-            "level": 7
+            "level": 9
           },
           {
             "companionId": "kenji",
-            "level": 5
+            "level": 6
           }
         ]
       },
@@ -333,15 +333,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 7
+            "level": 9
           },
           {
             "companionId": "tariq",
-            "level": 7
+            "level": 9
           },
           {
             "companionId": "kenji",
-            "level": 5
+            "level": 6
           }
         ]
       },
@@ -349,15 +349,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 7
+            "level": 9
           },
           {
             "companionId": "tariq",
-            "level": 7
+            "level": 9
           },
           {
             "companionId": "kenji",
-            "level": 5
+            "level": 6
           }
         ]
       },
@@ -365,15 +365,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 8
+            "level": 9
           },
           {
             "companionId": "tariq",
-            "level": 8
+            "level": 9
           },
           {
             "companionId": "kenji",
-            "level": 5
+            "level": 7
           }
         ]
       },
@@ -381,15 +381,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 8
+            "level": 9
           },
           {
             "companionId": "tariq",
-            "level": 8
+            "level": 9
           },
           {
             "companionId": "kenji",
-            "level": 5
+            "level": 7
           }
         ]
       },
@@ -397,15 +397,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 8
+            "level": 9
           },
           {
             "companionId": "tariq",
-            "level": 8
+            "level": 9
           },
           {
             "companionId": "kenji",
-            "level": 6
+            "level": 7
           }
         ]
       }
@@ -418,15 +418,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 8
+            "level": 10
           },
           {
             "companionId": "tariq",
-            "level": 8
+            "level": 10
           },
           {
             "companionId": "kenji",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "zahara",
@@ -438,19 +438,19 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 8
+            "level": 10
           },
           {
             "companionId": "tariq",
-            "level": 8
+            "level": 10
           },
           {
             "companionId": "kenji",
-            "level": 6
+            "level": 7
           },
           {
             "companionId": "zahara",
-            "level": 2
+            "level": 3
           }
         ]
       },
@@ -458,15 +458,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 8
+            "level": 10
           },
           {
             "companionId": "tariq",
-            "level": 8
+            "level": 10
           },
           {
             "companionId": "kenji",
-            "level": 6
+            "level": 8
           },
           {
             "companionId": "zahara",
@@ -478,19 +478,19 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 8
+            "level": 10
           },
           {
             "companionId": "tariq",
-            "level": 8
+            "level": 10
           },
           {
             "companionId": "kenji",
-            "level": 6
+            "level": 8
           },
           {
             "companionId": "zahara",
-            "level": 3
+            "level": 4
           }
         ]
       },
@@ -498,15 +498,15 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 9
+            "level": 10
           },
           {
             "companionId": "tariq",
-            "level": 9
+            "level": 10
           },
           {
             "companionId": "kenji",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "zahara",
@@ -518,19 +518,19 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 9
+            "level": 10
           },
           {
             "companionId": "tariq",
-            "level": 9
+            "level": 10
           },
           {
             "companionId": "kenji",
-            "level": 7
+            "level": 8
           },
           {
             "companionId": "zahara",
-            "level": 4
+            "level": 5
           }
         ]
       },
@@ -538,19 +538,164 @@
         "party": [
           {
             "companionId": "amara",
-            "level": 9
+            "level": 11
           },
           {
             "companionId": "tariq",
-            "level": 9
+            "level": 11
           },
           {
             "companionId": "kenji",
-            "level": 7
+            "level": 9
           },
           {
             "companionId": "zahara",
-            "level": 4
+            "level": 5
+          }
+        ]
+      }
+    }
+  },
+  {
+    "adventureId": "6",
+    "encounters": {
+      "6_1": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 11
+          },
+          {
+            "companionId": "tariq",
+            "level": 11
+          },
+          {
+            "companionId": "kenji",
+            "level": 9
+          },
+          {
+            "companionId": "zahara",
+            "level": 5
+          }
+        ]
+      },
+      "6_2": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 11
+          },
+          {
+            "companionId": "tariq",
+            "level": 11
+          },
+          {
+            "companionId": "kenji",
+            "level": 9
+          },
+          {
+            "companionId": "zahara",
+            "level": 6
+          }
+        ]
+      },
+      "6_4": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 11
+          },
+          {
+            "companionId": "tariq",
+            "level": 11
+          },
+          {
+            "companionId": "kenji",
+            "level": 9
+          },
+          {
+            "companionId": "zahara",
+            "level": 6
+          }
+        ]
+      },
+      "6_5": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 11
+          },
+          {
+            "companionId": "tariq",
+            "level": 11
+          },
+          {
+            "companionId": "kenji",
+            "level": 9
+          },
+          {
+            "companionId": "zahara",
+            "level": 6
+          }
+        ]
+      },
+      "6_7": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 11
+          },
+          {
+            "companionId": "tariq",
+            "level": 11
+          },
+          {
+            "companionId": "kenji",
+            "level": 9
+          },
+          {
+            "companionId": "zahara",
+            "level": 7
+          }
+        ]
+      },
+      "6_9": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 12
+          },
+          {
+            "companionId": "tariq",
+            "level": 12
+          },
+          {
+            "companionId": "kenji",
+            "level": 10
+          },
+          {
+            "companionId": "zahara",
+            "level": 7
+          }
+        ]
+      },
+      "6_10": {
+        "party": [
+          {
+            "companionId": "amara",
+            "level": 12
+          },
+          {
+            "companionId": "tariq",
+            "level": 12
+          },
+          {
+            "companionId": "kenji",
+            "level": 10
+          },
+          {
+            "companionId": "zahara",
+            "level": 7
           }
         ]
       }
