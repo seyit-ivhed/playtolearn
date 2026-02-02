@@ -116,6 +116,13 @@ export const MONSTERS = {
         maxHealth: 150,
         attack: 60,
     },
+    // Adventure 5 Boss
+    INFERNO_MANE: {
+        id: 'inferno_mane',
+        maxHealth: 800,
+        attack: 90,
+        isBoss: true,
+    },
     // Adventure 6 Monsters - Harmony Restored
     DISCORD_SPIRIT: {
         id: 'discord_spirit',
