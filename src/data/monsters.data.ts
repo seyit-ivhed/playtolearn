@@ -95,4 +95,32 @@ export const MONSTERS = {
         attack: 80,
         isBoss: true,
     },
+    // Adventure 5 Monsters - The Scorched Plains
+    BLAZE_HYENA: {
+        id: 'blaze_hyena',
+        maxHealth: 180,
+        attack: 45,
+    },
+    EMBER_LIONESS: {
+        id: 'ember_lioness',
+        maxHealth: 220,
+        attack: 55,
+    },
+    SUN_SCORCHED_RHINO: {
+        id: 'sun_scorched_rhino',
+        maxHealth: 300,
+        attack: 40,
+    },
+    MIRAGE_SPIRIT: {
+        id: 'mirage_spirit',
+        maxHealth: 150,
+        attack: 60,
+    },
+    // Adventure 5 Boss
+    INFERNO_MANE: {
+        id: 'inferno_mane',
+        maxHealth: 800,
+        attack: 90,
+        isBoss: true,
+    },
 } as const satisfies Record<string, AdventureMonster>;

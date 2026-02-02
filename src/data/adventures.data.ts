@@ -326,7 +326,80 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '5',
         volumeId: 'origins',
-        encounters: [] // To be implemented: The Scorched Plains (Free) - Intro to Savannah, meet Zahara
+        levelRange: [10, 12],
+        encounters: [
+            {
+                id: '5_1',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -200, y: 800 },
+                enemies: [MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+            },
+            {
+                id: '5_2',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 100, y: 1100 },
+                enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.EMBER_LIONESS],
+            },
+            {
+                id: '5_3',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 200, y: 1500 },
+                puzzleData: { puzzleType: PuzzleType.SUM_TARGET },
+            },
+            {
+                id: '5_4',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -150, y: 1900 },
+                enemies: [MONSTERS.SUN_SCORCHED_RHINO, MONSTERS.BLAZE_HYENA],
+            },
+            {
+                id: '5_5',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 50, y: 2300 },
+                enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+            },
+            {
+                id: '5_6',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 250, y: 2700 },
+                puzzleData: { puzzleType: PuzzleType.GEOMETRY },
+            },
+            {
+                id: '5_7',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -200, y: 3100 },
+                enemies: [MONSTERS.MIRAGE_SPIRIT, MONSTERS.MIRAGE_SPIRIT],
+            },
+            {
+                id: '5_8',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 150, y: 3400 },
+                puzzleData: { puzzleType: PuzzleType.SYMMETRY },
+            },
+            {
+                id: '5_9',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 250, y: 3800 },
+                enemies: [MONSTERS.SUN_SCORCHED_RHINO, MONSTERS.MIRAGE_SPIRIT],
+            },
+            {
+                id: '5_10',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: -150, y: 4000 },
+                puzzleData: { puzzleType: PuzzleType.SEQUENCE },
+            },
+            {
+                id: '5_11',
+                type: EncounterType.BOSS,
+                coordinates: { x: 0, y: 3500 },
+                enemies: [MONSTERS.INFERNO_MANE],
+            },
+            {
+                id: '5_12',
+                type: EncounterType.ENDING,
+                coordinates: { x: 0, y: 3000 },
+            }
+        ]
     },
     {
         id: '6',

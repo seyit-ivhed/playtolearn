@@ -189,6 +189,51 @@
                     "label": "Det inre tornet"
                 }
             }
+        },
+        "5": {
+            "title": "De Svedda Slätterna",
+            "description": "Zahara har återvänt till sitt hemland för att finna det under belägring av Inferno-Mans styrkor.",
+            "story_hook": "Hettan är intensiv och luften skimrar av hägringar. Flocken har korrumperats och andarna är oroliga. Zahara måste återta sin födslorätt och återställa balansen på slätterna.",
+            "completion_summary": "Inferno-Man är besegrad! Elden i hans ögon falnar och ersätts av en respektfull nick. Flocken bugar för Zahara och erkänner hennes styrka. Den brännande hettan börjar avta och lovar regn.",
+            "mystery_path": "Horisonten brinner med en ny utmaning...",
+            "nodes": {
+                "5_1": {
+                    "label": "Hyenflock"
+                },
+                "5_2": {
+                    "label": "Lejoninnejakt"
+                },
+                "5_3": {
+                    "label": "Svedd Stig"
+                },
+                "5_4": {
+                    "label": "Noshörningsanfall"
+                },
+                "5_5": {
+                    "label": "Flockbakhåll"
+                },
+                "5_6": {
+                    "label": "Eldens Geometri"
+                },
+                "5_7": {
+                    "label": "Andehägring"
+                },
+                "5_8": {
+                    "label": "Symmetrisk Sand"
+                },
+                "5_9": {
+                    "label": "Odjurens Kamp"
+                },
+                "5_10": {
+                    "label": "Stjärnmönster"
+                },
+                "5_11": {
+                    "label": "Inferno-Man"
+                },
+                "5_12": {
+                    "label": "Zaharas Triumf"
+                }
+            }
         }
     },
     "chronicle": {
@@ -466,6 +511,21 @@
         },
         "iron_warlord": {
             "name": "Järnkrigsherren"
+        },
+        "blaze_hyena": {
+            "name": "Låghyena"
+        },
+        "ember_lioness": {
+            "name": "Glödlejoninna"
+        },
+        "sun_scorched_rhino": {
+            "name": "Solsvedd Noshörning"
+        },
+        "mirage_spirit": {
+            "name": "Hägringsande"
+        },
+        "inferno_mane": {
+            "name": "Inferno-Man"
         }
     },
     "premium": {

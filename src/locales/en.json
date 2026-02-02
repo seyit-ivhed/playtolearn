@@ -189,6 +189,51 @@
                     "label": "The Inner Keep"
                 }
             }
+        },
+        "5": {
+            "title": "The Scorched Plains",
+            "description": "Zahara has returned to her homeland to find it under siege by the forces of the Inferno Mane.",
+            "story_hook": "The heat is intense, and the air shimmers with mirages. The pride has been corrupted, and the spirits are restless. Zahara must reclaim her birthright and restore balance to the plains.",
+            "completion_summary": "The Inferno Mane is defeated! The fire in his eyes fades, replaced by a respectful nod. The pride bows to Zahara, acknowledging her strength. The scorching heat begins to subside, promising rain.",
+            "mystery_path": "The horizon burns with a new challenge...",
+            "nodes": {
+                "5_1": {
+                    "label": "Hyena Pack"
+                },
+                "5_2": {
+                    "label": "Lioness Hunt"
+                },
+                "5_3": {
+                    "label": "Scorched Path"
+                },
+                "5_4": {
+                    "label": "Rhino Charge"
+                },
+                "5_5": {
+                    "label": "Pride Ambush"
+                },
+                "5_6": {
+                    "label": "Geometry of Fire"
+                },
+                "5_7": {
+                    "label": "Spirit Mirage"
+                },
+                "5_8": {
+                    "label": "Symmetrical Sands"
+                },
+                "5_9": {
+                    "label": "Clash of Beasts"
+                },
+                "5_10": {
+                    "label": "Star Pattern"
+                },
+                "5_11": {
+                    "label": "The Inferno Mane"
+                },
+                "5_12": {
+                    "label": "Zahara's Triumph"
+                }
+            }
         }
     },
     "chronicle": {
@@ -466,6 +511,21 @@
         },
         "iron_warlord": {
             "name": "The Iron Warlord"
+        },
+        "blaze_hyena": {
+            "name": "Blaze Hyena"
+        },
+        "ember_lioness": {
+            "name": "Ember Lioness"
+        },
+        "sun_scorched_rhino": {
+            "name": "Sun-Scorched Rhino"
+        },
+        "mirage_spirit": {
+            "name": "Mirage Spirit"
+        },
+        "inferno_mane": {
+            "name": "The Inferno Mane"
         }
     },
     "premium": {
