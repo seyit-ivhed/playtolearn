@@ -234,6 +234,48 @@
                     "label": "Zahara's Triumph"
                 }
             }
+        },
+        "6": {
+            "title": "Harmony Restored",
+            "description": "The source of the discord is revealed. Reclaim the balance of the world.",
+            "story_hook": "Amara, Tariq, Kenji, and Zahara stand at the threshold of the Spirit Realm. The once peaceful land is now fractured by chaotic energy. The Spirit King, guardian of harmony, has been overwhelmed by the shadow of the Warlord's influence. Our heroes must unite their strengths to calm the king and restore the eternal balance.",
+            "completion_summary": "Harmony is restored! The Spirit King, now calm and radiant, bows to the heroes. The fractured pieces of the realm mend before their eyes. Amara and her friends have secured the peace, but they know their journey of learning and discovery has only just reached its first great milestone.",
+            "mystery_path": "The spirits whisper of even greater trials...",
+            "nodes": {
+                "6_1": {
+                    "label": "Fractured Threshold"
+                },
+                "6_2": {
+                    "label": "Hollow Watchers"
+                },
+                "6_3": {
+                    "label": "Geometric Seal"
+                },
+                "6_4": {
+                    "label": "Echoes of Discord"
+                },
+                "6_5": {
+                    "label": "Shadow Surge"
+                },
+                "6_6": {
+                    "label": "The Spirit's Tribute"
+                },
+                "6_7": {
+                    "label": "Twisted Mirror"
+                },
+                "6_8": {
+                    "label": "Balance of Souls"
+                },
+                "6_9": {
+                    "label": "Final Descent"
+                },
+                "6_10": {
+                    "label": "The Spirit King"
+                },
+                "6_11": {
+                    "label": "Eternal Peace"
+                }
+            }
         }
     },
     "chronicle": {
@@ -526,6 +568,18 @@
         },
         "inferno_mane": {
             "name": "The Inferno Mane"
+        },
+        "discord_spirit": {
+            "name": "Discord Spirit"
+        },
+        "hollow_shell": {
+            "name": "Hollow Shell"
+        },
+        "twisted_reflection": {
+            "name": "Twisted Reflection"
+        },
+        "spirit_king": {
+            "name": "The Spirit King"
         }
     },
     "premium": {

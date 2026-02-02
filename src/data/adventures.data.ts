@@ -406,7 +406,74 @@ export const ADVENTURES: Adventure[] = [
     {
         id: '6',
         volumeId: 'origins',
-        encounters: [] // To be implemented: Harmony Restored (Premium) - Calming Spirit King
+        levelRange: [12, 14],
+        encounters: [
+            {
+                id: '6_1',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -200, y: 800 },
+                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.HOLLOW_SHELL],
+            },
+            {
+                id: '6_2',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 100, y: 1100 },
+                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.HOLLOW_SHELL],
+            },
+            {
+                id: '6_3',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 200, y: 1500 },
+                puzzleData: { puzzleType: PuzzleType.GEOMETRY },
+            },
+            {
+                id: '6_4',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -150, y: 1900 },
+                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.TWISTED_REFLECTION],
+            },
+            {
+                id: '6_5',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 50, y: 2300 },
+                enemies: [MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL, MONSTERS.DISCORD_SPIRIT],
+            },
+            {
+                id: '6_6',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 250, y: 2700 },
+                puzzleData: { puzzleType: PuzzleType.GUARDIAN_TRIBUTE },
+            },
+            {
+                id: '6_7',
+                type: EncounterType.BATTLE,
+                coordinates: { x: -200, y: 3100 },
+                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.TWISTED_REFLECTION],
+            },
+            {
+                id: '6_8',
+                type: EncounterType.PUZZLE,
+                coordinates: { x: 150, y: 3400 },
+                puzzleData: { puzzleType: PuzzleType.SYMMETRY },
+            },
+            {
+                id: '6_9',
+                type: EncounterType.BATTLE,
+                coordinates: { x: 250, y: 3800 },
+                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.HOLLOW_SHELL, MONSTERS.TWISTED_REFLECTION],
+            },
+            {
+                id: '6_10',
+                type: EncounterType.BOSS,
+                coordinates: { x: 0, y: 4200 },
+                enemies: [MONSTERS.SPIRIT_KING],
+            },
+            {
+                id: '6_11',
+                type: EncounterType.ENDING,
+                coordinates: { x: -300, y: 4400 },
+            }
+        ]
     }
 ];
 

@@ -92,3 +92,12 @@ Amara, Tariq, and Kenji arriving at the edge of the Scorched Plains and meeting 
 ### Primary Prompt
 > A beautiful storybook illustration of three young adventurers standing at the edge of a vast, scorched savanna. They have just emerged from a mountain pass into the blazing sunlight. **Amara (15-year-old South American Indigenous girl) is in her pathfinder gear with elaborate warrior braids and a recursion bow. Tariq (15-year-old Middle-Eastern boy) wears rich purple silk explorer robes with alchemical potion bandoliers. Kenji (12-year-old Japanese boy) is slightly younger, wearing travel-worn grey and navy robes with his hair in a short ponytail and a katana at his hip.** In front of them, meeting their gaze, is an 8-year-old East African-inspired girl named Zahara with deep ebony skin and tightly coiled black hair in Bantu knots. She wears a simple amber gold wrap and holds a dry acacia branch that glows with a soft, warm light. Behind her, the landscape is a sea of golden grass and scattered flat-topped acacia trees under a brilliant, shimmering orange sky. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, magical atmosphere. High quality, wide shot. No text. 16:9 aspect ratio.
 
+---
+
+## Adventure 6: Harmony Restored
+
+### Concept
+The four heroes (Amara, Tariq, Kenji, Zahara) standing together at the threshold of the Spirit Realm, facing the majestic Spirit King.
+
+### Primary Prompt
+> A magnificent storybook illustration of four young heroes standing together at the threshold of a radiant, ethereal Spirit Realm. **Amara (15-year-old South American Indigenous girl) has elaborate warrior braids and a recursion bow at her back. Tariq (15-year-old Middle-Eastern boy) wears rich purple silk explorer robes with alchemical potion bandoliers. Kenji (12-year-old Japanese boy) has his hair in a short ponytail and a katana at his hip. Zahara (8-year-old East African-inspired girl) has Bantu knots and an amber gold wrap, holding a glowing acacia branch.** They stand united before the Spirit King, a colossal, majestic entity composed of swirling starlight and nebula-like energy, currently flickering with turbulent dark shadows of discord. The realm around them is a dreamscape of floating islands, glowing flora, and ribbons of celestial light. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, magical atmosphere. High quality, wide shot. No text. 16:9 aspect ratio.

@@ -76,3 +76,19 @@ At the very bottom, the plains lead into a final, desolate "Volcanic Rim." The e
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 
 Try to make it as long as possible.
+
+
+## Adventure 6 Map Background
+
+**Prompt:**
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a journey through the "Spirit Realm," flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
+
+At the top, the path begins at a shimmering threshold where the physical world ends and a realm of floating islands and starlit nebulae begins. The terrain consists of ethereal bridges and glowing crystalline paths.
+
+Moving downwards, the landscape becomes increasingly fractured and chaotic. "Discord Clouds" with jagged dark energy swirl around the edges, and "Hollow Shells" of ancient artifacts are scattered among the shifting star-dust. Geometric light patterns and symmetrical energy fields pulse in the lower-middle section.
+
+At the very bottom, the map leads into the "Core of Harmony," a grand celestial theater where the Spirit King resides. The space is filled with concentric circles of pure light and radiating energy waves, signifying the return of balance.
+
+The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
+
+Try to make it as long as possible.

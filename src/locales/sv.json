@@ -234,6 +234,48 @@
                     "label": "Zaharas Triumf"
                 }
             }
+        },
+        "6": {
+            "title": "Harmonin återställd",
+            "description": "Källan till disharmonin avslöjas. Återta världens balans.",
+            "story_hook": "Amara, Tariq, Kenji och Zahara står vid tröskeln till Andevärlden. Det en gång så fridfulla landet är nu splittrat av kaotisk energi. Andekonungen, harmonins väktare, har överväldigats av skuggan från Krigsherrens inflytande. Våra hjältar måste förena sina krafter för att lugna konungen och återställa den eviga balansen.",
+            "completion_summary": "Harmonin är återställd! Andekonungen, nu lugn och strålande, bugar för hjältarna. De splittrade delarna av riket läks framför deras ögon. Amara och hennes vänner har säkrat freden, men de vet att deras resa av lärande och upptäckt precis har nått sin första stora milstolpe.",
+            "mystery_path": "Andarna viskar om ännu större prövningar...",
+            "nodes": {
+                "6_1": {
+                    "label": "Splittrad tröskel"
+                },
+                "6_2": {
+                    "label": "Tomma väktare"
+                },
+                "6_3": {
+                    "label": "Geometriskt sigill"
+                },
+                "6_4": {
+                    "label": "Ekon av disharmoni"
+                },
+                "6_5": {
+                    "label": "Skugganfall"
+                },
+                "6_6": {
+                    "label": "Andens hyllning"
+                },
+                "6_7": {
+                    "label": "Förvriden spegel"
+                },
+                "6_8": {
+                    "label": "Själarnas balans"
+                },
+                "6_9": {
+                    "label": "Sista nedstigningen"
+                },
+                "6_10": {
+                    "label": "Andekonungen"
+                },
+                "6_11": {
+                    "label": "Evig frid"
+                }
+            }
         }
     },
     "chronicle": {
@@ -526,6 +568,18 @@
         },
         "inferno_mane": {
             "name": "Inferno-Man"
+        },
+        "discord_spirit": {
+            "name": "Oredans ande"
+        },
+        "hollow_shell": {
+            "name": "Tomt skal"
+        },
+        "twisted_reflection": {
+            "name": "Förvriden spegelbild"
+        },
+        "spirit_king": {
+            "name": "Andekonungen"
         }
     },
     "premium": {

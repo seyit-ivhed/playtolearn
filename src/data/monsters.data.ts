@@ -116,11 +116,27 @@ export const MONSTERS = {
         maxHealth: 150,
         attack: 60,
     },
-    // Adventure 5 Boss
-    INFERNO_MANE: {
-        id: 'inferno_mane',
-        maxHealth: 800,
-        attack: 90,
+    // Adventure 6 Monsters - Harmony Restored
+    DISCORD_SPIRIT: {
+        id: 'discord_spirit',
+        maxHealth: 250,
+        attack: 60,
+    },
+    HOLLOW_SHELL: {
+        id: 'hollow_shell',
+        maxHealth: 300,
+        attack: 50,
+    },
+    TWISTED_REFLECTION: {
+        id: 'twisted_reflection',
+        maxHealth: 200,
+        attack: 70,
+    },
+    // Adventure 6 Boss
+    SPIRIT_KING: {
+        id: 'spirit_king',
+        maxHealth: 1000,
+        attack: 100,
         isBoss: true,
     },
 } as const satisfies Record<string, AdventureMonster>;
