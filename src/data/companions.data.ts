@@ -180,7 +180,7 @@ export const COMPANIONS: Record<string, Companion> = {
         },
         specialAbility: {
             id: 'ancestral_storm',
-            variables: { damage: 15 }
+            variables: { damage: 20 }
         },
         initialSpirit: 40,
         spiritGain: 35,
@@ -194,7 +194,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'ancestral_storm_2',
-                    variables: { damage: 25 }
+                    variables: { damage: 35 }
                 }
             },
             {
@@ -206,7 +206,7 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'ancestral_storm_3',
-                    variables: { damage: 40 }
+                    variables: { damage: 50 }
                 }
             },
             {
