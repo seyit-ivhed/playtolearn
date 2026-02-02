@@ -83,7 +83,9 @@ const COMPANION_LEVEL_UP_IMAGES: Record<string, string[]> = {
  */
 export const getCompanionCardImage = (companionId: string, level: number = 1): string | undefined => {
     const images = COMPANION_CARD_IMAGES[companionId];
-    if (!images) return undefined;
+    if (!images) {
+        return undefined;
+    }
 
     const data = getCompanionById(companionId);
 
@@ -99,7 +101,9 @@ export const getCompanionCardImage = (companionId: string, level: number = 1): s
  */
 export const getCompanionLevelUpImage = (companionId: string, level: number = 1): string | undefined => {
     const images = COMPANION_LEVEL_UP_IMAGES[companionId];
-    if (!images) return undefined;
+    if (!images) {
+        return undefined;
+    }
 
     const data = getCompanionById(companionId);
 

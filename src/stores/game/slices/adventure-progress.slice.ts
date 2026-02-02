@@ -73,7 +73,9 @@ export const createAdventureProgressSlice: StateCreator<GameStore, [], [], Adven
         const { encounterResults } = get();
         const adventure = ADVENTURES.find(a => a.id === adventureId);
 
-        if (!adventure) return [];
+        if (!adventure) {
+            return [];
+        }
 
         let lastUnlockedNodeCompleted = true; // First node is always unlocked
 
