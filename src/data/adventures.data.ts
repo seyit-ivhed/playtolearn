@@ -309,7 +309,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_10',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 4000 },
-                enemies: [MONSTERS.IRON_GRENADIER, MONSTERS.STEAM_VANGUARD, MONSTERS.CLOCKWORK_SCOUT],
+                enemies: [MONSTERS.STEAM_VANGUARD, MONSTERS.CLOCKWORK_SCOUT, MONSTERS.CLOCKWORK_SCOUT],
             },
             {
                 id: '4_11',
@@ -412,7 +412,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_1',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 800 },
-                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.HOLLOW_SHELL],
+                enemies: [MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL],
             },
             {
                 id: '6_2',
@@ -436,7 +436,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 50, y: 2300 },
-                enemies: [MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL, MONSTERS.DISCORD_SPIRIT],
+                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.DISCORD_SPIRIT],
             },
             {
                 id: '6_6',
@@ -460,7 +460,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_9',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 250, y: 3800 },
-                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.HOLLOW_SHELL, MONSTERS.TWISTED_REFLECTION],
+                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.TWISTED_REFLECTION],
             },
             {
                 id: '6_10',

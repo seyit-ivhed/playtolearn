@@ -27,7 +27,7 @@ export class DifficultyAnalyzer {
             partyConfig,
             encounter.enemies,
             'ALL_SUCCESS',
-            10
+            20
         );
 
         // Run simulations with all ultimates failing (20 times)
