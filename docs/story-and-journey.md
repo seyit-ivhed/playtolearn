@@ -60,9 +60,9 @@ Amara and Tariq meet and decide to explore the world together.
 **Theme: Misty Mountains & Cherry Blossoms**
 
 - **Adventure 3: The Misty Foothills**
-  Arriving in the Jade Peaks, they meet **Kenji** and discover the Iron Warlord's corruption.
-- **Adventure 4: The Iron Warlord's Fortress**
-  The team confronts the Warlord to free the nature spirits. Kenji fully joins the group.
+  Arriving in the Jade Peaks, they meet **Kenji** and discover the Evil Shogun's corruption.
+- **Adventure 4: The Evil Shogun's Fortress**
+  The team confronts the Shogun to free the nature spirits. Kenji fully joins the group.
 
 ### The Sunfire Savannah (Adventures 5-6)
 **Theme: Golden Grasslands & Ancestral Spirits**

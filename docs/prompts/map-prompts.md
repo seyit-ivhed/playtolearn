@@ -39,9 +39,9 @@ A vertical scrolling fantasy map background on ancient worn parchment paper. The
 
 At the top, the terrain features lush foothills with dense bamboo groves and small stone shrines, partially veiled in light, morning mist.
 
-Moving downwards, the path climbs steeply. The map shows winding ancient stone staircases carved into mountain ridges, surrounded by thick, swirling clouds and jagged peaks. Hints of Iron Warlord banners and watchtowers appear among the rocks.
+Moving downwards, the path climbs steeply. The map shows winding ancient stone staircases carved into mountain ridges, surrounded by thick, swirling clouds and jagged peaks. Hints of samurai banners and traditional watchtowers appear among the rocks.
 
-At the very bottom, the map culminates in a narrow, formidable mountain pass guarded by a massive iron-reinforced fortress gate—the stronghold of the Iron Warlord Enforcer.
+At the very bottom, the map culminates in a narrow, formidable mountain pass guarded by a fortified, traditional wooden gate with samurai crests—the stronghold of the Samurai Commander.
 
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 
@@ -50,13 +50,13 @@ Try to make it as long as possible.
 ## Adventure 4 Map Background
 
 **Prompt:**
-A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts the approach and infiltration of the formidable Iron Fortress, flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts the approach and infiltration of the formidable Shogun's Fortress, flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
 
-At the top, the path emerges from the misty peaks, transitioning from natural rock to fortified stone ramparts. Scattered iron debris and abandoned siege equipment suggest a history of conflict.
+At the top, the path emerges from the misty peaks, transitioning from natural rock to fortified stone ramparts. Tattered flags and wooden barricades suggest a history of conflict.
 
-Moving downwards, the landscape becomes dominated by the imposing outer walls of the fortress. A heavily guarded, winding road leads up to a massive gate mechanism, featuring sharp geometric patterns and cold, hard lines. Watchtowers and iron barricades line the ascent.
+Moving downwards, the landscape becomes dominated by the imposing outer walls of the fortress. A heavily guarded, winding road leads up to a traditional massive castle gate with ornate iron bracing and clan crests, featuring traditional Japanese rooflines. Watchtowers and sharp wooden palisades line the ascent.
 
-At the very bottom, the map reveals the inner keep of the Iron Warlord—a towering, impregnable citadel of dark metal and stone, bristling with spikes and defensive machinery, radiating an aura of oppressive power.
+At the very bottom, the map reveals the inner keep of the Evil Shogun—a majestic, dark-lacquered castle keep with multiple levels and curved roofs with gold accents, bristling with defensive spikes and banners, radiating an aura of oppressive power.
 
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 

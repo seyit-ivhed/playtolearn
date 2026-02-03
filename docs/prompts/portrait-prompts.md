@@ -93,11 +93,28 @@ Monster portraits use a consistent style: **Stylized 3D digital illustration, ch
 > Portrait of The Stone Emperor, a grand and intimidating ruler made of polished black obsidian and gold-veined marble. Sitting on a floating stone throne in the heart of the subterranean Assyrian capital. Wearing a massive jeweled headdress. Deep glowing purple eyes and a regal, yet stern adversarial expression. Controlling the surrounding stone debris and floating stalactites with magical gestures. Set in a magnificent cavernous throne room with glowing purple crystals and ancient hanging gardens. Stylized 3D digital illustration, child-friendly, majestic dark and gold colors, soft purple glow lighting. Safe for children.
 ### Adventure 3: The Misty Foothills
 
-**Mist Stalker (MIST_STALKER)**
-> Portrait of a Mist Stalker, sneaky and ethereal, a creature made of swirling soft white and grey mist with large, wide-set glowing light-blue eyes. Having thin, whispy tendrils that act like arms and a trail of vapor instead of legs. Looking mischievous, peeking out from behind a stylized misty mountain rock with a sneaky smirk. Set in a thick, swirling mountain mist among ancient pine trees and jagged rocks. Stylized 3D digital illustration, child-friendly, cool misty colors, soft glow lighting. Safe for children.
+**Mist Ronin (MIST_RONIN)**
+> Portrait of a Mist Ronin, sneaky and ethereal, a phantom samurai made of swirling soft white and grey mist with large, wide-set glowing light-blue eyes. Wearing a tattered ghostly straw hat and semi-transparent mist-armor. Looking mischievous, peeking out from behind a stylized misty mountain rock with a sneaky smirk. Set in a thick, swirling mountain mist among ancient pine trees and jagged rocks. Stylized 3D digital illustration, child-friendly, cool misty colors, soft glow lighting. Safe for children.
 
-**Iron Minion (IRON_MINION)**
-> Portrait of an Iron Minion, clunky and territorial, a small rounded soldier made of overlapping plates of grey iron and bronze. Glowing orange energy visible between the armor joints and through a narrow T-shaped visor. Having thick, stubby limbs and holding a large, rounded iron shield. Standing in a defensive, grumpy posture on a narrow, winding mountain pass with a steep drop-off and distant snowy peaks. Stylized 3D digital illustration, child-friendly, metallic colors with orange glow, soft lighting. Safe for children.
+**Samurai Soldier (SAMURAI_SOLDIER)**
+> Portrait of a Samurai Soldier, determined and territorial, a stout warrior in traditional lacquered armor plates of deep blue and gold. Wearing an ornate kabuto helmet with a small crescent moon crest. Holding a sturdy wooden spear (yari) and standing in a disciplined, grumpy posture on a narrow mountain pass. Distant snowy peaks in the background. Stylized 3D digital illustration, child-friendly, vibrant colors, soft lighting. Safe for children.
 
-**Iron Warlord Enforcer (IRON_WARLORD_ENFORCER - Boss)**
-> Portrait of an Iron Warlord Enforcer, massive and intimidating, a large warrior clad in heavy, dark gunmetal-grey iron armor with glowing crimson runes etched into the surface. Wearing a large helmet with a glowing red visor and broad spiked pauldrons. Carrying a massive, blunt iron hammer over one shoulder. Standing tall and adversarial at the entrance of a massive, dark iron fortress built into the side of a mountain peak, with heavy snow falling and a commanding, stern gaze. Stylized 3D digital illustration, child-friendly, dark metallic and crimson colors, soft lighting. Safe for children.
+**Samurai Commander (SAMURAI_COMMANDER - Boss)**
+> Portrait of a Samurai Commander, massive and intimidating, a seasoned warrior in heavy, dark crimson and black samurai armor with spiked pauldrons. Wearing a fearsome oni-faced menpo mask and a large helmet with aggressive golden horns. Carrying a massive tetsubo (studded iron club) over one shoulder. Standing tall and adversarial at the gates of a mountain fortress, with heavy snow falling and a commanding, stern gaze. Stylized 3D digital illustration, child-friendly, rich crimson and gold colors, soft lighting. Safe for children.
+
+### Adventure 4: Rise of the Evil Shogun
+
+**Ninja Scout (NINJA_SCOUT)**
+> Portrait of a Ninja Scout, quick and elusive, wearing dark navy shinobi gear with a face-covering mask. Large, focused dark eyes visible. Holding a small kunai and poised in a low, agile stance on a tiled roof. Stylized 3D digital illustration, child-friendly, dark blues and blacks, soft moonlight. Safe for children.
+
+**Samurai Vanguard (SAMURAI_VANGUARD)**
+> Portrait of a Samurai Vanguard, a heavy armored warrior with a large banner (sashimono) attached to the back. Holding a long naginata (polearm) and wearing reinforced iron-plated samurai armor. Looking stern and ready for a charge. Stylized 3D digital illustration, child-friendly, metallic and silk textures, soft lighting. Safe for children.
+
+**Samurai Archer (SAMURAI_ARCHER)**
+> Portrait of a Samurai Archer, focused and precise, wearing lightweight silk and leather armor for mobility. Drawing a large asymmetrical yumi bow with a glowing spirit arrow notched. Wearing a simple headband and having a determined expression. Stylized 3D digital illustration, child-friendly, forest greens and browns, dappled sun lighting. Safe for children.
+
+**War Hound (WAR_HOUND)**
+> Portrait of a War Hound, a fierce but stylized large dog breed (like an Akita or Shiba) wearing light leather armor and a small protective helmet. Growling and ready to pounce, with a loyal yet aggressive stance. Stylized 3D digital illustration, child-friendly, warm fur colors, soft lighting. Safe for children.
+
+**The Evil Shogun (EVIL_SHOGUN - Boss)**
+> Portrait of The Evil Shogun, a grand and intimidating ruler clad in legendary black and gold ancestral samurai armor infused with dark purple energy. Sitting on an ornate wooden throne in the heart of a mountain fortress. Wearing a massive, jagged golden crown over his kabuto. Deep glowing purple eyes and a regal, yet stern adversarial expression. Dark spirits swirl faintly around his unsheathed katana. Stylized 3D digital illustration, child-friendly, majestic dark and gold colors, soft purple glow lighting. Safe for children.

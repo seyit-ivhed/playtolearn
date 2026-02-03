@@ -106,7 +106,7 @@
         },
         "3": {
             "title": "De dimmiga fotbergen",
-            "story_hook": "Den bitande luften i Jade-topparna mötte Amara och Tariq när de anlände till de höga bergen. Höljd i dimma satt en ung pojke vid namn Kenji på en sten, kramande ett alldeles för stort träsvärd. Hans ögon spärrades upp av entusiasm och förvåning vid deras ankomst. 'Vilka är ni?' frågade han, innan han snabbt förklarade hur Järnkriggherrens styrkor börjat invadera hans berg och sprida en mörk, onaturlig dimma över landet.",
+            "story_hook": "Den bitande luften i Jade-topparna mötte Amara och Tariq när de anlände till de höga bergen. Höljd i dimma satt en ung pojke vid namn Kenji på en sten, kramande ett alldeles för stort träsvärd. Hans ögon spärrades upp av entusiasm och förvåning vid deras ankomst. 'Vilka är ni?' frågade han, innan han snabbt förklarade hur Den Onde Shogunens styrkor börjat invadera hans berg och sprida en mörk, onaturlig dimma över landet.",
             "completion_summary": "Järnhantlangaren har drivits tillbaka och dimman har tillfälligt skingrats. Kenji, imponerad av nykomlingarnas mod och visdom, torkar pannan och bugar formellt. Vägen till topparna är farlig, men med nya allierade har resan uppåt precis börjat.",
             "mystery_path": "Stigen leder högre upp i de frusna höjderna...",
             "nodes": {
@@ -120,7 +120,7 @@
                     "label": "Spegeldimman"
                 },
                 "3_4": {
-                    "label": "Järnväktare"
+                    "label": "Samurajväktare"
                 },
                 "3_5": {
                     "label": "Bakhåll"
@@ -135,7 +135,7 @@
                     "label": "Stjärnvägen"
                 },
                 "3_9": {
-                    "label": "Järnhantlangaren"
+                    "label": "Samuraj-befälhavaren"
                 },
                 "3_10": {
                     "label": "Till Jade-topparna"
@@ -143,25 +143,25 @@
             }
         },
         "4": {
-            "title": "Järnkrigsherrens uppgång",
-            "story_hook": "Dimman har skingrats och avslöjat en väg som vaktas tungt av järnkonstruktioner. Järnkrigsherren väntar i sin fästning och planerar att utöka sitt herravälde. Våra hjältar måste smyga genom fiendens linjer och lösa de uråldriga geometripussel som låser fästningens portar.",
-            "completion_summary": "Järnkrigsherrens yttre försvar har fallit! Men krigsherren själv har dragit sig djupare in i fästningen. Använd ditt förstånd för att låsa upp vägen framåt.",
+            "title": "Den Onde Shogunens uppgång",
+            "story_hook": "Dimman har skingrats och avslöjat en väg som vaktas tungt av samurajkrigare. Den Onde Shogunen väntar i sin fästning och planerar att utöka sitt herravälde. Våra hjältar måste smyga genom fiendens linjer och lösa de uråldriga geometripussel som låser fästningens portar.",
+            "completion_summary": "Den Onde Shogunen är besegrad! Hans samurajarmé har upplösts och fästningen är nu tyst. Amara och hennes vänner har räddat Jade-topparna från det mörka hotet.",
             "mystery_path": "Fästningen tornar upp sig framför er...",
             "nodes": {
                 "4_1": {
-                    "label": "Järnutpost"
+                    "label": "Samurajutpost"
                 },
                 "4_2": {
                     "label": "Patrullbakhåll"
                 },
                 "4_3": {
-                    "label": "Ångförtrupp"
+                    "label": "Samuraj-förtrupp"
                 },
                 "4_4": {
                     "label": "Formlås"
                 },
                 "4_5": {
-                    "label": "Tung vakt"
+                    "label": "Elitsamuraj"
                 },
                 "4_6": {
                     "label": "Spegelport"
@@ -170,7 +170,7 @@
                     "label": "Hundflock"
                 },
                 "4_8": {
-                    "label": "Ångbarriär"
+                    "label": "Andebarriär"
                 },
                 "4_9": {
                     "label": "Ädelstenshyllningen"
@@ -179,7 +179,7 @@
                     "label": "Elitvakt"
                 },
                 "4_11": {
-                    "label": "Järnkrigsherren"
+                    "label": "Den Onde Shogunen"
                 },
                 "4_12": {
                     "label": "Det inre tornet"
@@ -524,29 +524,29 @@
         "bandit_leader": {
             "name": "Banditledare"
         },
-        "mist_stalker": {
-            "name": "Dimmvandrare"
+        "mist_ronin": {
+            "name": "Dim-Ronin"
         },
-        "clockwork_scout": {
-            "name": "Urverksspanare"
+        "ninja_scout": {
+            "name": "Ninjaspanare"
         },
-        "steam_vanguard": {
-            "name": "Ångförtrupp"
+        "samurai_vanguard": {
+            "name": "Samuraj-förtrupp"
         },
-        "iron_grenadier": {
-            "name": "Järngrenadjär"
+        "samurai_archer": {
+            "name": "Samuraj-bågskytt"
         },
-        "mechanical_hound": {
-            "name": "Mekanisk hund"
+        "war_hound": {
+            "name": "Krigshund"
         },
-        "iron_minion": {
-            "name": "Järnhantlangare"
+        "samurai_soldier": {
+            "name": "Samuraj-soldat"
         },
-        "iron_warlord_enforcer": {
-            "name": "Järnhantlangaren"
+        "samurai_commander": {
+            "name": "Samuraj-befälhavaren"
         },
-        "iron_warlord": {
-            "name": "Järnkrigsherren"
+        "evil_shogun": {
+            "name": "Den Onde Shogunen"
         },
         "blaze_hyena": {
             "name": "Låghyena"

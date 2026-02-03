@@ -185,14 +185,14 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_1',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 800 },
-                enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER],
+                enemies: [MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN],
                 unlocksCompanion: 'kenji',
             },
             {
                 id: '3_2',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 150, y: 1000 },
-                enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER],
+                enemies: [MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN],
             },
 
             {
@@ -205,13 +205,13 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_4',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1900 },
-                enemies: [MONSTERS.IRON_MINION, MONSTERS.IRON_MINION],
+                enemies: [MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER],
             },
             {
                 id: '3_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 2200 },
-                enemies: [MONSTERS.MIST_STALKER, MONSTERS.MIST_STALKER, MONSTERS.IRON_MINION],
+                enemies: [MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN, MONSTERS.SAMURAI_SOLDIER],
             },
 
             {
@@ -224,7 +224,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_7',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -100, y: 3100 },
-                enemies: [MONSTERS.IRON_MINION, MONSTERS.IRON_MINION, MONSTERS.IRON_MINION],
+                enemies: [MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER],
             },
             {
                 id: '3_8',
@@ -237,7 +237,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_9',
                 type: EncounterType.BOSS,
                 coordinates: { x: 0, y: 4100 },
-                enemies: [MONSTERS.IRON_WARLORD_ENFORCER],
+                enemies: [MONSTERS.SAMURAI_COMMANDER],
             },
             {
                 id: '3_10',
@@ -255,19 +255,19 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_1',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 800 },
-                enemies: [MONSTERS.CLOCKWORK_SCOUT, MONSTERS.CLOCKWORK_SCOUT],
+                enemies: [MONSTERS.NINJA_SCOUT, MONSTERS.NINJA_SCOUT],
             },
             {
                 id: '4_2',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 100, y: 1100 },
-                enemies: [MONSTERS.CLOCKWORK_SCOUT, MONSTERS.CLOCKWORK_SCOUT, MONSTERS.MECHANICAL_HOUND],
+                enemies: [MONSTERS.NINJA_SCOUT, MONSTERS.NINJA_SCOUT, MONSTERS.WAR_HOUND],
             },
             {
                 id: '4_3',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1500 },
-                enemies: [MONSTERS.STEAM_VANGUARD, MONSTERS.MECHANICAL_HOUND],
+                enemies: [MONSTERS.SAMURAI_VANGUARD, MONSTERS.WAR_HOUND],
             },
             {
                 id: '4_4',
@@ -279,7 +279,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 50, y: 2300 },
-                enemies: [MONSTERS.IRON_GRENADIER, MONSTERS.STEAM_VANGUARD],
+                enemies: [MONSTERS.SAMURAI_ARCHER, MONSTERS.SAMURAI_VANGUARD],
             },
             {
                 id: '4_6',
@@ -291,13 +291,13 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_7',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 3100 },
-                enemies: [MONSTERS.MECHANICAL_HOUND, MONSTERS.MECHANICAL_HOUND, MONSTERS.MECHANICAL_HOUND],
+                enemies: [MONSTERS.WAR_HOUND, MONSTERS.WAR_HOUND, MONSTERS.WAR_HOUND],
             },
             {
                 id: '4_8',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 150, y: 3400 },
-                enemies: [MONSTERS.IRON_GRENADIER, MONSTERS.IRON_GRENADIER],
+                enemies: [MONSTERS.SAMURAI_ARCHER, MONSTERS.SAMURAI_ARCHER],
             },
             {
                 id: '4_9',
@@ -309,13 +309,13 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_10',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 4000 },
-                enemies: [MONSTERS.STEAM_VANGUARD, MONSTERS.CLOCKWORK_SCOUT, MONSTERS.CLOCKWORK_SCOUT],
+                enemies: [MONSTERS.SAMURAI_VANGUARD, MONSTERS.NINJA_SCOUT, MONSTERS.NINJA_SCOUT],
             },
             {
                 id: '4_11',
                 type: EncounterType.BOSS,
                 coordinates: { x: 0, y: 3500 },
-                enemies: [MONSTERS.IRON_WARLORD],
+                enemies: [MONSTERS.EVIL_SHOGUN],
             },
             {
                 id: '4_12',

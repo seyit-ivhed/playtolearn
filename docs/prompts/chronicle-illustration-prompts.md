@@ -73,14 +73,14 @@ Amara and Tariq arriving to meet Kenji in the snowy foothills of the Jade Peaks.
 
 ---
 
-## Adventure 4: Rise of the Iron Warlord
+## Adventure 4: Rise of the Evil Shogun
 
 ### Concept
-The approach to the Iron Fortress, a mechanical stronghold amidst the mountains.
+The approach to the Shogun's Fortress, a dark samurai stronghold amidst the mountains.
 
 
 ### Primary Prompt
-> A dramatic storybook illustration of the Iron Fortress, a massive, imposing citadel of dark metal and stone, rising from the jagged rocks of a mountain pass. The fortress is surrounded by a forest of sharp iron spikes and watchtowers, dominating the landscape. The atmosphere is tense and foreboding, with steam venting from the fortress machinery and a dark, stormy sky. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, industrial fantasy aesthetic. High quality, wide shot. No text. 16:9 aspect ratio.
+> A dramatic storybook illustration of the Shogun's Fortress, a massive, imposing citadel of dark wood and stone, rising from the jagged rocks of a mountain pass. The fortress is surrounded by sharp spiked fences and high watchtowers manned by samurai scouts, dominating the landscape. The atmosphere is tense and foreboding, with dark, stormy clouds swirling around the peaks and banners with the Shogun's emblem snapping in the wind. Hand-painted digital illustration, stylized fantasy art, rich painterly textures, cinematic composition, epic scale, traditional Japanese fantasy aesthetic. High quality, wide shot. No text. 16:9 aspect ratio.
 
 ---
 

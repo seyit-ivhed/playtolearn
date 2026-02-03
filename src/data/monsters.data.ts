@@ -54,44 +54,44 @@ export const MONSTERS = {
         attack: 35,
         isBoss: true,
     },
-    MIST_STALKER: {
-        id: 'mist_stalker',
+    MIST_RONIN: {
+        id: 'mist_ronin',
         maxHealth: 125,
         attack: 26,
     },
-    CLOCKWORK_SCOUT: {
-        id: 'clockwork_scout',
+    NINJA_SCOUT: {
+        id: 'ninja_scout',
         maxHealth: 150,
         attack: 30,
     },
-    STEAM_VANGUARD: {
-        id: 'steam_vanguard',
+    SAMURAI_VANGUARD: {
+        id: 'samurai_vanguard',
         maxHealth: 260,
         attack: 50,
     },
-    IRON_GRENADIER: {
-        id: 'iron_grenadier',
+    SAMURAI_ARCHER: {
+        id: 'samurai_archer',
         maxHealth: 220,
         attack: 50,
     },
-    MECHANICAL_HOUND: {
-        id: 'mechanical_hound',
+    WAR_HOUND: {
+        id: 'war_hound',
         maxHealth: 170,
         attack: 40,
     },
-    IRON_MINION: {
-        id: 'iron_minion',
+    SAMURAI_SOLDIER: {
+        id: 'samurai_soldier',
         maxHealth: 165,
         attack: 32,
     },
-    IRON_WARLORD_ENFORCER: {
-        id: 'iron_warlord_enforcer',
+    SAMURAI_COMMANDER: {
+        id: 'samurai_commander',
         maxHealth: 600,
         attack: 70,
         isBoss: true,
     },
-    IRON_WARLORD: {
-        id: 'iron_warlord',
+    EVIL_SHOGUN: {
+        id: 'evil_shogun',
         maxHealth: 600,
         attack: 85,
         isBoss: true,

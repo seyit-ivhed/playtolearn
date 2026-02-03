@@ -106,7 +106,7 @@
         },
         "3": {
             "title": "The Misty Foothills",
-            "story_hook": "The biting air of the Jade Peaks greeted Amara and Tariq as they arrived in the high mountains. Shrouded in mist, a young boy named Kenji sat on a rock, clutching an oversized wooden sword. His eyes widened with excitement and surprise at their arrival. 'Who are you?' he asked, before hurriedly explaining how the Iron Warlord's forces had begun to invade his mountains, spreading a dark, unnatural mist across the land.",
+            "story_hook": "The biting air of the Jade Peaks greeted Amara and Tariq as they arrived in the high mountains. Shrouded in mist, a young boy named Kenji sat on a rock, clutching an oversized wooden sword. His eyes widened with excitement and surprise at their arrival. 'Who are you?' he asked, before hurriedly explaining how the Evil Shogun's forces had begun to invade his mountains, spreading a dark, unnatural mist across the land.",
             "completion_summary": "The Iron Enforcer has been driven back, and the mists have momentarily parted. Kenji, impressed by the newcomers' bravery and wisdom, wipes his brow and offers a formal bow. The path to the peaks is dangerous, but with new allies, the journey upward has just begun.",
             "mystery_path": "The trail leads higher into the frozen heights...",
             "nodes": {
@@ -120,7 +120,7 @@
                     "label": "The Mirror Mist"
                 },
                 "3_4": {
-                    "label": "Iron Guardian"
+                    "label": "Samurai Guardian"
                 },
                 "3_5": {
                     "label": "Ambuscade"
@@ -135,7 +135,7 @@
                     "label": "The Star Path"
                 },
                 "3_9": {
-                    "label": "The Iron Enforcer"
+                    "label": "The Samurai Commander"
                 },
                 "3_10": {
                     "label": "To the Jade Peaks"
@@ -143,25 +143,25 @@
             }
         },
         "4": {
-            "title": "Rise of the Iron Warlord",
-            "story_hook": "The mists have cleared, revealing a path heavily guarded by iron constructs. The Iron Warlord awaits in his fortress, plotting to expand his dominion. Our heroes must stealthily navigate through the enemy lines and solve the ancient geometry puzzles that lock the fortress gates.",
-            "completion_summary": "The Iron Warlord's outer defenses have fallen! But the Warlord himself has retreated deeper into the fortress. Use your wits to unlock the path ahead.",
+            "title": "Rise of the Evil Shogun",
+            "story_hook": "The mists have cleared, revealing a path heavily guarded by samurai warriors. The Evil Shogun awaits in his fortress, plotting to expand his dominion. Our heroes must stealthily navigate through the enemy lines and solve the ancient geometry puzzles that lock the fortress gates.",
+            "completion_summary": "The Evil Shogun is defeated! His samurai army has been dispersed, and the fortress is now silent. Amara and her friends have saved the Jade Peaks from the dark threat.",
             "mystery_path": "The fortress looms large ahead...",
             "nodes": {
                 "4_1": {
-                    "label": "Iron Outpost"
+                    "label": "Samurai Outpost"
                 },
                 "4_2": {
                     "label": "Patrol Ambush"
                 },
                 "4_3": {
-                    "label": "Steam Vanguard"
+                    "label": "Samurai Vanguard"
                 },
                 "4_4": {
                     "label": "Shape Lock"
                 },
                 "4_5": {
-                    "label": "Heavy Guard"
+                    "label": "Elite Samurai"
                 },
                 "4_6": {
                     "label": "Mirror Gate"
@@ -170,7 +170,7 @@
                     "label": "Hound Pack"
                 },
                 "4_8": {
-                    "label": "Steam Barrier"
+                    "label": "Spirit Barrier"
                 },
                 "4_9": {
                     "label": "The Gem Tribute"
@@ -179,7 +179,7 @@
                     "label": "Elite Guard"
                 },
                 "4_11": {
-                    "label": "The Iron Warlord"
+                    "label": "The Evil Shogun"
                 },
                 "4_12": {
                     "label": "The Inner Keep"
@@ -524,29 +524,29 @@
         "bandit_leader": {
             "name": "Bandit Leader"
         },
-        "mist_stalker": {
-            "name": "Mist Stalker"
+        "mist_ronin": {
+            "name": "Mist Ronin"
         },
-        "clockwork_scout": {
-            "name": "Clockwork Scout"
+        "ninja_scout": {
+            "name": "Ninja Scout"
         },
-        "steam_vanguard": {
-            "name": "Steam Vanguard"
+        "samurai_vanguard": {
+            "name": "Samurai Vanguard"
         },
-        "iron_grenadier": {
-            "name": "Iron Grenadier"
+        "samurai_archer": {
+            "name": "Samurai Archer"
         },
-        "mechanical_hound": {
-            "name": "Mechanical Hound"
+        "war_hound": {
+            "name": "War Hound"
         },
-        "iron_minion": {
-            "name": "Iron Minion"
+        "samurai_soldier": {
+            "name": "Samurai Soldier"
         },
-        "iron_warlord_enforcer": {
-            "name": "The Iron Enforcer"
+        "samurai_commander": {
+            "name": "The Samurai Commander"
         },
-        "iron_warlord": {
-            "name": "The Iron Warlord"
+        "evil_shogun": {
+            "name": "The Evil Shogun"
         },
         "blaze_hyena": {
             "name": "Blaze Hyena"
