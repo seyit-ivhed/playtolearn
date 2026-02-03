@@ -24,7 +24,6 @@
     "adventures": {
         "1": {
             "title": "Den gömda ingången",
-            "description": "En uråldrig grotta avslöjad av de skiftande sanddynerna.",
             "story_hook": "Amara, en ung resenär från avlägsna södra länder, besöker sin vän Tariq i hans hemland. Märkliga syner nära den stora stenporten har fångat deras uppmärksamhet. Tillsammans ger de sig ut för att undersöka en uråldrig grottöppning, länge begravd i sand, som har avslöjats av de skiftande dynerna.",
             "completion_summary": "Sandkolossen är besegrad! Amara och Tariq står tillsammans vid mynningen av den massiva grottan, deras vänskap stärkt av deras första äventyr. Den mörka tunneln lockar dem framåt in i de okända djupen.",
             "mystery_path": "En mystisk väg in i det okända...",
@@ -66,7 +65,6 @@
         },
         "2": {
             "title": "Ashurs ruiner",
-            "description": "En underjordisk stad övertagen av banditer och stenväktare.",
             "story_hook": "När de lämnar ökensolen bakom sig stiger Amara och Tariq ner i de svala djupen av kanjongrottan. Tunneln öppnar sig mot en enorm underjordisk stad—det uråldriga Ashur. Men banditer har förvandlat ruinerna till sitt läger, och stenarna själva börjar röra på sig med uråldrig magi.",
             "completion_summary": "Med Stenkejsaren besegrad är Ashurs hjärta säkert. När Amara och Tariq står bland de uråldriga ruinerna inser de att detta bara är början. Inspirerade av sina äventyr tillsammans gör de en pakt: att utforska världen bortom dessa länder, att se vilka under som väntar, och att möta alla utmaningar som kommer i deras väg—tillsammans.",
             "mystery_path": "Djupt inne i ruinerna växer en ny skugga...",
@@ -108,7 +106,6 @@
         },
         "3": {
             "title": "De dimmiga fotbergen",
-            "description": "När de reser från de uråldriga ruinerna genom en skimrande portal, dyker Amara och Tariq upp i de hisnande Jade-topparna där de upptäcker en ung krigare vid namn Kenji som kämpar mot den tjocka bergsdimman.",
             "story_hook": "När portalen bleknade möttes Amara och Tariq av den bitande luften i Jade-topparna. Höljd i dimma satt en ung pojke vid namn Kenji på en sten, kramande ett alldeles för stort träsvärd. Hans ögon spärrades upp av entusiasm och förvåning vid deras ankomst. 'Vilka är ni?' frågade han, innan han snabbt förklarade hur Järnkriggherrens styrkor börjat invadera hans berg och sprida en mörk, onaturlig dimma över landet.",
             "completion_summary": "Järnhantlangaren har drivits tillbaka och dimman har tillfälligt skingrats. Kenji, imponerad av nykomlingarnas mod och visdom, torkar pannan och bugar formellt. Vägen till topparna är farlig, men med nya allierade har resan uppåt precis börjat.",
             "mystery_path": "Stigen leder högre upp i de frusna höjderna...",
@@ -147,7 +144,6 @@
         },
         "4": {
             "title": "Järnkrigsherrens uppgång",
-            "description": "Amara och Tariq måste resa till Järnfästningen för att konfrontera ledaren för den mekaniska armén.",
             "story_hook": "Dimman har skingrats och avslöjat en väg som vaktas tungt av järnkonstruktioner. Järnkrigsherren väntar i sin fästning och planerar att utöka sitt herravälde. Våra hjältar måste smyga genom fiendens linjer och lösa de uråldriga geometripussel som låser fästningens portar.",
             "completion_summary": "Järnkrigsherrens yttre försvar har fallit! Men krigsherren själv har dragit sig djupare in i fästningen. Använd ditt förstånd för att låsa upp vägen framåt.",
             "mystery_path": "Fästningen tornar upp sig framför er...",
@@ -192,7 +188,6 @@
         },
         "5": {
             "title": "De Svedda Slätterna",
-            "description": "Zahara har återvänt till sitt hemland för att finna det under belägring av Inferno-Mans styrkor.",
             "story_hook": "Hettan är intensiv och luften skimrar av hägringar. Flocken har korrumperats och andarna är oroliga. Zahara måste återta sin födslorätt och återställa balansen på slätterna.",
             "completion_summary": "Inferno-Man är besegrad! Elden i hans ögon falnar och ersätts av en respektfull nick. Flocken bugar för Zahara och erkänner hennes styrka. Den brännande hettan börjar avta och lovar regn.",
             "mystery_path": "Horisonten brinner med en ny utmaning...",
@@ -237,7 +232,6 @@
         },
         "6": {
             "title": "Harmonin återställd",
-            "description": "Källan till disharmonin avslöjas. Återta världens balans.",
             "story_hook": "Amara, Tariq, Kenji och Zahara står vid tröskeln till Andevärlden. Det en gång så fridfulla landet är nu splittrat av kaotisk energi. Andekonungen, harmonins väktare, har överväldigats av skuggan från Krigsherrens inflytande. Våra hjältar måste förena sina krafter för att lugna konungen och återställa den eviga balansen.",
             "completion_summary": "Harmonin är återställd! Andekonungen, nu lugn och strålande, bugar för hjältarna. De splittrade delarna av riket läks framför deras ögon. Amara och hennes vänner har säkrat freden, men de vet att deras resa av lärande och upptäckt precis har nått sin första stora milstolpe.",
             "mystery_path": "Andarna viskar om ännu större prövningar...",

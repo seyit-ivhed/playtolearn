@@ -107,7 +107,6 @@ export interface Encounter {
 export interface Adventure {
     id: AdventureId;
     title?: string;
-    description?: string; // Short description
     storyHook?: string;   // Narrative hook for the storybook page
     completionSummary?: string; // Summary shown after completion
     illustration?: string; // Thumbnail/Illustration for the storybook page

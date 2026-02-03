@@ -64,7 +64,6 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                 <ChapterStory
                     adventureId={adventure.id}
                     adventureStoryHook={adventure.storyHook}
-                    adventureDescription={adventure.description}
                     isLocked={isLocked}
                     isCompleted={isCompleted}
                     isJustCompleted={isJustCompleted}
