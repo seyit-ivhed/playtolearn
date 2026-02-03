@@ -69,7 +69,7 @@ Amara and Tariq meet and decide to explore the world together.
 
 - **Adventure 5: The Scorched Plains**
   Traveling to the Savannah, they meet **Zahara** and encounter out-of-control elemental magic.
-- **Adventure 6: Harmony Restored**
+- **Adventure 6: The Spirit Realm**
   At the Spirit Tree, they help Zahara calm the Raging Spirit King and restore balance to the land.
 
 ## Narrative Presence

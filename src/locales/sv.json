@@ -106,7 +106,7 @@
         },
         "3": {
             "title": "De dimmiga fotbergen",
-            "story_hook": "När portalen bleknade möttes Amara och Tariq av den bitande luften i Jade-topparna. Höljd i dimma satt en ung pojke vid namn Kenji på en sten, kramande ett alldeles för stort träsvärd. Hans ögon spärrades upp av entusiasm och förvåning vid deras ankomst. 'Vilka är ni?' frågade han, innan han snabbt förklarade hur Järnkriggherrens styrkor börjat invadera hans berg och sprida en mörk, onaturlig dimma över landet.",
+            "story_hook": "Den bitande luften i Jade-topparna mötte Amara och Tariq när de anlände till de höga bergen. Höljd i dimma satt en ung pojke vid namn Kenji på en sten, kramande ett alldeles för stort träsvärd. Hans ögon spärrades upp av entusiasm och förvåning vid deras ankomst. 'Vilka är ni?' frågade han, innan han snabbt förklarade hur Järnkriggherrens styrkor börjat invadera hans berg och sprida en mörk, onaturlig dimma över landet.",
             "completion_summary": "Järnhantlangaren har drivits tillbaka och dimman har tillfälligt skingrats. Kenji, imponerad av nykomlingarnas mod och visdom, torkar pannan och bugar formellt. Vägen till topparna är farlig, men med nya allierade har resan uppåt precis börjat.",
             "mystery_path": "Stigen leder högre upp i de frusna höjderna...",
             "nodes": {
@@ -231,7 +231,7 @@
             }
         },
         "6": {
-            "title": "Harmonin återställd",
+            "title": "Andevärlden",
             "story_hook": "Amara, Tariq, Kenji och Zahara står vid tröskeln till Andevärlden. Det en gång så fridfulla landet är nu splittrat av kaotisk energi. Andekonungen, harmonins väktare, har överväldigats av skuggan från Krigsherrens inflytande. Våra hjältar måste förena sina krafter för att lugna konungen och återställa den eviga balansen.",
             "completion_summary": "Harmonin är återställd! Andekonungen, nu lugn och strålande, bugar för hjältarna. De splittrade delarna av riket läks framför deras ögon. Amara och hennes vänner har säkrat freden, men de vet att deras resa av lärande och upptäckt precis har nått sin första stora milstolpe.",
             "mystery_path": "Andarna viskar om ännu större prövningar...",

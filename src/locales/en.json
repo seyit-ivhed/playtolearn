@@ -106,7 +106,7 @@
         },
         "3": {
             "title": "The Misty Foothills",
-            "story_hook": "As the portal faded, the biting air of the Jade Peaks greeted Amara and Tariq. Shrouded in mist, a young boy named Kenji sat on a rock, clutching an oversized wooden sword. His eyes widened with excitement and surprise at their arrival. 'Who are you?' he asked, before hurriedly explaining how the Iron Warlord's forces had begun to invade his mountains, spreading a dark, unnatural mist across the land.",
+            "story_hook": "The biting air of the Jade Peaks greeted Amara and Tariq as they arrived in the high mountains. Shrouded in mist, a young boy named Kenji sat on a rock, clutching an oversized wooden sword. His eyes widened with excitement and surprise at their arrival. 'Who are you?' he asked, before hurriedly explaining how the Iron Warlord's forces had begun to invade his mountains, spreading a dark, unnatural mist across the land.",
             "completion_summary": "The Iron Enforcer has been driven back, and the mists have momentarily parted. Kenji, impressed by the newcomers' bravery and wisdom, wipes his brow and offers a formal bow. The path to the peaks is dangerous, but with new allies, the journey upward has just begun.",
             "mystery_path": "The trail leads higher into the frozen heights...",
             "nodes": {
@@ -231,7 +231,7 @@
             }
         },
         "6": {
-            "title": "Harmony Restored",
+            "title": "The Spirit Realm",
             "story_hook": "Amara, Tariq, Kenji, and Zahara stand at the threshold of the Spirit Realm. The once peaceful land is now fractured by chaotic energy. The Spirit King, guardian of harmony, has been overwhelmed by the shadow of the Warlord's influence. Our heroes must unite their strengths to calm the king and restore the eternal balance.",
             "completion_summary": "Harmony is restored! The Spirit King, now calm and radiant, bows to the heroes. The fractured pieces of the realm mend before their eyes. Amara and her friends have secured the peace, but they know their journey of learning and discovery has only just reached its first great milestone.",
             "mystery_path": "The spirits whisper of even greater trials...",

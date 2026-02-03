@@ -124,7 +124,7 @@ export const MONSTERS = {
         attack: 100,
         isBoss: true,
     },
-    // Adventure 6 Monsters - Harmony Restored
+    // Adventure 6 Monsters - The Spirit Realm
     DISCORD_SPIRIT: {
         id: 'discord_spirit',
         maxHealth: 310,
