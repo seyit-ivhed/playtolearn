@@ -93,7 +93,9 @@ export class DifficultyAnalyzer {
      * Calculate win rate from results
      */
     private static calculateWinRate(results: SimulationResult[]): number {
-        if (results.length === 0) return 0;
+        if (results.length === 0) {
+            return 0;
+        }
         const wins = results.filter(r => r.victory).length;
         return Math.round((wins / results.length) * 100);
     }
@@ -102,7 +104,9 @@ export class DifficultyAnalyzer {
      * Calculate average turns for victories
      */
     private static calculateAverageTurns(victoryResults: SimulationResult[]): number {
-        if (victoryResults.length === 0) return 0;
+        if (victoryResults.length === 0) {
+            return 0;
+        }
         const totalTurns = victoryResults.reduce((sum, r) => sum + r.turnCount, 0);
         return Math.round(totalTurns / victoryResults.length);
     }
