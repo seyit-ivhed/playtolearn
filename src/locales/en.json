@@ -111,31 +111,31 @@
             "mystery_path": "The trail leads higher into the frozen heights...",
             "nodes": {
                 "3_1": {
-                    "label": "First Contact"
+                    "label": "Mist Ronin Sighting"
                 },
                 "3_2": {
-                    "label": "The Mist Thickens"
+                    "label": "Ronin Ambush"
                 },
                 "3_3": {
                     "label": "The Mirror Mist"
                 },
                 "3_4": {
-                    "label": "Samurai Guardian"
+                    "label": "Foothill Patrol"
                 },
                 "3_5": {
-                    "label": "Ambuscade"
+                    "label": "Mist-Bound Warriors"
                 },
                 "3_6": {
                     "label": "The Keystone Cipher"
                 },
                 "3_7": {
-                    "label": "Heavy Resistance"
+                    "label": "Samurai Phalanx"
                 },
                 "3_8": {
                     "label": "The Star Path"
                 },
                 "3_9": {
-                    "label": "The Samurai Commander"
+                    "label": "Commander of the Mists"
                 },
                 "3_10": {
                     "label": "To the Jade Peaks"
@@ -149,40 +149,40 @@
             "mystery_path": "The fortress looms large ahead...",
             "nodes": {
                 "4_1": {
-                    "label": "Samurai Outpost"
+                    "label": "Ninja Lookout"
                 },
                 "4_2": {
-                    "label": "Patrol Ambush"
+                    "label": "Night Stalkers"
                 },
                 "4_3": {
-                    "label": "Samurai Vanguard"
+                    "label": "Gate Guards"
                 },
                 "4_4": {
                     "label": "Shape Lock"
                 },
                 "4_5": {
-                    "label": "Elite Samurai"
+                    "label": "Fortress Defenders"
                 },
                 "4_6": {
                     "label": "Mirror Gate"
                 },
                 "4_7": {
-                    "label": "Hound Pack"
+                    "label": "Shogun's Hounds"
                 },
                 "4_8": {
-                    "label": "Spirit Barrier"
+                    "label": "Hidden Archers"
                 },
                 "4_9": {
                     "label": "The Gem Tribute"
                 },
                 "4_10": {
-                    "label": "Elite Guard"
+                    "label": "The Inner Circle"
                 },
                 "4_11": {
                     "label": "The Evil Shogun"
                 },
                 "4_12": {
-                    "label": "The Inner Keep"
+                    "label": "Journey Onward"
                 }
             }
         },
