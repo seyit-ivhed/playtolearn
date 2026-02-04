@@ -51,15 +51,9 @@ export async function runAnalysis() {
             encounters: {}
         };
 
-        const JOINS: Record<string, string> = {
-            '3': 'kenji',
-            '5': 'zahara'
-        };
-
         for (const encounter of adventure.encounters) {
-            const joiningCompanionId = JOINS[adventure.id];
-            if (joiningCompanionId && !party.find(c => c.id === joiningCompanionId)) {
-                party.push({ id: joiningCompanionId, level: 1, currentXp: 0 });
+            if (encounter.unlocksCompanion && !party.find(c => c.id === encounter.unlocksCompanion)) {
+                party.push({ id: encounter.unlocksCompanion, level: 1, currentXp: 0 });
             }
 
             const isXpGranting = encounter.type === EncounterType.BATTLE ||
