@@ -17,6 +17,11 @@ const banditLeaderImg = new URL('../assets/images/enemies/bandit-leader.jpg', im
 const mistRoninImg = new URL('../assets/images/enemies/mist-ronin.jpg', import.meta.url).href;
 const samuraiSoldierImg = new URL('../assets/images/enemies/samurai-soldier.jpg', import.meta.url).href;
 const samuraiCommanderImg = new URL('../assets/images/enemies/samurai-commander.jpg', import.meta.url).href;
+const ninjaScoutImg = new URL('../assets/images/enemies/ninja-scout.jpg', import.meta.url).href;
+const samuraiVanguardImg = new URL('../assets/images/enemies/samurai-vanguard.jpg', import.meta.url).href;
+const samuraiArcherImg = new URL('../assets/images/enemies/samurai-archer.jpg', import.meta.url).href;
+const warHoundImg = new URL('../assets/images/enemies/war-hound.jpg', import.meta.url).href;
+const evilShogunImg = new URL('../assets/images/enemies/the-evil-shogun.jpg', import.meta.url).href;
 
 const MONSTER_SPRITES: Record<string, string> = {
     'scorpion_1': duneScorpionImg,
@@ -32,6 +37,11 @@ const MONSTER_SPRITES: Record<string, string> = {
     'mist_ronin': mistRoninImg,
     'samurai_soldier': samuraiSoldierImg,
     'samurai_commander': samuraiCommanderImg,
+    'ninja_scout': ninjaScoutImg,
+    'samurai_vanguard': samuraiVanguardImg,
+    'samurai_archer': samuraiArcherImg,
+    'war_hound': warHoundImg,
+    'evil_shogun': evilShogunImg,
 };
 
 /**
