@@ -14,10 +14,9 @@ const stoneGuardianImg = new URL('../assets/images/enemies/stone-guardian.jpg', 
 const assyrianGuardianImg = new URL('../assets/images/enemies/assyrian-guardian.jpg', import.meta.url).href;
 const theStoneEmperorImg = new URL('../assets/images/enemies/the-stone-emperor.jpg', import.meta.url).href;
 const banditLeaderImg = new URL('../assets/images/enemies/bandit-leader.jpg', import.meta.url).href;
-const mistStalkerImg = new URL('../assets/images/enemies/mist-stalker.jpg', import.meta.url).href;
-const ironMinionImg = new URL('../assets/images/enemies/iron-minion.jpg', import.meta.url).href;
-const ironEnforcerImg = new URL('../assets/images/enemies/iron-enforcer.jpg', import.meta.url).href;
-
+const mistRoninImg = new URL('../assets/images/enemies/mist-ronin.jpg', import.meta.url).href;
+const samuraiSoldierImg = new URL('../assets/images/enemies/samurai-soldier.jpg', import.meta.url).href;
+const samuraiCommanderImg = new URL('../assets/images/enemies/samurai-commander.jpg', import.meta.url).href;
 
 const MONSTER_SPRITES: Record<string, string> = {
     'scorpion_1': duneScorpionImg,
@@ -30,10 +29,9 @@ const MONSTER_SPRITES: Record<string, string> = {
     'assyrian_guardian': assyrianGuardianImg,
     'the_stone_emperor': theStoneEmperorImg,
     'bandit_leader': banditLeaderImg,
-    'mist_stalker': mistStalkerImg,
-    'iron_minion': ironMinionImg,
-    'iron_warlord_enforcer': ironEnforcerImg,
-
+    'mist_ronin': mistRoninImg,
+    'samurai_soldier': samuraiSoldierImg,
+    'samurai_commander': samuraiCommanderImg,
 };
 
 /**
