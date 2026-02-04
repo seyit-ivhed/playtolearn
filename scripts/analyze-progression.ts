@@ -74,6 +74,12 @@ export async function runAnalysis() {
                 // Track which companions are blocked
                 const blockedCompanions: string[] = [];
 
+                // Record level BEFORE XP distribution
+                const partyBefore = party.map(c => ({
+                    companionId: c.id,
+                    level: c.level
+                }));
+
                 // Distribute XP to all eligible companions
                 for (let i = 0; i < party.length; i++) {
                     if (canEarnExperience(party[i].level, maxLevel)) {
@@ -86,14 +92,21 @@ export async function runAnalysis() {
                 // If it's a battle or boss, record it for the simulation config
                 if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS) {
                     advConfig.encounters[encounter.id] = {
-                        party: party.map(c => ({
-                            companionId: c.id,
-                            level: c.level
-                        }))
+                        party: partyBefore.map(pBefore => {
+                            const companionAfter = party.find(c => c.id === pBefore.companionId)!;
+                            return {
+                                companionId: pBefore.companionId,
+                                levelBefore: pBefore.level,
+                                levelAfter: companionAfter.level
+                            };
+                        })
                     };
                 }
 
-                const partyStatus = party.map(c => `${c.id}: L${c.level}`).join(', ');
+                const partyStatus = partyBefore.map(pb => {
+                    const companionAfter = party.find(c => c.id === pb.companionId)!;
+                    return `${pb.companionId}: L${pb.level} -> L${companionAfter.level}`;
+                }).join(', ');
                 const blockedStatus = blockedCompanions.length > 0
                     ? blockedCompanions.join(', ')
                     : '-';

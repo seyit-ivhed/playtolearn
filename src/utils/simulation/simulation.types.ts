@@ -58,7 +58,8 @@ export interface EncounterSimulationResults {
 
 export interface PartyMemberConfig {
     companionId: string;
-    level: number;
+    levelBefore: number; // Level at the start of the encounter
+    levelAfter: number;  // Level after the encounter reward
 }
 
 export interface EncounterConfig {

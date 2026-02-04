@@ -41,7 +41,7 @@ export class BattleSimulator {
                     return null;
                 }
 
-                const stats = getStatsForLevel(companionData, config.level);
+                const stats = getStatsForLevel(companionData, config.levelBefore);
 
                 return {
                     id: `party_${config.companionId}_${index}`,
