@@ -19,8 +19,8 @@ export const MONSTERS = {
     },
     BANDIT_LEADER: {
         id: 'bandit_leader',
-        maxHealth: 110,
-        attack: 14,
+        maxHealth: 95,
+        attack: 13,
     },
     BANDIT_RAIDER: {
         id: 'bandit_raider',
@@ -44,30 +44,30 @@ export const MONSTERS = {
     },
     SAND_COLOSSUS: {
         id: 'sand_colossus',
-        maxHealth: 300,
+        maxHealth: 325,
         attack: 30,
         isBoss: true,
     },
     THE_STONE_EMPEROR: {
         id: 'the_stone_emperor',
-        maxHealth: 350,
-        attack: 35,
+        maxHealth: 375,
+        attack: 38,
         isBoss: true,
     },
     MIST_RONIN: {
         id: 'mist_ronin',
-        maxHealth: 125,
-        attack: 26,
+        maxHealth: 110,
+        attack: 22,
     },
     NINJA_SCOUT: {
         id: 'ninja_scout',
-        maxHealth: 150,
-        attack: 30,
+        maxHealth: 135,
+        attack: 26,
     },
     SAMURAI_VANGUARD: {
         id: 'samurai_vanguard',
-        maxHealth: 260,
-        attack: 50,
+        maxHealth: 240,
+        attack: 45,
     },
     SAMURAI_ARCHER: {
         id: 'samurai_archer',
@@ -76,52 +76,52 @@ export const MONSTERS = {
     },
     WAR_HOUND: {
         id: 'war_hound',
-        maxHealth: 170,
-        attack: 40,
+        maxHealth: 160,
+        attack: 38,
     },
     SAMURAI_SOLDIER: {
         id: 'samurai_soldier',
-        maxHealth: 165,
-        attack: 32,
+        maxHealth: 150,
+        attack: 28,
     },
     SAMURAI_COMMANDER: {
         id: 'samurai_commander',
-        maxHealth: 600,
-        attack: 70,
+        maxHealth: 580,
+        attack: 65,
         isBoss: true,
     },
     EVIL_SHOGUN: {
         id: 'evil_shogun',
-        maxHealth: 600,
-        attack: 85,
+        maxHealth: 550,
+        attack: 80,
         isBoss: true,
     },
     // Adventure 5 Monsters - The Scorched Plains
     BLAZE_HYENA: {
         id: 'blaze_hyena',
-        maxHealth: 180,
-        attack: 45,
+        maxHealth: 160,
+        attack: 40,
     },
     EMBER_LIONESS: {
         id: 'ember_lioness',
-        maxHealth: 270,
-        attack: 65,
+        maxHealth: 240,
+        attack: 55,
     },
     SUN_SCORCHED_RHINO: {
         id: 'sun_scorched_rhino',
-        maxHealth: 420,
-        attack: 55,
+        maxHealth: 380,
+        attack: 50,
     },
     MIRAGE_SPIRIT: {
         id: 'mirage_spirit',
-        maxHealth: 240,
-        attack: 80,
+        maxHealth: 235,
+        attack: 75,
     },
     // Adventure 5 Boss
     INFERNO_MANE: {
         id: 'inferno_mane',
-        maxHealth: 1000,
-        attack: 100,
+        maxHealth: 925,
+        attack: 92,
         isBoss: true,
     },
     // Adventure 6 Monsters - The Spirit Realm
@@ -132,8 +132,8 @@ export const MONSTERS = {
     },
     HOLLOW_SHELL: {
         id: 'hollow_shell',
-        maxHealth: 280,
-        attack: 45,
+        maxHealth: 240,
+        attack: 40,
     },
     TWISTED_REFLECTION: {
         id: 'twisted_reflection',
@@ -143,8 +143,8 @@ export const MONSTERS = {
     // Adventure 6 Boss
     SPIRIT_KING: {
         id: 'spirit_king',
-        maxHealth: 1100,
-        attack: 110,
+        maxHealth: 950,
+        attack: 95,
         isBoss: true,
     },
 } as const satisfies Record<string, AdventureMonster>;

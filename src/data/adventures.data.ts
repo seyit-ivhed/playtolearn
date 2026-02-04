@@ -46,7 +46,7 @@ export const ADVENTURES: Adventure[] = [
                 enemies: [
                     MONSTERS.BANDIT_LEADER,
                     MONSTERS.DESERT_SCAVENGER,
-                    MONSTERS.DESERT_SCAVENGER
+                    MONSTERS.TINY_SCORPION
                 ],
             },
             {
@@ -205,7 +205,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_4',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 200, y: 1900 },
-                enemies: [MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER],
+                enemies: [MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER, MONSTERS.MIST_RONIN],
             },
             {
                 id: '3_5',
