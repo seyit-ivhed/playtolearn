@@ -83,12 +83,11 @@
 
 /* Monster Grid */
 .monster-grid {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     align-items: center;
-    justify-content: center;
+    justify-items: center;
     justify-self: start;
     /* Stay close to the VS indicator */
 }
