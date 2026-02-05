@@ -358,7 +358,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '5_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 50, y: 2300 },
-                enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+                enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.EMBER_LIONESS, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
             },
             {
                 id: '5_6',
@@ -460,7 +460,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_9',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 250, y: 3800 },
-                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL],
+                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.TWISTED_REFLECTION, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL],
             },
             {
                 id: '6_10',

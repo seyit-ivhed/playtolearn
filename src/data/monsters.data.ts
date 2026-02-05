@@ -86,65 +86,66 @@ export const MONSTERS = {
     },
     SAMURAI_COMMANDER: {
         id: 'samurai_commander',
-        maxHealth: 580,
-        attack: 65,
+        maxHealth: 640,
+        attack: 70,
         isBoss: true,
     },
     EVIL_SHOGUN: {
         id: 'evil_shogun',
-        maxHealth: 550,
-        attack: 80,
+        maxHealth: 650,
+        attack: 85,
         isBoss: true,
     },
     // Adventure 5 Monsters - The Scorched Plains
+    // Adventure 5 Monsters - The Scorched Plains
     BLAZE_HYENA: {
         id: 'blaze_hyena',
-        maxHealth: 120,
-        attack: 30,
+        maxHealth: 105,
+        attack: 27,
     },
     EMBER_LIONESS: {
         id: 'ember_lioness',
-        maxHealth: 180,
-        attack: 45,
+        maxHealth: 190,
+        attack: 48,
     },
     SUN_SCORCHED_RHINO: {
         id: 'sun_scorched_rhino',
-        maxHealth: 300,
+        maxHealth: 320,
         attack: 40,
     },
     MIRAGE_SPIRIT: {
         id: 'mirage_spirit',
-        maxHealth: 150,
-        attack: 45,
+        maxHealth: 170,
+        attack: 50,
     },
     // Adventure 5 Boss
     INFERNO_MANE: {
         id: 'inferno_mane',
-        maxHealth: 925,
-        attack: 92,
+        maxHealth: 980,
+        attack: 98,
         isBoss: true,
     },
     // Adventure 6 Monsters - The Spirit Realm
     DISCORD_SPIRIT: {
         id: 'discord_spirit',
-        maxHealth: 250,
-        attack: 60,
+        maxHealth: 280,
+        attack: 65,
     },
     HOLLOW_SHELL: {
         id: 'hollow_shell',
-        maxHealth: 180,
-        attack: 30,
+        maxHealth: 160,
+        attack: 28,
     },
     TWISTED_REFLECTION: {
         id: 'twisted_reflection',
-        maxHealth: 200,
-        attack: 55,
+        maxHealth: 250,
+        attack: 60,
     },
     // Adventure 6 Boss
     SPIRIT_KING: {
         id: 'spirit_king',
-        maxHealth: 950,
-        attack: 95,
+        maxHealth: 1100,
+        attack: 100,
         isBoss: true,
     },
 } as const satisfies Record<string, AdventureMonster>;

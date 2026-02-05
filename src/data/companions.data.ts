@@ -129,7 +129,7 @@ export const COMPANIONS: Record<string, Companion> = {
             variables: { damage: 20, duration: 2, reduction: 50 }
         },
         initialSpirit: 100,
-        spiritGain: 20,
+        spiritGain: 35,
         evolutions: [
             {
                 atLevel: EVOLUTION_LEVELS.STAGE_1,
