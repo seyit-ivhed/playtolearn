@@ -99,23 +99,23 @@ export const MONSTERS = {
     // Adventure 5 Monsters - The Scorched Plains
     BLAZE_HYENA: {
         id: 'blaze_hyena',
-        maxHealth: 160,
-        attack: 40,
+        maxHealth: 120,
+        attack: 30,
     },
     EMBER_LIONESS: {
         id: 'ember_lioness',
-        maxHealth: 240,
-        attack: 55,
+        maxHealth: 180,
+        attack: 45,
     },
     SUN_SCORCHED_RHINO: {
         id: 'sun_scorched_rhino',
-        maxHealth: 380,
-        attack: 50,
+        maxHealth: 300,
+        attack: 40,
     },
     MIRAGE_SPIRIT: {
         id: 'mirage_spirit',
-        maxHealth: 235,
-        attack: 75,
+        maxHealth: 150,
+        attack: 45,
     },
     // Adventure 5 Boss
     INFERNO_MANE: {
@@ -127,18 +127,18 @@ export const MONSTERS = {
     // Adventure 6 Monsters - The Spirit Realm
     DISCORD_SPIRIT: {
         id: 'discord_spirit',
-        maxHealth: 310,
-        attack: 75,
+        maxHealth: 250,
+        attack: 60,
     },
     HOLLOW_SHELL: {
         id: 'hollow_shell',
-        maxHealth: 240,
-        attack: 40,
+        maxHealth: 180,
+        attack: 30,
     },
     TWISTED_REFLECTION: {
         id: 'twisted_reflection',
-        maxHealth: 300,
-        attack: 85,
+        maxHealth: 200,
+        attack: 55,
     },
     // Adventure 6 Boss
     SPIRIT_KING: {

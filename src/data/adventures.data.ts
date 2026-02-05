@@ -333,14 +333,14 @@ export const ADVENTURES: Adventure[] = [
                 id: '5_1',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 800 },
-                enemies: [MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+                enemies: [MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
                 unlocksCompanion: 'zahara',
             },
             {
                 id: '5_2',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 100, y: 1100 },
-                enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.EMBER_LIONESS],
+                enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.EMBER_LIONESS, MONSTERS.EMBER_LIONESS],
             },
             {
                 id: '5_3',
@@ -352,13 +352,13 @@ export const ADVENTURES: Adventure[] = [
                 id: '5_4',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 1900 },
-                enemies: [MONSTERS.SUN_SCORCHED_RHINO, MONSTERS.BLAZE_HYENA],
+                enemies: [MONSTERS.SUN_SCORCHED_RHINO, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
             },
             {
                 id: '5_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 50, y: 2300 },
-                enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
+                enemies: [MONSTERS.EMBER_LIONESS, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
             },
             {
                 id: '5_6',
@@ -370,7 +370,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '5_7',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 3100 },
-                enemies: [MONSTERS.MIRAGE_SPIRIT, MONSTERS.MIRAGE_SPIRIT],
+                enemies: [MONSTERS.MIRAGE_SPIRIT, MONSTERS.MIRAGE_SPIRIT, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
             },
             {
                 id: '5_8',
@@ -382,7 +382,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '5_9',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 250, y: 3800 },
-                enemies: [MONSTERS.SUN_SCORCHED_RHINO, MONSTERS.MIRAGE_SPIRIT],
+                enemies: [MONSTERS.SUN_SCORCHED_RHINO, MONSTERS.MIRAGE_SPIRIT, MONSTERS.BLAZE_HYENA, MONSTERS.BLAZE_HYENA],
             },
             {
                 id: '5_10',
@@ -412,13 +412,13 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_1',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 800 },
-                enemies: [MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL],
+                enemies: [MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL],
             },
             {
                 id: '6_2',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 100, y: 1100 },
-                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.HOLLOW_SHELL],
+                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL],
             },
             {
                 id: '6_3',
@@ -430,13 +430,13 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_4',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -150, y: 1900 },
-                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.TWISTED_REFLECTION],
+                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.TWISTED_REFLECTION, MONSTERS.HOLLOW_SHELL],
             },
             {
                 id: '6_5',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 50, y: 2300 },
-                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.DISCORD_SPIRIT],
+                enemies: [MONSTERS.DISCORD_SPIRIT, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL],
             },
             {
                 id: '6_6',
@@ -448,7 +448,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_7',
                 type: EncounterType.BATTLE,
                 coordinates: { x: -200, y: 3100 },
-                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.TWISTED_REFLECTION],
+                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.TWISTED_REFLECTION, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL],
             },
             {
                 id: '6_8',
@@ -460,7 +460,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_9',
                 type: EncounterType.BATTLE,
                 coordinates: { x: 250, y: 3800 },
-                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.TWISTED_REFLECTION],
+                enemies: [MONSTERS.TWISTED_REFLECTION, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL, MONSTERS.HOLLOW_SHELL],
             },
             {
                 id: '6_10',
