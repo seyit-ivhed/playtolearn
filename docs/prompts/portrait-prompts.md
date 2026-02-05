@@ -118,3 +118,34 @@ Monster portraits use a consistent style: **Semi-realistic, stylized 3D digital 
 
 **The Evil Shogun (EVIL_SHOGUN - Boss)**
 > Portrait of The Evil Shogun, a grand and intimidating ruler clad in legendary black and gold ancestral samurai armor infused with dark purple energy. Sitting on an ornate wooden throne in the heart of a mountain fortress. Wearing a massive, jagged golden crown over his kabuto. Deep glowing purple eyes and a regal, yet stern adversarial expression. Dark spirits swirl faintly around his unsheathed katana. Semi-realistic, stylized 3D digital illustration, child-friendly, majestic dark and gold colors, soft purple glow lighting. Safe for children.
+
+### Adventure 5: The Scorched Plains
+
+**Blaze Hyena (BLAZE_HYENA)**
+> Portrait of a Blaze Hyena, energetic and fiery, a hyena with a mane of flickering orange flames and scorched-orange fur with charcoal spots. Big expressive yellow eyes and a wide, mischievous grin. Set in a shimmering heat-haze savanna under a blazing sun. Semi-realistic, stylized 3D digital illustration, child-friendly, bright vibrant colors, soft glow lighting. Safe for children.
+
+**Ember Lioness (EMBER_LIONESS)**
+> Portrait of an Ember Lioness, majestic and prideful, a powerful feline with glowing orange ember-spots along her flanks and a warm golden coat. Calm but sharp amber eyes and a regal posture. Standing on a sun-baked rock with heat distortion in the background. Semi-realistic, stylized 3D digital illustration, child-friendly, bright vibrant colors, soft lighting. Safe for children.
+
+**Sun-Scorched Rhino (SUN_SCORCHED_RHINO)**
+> Portrait of a Sun-Scorched Rhino, toughened and stubborn, a massive creature with armor plates resembling cracked, dried desert earth with a faint internal orange glow. A single large, blunt horn and small, focused eyes. Looking ready to charge across the scorched plains. Semi-realistic, stylized 3D digital illustration, child-friendly, earthy oranges and reds, soft lighting. Safe for children.
+
+**Mirage Spirit (MIRAGE_SPIRIT)**
+> Portrait of a Mirage Spirit, elusive and shimmering, a translucent creature made of swirling heated air and golden desert light. Large glowing white eyes and a faint, wavy silhouette that blends into the background. Floating above the hot sand with a wispy, ethereal tail. Semi-realistic, stylized 3D digital illustration, child-friendly, shimmering golds and pale blues, soft glow lighting. Safe for children.
+
+**Inferno Mane (INFERNO_MANE - Boss)**
+> Portrait of Inferno Mane, the legendary ruler of the Scorched Plains. A massive, intimidating lion with a grand mane of swirling supernova-like fire and brilliant golden fur. Deep glowing red eyes reflecting intense power. Standing atop a volcanic peak with sparks and embers raining down. Semi-realistic, stylized 3D digital illustration, child-friendly, majestic reds and golds, dramatic cinematic lighting with heat distortion. Safe for children.
+
+### Adventure 6: The Spirit Realm
+
+**Hollow Shell (HOLLOW_SHELL)**
+> Portrait of a Hollow Shell, mysterious and empty, a floating set of ornate white ceramic-like armor pieces with no physical body inside. Pulsating soft blue spirit energy flows from the joints and visor. Holding a translucent spirit sword. Set in a landscape of floating islands and violet clouds. Semi-realistic, stylized 3D digital illustration, child-friendly, clean whites and ethereal blues, soft glow lighting. Safe for children.
+
+**Twisted Reflection (TWISTED_REFLECTION)**
+> Portrait of a Twisted Reflection, confusing and prismatic, a crystalline creature made of jagged, iridescent purple shards. Multiple glowing eyes appear in various facets. Its surface reflects distorted pieces of the spirit realm. Floating in a void of shimmering stars and nebula clouds. Semi-realistic, stylized 3D digital illustration, child-friendly, vibrant purples and magentas, prismatic lighting effects. Safe for children.
+
+**Discord Spirit (DISCORD_SPIRIT)**
+> Portrait of a Discord Spirit, chaotic and noisy, a multi-limbed ethereal creature wearing several floating masks, each with a different grumpy or shouty expression. Swirling dark violet and neon green energy forms its body. Clashing colors and jagged shapes. Semi-realistic, stylized 3D digital illustration, child-friendly, neon violets and greens, dynamic soft lighting. Safe for children.
+
+**Spirit King (SPIRIT_KING - Boss)**
+> Portrait of the Spirit King, the ancient and supreme ruler of the Spirit Realm. A massive spectral entity with a flowing beard of stardust and a grand crown made of orbiting constellations. Deep glowing teal eyes that see through all dimensions. Holding a crystalline staff that pulses with the heartbeat of the realm. Set against a backdrop of the entire galaxy. Semi-realistic, stylized 3D digital illustration, child-friendly, majestic teals and deep space blues, dramatic cinematic lighting with star-field effects. Safe for children.

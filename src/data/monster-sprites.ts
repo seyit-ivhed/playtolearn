@@ -23,6 +23,19 @@ const samuraiArcherImg = new URL('../assets/images/enemies/samurai-archer.jpg', 
 const warHoundImg = new URL('../assets/images/enemies/war-hound.jpg', import.meta.url).href;
 const evilShogunImg = new URL('../assets/images/enemies/the-evil-shogun.jpg', import.meta.url).href;
 
+// Adventure 5 Monsters
+const blazeHyenaImg = new URL('../assets/images/enemies/blaze-hyena.jpg', import.meta.url).href;
+const emberLionessImg = new URL('../assets/images/enemies/ember-lioness.jpg', import.meta.url).href;
+const sunScorchedRhinoImg = new URL('../assets/images/enemies/sun-scorched-rhino.jpg', import.meta.url).href;
+const mirageSpiritImg = new URL('../assets/images/enemies/mirage-spirit.jpg', import.meta.url).href;
+const infernoManeImg = new URL('../assets/images/enemies/inferno-mane.jpg', import.meta.url).href;
+
+// Adventure 6 Monsters
+const discordSpiritImg = new URL('../assets/images/enemies/discord-spirit.jpg', import.meta.url).href;
+const hollowShellImg = new URL('../assets/images/enemies/hollow-shell.jpg', import.meta.url).href;
+const twistedReflectionImg = new URL('../assets/images/enemies/twisted-reflection.jpg', import.meta.url).href;
+const spiritKingImg = new URL('../assets/images/enemies/spirit-king.jpg', import.meta.url).href;
+
 const MONSTER_SPRITES: Record<string, string> = {
     'scorpion_1': duneScorpionImg,
     'tiny_scorpion': tinyScorpionImg,
@@ -42,6 +55,17 @@ const MONSTER_SPRITES: Record<string, string> = {
     'samurai_archer': samuraiArcherImg,
     'war_hound': warHoundImg,
     'evil_shogun': evilShogunImg,
+    // Adventure 5
+    'blaze_hyena': blazeHyenaImg,
+    'ember_lioness': emberLionessImg,
+    'sun_scorched_rhino': sunScorchedRhinoImg,
+    'mirage_spirit': mirageSpiritImg,
+    'inferno_mane': infernoManeImg,
+    // Adventure 6
+    'discord_spirit': discordSpiritImg,
+    'hollow_shell': hollowShellImg,
+    'twisted_reflection': twistedReflectionImg,
+    'spirit_king': spiritKingImg,
 };
 
 /**
