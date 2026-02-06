@@ -21,6 +21,7 @@ export const BookCover: React.FC<BookCoverProps> = ({
 
     return (
         <div className={styles.coverContent}>
+            <div className={styles.runeGlow} />
             <header className={styles.coverHeader}>
                 <h1 className={styles.coverTitle}>{title || t('landing.title')}</h1>
             </header>
