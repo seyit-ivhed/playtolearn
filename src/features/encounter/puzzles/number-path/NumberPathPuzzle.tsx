@@ -107,7 +107,7 @@ export const NumberPathPuzzle: React.FC<NumberPathPuzzleProps> = ({ data, onSolv
             }
 
             const cellSize = 64;
-            const gap = 12;
+            const gap = 24;
             const x = pos.col * (cellSize + gap) + (cellSize / 2);
             const y = pos.row * (cellSize + gap) + (cellSize / 2);
             points.push(`${x},${y}`);

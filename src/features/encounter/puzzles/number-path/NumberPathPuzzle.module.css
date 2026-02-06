@@ -26,14 +26,14 @@
 
 .grid {
     display: grid;
-    gap: 12px;
+    gap: 24px;
     position: relative;
     z-index: 1;
 }
 
 .cell {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     background: rgba(30, 30, 30, 0.8);
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
@@ -46,8 +46,6 @@
     user-select: none;
     transition: all 0.2s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    color: rgba(255, 255, 255, 0.5);
-    /* Faint placeholder color for standard cells? No, empty cells are empty */
     color: #fff;
 }
 
@@ -60,6 +58,7 @@
     background: rgba(60, 60, 80, 0.9);
     border-color: #4a9eff;
     color: #fff;
+    box-shadow: 0 0 10px rgba(74, 158, 255, 0.2);
 }
 
 .cell.fixed {
@@ -99,24 +98,16 @@
 .svgOverlay {
     position: absolute;
     top: 20px;
-    /* Match wrapper padding */
     left: 20px;
     width: calc(100% - 40px);
     height: calc(100% - 40px);
     z-index: 0;
-    /* Behind cells so lines don't obscure numbers? */
     pointer-events: none;
 }
 
-/* If we put SVG behind, we might want cell backgrounds to be opaque enough or handled carefully. */
-/* Let's try z-index 2 (above) but ensure fill is transparent for cells? No, cells have numbers. */
-/* Actually, putting SVG above (z-index 2) ensures the line is bright and visible. */
-/* But it might cross over the numbers. */
-/* Let's keep SVG at z-index 0 (behind) to look like a "path on the ground". */
-
 .svgLine {
-    stroke: rgba(255, 255, 255, 0.5);
-    stroke-width: 4;
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 6;
     stroke-linecap: round;
     stroke-linejoin: round;
     transition: all 0.3s ease;
@@ -124,7 +115,8 @@
 
 .svgLine.active {
     stroke: #4a9eff;
-    filter: drop-shadow(0 0 4px rgba(74, 158, 255, 0.6));
+    stroke-width: 8;
+    filter: drop-shadow(0 0 8px rgba(74, 158, 255, 0.8));
 }
 
 .instruction {
