@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { PrimaryButton } from './Shared/PrimaryButton';
 
 interface ChapterActionsProps {
     adventureId: string;
@@ -58,15 +59,12 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                 <div className="main-action">
                     {!isLocked ? (
                         isJustCompleted && canNext ? (
-                            <motion.button
-                                className="book-btn begin-btn"
+                            <PrimaryButton
                                 onClick={onNext}
                                 data-testid="next-chapter-btn"
-                                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
-                                whileTap={{ scale: 0.95 }}
                             >
                                 {t('chronicle.next_chapter', 'Next Chapter')}
-                            </motion.button>
+                            </PrimaryButton>
                         ) : isCompleted ? (
                             <motion.button
                                 className="book-btn replay-btn"
@@ -80,17 +78,14 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                                 {t('chronicle.replay_chapter')}
                             </motion.button>
                         ) : (
-                            <motion.button
-                                className="book-btn begin-btn"
+                            <PrimaryButton
                                 onClick={() => {
                                     onBegin(adventureId);
                                 }}
                                 data-testid="begin-chapter-btn"
-                                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
-                                whileTap={{ scale: 0.95 }}
                             >
                                 {hasProgress ? t('chronicle.continue_chapter', 'Continue Adventure') : t('chronicle.begin_chapter')}
-                            </motion.button>
+                            </PrimaryButton>
                         )
                     ) : isPremiumLocked && !isProgressionLocked ? (
                         <motion.button

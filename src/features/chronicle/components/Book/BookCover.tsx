@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from '../../ChronicleBook.module.css';
+import { PrimaryButton } from '../Shared/PrimaryButton';
 
 interface BookCoverProps {
     onStart: () => void;
@@ -14,8 +15,7 @@ export const BookCover: React.FC<BookCoverProps> = ({
     onStart,
     onLogin,
     hasProgress = false,
-    title,
-    subtitle
+    title
 }) => {
     const { t } = useTranslation();
 
@@ -26,13 +26,13 @@ export const BookCover: React.FC<BookCoverProps> = ({
             </header>
 
             <div className={styles.coverActions}>
-                <button
-                    className={`${styles.bookBtn} ${styles.btnPrimary}`}
+                <PrimaryButton
+                    className={styles.btnPrimaryOverrides}
                     onClick={onStart}
                     data-testid="cover-start-btn"
                 >
                     {hasProgress ? t('landing.continue_journey') : t('landing.start_game')}
-                </button>
+                </PrimaryButton>
 
                 <button
                     className={`${styles.bookBtn} ${styles.btnSecondary}`}
