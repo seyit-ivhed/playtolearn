@@ -14,7 +14,7 @@ import { SequencePuzzle } from './puzzles/sequence/SequencePuzzle';
 import { GuardianTributePuzzle } from './puzzles/guardian-tribute/GuardianTributePuzzle';
 import { SymmetryPuzzle } from './puzzles/symmetry/SymmetryPuzzle';
 import { LatinSquarePuzzle } from './puzzles/latin-square/LatinSquarePuzzle';
-import { GeometryPuzzle } from './puzzles/geometry/GeometryPuzzle';
+import { NumberPathPuzzle } from './puzzles/number-path/NumberPathPuzzle';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import styles from './PuzzlePage.module.css';
 
@@ -71,8 +71,8 @@ const PuzzlePage = () => {
                 return t('puzzle.symmetry.instruction', 'Mirror the pattern on the right side!');
             case PuzzleType.LATIN_SQUARE:
                 return t('puzzle.latin_square.instruction', 'Place elemental runes so each appears exactly once in every row and column.');
-            case PuzzleType.GEOMETRY:
-                return t('puzzle.geometry.instruction', 'Find the correct shape!');
+            case PuzzleType.NUMBER_PATH:
+                return t('puzzle.number_path.instruction', 'Create a continuous path by filling in the numbers!');
             default:
                 return '';
         }
@@ -185,8 +185,8 @@ const PuzzlePage = () => {
                     />
                 )}
 
-                {(puzzleData.puzzleType === PuzzleType.GEOMETRY) && (
-                    <GeometryPuzzle
+                {(puzzleData.puzzleType === PuzzleType.NUMBER_PATH) && (
+                    <NumberPathPuzzle
                         data={puzzleData}
                         onSolve={handleSolve}
                     />

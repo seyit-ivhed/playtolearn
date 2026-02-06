@@ -45,7 +45,7 @@ export const PuzzleType = {
     GUARDIAN_TRIBUTE: 'GUARDIAN_TRIBUTE', // Adventure 2: Division/Distribution
     SYMMETRY: 'SYMMETRY',         // Adventure 3: Mirror Mist
     LATIN_SQUARE: 'LATIN_SQUARE',  // Adventure 3: Keystone Cipher
-    GEOMETRY: 'GEOMETRY'          // Adventure 4: Shape Identification
+    NUMBER_PATH: 'NUMBER_PATH'    // Sifferstigen (Number Path)
 } as const;
 
 export type PuzzleType = typeof PuzzleType[keyof typeof PuzzleType];
@@ -80,11 +80,12 @@ export interface PuzzleData extends Required<Pick<PuzzleConfig, 'puzzleType'>> {
     // Guardian Tribute specific fields
     guardians?: unknown[]; // Actual type defined in guardian-tribute.ts to avoid circular dependency
     totalGems?: number;
-    // Geometry Puzzle specific fields
-    shapes?: unknown[]; // GeometryShape[] - defined in GeometryEngine to avoid circular dependency
-    correctShapeId?: string;
-    questionKey?: string;
-    targetShapeType?: string;
+    // Number Path specific fields
+    gridSize?: number;
+    pathSequence?: number[]; // The correct sequence of numbers if needed for validation, or just start/step
+    startValue?: number;
+    stepValue?: number;
+    preFilledIndices?: { row: number; col: number; value: number }[];
 }
 
 // Concept: An encounter is a single node on the map

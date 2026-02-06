@@ -371,16 +371,8 @@
         "guardian_tribute": {
             "instruction": "Fördela ädelstenarna mellan statyerna"
         },
-        "geometry": {
-            "instruction": "Hitta den rätta formen!",
-            "find_shape": "Hitta {{shape}}!",
-            "shapes": {
-                "triangle": "Triangel",
-                "square": "Kvadrat",
-                "circle": "Cirkel",
-                "pentagon": "Pentagon",
-                "hexagon": "Hexagon"
-            }
+        "number_path": {
+            "instruction": "Fyll i siffrorna för att skapa en sammanhängande stig!"
         }
     },
     "companions": {

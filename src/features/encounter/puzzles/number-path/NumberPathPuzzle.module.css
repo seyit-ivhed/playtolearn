@@ -1,0 +1,136 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+    padding: 2rem;
+    position: relative;
+}
+
+.header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.puzzleWrapper {
+    position: relative;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 1rem;
+    border: 2px solid #555;
+    /* Ensure content box acts as positioning context for absolute children */
+}
+
+.grid {
+    display: grid;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.cell {
+    width: 60px;
+    height: 60px;
+    background: rgba(30, 30, 30, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.5);
+    /* Faint placeholder color for standard cells? No, empty cells are empty */
+    color: #fff;
+}
+
+.cell:hover:not(.filled) {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.cell.filled {
+    background: rgba(60, 60, 80, 0.9);
+    border-color: #4a9eff;
+    color: #fff;
+}
+
+.cell.fixed {
+    background: rgba(40, 30, 20, 0.9);
+    border-color: #ffd700;
+    color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+.cell.lastPlaced {
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+/* Shake animation for invalid moves */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.invalid {
+    animation: shake 0.3s ease-in-out;
+    border-color: #ff4444 !important;
+}
+
+.svgOverlay {
+    position: absolute;
+    top: 20px;
+    /* Match wrapper padding */
+    left: 20px;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    z-index: 0;
+    /* Behind cells so lines don't obscure numbers? */
+    pointer-events: none;
+}
+
+/* If we put SVG behind, we might want cell backgrounds to be opaque enough or handled carefully. */
+/* Let's try z-index 2 (above) but ensure fill is transparent for cells? No, cells have numbers. */
+/* Actually, putting SVG above (z-index 2) ensures the line is bright and visible. */
+/* But it might cross over the numbers. */
+/* Let's keep SVG at z-index 0 (behind) to look like a "path on the ground". */
+
+.svgLine {
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.3s ease;
+}
+
+.svgLine.active {
+    stroke: #4a9eff;
+    filter: drop-shadow(0 0 4px rgba(74, 158, 255, 0.6));
+}
+
+.instruction {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: #ccc;
+    max-width: 500px;
+    text-align: center;
+}

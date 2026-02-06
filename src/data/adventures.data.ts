@@ -273,7 +273,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_4',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: -150, y: 1900 },
-                puzzleData: { puzzleType: PuzzleType.GEOMETRY },
+                puzzleData: { puzzleType: PuzzleType.NUMBER_PATH },
             },
             {
                 id: '4_5',
@@ -364,7 +364,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '5_6',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 250, y: 2700 },
-                puzzleData: { puzzleType: PuzzleType.GEOMETRY },
+                puzzleData: { puzzleType: PuzzleType.NUMBER_PATH },
             },
             {
                 id: '5_7',
@@ -424,7 +424,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_3',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 200, y: 1500 },
-                puzzleData: { puzzleType: PuzzleType.GEOMETRY },
+                puzzleData: { puzzleType: PuzzleType.NUMBER_PATH },
             },
             {
                 id: '6_4',
