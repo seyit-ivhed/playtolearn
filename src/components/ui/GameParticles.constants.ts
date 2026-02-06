@@ -88,3 +88,51 @@ export const CONFETTI_OPTIONS: ISourceOptions = {
         }
     }
 };
+
+export const BOOK_MAGIC_OPTIONS: ISourceOptions = {
+    fullScreen: { enable: false },
+    particles: {
+        number: {
+            value: 60,
+            density: {
+                enable: true,
+                width: 800,
+                height: 800
+            }
+        },
+        color: {
+            value: ["#FFD700", "#FFA500", "#FFFFFF"]
+        },
+        shape: {
+            type: "circle"
+        },
+        opacity: {
+            value: { min: 0.1, max: 0.8 },
+            animation: {
+                enable: true,
+                speed: 1,
+                sync: false
+            }
+        },
+        size: {
+            value: { min: 1, max: 3 }
+        },
+        move: {
+            enable: true,
+            speed: 1,
+            direction: "none",
+            random: false,
+            straight: false,
+            outModes: "out",
+            path: {
+                enable: true,
+                options: {
+                    type: "curl" // Trying a curl path for 'rotating' feel if supported, otherwise standard move
+                }
+            }
+        }
+    },
+    background: {
+        color: "transparent"
+    }
+};

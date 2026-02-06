@@ -85,6 +85,8 @@
     background-size: 140%;
     background-position: 50% 40%;
     background-repeat: no-repeat;
+    overflow: visible;
+    /* Allow particles to show outside */
 }
 
 .coverContent {

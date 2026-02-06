@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from '../../ChronicleBook.module.css';
 import { PrimaryButton } from '../Shared/PrimaryButton';
+import { GameParticles } from '../../../../components/ui/GameParticles';
+import { BOOK_MAGIC_OPTIONS } from '../../../../components/ui/GameParticles.constants';
 
 interface BookCoverProps {
     onStart: () => void;
@@ -22,6 +24,9 @@ export const BookCover: React.FC<BookCoverProps> = ({
     return (
         <div className={styles.coverContent}>
             <div className={styles.runeGlow} />
+            <div style={{ position: 'absolute', top: '-25%', left: '-25%', width: '150%', height: '150%', zIndex: 0, pointerEvents: 'none' }}>
+                <GameParticles options={BOOK_MAGIC_OPTIONS} />
+            </div>
             <header className={styles.coverHeader}>
                 <h1 className={styles.coverTitle}>{title || t('landing.title')}</h1>
             </header>
