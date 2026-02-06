@@ -93,6 +93,10 @@
     font-size: 3rem;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
     z-index: 2;
+    /* Strong drop shadow for visibility without background */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 20px rgba(0, 0, 0, 0.4));
+    transform: translate(-50%, -50%) scale(1.2);
+    /* Slightly larger */
 }
 
 .chapter-details {
