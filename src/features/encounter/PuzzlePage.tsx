@@ -30,34 +30,26 @@ const PuzzlePage = () => {
         initialized: premiumInitialized
     } = usePremiumStore();
 
-
     const [isCompleted, setIsCompleted] = useState(false);
-
     const adventure = ADVENTURES.find(a => a.id === adventureId);
-
-    // Find encounter by nodeIndex
     const encounter = adventure?.encounters[nodeIndex - 1];
-
-    // Progression and premium gates are handled above
     const isLocked = false;
-
-
-
-    // Check if this is the first time completing this node
-
-
 
     // Dynamically generate puzzle values based on difficulty
     const puzzleData = useMemo(() => {
         const pType = encounter?.puzzleData?.puzzleType;
-        if (!pType) return null;
+        if (!pType) {
+            return null;
+        }
         // Prefer explicit encounter difficulty if set, fallback to player preference
         const currentDifficulty = activeEncounterDifficulty as DifficultyLevel;
         return generatePuzzleData(pType, currentDifficulty);
     }, [encounter, activeEncounterDifficulty]);
 
     const instruction = useMemo(() => {
-        if (!puzzleData) return '';
+        if (!puzzleData) {
+            return '';
+        }
         switch (puzzleData.puzzleType) {
             case PuzzleType.SUM_TARGET:
                 return t('puzzle.flask.target', { target: puzzleData.targetValue });
