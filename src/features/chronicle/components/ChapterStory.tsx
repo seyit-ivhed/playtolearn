@@ -22,13 +22,15 @@ export const ChapterStory: React.FC<ChapterStoryProps> = ({
     const { t } = useTranslation();
 
     return (
-        <div className="chapter-details">
-            <p className="story-hook">
-                {isLocked
-                    ? t('chronicle.mystery_path')
-                    : t(`adventures.${adventureId}.story_hook`, adventureStoryHook || '')
-                }
-            </p>
+        <div className="chapter-details" style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
+            <div className="story-scroll-container">
+                <p className="story-hook">
+                    {isLocked
+                        ? t('chronicle.mystery_path')
+                        : t(`adventures.${adventureId}.story_hook`, adventureStoryHook || '')
+                    }
+                </p>
+            </div>
 
             <div className="completion-stats" style={{ visibility: isCompleted ? 'visible' : 'hidden' }}>
                 <div className="stars-earned">
