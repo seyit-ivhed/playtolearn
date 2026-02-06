@@ -21,13 +21,6 @@ export const BookCover: React.FC<BookCoverProps> = ({
 
     return (
         <div className={styles.coverContent}>
-            <div className={styles.coverDecorations}>
-                <div className={styles.cornerDecoration} />
-                <div className={styles.cornerDecoration} />
-                <div className={styles.cornerDecoration} />
-                <div className={styles.cornerDecoration} />
-            </div>
-
             <header className={styles.coverHeader}>
                 <h1 className={styles.coverTitle}>{title || t('landing.title')}</h1>
                 <p className={styles.coverSubtitle}>{subtitle || t('landing.subtitle')}</p>

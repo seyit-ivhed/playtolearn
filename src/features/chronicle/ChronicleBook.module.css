@@ -52,7 +52,6 @@
 
 .pageFront {
     background-color: var(--color-chronicle-bg);
-    box-shadow: inset 4px 0 10px rgba(0, 0, 0, 0.05), 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .pageBack {
@@ -82,41 +81,54 @@
 }
 
 .cover .pageFront {
-    background: linear-gradient(135deg, #4a3b2a 0%, #2c2216 100%);
-    box-shadow:
-        inset 4px 0 10px rgba(0, 0, 0, 0.3),
-        inset -2px 0 5px rgba(255, 255, 255, 0.1),
-        10px 10px 30px rgba(0, 0, 0, 0.5);
-    border: 1px solid #3e3020;
+    background-image: url('../../assets/images/tome-cover/tome-cover.png');
+    background-size: 140%;
+    background-position: 50% 40%;
+    background-repeat: no-repeat;
 }
 
 .coverContent {
-    padding: 40px;
+    padding: 60px 40px;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    border: 3px double #d4af37;
     border-radius: 8px;
-    margin: 10px;
+    margin: 15px;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
+
+.coverHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
 
 .coverTitle {
     font-family: var(--font-display);
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     text-align: center;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.5rem;
+    color: #FADCA1;
+    /* Highlight Gold from image */
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+    letter-spacing: 0.05em;
 }
 
 .coverSubtitle {
     font-family: var(--font-body);
-    font-size: 1rem;
+    font-size: 1.1rem;
     text-align: center;
-    opacity: 0.8;
+    color: #D4AF37;
+    /* Primary Gold from image */
+    opacity: 0.9;
     font-style: italic;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .coverActions {
@@ -140,26 +152,34 @@
 }
 
 .btnPrimary {
-    background: linear-gradient(to bottom, #d4af37 0%, #bbaa66 100%);
-    color: #2c2216;
-    border-color: #8a702b;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to bottom, #FADCA1 0%, #D4AF37 100%);
+    color: #2c1e11;
+    /* Dark Brown from theme */
+    border: 1px solid #8a702b;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
 .btnPrimary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     filter: brightness(1.1);
 }
 
 .btnSecondary {
-    background: transparent;
-    border: 1px solid #d4af37;
-    color: #d4af37;
+    background: rgba(44, 30, 17, 0.4);
+    /* Subtle dark brown overlay */
+    border: 1px solid #D4AF37;
+    color: #FADCA1;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    backdrop-filter: blur(4px);
 }
 
 .btnSecondary:hover {
-    background: rgba(212, 175, 55, 0.1);
+    background: rgba(212, 175, 55, 0.2);
+    color: #ffffff;
 }
 
 .coverFooter {
