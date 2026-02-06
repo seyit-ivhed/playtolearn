@@ -144,7 +144,7 @@
         },
         "4": {
             "title": "Rise of the Evil Shogun",
-            "story_hook": "The mists have cleared, revealing a path heavily guarded by samurai warriors. The Evil Shogun awaits in his fortress, plotting to expand his dominion. Our heroes must stealthily navigate through the enemy lines and solve the ancient geometry puzzles that lock the fortress gates.",
+            "story_hook": "The mists have cleared, revealing a path heavily guarded by samurai warriors. The Evil Shogun awaits in his fortress, plotting to expand his dominion. Our heroes must stealthily navigate through the enemy lines and solve the ancient puzzles that lock the fortress gates.",
             "completion_summary": "The Evil Shogun is defeated! His samurai army has been dispersed, and the fortress is now silent. Amara and her friends have saved the Jade Peaks from the dark threat.",
             "mystery_path": "The fortress looms large ahead...",
             "nodes": {
