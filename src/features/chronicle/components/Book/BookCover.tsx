@@ -23,7 +23,6 @@ export const BookCover: React.FC<BookCoverProps> = ({
         <div className={styles.coverContent}>
             <header className={styles.coverHeader}>
                 <h1 className={styles.coverTitle}>{title || t('landing.title')}</h1>
-                <p className={styles.coverSubtitle}>{subtitle || t('landing.subtitle')}</p>
             </header>
 
             <div className={styles.coverActions}>

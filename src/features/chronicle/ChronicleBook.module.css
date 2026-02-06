@@ -106,6 +106,8 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    margin-top: 60px;
+    /* Move title downwards */
 }
 
 
@@ -120,16 +122,6 @@
     letter-spacing: 0.05em;
 }
 
-.coverSubtitle {
-    font-family: var(--font-body);
-    font-size: 1.1rem;
-    text-align: center;
-    color: #D4AF37;
-    /* Primary Gold from image */
-    opacity: 0.9;
-    font-style: italic;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
 
 .coverActions {
     display: flex;
@@ -168,13 +160,12 @@
 }
 
 .btnSecondary {
-    background: rgba(44, 30, 17, 0.4);
-    /* Subtle dark brown overlay */
+    background: #3e3020;
+    /* Solid dark leather brown */
     border: 1px solid #D4AF37;
     color: #FADCA1;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    backdrop-filter: blur(4px);
 }
 
 .btnSecondary:hover {
