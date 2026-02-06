@@ -291,14 +291,6 @@
         "origins": {
             "title": "Ursprungets värld",
             "description": "Där resan börjar. Följ med Amara och Tariq när de möter sina första utmaningar."
-        },
-        "baobab": {
-            "title": "Baobabslätterna",
-            "description": "Utforska den vidsträckta savannen och forntida kungadömen med Zahara."
-        },
-        "sakura": {
-            "title": "Sakurahöglandet",
-            "description": "Klättra i dimmiga berg och körsbärsblomsskogar med Kenji."
         }
     },
     "shared_xp": "Delad XP",

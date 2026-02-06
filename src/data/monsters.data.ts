@@ -97,7 +97,6 @@ export const MONSTERS = {
         isBoss: true,
     },
     // Adventure 5 Monsters - The Scorched Plains
-    // Adventure 5 Monsters - The Scorched Plains
     BLAZE_HYENA: {
         id: 'blaze_hyena',
         maxHealth: 105,

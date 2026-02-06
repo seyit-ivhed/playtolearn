@@ -291,14 +291,6 @@
         "origins": {
             "title": "The World of Origins",
             "description": "Where the journey begins. Join Amara and Tariq as they face the first challenges of their quest."
-        },
-        "baobab": {
-            "title": "The Baobab Plains",
-            "description": "Explore the vast savannah and ancient kingdoms with Zahara."
-        },
-        "sakura": {
-            "title": "The Sakura Highlands",
-            "description": "Climb the misty mountains and cherry blossom forests with Kenji."
         }
     },
     "shared_xp": "Shared XP",
