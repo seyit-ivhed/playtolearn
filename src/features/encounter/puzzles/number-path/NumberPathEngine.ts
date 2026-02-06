@@ -89,13 +89,23 @@ export const generateNumberPathData = (difficulty: DifficultyLevel): PuzzleData 
 
     const path = generateHamiltonianPath(gridSize);
     const preFilledIndices: { row: number; col: number; value: number }[] = [];
+    const totalCells = gridSize * gridSize;
 
+    // Always fill the first number
     preFilledIndices.push({
         row: path[0].row,
         col: path[0].col,
         value: startValue
     });
 
+    // Always fill the last number to show the destination
+    preFilledIndices.push({
+        row: path[totalCells - 1].row,
+        col: path[totalCells - 1].col,
+        value: startValue + (totalCells - 1) * stepValue
+    });
+
+    // For Easy/Medium, fill the second number too to give a direction
     if (difficulty <= 2) {
         preFilledIndices.push({
             row: path[1].row,
@@ -104,9 +114,13 @@ export const generateNumberPathData = (difficulty: DifficultyLevel): PuzzleData 
         });
     }
 
-    const totalCells = gridSize * gridSize;
-    const desiredFixedCount = Math.floor(totalCells * 0.25);
-    const candidates = Array.from({ length: totalCells - 2 }, (_, i) => i + 2);
+    // Increase fixed count to roughly 40-50% for better guidance
+    const desiredFixedCount = Math.floor(totalCells * 0.45);
+
+    // Potential candidates (excluding already filled ones)
+    const existingIndices = new Set(preFilledIndices.map(p => path.findIndex(pos => pos.row === p.row && pos.col === p.col)));
+    const candidates = Array.from({ length: totalCells }, (_, i) => i)
+        .filter(i => !existingIndices.has(i));
 
     // Shuffle candidates
     for (let i = candidates.length - 1; i > 0; i--) {

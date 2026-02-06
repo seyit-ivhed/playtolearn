@@ -126,21 +126,27 @@ export const NumberPathPuzzle: React.FC<NumberPathPuzzleProps> = ({ data, onSolv
                 >
                     {grid.map((row, ri) => (
                         <React.Fragment key={ri}>
-                            {row.map((cell, ci) => (
-                                <div
-                                    key={`${ri}-${ci}`}
-                                    className={`
-                                        ${styles.cell} 
-                                        ${cell.value !== null ? styles.filled : ''}
-                                        ${cell.isFixed ? styles.fixed : ''}
-                                        ${cell.value === currentHeadValue && !isCompleted ? styles.lastPlaced : ''}
-                                        ${shakeCell?.row === ri && shakeCell?.col === ci ? styles.invalid : ''}
-                                    `}
-                                    onClick={() => handleCellClick(ri, ci)}
-                                >
-                                    {cell.value}
-                                </div>
-                            ))}
+                            {row.map((cell, ci) => {
+                                const finalValue = startValue + (gridSize * gridSize - 1) * stepValue;
+                                const isGoal = cell.value === finalValue;
+
+                                return (
+                                    <div
+                                        key={`${ri}-${ci}`}
+                                        className={`
+                                                ${styles.cell} 
+                                                ${cell.value !== null ? styles.filled : ''}
+                                                ${cell.isFixed ? styles.fixed : ''}
+                                                ${cell.value === currentHeadValue && !isCompleted ? styles.lastPlaced : ''}
+                                                ${shakeCell?.row === ri && shakeCell?.col === ci ? styles.invalid : ''}
+                                                ${isGoal ? styles.goal : ''}
+                                            `}
+                                        onClick={() => handleCellClick(ri, ci)}
+                                    >
+                                        {cell.value}
+                                    </div>
+                                );
+                            })}
                         </React.Fragment>
                     ))}
                 </div>
