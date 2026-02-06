@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../../hooks/useAuth';
-import { Mail, Lock, ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
+import { Mail, Lock, ChevronLeft, Loader2, AlertCircle } from 'lucide-react';
 import styles from '../../ChronicleBook.module.css';
 
 interface BookLoginProps {
@@ -37,14 +37,7 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess }) => {
 
     return (
         <div className={styles.loginPageContent}>
-            <button
-                className={styles.backBtn}
-                onClick={onBack}
-                data-testid="login-back-btn"
-            >
-                <ArrowLeft size={16} />
-                <span>{t('login.back_to_cover')}</span>
-            </button>
+
 
             <header className={styles.pageHeader}>
                 <h2 className={styles.pageTitle}>{t('login.member_access')}</h2>
@@ -102,6 +95,15 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess }) => {
                     {loading ? <Loader2 className={styles.spinner} /> : t('login.open_journal')}
                 </button>
             </form>
+
+            <button
+                className={styles.backBtn}
+                onClick={onBack}
+                data-testid="login-back-btn"
+            >
+                <ChevronLeft size={16} />
+                <span>{t('common.back')}</span>
+            </button>
         </div>
     );
 };
