@@ -38,5 +38,3 @@ export const GameParticles = ({ id = "tsparticles", options, className }: GamePa
     return null;
 };
 
-// --- Presets ---
-

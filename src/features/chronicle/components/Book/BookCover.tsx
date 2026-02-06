@@ -24,7 +24,7 @@ export const BookCover: React.FC<BookCoverProps> = ({
     return (
         <div className={styles.coverContent}>
             <div className={styles.runeGlow} />
-            <div style={{ position: 'absolute', top: '-25%', left: '-25%', width: '150%', height: '150%', zIndex: 0, pointerEvents: 'none' }}>
+            <div style={{ position: 'absolute', width: '200%', zIndex: 0, pointerEvents: 'none' }}>
                 <GameParticles options={BOOK_MAGIC_OPTIONS} />
             </div>
             <header className={styles.coverHeader}>
@@ -49,6 +49,6 @@ export const BookCover: React.FC<BookCoverProps> = ({
                 </PrimaryButton>
             </div>
 
-        </div>
+        </div >
     );
 };
