@@ -11,20 +11,29 @@ interface BookCoverProps {
     hasProgress?: boolean;
     title?: string;
     subtitle?: string;
+    isActive?: boolean;
 }
 
 export const BookCover: React.FC<BookCoverProps> = ({
     onStart,
     onLogin,
     hasProgress = false,
-    title
+    title,
+    isActive = true
 }) => {
     const { t } = useTranslation();
 
     return (
         <div className={styles.coverContent}>
             <div className={styles.runeGlow} />
-            <div style={{ position: 'absolute', width: '200%', zIndex: 0, pointerEvents: 'none' }}>
+            <div style={{
+                position: 'absolute',
+                width: '200%',
+                zIndex: 0,
+                pointerEvents: 'none',
+                opacity: isActive ? 1 : 0,
+                transition: 'opacity 0.5s ease-out'
+            }}>
                 <GameParticles options={BOOK_MAGIC_OPTIONS} />
             </div>
             <header className={styles.coverHeader}>

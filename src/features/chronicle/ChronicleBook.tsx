@@ -140,6 +140,7 @@ export const ChronicleBook: React.FC = () => {
                 onStart={handleStartNewGame}
                 onLogin={handleGoToLogin}
                 hasProgress={hasAnyProgress}
+                isActive={coverState === 'active'}
             />
         </BookPage>
 
