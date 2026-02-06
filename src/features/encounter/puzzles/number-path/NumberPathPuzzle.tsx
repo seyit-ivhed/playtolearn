@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { type PuzzleData } from '../../../../types/adventure.types';
 import styles from './NumberPathPuzzle.module.css';
 import {
@@ -16,6 +16,8 @@ interface NumberPathPuzzleProps {
 
 export const NumberPathPuzzle: React.FC<NumberPathPuzzleProps> = ({ data, onSolve }) => {
     const { gridSize = 3, startValue = 1, stepValue = 1, preFilledIndices = [] } = data;
+
+    const totalCells = gridSize * gridSize;
 
     const [grid, setGrid] = useState<CellData[][]>(() => {
         const initialGrid: CellData[][] = Array.from({ length: gridSize }, () =>
@@ -36,16 +38,6 @@ export const NumberPathPuzzle: React.FC<NumberPathPuzzleProps> = ({ data, onSolv
     const { currentHeadValue, nextExpectedValue } = useMemo(() => {
         return calculateSequenceState(grid, startValue, stepValue);
     }, [grid, startValue, stepValue]);
-
-    useEffect(() => {
-        const totalCells = gridSize * gridSize;
-        const filledCells = grid.flat().filter(cell => cell.value !== null).length;
-
-        if (filledCells === totalCells && !isCompleted) {
-            setIsCompleted(true);
-            setTimeout(onSolve, 1000);
-        }
-    }, [grid, gridSize, isCompleted, onSolve]);
 
     const triggerShake = (position: Position) => {
         setShakeCell(position);
@@ -91,9 +83,19 @@ export const NumberPathPuzzle: React.FC<NumberPathPuzzleProps> = ({ data, onSolv
             return;
         }
 
+        // Count current filled cells before placing
+        const currentFilledCells = grid.flat().filter(c => c.value !== null).length;
+        const willBeFilledAfter = currentFilledCells + 1;
+
         setGrid(prev => prev.map((r, ri) =>
             ri === row ? r.map((c, ci) => ci === col ? { ...c, value: nextExpectedValue } : c) : r
         ));
+
+        // Check if this placement completes the puzzle
+        if (willBeFilledAfter === totalCells) {
+            setIsCompleted(true);
+            setTimeout(onSolve, 1000);
+        }
     };
 
     const svgPathPoints = useMemo(() => {
