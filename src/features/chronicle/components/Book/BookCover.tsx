@@ -34,13 +34,13 @@ export const BookCover: React.FC<BookCoverProps> = ({
                     {hasProgress ? t('landing.continue_journey') : t('landing.start_game')}
                 </PrimaryButton>
 
-                <button
-                    className={`${styles.bookBtn} ${styles.btnSecondary}`}
+                <PrimaryButton
+                    className={styles.btnSecondary}
                     onClick={onLogin}
                     data-testid="cover-login-btn"
                 >
                     {t('landing.login')}
-                </button>
+                </PrimaryButton>
             </div>
 
         </div>

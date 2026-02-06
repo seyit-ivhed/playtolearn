@@ -165,17 +165,25 @@
 }
 
 .btnSecondary {
-    background: #3e3020;
-    /* Solid dark leather brown */
-    border: 1px solid #D4AF37;
-    color: #FADCA1;
+    background: #2a2015;
+    /* Darker brown, opaque */
+    border: 1px solid #5c4d3c;
+    /* Subtle border */
+    color: #c4b5a3;
+    /* Muted text color */
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    width: 100%;
 }
 
 .btnSecondary:hover {
-    background: rgba(212, 175, 55, 0.2);
-    color: #ffffff;
+    background: #3e3020;
+    /* Slightly lighter brown on hover */
+    color: #FADCA1;
+    /* Brighter text on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Subtle lift */
+    transform: translateY(-1px);
 }
 
 .coverFooter {
