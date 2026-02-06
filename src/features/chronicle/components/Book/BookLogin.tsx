@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../../hooks/useAuth';
 import { Mail, Lock, ChevronLeft, Loader2, AlertCircle } from 'lucide-react';
 import styles from '../../ChronicleBook.module.css';
+import { PrimaryButton } from '../Shared/PrimaryButton';
 
 interface BookLoginProps {
     onBack: () => void;
@@ -86,14 +87,13 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess }) => {
                     </div>
                 )}
 
-                <button
+                <PrimaryButton
                     type="submit"
-                    className={`${styles.bookBtn} ${styles.btnPrimary} ${styles.fullWidth}`}
                     disabled={loading}
                     data-testid="login-submit-btn"
                 >
                     {loading ? <Loader2 className={styles.spinner} /> : t('login.open_journal')}
-                </button>
+                </PrimaryButton>
             </form>
 
             <button

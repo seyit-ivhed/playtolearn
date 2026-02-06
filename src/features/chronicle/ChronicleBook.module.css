@@ -242,9 +242,13 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    align-items: center;
+    /* Center the button */
 }
 
 .inputGroup {
+    width: 100%;
+    /* Ensure inputs still stretch */
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -316,6 +320,10 @@
         width: 90vw;
         height: 80vh;
     }
+}
+
+.fullWidth {
+    width: 100%;
 }
 
 /* Rune Glow Animation */
