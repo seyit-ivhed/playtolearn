@@ -74,13 +74,6 @@
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
-.cell.goal {
-    background: rgba(40, 60, 40, 0.9);
-    border-color: #44ff44;
-    color: #44ff44;
-    box-shadow: 0 0 15px rgba(68, 255, 68, 0.3);
-}
-
 /* Shake animation for invalid moves */
 @keyframes shake {
 
