@@ -33,7 +33,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1rem 1.5rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -47,26 +47,27 @@
 .header-back-button {
     background: transparent;
     border: none;
-    font-size: 2rem;
     cursor: pointer;
-    padding: 0;
+    padding: 4px;
     margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
     z-index: 100;
     outline: none;
     box-shadow: none;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .header-back-button:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
+    color: #fff;
 }
 
 .header-right-spacer {
-    width: 3rem;
-    /* Same width as button area for centering */
+    width: 40px;
+    /* Match the 32px icon + 4px padding on each side */
 }
 
 .map-title {

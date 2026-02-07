@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { BookOpen } from 'lucide-react';
 
 interface AdventureHeaderProps {
     adventureId: string;
@@ -18,7 +19,7 @@ export const AdventureHeader: React.FC<AdventureHeaderProps> = ({ adventureId, a
                 title={t('common.back')}
                 data-testid="back-to-chronicle"
             >
-                📖
+                <BookOpen size={32} />
             </button>
             <h1 className="map-title" data-testid="map-title">
                 {t(`adventures.${adventureId}.title`, adventureTitle)}
