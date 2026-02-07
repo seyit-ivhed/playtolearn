@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star, ChevronDown } from 'lucide-react';
-import { FormCloseButton } from '../../../components/ui/FormCloseButton';
-import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { getDifficultyExamples } from '../../../utils/math/difficulty-examples';
-import './DifficultySelectionModal.css';
+import { FormCloseButton } from '@/components/ui/FormCloseButton';
+import { PrimaryButton } from '@/components/ui/PrimaryButton';
+import { getDifficultyExamples } from '@/utils/math/difficulty-examples';
+import styles from './DifficultySelectionModal.module.css';
 
 interface DifficultySelectionModalProps {
     isOpen: boolean;
@@ -65,43 +65,43 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
     const displayDifficulty = hoveredDifficulty ?? selectedDifficulty;
 
     return (
-        <div className="difficulty-modal-overlay" data-testid="difficulty-modal">
-            <div className="difficulty-modal-content">
+        <div className={styles.modalOverlay} data-testid="difficulty-modal">
+            <div className={styles.modalContent}>
                 <FormCloseButton onClick={onClose} size={32} />
 
-                <h2 className="modal-title">
+                <h2 className={styles.modalTitle}>
                     {title}
                 </h2>
 
-                <div className="difficulty-selection-container">
+                <div className={styles.selectionContainer}>
                     <div
-                        className="custom-dropdown"
+                        className={styles.customDropdown}
                         ref={dropdownRef}
                         onMouseEnter={() => !isDropdownOpen && setHoveredDifficulty(selectedDifficulty)}
                         onMouseLeave={() => !isDropdownOpen && setHoveredDifficulty(null)}
                         data-testid="difficulty-dropdown"
                     >
                         <div
-                            className={`dropdown-header ${isDropdownOpen ? 'open' : ''}`}
+                            className={`${styles.dropdownHeader} ${isDropdownOpen ? styles.dropdownHeaderOpen : ''}`}
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         >
-                            <div className="selected-value">
-                                <span className="difficulty-name">{getDifficultyLabel(selectedDifficulty)}</span>
-                                <div className="stars-mini">
+                            <div className={styles.selectedValue}>
+                                <span className={styles.difficultyName}>{getDifficultyLabel(selectedDifficulty)}</span>
+                                <div className={styles.starsMini}>
                                     {[...Array(selectedDifficulty)].map((_, i) => (
                                         <Star key={i} size={24} fill="#ffa502" color="#ffa502" />
                                     ))}
                                 </div>
                             </div>
-                            <ChevronDown size={32} className={`arrow ${isDropdownOpen ? 'rotated' : ''}`} />
+                            <ChevronDown size={32} className={`${styles.arrow} ${isDropdownOpen ? styles.arrowRotated : ''}`} />
                         </div>
 
                         {isDropdownOpen && (
-                            <div className="dropdown-list">
+                            <div className={styles.dropdownList}>
                                 {difficulties.map((level) => (
                                     <div
                                         key={level}
-                                        className={`dropdown-item ${selectedDifficulty === level ? 'selected' : ''}`}
+                                        className={`${styles.dropdownItem} ${selectedDifficulty === level ? styles.dropdownItemSelected : ''}`}
                                         onClick={() => {
                                             setSelectedDifficulty(level);
                                             setIsDropdownOpen(false);
@@ -111,9 +111,9 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                                         onMouseLeave={() => setHoveredDifficulty(null)}
                                         data-testid={`difficulty-dropdown-option-${level}`}
                                     >
-                                        <div className="item-content">
-                                            <span className="item-label">{getDifficultyLabel(level)}</span>
-                                            <div className="item-stars">
+                                        <div className={styles.itemContent}>
+                                            <span className={styles.itemLabel}>{getDifficultyLabel(level)}</span>
+                                            <div className={styles.itemStars}>
                                                 {[...Array(level)].map((_, i) => (
                                                     <Star key={i} size={20} fill="#ffa502" color="#ffa502" />
                                                 ))}
@@ -125,17 +125,17 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                         )}
                     </div>
 
-                    <div className="difficulty-explanation-box">
-                        <div className="explanation-content">
-                            <div className="explanation-left">
-                                <p className="explanation-text">
+                    <div className={styles.explanationBox}>
+                        <div className={styles.explanationContent}>
+                            <div>
+                                <p className={styles.explanationText}>
                                     {getDifficultyDescription(displayDifficulty)}
                                 </p>
                             </div>
-                            <div className="explanation-right">
-                                <div className="examples-container">
+                            <div className={styles.explanationRight}>
+                                <div className={styles.examplesContainer}>
                                     {getDifficultyExamples(displayDifficulty).map((example, index) => (
-                                        <div key={index} className="example-tag">
+                                        <div key={index} className={styles.exampleTag}>
                                             {example}
                                         </div>
                                     ))}
@@ -145,7 +145,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                     </div>
                 </div>
 
-                <div className="modal-footer">
+                <div className={styles.modalFooter}>
                     <PrimaryButton
                         data-testid="difficulty-start-btn"
                         onClick={() => onStart(selectedDifficulty)}

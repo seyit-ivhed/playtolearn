@@ -1,4 +1,4 @@
-.form-close-button {
+.formCloseButton {
     position: absolute;
     top: 16px;
     right: 16px;
@@ -17,7 +17,7 @@
     color: var(--color-chronicle-text, #4a3721);
 }
 
-.form-close-button:hover {
+.formCloseButton:hover {
     /* Style Guide Alignment: Full opacity and scale up */
     opacity: 1;
     transform: scale(1.1);
@@ -26,17 +26,17 @@
     color: #ffd700;
 }
 
-.form-close-button:active {
+.formCloseButton:active {
     transform: scale(0.95);
 }
 
-.form-close-button:focus-visible {
+.formCloseButton:focus-visible {
     /* Subtle focus indicator for accessibility, preserving elegance */
     outline: 2px solid var(--color-accent-primary, #ffa502);
     outline-offset: 2px;
     border-radius: 4px;
 }
 
-.form-close-button:focus:not(:focus-visible) {
+.formCloseButton:focus:not(:focus-visible) {
     outline: none;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import './FormCloseButton.css';
+import styles from './FormCloseButton.module.css';
 
 interface FormCloseButtonProps {
     onClick: () => void;
@@ -19,7 +19,7 @@ export const FormCloseButton: React.FC<FormCloseButtonProps> = ({
 }) => {
     return (
         <button
-            className={`form-close-button ${className}`}
+            className={`${styles.formCloseButton} ${className}`}
             onClick={onClick}
             aria-label={ariaLabel}
         >
