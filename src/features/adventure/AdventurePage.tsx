@@ -129,14 +129,7 @@ const AdventurePage = () => {
         return activeEncounterDifficulty;
     };
 
-    const getCurrentStars = (encounter: Encounter | null) => {
-        if (!encounter || !adventureId) {
-            return 0;
-        }
-        const nodeStep = encounters.findIndex(e => e.id === encounter.id) + 1;
-        const encounterKey = `${adventureId}_${nodeStep}`;
-        return encounterResults[encounterKey]?.stars || 0;
-    };
+
 
     return (
         <div className="adventure-page custom-scrollbar">
@@ -160,7 +153,6 @@ const AdventurePage = () => {
                 onStart={handleStartEncounter}
                 title={(selectedEncounter ? t(`adventures.${adventureId}.nodes.${selectedEncounter.id}.label`, selectedEncounter.label || '') : '') as string}
                 initialDifficulty={getInitialDifficulty()}
-                currentStars={getCurrentStars(selectedEncounter)}
             />
         </div>
     );
