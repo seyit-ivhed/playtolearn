@@ -212,6 +212,8 @@
     padding: 20px;
     text-align: left;
     border: 1px solid rgba(44, 30, 17, 0.1);
+    min-height: 200px;
+    /* Prevent resizing on hover */
 }
 
 .explanation-content {
