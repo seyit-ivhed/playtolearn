@@ -93,7 +93,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                                     ))}
                                 </div>
                             </div>
-                            <ChevronDown size={20} className={`arrow ${isDropdownOpen ? 'rotated' : ''}`} />
+                            <ChevronDown size={32} className={`arrow ${isDropdownOpen ? 'rotated' : ''}`} />
                         </div>
 
                         {isDropdownOpen && (
