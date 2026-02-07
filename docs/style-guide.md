@@ -14,7 +14,8 @@ We use CSS variables for all coloring defined in `src/styles/global.css`.
 
 ### Backgrounds
 - **World Background (Void/Sky):** `var(--color-bg-primary)` / `#1a0b2e` (Deep Indigo)
-- **Panel Background (Stone/Night):** `var(--color-bg-secondary)` / `#2d1b4e` (Dark Mystic Purple)
+- **Panel Background (Main UI):** `var(--color-chronicle-bg)` / `#e9dcc9` (Tactile Parchment)
+- **Secondary Panel (Dark):** `var(--color-bg-secondary)` / `#2d1b4e` (Reserved for deep overlays or combat UI)
 - **Overlay Background:** `var(--color-bg-overlay)` / `rgba(0, 0, 0, 0.85)`
 
 ### Chronicle & Book Theme
@@ -68,12 +69,13 @@ We use CSS variables for all coloring defined in `src/styles/global.css`.
 - **Interaction:** Subtle scaling and color shift.
 
 ### Cards ("Spell Cards")
-- **Background:** Dark semi-transparent purple or Parchment texture.
+- **Background:** Parchment texture (`var(--color-chronicle-bg)`) for a consistent book-like feel. Dark purple may be used for secondary content.
 - **Border Radius:** `var(--radius-lg)` (16px).
 - **Shadow:** `var(--shadow-md)`.
 
 ### Modals
 - **Close Button:** Simple 'X', transparent background, accent color gold.
+- **Background:** Default to **Parchment** (`var(--color-chronicle-bg)`) for a tactile, book-like feel. Text should be **Dark Ink** (`var(--color-chronicle-text-dark)`).
 
 ## 5. Visual Effects & Particles
 

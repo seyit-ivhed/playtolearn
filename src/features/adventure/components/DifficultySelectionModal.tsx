@@ -75,7 +75,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                     {currentStars !== undefined && currentStars > 0 && (
                         <div className="current-stars-display" style={{ display: 'inline-flex', marginLeft: '10px', verticalAlign: 'middle' }}>
                             {[...Array(currentStars)].map((_, i) => (
-                                <Star key={`current-${i}`} size={20} fill="#FFD700" color="#FFD700" />
+                                <Star key={`current-${i}`} size={20} fill="#ffa502" color="#ffa502" />
                             ))}
                         </div>
                     )}
@@ -97,7 +97,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                                 <span className="difficulty-name">{getDifficultyLabel(selectedDifficulty)}</span>
                                 <div className="stars-mini">
                                     {[...Array(selectedDifficulty)].map((_, i) => (
-                                        <Star key={i} size={24} fill="#FFD700" color="#FFD700" />
+                                        <Star key={i} size={24} fill="#ffa502" color="#ffa502" />
                                     ))}
                                 </div>
                             </div>
@@ -123,7 +123,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                                             <span className="item-label">{getDifficultyLabel(level)}</span>
                                             <div className="item-stars">
                                                 {[...Array(level)].map((_, i) => (
-                                                    <Star key={i} size={20} fill="#FFD700" color="#FFD700" />
+                                                    <Star key={i} size={20} fill="#ffa502" color="#ffa502" />
                                                 ))}
                                             </div>
                                         </div>
