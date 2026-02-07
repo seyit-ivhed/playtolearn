@@ -69,7 +69,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
     return (
         <div className="difficulty-modal-overlay" data-testid="difficulty-modal">
             <div className="difficulty-modal-content">
-                <FormCloseButton onClick={onClose} />
+                <FormCloseButton onClick={onClose} size={32} />
 
                 <h2 className="modal-title">
                     {title}
