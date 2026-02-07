@@ -614,5 +614,10 @@
         "password_placeholder": "••••••••",
         "open_journal": "Login",
         "invalid_credentials": "Invalid email or password"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": "Language",
+        "debug_console": "Open Debug Console"
     }
 }

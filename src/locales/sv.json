@@ -614,5 +614,10 @@
         "password_placeholder": "••••••••",
         "open_journal": "Logga in",
         "invalid_credentials": "Ogiltig e-post eller lösenord"
+    },
+    "settings": {
+        "title": "Inställningar",
+        "language": "Språk",
+        "debug_console": "Öppna felsökningskonsolen"
     }
 }

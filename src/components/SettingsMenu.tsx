@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Settings } from 'lucide-react';
 import { usePlayerStore } from '../stores/player.store';
 import { DebugConsole } from './DebugConsole';
-import '../styles/settings.css';
+import { FormCloseButton } from './ui/FormCloseButton';
+import styles from './SettingsMenu.module.css';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,8 +11,8 @@ const SettingsMenu: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDebugOpen, setIsDebugOpen] = useState(false);
     const { language, setLanguage } = usePlayerStore();
-    const { i18n } = useTranslation();
-    const menuRef = useRef<HTMLDivElement>(null);
+    const { i18n, t } = useTranslation();
+    const modalRef = useRef<HTMLDivElement>(null);
 
     // Sync language on mount/change
     useEffect(() => {
@@ -19,10 +21,10 @@ const SettingsMenu: React.FC = () => {
         }
     }, [language, i18n]);
 
-    // Close menu when clicking outside
+    // Close menu when clicking outside modal content
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            if (isOpen && modalRef.current && !modalRef.current.contains(event.target as Node)) {
                 setIsOpen(false);
             }
         };
@@ -30,73 +32,61 @@ const SettingsMenu: React.FC = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []);
+    }, [isOpen]);
 
     const toggleMenu = () => setIsOpen(!isOpen);
-
-
 
     const handleLanguageChange = (lang: 'en' | 'sv') => {
         setLanguage(lang);
         i18n.changeLanguage(lang);
     };
 
-
-
-
     return (
-        <div className="settings-container" ref={menuRef}>
+        <div className={styles.settingsContainer}>
             <button
-                className={`settings-button ${isOpen ? 'active' : ''}`}
+                className={styles.settingsTrigger}
                 onClick={toggleMenu}
-                aria-label="Settings"
+                aria-label={t('settings.title', 'Settings')}
                 data-testid="settings-button"
             >
-                ⚙️
+                <Settings size={32} />
             </button>
 
             {isOpen && (
-                <div className="settings-dropdown" data-testid="settings-menu">
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent} ref={modalRef} data-testid="settings-menu">
+                        <FormCloseButton onClick={() => setIsOpen(false)} size={32} />
 
+                        <h2 className={styles.modalTitle}>
+                            {t('settings.title', 'Settings')}
+                        </h2>
 
-                    <div className="settings-section">
-                        <h4>Language</h4>
-                        <div className="language-toggle">
+                        <div className={styles.settingsSection}>
+                            <h4 className={styles.sectionTitle}>{t('settings.language', 'Language')}</h4>
+                            <div className={styles.languageToggle}>
+                                <button
+                                    className={`${styles.langBtn} ${language === 'en' ? styles.langBtnActive : ''}`}
+                                    onClick={() => handleLanguageChange('en')}
+                                >
+                                    🇬🇧 EN
+                                </button>
+                                <button
+                                    className={`${styles.langBtn} ${language === 'sv' ? styles.langBtnActive : ''}`}
+                                    onClick={() => handleLanguageChange('sv')}
+                                >
+                                    🇸🇪 SV
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className={styles.settingsSection}>
                             <button
-                                className={`lang-btn ${language === 'en' ? 'active' : ''}`}
-                                onClick={() => handleLanguageChange('en')}
+                                className={styles.debugButton}
+                                onClick={() => { setIsDebugOpen(true); setIsOpen(false); }}
                             >
-                                🇬🇧 EN
-                            </button>
-                            <button
-                                className={`lang-btn ${language === 'sv' ? 'active' : ''}`}
-                                onClick={() => handleLanguageChange('sv')}
-                            >
-                                🇸🇪 SV
+                                🛠️ {t('settings.debug_console', 'Open Debug Console')}
                             </button>
                         </div>
-                    </div>
-
-
-                    <div className="settings-section">
-                        <button
-                            className="debug-button"
-                            onClick={() => { setIsDebugOpen(true); setIsOpen(false); }}
-                            style={{
-                                width: '100%',
-                                padding: '0.75rem',
-                                backgroundColor: '#1e293b',
-                                color: '#94a3b8',
-                                border: '1px solid #334155',
-                                borderRadius: '0.5rem',
-                                cursor: 'pointer',
-                                fontSize: '0.9rem',
-                                fontWeight: '600',
-                                transition: 'all 0.2s'
-                            }}
-                        >
-                            🛠️ Open Debug Console
-                        </button>
                     </div>
                 </div>
             )}
