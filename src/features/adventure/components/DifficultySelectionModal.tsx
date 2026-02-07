@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star, ChevronDown } from 'lucide-react';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
+import { PrimaryButton } from '../../chronicle/components/Shared/PrimaryButton';
 import { getDifficultyExamples } from '../../../utils/math/difficulty-examples';
 import './DifficultySelectionModal.css';
 
@@ -154,9 +155,12 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                 </div>
 
                 <div className="modal-footer">
-                    <button className="start-button" data-testid="difficulty-start-btn" onClick={() => onStart(selectedDifficulty)}>
+                    <PrimaryButton
+                        data-testid="difficulty-start-btn"
+                        onClick={() => onStart(selectedDifficulty)}
+                    >
                         {t('difficulty.start')}
-                    </button>
+                    </PrimaryButton>
                 </div>
             </div>
         </div>

@@ -260,35 +260,3 @@
     justify-content: center;
     margin-top: 8px;
 }
-
-/* Primary Chronicle Button Style for Start */
-.start-button {
-    background: linear-gradient(to bottom, #FADCA1 0%, #D4AF37 100%);
-    color: #2c1e11;
-    /* Dark Brown */
-    border: 1px solid #8a702b;
-    border-radius: var(--radius-lg, 16px);
-    padding: 16px 48px;
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-.start-button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-}
-
-.start-button:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
