@@ -13,7 +13,7 @@ export const CONFIG: MathEngineConfig = {
     level2: {
         addition: { enabled: true, left: { min: 5, max: 20 }, right: { min: 1, max: 10 } },
         subtraction: { enabled: true, left: { min: 10, max: 20 }, right: { min: 5, max: 10 } },
-        multiplication: { enabled: true, left: { min: 1, max: 10 }, right: { min: 2, max: 3 } }, // Intro to doubling
+        multiplication: { enabled: true, left: { min: 2, max: 5 }, right: { min: 1, max: 3 } }, // Intro to doubling
     },
     level3: {
         addition: { enabled: true, left: { min: 10, max: 50 }, right: { min: 10, max: 50 } },

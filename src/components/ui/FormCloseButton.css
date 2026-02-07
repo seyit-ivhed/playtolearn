@@ -13,9 +13,8 @@
     transition: all 0.2s ease;
     z-index: 100;
 
-    /* Style Guide Alignment: Accent color (Gold) with partial opacity */
-    color: var(--color-accent-primary, #ffa502);
-    opacity: 0.7;
+    /* Style Guide Alignment: Match Chronicle Text color (Dark Brown) */
+    color: var(--color-chronicle-text, #4a3721);
 }
 
 .form-close-button:hover {

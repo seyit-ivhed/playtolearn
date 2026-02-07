@@ -74,7 +74,7 @@ We use CSS variables for all coloring defined in `src/styles/global.css`.
 - **Shadow:** `var(--shadow-md)`.
 
 ### Modals
-- **Close Button:** Simple 'X', transparent background, accent color gold.
+- **Close Button:** Simple 'X', transparent background, color matching **Dark Ink** (`var(--color-chronicle-text)`).
 - **Background:** Default to **Parchment** (`var(--color-chronicle-bg)`) for a tactile, book-like feel. Text should be **Dark Ink** (`var(--color-chronicle-text-dark)`).
 
 ## 5. Visual Effects & Particles
