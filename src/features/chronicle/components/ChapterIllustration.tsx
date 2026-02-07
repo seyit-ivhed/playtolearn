@@ -22,11 +22,7 @@ export const ChapterIllustration: React.FC<ChapterIllustrationProps> = ({
     const { t } = useTranslation();
 
     return (
-        <motion.div
-            className="illustration-container"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
-        >
+        <div className="illustration-container">
             {illustration ? (
                 <img
                     src={illustration}
@@ -57,6 +53,6 @@ export const ChapterIllustration: React.FC<ChapterIllustrationProps> = ({
                     </motion.div>
                 </div>
             )}
-        </motion.div>
+        </div>
     );
 };
