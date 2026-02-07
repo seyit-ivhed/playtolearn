@@ -59,15 +59,15 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     illustration={illustration}
                     adventureTitle={adventure.title || ''}
                     isLocked={isLocked}
+                    stars={stars}
+                    isCompleted={isCompleted}
+                    isJustCompleted={isJustCompleted}
                 />
 
                 <ChapterStory
                     adventureId={adventure.id}
                     adventureStoryHook={adventure.storyHook}
                     isLocked={isLocked}
-                    isCompleted={isCompleted}
-                    isJustCompleted={isJustCompleted}
-                    stars={stars}
                 />
             </div>
 
