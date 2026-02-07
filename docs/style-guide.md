@@ -6,83 +6,96 @@
 **Target Audience:** Children (Primary/Elementary level).
 **Core Principle:** "Every math problem solved is a magical spell cast."
 
-The UI should feel tactile and magical, moving away from the sleek, digital sci-fi aesthetic of the previous iteration.
+The UI should feel tactile and magical, utilizing rich textures (parchment, leather, stone) and dynamic lighting effects (glows, particles).
 
 ## 2. Color Palette ("The Realm")
 
-We use CSS variables for all coloring. Existing code uses these variable names, so we re-map them to fantasy colors.
+We use CSS variables for all coloring defined in `src/styles/global.css`.
 
 ### Backgrounds
-- **Primary (Night Sky/Void):** `#1a0b2e` (Deep Indigo) - *Was Space Black*
-- **Secondary (Panels/Stone):** `#2d1b4e` (Dark Mystic Purple) - *Was Dark Blue*
-- **Tertiary (Paper/Parchment):** `#f0e6d2` (Warm Parchment) - *Used for text containers*
+- **World Background (Void/Sky):** `var(--color-bg-primary)` / `#1a0b2e` (Deep Indigo)
+- **Panel Background (Stone/Night):** `var(--color-bg-secondary)` / `#2d1b4e` (Dark Mystic Purple)
+- **Overlay Background:** `var(--color-bg-overlay)` / `rgba(0, 0, 0, 0.85)`
+
+### Chronicle & Book Theme
+- **Parchment Page:** `var(--color-chronicle-bg)` / `#e9dcc9`
+- **Dark Leather Cover:** `#3e3020` (Internal hex)
+- **Ink Text:** `var(--color-chronicle-text)` / `#4a3721`
+- **Dark Ink/Header:** `var(--color-chronicle-text-dark)` / `#2c1e11`
+- **Gold Accent:** `var(--color-chronicle-accent)` / `#8b6532`
+- **Wax Seal:** `var(--color-chronicle-seal)` / `#8b0000`
 
 ### Functional Colors
-- **Attack / Danger:** `#ff4757` (Dragon Red)
-- **Defense / Shield:** `#2ed573` (Emerald Guard) or `#1e90ff` (Mana Blue)
-- **Magic / Special:** `#a55eea` (Wizard Purple)
+- **Action/Attack (Danger):** `var(--color-danger)` / `#ff4757` (Dragon Red)
+- **Success/Defense (Emerald):** `var(--color-success)` / `#2ed573` (Emerald Guard)
+- **Magic/Info (Mana):** `var(--color-info)` / `#1e90ff` (Mana Blue)
+- **Warning/Treasure (Gold):** `var(--color-warning)` / `#ffa502`
 
 ### Text
-- **Primary (Light):** `#ffffff` (On dark backgrounds)
-- **Primary (Dark):** `#2f3542` (On parchment backgrounds)
-- **Accent:** `#ffd32a` (Gold Text)
+- **Primary (Light):** `var(--color-text-primary)` / `#f1f2f6` (On dark backgrounds)
+- **Secondary (Dim):** `var(--color-text-secondary)` / `#ced6e0`
+- **Inverse (Dark):** `var(--color-text-inverse)` / `#ffffff` (On buttons)
 
 ## 3. Typography
 
-- **Headings (Titles):** `'Fredoka', sans-serif` or `'Cinzel', serif`
-  - *Must look adventurous but readable.*
-- **Body (Content):** `'Nunito', sans-serif` or `'Quicksand', sans-serif`
-  - *Rounded, friendly, easy to read for kids.*
-- **Numbers (Math):** `'JetBrains Mono', monospace`
-  - *Clear distinction for math problems.*
+- **Headings (Titles):** `var(--font-display)`
+  - *Families:* 'Fredoka', 'Cinzel', sans-serif.
+  - *Usage:* Major titles often use 'Cinzel' for a legendary feel, while UI headers use 'Fredoka' for readability.
+- **Body (Content):** `var(--font-body)`
+  - *Families:* 'Nunito', sans-serif.
+  - *Usage:* All standard reading text. Readable, rounded, and friendly.
 
 ## 4. UI Components
 
-#### Navigation Buttons (Chronicle)
-For page navigation in the Chronicle, use clean, icon-only buttons (e.g., Lucide Chevrons) without circular borders or backgrounds to maintain an elegant, book-like feel.
-- **Color:** Inherit theme brown (`#4a3721`) or accent gold (`#ffa502`) on hover.
-- **Interaction:** Subtle scaling and color shift on hover/tap.
+### Buttons
+**Primary Chronicle Button (Gold/Magical):**
+- **Background:** Linear Gradient (`#FADCA1` to `#D4AF37`)
+- **Text:** Dark Brown (`#2c1e11`)
+- **Typography:** Uppercase, Bold, Letter-spacing `0.1em`
+- **Border:** `#8a702b`
+- **Shadow:** `0 4px 12px rgba(0, 0, 0, 0.4)`
+- **Hover:** Brightness `1.1`, Transform `translateY(-2px)`
+
+**Secondary Chronicle Button (Wood/Leather):**
+- **Background:** Dark Brown (`#2a2015`)
+- **Text:** Muted Beige (`#c4b5a3`) -> Gold on hover (`#FADCA1`)
+- **Border:** `#5c4d3c`
+- **Hover:** Lighter Brown (`#3e3020`), Transform `translateY(-1px)`
+
+### Navigation (Chronicle)
+- **Style:** Clean, icon-only buttons (e.g., Chevrons).
+- **Color:** Inherit theme brown or accent gold.
+- **Interaction:** Subtle scaling and color shift.
 
 ### Cards ("Spell Cards")
-Containers for Companions or Missions.
 - **Background:** Dark semi-transparent purple or Parchment texture.
-- **Border:** Fancy corner radius (16px) or golden borders.
-- **Effects:** Slight tilt or lift on hover.
+- **Border Radius:** `var(--radius-lg)` (16px).
+- **Shadow:** `var(--shadow-md)`.
 
-### Icons
-Use emoji until custom SVG assets are available.
-- **Attack:** ⚔️ (Swords)
-- **Defense:** 🛡️ (Shield)
-- **Magic/Special:** ✨ (Sparkles), ⚡ (Bolt), ❤️ (Heart)
-- **Close/Cancel:** ✖️ (Simple X icon)
-
-### Modal Close Buttons
-To maintain a clean, immersive look, modal close buttons in the top-right should be:
-- **Icon:** Simple `X` or `X` icon (e.g., Lucide `X`).
-- **Style:** Transparent background, no border.
-- **Color:** Accent color (Gold) with partial opacity (e.g., 0.7).
-- **Hover:** Full opacity, slight scale up (1.1x), and/or color shift.
+### Modals
+- **Close Button:** Simple 'X', transparent background, accent color gold.
 
 ## 5. Visual Effects & Particles
 
 ### Particle System (`tsparticles`)
-We use `tsparticles` for rich visual effects like confetti, magical sparkles, and ambient backgrounds.
-
-**Guidelines:**
-- **Library:** `@tsparticles/react` with the full `tsparticles` bundle (for emitters).
-- **Component:** Use the reusable `GameParticles` component.
+- **Library:** `@tsparticles/react`
+- **Component:** `GameParticles`
 - **Usage:**
-  - **High Intensity:** Level ups, boss defeats, major rewards (e.g., Confetti).
-  - **Low Intensity:** Ambient magic, background stars (e.g., Subtle floaters).
-- **Performance:** Ensure particles are destroyed after use or kept to a reasonable count (<200) for mobile performance.
+  - **High Intensity:** Level ups, boss defeats (Confetti).
+  - **Low Intensity:** Ambient magic, cover page sparkles (Subtle floaters).
+
+### Animations
+- **Book Opening:** 3D perspective transform (`preserve-3d`, `rotateY`).
+- **Rune Glow:** Radial gradient pulse animation (`rgba(255, 215, 0, 0.6)`).
 
 ## 6. CSS Variable Mapping
-Use this reference when creating new components to ensure they inherit the theme.
+Refer to `src/styles/global.css` for the source of truth.
 
 | CSS Variable | Fantasy Meaning | Hex Code |
 | :--- | :--- | :--- |
-| `--color-bg-primary` | World Background (Indigo) | `#1a0b2e` |
-| `--color-bg-secondary` | Panel Background (Dark Purple) | `#2d1b4e` |
-| `--color-accent-primary` | Main Highlight (Gold) | `#ffa502` |
-| `--color-accent-secondary` | Action/Attack (Red) | `#ff4757` |
-| `--color-text-primary` | Main Text (White/Off-white) | `#f1f2f6` |
+| `--color-bg-primary` | Void/Sky | `#1a0b2e` |
+| `--color-bg-secondary` | Mystic Stone | `#2d1b4e` |
+| `--color-chronicle-bg` | Parchment | `#e9dcc9` |
+| `--color-chronicle-text` | Old Ink | `#4a3721` |
+| `--color-brand-accent` | Treasure Gold | `#ffa502` |
+| `--color-danger` | Dragon Red | `#ff4757` |
