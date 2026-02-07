@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
     generateProblem,
     validateAnswer,
@@ -117,6 +117,14 @@ describe('Math Generator Functionality', () => {
     });
 
     describe('Error Handling', () => {
+        beforeEach(() => {
+            vi.spyOn(console, 'error').mockImplementation(() => { });
+        });
+
+        afterEach(() => {
+            vi.restoreAllMocks();
+        });
+
         it('should throw error if puzzle type is missing', () => {
             // @ts-expect-error - Testing invalid input
             expect(() => generatePuzzleData(null, 1)).toThrow('Puzzle type is required');
@@ -130,6 +138,11 @@ describe('Math Generator Functionality', () => {
         it('should throw error for unsupported puzzle type', () => {
             // @ts-expect-error - Testing invalid input
             expect(() => generatePuzzleData('INVALID_TYPE', 1)).toThrow('Unsupported puzzle type: INVALID_TYPE');
+        });
+
+        it('should throw error for unsupported math operation', () => {
+            // @ts-expect-error - Testing invalid input
+            expect(() => generateProblem('INVALID_OP', 1)).toThrow('Unsupported math operation: INVALID_OP');
         });
     });
 });
