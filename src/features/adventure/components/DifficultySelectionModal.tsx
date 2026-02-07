@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star, ChevronDown } from 'lucide-react';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
-import { PrimaryButton } from '../../chronicle/components/Shared/PrimaryButton';
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { getDifficultyExamples } from '../../../utils/math/difficulty-examples';
 import './DifficultySelectionModal.css';
 

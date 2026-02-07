@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../../hooks/useAuth';
 import { Mail, Lock, ChevronLeft, Loader2, AlertCircle } from 'lucide-react';
 import styles from '../../ChronicleBook.module.css';
-import { PrimaryButton } from '../Shared/PrimaryButton';
+import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 
 interface BookLoginProps {
     onBack: () => void;

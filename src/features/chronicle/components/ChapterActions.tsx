@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { PrimaryButton } from './Shared/PrimaryButton';
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 
 interface ChapterActionsProps {
     adventureId: string;
