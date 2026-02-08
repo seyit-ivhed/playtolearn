@@ -53,6 +53,7 @@
     flex-direction: column;
     align-items: center;
     gap: 3rem;
+    min-height: calc(100vh - 4rem);
 }
 
 .puzzleInstruction {
@@ -75,10 +76,11 @@
 .platesContainer {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 250px;
     width: 100%;
-    padding-top: 400px;
+    margin-top: auto;
+    margin-bottom: 2rem;
     position: relative;
     z-index: 5;
 }
