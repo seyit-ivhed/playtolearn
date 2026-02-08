@@ -49,34 +49,6 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
 
     return (
         <div className={styles.layout}>
-            <AnimatePresence>
-                {isSolved && (
-                    <motion.div
-                        className={styles.successOverlay}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        <motion.div
-                            className={styles.successMessage}
-                            initial={{ scale: 0.5, y: 20, opacity: 0 }}
-                            animate={{
-                                scale: [0.5, 1.2, 1],
-                                y: 0,
-                                opacity: 1
-                            }}
-                            transition={{
-                                duration: 0.5,
-                                times: [0, 0.6, 1],
-                                ease: "easeOut"
-                            }}
-                        >
-                            {t('puzzle.success', 'Success! ✨')}
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
             <div className={styles.boardContent}>
                 {/* Canteen Visual */}
                 <div className={styles.canteenWrapper}>
@@ -89,7 +61,7 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
                         <div className={styles.canteenNeck} />
                         <div className={styles.canteenBody}>
                             <motion.div
-                                className={styles.liquid}
+                                className={`${styles.liquid} ${isSolved && !isOverfilled ? styles.solved : ''}`}
                                 initial={{ height: 0 }}
                                 animate={{ height: `${progress}%` }}
                                 transition={{ type: 'spring', damping: 15 }}
@@ -164,14 +136,20 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
                 )}
             </AnimatePresence>
 
-            {/* Reset Button */}
+            {/* Reset Button or Success Message */}
             <div className={styles.controls}>
-                <PrimaryButton
-                    onClick={handleReset}
-                    disabled={isSolved}
-                >
-                    {t('common.start_over', 'Start Over')}
-                </PrimaryButton>
+                {isSolved ? (
+                    <div className={styles.successMessage}>
+                        {t('puzzle.success', 'Success! ✨')}
+                    </div>
+                ) : (
+                    <PrimaryButton
+                        onClick={handleReset}
+                        disabled={isSolved}
+                    >
+                        {t('common.start_over', 'Start Over')}
+                    </PrimaryButton>
+                )}
             </div>
         </div>
     );

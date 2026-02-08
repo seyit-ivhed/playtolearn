@@ -310,29 +310,41 @@
 
 .controls {
     margin-top: 2rem;
-}
-
-.successOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    min-height: 48px;
+    /* Maintain height to prevent layout shift */
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(2px);
-    z-index: 1000;
-    color: var(--color-chronicle-text-dark);
-    font-family: var(--font-display);
-    pointer-events: none;
 }
 
 .successMessage {
-    font-size: 4rem;
+    font-size: 2rem;
     font-weight: 800;
-    text-shadow: 0 4px 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(139, 101, 50, 0.4);
-    letter-spacing: 0.1em;
+    color: #10b981;
+    /* Success green */
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+    font-family: var(--font-display);
+    animation: successPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes successPop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.liquid.solved {
+    background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
+    box-shadow: 0 -5px 10px rgba(52, 211, 153, 0.3);
+}
+
+.liquid.solved .waves {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%2310b981' opacity='0.4'/%3E%3C/svg%3E");
+    background-size: 50% 100%;
 }
