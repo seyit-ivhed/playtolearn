@@ -311,3 +311,28 @@
 .controls {
     margin-top: 2rem;
 }
+
+.successOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    color: var(--color-chronicle-text-dark);
+    font-family: var(--font-display);
+    pointer-events: none;
+}
+
+.successMessage {
+    font-size: 4rem;
+    font-weight: 800;
+    text-shadow: 0 4px 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(139, 101, 50, 0.4);
+    letter-spacing: 0.1em;
+}

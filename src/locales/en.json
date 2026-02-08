@@ -337,7 +337,6 @@
             "guardian_tribute": {
                 "description": "Distribute the gems among the statues",
                 "offer": "Offer Tribute",
-                "success": "Success! ✨",
                 "gems_remaining": "You still have gems to distribute.",
                 "constraint": {
                     "exact": "{{value}}",
@@ -347,14 +346,12 @@
                     "halve": "Half of {{symbol}}",
                     "comparison": "{{operator}} than {{symbol}}"
                 }
-            },
-            "balance": {
-                "success": "Success! ✨"
             }
         }
     },
     "puzzle": {
         "reset": "Reset",
+        "success": "Success! ✨",
         "sequence": {
             "instruction": "Connect the stars in order!"
         },

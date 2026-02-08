@@ -35,7 +35,9 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
 
         if (isPuzzleSolved(nextSum, target) && !isSolved) {
             setIsSolved(true);
-            onSolve();
+            setTimeout(() => {
+                onSolve();
+            }, 2000);
         }
     };
 
@@ -47,6 +49,34 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
 
     return (
         <div className={styles.layout}>
+            <AnimatePresence>
+                {isSolved && (
+                    <motion.div
+                        className={styles.successOverlay}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <motion.div
+                            className={styles.successMessage}
+                            initial={{ scale: 0.5, y: 20, opacity: 0 }}
+                            animate={{
+                                scale: [0.5, 1.2, 1],
+                                y: 0,
+                                opacity: 1
+                            }}
+                            transition={{
+                                duration: 0.5,
+                                times: [0, 0.6, 1],
+                                ease: "easeOut"
+                            }}
+                        >
+                            {t('puzzle.success', 'Success! ✨')}
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <div className={styles.boardContent}>
                 {/* Canteen Visual */}
                 <div className={styles.canteenWrapper}>
