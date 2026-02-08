@@ -355,10 +355,6 @@
     },
     "puzzle": {
         "reset": "Nollställ",
-        "target": "Mål",
-        "irrigation": {
-            "target": "Mål"
-        },
         "sequence": {
             "instruction": "Koppla ihop stjärnorna i rätt ordning!"
         },

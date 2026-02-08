@@ -355,10 +355,6 @@
     },
     "puzzle": {
         "reset": "Reset",
-        "target": "Target",
-        "irrigation": {
-            "target": "Target"
-        },
         "sequence": {
             "instruction": "Connect the stars in order!"
         },
