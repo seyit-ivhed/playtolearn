@@ -20,7 +20,7 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
     const { t } = useTranslation();
 
     const target = data.targetValue;
-    const progress = Math.min(100, Math.max(0, (currentSum / target) * 100));
+    const progress = currentSum >= target ? (currentSum > target ? 100 : 90) : (currentSum / target) * 90;
     const isOverfilled = currentSum > target;
 
     const handlePipeClick = (option: number | PuzzleOption, index: number) => {
