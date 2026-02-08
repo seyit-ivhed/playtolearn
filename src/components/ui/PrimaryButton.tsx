@@ -1,9 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import type { HTMLMotionProps } from 'framer-motion';
 import styles from './PrimaryButton.module.css';
 
-interface PrimaryButtonProps extends HTMLMotionProps<"button"> {
+interface PrimaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;
     className?: string;
     variant?: 'primary' | 'gold';
@@ -17,25 +15,21 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     variant = 'primary',
     radiate = false,
     radiateVariant = 'primary',
-    whileHover,
-    whileTap,
     ...props
 }) => {
     const buttonClasses = [
         styles.button,
         variant === 'gold' ? styles.gold : '',
-        radiate ? (radiateVariant === 'secondary' ? styles['radiate-secondary'] : styles.radiate) : '',
+        radiate ? (radiateVariant === 'secondary' ? styles.radiateSecondary : styles.radiate) : '',
         className
     ].filter(Boolean).join(' ');
 
     return (
-        <motion.button
+        <button
             className={buttonClasses}
-            whileHover={whileHover || { scale: 1.05, boxShadow: "0 0 20px rgba(74, 55, 33, 0.4)" }}
-            whileTap={whileTap || { scale: 0.95 }}
             {...props}
         >
             {children}
-        </motion.button>
+        </button>
     );
 };

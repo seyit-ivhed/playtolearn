@@ -130,18 +130,6 @@
     transform: translateY(-2px);
 }
 
-/* Reset or remove old modal classes that are no longer used */
-.completion-modal,
-.reward-section,
-.reward-label,
-.reward-value,
-.completion-message,
-.victory-sparkles,
-.completion-modal.victory::before,
-.completion-btn {
-    display: none;
-}
-
 @keyframes banner-entrance {
     from {
         opacity: 0;
