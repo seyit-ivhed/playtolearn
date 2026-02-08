@@ -65,6 +65,9 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
     const leftTotal = calculateTotalWeight(leftStack);
     const rightTotal = calculateTotalWeight(rightStack);
 
+    // Check if all removable stones are gone
+    const hasRemovableStones = [...leftStack, ...rightStack].some(w => !w.isHeavy);
+
     return (
         <div className={styles.layout}>
             {/* Immersive Background */}
@@ -143,6 +146,8 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
                             <PrimaryButton
                                 onClick={handleReset}
                                 data-testid="puzzle-reset-button"
+                                variant={!hasRemovableStones ? 'gold' : 'primary'}
+                                radiate={!hasRemovableStones}
                             >
                                 {t('common.start_over', 'Start Over')}
                             </PrimaryButton>

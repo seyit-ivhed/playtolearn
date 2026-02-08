@@ -96,7 +96,7 @@
     min-height: 300px;
     width: 100%;
     /* Wee need px here to make it work with the background image */
-    padding-bottom: 20px;
+    padding-bottom: 0;
     position: relative;
 }
 
@@ -137,10 +137,10 @@
 }
 
 .plateInfo {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     font-weight: 800;
-    color: var(--color-chronicle-text-dark);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .controls {
