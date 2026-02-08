@@ -49,20 +49,32 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
         <div className={styles.layout}>
             <div className={styles.boardContent}>
                 {/* Canteen Visual */}
-                <div className={`${styles.canteenContainer} ${isOverfilled ? styles.overfilled : ''}`}>
-                    <div className={styles.canteenNeck} />
-                    <div className={styles.canteenBody}>
-                        <motion.div
-                            className={styles.liquid}
-                            initial={{ height: 0 }}
-                            animate={{ height: `${progress}%` }}
-                            transition={{ type: 'spring', damping: 15 }}
-                        >
-                            <div className={styles.waves}></div>
-                        </motion.div>
+                <div className={styles.canteenWrapper}>
+                    {/* Target value on the left, level with the target line */}
+                    <div className={styles.targetIndicator}>
+                        <div className={styles.targetValue}>{target}L</div>
+                    </div>
 
-                        <div className={styles.currentValueOverlay}>
-                            {currentSum}/{target}L
+                    <div className={`${styles.canteenContainer} ${isOverfilled ? styles.overfilled : ''}`}>
+                        <div className={styles.canteenNeck} />
+                        <div className={styles.canteenBody}>
+                            <motion.div
+                                className={styles.liquid}
+                                initial={{ height: 0 }}
+                                animate={{ height: `${progress}%` }}
+                                transition={{ type: 'spring', damping: 15 }}
+                            >
+                                <div className={styles.waves}></div>
+                            </motion.div>
+
+                            {/* Target line showing where water should reach - at 90% height */}
+                            <div className={styles.targetLine}>
+                                <div className={styles.targetLineDash}></div>
+                            </div>
+
+                            <div className={styles.currentValueOverlay}>
+                                {currentSum}L
+                            </div>
                         </div>
                     </div>
                 </div>
