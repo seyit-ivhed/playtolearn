@@ -298,12 +298,7 @@
     "combat": {
         "completion": {
             "victory_title": "SEGER!",
-            "victory_message_1": "Fantastiskt arbete! Öknen tystnar i vördnad för din kraft.",
-            "victory_message_2": "Seger! Dina matematikkunskaper är lika skarpa som ökensolen.",
-            "victory_message_3": "Spektakulärt! Fienden är besegrad. Vidare till fler äventyr!",
-            "victory_message_4": "Otroligt! Du hanterade detta med stil och visdom!",
             "defeat_title": "NEDERLAG",
-            "defeat_message": "Din grupp har fallit...",
             "continue_button": "Fortsätt"
         },
         "turn": {

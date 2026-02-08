@@ -136,3 +136,104 @@ export const BOOK_MAGIC_OPTIONS: ISourceOptions = {
         color: "transparent"
     }
 };
+
+export const VICTORY_CONFETTI_OPTIONS: ISourceOptions = {
+    fullScreen: {
+        enable: false,
+        zIndex: 0
+    },
+    particles: {
+        number: {
+            value: 0
+        },
+        color: {
+            value: ["#FFD700", "#FFFFFF", "#FFA500", "#FF4500", "#00FFFC"]
+        },
+        shape: {
+            type: ["circle", "square"],
+            options: {}
+        },
+        opacity: {
+            value: {
+                min: 0,
+                max: 1
+            },
+            animation: {
+                enable: true,
+                speed: 1,
+                sync: false,
+                startValue: "max",
+                destroy: "min"
+            }
+        },
+        size: {
+            value: {
+                min: 3,
+                max: 8
+            }
+        },
+        life: {
+            duration: {
+                sync: true,
+                value: 5
+            },
+            count: 1
+        },
+        move: {
+            enable: true,
+            gravity: {
+                enable: true,
+                acceleration: 20
+            },
+            speed: {
+                min: 25,
+                max: 50
+            },
+            decay: 0.05,
+            direction: "top",
+            random: true,
+            straight: false,
+            outModes: {
+                default: "destroy",
+                top: "none"
+            }
+        }
+    },
+    background: {
+        color: {
+            value: "transparent"
+        }
+    },
+    emitters: [
+        {
+            direction: "top-right",
+            rate: {
+                quantity: 15,
+                delay: 0.1
+            },
+            size: {
+                width: 0,
+                height: 0
+            },
+            position: {
+                y: 100,
+                x: 0
+            }
+        },
+        {
+            direction: "top-left",
+            rate: {
+                quantity: 15,
+                delay: 0.1
+            },
+            size: {
+                width: 0,
+                height: 0
+            },
+            position: {
+                y: 100,
+                x: 100
+            }
+        }
+    ]
+};

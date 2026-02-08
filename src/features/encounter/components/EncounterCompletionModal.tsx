@@ -1,119 +1,85 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
+import { PrimaryButton } from '@/components/ui/PrimaryButton';
+import { GameParticles } from '@/components/ui/GameParticles';
+import { VICTORY_CONFETTI_OPTIONS } from '@/components/ui/GameParticles.constants';
 import './EncounterCompletionModal.css';
 
 interface EncounterCompletionModalProps {
     result: 'VICTORY' | 'DEFEAT';
     onContinue: () => void;
     difficulty: number;
-
-
-    customMessage?: string;
 }
 
 export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> = ({
     result,
     onContinue,
     difficulty,
-
-
-    customMessage
 }) => {
     const { t } = useTranslation();
 
     const isVictory = result === 'VICTORY';
 
-    const [randomIndex] = React.useState(() => Math.floor(Math.random() * 4));
-
-    // Use custom message if provided, otherwise pick a random victory message
-    const victoryMessage = useMemo(() => {
-        if (customMessage) return customMessage;
-
-        const messages = [
-            t('combat.completion.victory_message_1', 'Amazing work! The desert stands silent in awe of your power.'),
-            t('combat.completion.victory_message_2', 'Victory! Your math skills are as sharp as a desert sun.'),
-            t('combat.completion.victory_message_3', 'Spectacular! The enemy has been defeated. Onward to more adventures!'),
-            t('combat.completion.victory_message_4', 'Incredible! You handled that with style and wisdom!')
-        ];
-        return messages[randomIndex];
-    }, [customMessage, t, randomIndex]);
-
     return (
         <div className="completion-overlay">
-            <motion.div
-                className={`completion-modal ${isVictory ? 'victory' : 'defeat'}`}
-                initial={{ scale: 0.8, y: 50, opacity: 0 }}
-                animate={{ scale: 1, y: 0, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            >
-                <div className="completion-content">
-                    {isVictory && <div className="victory-sparkles"></div>}
-
-                    <motion.div
-                        className="completion-banner"
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.2, duration: 0.5 }}
-                    >
-                        <h1>{isVictory ? t('combat.completion.victory_title', 'VICTORY!') : t('combat.completion.defeat_title', 'DEFEAT')}</h1>
-                    </motion.div>
-
-                    {isVictory && (
-                        <div className="stars-row">
-                            {[...Array(3)].map((_, i) => (
-                                <div key={i} className="star-wrapper">
-                                    <motion.div
-                                        initial={{ scale: 0, rotate: -180 }}
-                                        animate={{ scale: 1, rotate: 0 }}
-                                        transition={{
-                                            delay: 0.5 + (i * 0.1),
-                                            type: "spring",
-                                            stiffness: 260,
-                                            damping: 20
-                                        }}
-                                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                                    >
-                                        <Star
-                                            size={54}
-                                            fill={i < difficulty ? "var(--color-brand-accent)" : "transparent"}
-                                            color={i < difficulty ? "var(--color-brand-accent)" : "rgba(255,255,255,0.2)"}
-                                            className={i < difficulty ? "star-earned glow" : "star-earned"}
-                                        />
-                                    </motion.div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-
-                    <motion.div
-                        className="completion-message"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.4 }}
-                    >
-                        <p>
-                            {isVictory
-                                ? victoryMessage
-                                : t('combat.completion.defeat_message', 'Your party has fallen...')}
-                        </p>
-                    </motion.div>
-
-
-
-                    <motion.div
-                        className="completion-actions"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.8 }}
-                    >
-                        <button className="completion-btn" onClick={onContinue}>
-                            {t('combat.completion.continue_button', 'Continue')}
-                        </button>
-                    </motion.div>
+            {isVictory && (
+                <div className="particles-backdrop">
+                    <GameParticles options={VICTORY_CONFETTI_OPTIONS} />
                 </div>
-            </motion.div>
+            )}
+
+            <div className="completion-content">
+                <motion.div
+                    className={`completion-banner ${isVictory ? 'victory' : 'defeat'}`}
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.5, type: "spring" }}
+                >
+                    <h1>{isVictory ? t('combat.completion.victory_title', 'VICTORY!') : t('combat.completion.defeat_title', 'DEFEAT')}</h1>
+                </motion.div>
+
+                {isVictory && (
+                    <div className="stars-row">
+                        {[...Array(3)].map((_, i) => (
+                            <div key={i} className="star-wrapper">
+                                <motion.div
+                                    initial={{ scale: 0, rotate: -180 }}
+                                    animate={{ scale: 1, rotate: 0 }}
+                                    transition={{
+                                        delay: 0.5 + (i * 0.15),
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20
+                                    }}
+                                >
+                                    <Star
+                                        size={96}
+                                        fill={i < difficulty ? "var(--color-brand-accent)" : "transparent"}
+                                        color={i < difficulty ? "var(--color-brand-accent)" : "rgba(255,255,255,0.2)"}
+                                        className={i < difficulty ? "star-earned glow" : "star-earned"}
+                                    />
+                                </motion.div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                <motion.div
+                    className="completion-actions"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2 }}
+                >
+                    <PrimaryButton
+                        className="completion-btn-primary"
+                        onClick={onContinue}
+                    >
+                        {t('combat.completion.continue_button', 'Continue')}
+                    </PrimaryButton>
+                </motion.div>
+            </div>
         </div>
     );
 };
