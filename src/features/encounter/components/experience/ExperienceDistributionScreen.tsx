@@ -65,7 +65,9 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
     };
 
     const anyCanLevelUp = partyCompanionsData.some(({ companion, experience }) => {
-        if (companion.level >= EXPERIENCE_CONFIG.MAX_LEVEL) return false;
+        if (companion.level >= EXPERIENCE_CONFIG.MAX_LEVEL) {
+            return false;
+        }
         const requiredXp = getRequiredXpForNextLevel(companion.level);
         return experience >= requiredXp;
     });

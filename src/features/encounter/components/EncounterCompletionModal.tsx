@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { GameParticles } from '@/components/ui/GameParticles';
@@ -39,14 +38,10 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                     <div className="stars-row">
                         {[...Array(3)].map((_, i) => (
                             <div key={i} className="star-wrapper">
-                                <motion.div
-                                    initial={{ scale: 0, rotate: -180 }}
-                                    animate={{ scale: 1, rotate: 0 }}
-                                    transition={{
-                                        delay: 0.5 + (i * 0.15),
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 20
+                                <div
+                                    className="star-entrance"
+                                    style={{
+                                        animationDelay: `${0.5 + (i * 0.15)}s`
                                     }}
                                 >
                                     <Star
@@ -55,7 +50,7 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                                         color={i < difficulty ? "var(--color-brand-accent)" : "rgba(255,255,255,0.2)"}
                                         className={i < difficulty ? "star-earned glow" : "star-earned"}
                                     />
-                                </motion.div>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -64,7 +59,7 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                 <div className="completion-actions">
                     <PrimaryButton
                         className="completion-btn-primary"
-                        variant="gold"
+                        variant={isVictory ? "gold" : "ghost"}
                         radiate={true}
                         radiateVariant={isVictory ? 'primary' : 'secondary'}
                         onClick={onContinue}
