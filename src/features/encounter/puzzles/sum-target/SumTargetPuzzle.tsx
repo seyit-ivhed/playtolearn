@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { type PuzzleData, type PuzzleOption } from '../../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
+import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import styles from './SumTargetPuzzle.module.css';
 
 interface SumTargetPuzzleProps {
@@ -123,15 +124,12 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
 
             {/* Reset Button */}
             <div className={styles.controls}>
-                <motion.button
-                    className={styles.resetBtn}
+                <PrimaryButton
                     onClick={handleReset}
                     disabled={isSolved}
-                    whileHover={!isSolved ? { scale: 1.05 } : {}}
-                    whileTap={!isSolved ? { scale: 0.95 } : {}}
                 >
                     {t('common.start_over', 'Start Over')}
-                </motion.button>
+                </PrimaryButton>
             </div>
         </div>
     );
