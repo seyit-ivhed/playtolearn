@@ -351,7 +351,7 @@
     },
     "puzzle": {
         "reset": "Reset",
-        "success": "Success! ✨",
+        "success": "Success!",
         "sequence": {
             "instruction": "Connect the stars in order!"
         },

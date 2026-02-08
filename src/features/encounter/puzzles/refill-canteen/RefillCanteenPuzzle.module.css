@@ -318,10 +318,9 @@
 }
 
 .successMessage {
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: 800;
     color: #10b981;
-    /* Success green */
     text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
     font-family: var(--font-display);
     animation: successPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
