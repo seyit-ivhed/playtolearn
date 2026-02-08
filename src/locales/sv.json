@@ -354,7 +354,7 @@
             "instruction": "Fyll på din fältflaska genom att välja rätt mängd vatten"
         },
         "balance": {
-            "instruction": "Ta bort stenar tills båda högarna är lika höga!"
+            "instruction": "Ta bort stenar tills båda högarna väger lika mycket!"
         },
         "guardian_tribute": {
             "instruction": "Fördela ädelstenarna mellan statyerna"

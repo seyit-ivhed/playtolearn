@@ -354,7 +354,7 @@
             "instruction": "Refill your canteen by choosing the right amount of water"
         },
         "balance": {
-            "instruction": "Remove stones until both piles are of equal height!"
+            "instruction": "Remove stones until both piles are of equal weight!"
         },
         "guardian_tribute": {
             "instruction": "Distribute the gems among the statues"
