@@ -25,6 +25,7 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
     const [leftStack, setLeftStack] = useState<Weight[]>(initialData.leftStack);
     const [rightStack, setRightStack] = useState<Weight[]>(initialData.rightStack);
     const [isSolved, setIsSolved] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const leftRunes = GREEK_RUNES.slice(0, 6);
     const rightRunes = GREEK_RUNES.slice(6, 12);
@@ -48,6 +49,12 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
     const checkSolution = (l: Weight[], r: Weight[]) => {
         if (validateBalance(l, r)) {
             setIsSolved(true);
+
+            // Show success message after a short delay to let runes shine
+            setTimeout(() => {
+                setShowSuccess(true);
+            }, 1000);
+
             setTimeout(() => {
                 onSolve();
             }, 3000);
@@ -152,11 +159,11 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
 
                     {/* Controls/Status */}
                     <div className={styles.controls}>
-                        {isSolved ? (
+                        {showSuccess ? (
                             <div className={styles.successMessage}>
                                 {t('puzzle.success', 'Success! ✨')}
                             </div>
-                        ) : (
+                        ) : isSolved ? null : (
                             <PrimaryButton
                                 onClick={handleReset}
                                 data-testid="puzzle-reset-button"
