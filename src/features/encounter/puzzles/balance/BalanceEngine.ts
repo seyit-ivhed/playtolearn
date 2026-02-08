@@ -58,19 +58,6 @@ export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleD
     // Number of noise weights per side
     const noiseCount = difficulty === 1 ? 1 : 2;
 
-    // 2. Generate Heavy Weight
-    // Heavy weight is significantly heavier or just distinct?
-    // Let's make it a substantial part of the weight, e.g., 30-50% of target.
-    const heavyValue = getRandomInt(Math.floor(targetBalance * 0.3), Math.floor(targetBalance * 0.5));
-    const heavyWeight: Weight = {
-        id: `heavy-${Math.random().toString(36).substr(2, 9)}`,
-        value: heavyValue,
-        isHeavy: true
-    };
-
-    // Decide which side gets the heavy weight
-    const heavySide = Math.random() < 0.5 ? 'left' : 'right';
-
     // 3. Generate Solution Sets
 
     // Helper to generate weights summing to a remainder
@@ -96,28 +83,36 @@ export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleD
         return shuffleArray(result);
     };
 
+    // 2. Generate Heavy Weights
+    // Both sides now have a heavy weight acting as a platform.
+    // They should be heavy but unequal initially.
+    const baseHeavy = Math.floor(targetBalance * 0.4);
+    const heavyLeft: Weight = {
+        id: `heavy-left-${Math.random().toString(36).substr(2, 9)}`,
+        value: baseHeavy,
+        isHeavy: true
+    };
+    const heavyRight: Weight = {
+        id: `heavy-right-${Math.random().toString(36).substr(2, 9)}`,
+        value: baseHeavy + getRandomInt(2, 5), // Ensure initial imbalance
+        isHeavy: true
+    };
+
+    // Decide which side is "correct" for the solution total
+    // The target balance is the sum of (heavy + solution weights)
+    // We adjust the solution generation to account for the specific heavy weight on each side.
     const leftSolutionTotal = targetBalance;
     const rightSolutionTotal = targetBalance;
 
-    let leftSolutionValues: number[] = [];
-    let rightSolutionValues: number[] = [];
+    const leftRemaining = leftSolutionTotal - heavyLeft.value;
+    const rightRemaining = rightSolutionTotal - heavyRight.value;
 
-    if (heavySide === 'left') {
-        const remaining = leftSolutionTotal - heavyWeight.value;
-        const count = getRandomInt(minSolutionWeights, maxSolutionWeights) - 1; // -1 for heavy
-        leftSolutionValues = generateComponents(remaining, count);
-        // Heavy weight will be added manually later to ensure position
+    // Ensure we don't have negative remaining weight if target is too low
+    const lCount = getRandomInt(minSolutionWeights, maxSolutionWeights);
+    const rCount = getRandomInt(minSolutionWeights, maxSolutionWeights);
 
-        const rCount = getRandomInt(minSolutionWeights, maxSolutionWeights);
-        rightSolutionValues = generateComponents(rightSolutionTotal, rCount);
-    } else {
-        const lCount = getRandomInt(minSolutionWeights, maxSolutionWeights);
-        leftSolutionValues = generateComponents(leftSolutionTotal, lCount);
-
-        const remaining = rightSolutionTotal - heavyWeight.value;
-        const count = getRandomInt(minSolutionWeights, maxSolutionWeights) - 1;
-        rightSolutionValues = generateComponents(remaining, count);
-    }
+    const leftSolutionValues = generateComponents(Math.max(1, leftRemaining), lCount);
+    const rightSolutionValues = generateComponents(Math.max(1, rightRemaining), rCount);
 
     // 4. Generate Noise Weights
     // Noise weights are random values that don't need to balance
@@ -150,15 +145,9 @@ export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleD
     leftStack = shuffleArray(leftStack);
     rightStack = shuffleArray(rightStack);
 
-    // Place Heavy Weight at bottom (index 0 or last depending on UI, 
-    // usually stacks visually build up, so bottom is index 0. 
-    // If we map .reverse() for rendering, index 0 is bottom.
-    // Let's assume array order: index 0 is bottom.
-    if (heavySide === 'left') {
-        leftStack.unshift(heavyWeight);
-    } else {
-        rightStack.unshift(heavyWeight);
-    }
+    // Place Heavy Weights at bottom
+    leftStack.unshift(heavyLeft);
+    rightStack.unshift(heavyRight);
 
     return {
         puzzleType: PuzzleType.BALANCE, // Assuming this enum exists or mapped to generic

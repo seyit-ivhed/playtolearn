@@ -12,20 +12,17 @@ describe('Balance Engine', () => {
             expect(data.rightStack.length).toBeGreaterThan(0);
         });
 
-        it('should include exactly one heavy weight', () => {
+        it('should include exactly two heavy weights', () => {
             const data = generateBalanceData(1);
             const allWeights = [...data.leftStack, ...data.rightStack];
             const heavyWeights = allWeights.filter(w => w.isHeavy);
-            expect(heavyWeights).toHaveLength(1);
+            expect(heavyWeights).toHaveLength(2);
         });
 
-        it('should place heavy weight at index 0 of its stack', () => {
+        it('should place heavy weights at index 0 of both stacks', () => {
             const data = generateBalanceData(1);
-            if (data.leftStack.some(w => w.isHeavy)) {
-                expect(data.leftStack[0].isHeavy).toBe(true);
-            } else {
-                expect(data.rightStack[0].isHeavy).toBe(true);
-            }
+            expect(data.leftStack[0].isHeavy).toBe(true);
+            expect(data.rightStack[0].isHeavy).toBe(true);
         });
 
         it('should generate solvable puzzles', () => {

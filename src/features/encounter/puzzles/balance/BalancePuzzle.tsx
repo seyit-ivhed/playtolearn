@@ -107,21 +107,20 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
                             }}
                         >
                             <div className={styles.chain} />
-                            <div className={styles.stonePlate}>
-                                <div className={styles.weightStack}>
-                                    {leftStack.map((weight) => (
-                                        <WeightComponent
-                                            key={weight.id}
-                                            weight={weight}
-                                            side="left"
-                                            onRemove={handleRemoveWeight}
-                                            disabled={isSolved}
-                                        />
-                                    ))}
-                                </div>
-                                <div className={styles.plateInfo}>
-                                    {leftTotal}
-                                </div>
+                            <div className={styles.chain} />
+                            <div className={styles.weightStack}>
+                                {leftStack.map((weight) => (
+                                    <WeightComponent
+                                        key={weight.id}
+                                        weight={weight}
+                                        side="left"
+                                        onRemove={handleRemoveWeight}
+                                        disabled={isSolved}
+                                    />
+                                ))}
+                            </div>
+                            <div className={styles.plateInfo}>
+                                {leftTotal}
                             </div>
                         </div>
 
@@ -133,21 +132,20 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
                             }}
                         >
                             <div className={styles.chain} />
-                            <div className={styles.stonePlate}>
-                                <div className={styles.weightStack}>
-                                    {rightStack.map((weight) => (
-                                        <WeightComponent
-                                            key={weight.id}
-                                            weight={weight}
-                                            side="right"
-                                            onRemove={handleRemoveWeight}
-                                            disabled={isSolved}
-                                        />
-                                    ))}
-                                </div>
-                                <div className={styles.plateInfo}>
-                                    {rightTotal}
-                                </div>
+                            <div className={styles.chain} />
+                            <div className={styles.weightStack}>
+                                {rightStack.map((weight) => (
+                                    <WeightComponent
+                                        key={weight.id}
+                                        weight={weight}
+                                        side="right"
+                                        onRemove={handleRemoveWeight}
+                                        disabled={isSolved}
+                                    />
+                                ))}
+                            </div>
+                            <div className={styles.plateInfo}>
+                                {rightTotal}
                             </div>
                         </div>
                     </div>
