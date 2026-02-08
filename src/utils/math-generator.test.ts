@@ -68,9 +68,9 @@ describe('Math Generator Functionality', () => {
     });
 
     describe('Puzzle Data Generation', () => {
-        it('should generate valid Sum Target puzzle data', () => {
-            const data = generatePuzzleData(PuzzleType.SUM_TARGET, 3);
-            expect(data.puzzleType).toBe(PuzzleType.SUM_TARGET);
+        it('should generate valid Refill Canteen puzzle data', () => {
+            const data = generatePuzzleData(PuzzleType.REFILL_CANTEEN, 3);
+            expect(data.puzzleType).toBe(PuzzleType.REFILL_CANTEEN);
             expect(data.targetValue).toBeGreaterThan(0);
             expect(data.options.length).toBeGreaterThan(0);
         });
@@ -132,7 +132,7 @@ describe('Math Generator Functionality', () => {
 
         it('should throw error if difficulty is missing', () => {
             // @ts-expect-error - Testing invalid input
-            expect(() => generatePuzzleData(PuzzleType.SUM_TARGET, null)).toThrow('Valid difficulty level is required');
+            expect(() => generatePuzzleData(PuzzleType.REFILL_CANTEEN, null)).toThrow('Valid difficulty level is required');
         });
 
         it('should throw error for unsupported puzzle type', () => {

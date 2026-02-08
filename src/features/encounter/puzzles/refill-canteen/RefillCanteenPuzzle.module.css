@@ -7,6 +7,7 @@
     width: 100%;
     gap: 2rem;
     font-family: var(--font-display);
+    position: relative;
 }
 
 .boardContent {
@@ -45,8 +46,12 @@
 .scoop:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.8);
     border-color: var(--color-chronicle-accent);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.scoop:active:not(:disabled) {
+    transform: translateY(0) scale(0.95);
 }
 
 .scoopIcon {
@@ -97,10 +102,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    /* 40px for neck height + 10% of 240px body height = 40 + 24 = 64px from top */
     margin-top: 64px;
     transform: translateY(-50%);
-    /* Center the text vertically on the line */
 }
 
 .targetValue {
@@ -117,7 +120,6 @@
     left: -10px;
     right: -10px;
     bottom: 90%;
-    /* 10% from top */
     height: 0;
     z-index: 15;
     pointer-events: none;
@@ -153,7 +155,6 @@
     height: 40px;
     background: rgba(255, 255, 255, 0.2);
     border: 3px solid #5c4d3c;
-    /* Darker bronze/wood border */
     border-bottom: none;
     border-radius: 4px 4px 0 0;
     position: relative;
@@ -161,7 +162,6 @@
     margin-bottom: -2px;
 }
 
-/* Decoration for the canteen cap area */
 .canteenNeck::before {
     content: '';
     position: absolute;
@@ -188,19 +188,18 @@
         0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Liquid inside the canteen */
+/* Liquid */
 .liquid {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
-    /* Keep blue as "Mana/Water" */
     opacity: 0.9;
     box-shadow: 0 -5px 10px rgba(96, 165, 250, 0.3);
+    transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
 }
 
-/* Waves on top of liquid */
 .waves {
     position: absolute;
     top: -10px;
@@ -231,15 +230,16 @@
     font-weight: 800;
     color: #fff;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 8px rgba(0, 0, 0, 0.8);
-    /* Stronger shadow for contrast */
     z-index: 10;
     pointer-events: none;
     font-family: var(--font-display);
 }
 
-/* Floating feedback text */
+/* Floating feedback text - CSS animation replaces Framer Motion */
 .floatText {
     position: absolute;
+    left: 50%;
+    top: 50%;
     font-size: 2.5rem;
     font-weight: 800;
     color: var(--color-chronicle-text-dark);
@@ -248,6 +248,19 @@
     z-index: 50;
     white-space: nowrap;
     font-family: var(--font-display);
+    animation: floatUp 1s ease-out forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -150%);
+    }
 }
 
 /* Overfilled State */
@@ -308,10 +321,10 @@
     }
 }
 
+/* Controls */
 .controls {
     margin-top: 2rem;
     min-height: 48px;
-    /* Maintain height to prevent layout shift */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -320,7 +333,7 @@
 .successMessage {
     font-size: 3.5rem;
     font-weight: 900;
-    color: #0fb27a;
+    color: var(--color-success, #10b981);
     text-shadow:
         0 0 10px rgba(16, 185, 129, 0.4),
         0 0 20px rgba(255, 255, 255, 0.8),
@@ -343,8 +356,9 @@
     }
 }
 
+/* Solved liquid state */
 .liquid.solved {
-    background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
+    background: linear-gradient(180deg, #34d399 0%, var(--color-success, #10b981) 100%);
     box-shadow: 0 -5px 10px rgba(52, 211, 153, 0.3);
 }
 

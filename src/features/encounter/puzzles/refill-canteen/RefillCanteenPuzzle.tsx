@@ -1,6 +1,5 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
 import { type PuzzleData, type PuzzleOption } from '../../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './RefillCanteenEngine';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
@@ -11,10 +10,17 @@ interface RefillCanteenPuzzleProps {
     onSolve: () => void;
 }
 
+const getIconForOption = (option: number | PuzzleOption): string => {
+    if (typeof option === 'number') {
+        return option < 0 ? '🫗' : '💧';
+    }
+    return option.type === 'MULTIPLY' ? '🌊' : '💧';
+};
+
 export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps) => {
     const [currentSum, setCurrentSum] = useState(0);
     const [isSolved, setIsSolved] = useState(false);
-    const [usedOptions, setUsedOptions] = useState<number[]>([]); // Track indices of used options
+    const [usedOptions, setUsedOptions] = useState<number[]>([]);
     const [lastAction, setLastAction] = useState<{ label: string; id: number } | null>(null);
     const actionIdCounter = useRef(0);
     const { t } = useTranslation();
@@ -23,8 +29,17 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
     const progress = currentSum >= target ? (currentSum > target ? 100 : 90) : (currentSum / target) * 90;
     const isOverfilled = currentSum > target;
 
+    useEffect(() => {
+        if (lastAction) {
+            const timer = setTimeout(() => setLastAction(null), 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [lastAction]);
+
     const handlePipeClick = (option: number | PuzzleOption, index: number) => {
-        if (isSolved || usedOptions.includes(index)) return;
+        if (isSolved || usedOptions.includes(index)) {
+            return;
+        }
 
         const nextSum = calculateNextSum(currentSum, option);
         const actionLabel = formatActionLabel(option);
@@ -42,7 +57,9 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
     };
 
     const handleReset = () => {
-        if (isSolved) return;
+        if (isSolved) {
+            return;
+        }
         setCurrentSum(0);
         setUsedOptions([]);
     };
@@ -60,14 +77,12 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
                     <div className={`${styles.canteenContainer} ${isOverfilled ? styles.overfilled : ''}`}>
                         <div className={styles.canteenNeck} />
                         <div className={styles.canteenBody}>
-                            <motion.div
+                            <div
                                 className={`${styles.liquid} ${isSolved && !isOverfilled ? styles.solved : ''}`}
-                                initial={{ height: 0 }}
-                                animate={{ height: `${progress}%` }}
-                                transition={{ type: 'spring', damping: 15 }}
+                                style={{ height: `${progress}%` }}
                             >
                                 <div className={styles.waves}></div>
-                            </motion.div>
+                            </div>
 
                             {/* Target line showing where water should reach - at 90% height */}
                             <div className={styles.targetLine}>
@@ -84,57 +99,34 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps)
                 {/* Water Sources (Scoops) */}
                 <div className={styles.waterSourceGrid}>
                     {data.options.map((option, idx) => {
-                        const isObj = typeof option !== 'number';
-                        const puzzleOption = isObj ? (option as PuzzleOption) : null;
                         const label = formatActionLabel(option);
-
-                        // Icons for scoops/cups/jars
-                        // Simplification: Use water drops for standard inputs as per user request
-                        let icon = '💧';
-
-                        if (puzzleOption) {
-                            if (puzzleOption.type === 'MULTIPLY') icon = '🌊'; // Surge/Multiply still distinct
-                        } else if (typeof option === 'number') {
-                            if (option < 0) icon = '🫗'; // Empty/Pour out
-                        }
-
-                        // Override for now with consistent water icons for additions
-                        if (!isObj && (option as number) > 0) icon = '💧';
-
+                        const icon = getIconForOption(option);
                         const isUsed = usedOptions.includes(idx);
 
                         return (
-                            <motion.button
+                            <button
                                 key={`${idx}`}
                                 className={`${styles.scoop} ${isUsed ? styles.used : ''}`}
-                                whileHover={isUsed ? {} : { scale: 1.05 }}
-                                whileTap={isUsed ? {} : { scale: 0.95 }}
                                 onClick={() => handlePipeClick(option, idx)}
                                 disabled={isSolved || isUsed}
                             >
                                 <div className={styles.scoopIcon}>{isUsed ? '✅' : icon}</div>
                                 <div className={styles.scoopValue}>{label}</div>
-                            </motion.button>
+                            </button>
                         );
                     })}
                 </div>
             </div>
 
             {/* Feedback Animations */}
-            <AnimatePresence>
-                {lastAction && (
-                    <motion.div
-                        key={lastAction.id}
-                        initial={{ opacity: 1, y: 0 }}
-                        animate={{ opacity: 0, y: -100 }}
-                        exit={{ opacity: 0 }}
-                        className={styles.floatText}
-                        style={{ left: '50%' }}
-                    >
-                        {lastAction.label}
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {lastAction && (
+                <div
+                    key={lastAction.id}
+                    className={styles.floatText}
+                >
+                    {lastAction.label}
+                </div>
+            )}
 
             {/* Reset Button or Success Message */}
             <div className={styles.controls}>

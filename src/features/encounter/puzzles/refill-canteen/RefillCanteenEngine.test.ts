@@ -1,9 +1,8 @@
-
 import { describe, it, expect } from 'vitest';
-import { calculateNextSum, formatActionLabel, isPuzzleSolved, generateSumTargetData } from './SumTargetEngine';
+import { calculateNextSum, formatActionLabel, isPuzzleSolved, generateRefillCanteenData } from './RefillCanteenEngine';
 import { type PuzzleOption, PuzzleType } from '../../../../types/adventure.types';
 
-describe('SumTargetEngine', () => {
+describe('RefillCanteenEngine', () => {
     describe('calculateNextSum', () => {
         it('should handle simple addition with numbers', () => {
             expect(calculateNextSum(10, 5)).toBe(15);
@@ -49,21 +48,21 @@ describe('SumTargetEngine', () => {
         });
     });
 
-    describe('generateSumTargetData', () => {
+    describe('generateRefillCanteenData', () => {
         it('should generate valid puzzle structure', () => {
-            const data = generateSumTargetData(1);
-            expect(data.puzzleType).toBe(PuzzleType.SUM_TARGET);
+            const data = generateRefillCanteenData(1);
+            expect(data.puzzleType).toBe(PuzzleType.REFILL_CANTEEN);
             expect(typeof data.targetValue).toBe('number');
             expect(Array.isArray(data.options)).toBe(true);
         });
 
         it('should scale difficulty with steps', () => {
-            const data = generateSumTargetData(1);
+            const data = generateRefillCanteenData(1);
             expect(data.options.length).toBeGreaterThanOrEqual(2);
         });
 
         it('should include both numbers and objects (for level 3)', () => {
-            const data = generateSumTargetData(3);
+            const data = generateRefillCanteenData(3);
             const hasOperations = data.options.some(opt => typeof opt === 'object');
             expect(data.options.length).toBeGreaterThan(0);
             expect(typeof hasOperations).toBe('boolean');
@@ -71,7 +70,7 @@ describe('SumTargetEngine', () => {
 
         it('should not have 0 as an option value', () => {
             for (let i = 0; i < 10; i++) {
-                const data = generateSumTargetData(3);
+                const data = generateRefillCanteenData(3);
                 data.options.forEach(opt => {
                     if (typeof opt === 'number') {
                         expect(opt).not.toBe(0);
@@ -85,7 +84,7 @@ describe('SumTargetEngine', () => {
         it('should produce a positive target value', () => {
             for (let i = 0; i < 20; i++) {
                 const difficulty = (Math.floor(Math.random() * 3) + 1) as import('../../../../types/math.types').DifficultyLevel;
-                const data = generateSumTargetData(difficulty);
+                const data = generateRefillCanteenData(difficulty);
                 expect(data.targetValue).toBeGreaterThan(0);
             }
         });
