@@ -99,39 +99,55 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
                     )}
 
                     <div className={styles.platesContainer}>
-                        {/* Left Plate Area */}
-                        <div className={styles.stackSection}>
-                            <div className={styles.weightStack}>
-                                {leftStack.map((weight) => (
-                                    <WeightComponent
-                                        key={weight.id}
-                                        weight={weight}
-                                        side="left"
-                                        onRemove={handleRemoveWeight}
-                                        disabled={isSolved}
-                                    />
-                                ))}
-                            </div>
-                            <div className={styles.plateInfo}>
-                                {leftTotal}
+                        {/* Left Scale Arm */}
+                        <div
+                            className={`${styles.scaleArm} ${styles.leftArm}`}
+                            style={{
+                                transform: `translateY(${leftTotal > rightTotal ? '40px' : leftTotal < rightTotal ? '-40px' : '0'})`
+                            }}
+                        >
+                            <div className={styles.chain} />
+                            <div className={styles.stonePlate}>
+                                <div className={styles.weightStack}>
+                                    {leftStack.map((weight) => (
+                                        <WeightComponent
+                                            key={weight.id}
+                                            weight={weight}
+                                            side="left"
+                                            onRemove={handleRemoveWeight}
+                                            disabled={isSolved}
+                                        />
+                                    ))}
+                                </div>
+                                <div className={styles.plateInfo}>
+                                    {leftTotal}
+                                </div>
                             </div>
                         </div>
 
-                        {/* Right Plate Area */}
-                        <div className={styles.stackSection}>
-                            <div className={styles.weightStack}>
-                                {rightStack.map((weight) => (
-                                    <WeightComponent
-                                        key={weight.id}
-                                        weight={weight}
-                                        side="right"
-                                        onRemove={handleRemoveWeight}
-                                        disabled={isSolved}
-                                    />
-                                ))}
-                            </div>
-                            <div className={styles.plateInfo}>
-                                {rightTotal}
+                        {/* Right Scale Arm */}
+                        <div
+                            className={`${styles.scaleArm} ${styles.rightArm}`}
+                            style={{
+                                transform: `translateY(${rightTotal > leftTotal ? '40px' : rightTotal < leftTotal ? '-40px' : '0'})`
+                            }}
+                        >
+                            <div className={styles.chain} />
+                            <div className={styles.stonePlate}>
+                                <div className={styles.weightStack}>
+                                    {rightStack.map((weight) => (
+                                        <WeightComponent
+                                            key={weight.id}
+                                            weight={weight}
+                                            side="right"
+                                            onRemove={handleRemoveWeight}
+                                            disabled={isSolved}
+                                        />
+                                    ))}
+                                </div>
+                                <div className={styles.plateInfo}>
+                                    {rightTotal}
+                                </div>
                             </div>
                         </div>
                     </div>
