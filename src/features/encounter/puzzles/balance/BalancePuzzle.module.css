@@ -76,7 +76,8 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 6rem;
+    /* We need px here to make it work with the background image */
+    gap: 300px;
     width: 100%;
 }
 
@@ -94,7 +95,8 @@
     align-items: center;
     min-height: 300px;
     width: 100%;
-    padding-bottom: 2rem;
+    /* Wee need px here to make it work with the background image */
+    padding-bottom: 20px;
     position: relative;
 }
 
@@ -113,7 +115,7 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-bottom: -15px;
+    margin-bottom: -10px;
     position: relative;
 }
 
