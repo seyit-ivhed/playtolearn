@@ -132,7 +132,7 @@ const PuzzlePage = () => {
                 </button>
             </header>
 
-            {instruction && (
+            {instruction && puzzleData.puzzleType !== PuzzleType.BALANCE && (
                 <div className={styles.instructionContainer}>
                     <p className={styles.instructionText}>{instruction}</p>
                 </div>
