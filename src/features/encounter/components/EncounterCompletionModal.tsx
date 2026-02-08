@@ -64,6 +64,9 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                 <div className="completion-actions">
                     <PrimaryButton
                         className="completion-btn-primary"
+                        variant="gold"
+                        radiate={true}
+                        radiateVariant={isVictory ? 'primary' : 'secondary'}
                         onClick={onContinue}
                     >
                         {t('combat.completion.continue_button', 'Continue')}

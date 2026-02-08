@@ -21,6 +21,58 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Gold Variant (Victory/Experience) */
+.gold {
+    background: var(--color-brand-accent);
+    color: #1a150f;
+    border: none;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+}
+
+.gold:hover:not(:disabled) {
+    background: #ffd93d;
+    box-shadow: 0 0 35px rgba(255, 215, 0, 0.5);
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Radiate Animation */
+.radiate {
+    animation: gold-radiate 2s infinite ease-in-out;
+}
+
+/* Secondary Radiate for defeat/secondary cases */
+.radiate-secondary {
+    animation: secondary-radiate 2s infinite ease-in-out;
+}
+
+@keyframes gold-radiate {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes secondary-radiate {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+        transform: scale(1.02);
+    }
+}
+
 .button:disabled {
     opacity: 0.5;
     cursor: not-allowed;

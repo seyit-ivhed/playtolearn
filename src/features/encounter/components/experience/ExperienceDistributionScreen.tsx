@@ -9,6 +9,7 @@ import { COMPANIONS } from '../../../../data/companions.data';
 import type { Companion } from '../../../../types/companion.types';
 import { getStatsForLevel } from '../../../../utils/progression.utils';
 import { getRequiredXpForNextLevel } from '../../../../data/experience.data';
+import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 
 interface ExperienceDistributionScreenProps {
     partyIds: string[];
@@ -105,13 +106,17 @@ export const ExperienceDistributionScreen: React.FC<ExperienceDistributionScreen
             </div>
 
             {!anyCanLevelUp && (
-                <button
-                    className={`${styles.continueButton} ${styles.visible}`}
-                    data-testid="continue-button"
-                    onClick={onContinue}
-                >
-                    {t('common.continue')}
-                </button>
+                <div className={styles.actionsContainer}>
+                    <PrimaryButton
+                        variant="gold"
+                        radiate={true}
+                        onClick={onContinue}
+                        data-testid="continue-button"
+                        className={styles.continueButton}
+                    >
+                        {t('common.continue')}
+                    </PrimaryButton>
+                </div>
             )}
 
             {selectedCompanionId && (() => {
