@@ -2,16 +2,16 @@ import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { type PuzzleData, type PuzzleOption } from '../../../../types/adventure.types';
-import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './SumTargetEngine';
+import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './RefillCanteenEngine';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
-import styles from './SumTargetPuzzle.module.css';
+import styles from './RefillCanteenPuzzle.module.css';
 
-interface SumTargetPuzzleProps {
+interface RefillCanteenPuzzleProps {
     data: PuzzleData;
     onSolve: () => void;
 }
 
-export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
+export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps) => {
     const [currentSum, setCurrentSum] = useState(0);
     const [isSolved, setIsSolved] = useState(false);
     const [usedOptions, setUsedOptions] = useState<number[]>([]); // Track indices of used options

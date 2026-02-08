@@ -39,13 +39,13 @@ export interface MapCoordinates {
 
 // Puzzle Types
 export const PuzzleType = {
-    SUM_TARGET: 'SUM_TARGET',     // Water Flow
-    BALANCE: 'BALANCE',           // Weighing Rocks
-    SEQUENCE: 'SEQUENCE',          // Star Map
-    GUARDIAN_TRIBUTE: 'GUARDIAN_TRIBUTE', // Adventure 2: Division/Distribution
-    SYMMETRY: 'SYMMETRY',         // Adventure 3: Mirror Mist
-    LATIN_SQUARE: 'LATIN_SQUARE',  // Adventure 3: Keystone Cipher
-    NUMBER_PATH: 'NUMBER_PATH'    // Sifferstigen (Number Path)
+    REFILL_CANTEEN: 'REFILL_CANTEEN',
+    BALANCE: 'BALANCE',
+    SEQUENCE: 'SEQUENCE',
+    GUARDIAN_TRIBUTE: 'GUARDIAN_TRIBUTE',
+    SYMMETRY: 'SYMMETRY',
+    LATIN_SQUARE: 'LATIN_SQUARE',
+    NUMBER_PATH: 'NUMBER_PATH'
 } as const;
 
 export type PuzzleType = typeof PuzzleType[keyof typeof PuzzleType];

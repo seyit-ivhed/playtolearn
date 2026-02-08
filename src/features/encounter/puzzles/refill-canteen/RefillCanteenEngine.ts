@@ -3,11 +3,11 @@ import { PuzzleType, type PuzzleData, type PuzzleOption } from '../../../../type
 import { getRandomInt } from '../../../../utils/math/helpers';
 
 /**
- * Core engine for the Sum Target (Pipe Connections) puzzle.
+ * Core engine for the Refill Canteen puzzle.
  * Encapsulates logic for calculating sums and validating the solution.
  */
 
-export const generateSumTargetData = (difficulty: DifficultyLevel): PuzzleData => {
+export const generateRefillCanteenData = (difficulty: DifficultyLevel): PuzzleData => {
     let current = 0;
     const solutionPipes: (number | PuzzleOption)[] = [];
     const decoyPipes: (number | PuzzleOption)[] = [];
@@ -84,7 +84,7 @@ export const generateSumTargetData = (difficulty: DifficultyLevel): PuzzleData =
     }
 
     return {
-        puzzleType: PuzzleType.SUM_TARGET,
+        puzzleType: PuzzleType.REFILL_CANTEEN,
         targetValue: current,
         options: allOptions.filter(o => typeof o === 'number' ? o !== 0 : o.value !== 0)
     };

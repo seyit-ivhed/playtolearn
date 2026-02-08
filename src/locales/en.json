@@ -35,7 +35,7 @@
                     "label": "Scorpion Nest"
                 },
                 "1_3": {
-                    "label": "Water Flow Puzzle"
+                    "label": "Refill Canteen"
                 },
                 "1_4": {
                     "label": "Bandit Scouts"
@@ -73,7 +73,7 @@
                     "label": "Bandit Guards"
                 },
                 "2_2": {
-                    "label": "Water Network"
+                    "label": "Refill Canteen"
                 },
                 "2_3": {
                     "label": "Common Area"
@@ -199,7 +199,7 @@
                     "label": "Lioness Hunt"
                 },
                 "5_3": {
-                    "label": "Scorched Path"
+                    "label": "Refill Canteen"
                 },
                 "5_4": {
                     "label": "Rhino Charge"
@@ -358,8 +358,8 @@
         "sequence": {
             "instruction": "Connect the stars in order!"
         },
-        "flask": {
-            "target": "Choose the water to reach exactly {{target}}!"
+        "refill_canteen": {
+            "instruction": "Refill your canteen by choosing the right amount of water"
         },
         "balance": {
             "instruction": "Remove stones until both piles are of equal height!"
@@ -369,6 +369,12 @@
         },
         "number_path": {
             "instruction": "Create a continuous path by filling in the numbers!"
+        },
+        "symmetry": {
+            "instruction": "Mirror the pattern on the right side!"
+        },
+        "latin_square": {
+            "instruction": "Place elemental runes so each appears exactly once in every row and column."
         }
     },
     "companions": {

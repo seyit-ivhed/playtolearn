@@ -26,7 +26,7 @@ export const ADVENTURES: Adventure[] = [
                 type: EncounterType.PUZZLE,
                 coordinates: { x: -150, y: 1200 },
                 puzzleData: {
-                    puzzleType: PuzzleType.SUM_TARGET
+                    puzzleType: PuzzleType.REFILL_CANTEEN
                 },
             },
             {
@@ -116,7 +116,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_2',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 100, y: 900 },
-                puzzleData: { puzzleType: PuzzleType.SUM_TARGET },
+                puzzleData: { puzzleType: PuzzleType.REFILL_CANTEEN },
             },
             {
                 id: '2_3',
@@ -346,7 +346,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '5_3',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 200, y: 1500 },
-                puzzleData: { puzzleType: PuzzleType.SUM_TARGET },
+                puzzleData: { puzzleType: PuzzleType.REFILL_CANTEEN },
             },
             {
                 id: '5_4',

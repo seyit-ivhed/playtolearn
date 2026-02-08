@@ -8,7 +8,7 @@ import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType } from '../../types/adventure.types';
 import { type DifficultyLevel } from '../../types/math.types';
 import { generatePuzzleData } from '../../utils/math-generator';
-import { SumTargetPuzzle } from './puzzles/sum-target/SumTargetPuzzle';
+import { RefillCanteenPuzzle } from './puzzles/refill-canteen/RefillCanteenPuzzle';
 import { BalancePuzzle } from './puzzles/balance/BalancePuzzle';
 import { SequencePuzzle } from './puzzles/sequence/SequencePuzzle';
 import { GuardianTributePuzzle } from './puzzles/guardian-tribute/GuardianTributePuzzle';
@@ -51,20 +51,20 @@ const PuzzlePage = () => {
             return '';
         }
         switch (puzzleData.puzzleType) {
-            case PuzzleType.SUM_TARGET:
-                return t('puzzle.flask.target', { target: puzzleData.targetValue });
+            case PuzzleType.REFILL_CANTEEN:
+                return t('puzzle.refill_canteen.instruction');
             case PuzzleType.BALANCE:
-                return t('puzzle.balance.instruction', 'Remove stones until both piles are of equal height!');
+                return t('puzzle.balance.instruction');
             case PuzzleType.SEQUENCE:
-                return t('puzzle.sequence.instruction', 'Connect the stars in order!');
+                return t('puzzle.sequence.instruction');
             case PuzzleType.GUARDIAN_TRIBUTE:
-                return t('puzzle.guardian_tribute.instruction', 'Distribute the gems among the statues');
+                return t('puzzle.guardian_tribute.instruction');
             case PuzzleType.SYMMETRY:
-                return t('puzzle.symmetry.instruction', 'Mirror the pattern on the right side!');
+                return t('puzzle.symmetry.instruction');
             case PuzzleType.LATIN_SQUARE:
-                return t('puzzle.latin_square.instruction', 'Place elemental runes so each appears exactly once in every row and column.');
+                return t('puzzle.latin_square.instruction');
             case PuzzleType.NUMBER_PATH:
-                return t('puzzle.number_path.instruction', 'Create a continuous path by filling in the numbers!');
+                return t('puzzle.number_path.instruction');
             default:
                 return '';
         }
@@ -139,8 +139,8 @@ const PuzzlePage = () => {
             )}
 
             <main className={styles.puzzleContent}>
-                {puzzleData.puzzleType === PuzzleType.SUM_TARGET && (
-                    <SumTargetPuzzle
+                {puzzleData.puzzleType === PuzzleType.REFILL_CANTEEN && (
+                    <RefillCanteenPuzzle
                         data={puzzleData}
                         onSolve={handleSolve}
                     />

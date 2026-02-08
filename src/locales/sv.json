@@ -35,7 +35,7 @@
                     "label": "Skorpionnäste"
                 },
                 "1_3": {
-                    "label": "Vattenflödespussel"
+                    "label": "Fyll på fältflaskan"
                 },
                 "1_4": {
                     "label": "Banditspanare"
@@ -73,7 +73,7 @@
                     "label": "Banditvakter"
                 },
                 "2_2": {
-                    "label": "Vattennätverk"
+                    "label": "Fyll på flaskan"
                 },
                 "2_3": {
                     "label": "Patrullerande banditer"
@@ -199,7 +199,7 @@
                     "label": "Lejoninnejakt"
                 },
                 "5_3": {
-                    "label": "Svedd Stig"
+                    "label": "Fyll på fältflaskan"
                 },
                 "5_4": {
                     "label": "Noshörningsanfall"
@@ -358,8 +358,8 @@
         "sequence": {
             "instruction": "Koppla ihop stjärnorna i rätt ordning!"
         },
-        "flask": {
-            "target": "Använd vattnet för att nå exakt {{target}}!"
+        "refill_canteen": {
+            "instruction": "Fyll på din fältflaska genom att välja rätt mängd vatten"
         },
         "balance": {
             "instruction": "Ta bort stenar tills båda högarna är lika höga!"
@@ -369,6 +369,12 @@
         },
         "number_path": {
             "instruction": "Fyll i siffrorna för att skapa en sammanhängande stig!"
+        },
+        "symmetry": {
+            "instruction": "Spegla mönstret på den högra sidan!"
+        },
+        "latin_square": {
+            "instruction": "Placera element-runor så att varje runa förekommer exakt en gång i varje rad och kolumn."
         }
     },
     "companions": {
