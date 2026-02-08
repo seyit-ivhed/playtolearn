@@ -23,7 +23,7 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
     const isVictory = result === 'VICTORY';
 
     return (
-        <div className="completion-overlay">
+        <div className={`completion-overlay ${isVictory ? 'victory' : 'defeat'}`}>
             {isVictory && (
                 <div className="particles-backdrop">
                     <GameParticles options={VICTORY_CONFETTI_OPTIONS} />

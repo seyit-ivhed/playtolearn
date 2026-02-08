@@ -102,6 +102,28 @@
     margin-top: 1rem;
 }
 
+.completion-overlay.victory .completion-btn-primary {
+    background: var(--color-brand-accent);
+    color: #1a150f;
+    /* High contrast dark text */
+    border: none;
+    font-size: 1.4rem;
+    padding: 1rem 4rem;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.completion-overlay.victory .completion-btn-primary:hover {
+    background: #ffd93d;
+    /* Brightening the amber/gold */
+    box-shadow: 0 0 35px rgba(255, 215, 0, 0.5);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.completion-overlay.defeat .completion-btn-primary {
+    opacity: 0.8;
+}
+
 /* Reset or remove old modal classes that are no longer used */
 .completion-modal,
 .reward-section,
