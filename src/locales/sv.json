@@ -359,7 +359,7 @@
             "instruction": "Koppla ihop stjärnorna i rätt ordning!"
         },
         "flask": {
-            "target": "Fyll din fältflaska till exakt {{target}}"
+            "target": "Använd vattnet för att nå exakt {{target}}!"
         },
         "balance": {
             "instruction": "Ta bort stenar tills båda högarna är lika höga!"

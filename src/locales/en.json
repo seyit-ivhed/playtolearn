@@ -359,7 +359,7 @@
             "instruction": "Connect the stars in order!"
         },
         "flask": {
-            "target": "Fill your canteen to exactly {{target}}"
+            "target": "Choose the water to reach exactly {{target}}!"
         },
         "balance": {
             "instruction": "Remove stones until both piles are of equal height!"

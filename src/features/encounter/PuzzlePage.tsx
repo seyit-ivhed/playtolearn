@@ -132,6 +132,12 @@ const PuzzlePage = () => {
                 </button>
             </header>
 
+            {instruction && (
+                <div className={styles.instructionContainer}>
+                    <p className={styles.instructionText}>{instruction}</p>
+                </div>
+            )}
+
             <main className={styles.puzzleContent}>
                 {puzzleData.puzzleType === PuzzleType.SUM_TARGET && (
                     <SumTargetPuzzle
