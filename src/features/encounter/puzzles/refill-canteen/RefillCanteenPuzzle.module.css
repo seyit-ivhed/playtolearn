@@ -318,12 +318,17 @@
 }
 
 .successMessage {
-    font-size: 3rem;
-    font-weight: 800;
-    color: #10b981;
-    text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #0fb27a;
+    text-shadow:
+        0 0 10px rgba(16, 185, 129, 0.4),
+        0 0 20px rgba(255, 255, 255, 0.8),
+        0 4px 10px rgba(0, 0, 0, 0.2);
     font-family: var(--font-display);
-    animation: successPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: successPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 @keyframes successPop {
