@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
 import type { PuzzleData } from '../../../../types/adventure.types';
 import {
     type BalancePuzzleData,
@@ -9,6 +8,7 @@ import {
     validateBalance
 } from './BalanceEngine';
 import styles from './BalancePuzzle.module.css';
+import { PrimaryButton } from '@/components/ui/PrimaryButton';
 
 interface BalancePuzzleProps {
     data: PuzzleData;
@@ -30,7 +30,9 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
     const rightRunes = GREEK_RUNES.slice(6, 12);
 
     const handleRemoveWeight = (side: 'left' | 'right', weightId: string) => {
-        if (isSolved) return;
+        if (isSolved) {
+            return;
+        }
 
         if (side === 'left') {
             const next = leftStack.filter(w => w.id !== weightId);
@@ -46,12 +48,16 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
     const checkSolution = (l: Weight[], r: Weight[]) => {
         if (validateBalance(l, r)) {
             setIsSolved(true);
-            setTimeout(() => onSolve(), 3000);
+            setTimeout(() => {
+                onSolve();
+            }, 3000);
         }
     };
 
     const handleReset = () => {
-        if (isSolved) return;
+        if (isSolved) {
+            return;
+        }
         setLeftStack(initialData.leftStack);
         setRightStack(initialData.rightStack);
     };
@@ -61,88 +67,65 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
 
     return (
         <div className={styles.layout}>
-            <div className={styles.puzzleWrapper}>
-                {/* Immersive Background */}
-                <div className={styles.backgroundContainer} />
-                <div className={styles.vignette} />
+            {/* Immersive Background */}
+            <div className={styles.backgroundContainer} />
+            <div className={styles.vignette} />
 
+            <div className={styles.puzzleWrapper}>
                 {/* Gate Runes Overlay */}
                 <div className={styles.runesContainer}>
-                    <div className={styles.doorRunesLeft}>
-                        <div className={styles.runeColumn}>
-                            {leftRunes.slice(0, 3).map((r, i) => (
-                                <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
-                            ))}
-                        </div>
-                        <div className={styles.runeColumn}>
-                            {leftRunes.slice(3, 6).map((r, i) => (
-                                <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
-                            ))}
-                        </div>
+                    <div className={styles.runeColumn}>
+                        {leftRunes.map((r, i) => (
+                            <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
+                        ))}
                     </div>
-                    <div className={styles.doorRunesRight}>
-                        <div className={styles.runeColumn}>
-                            {rightRunes.slice(0, 3).map((r, i) => (
-                                <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
-                            ))}
-                        </div>
-                        <div className={styles.runeColumn}>
-                            {rightRunes.slice(3, 6).map((r, i) => (
-                                <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
-                            ))}
-                        </div>
+                    <div className={styles.runeColumn}>
+                        {rightRunes.map((r, i) => (
+                            <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
+                        ))}
                     </div>
                 </div>
 
-                {/* Instructions Overlay */}
-                {instruction && (
-                    <div className={styles.puzzleInstruction}>
-                        "{instruction}"
-                    </div>
-                )}
-
                 {/* Puzzle Content */}
                 <div className={styles.puzzleContent}>
+                    {/* Instructions */}
+                    {instruction && (
+                        <div className={styles.puzzleInstruction}>
+                            {instruction}
+                        </div>
+                    )}
+
                     <div className={styles.platesContainer}>
                         {/* Left Plate Area */}
                         <div className={styles.stackSection}>
                             <div className={styles.weightStack}>
-                                <AnimatePresence>
-                                    {leftStack.map((weight) => (
-                                        <WeightComponent
-                                            key={weight.id}
-                                            weight={weight}
-                                            side="left"
-                                            onRemove={handleRemoveWeight}
-                                            disabled={isSolved}
-                                        />
-                                    ))}
-                                </AnimatePresence>
+                                {leftStack.map((weight) => (
+                                    <WeightComponent
+                                        key={weight.id}
+                                        weight={weight}
+                                        side="left"
+                                        onRemove={handleRemoveWeight}
+                                        disabled={isSolved}
+                                    />
+                                ))}
                             </div>
                             <div className={styles.plateInfo}>
                                 {leftTotal}
                             </div>
                         </div>
 
-                        {/* Controls/Status in between */}
-                        <div className={styles.controls}>
-                            {/* Spacing between plates */}
-                        </div>
-
                         {/* Right Plate Area */}
                         <div className={styles.stackSection}>
                             <div className={styles.weightStack}>
-                                <AnimatePresence>
-                                    {rightStack.map((weight) => (
-                                        <WeightComponent
-                                            key={weight.id}
-                                            weight={weight}
-                                            side="right"
-                                            onRemove={handleRemoveWeight}
-                                            disabled={isSolved}
-                                        />
-                                    ))}
-                                </AnimatePresence>
+                                {rightStack.map((weight) => (
+                                    <WeightComponent
+                                        key={weight.id}
+                                        weight={weight}
+                                        side="right"
+                                        onRemove={handleRemoveWeight}
+                                        disabled={isSolved}
+                                    />
+                                ))}
                             </div>
                             <div className={styles.plateInfo}>
                                 {rightTotal}
@@ -150,20 +133,21 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
                         </div>
                     </div>
 
-                    <AnimatePresence>
-                        {!isSolved && (
-                            <motion.button
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                className={styles.resetBtn}
+                    {/* Controls/Status */}
+                    <div className={styles.controls}>
+                        {isSolved ? (
+                            <div className={styles.successMessage}>
+                                {t('puzzle.success', 'Success! ✨')}
+                            </div>
+                        ) : (
+                            <PrimaryButton
                                 onClick={handleReset}
                                 data-testid="puzzle-reset-button"
                             >
                                 {t('common.start_over', 'Start Over')}
-                            </motion.button>
+                            </PrimaryButton>
                         )}
-                    </AnimatePresence>
+                    </div>
                 </div>
             </div>
         </div>
@@ -179,16 +163,16 @@ interface WeightComponentProps {
 
 const WeightComponent = ({ weight, side, onRemove, disabled }: WeightComponentProps) => {
     return (
-        <motion.div
-            layout
-            initial={{ opacity: 0, scale: 0.8, y: -50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.5, y: 50 }}
-            transition={{ type: 'tween', ease: 'easeIn', duration: 0.2 }}
-            className={`${styles.weight} ${weight.isHeavy ? styles.heavyWeight : ''}`}
-            onClick={() => !weight.isHeavy && !disabled && onRemove(side, weight.id)}
+        <div
+            className={`${styles.weight} ${weight.isHeavy ? styles.heavyWeight : ''} ${disabled ? styles.disabled : ''} ${styles.weightEntering}`}
+            onClick={() => {
+                if (!weight.isHeavy && !disabled) {
+                    onRemove(side, weight.id);
+                }
+            }}
         >
             {weight.value}
-        </motion.div>
+        </div>
     );
 };
+

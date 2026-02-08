@@ -1,34 +1,23 @@
+/* Layout */
 .layout {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: #000000;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    gap: 2rem;
+    font-family: var(--font-display);
+    position: relative;
     overflow: hidden;
-    font-family: 'Cinzel', serif;
-    box-sizing: border-box;
 }
 
-.layout * {
-    box-sizing: border-box;
-}
-
-/* Container that maintains aspect ratio to keep background and foreground in sync */
 .puzzleWrapper {
     position: relative;
-    /* Force 16:9 and fit within the available space */
-    aspect-ratio: 16 / 9;
-    height: 100%;
-    width: auto;
-    max-width: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    container-type: inline-size;
+    padding: 2rem;
 }
 
 .backgroundContainer {
@@ -38,232 +27,207 @@
     width: 100%;
     height: 100%;
     background-image: url('../../../../assets/images/puzzles/balance/gate.png');
-    background-size: 100% 100%;
+    background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    opacity: 0.15;
     z-index: 1;
-}
-
-.runesContainer {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20%;
-    height: 30%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 2;
     pointer-events: none;
 }
 
-.doorRunesLeft,
-.doorRunesRight {
-    display: flex;
-    gap: 2cqw;
-    width: 40%;
-    justify-content: center;
-}
-
-.runeColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 2cqw;
-}
-
-.rune {
-    font-size: 4cqw;
-    color: rgba(0, 0, 0, 0.7);
-    font-family: serif;
-    font-weight: bold;
-    line-height: 1;
-    transition: color 1s ease;
-}
-
-.runeLit {
-    color: #60a5fa;
-    text-shadow:
-        0 0 1cqw #2563eb,
-        0 0 2cqw #3b82f6,
-        0 0 3cqw #60a5fa;
-    filter: brightness(1.5);
-}
-
-/* Fade effect using multiple gradients to mask edges */
 .vignette {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background:
-        /* Top/Bottom fade */
-        linear-gradient(to bottom, #000000 0%, transparent 15%, transparent 85%, #000000 100%),
-        /* Left/Right fade */
-        linear-gradient(to right, #000000 0%, transparent 15%, transparent 85%, #000000 100%),
-        /* Center focus */
-        radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.4) 60%, #000000 100%);
+    background: radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
     z-index: 2;
     pointer-events: none;
 }
 
 .puzzleContent {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     z-index: 3;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    padding-bottom: 12%;
-    /* Proportional bottom padding */
+    gap: 3rem;
 }
 
 .puzzleInstruction {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-    width: max-content;
-    max-width: 85%;
+    font-size: 1.5rem;
+    color: var(--color-chronicle-text-dark);
     text-align: center;
-    color: #ffd32a;
-    font-family: 'Cinzel', serif;
-    font-size: 3cqw;
-    letter-spacing: 0.1cqw;
-    text-shadow: 0 0 1.5cqw rgba(0, 0, 0, 0.8);
-    pointer-events: none;
-    line-height: 1.2;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 1cqw 3cqw;
-    border-radius: 1cqw;
+    max-width: 80%;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 1rem;
 }
 
 .platesContainer {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 16%;
-    /* Adjust based on gate.png plate distance */
-    width: 50%;
+    gap: 6rem;
+    width: 100%;
 }
 
 .stackSection {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 35%;
-    /* Relative width within platesContainer */
+    gap: 1.5rem;
+    width: 200px;
 }
 
 .weightStack {
     display: flex;
     flex-direction: column-reverse;
-    /* Bottom up */
     align-items: center;
-    min-height: 250%;
-    /* Allow stack to grow relative to section */
+    min-height: 300px;
     width: 100%;
-    justify-content: flex-start;
-    padding-bottom: 30%;
-    /* Relative space for the "plate" area in image */
+    padding-bottom: 2rem;
+    position: relative;
 }
 
+/* Base Weight style */
 .weight {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 120 / 45;
+    width: 140px;
+    height: 50px;
     background-image: url('../../../../assets/images/puzzles/balance/weight.png');
     background-size: 100% 100%;
-    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Move text 3px downwards */
-    padding-top: 1cqw;
-    /* Magical cyan glow */
-    color: #a5f3fc;
-    font-family: 'Cinzel', serif;
-    font-size: 3.2cqw;
-    font-weight: bold;
-    text-shadow:
-        -1px -1px 0 rgba(0, 0, 0, 0.7),
-        1px 1px 0 rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     cursor: pointer;
-    margin-bottom: -15%;
-    transition: transform 0.2s ease, filter 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: -15px;
+    position: relative;
 }
 
-.weight:hover {
-    transform: scale(1.2) translateY(-0.5cqw);
-    filter: brightness(1.2) drop-shadow(0 0 1cqw rgba(255, 211, 42, 0.4));
+.weight:hover:not(.disabled) {
+    transform: translateY(-5px) scale(1.05);
+    filter: brightness(1.2);
+    z-index: 10;
+}
+
+.weight.disabled {
+    cursor: default;
 }
 
 .heavyWeight {
-    aspect-ratio: 150 / 60;
-    /* Specific ratio for heavy asset */
+    width: 180px;
+    height: 70px;
     background-image: url('../../../../assets/images/puzzles/balance/heavy-weight.png');
     cursor: default;
 }
 
-.heavyWeight:hover {
-    transform: none;
-    filter: none;
-}
-
 .plateInfo {
-    /* Matching magical cyan */
-    color: #7dd3fc;
-    font-family: 'Cinzel', serif;
-    font-size: 4.5cqw;
-    font-weight: bold;
-    text-shadow:
-        -1px -1px 0 rgba(0, 0, 0, 0.7),
-        1px 1px 0 rgba(255, 255, 255, 0.2);
-    letter-spacing: 0.3cqw;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-chronicle-text-dark);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .controls {
+    margin-top: 2rem;
+    min-height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.successMessage {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--color-success, #10b981);
+    text-shadow:
+        0 0 10px rgba(16, 185, 129, 0.4),
+        0 0 20px rgba(255, 255, 255, 0.8),
+        0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: successPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+@keyframes successPop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animations for removal */
+.weightEntering {
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+.weightExiting {
+    animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(50px) scale(0.5);
+    }
+}
+
+/* Runes - keeping some of the mystic feel but cleaner */
+.runesContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.3;
+}
+
+.runeColumn {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 2cqw;
-    /* Maintain spacing between plates */
-    min-width: 17cqw;
+    gap: 1rem;
 }
 
-.resetBtn {
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    border: 0.1cqw solid #ffd32a;
-    color: #ffd32a;
-    padding: 1cqw 3cqw;
-    font-family: 'Cinzel', serif;
-    font-size: 2cqw;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.2cqw;
-    box-shadow: 0 0.5cqw 2cqw rgba(0, 0, 0, 0.5);
-    z-index: 10;
+.rune {
+    font-size: 2rem;
+    color: var(--color-chronicle-text);
+    transition: all 1s ease;
 }
 
-.resetBtn:hover:not(:disabled) {
-    background: #ffd32a;
-    color: #000000;
-    box-shadow: 0 0 2cqw rgba(255, 211, 42, 0.4);
-    transform: translateX(-50%);
-}
-
-.resetBtn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    border-color: #444;
+.runeLit {
+    color: var(--color-brand-primary);
+    text-shadow: 0 0 10px var(--color-brand-primary);
+    opacity: 1;
 }
