@@ -96,9 +96,9 @@
 }
 
 .chain {
-    width: 16px;
+    width: 64px;
     height: 1500px;
-    background-image: url('../../../../assets/images/puzzles/balance/scale-chain.png');
+    background-image: url('../../../../assets/images/puzzles/balance/chain.png');
     background-size: contain;
     background-repeat: repeat;
     position: absolute;
@@ -108,11 +108,11 @@
 
 /* Position two chains at the edges of the heavy weight (which is 180px wide) */
 .chain:nth-child(1) {
-    left: 50px;
+    left: 30px;
 }
 
 .chain:nth-child(2) {
-    right: 50px;
+    right: 30px;
 }
 
 .weightStack {
