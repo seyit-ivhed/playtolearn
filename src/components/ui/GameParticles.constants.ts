@@ -168,8 +168,8 @@ export const VICTORY_CONFETTI_OPTIONS: ISourceOptions = {
         },
         size: {
             value: {
-                min: 3,
-                max: 8
+                min: 2,
+                max: 5
             }
         },
         life: {
@@ -187,7 +187,7 @@ export const VICTORY_CONFETTI_OPTIONS: ISourceOptions = {
             },
             speed: {
                 min: 25,
-                max: 50
+                max: 100
             },
             decay: 0.05,
             direction: "top",
@@ -208,7 +208,7 @@ export const VICTORY_CONFETTI_OPTIONS: ISourceOptions = {
         {
             direction: "top-right",
             rate: {
-                quantity: 15,
+                quantity: 10,
                 delay: 0.1
             },
             size: {
@@ -223,7 +223,7 @@ export const VICTORY_CONFETTI_OPTIONS: ISourceOptions = {
         {
             direction: "top-left",
             rate: {
-                quantity: 15,
+                quantity: 10,
                 delay: 0.1
             },
             size: {
