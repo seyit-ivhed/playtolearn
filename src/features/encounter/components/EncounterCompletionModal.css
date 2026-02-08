@@ -43,6 +43,12 @@
 }
 
 /* Titles */
+.completion-banner {
+    animation: banner-entrance 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+}
+
 .completion-banner h1 {
     margin: 0;
     font-weight: 900;
@@ -100,6 +106,9 @@
 /* Button Container */
 .completion-actions {
     margin-top: 1rem;
+    animation: actions-entrance 0.6s ease-out forwards;
+    animation-delay: 1.2s;
+    opacity: 0;
 }
 
 .completion-overlay.victory .completion-btn-primary {
@@ -174,4 +183,28 @@
 .completion-modal.victory::before,
 .completion-btn {
     display: none;
+}
+
+@keyframes banner-entrance {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes actions-entrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

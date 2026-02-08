@@ -31,14 +31,9 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
             )}
 
             <div className="completion-content">
-                <motion.div
-                    className={`completion-banner ${isVictory ? 'victory' : 'defeat'}`}
-                    initial={{ scale: 0.5, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.5, type: "spring" }}
-                >
+                <div className={`completion-banner ${isVictory ? 'victory' : 'defeat'}`}>
                     <h1>{isVictory ? t('combat.completion.victory_title', 'VICTORY!') : t('combat.completion.defeat_title', 'DEFEAT')}</h1>
-                </motion.div>
+                </div>
 
                 {isVictory && (
                     <div className="stars-row">
@@ -66,19 +61,14 @@ export const EncounterCompletionModal: React.FC<EncounterCompletionModalProps> =
                     </div>
                 )}
 
-                <motion.div
-                    className="completion-actions"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.2 }}
-                >
+                <div className="completion-actions">
                     <PrimaryButton
                         className="completion-btn-primary"
                         onClick={onContinue}
                     >
                         {t('combat.completion.continue_button', 'Continue')}
                     </PrimaryButton>
-                </motion.div>
+                </div>
             </div>
         </div>
     );
