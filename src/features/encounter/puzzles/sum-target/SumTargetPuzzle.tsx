@@ -52,7 +52,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                 <div className={styles.canteenWrapper}>
                     {/* Target value on the left, level with the target line */}
                     <div className={styles.targetIndicator}>
-                        <div className={styles.targetValue}>{target}L</div>
+                        <div className={styles.targetValue}>{target}</div>
                     </div>
 
                     <div className={`${styles.canteenContainer} ${isOverfilled ? styles.overfilled : ''}`}>
@@ -73,7 +73,7 @@ export const SumTargetPuzzle = ({ data, onSolve }: SumTargetPuzzleProps) => {
                             </div>
 
                             <div className={styles.currentValueOverlay}>
-                                {currentSum}L
+                                {currentSum}
                             </div>
                         </div>
                     </div>

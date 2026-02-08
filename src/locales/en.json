@@ -357,13 +357,13 @@
         "reset": "Reset",
         "target": "Target",
         "irrigation": {
-            "target": "Target Litres"
+            "target": "Target"
         },
         "sequence": {
             "instruction": "Connect the stars in order!"
         },
         "flask": {
-            "target": "Fill your canteen to exactly {{target}}L"
+            "target": "Fill your canteen to exactly {{target}}"
         },
         "balance": {
             "instruction": "Remove stones until both piles are of equal height!"

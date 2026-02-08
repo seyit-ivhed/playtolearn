@@ -357,13 +357,13 @@
         "reset": "Nollställ",
         "target": "Mål",
         "irrigation": {
-            "target": "Målliter"
+            "target": "Mål"
         },
         "sequence": {
             "instruction": "Koppla ihop stjärnorna i rätt ordning!"
         },
         "flask": {
-            "target": "Fyll din fältflaska till exakt {{target}}L"
+            "target": "Fyll din fältflaska till exakt {{target}}"
         },
         "balance": {
             "instruction": "Ta bort stenar tills båda högarna är lika höga!"
