@@ -95,12 +95,12 @@
 
 .chain {
     width: 16px;
-    height: 400px;
+    height: 1500px;
     background-image: url('../../../../assets/images/puzzles/balance/scale-chain.png');
     background-size: contain;
-    background-repeat: repeat-y;
+    background-repeat: repeat;
     position: absolute;
-    top: -400px;
+    bottom: 90px;
     z-index: 1;
 }
 
