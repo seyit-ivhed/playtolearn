@@ -183,6 +183,7 @@ interface WeightComponentProps {
 const WeightComponent = ({ weight, side, onRemove, disabled }: WeightComponentProps) => {
     return (
         <div
+            data-testid={`weight-${side}-${weight.id}`}
             className={`${styles.weight} ${weight.isHeavy ? styles.heavyWeight : ''} ${disabled ? styles.disabled : ''} ${styles.weightEntering}`}
             onClick={() => {
                 if (!weight.isHeavy && !disabled) {

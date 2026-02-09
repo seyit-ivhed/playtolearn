@@ -102,6 +102,7 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
                         return (
                             <button
                                 key={`${idx}`}
+                                data-testid={`scoop-option-${idx}`}
                                 className={`${styles.scoop} ${isUsed ? styles.used : ''}`}
                                 onClick={() => handlePipeClick(option, idx)}
                                 disabled={isSolved || isUsed}
