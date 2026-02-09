@@ -107,9 +107,9 @@ export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleD
     const leftRemaining = leftSolutionTotal - heavyLeft.value;
     const rightRemaining = rightSolutionTotal - heavyRight.value;
 
-    // Ensure we don't have negative remaining weight if target is too low
-    const lCount = getRandomInt(minSolutionWeights, maxSolutionWeights);
-    const rCount = getRandomInt(minSolutionWeights, maxSolutionWeights);
+    // Ensure we have at least 1 per weight by capping count to the target value
+    const lCount = Math.min(getRandomInt(minSolutionWeights, maxSolutionWeights), Math.max(1, leftRemaining));
+    const rCount = Math.min(getRandomInt(minSolutionWeights, maxSolutionWeights), Math.max(1, rightRemaining));
 
     const leftSolutionValues = generateComponents(Math.max(1, leftRemaining), lCount);
     const rightSolutionValues = generateComponents(Math.max(1, rightRemaining), rCount);
@@ -119,7 +119,7 @@ export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleD
     const generateNoise = (count: number): number[] => {
         const noise: number[] = [];
         for (let i = 0; i < count; i++) {
-            noise.push(getRandomInt(1, Math.floor(targetBalance / 3)));
+            noise.push(getRandomInt(1, Math.max(1, Math.floor(targetBalance / 3))));
         }
         return noise;
     };
