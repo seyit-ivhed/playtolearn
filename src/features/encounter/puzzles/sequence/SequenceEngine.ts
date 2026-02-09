@@ -53,27 +53,11 @@ export const validateNextStep = (
 };
 
 const isValidFirstStep = (value: number, rule: string): boolean => {
-    // For ADD_N, we usually start at X (e.g. Start at 5, Add 3).
-    // But since our generator creates the options, the "First" valid option 
-    // is just the smallest one in the set usually.
-    // However, validation relies on "Previous". 
-    // If it's the very first click, we might accept ANY number if we assume the user 
-    // can start the sequence anywhere?
-    // OR we check if it matches the 'start' logic of the puzzle.
-
-    // STRICT MODE:
-    // If rule is MULTIPLES_OF_X, start must be X.
     if (rule.startsWith('MULTIPLES_OF_')) {
         const step = parseInt(rule.replace('MULTIPLES_OF_', ''), 10);
         return value === step;
     }
 
-    // For generic ADD or MULTIPLY, we might just let them start anywhere 
-    // as long as subsequent steps follow the rule?
-    // Simplify: ALWAYS Allow the first click to be valid?
-    // Risk: User clicks the middle of a chain.
-    // Solution: The generator should perhaps provide the "Start Value" in the rules or data?
-    // For now, let's assume the Start Value is the smallest number in the options.
     return true;
 };
 
@@ -154,14 +138,14 @@ export const generateSequenceData = (difficulty: DifficultyLevel): PuzzleData =>
         ruleType = 'ADD';
         step = getRandomInt(1, 2);
         startValue = getRandomInt(1, 5);
-        count = 6;
+        count = 8;
     } else if (difficulty === 2) {
         // Skip counting: +2, +5, +10
         ruleType = 'ADD';
         const options = [2, 5, 10];
         step = options[getRandomInt(0, options.length - 1)];
         startValue = step; // Start at the step value for cleaner sequences
-        count = 7;
+        count = 12;
     } else {
         // Level 3: More skip counting or intro multiplication
         const useMultiply = Math.random() > 0.8;
@@ -169,13 +153,13 @@ export const generateSequenceData = (difficulty: DifficultyLevel): PuzzleData =>
             ruleType = 'MULTIPLY';
             step = 2; // Doubling
             startValue = 1;
-            count = 7; // 1, 2, 4, 8, 16, 32, 64
+            count = 16; // 1, 2, 4, 8, 16, 32...
         } else {
             ruleType = 'ADD';
             const options = [3, 4, 5, 10];
             step = options[getRandomInt(0, options.length - 1)];
             startValue = step;
-            count = 8;
+            count = 16;
         }
     }
 
@@ -192,66 +176,13 @@ export const generateSequenceData = (difficulty: DifficultyLevel): PuzzleData =>
         }
     }
 
-    // Add decoy numbers that break the pattern
-    const decoys: number[] = [];
-    const numDecoys = difficulty <= 2 ? 2 : difficulty <= 3 ? 3 : 4;
-
-    const minValid = validSequence[0];
-    const maxValid = validSequence[validSequence.length - 1];
-    // Allow players to establish pattern with first 3 numbers
-    const minDecoyValue = validSequence.length >= 3 ? validSequence[2] : validSequence[0];
-
-    for (let i = 0; i < numDecoys; i++) {
-        let decoy: number;
-        let attempts = 0;
-
-        do {
-            attempts++;
-            if (ruleType === 'ADD') {
-                const baseIndex = getRandomInt(Math.min(2, validSequence.length - 1), validSequence.length - 1);
-                const offset = Math.random() > 0.5 ? 1 : -1;
-                decoy = validSequence[baseIndex] + offset;
-            } else {
-                if (validSequence.length > 3) {
-                    const baseIndex = getRandomInt(2, validSequence.length - 2);
-                    const lower = validSequence[baseIndex];
-                    const upper = validSequence[baseIndex + 1];
-                    decoy = getRandomInt(lower + 1, upper - 1);
-                } else {
-                    decoy = maxValid + getRandomInt(1, step);
-                }
-            }
-        } while (
-            (decoy <= 0 ||
-                decoy < minDecoyValue ||
-                validSequence.includes(decoy) ||
-                decoys.includes(decoy) ||
-                decoy < minValid - step ||
-                decoy > maxValid + step) &&
-            attempts < 20
-        );
-
-        if (attempts < 20) {
-            decoys.push(decoy);
-        }
-    }
-
-    // Combine and shuffle
-    const allOptions = [...validSequence, ...decoys];
-
-    // Fisher-Yates shuffle
-    for (let i = allOptions.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [allOptions[i], allOptions[j]] = [allOptions[j], allOptions[i]];
-    }
-
     const targetValue = validSequence[validSequence.length - 1];
     const ruleName = ruleType === 'ADD' ? `ADD_${step}` : `MULTIPLY_${step}`;
 
     return {
         puzzleType: PuzzleType.SEQUENCE,
         targetValue,
-        options: allOptions,
+        options: validSequence,
         rules: [ruleName]
     };
 };

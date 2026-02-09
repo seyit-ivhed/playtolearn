@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { PuzzleData } from '../../../../types/adventure.types';
 import { validateNextStep, isSequenceComplete, generateStarPositions } from './SequenceEngine';
 import styles from './SequencePuzzle.module.css';
@@ -10,7 +9,6 @@ interface SequencePuzzleProps {
 }
 
 export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
-    const { t } = useTranslation();
     const { options, targetValue, rules } = data;
 
     // Convert options to simple number array if they are complex objects (though sequence usually assumes numbers)
@@ -70,13 +68,6 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
             setWrongSelection(index);
         }
     };
-
-    const handleReset = () => {
-        setPath(initialPath);
-        setWrongSelection(null);
-    };
-
-    const isSolved = isSequenceComplete([...path.map(i => numericOptions[i])], targetValue);
 
     return (
         <div className={styles.layout}>
@@ -142,17 +133,6 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
                         </div>
                     );
                 })}
-            </div>
-
-            {/* Reset Button */}
-            <div className={styles.controls}>
-                <button
-                    className={styles.resetBtn}
-                    onClick={handleReset}
-                    disabled={isSolved}
-                >
-                    {t('common.start_over', 'Start Over')}
-                </button>
             </div>
         </div>
     );

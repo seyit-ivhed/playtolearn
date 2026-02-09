@@ -103,13 +103,19 @@ describe('SequenceEngine', () => {
             const lvl1 = generateSequenceData(1);
             expect(lvl1.rules![0]).toMatch(/ADD_(1|2)/);
 
-            const lvl5 = generateSequenceData(5);
-            expect(lvl5.rules![0]).toMatch(/(ADD|MULTIPLY)_\d+/);
+            const lvl3 = generateSequenceData(3);
+            expect(lvl3.rules![0]).toMatch(/(ADD|MULTIPLY)_\d+/);
         });
 
         it('should provide enough options for pattern establishment', () => {
-            const data = generateSequenceData(3);
-            expect(data.options.length).toBeGreaterThanOrEqual(10);
+            const lvl1 = generateSequenceData(1);
+            expect(lvl1.options.length).toBe(8);
+
+            const lvl2 = generateSequenceData(2);
+            expect(lvl2.options.length).toBe(12);
+
+            const lvl3 = generateSequenceData(3);
+            expect(lvl3.options.length).toBe(16);
         });
 
         it('should ensure decoys are distinct from valid sequence members', () => {
