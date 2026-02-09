@@ -345,7 +345,9 @@
             "instruction": "Create a continuous path by filling in the numbers!"
         },
         "symmetry": {
-            "instruction": "Mirror the pattern on the right side!"
+            "instruction": "Mirror the pattern on the right side!",
+            "pattern_title": "Pattern",
+            "mirror_title": "Mirror"
         },
         "latin_square": {
             "instruction": "Place elemental runes so each appears exactly once in every row and column."

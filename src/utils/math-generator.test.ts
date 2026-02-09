@@ -7,9 +7,9 @@ import {
 } from './math-generator';
 import { MathOperation } from '../types/math.types';
 import { PuzzleType } from '../types/adventure.types';
-import { type BalancePuzzleData } from '../features/encounter/puzzles/balance/BalanceEngine';
-import { type SymmetryPuzzleData } from '../features/encounter/puzzles/symmetry/SymmetryEngine';
-import { type LatinSquarePuzzleData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
+import { type BalanceData } from '../features/encounter/puzzles/balance/BalanceEngine';
+import { type SymmetryData } from '../features/encounter/puzzles/symmetry/SymmetryEngine';
+import { type LatinSquareData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
 
 describe('Math Generator Functionality', () => {
     describe('Basic Math Problems', () => {
@@ -75,7 +75,7 @@ describe('Math Generator Functionality', () => {
         });
 
         it('should generate valid Balance puzzle data', () => {
-            const data = generatePuzzleData(PuzzleType.BALANCE, 2) as BalancePuzzleData;
+            const data = generatePuzzleData(PuzzleType.BALANCE, 2) as BalanceData;
             expect(data.puzzleType).toBe(PuzzleType.BALANCE);
             expect(data.leftStack).toBeDefined();
             expect(data.rightStack).toBeDefined();
@@ -94,7 +94,7 @@ describe('Math Generator Functionality', () => {
 
 
         it('should generate valid Symmetry puzzle data', () => {
-            const data = generatePuzzleData(PuzzleType.SYMMETRY, 1) as SymmetryPuzzleData;
+            const data = generatePuzzleData(PuzzleType.SYMMETRY, 1) as SymmetryData;
             expect(data.puzzleType).toBe(PuzzleType.SYMMETRY);
             expect(data.targetValue).toBe(3); // Level 1 -> 3x3
             expect(data.leftOptions).toBeDefined();
@@ -102,10 +102,10 @@ describe('Math Generator Functionality', () => {
         });
 
         it('should generate valid Latin Square puzzle data', () => {
-            const data = generatePuzzleData(PuzzleType.LATIN_SQUARE, 2) as LatinSquarePuzzleData;
+            const data = generatePuzzleData(PuzzleType.LATIN_SQUARE, 2) as LatinSquareData;
             expect(data.puzzleType).toBe(PuzzleType.LATIN_SQUARE);
             expect(data.targetValue).toBe(4);
-            expect(data.options).toBeDefined();
+            expect(data.grid).toBeDefined();
         });
     });
 

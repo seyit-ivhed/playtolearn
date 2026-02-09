@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SymmetryEngine } from './SymmetryEngine';
 import styles from './SymmetryPuzzle.module.css';
 import { type PuzzleProps, type SymmetryData, type SymmetryGridCell } from '../../../../types/adventure.types';
 
 export const SymmetryPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
+    const { t } = useTranslation();
     const puzzleData = data as SymmetryData;
     const gridSize = puzzleData.targetValue;
     const [leftPattern, setLeftPattern] = useState<SymmetryGridCell[]>([]);
@@ -37,6 +39,7 @@ export const SymmetryPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instructi
                 cells.push(
                     <div
                         key={`${x}-${y}`}
+                        data-testid={`symmetry-cell-${isInteractive ? 'right' : 'left'}-${x}-${y}`}
                         className={`${styles.cell} ${cell?.isActive ? styles.active : ''} ${isInteractive ? styles.interactive : ''}`}
                         onClick={isInteractive ? () => handleCellClick(x, y) : undefined}
                     />
@@ -54,12 +57,12 @@ export const SymmetryPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instructi
         <div className={styles.container}>
             <div className={styles.puzzleBoard}>
                 <div className={styles.side}>
-                    <h3>Pattern</h3>
+                    <h3>{t('puzzle.symmetry.pattern_title', 'Pattern')}</h3>
                     {renderGrid(leftPattern, false)}
                 </div>
                 <div className={styles.divider} />
                 <div className={styles.side}>
-                    <h3>Mirror</h3>
+                    <h3>{t('puzzle.symmetry.mirror_title', 'Mirror')}</h3>
                     {renderGrid(rightPattern, true)}
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import {
     LatinSquareEngine,
     generateLatinSquareData,
@@ -83,55 +83,55 @@ describe('LatinSquareEngine', () => {
     });
 
     describe('generateLatinSquareData', () => {
-        // Ensure mocks are cleaned up between tests even if an expectation fails
         afterEach(() => {
             vi.restoreAllMocks();
         });
+
         it('should generate valid puzzle data structure', () => {
             const data = generateLatinSquareData(1);
             expect(data.puzzleType).toBe(PuzzleType.LATIN_SQUARE);
             expect(data.targetValue).toBe(4);
-            expect(Array.isArray(data.options)).toBe(true);
-            expect(data.options).toHaveLength(4); // 4 rows
-            expect((data.options as unknown as LatinSquareElement[][])[0]).toHaveLength(4); // 4 cols
+            expect(Array.isArray(data.grid)).toBe(true);
+            expect(data.grid).toHaveLength(4);
+            expect(data.grid[0]).toHaveLength(4);
         });
 
         it('should have correct number of fixed elements based on difficulty', () => {
             // difficulty 1: totalToKeep = max(4, 10 - 1*2) = 8
             const dataEasy = generateLatinSquareData(1);
-            expect(dataEasy.rules).toHaveLength(8);
+            expect(dataEasy.fixedIndices).toHaveLength(8);
 
             // difficulty 3: totalToKeep = max(4, 10 - 3*2) = 4
             const dataHard = generateLatinSquareData(3);
-            expect(dataHard.rules).toHaveLength(4);
+            expect(dataHard.fixedIndices).toHaveLength(4);
         });
 
-        it('should respect the rules format "row,col"', () => {
+        it('should have valid fixedIndices structure', () => {
             const data = generateLatinSquareData(1);
-            data.rules?.forEach(rule => {
-                expect(rule).toMatch(/^\d,\d$/);
+            data.fixedIndices.forEach(idx => {
+                expect(idx.row).toBeGreaterThanOrEqual(0);
+                expect(idx.row).toBeLessThan(4);
+                expect(idx.col).toBeGreaterThanOrEqual(0);
+                expect(idx.col).toBeLessThan(4);
             });
         });
 
-        it('should populate options grid with fixed elements at specified indices', () => {
+        it('should populate grid with fixed elements at specified indices', () => {
             const data = generateLatinSquareData(1);
-            const grid = data.options as unknown as LatinSquareElement[][];
-            const fixedIndices = data.rules?.map(r => {
-                const [row, col] = r.split(',').map(Number);
-                return { row, col };
-            }) || [];
+            const { grid, fixedIndices } = data;
 
             fixedIndices.forEach(({ row, col }) => {
                 expect(grid[row][col]).not.toBeNull();
             });
 
-            // Count non-nulls
             let nonNullCount = 0;
             grid.forEach(row => row.forEach(cell => {
-                if (cell !== null) nonNullCount++;
+                if (cell !== null) {
+                    nonNullCount++;
+                }
             }));
 
-            expect(nonNullCount).toBe(data.rules?.length);
+            expect(nonNullCount).toBe(fixedIndices.length);
         });
     });
 });

@@ -147,7 +147,6 @@ export const generateNumberPathData = (difficulty: DifficultyLevel): NumberPathD
     return {
         puzzleType: PuzzleType.NUMBER_PATH,
         targetValue: totalCells,
-        options: [],
         gridSize,
         startValue,
         stepValue,

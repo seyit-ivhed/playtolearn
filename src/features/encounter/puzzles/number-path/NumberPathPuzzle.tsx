@@ -128,6 +128,7 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruc
                                 return (
                                     <div
                                         key={`${ri}-${ci}`}
+                                        data-testid={`numberpath-cell-${ri}-${ci}`}
                                         className={`
                                                 ${styles.cell} 
                                                 ${cell.value !== null ? styles.filled : ''}

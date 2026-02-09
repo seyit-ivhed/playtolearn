@@ -197,6 +197,3 @@ export const generateSequenceData = (difficulty: DifficultyLevel): SequenceData 
         rules: [rule.name]
     };
 };
-
-
-

@@ -1,9 +1,7 @@
-import { PuzzleType, type LatinSquareData } from '../../../../types/adventure.types';
+import { PuzzleType, type LatinSquareData, type LatinSquareElement } from '../../../../types/adventure.types';
 import { type DifficultyLevel } from '../../../../types/math.types';
 
-export type LatinSquareElement = 'FIRE' | 'WATER' | 'EARTH' | 'AIR' | null;
-
-export type { LatinSquareData };
+export type { LatinSquareData, LatinSquareElement };
 
 export const generateLatinSquareData = (difficulty: DifficultyLevel): LatinSquareData => {
     const solution: LatinSquareElement[][] = [
@@ -17,7 +15,6 @@ export const generateLatinSquareData = (difficulty: DifficultyLevel): LatinSquar
 
     const puzzleGrid: LatinSquareElement[][] = Array.from({ length: 4 }, () => Array(4).fill(null));
 
-    // Create a list of all possible cell indices
     const candidates: { row: number, col: number }[] = [];
     for (let row = 0; row < 4; row++) {
         for (let col = 0; col < 4; col++) {
@@ -25,7 +22,6 @@ export const generateLatinSquareData = (difficulty: DifficultyLevel): LatinSquar
         }
     }
 
-    // Shuffle candidates to pick random ones without replacement
     for (let i = candidates.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
@@ -41,8 +37,8 @@ export const generateLatinSquareData = (difficulty: DifficultyLevel): LatinSquar
     return {
         puzzleType: PuzzleType.LATIN_SQUARE,
         targetValue: 4,
-        options: puzzleGrid as unknown as LatinSquareData['options'],
-        rules: fixedIndices.map(f => `${f.row},${f.col}`)
+        grid: puzzleGrid,
+        fixedIndices
     };
 };
 
@@ -64,12 +60,16 @@ export class LatinSquareEngine {
     static checkSolution(grid: LatinSquareElement[][]): boolean {
         for (let r = 0; r < 4; r++) {
             const rowSet = new Set(grid[r]);
-            if (rowSet.size !== 4 || rowSet.has(null)) return false;
+            if (rowSet.size !== 4 || rowSet.has(null)) {
+                return false;
+            }
         }
         for (let c = 0; c < 4; c++) {
             const colValues = [grid[0][c], grid[1][c], grid[2][c], grid[3][c]];
             const colSet = new Set(colValues);
-            if (colSet.size !== 4 || colSet.has(null)) return false;
+            if (colSet.size !== 4 || colSet.has(null)) {
+                return false;
+            }
         }
         return true;
     }

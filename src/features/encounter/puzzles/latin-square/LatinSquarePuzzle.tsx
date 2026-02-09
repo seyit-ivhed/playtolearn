@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import { LatinSquareEngine, type LatinSquareElement } from './LatinSquareEngine';
+import { LatinSquareEngine } from './LatinSquareEngine';
 import styles from './LatinSquarePuzzle.module.css';
-import { type PuzzleProps, type LatinSquareData } from '../../../../types/adventure.types';
+import { type PuzzleProps, type LatinSquareData, type LatinSquareElement } from '../../../../types/adventure.types';
 
 export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
     const puzzleData = data as LatinSquareData;
-    const [grid, setGrid] = useState<LatinSquareElement[][]>(() => (puzzleData.options as unknown) as LatinSquareElement[][]);
-    const [fixedIndices] = useState<{ row: number; col: number }[]>(() => {
-        return (puzzleData.rules || []).map(r => {
-            const [row, col] = r.split(',').map(Number);
-            return { row, col };
-        });
-    });
+    const [grid, setGrid] = useState<LatinSquareElement[][]>(() => puzzleData.grid);
+    const [fixedIndices] = useState<{ row: number; col: number }[]>(() => puzzleData.fixedIndices);
     const [isSolved, setIsSolved] = useState(false);
 
     const handleCellClick = (row: number, col: number) => {
@@ -61,6 +56,7 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
                             return (
                                 <div
                                     key={ci}
+                                    data-testid={`latin-cell-${ri}-${ci}`}
                                     className={`${styles.cell} ${isFixed ? styles.fixed : styles.interactive}`}
                                     onClick={() => handleCellClick(ri, ci)}
                                 >

@@ -345,7 +345,9 @@
             "instruction": "Fyll i siffrorna för att skapa en sammanhängande stig!"
         },
         "symmetry": {
-            "instruction": "Spegla mönstret på den högra sidan!"
+            "instruction": "Spegla mönstret på den högra sidan!",
+            "pattern_title": "Mönster",
+            "mirror_title": "Spegel"
         },
         "latin_square": {
             "instruction": "Placera element-runor så att varje runa förekommer exakt en gång i varje rad och kolumn."

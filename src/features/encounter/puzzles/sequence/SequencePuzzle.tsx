@@ -125,6 +125,7 @@ export const SequencePuzzle = ({ data, onSolve }: PuzzleProps) => {
                     return (
                         <div
                             key={index}
+                            data-testid={`sequence-star-${index}`}
                             className={`
                                 ${styles.star} 
                                 ${isSelected ? styles.selected : ''} 

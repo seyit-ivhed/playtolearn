@@ -162,11 +162,13 @@ export interface SymmetryData extends BasePuzzleData {
     rightOptions: SymmetryGridCell[];
 }
 
+export type LatinSquareElement = 'FIRE' | 'WATER' | 'EARTH' | 'AIR' | null;
+
 export interface LatinSquareData extends BasePuzzleData {
     puzzleType: typeof PuzzleType.LATIN_SQUARE;
     targetValue: number; // gridSize
-    options: (number | PuzzleOption)[]; // The grid
-    rules: string[]; // fixedIndices as strings "row,col"
+    grid: LatinSquareElement[][];
+    fixedIndices: { row: number; col: number }[];
 }
 
 export interface NumberPathData extends BasePuzzleData {
