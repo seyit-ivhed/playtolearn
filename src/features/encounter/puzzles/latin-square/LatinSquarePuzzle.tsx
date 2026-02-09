@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { LatinSquareEngine, type LatinSquareElement } from './LatinSquareEngine';
 import styles from './LatinSquarePuzzle.module.css';
-import { type PuzzleData } from '../../../../types/adventure.types';
+import { type PuzzleProps } from '../../../../types/adventure.types';
 
-interface LatinSquarePuzzleProps {
-    data: PuzzleData;
-    onSolve: () => void;
-}
-
-export const LatinSquarePuzzle: React.FC<LatinSquarePuzzleProps> = ({ data, onSolve }) => {
+export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
     const [grid, setGrid] = useState<LatinSquareElement[][]>(() => (data.options as unknown) as LatinSquareElement[][]);
-    const [fixedIndices] = useState<{ row: number, col: number }[]>(() => {
+    const [fixedIndices] = useState<{ row: number; col: number }[]>(() => {
         return (data.rules || []).map(r => {
             const [row, col] = r.split(',').map(Number);
             return { row, col };
@@ -19,7 +14,9 @@ export const LatinSquarePuzzle: React.FC<LatinSquarePuzzleProps> = ({ data, onSo
     const [isSolved, setIsSolved] = useState(false);
 
     const handleCellClick = (row: number, col: number) => {
-        if (isSolved || fixedIndices.some(idx => idx.row === row && idx.col === col)) return;
+        if (isSolved || fixedIndices.some(idx => idx.row === row && idx.col === col)) {
+            return;
+        }
 
         const current = grid[row][col];
         const elements: LatinSquareElement[] = [null, 'FIRE', 'WATER', 'EARTH', 'AIR'];
@@ -49,7 +46,9 @@ export const LatinSquarePuzzle: React.FC<LatinSquarePuzzleProps> = ({ data, onSo
         }
     };
 
-    if (grid.length === 0) return null;
+    if (grid.length === 0) {
+        return null;
+    }
 
     return (
         <div className={styles.container}>
@@ -71,9 +70,11 @@ export const LatinSquarePuzzle: React.FC<LatinSquarePuzzleProps> = ({ data, onSo
                     </div>
                 ))}
             </div>
-            <div className={styles.instructions}>
-                Place elemental runes so each appears exactly once in every row and column.
-            </div>
+            {instruction && (
+                <div className={styles.instructions}>
+                    {instruction}
+                </div>
+            )}
         </div>
     );
 };

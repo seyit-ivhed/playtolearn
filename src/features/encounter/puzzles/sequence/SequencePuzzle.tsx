@@ -1,14 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
-import type { PuzzleData } from '@/types/adventure.types';
+import type { PuzzleProps } from '@/types/adventure.types';
 import { validateNextStep, isSequenceComplete, generateStarPositions } from './SequenceEngine';
 import styles from './SequencePuzzle.module.css';
 
-interface SequencePuzzleProps {
-    data: PuzzleData;
-    onSolve: () => void;
-}
-
-export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
+export const SequencePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const { options, targetValue, rules } = data;
 
     // Convert options to simple number array if they are complex objects (though sequence usually assumes numbers)

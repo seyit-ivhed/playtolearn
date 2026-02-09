@@ -1,14 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { type PuzzleData, type PuzzleOption } from '../../../../types/adventure.types';
+import { type PuzzleOption, type PuzzleProps } from '../../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './RefillCanteenEngine';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import styles from './RefillCanteenPuzzle.module.css';
-
-interface RefillCanteenPuzzleProps {
-    data: PuzzleData;
-    onSolve: () => void;
-}
 
 const getIconForOption = (option: number | PuzzleOption): string => {
     if (typeof option === 'number') {
@@ -17,7 +12,7 @@ const getIconForOption = (option: number | PuzzleOption): string => {
     return option.type === 'MULTIPLY' ? '🌊' : '💧';
 };
 
-export const RefillCanteenPuzzle = ({ data, onSolve }: RefillCanteenPuzzleProps) => {
+export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
     const [currentSum, setCurrentSum] = useState(0);
     const [isSolved, setIsSolved] = useState(false);
     const [usedOptions, setUsedOptions] = useState<number[]>([]);

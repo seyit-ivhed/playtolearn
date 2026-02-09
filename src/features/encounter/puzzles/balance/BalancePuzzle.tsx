@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PuzzleData } from '../../../../types/adventure.types';
+import { type PuzzleProps } from '../../../../types/adventure.types';
 import {
     type BalancePuzzleData,
     type Weight,
@@ -10,17 +10,11 @@ import {
 import styles from './BalancePuzzle.module.css';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 
-interface BalancePuzzleProps {
-    data: PuzzleData;
-    onSolve: () => void;
-    instruction?: string;
-}
-
 const GREEK_RUNES = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ'];
 const RUNE_ANIMATION_DELAY_MS = 1000;
 const SUCCESS_DISPLAY_DURATION_MS = 3000;
 
-export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps) => {
+export const BalancePuzzle = ({ data, onSolve, instruction }: PuzzleProps) => {
     const { t } = useTranslation();
     const initialData = data as BalancePuzzleData;
 

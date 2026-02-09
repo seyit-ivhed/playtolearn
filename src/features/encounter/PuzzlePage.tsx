@@ -5,7 +5,7 @@ import { useGameStore } from '../../stores/game/store';
 import { usePremiumStore } from '../../stores/premium.store';
 import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { ADVENTURES } from '../../data/adventures.data';
-import { PuzzleType } from '../../types/adventure.types';
+import { PuzzleType, type PuzzleProps } from '../../types/adventure.types';
 import { type DifficultyLevel } from '../../types/math.types';
 import { generatePuzzleData } from '../../utils/math-generator';
 import { RefillCanteenPuzzle } from './puzzles/refill-canteen/RefillCanteenPuzzle';
@@ -16,6 +16,40 @@ import { LatinSquarePuzzle } from './puzzles/latin-square/LatinSquarePuzzle';
 import { NumberPathPuzzle } from './puzzles/number-path/NumberPathPuzzle';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import styles from './PuzzlePage.module.css';
+
+interface PuzzleDefinition {
+    instructionKey: string;
+    Component: React.ComponentType<PuzzleProps>;
+    hideStandardInstruction?: boolean;
+}
+
+const PUZZLE_DEFINITIONS: Record<PuzzleType, PuzzleDefinition> = {
+    [PuzzleType.REFILL_CANTEEN]: {
+        instructionKey: 'puzzle.refill_canteen.instruction',
+        Component: RefillCanteenPuzzle
+    },
+    [PuzzleType.BALANCE]: {
+        instructionKey: 'puzzle.balance.instruction',
+        Component: BalancePuzzle,
+        hideStandardInstruction: true
+    },
+    [PuzzleType.SEQUENCE]: {
+        instructionKey: 'puzzle.sequence.instruction',
+        Component: SequencePuzzle
+    },
+    [PuzzleType.SYMMETRY]: {
+        instructionKey: 'puzzle.symmetry.instruction',
+        Component: SymmetryPuzzle
+    },
+    [PuzzleType.LATIN_SQUARE]: {
+        instructionKey: 'puzzle.latin_square.instruction',
+        Component: LatinSquarePuzzle
+    },
+    [PuzzleType.NUMBER_PATH]: {
+        instructionKey: 'puzzle.number_path.instruction',
+        Component: NumberPathPuzzle
+    }
+};
 
 const PuzzlePage = () => {
     const { t } = useTranslation();
@@ -45,27 +79,14 @@ const PuzzlePage = () => {
         return generatePuzzleData(pType, currentDifficulty);
     }, [encounter, activeEncounterDifficulty]);
 
+    const puzzleDef = puzzleData ? PUZZLE_DEFINITIONS[puzzleData.puzzleType] : null;
+
     const instruction = useMemo(() => {
-        if (!puzzleData) {
+        if (!puzzleDef) {
             return '';
         }
-        switch (puzzleData.puzzleType) {
-            case PuzzleType.REFILL_CANTEEN:
-                return t('puzzle.refill_canteen.instruction');
-            case PuzzleType.BALANCE:
-                return t('puzzle.balance.instruction');
-            case PuzzleType.SEQUENCE:
-                return t('puzzle.sequence.instruction');
-            case PuzzleType.SYMMETRY:
-                return t('puzzle.symmetry.instruction');
-            case PuzzleType.LATIN_SQUARE:
-                return t('puzzle.latin_square.instruction');
-            case PuzzleType.NUMBER_PATH:
-                return t('puzzle.number_path.instruction');
-            default:
-                return '';
-        }
-    }, [puzzleData, t]);
+        return t(puzzleDef.instructionKey);
+    }, [puzzleDef, t]);
 
     const isBalancePuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE;
 
@@ -102,7 +123,7 @@ const PuzzlePage = () => {
         navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
     };
 
-    if (!encounter || !puzzleData || isLocked) {
+    if (!encounter || !puzzleData || !puzzleDef || isLocked) {
         return (
             <div className={styles.errorContainer}>
                 <h2>{isLocked ? t('puzzle.locked', 'Puzzle Locked') : t('puzzle.not_found', 'Puzzle Not Found')}</h2>
@@ -121,6 +142,8 @@ const PuzzlePage = () => {
         );
     }
 
+    const { Component: PuzzleComponent } = puzzleDef;
+
     return (
         <div className={`${styles.puzzlePage} ${isBalancePuzzle ? styles.blackBg : ''}`}>
             <header className={styles.header}>
@@ -129,57 +152,21 @@ const PuzzlePage = () => {
                 </button>
             </header>
 
-            {instruction && puzzleData.puzzleType !== PuzzleType.BALANCE && (
+            {instruction && !puzzleDef.hideStandardInstruction && (
                 <div className={styles.instructionContainer}>
                     <p className={styles.instructionText}>{instruction}</p>
                 </div>
             )}
 
             <main className={styles.puzzleContent}>
-                {puzzleData.puzzleType === PuzzleType.REFILL_CANTEEN && (
-                    <RefillCanteenPuzzle
-                        data={puzzleData}
-                        onSolve={handleSolve}
-                    />
-                )}
-
-                {(puzzleData.puzzleType === PuzzleType.BALANCE) && (
-                    <BalancePuzzle
-                        key={`balance-${adventureId}-${nodeIndex}-${activeEncounterDifficulty}`}
-                        data={puzzleData}
-                        onSolve={handleSolve}
-                        instruction={instruction}
-                    />
-                )}
-
-                {puzzleData.puzzleType === PuzzleType.SEQUENCE && (
-                    <SequencePuzzle
-                        data={puzzleData}
-                        onSolve={handleSolve}
-                    />
-                )}
-
-                {puzzleData.puzzleType === PuzzleType.SYMMETRY && (
-                    <SymmetryPuzzle
-                        data={puzzleData}
-                        onSolve={handleSolve}
-                    />
-                )}
-
-                {(puzzleData.puzzleType === PuzzleType.LATIN_SQUARE) && (
-                    <LatinSquarePuzzle
-                        data={puzzleData}
-                        onSolve={handleSolve}
-                    />
-                )}
-
-                {(puzzleData.puzzleType === PuzzleType.NUMBER_PATH) && (
-                    <NumberPathPuzzle
-                        data={puzzleData}
-                        onSolve={handleSolve}
-                    />
-                )}
+                <PuzzleComponent
+                    key={`${puzzleData.puzzleType}-${adventureId}-${nodeIndex}-${activeEncounterDifficulty}`}
+                    data={puzzleData}
+                    onSolve={handleSolve}
+                    instruction={instruction}
+                />
             </main>
+
 
             {/* Completion Modal */}
             {isCompleted && (

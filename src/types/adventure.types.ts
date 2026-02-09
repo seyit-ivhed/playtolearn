@@ -49,6 +49,12 @@ export const PuzzleType = {
 
 export type PuzzleType = typeof PuzzleType[keyof typeof PuzzleType];
 
+export interface PuzzleProps {
+    data: PuzzleData;
+    onSolve: () => void;
+    instruction?: string;
+}
+
 export interface PuzzleOption {
     value: number;
     type: 'ADD' | 'MULTIPLY';

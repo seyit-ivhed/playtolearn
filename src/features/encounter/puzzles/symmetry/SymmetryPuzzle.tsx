@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { SymmetryEngine, type SymmetryGridCell } from './SymmetryEngine';
 import styles from './SymmetryPuzzle.module.css';
-import { type PuzzleData } from '../../../../types/adventure.types';
+import { type PuzzleProps } from '../../../../types/adventure.types';
 
-interface SymmetryPuzzleProps {
-    data: PuzzleData;
-    onSolve: () => void;
-}
-
-export const SymmetryPuzzle: React.FC<SymmetryPuzzleProps> = ({ data, onSolve }) => {
+export const SymmetryPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
     const gridSize = data.targetValue;
     const [leftPattern, setLeftPattern] = useState<SymmetryGridCell[]>([]);
     const [rightPattern, setRightPattern] = useState<SymmetryGridCell[]>([]);
@@ -20,7 +15,9 @@ export const SymmetryPuzzle: React.FC<SymmetryPuzzleProps> = ({ data, onSolve })
     }, [data]);
 
     const handleCellClick = (x: number, y: number) => {
-        if (isSolved) return;
+        if (isSolved) {
+            return;
+        }
 
         const updatedRight = SymmetryEngine.toggleCell(rightPattern, x, y);
         setRightPattern(updatedRight);
@@ -65,9 +62,11 @@ export const SymmetryPuzzle: React.FC<SymmetryPuzzleProps> = ({ data, onSolve })
                     {renderGrid(rightPattern, true)}
                 </div>
             </div>
-            <div className={styles.instructions}>
-                Mirror the pattern on the right side.
-            </div>
+            {instruction && (
+                <div className={styles.instructions}>
+                    {instruction}
+                </div>
+            )}
         </div>
     );
 };
