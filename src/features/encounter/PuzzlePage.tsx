@@ -11,7 +11,6 @@ import { generatePuzzleData } from '../../utils/math-generator';
 import { RefillCanteenPuzzle } from './puzzles/refill-canteen/RefillCanteenPuzzle';
 import { BalancePuzzle } from './puzzles/balance/BalancePuzzle';
 import { SequencePuzzle } from './puzzles/sequence/SequencePuzzle';
-import { GuardianTributePuzzle } from './puzzles/guardian-tribute/GuardianTributePuzzle';
 import { SymmetryPuzzle } from './puzzles/symmetry/SymmetryPuzzle';
 import { LatinSquarePuzzle } from './puzzles/latin-square/LatinSquarePuzzle';
 import { NumberPathPuzzle } from './puzzles/number-path/NumberPathPuzzle';
@@ -57,8 +56,6 @@ const PuzzlePage = () => {
                 return t('puzzle.balance.instruction');
             case PuzzleType.SEQUENCE:
                 return t('puzzle.sequence.instruction');
-            case PuzzleType.GUARDIAN_TRIBUTE:
-                return t('puzzle.guardian_tribute.instruction');
             case PuzzleType.SYMMETRY:
                 return t('puzzle.symmetry.instruction');
             case PuzzleType.LATIN_SQUARE:
@@ -157,13 +154,6 @@ const PuzzlePage = () => {
 
                 {puzzleData.puzzleType === PuzzleType.SEQUENCE && (
                     <SequencePuzzle
-                        data={puzzleData}
-                        onSolve={handleSolve}
-                    />
-                )}
-
-                {puzzleData.puzzleType === PuzzleType.GUARDIAN_TRIBUTE && (
-                    <GuardianTributePuzzle
                         data={puzzleData}
                         onSolve={handleSolve}
                     />

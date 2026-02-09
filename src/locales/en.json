@@ -327,22 +327,7 @@
         "xp": "XP Gained",
         "continue": "Continue",
         "retry": "Try Again",
-        "vs": "VS",
-        "puzzles": {
-            "guardian_tribute": {
-                "description": "Distribute the gems among the statues",
-                "offer": "Offer Tribute",
-                "gems_remaining": "You still have gems to distribute.",
-                "constraint": {
-                    "exact": "{{value}}",
-                    "multiplier": "{{multiplier}}× {{target}}",
-                    "addition": "{{symbol}} {{operator}} {{value}}",
-                    "range": "Between {{min}} and {{max}}",
-                    "halve": "Half of {{symbol}}",
-                    "comparison": "{{operator}} than {{symbol}}"
-                }
-            }
-        }
+        "vs": "VS"
     },
     "puzzle": {
         "reset": "Reset",
@@ -355,9 +340,6 @@
         },
         "balance": {
             "instruction": "Remove stones until both piles are of equal weight!"
-        },
-        "guardian_tribute": {
-            "instruction": "Distribute the gems among the statues"
         },
         "number_path": {
             "instruction": "Create a continuous path by filling in the numbers!"

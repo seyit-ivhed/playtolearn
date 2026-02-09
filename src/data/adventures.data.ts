@@ -154,7 +154,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '2_8',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 350, y: 3000 },
-                puzzleData: { puzzleType: PuzzleType.GUARDIAN_TRIBUTE },
+                puzzleData: { puzzleType: PuzzleType.LATIN_SQUARE },
             },
             {
                 id: '2_9',
@@ -303,7 +303,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_9',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 250, y: 3800 },
-                puzzleData: { puzzleType: PuzzleType.GUARDIAN_TRIBUTE },
+                puzzleData: { puzzleType: PuzzleType.LATIN_SQUARE },
             },
             {
                 id: '4_10',
@@ -442,7 +442,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_6',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 250, y: 2700 },
-                puzzleData: { puzzleType: PuzzleType.GUARDIAN_TRIBUTE },
+                puzzleData: { puzzleType: PuzzleType.LATIN_SQUARE },
             },
             {
                 id: '6_7',

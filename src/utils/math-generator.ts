@@ -12,7 +12,6 @@ export * from './math/validation';
 import { generateRefillCanteenData } from '../features/encounter/puzzles/refill-canteen/RefillCanteenEngine';
 import { generateBalanceData } from '../features/encounter/puzzles/balance/BalanceEngine';
 import { generateSequenceData } from '../features/encounter/puzzles/sequence/SequenceEngine';
-import { generateGuardianTributeData } from '../features/encounter/puzzles/guardian-tribute/GuardianTributeEngine';
 import { generateSymmetryData } from '../features/encounter/puzzles/symmetry/SymmetryEngine';
 import { generateLatinSquareData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
 import { generateNumberPathData } from '../features/encounter/puzzles/number-path/NumberPathEngine';
@@ -24,7 +23,6 @@ const PUZZLE_GENERATORS: Record<PuzzleType, (difficulty: DifficultyLevel) => Puz
     [PuzzleType.REFILL_CANTEEN]: generateRefillCanteenData,
     [PuzzleType.BALANCE]: generateBalanceData,
     [PuzzleType.SEQUENCE]: generateSequenceData,
-    [PuzzleType.GUARDIAN_TRIBUTE]: generateGuardianTributeData,
     [PuzzleType.SYMMETRY]: generateSymmetryData,
     [PuzzleType.LATIN_SQUARE]: generateLatinSquareData,
     [PuzzleType.NUMBER_PATH]: generateNumberPathData,

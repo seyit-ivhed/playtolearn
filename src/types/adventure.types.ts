@@ -42,7 +42,6 @@ export const PuzzleType = {
     REFILL_CANTEEN: 'REFILL_CANTEEN',
     BALANCE: 'BALANCE',
     SEQUENCE: 'SEQUENCE',
-    GUARDIAN_TRIBUTE: 'GUARDIAN_TRIBUTE',
     SYMMETRY: 'SYMMETRY',
     LATIN_SQUARE: 'LATIN_SQUARE',
     NUMBER_PATH: 'NUMBER_PATH'
@@ -77,9 +76,6 @@ export interface PuzzleData extends Required<Pick<PuzzleConfig, 'puzzleType'>> {
     rules?: string[];
     initialLeftWeight?: number;
     initialRightWeight?: number;
-    // Guardian Tribute specific fields
-    guardians?: unknown[]; // Actual type defined in guardian-tribute.ts to avoid circular dependency
-    totalGems?: number;
     // Number Path specific fields
     gridSize?: number;
     pathSequence?: number[]; // The correct sequence of numbers if needed for validation, or just start/step

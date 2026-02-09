@@ -8,7 +8,6 @@ import {
 import { MathOperation } from '../types/math.types';
 import { PuzzleType } from '../types/adventure.types';
 import { type BalancePuzzleData } from '../features/encounter/puzzles/balance/BalanceEngine';
-import { type GuardianTributePuzzleData } from '../features/encounter/puzzles/guardian-tribute/GuardianTributeEngine';
 import { type SymmetryPuzzleData } from '../features/encounter/puzzles/symmetry/SymmetryEngine';
 import { type LatinSquarePuzzleData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
 
@@ -92,13 +91,7 @@ describe('Math Generator Functionality', () => {
             expect(data.options.length).toBeGreaterThan(0);
         });
 
-        it('should generate valid Guardian Tribute puzzle data', () => {
-            const data = generatePuzzleData(PuzzleType.GUARDIAN_TRIBUTE, 1) as GuardianTributePuzzleData;
-            expect(data.puzzleType).toBe(PuzzleType.GUARDIAN_TRIBUTE);
-            expect(data.guardians).toBeDefined();
-            expect(data.guardians.length).toBeGreaterThan(0);
-            expect(data.totalGems).toBeGreaterThan(0);
-        });
+
 
         it('should generate valid Symmetry puzzle data', () => {
             const data = generatePuzzleData(PuzzleType.SYMMETRY, 1) as SymmetryPuzzleData;

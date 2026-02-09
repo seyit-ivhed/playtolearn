@@ -327,22 +327,7 @@
         "xp": "XP vunnet",
         "continue": "Fortsätt",
         "retry": "Försök igen",
-        "vs": "MOT",
-        "puzzles": {
-            "guardian_tribute": {
-                "description": "Fördela ädelstenarna mellan statyerna",
-                "offer": "Ge gåva",
-                "gems_remaining": "Du har fortfarande ädelstenar att fördela.",
-                "constraint": {
-                    "exact": "{{value}}",
-                    "multiplier": "{{multiplier}}× {{target}}",
-                    "addition": "{{symbol}} {{operator}} {{value}}",
-                    "range": "Mellan {{min}} och {{max}}",
-                    "halve": "Hälften av {{symbol}}",
-                    "comparison": "{{operator}} än {{symbol}}"
-                }
-            }
-        }
+        "vs": "MOT"
     },
     "puzzle": {
         "reset": "Nollställ",
@@ -355,9 +340,6 @@
         },
         "balance": {
             "instruction": "Ta bort stenar tills båda högarna väger lika mycket!"
-        },
-        "guardian_tribute": {
-            "instruction": "Fördela ädelstenarna mellan statyerna"
         },
         "number_path": {
             "instruction": "Fyll i siffrorna för att skapa en sammanhängande stig!"
