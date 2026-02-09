@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { LatinSquareEngine } from './LatinSquareEngine';
 import styles from './LatinSquarePuzzle.module.css';
 import { type PuzzleProps, type LatinSquareData, type LatinSquareElement } from '../../../../types/adventure.types';
@@ -6,14 +6,8 @@ import { type PuzzleProps, type LatinSquareData, type LatinSquareElement } from 
 export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
     const puzzleData = data as LatinSquareData;
     const [grid, setGrid] = useState<LatinSquareElement[][]>(() => puzzleData.grid);
-    const [fixedIndices, setFixedIndices] = useState<{ row: number; col: number }[]>(() => puzzleData.fixedIndices);
+    const fixedIndices = puzzleData.fixedIndices;
     const [isSolved, setIsSolved] = useState(false);
-
-    useEffect(() => {
-        setGrid(puzzleData.grid);
-        setFixedIndices(puzzleData.fixedIndices);
-        setIsSolved(false);
-    }, [puzzleData]);
 
     const handleCellClick = (row: number, col: number) => {
         if (isSolved || fixedIndices.some(idx => idx.row === row && idx.col === col)) {
