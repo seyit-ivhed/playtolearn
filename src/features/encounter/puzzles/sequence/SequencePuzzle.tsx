@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import type { PuzzleData } from '../../../../types/adventure.types';
+import type { PuzzleData } from '@/types/adventure.types';
 import { validateNextStep, isSequenceComplete, generateStarPositions } from './SequenceEngine';
 import styles from './SequencePuzzle.module.css';
 

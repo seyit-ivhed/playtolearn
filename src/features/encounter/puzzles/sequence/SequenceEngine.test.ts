@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { validateNextStep, isSequenceComplete, generateStarPositions, generateSequenceData } from './SequenceEngine';
-import { PuzzleType } from '../../../../types/adventure.types';
 
 describe('SequenceEngine', () => {
     describe('validateNextStep', () => {

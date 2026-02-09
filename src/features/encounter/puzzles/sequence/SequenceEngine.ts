@@ -1,6 +1,6 @@
-import { type DifficultyLevel } from '../../../../types/math.types';
-import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
-import { getRandomInt } from '../../../../utils/math/helpers';
+import { type DifficultyLevel } from '@/types/math.types';
+import { PuzzleType, type PuzzleData } from '@/types/adventure.types';
+import { getRandomInt } from '@/utils/math/helpers';
 
 interface StarPosition {
     x: number;
