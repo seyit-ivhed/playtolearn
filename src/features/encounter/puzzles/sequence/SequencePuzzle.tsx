@@ -35,6 +35,16 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
     // State - Initialize with first 3 numbers
     const [path, setPath] = useState<number[]>(initialPath);
     const [wrongSelection, setWrongSelection] = useState<number | null>(null); // Index of wrongly clicked star
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    useEffect(() => {
+        if (isSuccess) {
+            const timer = setTimeout(() => {
+                onSolve();
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [isSuccess, onSolve]);
 
     // Reset wrong selection animation after a delay
     useEffect(() => {
@@ -61,7 +71,7 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
             // Check win condition
             const newValues = [...currentValues, selectedValue];
             if (isSequenceComplete(newValues, targetValue)) {
-                onSolve();
+                setIsSuccess(true);
             }
         } else {
             // Trigger wrong animation
@@ -103,7 +113,7 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
                                 y1={`${p1.y}%`}
                                 x2={`${p2.x}%`}
                                 y2={`${p2.y}%`}
-                                className={`${styles.connectionLine} ${styles.active}`}
+                                className={`${styles.connectionLine} ${styles.active} ${isSuccess ? styles.success : ''}`}
                                 markerEnd="url(#arrowhead)"
                             />
                         );
@@ -123,6 +133,7 @@ export const SequencePuzzle = ({ data, onSolve }: SequencePuzzleProps) => {
                                 ${styles.star} 
                                 ${isSelected ? styles.selected : ''} 
                                 ${isWrong ? styles.wrong : ''}
+                                ${isSuccess && isSelected ? styles.success : ''}
                             `}
                             style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
                             onClick={() => handleStarClick(index)}

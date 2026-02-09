@@ -132,6 +132,55 @@
     }
 }
 
+.connectionLine.active.success {
+    stroke: #4ade80;
+    stroke-width: 6;
+    filter: drop-shadow(0 0 8px #4ade80) drop-shadow(0 0 16px rgba(74, 222, 128, 0.6));
+    animation: glowLine 1.5s ease-in-out infinite;
+}
+
+@keyframes glowLine {
+
+    0%,
+    100% {
+        stroke-width: 6;
+        opacity: 0.8;
+    }
+
+    50% {
+        stroke-width: 8;
+        opacity: 1;
+    }
+}
+
+.star.success .starContent {
+    background: radial-gradient(circle, #fff 0%, #4ade80 40%, transparent 70%);
+    box-shadow: 0 0 30px rgba(74, 222, 128, 1);
+    transform: scale(1.5);
+    color: transparent;
+    animation: starShine 1s ease-in-out infinite alternate;
+}
+
+.star.success .starContent::after {
+    content: '★';
+    position: absolute;
+    color: #fff;
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 5px #fff);
+}
+
+@keyframes starShine {
+    0% {
+        transform: scale(1.5) rotate(0deg);
+        filter: brightness(1);
+    }
+
+    100% {
+        transform: scale(1.8) rotate(10deg);
+        filter: brightness(1.5);
+    }
+}
+
 .layout {
     display: flex;
     flex-direction: column;
