@@ -6,8 +6,6 @@ export interface Weight {
     id: string;
     value: number;
     isHeavy: boolean;
-    // Helper property to visualize unique weights if needed, 
-    // or we can rely on ID/index for React keys.
 }
 
 export interface BalancePuzzleData extends PuzzleData {

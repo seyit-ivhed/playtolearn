@@ -216,10 +216,6 @@
     animation: slideIn 0.3s ease-out forwards;
 }
 
-.weightExiting {
-    animation: slideOut 0.3s ease-in forwards;
-}
-
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -229,18 +225,6 @@
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
-    }
-}
-
-@keyframes slideOut {
-    from {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-    to {
-        opacity: 0;
-        transform: translateY(50px) scale(0.5);
     }
 }
 

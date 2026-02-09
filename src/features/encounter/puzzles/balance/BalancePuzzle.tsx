@@ -17,6 +17,8 @@ interface BalancePuzzleProps {
 }
 
 const GREEK_RUNES = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ'];
+const RUNE_ANIMATION_DELAY_MS = 1000;
+const SUCCESS_DISPLAY_DURATION_MS = 3000;
 
 export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps) => {
     const { t } = useTranslation();
@@ -50,14 +52,13 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: BalancePuzzleProps
         if (validateBalance(l, r)) {
             setIsSolved(true);
 
-            // Show success message after a short delay to let runes shine
             setTimeout(() => {
                 setShowSuccess(true);
-            }, 1000);
+            }, RUNE_ANIMATION_DELAY_MS);
 
             setTimeout(() => {
                 onSolve();
-            }, 3000);
+            }, SUCCESS_DISPLAY_DURATION_MS);
         }
     };
 
