@@ -7,82 +7,114 @@ interface StarPosition {
     y: number;
 }
 
-/**
- * Validates if the next selected value is the correct next step in the sequence.
- * 
- * @param currentValues The array of values currently in the chain (in order)
- * @param nextValue The value the user is trying to add
- * @param rules Array of rule strings (e.g., "MULTIPLES_OF_2")
- * @returns boolean
- */
+interface SequenceRule {
+    readonly name: string;
+    getNext(lastValue: number): number;
+    isValid(lastValue: number, nextValue: number): boolean;
+}
+
+class AdditionRule implements SequenceRule {
+    readonly step: number;
+
+    constructor(step: number) {
+        if (typeof step !== 'number') {
+            console.error('Invalid step for AdditionRule');
+            this.step = 0;
+            return;
+        }
+        this.step = step;
+    }
+
+    get name() { return `ADD_${this.step}`; }
+    getNext(lastValue: number) { return lastValue + this.step; }
+    isValid(lastValue: number, nextValue: number) { return nextValue === lastValue + this.step; }
+}
+
+class MultiplicationRule implements SequenceRule {
+    readonly factor: number;
+
+    constructor(factor: number) {
+        if (typeof factor !== 'number') {
+            console.error('Invalid factor for MultiplicationRule');
+            this.factor = 1;
+            return;
+        }
+        this.factor = factor;
+    }
+
+    get name() { return `MULTIPLY_${this.factor}`; }
+    getNext(lastValue: number) { return lastValue * this.factor; }
+    isValid(lastValue: number, nextValue: number) { return nextValue === lastValue * this.factor; }
+}
+
+const SequenceRuleFactory = {
+    getRule(ruleName: string): SequenceRule | null {
+        if (!ruleName) {
+            console.error('Sequence rule name is required');
+            return null;
+        }
+
+        if (ruleName.startsWith('ADD_')) {
+            const step = parseInt(ruleName.replace('ADD_', ''), 10);
+            return new AdditionRule(step);
+        }
+        if (ruleName.startsWith('MULTIPLY_')) {
+            const factor = parseInt(ruleName.replace('MULTIPLY_', ''), 10);
+            return new MultiplicationRule(factor);
+        }
+
+        console.error(`Unknown sequence rule: ${ruleName}`);
+        return null;
+    }
+};
+
 export const validateNextStep = (
     currentValues: number[],
     nextValue: number,
     rules: string[] = []
 ): boolean => {
-    // If no rules provided, valid if it's strictly greater than the last one? 
-    // Or maybe we treat it as simple increment by 1 if no rule.
-    // For now, let's look at the first rule.
-    const rule = rules[0] || '';
+    if (!currentValues || !Array.isArray(currentValues)) {
+        console.error('currentValues must be an array');
+        return false;
+    }
 
-    // If starting a fresh chain
     if (currentValues.length === 0) {
-        // Validation for the FIRST item depends on the rule.
-        // e.g. "MULTIPLES_OF_2" -> starts at 2
-        return isValidFirstStep(nextValue, rule);
+        return true;
+    }
+
+    if (!rules || rules.length === 0) {
+        console.error('Rules are required for sequence validation');
+        return false;
+    }
+
+    const rule = SequenceRuleFactory.getRule(rules[0]);
+    if (!rule) {
+        return false;
     }
 
     const lastValue = currentValues[currentValues.length - 1];
-
-    // 1. Arithmetic Progression: ADD_N
-    if (rule.startsWith('ADD_') || rule.startsWith('MULTIPLES_OF_')) {
-        // Support legacy MULTIPLES_OF as alias for ADD logic, though typically starts at 0 or step
-        const suffix = rule.startsWith('ADD_') ? rule.replace('ADD_', '') : rule.replace('MULTIPLES_OF_', '');
-        const step = parseInt(suffix, 10);
-        return nextValue === lastValue + step;
-    }
-
-    // 2. Geometric Progression: MULTIPLY_N
-    if (rule.startsWith('MULTIPLY_')) {
-        const factor = parseInt(rule.replace('MULTIPLY_', ''), 10);
-        return nextValue === lastValue * factor;
-    }
-
-    // Default fallback: Increment by 1
-    return nextValue === lastValue + 1;
+    return rule.isValid(lastValue, nextValue);
 };
 
-const isValidFirstStep = (value: number, rule: string): boolean => {
-    if (rule.startsWith('MULTIPLES_OF_')) {
-        const step = parseInt(rule.replace('MULTIPLES_OF_', ''), 10);
-        return value === step;
-    }
-
-    return true;
-};
-
-/**
- * Checks if the sequence has reached the required target value.
- */
 export const isSequenceComplete = (
     currentValues: number[],
     targetValue: number
 ): boolean => {
-    if (currentValues.length === 0) {
+    if (!currentValues || currentValues.length === 0) {
         return false;
     }
-    const lastValue = currentValues[currentValues.length - 1];
-    return lastValue >= targetValue;
+    return currentValues[currentValues.length - 1] >= targetValue;
 };
 
-/**
- * Generates random positions for stars ensuring they don't overlap too much.
- * Returns coordinates as percentages (0-100) to be responsive.
- */
 export const generateStarPositions = (
     count: number,
-    safeMargin: number = 10 // Minimum distance in % between stars
+    safeMargin: number = 10
 ): StarPosition[] => {
+    if (typeof count !== 'number') {
+        console.error('Count must be a number');
+        return [];
+    }
+
     const positions: StarPosition[] = [];
     const maxAttempts = 50;
 
@@ -93,96 +125,76 @@ export const generateStarPositions = (
 
         while (!valid && attempts < maxAttempts) {
             attempts++;
-            // Generate random x,y between 10% and 90% to keep away from extreme edges
             pos = {
                 x: Math.floor(Math.random() * 80) + 10,
                 y: Math.floor(Math.random() * 80) + 10
             };
 
-            // Check distance against existing positions
-            valid = true;
-            for (const existing of positions) {
+            valid = positions.every(existing => {
                 const dx = existing.x - pos.x;
                 const dy = existing.y - pos.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < safeMargin) {
-                    valid = false;
-                    break;
-                }
-            }
+                return Math.sqrt(dx * dx + dy * dy) >= safeMargin;
+            });
         }
-
         positions.push(pos);
     }
-
     return positions;
 };
 
-/**
- * Generates sequence-based puzzle data
- */
-export const generateSequenceData = (difficulty: DifficultyLevel): PuzzleData => {
-    // Choose sequence type based on difficulty
-    // Level 1-2: Simple addition (ADD_1, ADD_2)
-    // Level 3-4: Skip counting (ADD_3, ADD_5, MULTIPLES_OF_X)
-    // Level 5: Geometric sequences (MULTIPLY_2)
-
-    let ruleType: 'ADD' | 'MULTIPLY';
-    let step: number;
-    let startValue: number;
-    let count: number;
-
+const getLevelConfig = (difficulty: DifficultyLevel) => {
     if (difficulty === 1) {
-        // Simple arithmetic: +1 or +2
-        ruleType = 'ADD';
-        step = getRandomInt(1, 2);
-        startValue = getRandomInt(1, 5);
-        count = 8;
-    } else if (difficulty === 2) {
-        // Skip counting: +2, +5, +10
-        ruleType = 'ADD';
-        const options = [2, 5, 10];
-        step = options[getRandomInt(0, options.length - 1)];
-        startValue = step; // Start at the step value for cleaner sequences
-        count = 12;
-    } else {
-        // Level 3: More skip counting or intro multiplication
-        const useMultiply = Math.random() > 0.8;
-        if (useMultiply) {
-            ruleType = 'MULTIPLY';
-            step = 2; // Doubling
-            startValue = 1;
-            count = 16; // 1, 2, 4, 8, 16, 32...
-        } else {
-            ruleType = 'ADD';
-            const options = [3, 4, 5, 10];
-            step = options[getRandomInt(0, options.length - 1)];
-            startValue = step;
-            count = 16;
-        }
+        return {
+            rule: new AdditionRule(getRandomInt(1, 2)),
+            startValue: getRandomInt(1, 5),
+            count: 8
+        };
+    }
+    if (difficulty === 2) {
+        const step = getRandomInt(3, 10);
+        return {
+            rule: new AdditionRule(step),
+            startValue: getRandomInt(1, 10),
+            count: 12
+        };
+    }
+    const factor = getRandomInt(2, 5);
+    return {
+        rule: new MultiplicationRule(factor),
+        startValue: factor,
+        count: 6
+    };
+};
+
+export const generateSequenceData = (difficulty: DifficultyLevel): PuzzleData => {
+    if (typeof difficulty !== 'number') {
+        console.error('Difficulty must be a number');
+        // Return dummy data since we can't just 'return' from a function that expects PuzzleData
+        return {
+            puzzleType: PuzzleType.SEQUENCE,
+            targetValue: 0,
+            options: [],
+            rules: []
+        };
     }
 
-    // Generate the valid sequence
+    const config = getLevelConfig(difficulty);
+    const { rule, startValue, count } = config;
+
     const validSequence: number[] = [];
     let current = startValue;
 
     for (let i = 0; i < count; i++) {
         validSequence.push(current);
-        if (ruleType === 'ADD') {
-            current += step;
-        } else {
-            current *= step;
-        }
+        current = rule.getNext(current);
     }
-
-    const targetValue = validSequence[validSequence.length - 1];
-    const ruleName = ruleType === 'ADD' ? `ADD_${step}` : `MULTIPLY_${step}`;
 
     return {
         puzzleType: PuzzleType.SEQUENCE,
-        targetValue,
+        targetValue: validSequence[validSequence.length - 1],
         options: validSequence,
-        rules: [ruleName]
+        rules: [rule.name]
     };
 };
+
+
+
