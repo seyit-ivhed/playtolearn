@@ -90,9 +90,15 @@ export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleD
         value: baseHeavy,
         isHeavy: true
     };
+
+    // Ensure heavyRight is strictly less than targetBalance so there is room for at least 1 solution weight.
+    const maxHeavyRight = Math.max(baseHeavy + 1, targetBalance - 1);
+    const minDiff = 2;
+    const maxDiff = Math.min(5, maxHeavyRight - baseHeavy);
+
     const heavyRight: Weight = {
         id: `heavy-right-${Math.random().toString(36).substr(2, 9)}`,
-        value: baseHeavy + getRandomInt(2, 5), // Ensure initial imbalance
+        value: baseHeavy + getRandomInt(minDiff, Math.max(minDiff, maxDiff)), // Ensure initial imbalance but keep < target
         isHeavy: true
     };
 
