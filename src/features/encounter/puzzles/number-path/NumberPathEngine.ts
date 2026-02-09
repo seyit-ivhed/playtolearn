@@ -1,5 +1,7 @@
-import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
+import { PuzzleType, type NumberPathData } from '../../../../types/adventure.types';
 import type { DifficultyLevel } from '../../../../types/math.types';
+
+export type { NumberPathData };
 
 export interface Position {
     row: number;
@@ -72,7 +74,7 @@ export const validateMove = (
     return true;
 };
 
-export const generateNumberPathData = (difficulty: DifficultyLevel): PuzzleData => {
+export const generateNumberPathData = (difficulty: DifficultyLevel): NumberPathData => {
     let gridSize = 3;
     let stepValue = 1;
     let startValue = 1;

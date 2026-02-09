@@ -1,6 +1,8 @@
 import { type DifficultyLevel } from '@/types/math.types';
-import { PuzzleType, type PuzzleData } from '@/types/adventure.types';
+import { PuzzleType, type SequenceData } from '@/types/adventure.types';
 import { getRandomInt } from '@/utils/math/helpers';
+
+export type { SequenceData };
 
 interface StarPosition {
     x: number;
@@ -165,7 +167,7 @@ const getLevelConfig = (difficulty: DifficultyLevel) => {
     };
 };
 
-export const generateSequenceData = (difficulty: DifficultyLevel): PuzzleData => {
+export const generateSequenceData = (difficulty: DifficultyLevel): SequenceData => {
     if (typeof difficulty !== 'number') {
         console.error('Difficulty must be a number');
         // Return dummy data since we can't just 'return' from a function that expects PuzzleData

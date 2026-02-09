@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { type PuzzleOption, type PuzzleProps } from '../../../../types/adventure.types';
+import { type PuzzleOption, type PuzzleProps, type RefillCanteenData } from '../../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './RefillCanteenEngine';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import styles from './RefillCanteenPuzzle.module.css';
@@ -13,6 +13,7 @@ const getIconForOption = (option: number | PuzzleOption): string => {
 };
 
 export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
+    const puzzleData = data as RefillCanteenData;
     const [currentSum, setCurrentSum] = useState(0);
     const [isSolved, setIsSolved] = useState(false);
     const [usedOptions, setUsedOptions] = useState<number[]>([]);
@@ -20,7 +21,7 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
     const actionIdCounter = useRef(0);
     const { t } = useTranslation();
 
-    const target = data.targetValue;
+    const target = puzzleData.targetValue;
     const progress = currentSum >= target ? (currentSum > target ? 100 : 90) : (currentSum / target) * 90;
     const isOverfilled = currentSum > target;
 
@@ -93,7 +94,7 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
 
                 {/* Water Sources (Scoops) */}
                 <div className={styles.waterSourceGrid}>
-                    {data.options.map((option, idx) => {
+                    {puzzleData.options.map((option, idx) => {
                         const label = formatActionLabel(option);
                         const icon = getIconForOption(option);
                         const isUsed = usedOptions.includes(idx);

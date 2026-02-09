@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { SymmetryEngine, type SymmetryGridCell } from './SymmetryEngine';
+import { SymmetryEngine } from './SymmetryEngine';
 import styles from './SymmetryPuzzle.module.css';
-import { type PuzzleProps } from '../../../../types/adventure.types';
+import { type PuzzleProps, type SymmetryData, type SymmetryGridCell } from '../../../../types/adventure.types';
 
 export const SymmetryPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
-    const gridSize = data.targetValue;
+    const puzzleData = data as SymmetryData;
+    const gridSize = puzzleData.targetValue;
     const [leftPattern, setLeftPattern] = useState<SymmetryGridCell[]>([]);
     const [rightPattern, setRightPattern] = useState<SymmetryGridCell[]>([]);
     const [isSolved, setIsSolved] = useState(false);
 
     useEffect(() => {
-        setLeftPattern((data.leftOptions as unknown) as SymmetryGridCell[]);
-        setRightPattern((data.rightOptions as unknown) as SymmetryGridCell[]);
-    }, [data]);
+        setLeftPattern(puzzleData.leftOptions);
+        setRightPattern(puzzleData.rightOptions);
+    }, [puzzleData]);
 
     const handleCellClick = (x: number, y: number) => {
         if (isSolved) {

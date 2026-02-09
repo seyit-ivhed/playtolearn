@@ -1,15 +1,11 @@
-import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
+import { PuzzleType, type LatinSquareData } from '../../../../types/adventure.types';
 import { type DifficultyLevel } from '../../../../types/math.types';
 
 export type LatinSquareElement = 'FIRE' | 'WATER' | 'EARTH' | 'AIR' | null;
 
-export interface LatinSquarePuzzleData extends PuzzleData {
-    grid: LatinSquareElement[][];
-    fixedIndices: { row: number, col: number }[];
-    solution: LatinSquareElement[][];
-}
+export type { LatinSquareData };
 
-export const generateLatinSquareData = (difficulty: DifficultyLevel): PuzzleData => {
+export const generateLatinSquareData = (difficulty: DifficultyLevel): LatinSquareData => {
     const solution: LatinSquareElement[][] = [
         ['FIRE', 'WATER', 'EARTH', 'AIR'],
         ['EARTH', 'AIR', 'FIRE', 'WATER'],
@@ -45,9 +41,9 @@ export const generateLatinSquareData = (difficulty: DifficultyLevel): PuzzleData
     return {
         puzzleType: PuzzleType.LATIN_SQUARE,
         targetValue: 4,
-        options: puzzleGrid as unknown as PuzzleData['options'],
+        options: puzzleGrid as unknown as LatinSquareData['options'],
         rules: fixedIndices.map(f => `${f.row},${f.col}`)
-    } as PuzzleData;
+    };
 };
 
 export class LatinSquareEngine {

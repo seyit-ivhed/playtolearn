@@ -1,10 +1,11 @@
 import { useState, useMemo, useEffect } from 'react';
-import type { PuzzleProps } from '@/types/adventure.types';
+import type { PuzzleProps, SequenceData } from '@/types/adventure.types';
 import { validateNextStep, isSequenceComplete, generateStarPositions } from './SequenceEngine';
 import styles from './SequencePuzzle.module.css';
 
 export const SequencePuzzle = ({ data, onSolve }: PuzzleProps) => {
-    const { options, targetValue, rules } = data;
+    const puzzleData = data as SequenceData;
+    const { options, targetValue, rules } = puzzleData;
 
     // Convert options to simple number array if they are complex objects (though sequence usually assumes numbers)
     const numericOptions = useMemo(() => {

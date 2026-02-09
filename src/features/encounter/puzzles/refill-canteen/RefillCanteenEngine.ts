@@ -1,13 +1,15 @@
 import { type DifficultyLevel } from '../../../../types/math.types';
-import { PuzzleType, type PuzzleData, type PuzzleOption } from '../../../../types/adventure.types';
+import { PuzzleType, type RefillCanteenData, type PuzzleOption } from '../../../../types/adventure.types';
 import { getRandomInt } from '../../../../utils/math/helpers';
+
+export type { RefillCanteenData };
 
 /**
  * Core engine for the Refill Canteen puzzle.
  * Encapsulates logic for calculating sums and validating the solution.
  */
 
-export const generateRefillCanteenData = (difficulty: DifficultyLevel): PuzzleData => {
+export const generateRefillCanteenData = (difficulty: DifficultyLevel): RefillCanteenData => {
     let current = 0;
     const solutionPipes: (number | PuzzleOption)[] = [];
     const decoyPipes: (number | PuzzleOption)[] = [];

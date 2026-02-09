@@ -1,19 +1,9 @@
-import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
+import { PuzzleType, type SymmetryData, type SymmetryGridCell } from '../../../../types/adventure.types';
 import { type DifficultyLevel } from '../../../../types/math.types';
 
-export interface SymmetryGridCell {
-    x: number;
-    y: number;
-    isActive: boolean;
-}
+export type { SymmetryGridCell, SymmetryData };
 
-export interface SymmetryPuzzleData extends PuzzleData {
-    gridSize: number;
-    leftPattern: SymmetryGridCell[];
-    rightPattern: SymmetryGridCell[];
-}
-
-export const generateSymmetryData = (difficulty: DifficultyLevel): PuzzleData => {
+export const generateSymmetryData = (difficulty: DifficultyLevel): SymmetryData => {
     const gridSize = difficulty + 2; // e.g. level 1 -> 3x3, level 2 -> 4x4
     const leftPattern: SymmetryGridCell[] = [];
     const rightPattern: SymmetryGridCell[] = [];
@@ -28,11 +18,11 @@ export const generateSymmetryData = (difficulty: DifficultyLevel): PuzzleData =>
 
     return {
         puzzleType: PuzzleType.SYMMETRY,
-        targetValue: gridSize, // misused as grid size for simplicity in data passing
+        targetValue: gridSize,
         options: [],
-        leftOptions: leftPattern as unknown as PuzzleData['leftOptions'],
-        rightOptions: rightPattern as unknown as PuzzleData['rightOptions']
-    } as PuzzleData;
+        leftOptions: leftPattern,
+        rightOptions: rightPattern
+    };
 };
 
 export class SymmetryEngine {

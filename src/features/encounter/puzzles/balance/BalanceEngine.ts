@@ -1,18 +1,8 @@
-import type { DifficultyLevel } from '../../../../types/math.types';
-import { PuzzleType, type PuzzleData } from '../../../../types/adventure.types';
+import { type DifficultyLevel } from '../../../../types/math.types';
+import { PuzzleType, type BalanceData, type Weight } from '../../../../types/adventure.types';
 import { getRandomInt, shuffleArray } from '../../../../utils/math/helpers';
 
-export interface Weight {
-    id: string;
-    value: number;
-    isHeavy: boolean;
-}
-
-export interface BalancePuzzleData extends PuzzleData {
-    leftStack: Weight[];
-    rightStack: Weight[];
-    targetBalance: number; // The sum required on each side to solve (internal target)
-}
+export type { Weight, BalanceData };
 
 /**
  * Calculates the total weight of a stack.
@@ -42,7 +32,7 @@ export const validateBalance = (
  * 4. Generate "noise" weights (extra weights) and mix them into the solution stacks.
  * 5. Player must remove the noise weights to return to the balanced state.
  */
-export const generateBalanceData = (difficulty: DifficultyLevel): BalancePuzzleData => {
+export const generateBalanceData = (difficulty: DifficultyLevel): BalanceData => {
     // 1. Config based on difficulty
     // Higher difficulty -> Higher values, more weights
     const minTarget = difficulty === 1 ? 5 : difficulty === 2 ? 10 : 15;

@@ -62,33 +62,129 @@ export interface PuzzleOption {
 }
 
 
-export interface PuzzleConfig {
+export interface BasePuzzleConfig {
     puzzleType: PuzzleType;
-    // Optional overrides for static puzzles (tutorials, etc)
+}
+
+export interface RefillCanteenConfig extends BasePuzzleConfig {
+    puzzleType: typeof PuzzleType.REFILL_CANTEEN;
     targetValue?: number;
     options?: (number | PuzzleOption)[];
+}
+
+export interface BalanceConfig extends BasePuzzleConfig {
+    puzzleType: typeof PuzzleType.BALANCE;
     leftOptions?: (number | PuzzleOption)[];
     rightOptions?: (number | PuzzleOption)[];
-    rules?: string[];
     initialLeftWeight?: number;
     initialRightWeight?: number;
 }
 
-export interface PuzzleData extends Required<Pick<PuzzleConfig, 'puzzleType'>> {
-    targetValue: number;
-    options: (number | PuzzleOption)[];
+export interface SequenceConfig extends BasePuzzleConfig {
+    puzzleType: typeof PuzzleType.SEQUENCE;
+    targetValue?: number;
+    options?: (number | PuzzleOption)[];
+    rules?: string[];
+}
+
+export interface SymmetryConfig extends BasePuzzleConfig {
+    puzzleType: typeof PuzzleType.SYMMETRY;
+    targetValue?: number; // Used for gridSize
     leftOptions?: (number | PuzzleOption)[];
     rightOptions?: (number | PuzzleOption)[];
+}
+
+export interface LatinSquareConfig extends BasePuzzleConfig {
+    puzzleType: typeof PuzzleType.LATIN_SQUARE;
+    options?: (number | PuzzleOption)[];
     rules?: string[];
-    initialLeftWeight?: number;
-    initialRightWeight?: number;
-    // Number Path specific fields
+}
+
+export interface NumberPathConfig extends BasePuzzleConfig {
+    puzzleType: typeof PuzzleType.NUMBER_PATH;
     gridSize?: number;
-    pathSequence?: number[]; // The correct sequence of numbers if needed for validation, or just start/step
     startValue?: number;
     stepValue?: number;
     preFilledIndices?: { row: number; col: number; value: number }[];
 }
+
+export type PuzzleConfig =
+    | RefillCanteenConfig
+    | BalanceConfig
+    | SequenceConfig
+    | SymmetryConfig
+    | LatinSquareConfig
+    | NumberPathConfig;
+
+export interface BasePuzzleData {
+    puzzleType: PuzzleType;
+}
+
+export interface RefillCanteenData extends BasePuzzleData {
+    puzzleType: typeof PuzzleType.REFILL_CANTEEN;
+    targetValue: number;
+    options: (number | PuzzleOption)[];
+}
+
+export interface Weight {
+    id: string;
+    value: number;
+    isHeavy: boolean;
+}
+
+export interface BalanceData extends BasePuzzleData {
+    puzzleType: typeof PuzzleType.BALANCE;
+    targetValue: number; // The target balance sum
+    options: (number | PuzzleOption)[];
+    leftStack: Weight[];
+    rightStack: Weight[];
+    targetBalance: number;
+}
+
+export interface SequenceData extends BasePuzzleData {
+    puzzleType: typeof PuzzleType.SEQUENCE;
+    targetValue: number;
+    options: (number | PuzzleOption)[];
+    rules: string[];
+}
+
+export interface SymmetryGridCell {
+    x: number;
+    y: number;
+    isActive: boolean;
+}
+
+export interface SymmetryData extends BasePuzzleData {
+    puzzleType: typeof PuzzleType.SYMMETRY;
+    targetValue: number; // gridSize
+    options: (number | PuzzleOption)[];
+    leftOptions: SymmetryGridCell[];
+    rightOptions: SymmetryGridCell[];
+}
+
+export interface LatinSquareData extends BasePuzzleData {
+    puzzleType: typeof PuzzleType.LATIN_SQUARE;
+    targetValue: number; // gridSize
+    options: (number | PuzzleOption)[]; // The grid
+    rules: string[]; // fixedIndices as strings "row,col"
+}
+
+export interface NumberPathData extends BasePuzzleData {
+    puzzleType: typeof PuzzleType.NUMBER_PATH;
+    gridSize: number;
+    startValue: number;
+    stepValue: number;
+    preFilledIndices: { row: number; col: number; value: number }[];
+    targetValue: number; // totalCells
+}
+
+export type PuzzleData =
+    | RefillCanteenData
+    | BalanceData
+    | SequenceData
+    | SymmetryData
+    | LatinSquareData
+    | NumberPathData;
 
 // Concept: An encounter is a single node on the map
 export interface Encounter {

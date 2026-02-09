@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { type PuzzleProps } from '../../../../types/adventure.types';
+import { type PuzzleProps, type BalanceData, type Weight } from '../../../../types/adventure.types';
 import {
-    type BalancePuzzleData,
-    type Weight,
     calculateTotalWeight,
     validateBalance
 } from './BalanceEngine';
@@ -16,7 +14,7 @@ const SUCCESS_DISPLAY_DURATION_MS = 3000;
 
 export const BalancePuzzle = ({ data, onSolve, instruction }: PuzzleProps) => {
     const { t } = useTranslation();
-    const initialData = data as BalancePuzzleData;
+    const initialData = data as BalanceData;
 
     const [leftStack, setLeftStack] = useState<Weight[]>(initialData.leftStack);
     const [rightStack, setRightStack] = useState<Weight[]>(initialData.rightStack);

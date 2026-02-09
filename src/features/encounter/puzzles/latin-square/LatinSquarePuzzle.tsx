@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { LatinSquareEngine, type LatinSquareElement } from './LatinSquareEngine';
 import styles from './LatinSquarePuzzle.module.css';
-import { type PuzzleProps } from '../../../../types/adventure.types';
+import { type PuzzleProps, type LatinSquareData } from '../../../../types/adventure.types';
 
 export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
-    const [grid, setGrid] = useState<LatinSquareElement[][]>(() => (data.options as unknown) as LatinSquareElement[][]);
+    const puzzleData = data as LatinSquareData;
+    const [grid, setGrid] = useState<LatinSquareElement[][]>(() => (puzzleData.options as unknown) as LatinSquareElement[][]);
     const [fixedIndices] = useState<{ row: number; col: number }[]>(() => {
-        return (data.rules || []).map(r => {
+        return (puzzleData.rules || []).map(r => {
             const [row, col] = r.split(',').map(Number);
             return { row, col };
         });

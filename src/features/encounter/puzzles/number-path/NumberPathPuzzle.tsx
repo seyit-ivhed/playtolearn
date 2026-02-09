@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { type PuzzleProps } from '../../../../types/adventure.types';
+import { type PuzzleProps, type NumberPathData } from '../../../../types/adventure.types';
 import styles from './NumberPathPuzzle.module.css';
 import {
     type CellData,
@@ -10,7 +10,8 @@ import {
 } from './NumberPathEngine';
 
 export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
-    const { gridSize = 3, startValue = 1, stepValue = 1, preFilledIndices = [] } = data;
+    const puzzleData = data as NumberPathData;
+    const { gridSize = 3, startValue = 1, stepValue = 1, preFilledIndices = [] } = puzzleData;
 
     const totalCells = gridSize * gridSize;
 
