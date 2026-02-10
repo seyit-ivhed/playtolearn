@@ -16,23 +16,21 @@ interface DifficultyConfig {
     equationCount: number;
     minValue: number;
     maxValue: number;
-    allowSubtraction: boolean;
 }
 
 const getDifficultyConfig = (difficulty: DifficultyLevel): DifficultyConfig => {
     if (difficulty === 1) {
-        return { variableCount: 2, equationCount: 2, minValue: 1, maxValue: 3, allowSubtraction: false };
+        return { variableCount: 2, equationCount: 2, minValue: 1, maxValue: 3 };
     }
     if (difficulty === 2) {
-        return { variableCount: 2, equationCount: 2, minValue: 1, maxValue: 5, allowSubtraction: false };
+        return { variableCount: 2, equationCount: 2, minValue: 1, maxValue: 5 };
     }
-    return { variableCount: 3, equationCount: 3, minValue: 1, maxValue: 5, allowSubtraction: true };
+    return { variableCount: 3, equationCount: 3, minValue: 1, maxValue: 5 };
 };
 
 const buildEquation = (
     variableCount: number,
-    values: number[],
-    allowSubtraction: boolean
+    values: number[]
 ): Equation => {
     const usedIndices = new Set<number>();
     const termCount = getRandomInt(2, Math.min(3, variableCount + 1));
@@ -51,14 +49,8 @@ const buildEquation = (
         }
         usedIndices.add(symbolIndex);
 
-        const coefficient = (allowSubtraction && i > 0 && Math.random() < 0.3) ? -1 : 1;
-        terms.push({ symbolIndex, coefficient });
-        result += coefficient * values[symbolIndex];
-    }
-
-    if (result <= 0) {
-        terms.forEach(term => { term.coefficient = 1; });
-        result = terms.reduce((sum, term) => sum + values[term.symbolIndex], 0);
+        terms.push({ symbolIndex, coefficient: 1 });
+        result += values[symbolIndex];
     }
 
     return { left: terms, right: result };
@@ -111,7 +103,7 @@ export const generateEquationData = (difficulty: DifficultyLevel): EquationData 
     }
 
     const config = getDifficultyConfig(difficulty);
-    const { variableCount, equationCount, minValue, maxValue, allowSubtraction } = config;
+    const { variableCount, equationCount, minValue, maxValue } = config;
 
     const values: number[] = [];
     for (let i = 0; i < variableCount; i++) {
@@ -141,7 +133,7 @@ export const generateEquationData = (difficulty: DifficultyLevel): EquationData 
         const maxAttempts = 50;
 
         while (equations.length < equationCount && attempts < maxAttempts) {
-            const eq = buildEquation(variableCount, values, allowSubtraction);
+            const eq = buildEquation(variableCount, values);
             if (!isEquationRedundant(eq, equations) && eq.right > 0) {
                 equations.push(eq);
             }
