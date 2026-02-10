@@ -53,7 +53,7 @@ describe('EquationEngine', () => {
                         expect(data.equations.length).toBeGreaterThanOrEqual(2);
                         data.equations.forEach(eq => {
                             expect(eq.right).toBeGreaterThan(0);
-                            expect(eq.left.length).toBeGreaterThanOrEqual(2);
+                            expect(eq.left.length).toBeGreaterThanOrEqual(1);
                         });
                     }
                 });

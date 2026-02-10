@@ -108,12 +108,6 @@ export const EquationPuzzle = ({ data, onSolve, instruction }: PuzzleProps) => {
                     );
                 })}
             </div>
-
-            {isSolved && (
-                <div className={styles.successMessage}>
-                    {t('puzzle.success')}
-                </div>
-            )}
         </div>
     );
 };
