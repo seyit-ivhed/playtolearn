@@ -7,6 +7,10 @@ const SHAKE_DURATION_MS = 500;
 const SUCCESS_DELAY_MS = 2000;
 
 export const EquationPuzzle = ({ data, onSolve }: PuzzleProps) => {
+    const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+    const [isSolved, setIsSolved] = useState(false);
+    const [isShaking, setIsShaking] = useState(false);
+
     if (data.puzzleType !== PuzzleType.EQUATION) {
         console.error('Invalid puzzle type for EquationPuzzle');
         return null;
@@ -19,9 +23,6 @@ export const EquationPuzzle = ({ data, onSolve }: PuzzleProps) => {
         return null;
     }
 
-    const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-    const [isSolved, setIsSolved] = useState(false);
-    const [isShaking, setIsShaking] = useState(false);
 
     const handleChoiceSelect = (value: number) => {
         if (isSolved || isShaking) {
