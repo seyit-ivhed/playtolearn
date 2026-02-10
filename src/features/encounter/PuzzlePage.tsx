@@ -52,7 +52,8 @@ const PUZZLE_DEFINITIONS: Record<PuzzleType, PuzzleDefinition> = {
     },
     [PuzzleType.EQUATION]: {
         instructionKey: 'puzzle.equation.instruction',
-        Component: EquationPuzzle
+        Component: EquationPuzzle,
+        hideStandardInstruction: true
     }
 };
 
@@ -93,7 +94,8 @@ const PuzzlePage = () => {
         return t(puzzleDef.instructionKey);
     }, [puzzleDef, t]);
 
-    const isBalancePuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE;
+    const isDarkBackgroundPuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE ||
+        puzzleData?.puzzleType === PuzzleType.EQUATION;
 
     useEffect(() => {
         if (premiumInitialized && adventureId) {
@@ -150,7 +152,7 @@ const PuzzlePage = () => {
     const { Component: PuzzleComponent } = puzzleDef;
 
     return (
-        <div className={`${styles.puzzlePage} ${isBalancePuzzle ? styles.blackBg : ''}`}>
+        <div className={`${styles.puzzlePage} ${isDarkBackgroundPuzzle ? styles.blackBg : ''}`}>
             <header className={styles.header}>
                 <button className={styles.backButton} onClick={handleBack}>
                     {t('retreat', 'Retreat')}
