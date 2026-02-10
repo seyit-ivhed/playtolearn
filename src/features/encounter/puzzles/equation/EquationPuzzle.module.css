@@ -16,11 +16,6 @@
     /* Removed border and shadow from container to let parchment look natural */
 }
 
-.instruction {
-    display: none;
-    /* Handled by PuzzlePage */
-}
-
 .equationsArea {
     display: flex;
     flex-direction: column;

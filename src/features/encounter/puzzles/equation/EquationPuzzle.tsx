@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { type PuzzleProps, type EquationData } from '../../../../types/adventure.types';
 import { validateAnswer } from './EquationEngine';
 import styles from './EquationPuzzle.module.css';
@@ -7,8 +6,7 @@ import styles from './EquationPuzzle.module.css';
 const SHAKE_DURATION_MS = 500;
 const SUCCESS_DELAY_MS = 2000;
 
-export const EquationPuzzle = ({ data, onSolve, instruction }: PuzzleProps) => {
-    const { t } = useTranslation();
+export const EquationPuzzle = ({ data, onSolve }: PuzzleProps) => {
     const puzzleData = data as EquationData;
 
     if (!puzzleData || !puzzleData.equations) {
