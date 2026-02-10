@@ -21,12 +21,12 @@ interface DifficultyConfig {
 
 const getDifficultyConfig = (difficulty: DifficultyLevel): DifficultyConfig => {
     if (difficulty === 1) {
-        return { variableCount: 2, equationCount: 2, minValue: 1, maxValue: 10, allowSubtraction: false };
+        return { variableCount: 2, equationCount: 2, minValue: 1, maxValue: 3, allowSubtraction: false };
     }
     if (difficulty === 2) {
-        return { variableCount: 2, equationCount: 2, minValue: 1, maxValue: 15, allowSubtraction: false };
+        return { variableCount: 2, equationCount: 2, minValue: 1, maxValue: 5, allowSubtraction: false };
     }
-    return { variableCount: getRandomInt(2, 3), equationCount: getRandomInt(2, 3), minValue: 1, maxValue: 20, allowSubtraction: true };
+    return { variableCount: 3, equationCount: 3, minValue: 1, maxValue: 5, allowSubtraction: true };
 };
 
 const buildEquation = (
