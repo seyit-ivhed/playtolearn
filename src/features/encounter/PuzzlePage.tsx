@@ -52,8 +52,7 @@ const PUZZLE_DEFINITIONS: Record<PuzzleType, PuzzleDefinition> = {
     },
     [PuzzleType.EQUATION]: {
         instructionKey: 'puzzle.equation.instruction',
-        Component: EquationPuzzle,
-        hideStandardInstruction: true
+        Component: EquationPuzzle
     }
 };
 
@@ -94,8 +93,7 @@ const PuzzlePage = () => {
         return t(puzzleDef.instructionKey);
     }, [puzzleDef, t]);
 
-    const isDarkBackgroundPuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE ||
-        puzzleData?.puzzleType === PuzzleType.EQUATION;
+    const isDarkBackgroundPuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE;
 
     useEffect(() => {
         if (premiumInitialized && adventureId) {

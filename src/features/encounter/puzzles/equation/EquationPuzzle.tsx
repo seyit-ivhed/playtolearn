@@ -61,10 +61,6 @@ export const EquationPuzzle = ({ data, onSolve, instruction }: PuzzleProps) => {
 
     return (
         <div className={styles.container}>
-            {instruction && (
-                <div className={styles.instruction}>{instruction}</div>
-            )}
-
             <div className={`${styles.equationsArea} ${isShaking ? styles.shake : ''}`}>
                 {puzzleData.equations.map((equation, eqIndex) => (
                     <div key={eqIndex} className={styles.equationRow} data-testid={`equation-${eqIndex}`}>

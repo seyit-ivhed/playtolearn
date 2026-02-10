@@ -2,39 +2,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
     padding: 1rem;
     max-width: 500px;
     margin: 0 auto;
 }
 
 .instruction {
-    font-size: 1.25rem;
-    color: var(--color-text-primary, #ffffff);
-    text-align: center;
-    margin-bottom: 0.5rem;
-    font-family: var(--font-display);
+    display: none;
+    /* Handled by PuzzlePage */
 }
 
 .equationsArea {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    gap: 1.5rem;
+    padding: 2.5rem;
+    background: rgba(74, 55, 33, 0.05);
+    /* Subtle ink tint */
+    border-radius: 24px;
+    border: 2px dashed rgba(74, 55, 33, 0.2);
     width: 100%;
     transition: transform 0.1s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .equationRow {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    font-size: 2rem;
+    gap: 1.25rem;
+    font-size: 2.2rem;
+    color: var(--color-chronicle-text, #4a3721);
 }
 
 .leftSide {
@@ -50,97 +48,97 @@
 }
 
 .operator {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
-    color: #ffffff;
+    color: var(--color-chronicle-text, #4a3721);
     padding: 0 0.25rem;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    opacity: 0.8;
 }
 
 .symbolBox {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3.5rem;
-    height: 3.5rem;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    font-size: 2rem;
+    width: 3.8rem;
+    height: 3.8rem;
+    background: white;
+    border-radius: 14px;
+    border: 2px solid var(--color-chronicle-text, #4a3721);
+    font-size: 2.2rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 0px rgba(74, 55, 33, 0.1);
 }
 
 .equals {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    color: var(--color-chronicle-text, #4a3721);
 }
 
 .resultValue {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #f1c40f;
-    /* Clearer Yellow */
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--color-chronicle-text-dark, #2c1e11);
     min-width: 2.5rem;
     text-align: center;
-    text-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+    font-family: var(--font-display);
 }
 
 .divider {
-    width: 90%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    margin: 1rem 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(74, 55, 33, 0.2), transparent);
+    margin: 1.25rem 0;
 }
 
 .questionRow {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    font-size: 2.2rem;
+    gap: 1.25rem;
+    font-size: 2.4rem;
 }
 
 .questionMark {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #f1c40f;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--color-chronicle-accent, #8b6532);
     animation: pulse 1.5s ease-in-out infinite;
-    text-shadow: 0 0 20px rgba(241, 196, 15, 0.5);
 }
 
 .choicesArea {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
     width: 100%;
-    max-width: 380px;
+    max-width: 400px;
 }
 
 .choiceButton {
     padding: 1.25rem;
-    font-size: 1.8rem;
-    font-weight: bold;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    border: 2px solid var(--color-chronicle-text, #4a3721);
+    border-radius: 18px;
+    background: white;
+    color: var(--color-chronicle-text-dark, #2c1e11);
     cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 0px rgba(74, 55, 33, 0.15);
+    font-family: var(--font-display);
 }
 
 .choiceButton:active:not(:disabled) {
-    transform: scale(0.95);
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px rgba(74, 55, 33, 0.15);
 }
 
 .choiceButton:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: #ffffff;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    background: #fdfaf5;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0px rgba(74, 55, 33, 0.15);
+    border-color: var(--color-chronicle-accent, #8b6532);
 }
 
 .choiceButton:disabled {
@@ -149,22 +147,24 @@
 }
 
 .choiceButton.correct {
-    background: rgba(46, 213, 115, 0.4) !important;
-    border-color: #2ed573 !important;
-    box-shadow: 0 0 30px rgba(46, 213, 115, 0.4) !important;
+    background: #e8f5e9 !important;
+    border-color: #2e7d32 !important;
+    color: #1b5e20 !important;
+    box-shadow: 0 0 20px rgba(46, 125, 50, 0.2) !important;
     animation: correctPulse 0.6s ease;
 }
 
 .choiceButton.wrong {
-    background: rgba(255, 71, 87, 0.4) !important;
-    border-color: #ff4757 !important;
+    background: #ffebee !important;
+    border-color: #c62828 !important;
+    color: #b71c1c !important;
     animation: wrongShake 0.4s ease;
 }
 
 .successMessage {
     font-size: 1.4rem;
     font-weight: bold;
-    color: rgba(80, 200, 120, 1);
+    color: #2e7d32;
     animation: fadeIn 0.5s ease;
 }
 
