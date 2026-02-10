@@ -15,6 +15,7 @@ import { generateSequenceData } from '../features/encounter/puzzles/sequence/Seq
 import { generateSymmetryData } from '../features/encounter/puzzles/symmetry/SymmetryEngine';
 import { generateLatinSquareData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
 import { generateNumberPathData } from '../features/encounter/puzzles/number-path/NumberPathEngine';
+import { generateEquationData } from '../features/encounter/puzzles/equation/EquationEngine';
 
 /**
  * Mapping of puzzle types to their respective data generators
@@ -26,6 +27,7 @@ const PUZZLE_GENERATORS: Record<PuzzleType, (difficulty: DifficultyLevel) => Puz
     [PuzzleType.SYMMETRY]: generateSymmetryData,
     [PuzzleType.LATIN_SQUARE]: generateLatinSquareData,
     [PuzzleType.NUMBER_PATH]: generateNumberPathData,
+    [PuzzleType.EQUATION]: generateEquationData,
 };
 
 /**

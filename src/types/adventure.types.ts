@@ -44,7 +44,8 @@ export const PuzzleType = {
     SEQUENCE: 'SEQUENCE',
     SYMMETRY: 'SYMMETRY',
     LATIN_SQUARE: 'LATIN_SQUARE',
-    NUMBER_PATH: 'NUMBER_PATH'
+    NUMBER_PATH: 'NUMBER_PATH',
+    EQUATION: 'EQUATION'
 } as const;
 
 export type PuzzleType = typeof PuzzleType[keyof typeof PuzzleType];
@@ -108,13 +109,18 @@ export interface NumberPathConfig extends BasePuzzleConfig {
     preFilledIndices?: { row: number; col: number; value: number }[];
 }
 
+export interface EquationConfig extends BasePuzzleConfig {
+    puzzleType: typeof PuzzleType.EQUATION;
+}
+
 export type PuzzleConfig =
     | RefillCanteenConfig
     | BalanceConfig
     | SequenceConfig
     | SymmetryConfig
     | LatinSquareConfig
-    | NumberPathConfig;
+    | NumberPathConfig
+    | EquationConfig;
 
 export interface BasePuzzleData {
     puzzleType: PuzzleType;
@@ -180,13 +186,33 @@ export interface NumberPathData extends BasePuzzleData {
     targetValue: number; // totalCells
 }
 
+export interface EquationTerm {
+    symbolIndex: number;
+    coefficient: number;
+}
+
+export interface Equation {
+    left: EquationTerm[];
+    right: number;
+}
+
+export interface EquationData extends BasePuzzleData {
+    puzzleType: typeof PuzzleType.EQUATION;
+    equations: Equation[];
+    symbols: string[];
+    targetSymbolIndex: number;
+    correctAnswer: number;
+    choices: number[];
+}
+
 export type PuzzleData =
     | RefillCanteenData
     | BalanceData
     | SequenceData
     | SymmetryData
     | LatinSquareData
-    | NumberPathData;
+    | NumberPathData
+    | EquationData;
 
 // Concept: An encounter is a single node on the map
 export interface Encounter {

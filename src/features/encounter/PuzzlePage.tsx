@@ -14,6 +14,7 @@ import { SequencePuzzle } from './puzzles/sequence/SequencePuzzle';
 import { SymmetryPuzzle } from './puzzles/symmetry/SymmetryPuzzle';
 import { LatinSquarePuzzle } from './puzzles/latin-square/LatinSquarePuzzle';
 import { NumberPathPuzzle } from './puzzles/number-path/NumberPathPuzzle';
+import { EquationPuzzle } from './puzzles/equation/EquationPuzzle';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
 import styles from './PuzzlePage.module.css';
 
@@ -48,6 +49,10 @@ const PUZZLE_DEFINITIONS: Record<PuzzleType, PuzzleDefinition> = {
     [PuzzleType.NUMBER_PATH]: {
         instructionKey: 'puzzle.number_path.instruction',
         Component: NumberPathPuzzle
+    },
+    [PuzzleType.EQUATION]: {
+        instructionKey: 'puzzle.equation.instruction',
+        Component: EquationPuzzle
     }
 };
 
