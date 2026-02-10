@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { type PuzzleProps, type EquationData } from '../../../../types/adventure.types';
+import { PuzzleType, type PuzzleProps, type EquationData } from '@/types/adventure.types';
 import { validateAnswer } from './EquationEngine';
 import styles from './EquationPuzzle.module.css';
 
@@ -7,9 +7,14 @@ const SHAKE_DURATION_MS = 500;
 const SUCCESS_DELAY_MS = 2000;
 
 export const EquationPuzzle = ({ data, onSolve }: PuzzleProps) => {
+    if (data.puzzleType !== PuzzleType.EQUATION) {
+        console.error('Invalid puzzle type for EquationPuzzle');
+        return null;
+    }
+
     const puzzleData = data as EquationData;
 
-    if (!puzzleData || !puzzleData.equations) {
+    if (!puzzleData.equations) {
         console.error('Invalid equation puzzle data');
         return null;
     }
@@ -41,14 +46,11 @@ export const EquationPuzzle = ({ data, onSolve }: PuzzleProps) => {
 
     const renderTerm = (term: { symbolIndex: number; coefficient: number }, index: number) => {
         const symbol = puzzleData.symbols[term.symbolIndex];
-        const isNegative = term.coefficient < 0;
 
         return (
             <span key={index} className={styles.term}>
                 {index > 0 && (
-                    <span className={styles.operator}>
-                        {isNegative ? '−' : '+'}
-                    </span>
+                    <span className={styles.operator}>+</span>
                 )}
                 <span className={styles.symbolBox} data-testid={`symbol-${term.symbolIndex}`}>
                     {symbol}
@@ -58,7 +60,7 @@ export const EquationPuzzle = ({ data, onSolve }: PuzzleProps) => {
     };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} data-testid="equation-puzzle-container">
             <div className={`${styles.equationsArea} ${isShaking ? styles.shake : ''}`}>
                 {puzzleData.equations.map((equation, eqIndex) => (
                     <div key={eqIndex} className={styles.equationRow} data-testid={`equation-${eqIndex}`}>
@@ -81,7 +83,7 @@ export const EquationPuzzle = ({ data, onSolve }: PuzzleProps) => {
                 </div>
             </div>
 
-            <div className={styles.choicesArea}>
+            <div className={styles.choicesArea} data-testid="equation-choices">
                 {puzzleData.choices.map((choice, index) => {
                     const isCorrectChoice = isSolved && choice === puzzleData.correctAnswer;
                     const isWrongChoice = isShaking && choice === selectedAnswer;

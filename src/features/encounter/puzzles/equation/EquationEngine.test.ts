@@ -1,9 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { generateEquationData, validateAnswer } from './EquationEngine';
-import { type DifficultyLevel } from '../../../../types/math.types';
 
 describe('EquationEngine', () => {
-    const difficulties: DifficultyLevel[] = [1, 2, 3];
+    const difficulties = [1, 2, 3] as const;
 
     describe('generateEquationData', () => {
         difficulties.forEach(difficulty => {

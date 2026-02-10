@@ -4,16 +4,13 @@
     align-items: center;
     gap: 1.5rem;
     padding: 3.5rem;
-    /* More padding to center content on parchment */
     max-width: 650px;
     margin: 1rem auto;
     background-image: url('../../../../assets/images/puzzles/equation/parchment.png');
     background-size: 100% 100%;
-    /* Stretch to fill */
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
-    /* Removed border and shadow from container to let parchment look natural */
 }
 
 .equationsArea {
@@ -146,17 +143,17 @@
 }
 
 .choiceButton.correct {
-    background: #e8f5e9 !important;
-    border-color: #2e7d32 !important;
-    color: #1b5e20 !important;
-    box-shadow: 0 0 20px rgba(46, 125, 50, 0.2) !important;
+    background: #e8f5e9;
+    border-color: #2e7d32;
+    color: #1b5e20;
+    box-shadow: 0 0 20px rgba(46, 125, 50, 0.2);
     animation: correctPulse 0.6s ease;
 }
 
 .choiceButton.wrong {
-    background: #ffebee !important;
-    border-color: #c62828 !important;
-    color: #b71c1c !important;
+    background: #ffebee;
+    border-color: #c62828;
+    color: #b71c1c;
     animation: wrongShake 0.4s ease;
 }
 

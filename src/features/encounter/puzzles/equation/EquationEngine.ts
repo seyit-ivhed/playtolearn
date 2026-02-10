@@ -1,13 +1,11 @@
-import { type DifficultyLevel } from '../../../../types/math.types';
+import { type DifficultyLevel } from '@/types/math.types';
 import {
     PuzzleType,
     type EquationData,
     type EquationTerm,
     type Equation
-} from '../../../../types/adventure.types';
-import { getRandomInt, shuffleArray } from '../../../../utils/math/helpers';
-
-export type { EquationData };
+} from '@/types/adventure.types';
+import { getRandomInt, shuffleArray } from '@/utils/math/helpers';
 
 const SYMBOLS = ['💎', '🔮', '⭐', '🌙', '🔥', '🍀', '🗝️', '⚡'];
 
