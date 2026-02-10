@@ -121,30 +121,46 @@ export const generateEquationData = (difficulty: DifficultyLevel): EquationData 
     const selectedSymbols = shuffleArray([...SYMBOLS]).slice(0, variableCount);
 
     const equations: Equation[] = [];
-    let attempts = 0;
-    const maxAttempts = 50;
+    const targetSymbolIndex = (difficulty === 1) ? getRandomInt(0, 1) : getRandomInt(0, variableCount - 1);
 
-    while (equations.length < equationCount && attempts < maxAttempts) {
-        const eq = buildEquation(variableCount, values, allowSubtraction);
-        if (!isEquationRedundant(eq, equations) && eq.right > 0) {
-            equations.push(eq);
-        }
-        attempts++;
-    }
-
-    while (equations.length < equationCount) {
-        const idx = getRandomInt(0, variableCount - 1);
-        const secondIdx = (idx + 1) % variableCount;
+    if (difficulty === 1) {
+        const knownSymbolIndex = 1 - targetSymbolIndex;
         equations.push({
             left: [
-                { symbolIndex: idx, coefficient: 1 },
-                { symbolIndex: secondIdx, coefficient: 1 }
+                { symbolIndex: 0, coefficient: 1 },
+                { symbolIndex: 1, coefficient: 1 }
             ],
-            right: values[idx] + values[secondIdx]
+            right: values[0] + values[1]
         });
+        equations.push({
+            left: [{ symbolIndex: knownSymbolIndex, coefficient: 1 }],
+            right: values[knownSymbolIndex]
+        });
+    } else {
+        let attempts = 0;
+        const maxAttempts = 50;
+
+        while (equations.length < equationCount && attempts < maxAttempts) {
+            const eq = buildEquation(variableCount, values, allowSubtraction);
+            if (!isEquationRedundant(eq, equations) && eq.right > 0) {
+                equations.push(eq);
+            }
+            attempts++;
+        }
+
+        while (equations.length < equationCount) {
+            const idx = getRandomInt(0, variableCount - 1);
+            const secondIdx = (idx + 1) % variableCount;
+            equations.push({
+                left: [
+                    { symbolIndex: idx, coefficient: 1 },
+                    { symbolIndex: secondIdx, coefficient: 1 }
+                ],
+                right: values[idx] + values[secondIdx]
+            });
+        }
     }
 
-    const targetSymbolIndex = getRandomInt(0, variableCount - 1);
     const correctAnswer = values[targetSymbolIndex];
     const choices = generateDistractionChoices(correctAnswer, 4);
 
