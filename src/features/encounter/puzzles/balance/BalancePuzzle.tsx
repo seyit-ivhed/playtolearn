@@ -147,7 +147,7 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
                                 onClick={handleReset}
                                 data-testid="puzzle-reset-button"
                                 variant={!hasRemovableStones ? 'gold' : 'primary'}
-                                radiate={!hasRemovableStones} // removed {showSuccess} check
+                                radiate={!hasRemovableStones}
                             >
                                 {t('common.start_over', 'Start Over')}
                             </PrimaryButton>

@@ -9,6 +9,8 @@ import {
     validateMove
 } from './NumberPathEngine';
 
+const SUCCESS_DISPLAY_DURATION_MS = 2000;
+
 export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
     const puzzleData = data as NumberPathData;
     const { gridSize = 3, startValue = 1, stepValue = 1, preFilledIndices = [] } = puzzleData;
@@ -90,7 +92,7 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
         // Check if this placement completes the puzzle
         if (willBeFilledAfter === totalCells) {
             setIsCompleted(true);
-            setTimeout(onSolve, 2000);
+            setTimeout(onSolve, SUCCESS_DISPLAY_DURATION_MS);
         }
     };
 
