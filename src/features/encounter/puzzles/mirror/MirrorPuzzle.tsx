@@ -47,7 +47,7 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction
             }
         }
         return (
-            <div className={styles.grid} style={{ gridTemplateColumns: `repeat(${gridSize}, 1fr)` }}>
+            <div className={`${styles.grid} ${isInteractive ? styles.rightSide : styles.leftSide}`} style={{ gridTemplateColumns: `repeat(${gridSize}, 1fr)` }}>
                 {cells}
             </div>
         );
