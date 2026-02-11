@@ -143,8 +143,10 @@
 
 /* Controls/Status */
 .controls {
-    margin-top: 1rem;
-    min-height: 50px;
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -157,17 +159,14 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(6, 1fr);
-    gap: 0.5rem 1rem;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 0.5rem 2rem;
+    padding-bottom: 40px;
 }
 
 .greekSymbol {
     font-size: 1.5rem;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(0, 0, 0, 0.496);
     width: 30px;
     height: 30px;
     display: flex;
