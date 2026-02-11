@@ -52,7 +52,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_6',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: -50, y: 3100 },
+                coordinates: { x: 0, y: 2900 },
                 puzzleData: {
                     puzzleType: PuzzleType.BALANCE
                 },
