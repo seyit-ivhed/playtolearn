@@ -377,15 +377,10 @@ Organize imports in this order:
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-// 2. Internal absolute
-import { Companion } from "@/types/companion.types";
-import { useCombatStore } from "@/stores/combat.store";
-import { Button } from "@/components/common/Button";
-
-// 3. Relative
+// 2. Relative
 import { AdventureNode } from "./components/AdventureNode";
 
-// 4. Styles
+// 3. Styles
 import styles from "./AdventurePage.module.css";
 ```
 

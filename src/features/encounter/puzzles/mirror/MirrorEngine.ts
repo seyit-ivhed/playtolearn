@@ -21,7 +21,6 @@ export const generateMirrorData = (difficulty: DifficultyLevel): MirrorData => {
     const leftPattern: MirrorGridCell[] = [];
     const rightPattern: MirrorGridCell[] = [];
 
-    // Pick 2 random runes
     const shuffledRunes = [...AVAILABLE_RUNES].sort(() => Math.random() - 0.5);
     const selectedRunes = shuffledRunes.slice(0, 2);
 
@@ -30,7 +29,6 @@ export const generateMirrorData = (difficulty: DifficultyLevel): MirrorData => {
             const runeIndex = Math.random() > 0.5 ? 1 : 0;
             leftPattern.push({ x, y, runeIndex });
 
-            // Initial right side is all runeIndex 0 or randomized but not mirrored
             rightPattern.push({ x, y, runeIndex: 0 });
         }
     }
@@ -85,7 +83,6 @@ export class MirrorEngine {
 
         return pattern.map(cell => {
             if (cell.x === x && cell.y === y) {
-                // Toggles between index 0 and 1
                 return { ...cell, runeIndex: (cell.runeIndex + 1) % 2 };
             }
             return cell;

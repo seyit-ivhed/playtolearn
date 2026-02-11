@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MirrorEngine } from './MirrorEngine';
 import styles from './MirrorPuzzle.module.css';
@@ -8,14 +8,8 @@ const ANIMATION_DURATION_MS = 600;
 const ROTATION_MIDPOINT_MS = 300;
 const VICTORY_DELAY_MS = 2000;
 
-export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
+export const MirrorPuzzle = ({ data, onSolve }: PuzzleProps) => {
     const { t } = useTranslation();
-
-    if (data.puzzleType !== PuzzleType.MIRROR) {
-        console.error(`Invalid puzzle type passed to MirrorPuzzle: ${data.puzzleType}`);
-        return null;
-    }
-
     const puzzleData = data as MirrorData;
     const gridSize = puzzleData.targetValue;
     const [leftPattern, setLeftPattern] = useState<MirrorGridCell[]>([]);
@@ -28,15 +22,18 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
         setRightPattern(puzzleData.rightOptions);
     }, [puzzleData]);
 
+    if (data.puzzleType !== PuzzleType.MIRROR) {
+        console.error(`Invalid puzzle type passed to MirrorPuzzle: ${data.puzzleType}`);
+        return null;
+    }
+
     const handleCellClick = (x: number, y: number) => {
         if (isSolved || rotatingCell) {
             return;
         }
 
-        // Trigger animation
         setRotatingCell({ x, y });
 
-        // Update logic at the midpoint of the animation (300ms of 600ms)
         setTimeout(() => {
             const updatedRight = MirrorEngine.rotateCell(rightPattern, x, y);
             setRightPattern(updatedRight);
@@ -47,7 +44,6 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
             }
         }, ROTATION_MIDPOINT_MS);
 
-        // Reset rotation state after animation duration
         setTimeout(() => setRotatingCell(null), ANIMATION_DURATION_MS);
     };
 

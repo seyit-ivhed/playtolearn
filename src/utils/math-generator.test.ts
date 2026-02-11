@@ -95,8 +95,6 @@ describe('Math Generator Functionality', () => {
             expect(data.options.length).toBeGreaterThan(0);
         });
 
-
-
         it('should generate valid Mirror puzzle data', () => {
             const data = generatePuzzleData(PuzzleType.MIRROR, 1) as MirrorData;
             expect(data.puzzleType).toBe(PuzzleType.MIRROR);
