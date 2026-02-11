@@ -9,6 +9,9 @@ import styles from './BalancePuzzle.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 
 const SUCCESS_DISPLAY_DURATION_MS = 3000;
+const ARM_OFFSET_HEAVY = '100px';
+const ARM_OFFSET_LIGHT = '40px';
+const ARM_OFFSET_BALANCED = '70px';
 
 export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const { t } = useTranslation();
@@ -73,12 +76,23 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     return (
         <div className={`${styles.container} ${isSolved ? styles.solved : ''}`} data-testid="balance-puzzle-container">
             <div className={`${styles.puzzleBoard} ${isSolved ? styles.solved : ''}`}>
+                <div className={styles.greekGrid}>
+                    {greekSymbols.map((symbol, index) => (
+                        <div
+                            key={index}
+                            className={`${styles.greekSymbol} ${isSolved ? styles.glowing : ''}`}
+                        >
+                            {symbol}
+                        </div>
+                    ))}
+                </div>
+
                 <div className={styles.platesContainer}>
                     {/* Left Scale Arm */}
                     <div
                         className={`${styles.scaleArm} ${styles.leftArm}`}
                         style={{
-                            transform: `translateY(${leftTotal > rightTotal ? '100px' : leftTotal < rightTotal ? '40px' : '0'})`
+                            transform: `translateY(${leftTotal > rightTotal ? ARM_OFFSET_HEAVY : leftTotal < rightTotal ? ARM_OFFSET_LIGHT : ARM_OFFSET_BALANCED})`
                         }}
                     >
                         <div className={styles.chain} />
@@ -103,7 +117,7 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
                     <div
                         className={`${styles.scaleArm} ${styles.rightArm}`}
                         style={{
-                            transform: `translateY(${rightTotal > leftTotal ? '100px' : rightTotal < leftTotal ? '40px' : '0'})`
+                            transform: `translateY(${rightTotal > leftTotal ? ARM_OFFSET_HEAVY : rightTotal < leftTotal ? ARM_OFFSET_LIGHT : ARM_OFFSET_BALANCED})`
                         }}
                     >
                         <div className={styles.chain} />
@@ -127,16 +141,6 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
 
                 {/* Controls/Status */}
                 <div className={styles.controls}>
-                    <div className={styles.greekGrid}>
-                        {greekSymbols.map((symbol, index) => (
-                            <div
-                                key={index}
-                                className={`${styles.greekSymbol} ${isSolved ? styles.glowing : ''}`}
-                            >
-                                {symbol}
-                            </div>
-                        ))}
-                    </div>
                     {isSolved ? null : (
                         <div className={styles.resetWrapper}>
                             <PrimaryButton

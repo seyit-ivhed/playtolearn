@@ -161,11 +161,16 @@
 }
 
 .greekGrid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(6, 1fr);
     gap: 0.5rem 2rem;
-    padding-bottom: 40px;
+    z-index: 0;
+    pointer-events: none;
 }
 
 .greekSymbol {
