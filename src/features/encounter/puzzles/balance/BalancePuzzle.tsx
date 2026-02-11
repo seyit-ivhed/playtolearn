@@ -12,6 +12,12 @@ const SUCCESS_DISPLAY_DURATION_MS = 3000;
 
 export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const { t } = useTranslation();
+    const initialData = (data as BalanceData) || { leftStack: [], rightStack: [] };
+
+    const [leftStack, setLeftStack] = useState<Weight[]>(initialData.leftStack || []);
+    const [rightStack, setRightStack] = useState<Weight[]>(initialData.rightStack || []);
+    const [isSolved, setIsSolved] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     if (!data || data.puzzleType !== PuzzleType.BALANCE) {
         console.error(`Invalid puzzle data passed to BalancePuzzle: ${data?.puzzleType}`);
@@ -22,13 +28,6 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
         console.error('onSolve is not a function in BalancePuzzle');
         return null;
     }
-
-    const initialData = data as BalanceData;
-
-    const [leftStack, setLeftStack] = useState<Weight[]>(initialData.leftStack);
-    const [rightStack, setRightStack] = useState<Weight[]>(initialData.rightStack);
-    const [isSolved, setIsSolved] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleRemoveWeight = (side: 'left' | 'right', weightId: string) => {
         if (isSolved) {

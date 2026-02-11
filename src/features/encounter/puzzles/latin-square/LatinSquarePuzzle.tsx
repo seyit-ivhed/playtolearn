@@ -9,6 +9,12 @@ const ROTATION_MIDPOINT_MS = 300;
 
 export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
     const { t } = useTranslation();
+    const puzzleData = (data as LatinSquareData) || { grid: [], fixedIndices: [], selectedRunes: [] };
+    const [grid, setGrid] = useState<LatinSquareElement[][]>(() => puzzleData.grid || []);
+    const fixedIndices = puzzleData.fixedIndices || [];
+    const selectedRunes = puzzleData.selectedRunes || [];
+    const [isSolved, setIsSolved] = useState(false);
+    const [rotatingCell, setRotatingCell] = useState<{ row: number, col: number } | null>(null);
 
     if (!data || data.puzzleType !== PuzzleType.LATIN_SQUARE) {
         console.error(`Invalid puzzle data passed to LatinSquarePuzzle: ${data?.puzzleType}`);
@@ -19,13 +25,6 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
         console.error('onSolve is not a function in LatinSquarePuzzle');
         return null;
     }
-
-    const puzzleData = data as LatinSquareData;
-    const [grid, setGrid] = useState<LatinSquareElement[][]>(() => puzzleData.grid);
-    const fixedIndices = puzzleData.fixedIndices;
-    const selectedRunes = puzzleData.selectedRunes;
-    const [isSolved, setIsSolved] = useState(false);
-    const [rotatingCell, setRotatingCell] = useState<{ row: number, col: number } | null>(null);
 
     const handleCellClick = (row: number, col: number) => {
         if (isSolved || rotatingCell || fixedIndices.some(idx => idx.row === row && idx.col === col)) {

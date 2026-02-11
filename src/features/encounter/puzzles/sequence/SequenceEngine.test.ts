@@ -72,7 +72,7 @@ describe('SequenceEngine', () => {
     describe('Edge Cases and Validation', () => {
         it('AdditionRule should handle invalid step', () => {
             const spy = vi.spyOn(console, 'error').mockImplementation(() => { });
-            // @ts-ignore
+            // @ts-expect-error: Testing invalid input
             const rule = new AdditionRule('invalid');
             expect(rule.step).toBe(0);
             expect(new AdditionRule(NaN).step).toBe(0);
@@ -82,7 +82,7 @@ describe('SequenceEngine', () => {
 
         it('MultiplicationRule should handle invalid factor', () => {
             const spy = vi.spyOn(console, 'error').mockImplementation(() => { });
-            // @ts-ignore
+            // @ts-expect-error: Testing invalid input
             const rule = new MultiplicationRule('invalid');
             expect(rule.factor).toBe(1);
             expect(new MultiplicationRule(NaN).factor).toBe(1);
@@ -92,7 +92,7 @@ describe('SequenceEngine', () => {
 
         it('SequenceRuleFactory should handle invalid rule names', () => {
             const spy = vi.spyOn(console, 'error').mockImplementation(() => { });
-            // @ts-ignore
+            // @ts-expect-error: Testing invalid input
             expect(SequenceRuleFactory.getRule(null)).toBeNull();
             expect(SequenceRuleFactory.getRule('INVALID_RULE')).toBeNull();
             expect(spy).toHaveBeenCalled();
@@ -101,9 +101,9 @@ describe('SequenceEngine', () => {
 
         it('validateNextStep should return false for invalid inputs', () => {
             const spy = vi.spyOn(console, 'error').mockImplementation(() => { });
-            // @ts-ignore
+            // @ts-expect-error: Testing invalid input
             expect(validateNextStep(null, 1, ['ADD_1'])).toBe(false);
-            // @ts-ignore
+            // @ts-expect-error: Testing invalid input
             expect(validateNextStep([1], 2, null)).toBe(false);
             expect(validateNextStep([1], 2, [])).toBe(false);
             expect(validateNextStep([1], 2, ['INVALID_RULE'])).toBe(false);
@@ -113,7 +113,7 @@ describe('SequenceEngine', () => {
 
         it('isSequenceComplete should return false for invalid inputs', () => {
             const spy = vi.spyOn(console, 'error').mockImplementation(() => { });
-            // @ts-ignore
+            // @ts-expect-error: Testing invalid input
             expect(isSequenceComplete(null, 10)).toBe(false);
             expect(isSequenceComplete([], 10)).toBe(false);
             expect(spy).toHaveBeenCalled();
@@ -122,7 +122,7 @@ describe('SequenceEngine', () => {
 
         it('generateStarPositions should handle invalid inputs', () => {
             const spy = vi.spyOn(console, 'error').mockImplementation(() => { });
-            // @ts-ignore
+            // @ts-expect-error: Testing invalid input
             expect(generateStarPositions('invalid')).toEqual([]);
             expect(spy).toHaveBeenCalled();
             spy.mockRestore();
@@ -130,7 +130,7 @@ describe('SequenceEngine', () => {
 
         it('generateSequenceData should handle invalid inputs', () => {
             const spy = vi.spyOn(console, 'error').mockImplementation(() => { });
-            // @ts-ignore
+            // @ts-expect-error: Testing invalid input
             const data = generateSequenceData('invalid');
             expect(data.targetValue).toBe(0);
             expect(data.options).toEqual([]);

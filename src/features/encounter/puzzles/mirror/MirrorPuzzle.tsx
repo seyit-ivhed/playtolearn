@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MirrorEngine } from './MirrorEngine';
 import styles from './MirrorPuzzle.module.css';
@@ -10,6 +10,17 @@ const VICTORY_DELAY_MS = 2000;
 
 export const MirrorPuzzle = ({ data, onSolve }: PuzzleProps) => {
     const { t } = useTranslation();
+    const puzzleData = useMemo(() => (data as MirrorData) || { targetValue: 0, leftOptions: [], rightOptions: [], selectedRunes: [] }, [data]);
+    const gridSize = puzzleData.targetValue || 0;
+    const [leftPattern, setLeftPattern] = useState<MirrorGridCell[]>([]);
+    const [rightPattern, setRightPattern] = useState<MirrorGridCell[]>([]);
+    const [isSolved, setIsSolved] = useState(false);
+    const [rotatingCell, setRotatingCell] = useState<{ x: number, y: number } | null>(null);
+
+    useEffect(() => {
+        setLeftPattern(puzzleData.leftOptions || []);
+        setRightPattern(puzzleData.rightOptions || []);
+    }, [puzzleData]);
 
     if (!data || data.puzzleType !== PuzzleType.MIRROR) {
         console.error(`Invalid puzzle data passed to MirrorPuzzle: ${data?.puzzleType}`);
@@ -20,18 +31,6 @@ export const MirrorPuzzle = ({ data, onSolve }: PuzzleProps) => {
         console.error('onSolve is not a function in MirrorPuzzle');
         return null;
     }
-
-    const puzzleData = data as MirrorData;
-    const gridSize = puzzleData.targetValue;
-    const [leftPattern, setLeftPattern] = useState<MirrorGridCell[]>([]);
-    const [rightPattern, setRightPattern] = useState<MirrorGridCell[]>([]);
-    const [isSolved, setIsSolved] = useState(false);
-    const [rotatingCell, setRotatingCell] = useState<{ x: number, y: number } | null>(null);
-
-    useEffect(() => {
-        setLeftPattern(puzzleData.leftOptions);
-        setRightPattern(puzzleData.rightOptions);
-    }, [puzzleData]);
 
     const handleCellClick = (x: number, y: number) => {
         if (isSolved || rotatingCell) {
