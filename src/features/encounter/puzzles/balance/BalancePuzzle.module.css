@@ -141,37 +141,67 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Controls/Status */
 .controls {
     margin-top: 1rem;
     min-height: 50px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1.5rem;
     z-index: 10;
 }
 
-.successMessage {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--color-success, #10b981);
-    text-shadow:
-        0 0 10px rgba(16, 185, 129, 0.4),
-        0 0 20px rgba(255, 255, 255, 0.8),
-        0 4px 10px rgba(0, 0, 0, 0.2);
-    animation: successPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+.greekGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 0.5rem 1rem;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-@keyframes successPop {
-    0% {
-        transform: scale(0.5);
-        opacity: 0;
+.greekSymbol {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.2);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+    font-family: serif;
+    user-select: none;
+}
+
+.greekSymbol.glowing {
+    color: #ffd700;
+    text-shadow:
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.4);
+    animation: textPulse 2s infinite ease-in-out;
+}
+
+@keyframes textPulse {
+
+    0%,
+    100% {
+        opacity: 0.8;
+        transform: scale(1);
     }
 
-    100% {
-        transform: scale(1);
+    50% {
         opacity: 1;
+        transform: scale(1.1);
+        text-shadow:
+            0 0 15px rgba(255, 215, 0, 1),
+            0 0 25px rgba(255, 215, 0, 0.8),
+            0 0 35px rgba(255, 215, 0, 0.6);
     }
 }
 
@@ -196,7 +226,7 @@
 @media (max-width: 1024px) {
     .puzzleBoard {
         min-width: 90vw;
-        padding: 60px 40px 80px;
+        padding: 0;
     }
 
     .platesContainer {

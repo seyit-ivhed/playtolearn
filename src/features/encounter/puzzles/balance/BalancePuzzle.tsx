@@ -17,7 +17,6 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const [leftStack, setLeftStack] = useState<Weight[]>(initialData.leftStack || []);
     const [rightStack, setRightStack] = useState<Weight[]>(initialData.rightStack || []);
     const [isSolved, setIsSolved] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
 
     if (!data || data.puzzleType !== PuzzleType.BALANCE) {
         console.error(`Invalid puzzle data passed to BalancePuzzle: ${data?.puzzleType}`);
@@ -50,10 +49,6 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
             setIsSolved(true);
 
             setTimeout(() => {
-                setShowSuccess(true);
-            }, 500);
-
-            setTimeout(() => {
                 onSolve();
             }, SUCCESS_DISPLAY_DURATION_MS);
         }
@@ -72,6 +67,8 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
 
     // Check if all removable stones are gone
     const hasRemovableStones = [...leftStack, ...rightStack].some(w => !w.isHeavy);
+
+    const greekSymbols = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ'];
 
     return (
         <div className={`${styles.container} ${isSolved ? styles.solved : ''}`} data-testid="balance-puzzle-container">
@@ -130,16 +127,22 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
 
                 {/* Controls/Status */}
                 <div className={styles.controls}>
-                    {showSuccess ? (
-                        <div className={styles.successMessage}>
-                            {t('puzzle.success', 'Success! ✨')}
-                        </div>
-                    ) : isSolved ? null : (
+                    <div className={styles.greekGrid}>
+                        {greekSymbols.map((symbol, index) => (
+                            <div
+                                key={index}
+                                className={`${styles.greekSymbol} ${isSolved ? styles.glowing : ''}`}
+                            >
+                                {symbol}
+                            </div>
+                        ))}
+                    </div>
+                    {isSolved ? null : (
                         <PrimaryButton
                             onClick={handleReset}
                             data-testid="puzzle-reset-button"
                             variant={!hasRemovableStones ? 'gold' : 'primary'}
-                            radiate={!hasRemovableStones}
+                            radiate={!hasRemovableStones} // removed {showSuccess} check
                         >
                             {t('common.start_over', 'Start Over')}
                         </PrimaryButton>
