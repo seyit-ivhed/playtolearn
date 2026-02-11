@@ -13,10 +13,14 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    border-radius: 1rem;
-    border: 2px solid #555;
+    background-image: url('../../../../assets/images/puzzles/pedestal.png');
+    background-size: cover;
+    background-position: center;
+    padding: 140px 160px 200px;
+    border-radius: 24px;
+    border: 4px solid #8b6532;
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5);
+    filter: brightness(0.95);
 }
 
 .row {
@@ -27,9 +31,9 @@
 .cell {
     width: 70px;
     height: 70px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
