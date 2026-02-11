@@ -71,7 +71,7 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
                     <div
                         className={`${styles.scaleArm} ${styles.leftArm}`}
                         style={{
-                            transform: `translateY(${leftTotal > rightTotal ? '40px' : leftTotal < rightTotal ? '-40px' : '0'})`
+                            transform: `translateY(${leftTotal > rightTotal ? '160px' : leftTotal < rightTotal ? '40px' : '0'})`
                         }}
                     >
                         <div className={styles.chain} />
@@ -96,7 +96,7 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
                     <div
                         className={`${styles.scaleArm} ${styles.rightArm}`}
                         style={{
-                            transform: `translateY(${rightTotal > leftTotal ? '40px' : rightTotal < leftTotal ? '-40px' : '0'})`
+                            transform: `translateY(${rightTotal > leftTotal ? '160px' : rightTotal < leftTotal ? '40px' : '0'})`
                         }}
                     >
                         <div className={styles.chain} />

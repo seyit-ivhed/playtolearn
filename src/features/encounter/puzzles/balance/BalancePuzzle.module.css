@@ -27,6 +27,7 @@
     position: relative;
     min-width: 800px;
     min-height: 500px;
+    overflow: hidden;
 }
 
 .puzzleBoard.solved {
