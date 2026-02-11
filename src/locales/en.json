@@ -351,7 +351,7 @@
             "rune_alt": "Rune"
         },
         "latin_square": {
-            "instruction": "Place elemental runes so each appears exactly once in every row and column."
+            "instruction": "Place runes so each appears exactly once in every row and column."
         },
         "equation": {
             "instruction": "Find the value of the mystery symbol!"

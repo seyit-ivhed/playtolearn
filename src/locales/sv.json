@@ -351,7 +351,7 @@
             "rune_alt": "Runa"
         },
         "latin_square": {
-            "instruction": "Placera element-runor så att varje runa förekommer exakt en gång i varje rad och kolumn."
+            "instruction": "Placera runor så att varje runa förekommer exakt en gång i varje rad och kolumn."
         },
         "equation": {
             "instruction": "Hitta värdet på den hemliga symbolen!"
