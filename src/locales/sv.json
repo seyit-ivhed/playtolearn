@@ -344,7 +344,7 @@
         "number_path": {
             "instruction": "Fyll i siffrorna för att skapa en sammanhängande stig!"
         },
-        "symmetry": {
+        "mirror": {
             "instruction": "Spegla mönstret på den högra sidan!",
             "pattern_title": "Mönster",
             "mirror_title": "Spegel"

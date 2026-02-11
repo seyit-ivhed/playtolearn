@@ -344,7 +344,7 @@
         "number_path": {
             "instruction": "Create a continuous path by filling in the numbers!"
         },
-        "symmetry": {
+        "mirror": {
             "instruction": "Mirror the pattern on the right side!",
             "pattern_title": "Pattern",
             "mirror_title": "Mirror"

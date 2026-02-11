@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SymmetryEngine } from './SymmetryEngine';
-import styles from './SymmetryPuzzle.module.css';
-import { type PuzzleProps, type SymmetryData, type SymmetryGridCell } from '../../../../types/adventure.types';
+import { MirrorEngine } from './MirrorEngine';
+import styles from './MirrorPuzzle.module.css';
+import { type PuzzleProps, type MirrorData, type MirrorGridCell } from '../../../../types/adventure.types';
 
-export const SymmetryPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
+export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
     const { t } = useTranslation();
-    const puzzleData = data as SymmetryData;
+    const puzzleData = data as MirrorData;
     const gridSize = puzzleData.targetValue;
-    const [leftPattern, setLeftPattern] = useState<SymmetryGridCell[]>([]);
-    const [rightPattern, setRightPattern] = useState<SymmetryGridCell[]>([]);
+    const [leftPattern, setLeftPattern] = useState<MirrorGridCell[]>([]);
+    const [rightPattern, setRightPattern] = useState<MirrorGridCell[]>([]);
     const [isSolved, setIsSolved] = useState(false);
 
     useEffect(() => {
@@ -22,16 +22,16 @@ export const SymmetryPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instructi
             return;
         }
 
-        const updatedRight = SymmetryEngine.toggleCell(rightPattern, x, y);
+        const updatedRight = MirrorEngine.toggleCell(rightPattern, x, y);
         setRightPattern(updatedRight);
 
-        if (SymmetryEngine.checkSolution(leftPattern, updatedRight, gridSize)) {
+        if (MirrorEngine.checkSolution(leftPattern, updatedRight, gridSize)) {
             setIsSolved(true);
             setTimeout(() => onSolve(), 1000);
         }
     };
 
-    const renderGrid = (pattern: SymmetryGridCell[], isInteractive: boolean) => {
+    const renderGrid = (pattern: MirrorGridCell[], isInteractive: boolean) => {
         const cells = [];
         for (let y = 0; y < gridSize; y++) {
             for (let x = 0; x < gridSize; x++) {
@@ -39,7 +39,7 @@ export const SymmetryPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instructi
                 cells.push(
                     <div
                         key={`${x}-${y}`}
-                        data-testid={`symmetry-cell-${isInteractive ? 'right' : 'left'}-${x}-${y}`}
+                        data-testid={`mirror-cell-${isInteractive ? 'right' : 'left'}-${x}-${y}`}
                         className={`${styles.cell} ${cell?.isActive ? styles.active : ''} ${isInteractive ? styles.interactive : ''}`}
                         onClick={isInteractive ? () => handleCellClick(x, y) : undefined}
                     />
@@ -57,12 +57,12 @@ export const SymmetryPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instructi
         <div className={styles.container}>
             <div className={styles.puzzleBoard}>
                 <div className={styles.side}>
-                    <h3>{t('puzzle.symmetry.pattern_title', 'Pattern')}</h3>
+                    <h3>{t('puzzle.mirror.pattern_title', 'Pattern')}</h3>
                     {renderGrid(leftPattern, false)}
                 </div>
                 <div className={styles.divider} />
                 <div className={styles.side}>
-                    <h3>{t('puzzle.symmetry.mirror_title', 'Mirror')}</h3>
+                    <h3>{t('puzzle.mirror.mirror_title', 'Mirror')}</h3>
                     {renderGrid(rightPattern, true)}
                 </div>
             </div>

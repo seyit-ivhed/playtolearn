@@ -11,7 +11,7 @@ import { generatePuzzleData } from '../../utils/math-generator';
 import { RefillCanteenPuzzle } from './puzzles/refill-canteen/RefillCanteenPuzzle';
 import { BalancePuzzle } from './puzzles/balance/BalancePuzzle';
 import { SequencePuzzle } from './puzzles/sequence/SequencePuzzle';
-import { SymmetryPuzzle } from './puzzles/symmetry/SymmetryPuzzle';
+import { MirrorPuzzle } from './puzzles/mirror/MirrorPuzzle';
 import { LatinSquarePuzzle } from './puzzles/latin-square/LatinSquarePuzzle';
 import { NumberPathPuzzle } from './puzzles/number-path/NumberPathPuzzle';
 import { EquationPuzzle } from './puzzles/equation/EquationPuzzle';
@@ -38,9 +38,9 @@ const PUZZLE_DEFINITIONS: Record<PuzzleType, PuzzleDefinition> = {
         instructionKey: 'puzzle.sequence.instruction',
         Component: SequencePuzzle
     },
-    [PuzzleType.SYMMETRY]: {
-        instructionKey: 'puzzle.symmetry.instruction',
-        Component: SymmetryPuzzle
+    [PuzzleType.MIRROR]: {
+        instructionKey: 'puzzle.mirror.instruction',
+        Component: MirrorPuzzle
     },
     [PuzzleType.LATIN_SQUARE]: {
         instructionKey: 'puzzle.latin_square.instruction',

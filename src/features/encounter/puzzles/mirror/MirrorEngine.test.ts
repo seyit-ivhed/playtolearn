@@ -1,15 +1,15 @@
 import { describe, it, expect } from 'vitest';
 import {
-    SymmetryEngine,
-    generateSymmetryData,
-    type SymmetryGridCell
-} from './SymmetryEngine';
+    MirrorEngine,
+    generateMirrorData,
+    type MirrorGridCell
+} from './MirrorEngine';
 import { PuzzleType } from '../../../../types/adventure.types';
 
-describe('SymmetryEngine', () => {
+describe('MirrorEngine', () => {
     const gridSize = 3;
-    const createPattern = (activeCoords: { x: number, y: number }[]): SymmetryGridCell[] => {
-        const pattern: SymmetryGridCell[] = [];
+    const createPattern = (activeCoords: { x: number, y: number }[]): MirrorGridCell[] => {
+        const pattern: MirrorGridCell[] = [];
         for (let y = 0; y < gridSize; y++) {
             for (let x = 0; x < gridSize; x++) {
                 const isActive = activeCoords.some(c => c.x === x && c.y === y);
@@ -27,14 +27,14 @@ describe('SymmetryEngine', () => {
             // (1, 1) -> (1, 1)
             const right = createPattern([{ x: 2, y: 0 }, { x: 1, y: 1 }]);
 
-            expect(SymmetryEngine.checkSolution(left, right, gridSize)).toBe(true);
+            expect(MirrorEngine.checkSolution(left, right, gridSize)).toBe(true);
         });
 
         it('should return false if patterns are not mirrored', () => {
             const left = createPattern([{ x: 0, y: 0 }]);
             const right = createPattern([{ x: 0, y: 0 }]); // This is same, not mirrored (unless center)
 
-            expect(SymmetryEngine.checkSolution(left, right, gridSize)).toBe(false);
+            expect(MirrorEngine.checkSolution(left, right, gridSize)).toBe(false);
         });
 
         it('should return false if a cell is missing in one pattern', () => {
@@ -44,55 +44,55 @@ describe('SymmetryEngine', () => {
             // Remove a cell from right
             const incompleteRight = right.filter(c => !(c.x === 2 && c.y === 0));
 
-            expect(SymmetryEngine.checkSolution(left, incompleteRight, gridSize)).toBe(false);
+            expect(MirrorEngine.checkSolution(left, incompleteRight, gridSize)).toBe(false);
         });
     });
 
     describe('toggleCell', () => {
         it('should toggle an inactive cell to active', () => {
             const pattern = createPattern([]);
-            const result = SymmetryEngine.toggleCell(pattern, 0, 0);
+            const result = MirrorEngine.toggleCell(pattern, 0, 0);
             expect(result.find(c => c.x === 0 && c.y === 0)?.isActive).toBe(true);
         });
 
         it('should toggle an active cell to inactive', () => {
             const pattern = createPattern([{ x: 0, y: 0 }]);
-            const result = SymmetryEngine.toggleCell(pattern, 0, 0);
+            const result = MirrorEngine.toggleCell(pattern, 0, 0);
             expect(result.find(c => c.x === 0 && c.y === 0)?.isActive).toBe(false);
         });
 
         it('should not affect other cells', () => {
             const pattern = createPattern([{ x: 1, y: 1 }]);
-            const result = SymmetryEngine.toggleCell(pattern, 0, 0);
+            const result = MirrorEngine.toggleCell(pattern, 0, 0);
             expect(result.find(c => c.x === 1 && c.y === 1)?.isActive).toBe(true);
         });
     });
 
-    describe('generateSymmetryData', () => {
+    describe('generateMirrorData', () => {
         it('should generate valid puzzle data structure', () => {
-            const data = generateSymmetryData(1);
-            expect(data.puzzleType).toBe(PuzzleType.SYMMETRY);
+            const data = generateMirrorData(1);
+            expect(data.puzzleType).toBe(PuzzleType.MIRROR);
             expect(data.targetValue).toBe(3); // gridSize for difficulty 1
             expect(Array.isArray(data.leftOptions)).toBe(true);
             expect(Array.isArray(data.rightOptions)).toBe(true);
         });
 
         it('should have gridSize x gridSize cells in patterns', () => {
-            const data = generateSymmetryData(1);
+            const data = generateMirrorData(1);
             const size = data.targetValue as number;
             expect(data.leftOptions).toHaveLength(size * size);
             expect(data.rightOptions).toHaveLength(size * size);
         });
 
         it('should start with all right cells inactive', () => {
-            const data = generateSymmetryData(2);
-            const rightPattern = data.rightOptions as unknown as SymmetryGridCell[];
+            const data = generateMirrorData(2);
+            const rightPattern = data.rightOptions as unknown as MirrorGridCell[];
             expect(rightPattern.every(c => !c.isActive)).toBe(true);
         });
 
         it('should scale grid size with difficulty', () => {
-            const data1 = generateSymmetryData(1);
-            const data2 = generateSymmetryData(2);
+            const data1 = generateMirrorData(1);
+            const data2 = generateMirrorData(2);
             expect(data1.targetValue).toBe(3);
             expect(data2.targetValue).toBe(4);
         });

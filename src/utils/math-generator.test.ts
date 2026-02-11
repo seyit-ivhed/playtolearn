@@ -7,8 +7,10 @@ import {
 } from './math-generator';
 import { MathOperation } from '../types/math.types';
 import { PuzzleType } from '../types/adventure.types';
+import { type RefillCanteenData } from '../features/encounter/puzzles/refill-canteen/RefillCanteenEngine';
 import { type BalanceData } from '../features/encounter/puzzles/balance/BalanceEngine';
-import { type SymmetryData } from '../features/encounter/puzzles/symmetry/SymmetryEngine';
+import { type SequenceData } from '../features/encounter/puzzles/sequence/SequenceEngine';
+import { type MirrorData } from '../features/encounter/puzzles/mirror/MirrorEngine';
 import { type LatinSquareData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
 
 describe('Math Generator Functionality', () => {
@@ -68,7 +70,7 @@ describe('Math Generator Functionality', () => {
 
     describe('Puzzle Data Generation', () => {
         it('should generate valid Refill Canteen puzzle data', () => {
-            const data = generatePuzzleData(PuzzleType.REFILL_CANTEEN, 3);
+            const data = generatePuzzleData(PuzzleType.REFILL_CANTEEN, 3) as RefillCanteenData;
             expect(data.puzzleType).toBe(PuzzleType.REFILL_CANTEEN);
             expect(data.targetValue).toBeGreaterThan(0);
             expect(data.options.length).toBeGreaterThan(0);
@@ -84,7 +86,7 @@ describe('Math Generator Functionality', () => {
         });
 
         it('should generate valid Sequence puzzle data', () => {
-            const data = generatePuzzleData(PuzzleType.SEQUENCE, 1);
+            const data = generatePuzzleData(PuzzleType.SEQUENCE, 1) as SequenceData;
             expect(data.puzzleType).toBe(PuzzleType.SEQUENCE);
             expect(data.targetValue).toBeDefined();
             expect(data.rules).toBeDefined();
@@ -93,9 +95,9 @@ describe('Math Generator Functionality', () => {
 
 
 
-        it('should generate valid Symmetry puzzle data', () => {
-            const data = generatePuzzleData(PuzzleType.SYMMETRY, 1) as SymmetryData;
-            expect(data.puzzleType).toBe(PuzzleType.SYMMETRY);
+        it('should generate valid Mirror puzzle data', () => {
+            const data = generatePuzzleData(PuzzleType.MIRROR, 1) as MirrorData;
+            expect(data.puzzleType).toBe(PuzzleType.MIRROR);
             expect(data.targetValue).toBe(3); // Level 1 -> 3x3
             expect(data.leftOptions).toBeDefined();
             expect(data.rightOptions).toBeDefined();

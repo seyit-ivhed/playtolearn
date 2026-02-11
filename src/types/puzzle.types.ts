@@ -2,7 +2,7 @@ export const PuzzleType = {
     REFILL_CANTEEN: 'REFILL_CANTEEN',
     BALANCE: 'BALANCE',
     SEQUENCE: 'SEQUENCE',
-    SYMMETRY: 'SYMMETRY',
+    MIRROR: 'MIRROR',
     LATIN_SQUARE: 'LATIN_SQUARE',
     NUMBER_PATH: 'NUMBER_PATH',
     EQUATION: 'EQUATION'
@@ -47,8 +47,8 @@ export interface SequenceConfig extends BasePuzzleConfig {
     rules?: string[];
 }
 
-export interface SymmetryConfig extends BasePuzzleConfig {
-    puzzleType: typeof PuzzleType.SYMMETRY;
+export interface MirrorConfig extends BasePuzzleConfig {
+    puzzleType: typeof PuzzleType.MIRROR;
     targetValue?: number;
     leftOptions?: (number | PuzzleOption)[];
     rightOptions?: (number | PuzzleOption)[];
@@ -76,7 +76,7 @@ export type PuzzleConfig =
     | RefillCanteenConfig
     | BalanceConfig
     | SequenceConfig
-    | SymmetryConfig
+    | MirrorConfig
     | LatinSquareConfig
     | NumberPathConfig
     | EquationConfig;
@@ -113,18 +113,18 @@ export interface SequenceData extends BasePuzzleData {
     rules: string[];
 }
 
-export interface SymmetryGridCell {
+export interface MirrorGridCell {
     x: number;
     y: number;
     isActive: boolean;
 }
 
-export interface SymmetryData extends BasePuzzleData {
-    puzzleType: typeof PuzzleType.SYMMETRY;
+export interface MirrorData extends BasePuzzleData {
+    puzzleType: typeof PuzzleType.MIRROR;
     targetValue: number;
     options: (number | PuzzleOption)[];
-    leftOptions: SymmetryGridCell[];
-    rightOptions: SymmetryGridCell[];
+    leftOptions: MirrorGridCell[];
+    rightOptions: MirrorGridCell[];
 }
 
 export type LatinSquareElement = 'FIRE' | 'WATER' | 'EARTH' | 'AIR' | null;
@@ -168,7 +168,7 @@ export type PuzzleData =
     | RefillCanteenData
     | BalanceData
     | SequenceData
-    | SymmetryData
+    | MirrorData
     | LatinSquareData
     | NumberPathData
     | EquationData;

@@ -1,12 +1,12 @@
-import { PuzzleType, type SymmetryData, type SymmetryGridCell } from '../../../../types/adventure.types';
+import { PuzzleType, type MirrorData, type MirrorGridCell } from '../../../../types/adventure.types';
 import { type DifficultyLevel } from '../../../../types/math.types';
 
-export type { SymmetryGridCell, SymmetryData };
+export type { MirrorGridCell, MirrorData };
 
-export const generateSymmetryData = (difficulty: DifficultyLevel): SymmetryData => {
+export const generateMirrorData = (difficulty: DifficultyLevel): MirrorData => {
     const gridSize = difficulty + 2; // e.g. level 1 -> 3x3, level 2 -> 4x4
-    const leftPattern: SymmetryGridCell[] = [];
-    const rightPattern: SymmetryGridCell[] = [];
+    const leftPattern: MirrorGridCell[] = [];
+    const rightPattern: MirrorGridCell[] = [];
 
     for (let y = 0; y < gridSize; y++) {
         for (let x = 0; x < gridSize; x++) {
@@ -17,7 +17,7 @@ export const generateSymmetryData = (difficulty: DifficultyLevel): SymmetryData 
     }
 
     return {
-        puzzleType: PuzzleType.SYMMETRY,
+        puzzleType: PuzzleType.MIRROR,
         targetValue: gridSize,
         options: [],
         leftOptions: leftPattern,
@@ -25,9 +25,9 @@ export const generateSymmetryData = (difficulty: DifficultyLevel): SymmetryData 
     };
 };
 
-export class SymmetryEngine {
+export class MirrorEngine {
 
-    static checkSolution(leftPattern: SymmetryGridCell[], rightPattern: SymmetryGridCell[], gridSize: number): boolean {
+    static checkSolution(leftPattern: MirrorGridCell[], rightPattern: MirrorGridCell[], gridSize: number): boolean {
         for (let y = 0; y < gridSize; y++) {
             for (let x = 0; x < gridSize; x++) {
                 const leftCell = leftPattern.find(c => c.x === x && c.y === y);
@@ -42,9 +42,12 @@ export class SymmetryEngine {
         return true;
     }
 
-    static toggleCell(pattern: SymmetryGridCell[], x: number, y: number): SymmetryGridCell[] {
-        return pattern.map(cell =>
-            cell.x === x && cell.y === y ? { ...cell, isActive: !cell.isActive } : cell
-        );
+    static toggleCell(pattern: MirrorGridCell[], x: number, y: number): MirrorGridCell[] {
+        return pattern.map(cell => {
+            if (cell.x === x && cell.y === y) {
+                return { ...cell, isActive: !cell.isActive };
+            }
+            return cell;
+        });
     }
 }
