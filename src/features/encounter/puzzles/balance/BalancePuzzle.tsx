@@ -8,8 +8,6 @@ import {
 import styles from './BalancePuzzle.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 
-const GREEK_RUNES = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ'];
-const RUNE_ANIMATION_DELAY_MS = 1000;
 const SUCCESS_DISPLAY_DURATION_MS = 3000;
 
 export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
@@ -20,9 +18,6 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const [rightStack, setRightStack] = useState<Weight[]>(initialData.rightStack);
     const [isSolved, setIsSolved] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
-
-    const leftRunes = GREEK_RUNES.slice(0, 6);
-    const rightRunes = GREEK_RUNES.slice(6, 12);
 
     const handleRemoveWeight = (side: 'left' | 'right', weightId: string) => {
         if (isSolved) {
@@ -46,7 +41,7 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
 
             setTimeout(() => {
                 setShowSuccess(true);
-            }, RUNE_ANIMATION_DELAY_MS);
+            }, 500);
 
             setTimeout(() => {
                 onSolve();
@@ -69,100 +64,76 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const hasRemovableStones = [...leftStack, ...rightStack].some(w => !w.isHeavy);
 
     return (
-        <div className={styles.layout}>
-            {/* Immersive Background */}
-            <div className={styles.backgroundContainer} />
-            <div className={styles.vignette} />
-
-            <div className={styles.puzzleWrapper}>
-                {/* Gate Runes Overlay */}
-                <div className={styles.runesContainer}>
-                    <div className={styles.runeColumn}>
-                        {leftRunes.map((r, i) => (
-                            <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
-                        ))}
+        <div className={`${styles.container} ${isSolved ? styles.solved : ''}`}>
+            <div className={`${styles.puzzleBoard} ${isSolved ? styles.solved : ''}`}>
+                <div className={styles.platesContainer}>
+                    {/* Left Scale Arm */}
+                    <div
+                        className={`${styles.scaleArm} ${styles.leftArm}`}
+                        style={{
+                            transform: `translateY(${leftTotal > rightTotal ? '40px' : leftTotal < rightTotal ? '-40px' : '0'})`
+                        }}
+                    >
+                        <div className={styles.chain} />
+                        <div className={styles.chain} />
+                        <div className={styles.weightStack}>
+                            {leftStack.map((weight) => (
+                                <WeightComponent
+                                    key={weight.id}
+                                    weight={weight}
+                                    side="left"
+                                    onRemove={handleRemoveWeight}
+                                    disabled={isSolved}
+                                />
+                            ))}
+                        </div>
+                        <div className={styles.plateInfo}>
+                            {leftTotal}
+                        </div>
                     </div>
-                    <div className={styles.runeColumn}>
-                        {rightRunes.map((r, i) => (
-                            <span key={i} className={`${styles.rune} ${isSolved ? styles.runeLit : ''}`}>{r}</span>
-                        ))}
+
+                    {/* Right Scale Arm */}
+                    <div
+                        className={`${styles.scaleArm} ${styles.rightArm}`}
+                        style={{
+                            transform: `translateY(${rightTotal > leftTotal ? '40px' : rightTotal < leftTotal ? '-40px' : '0'})`
+                        }}
+                    >
+                        <div className={styles.chain} />
+                        <div className={styles.chain} />
+                        <div className={styles.weightStack}>
+                            {rightStack.map((weight) => (
+                                <WeightComponent
+                                    key={weight.id}
+                                    weight={weight}
+                                    side="right"
+                                    onRemove={handleRemoveWeight}
+                                    disabled={isSolved}
+                                />
+                            ))}
+                        </div>
+                        <div className={styles.plateInfo}>
+                            {rightTotal}
+                        </div>
                     </div>
                 </div>
 
-                {/* Puzzle Content */}
-                <div className={styles.puzzleContent}>
-                    {/* Instructions */}
-
-
-                    <div className={styles.platesContainer}>
-                        {/* Left Scale Arm */}
-                        <div
-                            className={`${styles.scaleArm} ${styles.leftArm}`}
-                            style={{
-                                transform: `translateY(${leftTotal > rightTotal ? '40px' : leftTotal < rightTotal ? '-40px' : '0'})`
-                            }}
-                        >
-                            <div className={styles.chain} />
-                            <div className={styles.chain} />
-                            <div className={styles.weightStack}>
-                                {leftStack.map((weight) => (
-                                    <WeightComponent
-                                        key={weight.id}
-                                        weight={weight}
-                                        side="left"
-                                        onRemove={handleRemoveWeight}
-                                        disabled={isSolved}
-                                    />
-                                ))}
-                            </div>
-                            <div className={styles.plateInfo}>
-                                {leftTotal}
-                            </div>
+                {/* Controls/Status */}
+                <div className={styles.controls}>
+                    {showSuccess ? (
+                        <div className={styles.successMessage}>
+                            {t('puzzle.success', 'Success! ✨')}
                         </div>
-
-                        {/* Right Scale Arm */}
-                        <div
-                            className={`${styles.scaleArm} ${styles.rightArm}`}
-                            style={{
-                                transform: `translateY(${rightTotal > leftTotal ? '40px' : rightTotal < leftTotal ? '-40px' : '0'})`
-                            }}
+                    ) : isSolved ? null : (
+                        <PrimaryButton
+                            onClick={handleReset}
+                            data-testid="puzzle-reset-button"
+                            variant={!hasRemovableStones ? 'gold' : 'primary'}
+                            radiate={!hasRemovableStones}
                         >
-                            <div className={styles.chain} />
-                            <div className={styles.chain} />
-                            <div className={styles.weightStack}>
-                                {rightStack.map((weight) => (
-                                    <WeightComponent
-                                        key={weight.id}
-                                        weight={weight}
-                                        side="right"
-                                        onRemove={handleRemoveWeight}
-                                        disabled={isSolved}
-                                    />
-                                ))}
-                            </div>
-                            <div className={styles.plateInfo}>
-                                {rightTotal}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Controls/Status */}
-                    <div className={styles.controls}>
-                        {showSuccess ? (
-                            <div className={styles.successMessage}>
-                                {t('puzzle.success', 'Success! ✨')}
-                            </div>
-                        ) : isSolved ? null : (
-                            <PrimaryButton
-                                onClick={handleReset}
-                                data-testid="puzzle-reset-button"
-                                variant={!hasRemovableStones ? 'gold' : 'primary'}
-                                radiate={!hasRemovableStones}
-                            >
-                                {t('common.start_over', 'Start Over')}
-                            </PrimaryButton>
-                        )}
-                    </div>
+                            {t('common.start_over', 'Start Over')}
+                        </PrimaryButton>
+                    )}
                 </div>
             </div>
         </div>

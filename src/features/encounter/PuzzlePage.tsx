@@ -91,7 +91,6 @@ const PuzzlePage = () => {
         return t(puzzleDef.instructionKey);
     }, [puzzleDef, t]);
 
-    const isDarkBackgroundPuzzle = puzzleData?.puzzleType === PuzzleType.BALANCE;
 
     useEffect(() => {
         if (premiumInitialized && adventureId) {
@@ -148,7 +147,7 @@ const PuzzlePage = () => {
     const { Component: PuzzleComponent } = puzzleDef;
 
     return (
-        <div className={`${styles.puzzlePage} ${isDarkBackgroundPuzzle ? styles.blackBg : ''}`}>
+        <div className={styles.puzzlePage}>
             <header className={styles.header}>
                 <button className={styles.backButton} onClick={handleBack}>
                     {t('retreat', 'Retreat')}
