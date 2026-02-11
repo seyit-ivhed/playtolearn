@@ -15,11 +15,11 @@ interface SequenceRule {
     isValid(lastValue: number, nextValue: number): boolean;
 }
 
-class AdditionRule implements SequenceRule {
+export class AdditionRule implements SequenceRule {
     readonly step: number;
 
     constructor(step: number) {
-        if (typeof step !== 'number') {
+        if (typeof step !== 'number' || Number.isNaN(step)) {
             console.error('Invalid step for AdditionRule');
             this.step = 0;
             return;
@@ -32,11 +32,11 @@ class AdditionRule implements SequenceRule {
     isValid(lastValue: number, nextValue: number) { return nextValue === lastValue + this.step; }
 }
 
-class MultiplicationRule implements SequenceRule {
+export class MultiplicationRule implements SequenceRule {
     readonly factor: number;
 
     constructor(factor: number) {
-        if (typeof factor !== 'number') {
+        if (typeof factor !== 'number' || Number.isNaN(factor)) {
             console.error('Invalid factor for MultiplicationRule');
             this.factor = 1;
             return;
@@ -49,7 +49,7 @@ class MultiplicationRule implements SequenceRule {
     isValid(lastValue: number, nextValue: number) { return nextValue === lastValue * this.factor; }
 }
 
-const SequenceRuleFactory = {
+export const SequenceRuleFactory = {
     getRule(ruleName: string): SequenceRule | null {
         if (!ruleName) {
             console.error('Sequence rule name is required');
@@ -102,7 +102,11 @@ export const isSequenceComplete = (
     currentValues: number[],
     targetValue: number
 ): boolean => {
-    if (!currentValues || currentValues.length === 0) {
+    if (!currentValues || !Array.isArray(currentValues)) {
+        console.error('currentValues must be an array');
+        return false;
+    }
+    if (currentValues.length === 0) {
         return false;
     }
     return currentValues[currentValues.length - 1] >= targetValue;
