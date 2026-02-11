@@ -35,6 +35,11 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
             }
         };
 
+        if (current === null) {
+            updateGrid(nextValue);
+            return;
+        }
+
         setRotatingCell({ row, col });
 
         setTimeout(() => {
@@ -50,7 +55,7 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
 
     return (
         <div className={styles.container}>
-            <div className={styles.puzzleBoard}>
+            <div className={`${styles.puzzleBoard} ${isSolved ? styles.solvedBoard : ''}`}>
                 {grid.map((row, ri) => (
                     <div key={ri} className={styles.row}>
                         {row.map((cell, ci) => {
@@ -67,7 +72,7 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
                                         <img
                                             src={selectedRunes[cell]}
                                             alt="rune"
-                                            className={styles.rune}
+                                            className={`${styles.rune} ${isSolved ? styles.solvedRune : ''}`}
                                             draggable={false}
                                         />
                                     )}
@@ -77,11 +82,6 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
                     </div>
                 ))}
             </div>
-            {instruction && (
-                <div className={styles.instructions}>
-                    {instruction}
-                </div>
-            )}
         </div>
     );
 };

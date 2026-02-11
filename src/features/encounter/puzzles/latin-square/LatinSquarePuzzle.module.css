@@ -21,6 +21,13 @@
     border: 4px solid #8b6532;
     box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5);
     filter: brightness(0.95);
+    transition: all 0.5s ease;
+}
+
+.puzzleBoard.solvedBoard {
+    border-color: #ffd700;
+    box-shadow: inset 0 0 60px rgba(255, 215, 0, 0.2), 0 0 40px rgba(255, 215, 0, 0.4);
+    filter: brightness(1.1);
 }
 
 .row {
@@ -49,6 +56,12 @@
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
+    transition: all 0.5s ease;
+}
+
+.rune.solvedRune {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)) brightness(1.2);
+    transform: scale(1.1);
 }
 
 @keyframes flipRune {
