@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { LatinSquareEngine } from './LatinSquareEngine';
 import styles from './LatinSquarePuzzle.module.css';
 import { type PuzzleProps, type LatinSquareData, type LatinSquareElement } from '../../../../types/adventure.types';
+import { RUNE_ASSETS } from '../../../../data/puzzle-assets';
 
 export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
     const puzzleData = data as LatinSquareData;
@@ -32,13 +33,13 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
         }
     };
 
-    const getElementIcon = (element: LatinSquareElement) => {
+    const getElementRune = (element: LatinSquareElement) => {
         switch (element) {
-            case 'FIRE': return '🔥';
-            case 'WATER': return '💧';
-            case 'EARTH': return '🌱';
-            case 'AIR': return '💨';
-            default: return '';
+            case 'FIRE': return RUNE_ASSETS[0];
+            case 'WATER': return RUNE_ASSETS[1];
+            case 'EARTH': return RUNE_ASSETS[2];
+            case 'AIR': return RUNE_ASSETS[3];
+            default: return null;
         }
     };
 
@@ -60,7 +61,17 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
                                     className={`${styles.cell} ${isFixed ? styles.fixed : styles.interactive}`}
                                     onClick={() => handleCellClick(ri, ci)}
                                 >
-                                    {getElementIcon(cell)}
+                                    {(() => {
+                                        const runeSrc = getElementRune(cell);
+                                        return runeSrc ? (
+                                            <img
+                                                src={runeSrc}
+                                                alt={cell || 'rune'}
+                                                className={styles.rune}
+                                                draggable={false}
+                                            />
+                                        ) : null;
+                                    })()}
                                 </div>
                             );
                         })}
