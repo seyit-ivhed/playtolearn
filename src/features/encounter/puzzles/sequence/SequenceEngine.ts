@@ -1,6 +1,6 @@
-import { type DifficultyLevel } from '@/types/math.types';
-import { PuzzleType, type SequenceData } from '@/types/adventure.types';
-import { getRandomInt } from '@/utils/math/helpers';
+import { type DifficultyLevel } from '../../../../types/math.types';
+import { PuzzleType, type SequenceData } from '../../../../types/adventure.types';
+import { getRandomInt } from '../../../../utils/math/helpers';
 
 export type { SequenceData };
 

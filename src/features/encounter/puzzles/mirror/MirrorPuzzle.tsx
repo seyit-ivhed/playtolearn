@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MirrorEngine } from '@/features/encounter/puzzles/mirror/MirrorEngine';
-import styles from '@/features/encounter/puzzles/mirror/MirrorPuzzle.module.css';
-import { PuzzleType, type PuzzleProps, type MirrorData, type MirrorGridCell } from '@/types/adventure.types';
+import { MirrorEngine } from './MirrorEngine';
+import styles from './MirrorPuzzle.module.css';
+import { PuzzleType, type PuzzleProps, type MirrorData, type MirrorGridCell } from '../../../../types/adventure.types';
 
 const ANIMATION_DURATION_MS = 600;
 const ROTATION_MIDPOINT_MS = 300;
@@ -73,7 +73,7 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
                         {runeSrc && (
                             <img
                                 src={runeSrc}
-                                alt="rune"
+                                alt={t('puzzle.mirror.rune_alt', 'rune')}
                                 className={styles.rune}
                                 draggable={false}
                             />
@@ -93,12 +93,12 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
         <div className={`${styles.container} ${isSolved ? styles.solved : ''}`}>
             <div className={`${styles.puzzleBoard} ${isSolved ? styles.solved : ''}`}>
                 <div className={styles.side}>
-                    <h3>{t('puzzle.mirror.pattern_title', 'Pattern')}</h3>
+                    <h3 data-testid="mirror-pattern-title">{t('puzzle.mirror.pattern_title', 'Pattern')}</h3>
                     {renderGrid(leftPattern, false)}
                 </div>
                 <div className={styles.divider} />
                 <div className={styles.side}>
-                    <h3>{t('puzzle.mirror.mirror_title', 'Mirror')}</h3>
+                    <h3 data-testid="mirror-mirror-title">{t('puzzle.mirror.mirror_title', 'Mirror')}</h3>
                     {renderGrid(rightPattern, true)}
                 </div>
             </div>

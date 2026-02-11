@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type PuzzleOption, type PuzzleProps, type RefillCanteenData } from '../../../../types/adventure.types';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './RefillCanteenEngine';
-import { PrimaryButton } from '@/components/ui/PrimaryButton';
+import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 import styles from './RefillCanteenPuzzle.module.css';
 
 const getIconForOption = (option: number | PuzzleOption): string => {

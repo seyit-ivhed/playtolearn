@@ -1,7 +1,5 @@
-import { PuzzleType, type MirrorData, type MirrorGridCell } from '@/types/adventure.types';
-import { type DifficultyLevel } from '@/types/math.types';
-
-export type { MirrorGridCell, MirrorData };
+import { PuzzleType, type MirrorData, type MirrorGridCell } from '../../../../types/puzzle.types';
+import { type DifficultyLevel } from '../../../../types/math.types';
 
 const AVAILABLE_RUNES = [
     '/assets/images/runes/rune-1.png',

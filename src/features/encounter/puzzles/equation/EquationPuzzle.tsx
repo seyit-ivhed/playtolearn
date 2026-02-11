@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PuzzleType, type PuzzleProps, type EquationData } from '@/types/adventure.types';
+import { PuzzleType, type PuzzleProps, type EquationData } from '../../../../types/adventure.types';
 import { validateAnswer } from './EquationEngine';
 import styles from './EquationPuzzle.module.css';
 

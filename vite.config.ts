@@ -1,6 +1,5 @@
 import { defineConfig, createLogger } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
 
 const logger = createLogger()
 
@@ -9,14 +8,8 @@ logger.warn = (msg) => {
   throw new Error(msg)
 }
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
   customLogger: logger,
   build: {
     rollupOptions: {

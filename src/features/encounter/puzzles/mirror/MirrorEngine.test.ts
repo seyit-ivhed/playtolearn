@@ -1,10 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import {
     MirrorEngine,
-    generateMirrorData,
-    type MirrorGridCell
+    generateMirrorData
 } from './MirrorEngine';
-import { PuzzleType } from '../../../../types/adventure.types';
+import { PuzzleType, type MirrorGridCell } from '../../../../types/puzzle.types';
 
 describe('MirrorEngine', () => {
     const gridSize = 3;

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star, ChevronDown } from 'lucide-react';
-import { FormCloseButton } from '@/components/ui/FormCloseButton';
-import { PrimaryButton } from '@/components/ui/PrimaryButton';
-import { getDifficultyExamples } from '@/utils/math/difficulty-examples';
+import { FormCloseButton } from '../../../components/ui/FormCloseButton';
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
+import { getDifficultyExamples } from '../../../utils/math/difficulty-examples';
 import styles from './DifficultySelectionModal.module.css';
 
 interface DifficultySelectionModalProps {

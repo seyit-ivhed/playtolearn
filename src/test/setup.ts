@@ -20,8 +20,7 @@ vi.mock('../services/supabase.service', () => ({
     }
 }));
 
-// 1.1 Mock the import alias as well if necessary, but starting with relative path for safety
-vi.mock('@/services/supabase.service', () => ({
+vi.mock('../services/supabase.service', () => ({
     supabase: {
         auth: {
             getSession: vi.fn(() => Promise.resolve({ data: { session: null }, error: null })),
@@ -50,10 +49,4 @@ vi.mock('../services/persistence.service', () => ({
     }
 }));
 
-vi.mock('@/services/persistence.service', () => ({
-    PersistenceService: {
-        sync: vi.fn(() => Promise.resolve({ success: true })),
-        pushState: vi.fn(() => Promise.resolve({ success: true })),
-        pullState: vi.fn(() => Promise.resolve(null)),
-    }
-}));
+

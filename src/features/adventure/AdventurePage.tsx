@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useGameStore } from '@/stores/game/store';
-import { useEncounterStore } from '@/stores/encounter/store';
-import { usePremiumStore } from '@/stores/premium.store';
+import { useGameStore } from '../../stores/game/store';
+import { useEncounterStore } from '../../stores/encounter/store';
+import { usePremiumStore } from '../../stores/premium.store';
 import { getFocalNodeIndex } from './utils/navigation.utils';
-import { checkNavigationAccess } from '@/utils/navigation-security.utils';
+import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { DifficultySelectionModal } from './components/DifficultySelectionModal';
 import './AdventurePage.css';
-
-import { ADVENTURES } from '@/data/adventures.data';
-import { EncounterType, type Encounter, type AdventureMonster } from '@/types/adventure.types';
+import { ADVENTURES } from '../../data/adventures.data';
+import { EncounterType, type Encounter, type AdventureMonster } from '../../types/adventure.types';
 import { FantasyMap } from './components/FantasyMap';
 import { AdventureHeader } from './components/AdventureHeader';
 

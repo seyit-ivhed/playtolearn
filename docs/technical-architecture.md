@@ -349,17 +349,17 @@ a dual-layer versioning strategy:
 
 ## Import Conventions
 
-### Absolute Imports
+### Relative Imports
 
-Use absolute imports from `src/` for better refactoring:
+Use relative imports from `src/` for better refactoring:
 
 ```typescript
-// ✅ Good
+// ❌ Avoid
 import { Companion } from "@/types/companion.types";
 import { useProgress } from "@/stores/progress.store";
 import { Button } from "@/components/common/Button";
-
-// ❌ Avoid
+  
+// ✅ Good
 import { Companion } from "../../../types/companion.types";
 ```
 

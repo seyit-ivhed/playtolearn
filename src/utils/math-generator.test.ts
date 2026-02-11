@@ -6,12 +6,14 @@ import {
     generatePuzzleData
 } from './math-generator';
 import { MathOperation } from '../types/math.types';
-import { PuzzleType } from '../types/adventure.types';
-import { type RefillCanteenData } from '../features/encounter/puzzles/refill-canteen/RefillCanteenEngine';
-import { type BalanceData } from '../features/encounter/puzzles/balance/BalanceEngine';
-import { type SequenceData } from '../features/encounter/puzzles/sequence/SequenceEngine';
-import { type MirrorData } from '../features/encounter/puzzles/mirror/MirrorEngine';
-import { type LatinSquareData } from '../features/encounter/puzzles/latin-square/LatinSquareEngine';
+import {
+    PuzzleType,
+    type RefillCanteenData,
+    type BalanceData,
+    type SequenceData,
+    type MirrorData,
+    type LatinSquareData
+} from '../types/adventure.types';
 
 describe('Math Generator Functionality', () => {
     describe('Basic Math Problems', () => {
@@ -121,22 +123,18 @@ describe('Math Generator Functionality', () => {
         });
 
         it('should throw error if puzzle type is missing', () => {
-            // @ts-expect-error - Testing invalid input
             expect(() => generatePuzzleData(null, 1)).toThrow('Puzzle type is required');
         });
 
         it('should throw error if difficulty is missing', () => {
-            // @ts-expect-error - Testing invalid input
             expect(() => generatePuzzleData(PuzzleType.REFILL_CANTEEN, null)).toThrow('Valid difficulty level is required');
         });
 
         it('should throw error for unsupported puzzle type', () => {
-            // @ts-expect-error - Testing invalid input
             expect(() => generatePuzzleData('INVALID_TYPE', 1)).toThrow('Unsupported puzzle type: INVALID_TYPE');
         });
 
         it('should throw error for unsupported math operation', () => {
-            // @ts-expect-error - Testing invalid input
             expect(() => generateProblem('INVALID_OP', 1)).toThrow('Unsupported math operation: INVALID_OP');
         });
     });

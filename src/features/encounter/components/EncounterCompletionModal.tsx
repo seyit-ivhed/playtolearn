@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star } from 'lucide-react';
-import { PrimaryButton } from '@/components/ui/PrimaryButton';
-import { GameParticles } from '@/components/ui/GameParticles';
-import { VICTORY_CONFETTI_OPTIONS } from '@/components/ui/GameParticles.constants';
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
+import { GameParticles } from '../../../components/ui/GameParticles';
+import { VICTORY_CONFETTI_OPTIONS } from '../../../components/ui/GameParticles.constants';
 import './EncounterCompletionModal.css';
 
 interface EncounterCompletionModalProps {

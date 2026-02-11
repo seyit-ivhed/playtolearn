@@ -6,7 +6,7 @@ import {
     validateBalance
 } from './BalanceEngine';
 import styles from './BalancePuzzle.module.css';
-import { PrimaryButton } from '@/components/ui/PrimaryButton';
+import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 
 const GREEK_RUNES = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ'];
 const RUNE_ANIMATION_DELAY_MS = 1000;

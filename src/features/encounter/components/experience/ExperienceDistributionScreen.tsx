@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useGameStore } from '@/stores/game/store';
-import { EXPERIENCE_CONFIG, getRequiredXpForNextLevel } from '@/data/experience.data';
-import { COMPANIONS } from '@/data/companions.data';
-import type { Companion } from '@/types/companion.types';
-import { getStatsForLevel } from '@/utils/progression.utils';
-import { PrimaryButton } from '@/components/ui/PrimaryButton';
+import { useGameStore } from '../../../../stores/game/store';
+import { EXPERIENCE_CONFIG, getRequiredXpForNextLevel } from '../../../../data/experience.data';
+import { COMPANIONS } from '../../../../data/companions.data';
+import type { Companion } from '../../../../types/companion.types';
+import { getStatsForLevel } from '../../../../utils/progression.utils';
+import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 import { CompanionExperienceCard } from './CompanionExperienceCard';
 import { LevelUpModal } from './LevelUpModal';
 import styles from './ExperienceDistributionScreen.module.css';

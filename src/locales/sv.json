@@ -347,7 +347,8 @@
         "mirror": {
             "instruction": "Rotera runorna för att matcha spegelbilden!",
             "pattern_title": "Mönster",
-            "mirror_title": "Spegel"
+            "mirror_title": "Spegel",
+            "rune_alt": "Runa"
         },
         "latin_square": {
             "instruction": "Placera element-runor så att varje runa förekommer exakt en gång i varje rad och kolumn."
