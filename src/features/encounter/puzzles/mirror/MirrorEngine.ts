@@ -1,15 +1,6 @@
 import { PuzzleType, type MirrorData, type MirrorGridCell } from '../../../../types/puzzle.types';
 import { type DifficultyLevel } from '../../../../types/math.types';
-
-const AVAILABLE_RUNES = [
-    '/assets/images/runes/rune-1.png',
-    '/assets/images/runes/rune-2.png',
-    '/assets/images/runes/rune-3.png',
-    '/assets/images/runes/rune-4.png',
-    '/assets/images/runes/rune-5.png',
-    '/assets/images/runes/rune-6.png',
-    '/assets/images/runes/rune-7.png',
-];
+import { RUNE_ASSETS } from '../../../../data/puzzle-assets';
 
 export const generateMirrorData = (difficulty: DifficultyLevel): MirrorData => {
     if (typeof difficulty !== 'number') {
@@ -21,7 +12,7 @@ export const generateMirrorData = (difficulty: DifficultyLevel): MirrorData => {
     const leftPattern: MirrorGridCell[] = [];
     const rightPattern: MirrorGridCell[] = [];
 
-    const shuffledRunes = [...AVAILABLE_RUNES].sort(() => Math.random() - 0.5);
+    const shuffledRunes = [...RUNE_ASSETS].sort(() => Math.random() - 0.5);
     const selectedRunes = shuffledRunes.slice(0, 2);
 
     for (let y = 0; y < gridSize; y++) {
