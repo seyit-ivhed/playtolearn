@@ -39,6 +39,12 @@ const getBaseSolution = (size: number): LatinSquareElement[][] => {
 };
 
 export const generateLatinSquareData = (difficulty: DifficultyLevel): LatinSquareData => {
+    if (typeof difficulty !== 'number') {
+        console.error(`Invalid difficulty level provided to generateLatinSquareData: ${difficulty}`);
+        // Return a default level 1 puzzle data to avoid crash if possible, or throw
+        throw new Error(`Invalid difficulty level: ${difficulty}`);
+    }
+
     const config = getDifficultyConfig(difficulty);
     const { gridSize, fixedCount } = config;
 
@@ -83,6 +89,11 @@ export const generateLatinSquareData = (difficulty: DifficultyLevel): LatinSquar
 export class LatinSquareEngine {
 
     static shuffle(grid: LatinSquareElement[][]) {
+        if (!grid || !Array.isArray(grid)) {
+            console.error('Invalid grid provided to LatinSquareEngine.shuffle');
+            return;
+        }
+
         const size = grid.length;
         // Shuffle rows
         for (let i = size - 1; i > 0; i--) {
@@ -99,6 +110,11 @@ export class LatinSquareEngine {
     }
 
     static checkSolution(grid: LatinSquareElement[][]): boolean {
+        if (!grid || !Array.isArray(grid)) {
+            console.error('Invalid grid provided to LatinSquareEngine.checkSolution');
+            return false;
+        }
+
         const size = grid.length;
         if (size < 1) {
             return false;

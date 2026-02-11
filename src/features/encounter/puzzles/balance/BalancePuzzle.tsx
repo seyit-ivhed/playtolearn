@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { type PuzzleProps, type BalanceData, type Weight } from '../../../../types/adventure.types';
+import { PuzzleType, type PuzzleProps, type BalanceData, type Weight } from '../../../../types/adventure.types';
 import {
     calculateTotalWeight,
     validateBalance
@@ -12,6 +12,17 @@ const SUCCESS_DISPLAY_DURATION_MS = 3000;
 
 export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const { t } = useTranslation();
+
+    if (!data || data.puzzleType !== PuzzleType.BALANCE) {
+        console.error(`Invalid puzzle data passed to BalancePuzzle: ${data?.puzzleType}`);
+        return null;
+    }
+
+    if (typeof onSolve !== 'function') {
+        console.error('onSolve is not a function in BalancePuzzle');
+        return null;
+    }
+
     const initialData = data as BalanceData;
 
     const [leftStack, setLeftStack] = useState<Weight[]>(initialData.leftStack);
@@ -64,7 +75,7 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const hasRemovableStones = [...leftStack, ...rightStack].some(w => !w.isHeavy);
 
     return (
-        <div className={`${styles.container} ${isSolved ? styles.solved : ''}`}>
+        <div className={`${styles.container} ${isSolved ? styles.solved : ''}`} data-testid="balance-puzzle-container">
             <div className={`${styles.puzzleBoard} ${isSolved ? styles.solved : ''}`}>
                 <div className={styles.platesContainer}>
                     {/* Left Scale Arm */}

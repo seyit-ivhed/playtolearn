@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LatinSquareEngine } from './LatinSquareEngine';
 import styles from './LatinSquarePuzzle.module.css';
-import { type PuzzleProps, type LatinSquareData, type LatinSquareElement } from '../../../../types/adventure.types';
+import { PuzzleType, type PuzzleProps, type LatinSquareData, type LatinSquareElement } from '../../../../types/adventure.types';
 
 const ANIMATION_DURATION_MS = 600;
 const ROTATION_MIDPOINT_MS = 300;
 
 export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
+    const { t } = useTranslation();
+
+    if (!data || data.puzzleType !== PuzzleType.LATIN_SQUARE) {
+        console.error(`Invalid puzzle data passed to LatinSquarePuzzle: ${data?.puzzleType}`);
+        return null;
+    }
+
+    if (typeof onSolve !== 'function') {
+        console.error('onSolve is not a function in LatinSquarePuzzle');
+        return null;
+    }
+
     const puzzleData = data as LatinSquareData;
     const [grid, setGrid] = useState<LatinSquareElement[][]>(() => puzzleData.grid);
     const fixedIndices = puzzleData.fixedIndices;
@@ -54,7 +67,7 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} data-testid="latin-square-container">
             <div className={`${styles.puzzleBoard} ${isSolved ? styles.solvedBoard : ''}`}>
                 {grid.map((row, ri) => (
                     <div key={ri} className={styles.row}>
@@ -71,7 +84,7 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
                                     {cell !== null && (
                                         <img
                                             src={selectedRunes[cell]}
-                                            alt="rune"
+                                            alt={t('puzzle.mirror.rune_alt', 'rune')}
                                             className={`${styles.rune} ${isSolved ? styles.solvedRune : ''}`}
                                             draggable={false}
                                         />

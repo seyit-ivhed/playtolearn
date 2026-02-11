@@ -10,6 +10,17 @@ const VICTORY_DELAY_MS = 2000;
 
 export const MirrorPuzzle = ({ data, onSolve }: PuzzleProps) => {
     const { t } = useTranslation();
+
+    if (!data || data.puzzleType !== PuzzleType.MIRROR) {
+        console.error(`Invalid puzzle data passed to MirrorPuzzle: ${data?.puzzleType}`);
+        return null;
+    }
+
+    if (typeof onSolve !== 'function') {
+        console.error('onSolve is not a function in MirrorPuzzle');
+        return null;
+    }
+
     const puzzleData = data as MirrorData;
     const gridSize = puzzleData.targetValue;
     const [leftPattern, setLeftPattern] = useState<MirrorGridCell[]>([]);
@@ -21,11 +32,6 @@ export const MirrorPuzzle = ({ data, onSolve }: PuzzleProps) => {
         setLeftPattern(puzzleData.leftOptions);
         setRightPattern(puzzleData.rightOptions);
     }, [puzzleData]);
-
-    if (data.puzzleType !== PuzzleType.MIRROR) {
-        console.error(`Invalid puzzle type passed to MirrorPuzzle: ${data.puzzleType}`);
-        return null;
-    }
 
     const handleCellClick = (x: number, y: number) => {
         if (isSolved || rotatingCell) {
@@ -86,7 +92,7 @@ export const MirrorPuzzle = ({ data, onSolve }: PuzzleProps) => {
     };
 
     return (
-        <div className={`${styles.container} ${isSolved ? styles.solved : ''}`}>
+        <div className={`${styles.container} ${isSolved ? styles.solved : ''}`} data-testid="mirror-puzzle-container">
             <div className={`${styles.puzzleBoard} ${isSolved ? styles.solved : ''}`}>
                 <div className={styles.side}>
                     <h3 data-testid="mirror-pattern-title">{t('puzzle.mirror.pattern_title', 'Pattern')}</h3>
