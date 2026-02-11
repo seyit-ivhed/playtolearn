@@ -345,7 +345,7 @@
             "instruction": "Fyll i siffrorna för att skapa en sammanhängande stig!"
         },
         "mirror": {
-            "instruction": "Spegla mönstret på den högra sidan!",
+            "instruction": "Rotera runorna för att matcha spegelbilden!",
             "pattern_title": "Mönster",
             "mirror_title": "Spegel"
         },

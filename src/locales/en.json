@@ -345,7 +345,7 @@
             "instruction": "Create a continuous path by filling in the numbers!"
         },
         "mirror": {
-            "instruction": "Mirror the pattern on the right side!",
+            "instruction": "Rotate the runes to match the reflection!",
             "pattern_title": "Pattern",
             "mirror_title": "Mirror"
         },
