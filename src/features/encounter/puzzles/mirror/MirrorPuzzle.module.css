@@ -6,7 +6,6 @@
     width: 100%;
     height: 100%;
     color: white;
-    padding: 2rem;
 }
 
 .puzzleBoard {
@@ -205,4 +204,48 @@
     box-shadow: 0 0 30px #fff;
     width: 4px;
     transition: all 0.5s ease;
+}
+
+/* Responsive adjustments for Tablets and Mobile (Vertical Orientations) */
+@media (max-width: 1024px) or (orientation: portrait) {
+    .puzzleBoard {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        max-width: 95vw;
+    }
+
+    .grid {
+        padding: 40px;
+        /* Reduced significant padding to fit screen */
+        gap: 8px;
+    }
+
+    .cell {
+        width: 50px;
+        /* Smaller cells on smaller screens */
+        height: 50px;
+    }
+
+    .divider {
+        width: 80%;
+        height: 2px;
+        background: linear-gradient(to right, transparent, rgba(0, 212, 255, 0.6), transparent);
+    }
+
+    .side h3 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Extra small devices (Mobile) */
+@media (max-width: 480px) {
+    .grid {
+        padding: 20px;
+    }
+
+    .cell {
+        width: 42px;
+        height: 42px;
+    }
 }
