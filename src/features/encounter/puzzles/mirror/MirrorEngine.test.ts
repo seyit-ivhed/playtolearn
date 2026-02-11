@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import {
     MirrorEngine,
     generateMirrorData
@@ -6,6 +6,14 @@ import {
 import { PuzzleType, type MirrorGridCell } from '../../../../types/puzzle.types';
 
 describe('MirrorEngine', () => {
+    beforeAll(() => {
+        vi.spyOn(console, 'error').mockImplementation(() => { });
+    });
+
+    afterAll(() => {
+        vi.restoreAllMocks();
+    });
+
     const gridSize = 3;
     const createPattern = (runeIndices: { x: number, y: number, runeIndex: number }[]): MirrorGridCell[] => {
         const pattern: MirrorGridCell[] = [];
