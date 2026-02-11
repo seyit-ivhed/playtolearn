@@ -90,7 +90,7 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
         // Check if this placement completes the puzzle
         if (willBeFilledAfter === totalCells) {
             setIsCompleted(true);
-            setTimeout(onSolve, 1000);
+            setTimeout(onSolve, 2000);
         }
     };
 
@@ -117,7 +117,7 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.puzzleWrapper}>
+            <div className={`${styles.puzzleWrapper} ${isCompleted ? styles.completed : ''}`}>
                 <div
                     className={styles.grid}
                     style={{ gridTemplateColumns: `repeat(${gridSize}, auto)` }}
