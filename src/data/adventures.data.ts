@@ -218,7 +218,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '3_6',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 300, y: 2800 },
-                puzzleData: { puzzleType: PuzzleType.LATIN_SQUARE },
+                puzzleData: { puzzleType: PuzzleType.NUMBER_PATH },
             },
             {
                 id: '3_7',
@@ -285,7 +285,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '4_6',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 250, y: 2700 },
-                puzzleData: { puzzleType: PuzzleType.MIRROR },
+                puzzleData: { puzzleType: PuzzleType.EQUATION },
             },
             {
                 id: '4_7',
@@ -346,7 +346,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '5_3',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 200, y: 1500 },
-                puzzleData: { puzzleType: PuzzleType.REFILL_CANTEEN },
+                puzzleData: { puzzleType: PuzzleType.BALANCE },
             },
             {
                 id: '5_4',
@@ -424,7 +424,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_3',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 200, y: 1500 },
-                puzzleData: { puzzleType: PuzzleType.NUMBER_PATH },
+                puzzleData: { puzzleType: PuzzleType.MIRROR },
             },
             {
                 id: '6_4',
@@ -454,7 +454,7 @@ export const ADVENTURES: Adventure[] = [
                 id: '6_8',
                 type: EncounterType.PUZZLE,
                 coordinates: { x: 150, y: 3400 },
-                puzzleData: { puzzleType: PuzzleType.MIRROR },
+                puzzleData: { puzzleType: PuzzleType.EQUATION },
             },
             {
                 id: '6_9',
