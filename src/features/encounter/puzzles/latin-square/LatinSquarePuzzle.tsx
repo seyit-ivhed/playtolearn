@@ -31,7 +31,7 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
 
             if (LatinSquareEngine.checkSolution(newGrid)) {
                 setIsSolved(true);
-                setTimeout(() => onSolve(), 1000);
+                setTimeout(() => onSolve(), 2000);
             }
         };
 
