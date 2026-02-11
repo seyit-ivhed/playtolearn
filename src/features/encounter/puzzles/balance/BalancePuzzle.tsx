@@ -138,14 +138,16 @@ export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
                         ))}
                     </div>
                     {isSolved ? null : (
-                        <PrimaryButton
-                            onClick={handleReset}
-                            data-testid="puzzle-reset-button"
-                            variant={!hasRemovableStones ? 'gold' : 'primary'}
-                            radiate={!hasRemovableStones} // removed {showSuccess} check
-                        >
-                            {t('common.start_over', 'Start Over')}
-                        </PrimaryButton>
+                        <div className={styles.resetWrapper}>
+                            <PrimaryButton
+                                onClick={handleReset}
+                                data-testid="puzzle-reset-button"
+                                variant={!hasRemovableStones ? 'gold' : 'primary'}
+                                radiate={!hasRemovableStones} // removed {showSuccess} check
+                            >
+                                {t('common.start_over', 'Start Over')}
+                            </PrimaryButton>
+                        </div>
                     )}
                 </div>
             </div>

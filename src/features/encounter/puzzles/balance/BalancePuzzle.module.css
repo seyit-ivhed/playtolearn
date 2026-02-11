@@ -153,6 +153,11 @@
     align-items: center;
     gap: 1.5rem;
     z-index: 10;
+    pointer-events: none;
+}
+
+.resetWrapper {
+    pointer-events: auto;
 }
 
 .greekGrid {
