@@ -65,12 +65,13 @@ describe('MirrorEngine', () => {
         it('should generate valid puzzle data structure', () => {
             const data = generateMirrorData(1);
             expect(data.puzzleType).toBe(PuzzleType.MIRROR);
-            expect(data.targetValue).toBe(3);
+            expect(data.targetValue).toBe(3); // D1 -> 3
             expect(data.selectedRunes).toHaveLength(2);
         });
 
         it('should start with all right cells at index 0 (initial state)', () => {
             const data = generateMirrorData(2);
+            expect(data.targetValue).toBe(4); // D2 -> 4
             expect(data.rightOptions.every(c => c.runeIndex === 0)).toBe(true);
         });
     });

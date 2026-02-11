@@ -14,7 +14,7 @@ const AVAILABLE_RUNES = [
 ];
 
 export const generateMirrorData = (difficulty: DifficultyLevel): MirrorData => {
-    const gridSize = difficulty + 2; // e.g. level 1 -> 3x3, level 2 -> 4x4
+    const gridSize = Math.floor(difficulty / 2) + 3; // D1 -> 3x3, D2 -> 4x4, D3 -> 4x4, D4 -> 5x5
     const leftPattern: MirrorGridCell[] = [];
     const rightPattern: MirrorGridCell[] = [];
 
