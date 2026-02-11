@@ -153,19 +153,6 @@
     box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
 }
 
-.instructions {
-    margin-top: 2.5rem;
-    font-size: 1.3rem;
-    color: #e9dcc9;
-    text-align: center;
-    max-width: 600px;
-    line-height: 1.5;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    background: rgba(0, 0, 0, 0.3);
-    padding: 1rem 2rem;
-    border-radius: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
 
 @keyframes solveGlow {
     0% {

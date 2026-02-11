@@ -92,11 +92,6 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction
                     {renderGrid(rightPattern, true)}
                 </div>
             </div>
-            {instruction && (
-                <div className={styles.instructions}>
-                    {instruction}
-                </div>
-            )}
         </div>
     );
 };
