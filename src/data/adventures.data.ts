@@ -10,13 +10,13 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_1',
                 type: EncounterType.BATTLE,
-                coordinates: { x: -100, y: 600 },
+                coordinates: { x: 300, y: 4300 },
                 enemies: [MONSTERS.SCORPION_1],
             },
             {
                 id: '1_2',
                 type: EncounterType.BATTLE,
-                coordinates: { x: -250, y: 900 },
+                coordinates: { x: 250, y: 3900 },
                 enemies: [
                     ...Array.from({ length: 3 }).map(() => MONSTERS.TINY_SCORPION)
                 ],
@@ -24,7 +24,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_3',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: -150, y: 1200 },
+                coordinates: { x: 0, y: 3800 },
                 puzzleData: {
                     puzzleType: PuzzleType.REFILL_CANTEEN
                 },
@@ -32,7 +32,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_4',
                 type: EncounterType.BATTLE,
-                coordinates: { x: -150, y: 1600 },
+                coordinates: { x: -250, y: 3500 },
                 enemies: [
                     MONSTERS.DESERT_SCAVENGER,
                     MONSTERS.DESERT_SCAVENGER,
@@ -42,7 +42,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_5',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 0, y: 1800 },
+                coordinates: { x: 0, y: 3400 },
                 enemies: [
                     MONSTERS.BANDIT_LEADER,
                     MONSTERS.DESERT_SCAVENGER,
@@ -52,7 +52,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_6',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 250, y: 2000 },
+                coordinates: { x: -50, y: 3100 },
                 puzzleData: {
                     puzzleType: PuzzleType.BALANCE
                 },
@@ -61,7 +61,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_7',
                 type: EncounterType.BATTLE,
-                coordinates: { x: -100, y: 2700 },
+                coordinates: { x: -200, y: 2000 },
                 enemies: [
                     MONSTERS.SCORPION_1,
                     MONSTERS.SCORPION_1,
@@ -72,7 +72,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_8',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 0, y: 2950 },
+                coordinates: { x: 0, y: 1600 },
                 puzzleData: {
                     puzzleType: PuzzleType.SEQUENCE
                 },
@@ -80,7 +80,7 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_9',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 200, y: 3200 },
+                coordinates: { x: 200, y: 1250 },
                 enemies: [
                     MONSTERS.SAND_SPIRIT_1,
                     MONSTERS.SAND_SPIRIT_1,
@@ -91,13 +91,13 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '1_10',
                 type: EncounterType.BOSS,
-                coordinates: { x: -100, y: 3850 },
+                coordinates: { x: 0, y: 1000 },
                 enemies: [MONSTERS.SAND_COLOSSUS],
             },
             {
                 id: '1_11',
                 type: EncounterType.ENDING,
-                coordinates: { x: -300, y: 3850 },
+                coordinates: { x: 20, y: 420 },
             }
         ]
     },

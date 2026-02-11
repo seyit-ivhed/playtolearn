@@ -29,31 +29,31 @@
             "mystery_path": "En mystisk väg in i det okända...",
             "nodes": {
                 "1_1": {
-                    "label": "Skorpionbakhåll"
+                    "label": "Stickande spanare"
                 },
                 "1_2": {
-                    "label": "Skorpionnäste"
+                    "label": "Små plågor"
                 },
                 "1_3": {
-                    "label": "Fyll på fältflaskan"
+                    "label": "Den solkyssta oasen"
                 },
                 "1_4": {
-                    "label": "Banditspanare"
+                    "label": "Dynernas plundrare"
                 },
                 "1_5": {
-                    "label": "Banditledare"
+                    "label": "Banditernas gömställe"
                 },
                 "1_6": {
-                    "label": "Stenvågen"
+                    "label": "Sanningens våg"
                 },
                 "1_7": {
-                    "label": "Sandens ekon"
+                    "label": "Sandgengångare"
                 },
                 "1_8": {
-                    "label": "Stjärnkarta"
+                    "label": "Stjärnskådarens dyn"
                 },
                 "1_9": {
-                    "label": "Väktarandar"
+                    "label": "Andeväktare"
                 },
                 "1_10": {
                     "label": "Sandkolossen"

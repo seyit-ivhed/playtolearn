@@ -29,31 +29,31 @@
             "mystery_path": "A mysterious path into the unknown...",
             "nodes": {
                 "1_1": {
-                    "label": "Scorpion Ambush"
+                    "label": "Stinging Scout"
                 },
                 "1_2": {
-                    "label": "Scorpion Nest"
+                    "label": "Tiny Terrors"
                 },
                 "1_3": {
-                    "label": "Refill Canteen"
+                    "label": "The Sun-Drenched Oasis"
                 },
                 "1_4": {
-                    "label": "Bandit Scouts"
+                    "label": "Dune Scavengers"
                 },
                 "1_5": {
-                    "label": "Bandit Leader"
+                    "label": "Bandit Hideout"
                 },
                 "1_6": {
-                    "label": "Weighing Rocks"
+                    "label": "The Scales of Truth"
                 },
                 "1_7": {
-                    "label": "Echoes of the Sand"
+                    "label": "Sand Specters"
                 },
                 "1_8": {
-                    "label": "Star Map"
+                    "label": "Star Gazer's Dune"
                 },
                 "1_9": {
-                    "label": "Guardian Spirits"
+                    "label": "Spirit Guardians"
                 },
                 "1_10": {
                     "label": "The Sand Colossus"
