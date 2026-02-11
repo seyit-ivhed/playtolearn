@@ -21,7 +21,6 @@ import styles from './PuzzlePage.module.css';
 interface PuzzleDefinition {
     instructionKey: string;
     Component: React.ComponentType<PuzzleProps>;
-    hideStandardInstruction?: boolean;
 }
 
 const PUZZLE_DEFINITIONS: Record<PuzzleType, PuzzleDefinition> = {
@@ -31,8 +30,7 @@ const PUZZLE_DEFINITIONS: Record<PuzzleType, PuzzleDefinition> = {
     },
     [PuzzleType.BALANCE]: {
         instructionKey: 'puzzle.balance.instruction',
-        Component: BalancePuzzle,
-        hideStandardInstruction: true
+        Component: BalancePuzzle
     },
     [PuzzleType.SEQUENCE]: {
         instructionKey: 'puzzle.sequence.instruction',
@@ -157,7 +155,7 @@ const PuzzlePage = () => {
                 </button>
             </header>
 
-            {instruction && !puzzleDef.hideStandardInstruction && (
+            {instruction && (
                 <div className={styles.instructionContainer}>
                     <p className={styles.instructionText}>{instruction}</p>
                 </div>

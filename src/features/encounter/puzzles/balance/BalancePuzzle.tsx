@@ -12,7 +12,7 @@ const GREEK_RUNES = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ',
 const RUNE_ANIMATION_DELAY_MS = 1000;
 const SUCCESS_DISPLAY_DURATION_MS = 3000;
 
-export const BalancePuzzle = ({ data, onSolve, instruction }: PuzzleProps) => {
+export const BalancePuzzle = ({ data, onSolve }: PuzzleProps) => {
     const { t } = useTranslation();
     const initialData = data as BalanceData;
 
@@ -92,11 +92,7 @@ export const BalancePuzzle = ({ data, onSolve, instruction }: PuzzleProps) => {
                 {/* Puzzle Content */}
                 <div className={styles.puzzleContent}>
                     {/* Instructions */}
-                    {instruction && (
-                        <div className={styles.puzzleInstruction}>
-                            {instruction}
-                        </div>
-                    )}
+
 
                     <div className={styles.platesContainer}>
                         {/* Left Scale Arm */}

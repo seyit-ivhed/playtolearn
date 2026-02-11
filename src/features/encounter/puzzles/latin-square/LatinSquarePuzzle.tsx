@@ -6,7 +6,7 @@ import { type PuzzleProps, type LatinSquareData, type LatinSquareElement } from 
 const ANIMATION_DURATION_MS = 600;
 const ROTATION_MIDPOINT_MS = 300;
 
-export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
+export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
     const puzzleData = data as LatinSquareData;
     const [grid, setGrid] = useState<LatinSquareElement[][]>(() => puzzleData.grid);
     const fixedIndices = puzzleData.fixedIndices;
