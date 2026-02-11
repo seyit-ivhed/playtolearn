@@ -26,14 +26,16 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction
         // Trigger animation
         setRotatingCell({ x, y });
 
-        // Update logic after a brief delay for animation impact
-        const updatedRight = MirrorEngine.rotateCell(rightPattern, x, y);
-        setRightPattern(updatedRight);
+        // Update logic at the midpoint of the animation (300ms of 600ms)
+        setTimeout(() => {
+            const updatedRight = MirrorEngine.rotateCell(rightPattern, x, y);
+            setRightPattern(updatedRight);
 
-        if (MirrorEngine.checkSolution(leftPattern, updatedRight, gridSize)) {
-            setIsSolved(true);
-            setTimeout(() => onSolve(), 1500);
-        }
+            if (MirrorEngine.checkSolution(leftPattern, updatedRight, gridSize)) {
+                setIsSolved(true);
+                setTimeout(() => onSolve(), 1000);
+            }
+        }, 300);
 
         // Reset rotation state after animation duration
         setTimeout(() => setRotatingCell(null), 600);
