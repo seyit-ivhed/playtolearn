@@ -118,11 +118,3 @@
     stroke-width: 8;
     filter: drop-shadow(0 0 8px rgba(74, 158, 255, 0.8));
 }
-
-.instruction {
-    margin-top: 1.5rem;
-    font-size: 1.1rem;
-    color: #ccc;
-    max-width: 500px;
-    text-align: center;
-}

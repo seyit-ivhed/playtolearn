@@ -9,7 +9,7 @@ import {
     validateMove
 } from './NumberPathEngine';
 
-export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
+export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
     const puzzleData = data as NumberPathData;
     const { gridSize = 3, startValue = 1, stepValue = 1, preFilledIndices = [] } = puzzleData;
 
@@ -154,11 +154,7 @@ export const NumberPathPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruc
                     />
                 </svg>
             </div>
-            {instruction && (
-                <div className={styles.instruction}>
-                    {instruction}
-                </div>
-            )}
         </div>
     );
 };
+
