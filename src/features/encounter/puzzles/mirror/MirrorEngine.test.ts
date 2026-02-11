@@ -75,4 +75,24 @@ describe('MirrorEngine', () => {
             expect(data.rightOptions.every(c => c.runeIndex === 0)).toBe(true);
         });
     });
+
+    describe('Parameter Validation', () => {
+        it('generateMirrorData should throw on invalid difficulty', () => {
+            expect(() => generateMirrorData('invalid')).toThrow();
+        });
+
+        it('checkSolution should return false on missing patterns', () => {
+            // @ts-expect-error Testing runtime check
+            expect(MirrorEngine.checkSolution(null, [], 3)).toBe(false);
+            // @ts-expect-error Testing runtime check
+            expect(MirrorEngine.checkSolution([], null, 3)).toBe(false);
+        });
+
+        it('rotateCell should handle invalid inputs safely', () => {
+            // @ts-expect-error Testing runtime check
+            expect(MirrorEngine.rotateCell(null, 0, 0)).toEqual([]);
+            // @ts-expect-error Testing runtime check
+            expect(MirrorEngine.rotateCell([], 'x', 0)).toEqual([]);
+        });
+    });
 });

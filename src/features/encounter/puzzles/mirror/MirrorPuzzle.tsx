@@ -2,10 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MirrorEngine } from '@/features/encounter/puzzles/mirror/MirrorEngine';
 import styles from '@/features/encounter/puzzles/mirror/MirrorPuzzle.module.css';
-import { type PuzzleProps, type MirrorData, type MirrorGridCell } from '@/types/adventure.types';
+import { PuzzleType, type PuzzleProps, type MirrorData, type MirrorGridCell } from '@/types/adventure.types';
 
-export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
+const ANIMATION_DURATION_MS = 600;
+const ROTATION_MIDPOINT_MS = 300;
+const VICTORY_DELAY_MS = 2000;
+
+export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve }) => {
     const { t } = useTranslation();
+
+    if (data.puzzleType !== PuzzleType.MIRROR) {
+        console.error(`Invalid puzzle type passed to MirrorPuzzle: ${data.puzzleType}`);
+        return null;
+    }
+
     const puzzleData = data as MirrorData;
     const gridSize = puzzleData.targetValue;
     const [leftPattern, setLeftPattern] = useState<MirrorGridCell[]>([]);
@@ -33,12 +43,12 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction
 
             if (MirrorEngine.checkSolution(leftPattern, updatedRight, gridSize)) {
                 setIsSolved(true);
-                setTimeout(() => onSolve(), 2000);
+                setTimeout(() => onSolve(), VICTORY_DELAY_MS);
             }
-        }, 300);
+        }, ROTATION_MIDPOINT_MS);
 
         // Reset rotation state after animation duration
-        setTimeout(() => setRotatingCell(null), 600);
+        setTimeout(() => setRotatingCell(null), ANIMATION_DURATION_MS);
     };
 
     const renderGrid = (pattern: MirrorGridCell[], isInteractive: boolean) => {

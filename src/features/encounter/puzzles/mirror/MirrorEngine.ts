@@ -14,6 +14,11 @@ const AVAILABLE_RUNES = [
 ];
 
 export const generateMirrorData = (difficulty: DifficultyLevel): MirrorData => {
+    if (typeof difficulty !== 'number') {
+        console.error(`Invalid difficulty level provided to generateMirrorData: ${difficulty}`);
+        throw new Error(`Invalid difficulty level: ${difficulty}`);
+    }
+
     const gridSize = Math.floor(difficulty / 2) + 3; // D1 -> 3x3, D2 -> 4x4, D3 -> 4x4, D4 -> 5x5
     const leftPattern: MirrorGridCell[] = [];
     const rightPattern: MirrorGridCell[] = [];
@@ -45,6 +50,16 @@ export const generateMirrorData = (difficulty: DifficultyLevel): MirrorData => {
 export class MirrorEngine {
 
     static checkSolution(leftPattern: MirrorGridCell[], rightPattern: MirrorGridCell[], gridSize: number): boolean {
+        if (!leftPattern || !rightPattern) {
+            console.error('Patterns missing in checkSolution');
+            return false;
+        }
+
+        if (typeof gridSize !== 'number') {
+            console.error(`Invalid gridSize in checkSolution: ${gridSize}`);
+            return false;
+        }
+
         for (let y = 0; y < gridSize; y++) {
             for (let x = 0; x < gridSize; x++) {
                 const leftCell = leftPattern.find(c => c.x === x && c.y === y);
@@ -60,6 +75,16 @@ export class MirrorEngine {
     }
 
     static rotateCell(pattern: MirrorGridCell[], x: number, y: number): MirrorGridCell[] {
+        if (!pattern) {
+            console.error('Pattern missing in rotateCell');
+            return [];
+        }
+
+        if (typeof x !== 'number' || typeof y !== 'number') {
+            console.error(`Invalid coordinates in rotateCell: ${x}, ${y}`);
+            return pattern;
+        }
+
         return pattern.map(cell => {
             if (cell.x === x && cell.y === y) {
                 // Toggles between index 0 and 1
