@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { LatinSquareEngine } from './LatinSquareEngine';
 import styles from './LatinSquarePuzzle.module.css';
 import { type PuzzleProps, type LatinSquareData, type LatinSquareElement } from '../../../../types/adventure.types';
-import { RUNE_ASSETS } from '../../../../data/puzzle-assets';
 
 const ANIMATION_DURATION_MS = 600;
 const ROTATION_MIDPOINT_MS = 300;
@@ -11,6 +10,7 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
     const puzzleData = data as LatinSquareData;
     const [grid, setGrid] = useState<LatinSquareElement[][]>(() => puzzleData.grid);
     const fixedIndices = puzzleData.fixedIndices;
+    const selectedRunes = puzzleData.selectedRunes;
     const [isSolved, setIsSolved] = useState(false);
     const [rotatingCell, setRotatingCell] = useState<{ row: number, col: number } | null>(null);
 
@@ -20,14 +20,11 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
         }
 
         const current = grid[row][col];
-        const elements: LatinSquareElement[] = ['FIRE', 'WATER', 'EARTH', 'AIR'];
-        const currentIndex = elements.indexOf(current);
-        const nextIndex = (currentIndex + 1) % elements.length;
-        const next = elements[nextIndex];
+        const nextValue = current === null ? 0 : (current + 1) % selectedRunes.length;
 
-        const updateGrid = (nextValue: LatinSquareElement) => {
+        const updateGrid = (val: LatinSquareElement) => {
             const newGrid = grid.map((r, ri) =>
-                ri === row ? r.map((c, ci) => ci === col ? nextValue : c) : r
+                ri === row ? r.map((c, ci) => ci === col ? val : c) : r
             );
 
             setGrid(newGrid);
@@ -41,20 +38,10 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
         setRotatingCell({ row, col });
 
         setTimeout(() => {
-            updateGrid(next);
+            updateGrid(nextValue);
         }, ROTATION_MIDPOINT_MS);
 
         setTimeout(() => setRotatingCell(null), ANIMATION_DURATION_MS);
-    };
-
-    const getElementRune = (element: LatinSquareElement) => {
-        switch (element) {
-            case 'FIRE': return RUNE_ASSETS[0];
-            case 'WATER': return RUNE_ASSETS[1];
-            case 'EARTH': return RUNE_ASSETS[2];
-            case 'AIR': return RUNE_ASSETS[3];
-            default: return null;
-        }
     };
 
     if (grid.length === 0) {
@@ -76,17 +63,14 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
                                     className={`${styles.cell} ${isFixed ? styles.fixed : styles.interactive} ${isCurrentlyRotating ? styles.rotating : ''}`}
                                     onClick={() => handleCellClick(ri, ci)}
                                 >
-                                    {(() => {
-                                        const runeSrc = getElementRune(cell);
-                                        return runeSrc ? (
-                                            <img
-                                                src={runeSrc}
-                                                alt={cell || 'rune'}
-                                                className={styles.rune}
-                                                draggable={false}
-                                            />
-                                        ) : null;
-                                    })()}
+                                    {cell !== null && (
+                                        <img
+                                            src={selectedRunes[cell]}
+                                            alt="rune"
+                                            className={styles.rune}
+                                            draggable={false}
+                                        />
+                                    )}
                                 </div>
                             );
                         })}

@@ -8,10 +8,10 @@ import { PuzzleType } from '../../../../types/adventure.types';
 
 describe('LatinSquareEngine', () => {
     const validGrid: LatinSquareElement[][] = [
-        ['FIRE', 'WATER', 'EARTH', 'AIR'],
-        ['EARTH', 'AIR', 'FIRE', 'WATER'],
-        ['WATER', 'FIRE', 'AIR', 'EARTH'],
-        ['AIR', 'EARTH', 'WATER', 'FIRE']
+        [0, 1, 2, 3],
+        [2, 3, 0, 1],
+        [1, 0, 3, 2],
+        [3, 2, 1, 0]
     ];
 
     describe('checkSolution', () => {
@@ -21,41 +21,41 @@ describe('LatinSquareEngine', () => {
 
         it('should return false if a row has duplicates', () => {
             const invalidGrid: LatinSquareElement[][] = [
-                ['FIRE', 'FIRE', 'EARTH', 'AIR'], // Duplicate FIRE
-                ['EARTH', 'AIR', 'FIRE', 'WATER'],
-                ['WATER', 'WATER', 'AIR', 'EARTH'], // Duplicate WATER (though one per row is enough to fail)
-                ['AIR', 'EARTH', 'WATER', 'FIRE']
+                [0, 0, 2, 3], // Duplicate 0
+                [2, 3, 0, 1],
+                [1, 2, 3, 0],
+                [3, 0, 1, 2]
             ];
             expect(LatinSquareEngine.checkSolution(invalidGrid)).toBe(false);
         });
 
         it('should return false if a column has duplicates', () => {
             const invalidGrid: LatinSquareElement[][] = [
-                ['FIRE', 'WATER', 'EARTH', 'AIR'],
-                ['FIRE', 'AIR', 'WATER', 'EARTH'], // FIRE duplicate in col 0
-                ['WATER', 'FIRE', 'AIR', 'EARTH'],
-                ['AIR', 'EARTH', 'WATER', 'FIRE']
+                [0, 1, 2, 3],
+                [0, 3, 1, 2], // 0 duplicate in col 0
+                [1, 0, 3, 2],
+                [3, 2, 1, 0]
             ];
             expect(LatinSquareEngine.checkSolution(invalidGrid)).toBe(false);
         });
 
-        it('should return false if there are null values', () => {
+        it('should return incomplete if there are null values', () => {
             const incompleteGrid: LatinSquareElement[][] = [
-                ['FIRE', 'WATER', 'EARTH', 'AIR'],
-                ['EARTH', null, 'FIRE', 'WATER'],
-                ['WATER', 'FIRE', 'AIR', 'EARTH'],
-                ['AIR', 'EARTH', 'WATER', 'FIRE']
+                [0, 1, 2, 3],
+                [2, null, 0, 1],
+                [1, 0, 3, 2],
+                [3, 2, 1, 0]
             ];
             expect(LatinSquareEngine.checkSolution(incompleteGrid)).toBe(false);
         });
 
-        it('should return false if row size is wrong', () => {
-            const smallGrid: LatinSquareElement[][] = [
-                ['FIRE', 'WATER', 'EARTH'],
-                ['EARTH', 'AIR', 'FIRE'],
-                ['WATER', 'FIRE', 'AIR']
-            ] as LatinSquareElement[][];
-            expect(LatinSquareEngine.checkSolution(smallGrid)).toBe(false);
+        it('should return true for a valid 3x3 grid', () => {
+            const valid3x3: LatinSquareElement[][] = [
+                [0, 1, 2],
+                [2, 0, 1],
+                [1, 2, 0]
+            ];
+            expect(LatinSquareEngine.checkSolution(valid3x3)).toBe(true);
         });
     });
 
@@ -90,20 +90,31 @@ describe('LatinSquareEngine', () => {
         it('should generate valid puzzle data structure', () => {
             const data = generateLatinSquareData(1);
             expect(data.puzzleType).toBe(PuzzleType.LATIN_SQUARE);
-            expect(data.targetValue).toBe(4);
+            expect(data.targetValue).toBe(3); // Level 1 is 3x3
             expect(Array.isArray(data.grid)).toBe(true);
-            expect(data.grid).toHaveLength(4);
-            expect(data.grid[0]).toHaveLength(4);
+            expect(data.grid).toHaveLength(3);
+            expect(data.grid[0]).toHaveLength(3);
+            expect(data.selectedRunes).toHaveLength(3);
         });
 
         it('should have correct number of fixed elements based on difficulty', () => {
-            // difficulty 1: totalToKeep = max(4, 10 - 1*2) = 8
+            // difficulty 1: 3x3, 5 clues
             const dataEasy = generateLatinSquareData(1);
-            expect(dataEasy.fixedIndices).toHaveLength(8);
+            expect(dataEasy.fixedIndices).toHaveLength(5);
+            expect(dataEasy.grid).toHaveLength(3);
+            expect(dataEasy.selectedRunes).toHaveLength(3);
 
-            // difficulty 3: totalToKeep = max(4, 10 - 3*2) = 4
+            // difficulty 2: 4x4, 8 clues
+            const dataMedium = generateLatinSquareData(2);
+            expect(dataMedium.fixedIndices).toHaveLength(8);
+            expect(dataMedium.grid).toHaveLength(4);
+            expect(dataMedium.selectedRunes).toHaveLength(4);
+
+            // difficulty 3: 4x4, 6 clues
             const dataHard = generateLatinSquareData(3);
-            expect(dataHard.fixedIndices).toHaveLength(4);
+            expect(dataHard.fixedIndices).toHaveLength(6);
+            expect(dataHard.grid).toHaveLength(4);
+            expect(dataHard.selectedRunes).toHaveLength(4);
         });
 
         it('should have valid fixedIndices structure', () => {

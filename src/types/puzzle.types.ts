@@ -128,13 +128,14 @@ export interface MirrorData extends BasePuzzleData {
     selectedRunes: string[];
 }
 
-export type LatinSquareElement = 'FIRE' | 'WATER' | 'EARTH' | 'AIR' | null;
+export type LatinSquareElement = number | null;
 
 export interface LatinSquareData extends BasePuzzleData {
     puzzleType: typeof PuzzleType.LATIN_SQUARE;
     targetValue: number;
     grid: LatinSquareElement[][];
     fixedIndices: { row: number; col: number }[];
+    selectedRunes: string[];
 }
 
 export interface NumberPathData extends BasePuzzleData {
