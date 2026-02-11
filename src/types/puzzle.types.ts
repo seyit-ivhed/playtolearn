@@ -116,7 +116,7 @@ export interface SequenceData extends BasePuzzleData {
 export interface MirrorGridCell {
     x: number;
     y: number;
-    isActive: boolean;
+    runeIndex: number;
 }
 
 export interface MirrorData extends BasePuzzleData {
@@ -125,6 +125,7 @@ export interface MirrorData extends BasePuzzleData {
     options: (number | PuzzleOption)[];
     leftOptions: MirrorGridCell[];
     rightOptions: MirrorGridCell[];
+    selectedRunes: string[];
 }
 
 export type LatinSquareElement = 'FIRE' | 'WATER' | 'EARTH' | 'AIR' | null;

@@ -13,65 +13,73 @@
     display: flex;
     gap: 2rem;
     align-items: center;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.4);
     padding: 2rem;
-    border-radius: 1rem;
-    border: 2px solid #555;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .side {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .side h3 {
     margin: 0;
-    color: #00d4ff;
+    color: #e9dcc9;
+    /* Parchment color */
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    font-size: 1.4rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .grid {
     display: grid;
     gap: 12px;
-    padding: 80px;
-    border-radius: 20px;
+    padding: 100px;
+    border-radius: 24px;
     background-size: cover;
     background-position: center;
-    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7);
-    transition: all 0.3s ease;
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .leftSide {
     background-image: url('/assets/images/puzzles/mirror/pedestal.png');
-    border: 3px solid #8b6532;
-    /* Bronze/Gold frame for the pattern */
+    border: 4px solid #8b6532;
+    filter: brightness(0.9);
 }
 
 .rightSide {
     background-image: url('/assets/images/puzzles/mirror/mirror.png');
-    border: 3px solid #00d4ff;
-    /* Mana blue frame for the mirror */
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 4px solid #00d4ff;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), inset 0 0 60px rgba(0, 0, 0, 0.8);
 }
 
 .cell {
-    width: 54px;
-    height: 54px;
-    background: rgba(255, 255, 255, 0.08);
-    /* More transparent to show background */
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 64px;
+    height: 64px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.cell.active {
-    background: #00d4ff;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
-    border-color: #fff;
-    transform: scale(1.05);
+.rune {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3));
 }
 
 .cell.interactive {
@@ -79,26 +87,43 @@
 }
 
 .cell.interactive:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
 }
 
-.cell.interactive.active:hover {
-    background: #40e0ff;
-    transform: scale(1.1);
+.cell.rotating .rune {
+    transform: rotate(360deg) scale(0.8);
+}
+
+/* Specific styling for the target pattern runes to make them look more static/embedded */
+.leftSide .rune {
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.8)) sepia(0.2);
+    opacity: 0.9;
+}
+
+/* Interactive runes glow slightly */
+.rightSide .rune {
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
 }
 
 .divider {
     width: 2px;
-    height: 380px;
-    /* Increased to match larger grid container */
-    background: linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.5), transparent);
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+    height: 500px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.6), transparent);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
 }
 
 .instructions {
-    margin-top: 2rem;
-    font-size: 1.2rem;
-    color: #ccc;
+    margin-top: 2.5rem;
+    font-size: 1.3rem;
+    color: #e9dcc9;
     text-align: center;
+    max-width: 600px;
+    line-height: 1.5;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }

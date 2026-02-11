@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MirrorEngine } from './MirrorEngine';
-import styles from './MirrorPuzzle.module.css';
-import { type PuzzleProps, type MirrorData, type MirrorGridCell } from '../../../../types/adventure.types';
+import { MirrorEngine } from '@/features/encounter/puzzles/mirror/MirrorEngine';
+import styles from '@/features/encounter/puzzles/mirror/MirrorPuzzle.module.css';
+import { type PuzzleProps, type MirrorData, type MirrorGridCell } from '@/types/adventure.types';
 
 export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction }) => {
     const { t } = useTranslation();
@@ -11,6 +11,7 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction
     const [leftPattern, setLeftPattern] = useState<MirrorGridCell[]>([]);
     const [rightPattern, setRightPattern] = useState<MirrorGridCell[]>([]);
     const [isSolved, setIsSolved] = useState(false);
+    const [rotatingCell, setRotatingCell] = useState<{ x: number, y: number } | null>(null);
 
     useEffect(() => {
         setLeftPattern(puzzleData.leftOptions);
@@ -18,17 +19,24 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction
     }, [puzzleData]);
 
     const handleCellClick = (x: number, y: number) => {
-        if (isSolved) {
+        if (isSolved || rotatingCell) {
             return;
         }
 
-        const updatedRight = MirrorEngine.toggleCell(rightPattern, x, y);
+        // Trigger animation
+        setRotatingCell({ x, y });
+
+        // Update logic after a brief delay for animation impact
+        const updatedRight = MirrorEngine.rotateCell(rightPattern, x, y);
         setRightPattern(updatedRight);
 
         if (MirrorEngine.checkSolution(leftPattern, updatedRight, gridSize)) {
             setIsSolved(true);
-            setTimeout(() => onSolve(), 1000);
+            setTimeout(() => onSolve(), 1500);
         }
+
+        // Reset rotation state after animation duration
+        setTimeout(() => setRotatingCell(null), 600);
     };
 
     const renderGrid = (pattern: MirrorGridCell[], isInteractive: boolean) => {
@@ -36,13 +44,29 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction
         for (let y = 0; y < gridSize; y++) {
             for (let x = 0; x < gridSize; x++) {
                 const cell = pattern.find(c => c.x === x && c.y === y);
+                if (!cell) {
+                    continue;
+                }
+
+                const isCurrentlyRotating = isInteractive && rotatingCell?.x === x && rotatingCell?.y === y;
+                const runeSrc = puzzleData.selectedRunes[cell.runeIndex];
+
                 cells.push(
                     <div
                         key={`${x}-${y}`}
                         data-testid={`mirror-cell-${isInteractive ? 'right' : 'left'}-${x}-${y}`}
-                        className={`${styles.cell} ${cell?.isActive ? styles.active : ''} ${isInteractive ? styles.interactive : ''}`}
+                        className={`${styles.cell} ${isInteractive ? styles.interactive : ''} ${isCurrentlyRotating ? styles.rotating : ''}`}
                         onClick={isInteractive ? () => handleCellClick(x, y) : undefined}
-                    />
+                    >
+                        {runeSrc && (
+                            <img
+                                src={runeSrc}
+                                alt="rune"
+                                className={styles.rune}
+                                draggable={false}
+                            />
+                        )}
+                    </div>
                 );
             }
         }
