@@ -166,3 +166,56 @@
     border-radius: 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+@keyframes solveGlow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 60px rgba(0, 0, 0, 0.8);
+        filter: brightness(1);
+    }
+
+    50% {
+        box-shadow: 0 0 60px rgba(0, 212, 255, 0.8), inset 0 0 80px rgba(0, 212, 255, 0.4);
+        filter: brightness(1.3);
+    }
+
+    100% {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 60px rgba(0, 0, 0, 0.8);
+        filter: brightness(1);
+    }
+}
+
+@keyframes runeSolveGlow {
+    0% {
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4)) brightness(1);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.9)) brightness(1.5);
+    }
+
+    100% {
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4)) brightness(1);
+    }
+}
+
+.puzzleBoard.solved {
+    border-color: #00d4ff;
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.4);
+    transition: all 1s ease;
+}
+
+.solved .grid {
+    animation: solveGlow 2s infinite ease-in-out;
+    border-color: #fff !important;
+}
+
+.solved .rune {
+    animation: runeSolveGlow 1s infinite ease-in-out !important;
+}
+
+.solved .divider {
+    background: #fff;
+    box-shadow: 0 0 30px #fff;
+    width: 4px;
+    transition: all 0.5s ease;
+}

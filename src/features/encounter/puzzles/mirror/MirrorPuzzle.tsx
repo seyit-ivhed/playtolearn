@@ -33,7 +33,7 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction
 
             if (MirrorEngine.checkSolution(leftPattern, updatedRight, gridSize)) {
                 setIsSolved(true);
-                setTimeout(() => onSolve(), 1000);
+                setTimeout(() => onSolve(), 2000);
             }
         }, 300);
 
@@ -80,8 +80,8 @@ export const MirrorPuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instruction
     };
 
     return (
-        <div className={styles.container}>
-            <div className={styles.puzzleBoard}>
+        <div className={`${styles.container} ${isSolved ? styles.solved : ''}`}>
+            <div className={`${styles.puzzleBoard} ${isSolved ? styles.solved : ''}`}>
                 <div className={styles.side}>
                     <h3>{t('puzzle.mirror.pattern_title', 'Pattern')}</h3>
                     {renderGrid(leftPattern, false)}
