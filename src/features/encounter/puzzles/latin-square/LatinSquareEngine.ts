@@ -34,6 +34,16 @@ export const generateLatinSquareData = (difficulty: DifficultyLevel): LatinSquar
         puzzleGrid[row][col] = solution[row][col];
     });
 
+    // Fill remaining cells with random runes
+    const ELEMENTS: LatinSquareElement[] = ['FIRE', 'WATER', 'EARTH', 'AIR'];
+    for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 4; col++) {
+            if (puzzleGrid[row][col] === null) {
+                puzzleGrid[row][col] = ELEMENTS[Math.floor(Math.random() * ELEMENTS.length)];
+            }
+        }
+    }
+
     return {
         puzzleType: PuzzleType.LATIN_SQUARE,
         targetValue: 4,

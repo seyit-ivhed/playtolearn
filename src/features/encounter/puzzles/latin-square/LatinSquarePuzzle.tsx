@@ -20,7 +20,7 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
         }
 
         const current = grid[row][col];
-        const elements: LatinSquareElement[] = [null, 'FIRE', 'WATER', 'EARTH', 'AIR'];
+        const elements: LatinSquareElement[] = ['FIRE', 'WATER', 'EARTH', 'AIR'];
         const currentIndex = elements.indexOf(current);
         const nextIndex = (currentIndex + 1) % elements.length;
         const next = elements[nextIndex];
@@ -38,17 +38,13 @@ export const LatinSquarePuzzle: React.FC<PuzzleProps> = ({ data, onSolve, instru
             }
         };
 
-        if (current === null) {
+        setRotatingCell({ row, col });
+
+        setTimeout(() => {
             updateGrid(next);
-        } else {
-            setRotatingCell({ row, col });
+        }, ROTATION_MIDPOINT_MS);
 
-            setTimeout(() => {
-                updateGrid(next);
-            }, ROTATION_MIDPOINT_MS);
-
-            setTimeout(() => setRotatingCell(null), ANIMATION_DURATION_MS);
-        }
+        setTimeout(() => setRotatingCell(null), ANIMATION_DURATION_MS);
     };
 
     const getElementRune = (element: LatinSquareElement) => {
