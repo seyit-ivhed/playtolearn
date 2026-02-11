@@ -40,3 +40,25 @@ Used as a more organic alternative background for the pattern side.
 
 **Prompt:**
 > A top-down view of a rustic, hand-carved wooden tray. The wood has a deep, rich grain with warm oak tones and smooth, worn edges. The texture is tactile and painterly, showing natural aging. High fantasy RPG style, hand-painted digital illustration, soft warm lighting, 1:1 aspect ratio, high resolution.
+
+---
+
+## Number Path Puzzle Assets
+
+### Ancient Temple Pavement (Background)
+A top-down view of an ancient, weathered stone floor suitable for a "Path of Trials" puzzle.
+
+**Prompt:**
+> A top-down view of an ancient temple floor made of a single continuous block of weathered stone. The surface is heavily cracked and worn, showing organic imperfections and mossy patches from centuries of age. High-fantasy RPG style, hand-painted digital illustration, tactile texture, dark grey and moss green tones. No characters or objects, just the floor. 1:1 aspect ratio, high resolution.
+
+### Stone Pressure Plate (Inert)
+The base stone tile for the puzzle grid.
+
+**Prompt:**
+> A single, square stone pressure plate seen from directly above. It is made of ancient, dark-hewn granite with rough, beveled edges. The surface is slightly weathered with fine cracks and a subtle, hand-carved geometric pattern in the center. Top-down view, stylized fantasy RPG icon, painterly texture, subtle stone grain, neutral lighting. 1:1 aspect ratio, high resolution.
+
+### Stone Pressure Plate (Activated)
+The activated or "correctly stepped upon" version of the tile.
+
+**Prompt:**
+> A single, square stone pressure plate seen from directly above, activated and glowing. The central hand-carved geometric pattern is glowing with a vibrant, magical golden light. The edges of the stone catch the glow, creating a sense of powerful energy being released. Top-down view, stylized fantasy RPG icon, painterly texture, glowing ember effect, warm magical lighting. 1:1 aspect ratio, high resolution.
