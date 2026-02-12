@@ -106,7 +106,7 @@
         },
         "3": {
             "title": "The Misty Foothills",
-            "story_hook": "The biting air of the Jade Peaks greeted Amara and Tariq as they arrived in the high mountains. Shrouded in mist, a young boy named Kenji sat on a rock, clutching an oversized wooden sword. His eyes widened with excitement and surprise at their arrival. 'Who are you?' he asked, before hurriedly explaining how the Evil Shogun's forces had begun to invade his mountains, spreading a dark, unnatural mist across the land.",
+            "story_hook": "The biting air of the Jade Peaks greeted Amara and Tariq as they arrived in the high mountains. Shrouded in mist, a young boy named Kenji sat on a rock, clutching an oversized wooden sword. His eyes widened with excitement and surprise at their arrival. 'Who are you?' he asked, before hurriedly explaining how the Shadow Master's forces had begun to invade his mountains, spreading a dark, unnatural mist across the land.",
             "completion_summary": "The Iron Enforcer has been driven back, and the mists have momentarily parted. Kenji, impressed by the newcomers' bravery and wisdom, wipes his brow and offers a formal bow. The path to the peaks is dangerous, but with new allies, the journey upward has just begun.",
             "mystery_path": "The trail leads higher into the frozen heights...",
             "nodes": {
@@ -114,13 +114,13 @@
                     "label": "Bamboo Grove Ambush"
                 },
                 "3_2": {
-                    "label": "Ronin Patrol"
+                    "label": "Mist Warrior Patrol"
                 },
                 "3_3": {
                     "label": "The Mirror Pond"
                 },
                 "3_4": {
-                    "label": "Foothill Vanguard"
+                    "label": "Foothill Scouts"
                 },
                 "3_5": {
                     "label": "Shrouded Samurai"
@@ -129,13 +129,13 @@
                     "label": "The Cipher Plates"
                 },
                 "3_7": {
-                    "label": "Fortress Guards"
+                    "label": "Samurai Squad"
                 },
                 "3_8": {
                     "label": "The Constellation Stones"
                 },
                 "3_9": {
-                    "label": "The Commander's Stronghold"
+                    "label": "The Captain's Fort"
                 },
                 "3_10": {
                     "label": "Path to the Peaks"
@@ -143,9 +143,9 @@
             }
         },
         "4": {
-            "title": "Rise of the Evil Shogun",
-            "story_hook": "The mists have cleared, revealing a path heavily guarded by samurai warriors. The Evil Shogun awaits in his fortress, plotting to expand his dominion. Our heroes must stealthily navigate through the enemy lines and solve the ancient puzzles that lock the fortress gates.",
-            "completion_summary": "The Evil Shogun is defeated! His samurai army has been dispersed, and the fortress is now silent. Amara and her friends have saved the Jade Peaks from the dark threat.",
+            "title": "Rise of the Shadow Master",
+            "story_hook": "The mists have cleared, revealing a path heavily guarded by samurai warriors. The Shadow Master awaits in his fortress, plotting to expand his dominion. Our heroes must stealthily navigate through the enemy lines and solve the ancient puzzles that lock the fortress gates.",
+            "completion_summary": "The Shadow Master is defeated! His samurai army has been dispersed, and the fortress is now silent. Amara and her friends have saved the Jade Peaks from the dark threat.",
             "mystery_path": "The fortress looms large ahead...",
             "nodes": {
                 "4_1": {
@@ -167,7 +167,7 @@
                     "label": "Mirror Gate"
                 },
                 "4_7": {
-                    "label": "Shogun's Hounds"
+                    "label": "Shadow Master's Hounds"
                 },
                 "4_8": {
                     "label": "Hidden Archers"
@@ -179,7 +179,7 @@
                     "label": "The Inner Circle"
                 },
                 "4_11": {
-                    "label": "The Evil Shogun"
+                    "label": "The Shadow Master"
                 },
                 "4_12": {
                     "label": "Journey Onward"
@@ -382,9 +382,9 @@
         },
         "kenji": {
             "title": "The Mountain Samurai",
-            "evolution_1": "Ronin Defender",
+            "evolution_1": "Warrior Defender",
             "evolution_2": "Steel Sentinel",
-            "evolution_3": "Shogun's Wall"
+            "evolution_3": "Shadow Wall"
         },
         "zahara": {
             "title": "The Savannah Mage",
@@ -491,13 +491,13 @@
             "name": "Bandit Leader"
         },
         "mist_ronin": {
-            "name": "Mist Ronin"
+            "name": "Mist Warrior"
         },
         "ninja_scout": {
             "name": "Ninja Scout"
         },
         "samurai_vanguard": {
-            "name": "Samurai Vanguard"
+            "name": "Samurai Scout"
         },
         "samurai_archer": {
             "name": "Samurai Archer"
@@ -509,10 +509,10 @@
             "name": "Samurai Soldier"
         },
         "samurai_commander": {
-            "name": "The Samurai Commander"
+            "name": "The Samurai Captain"
         },
         "evil_shogun": {
-            "name": "The Evil Shogun"
+            "name": "The Shadow Master"
         },
         "blaze_hyena": {
             "name": "Blaze Hyena"

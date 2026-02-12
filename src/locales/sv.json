@@ -106,7 +106,7 @@
         },
         "3": {
             "title": "De dimmiga fotbergen",
-            "story_hook": "Den bitande luften i Jade-topparna mötte Amara och Tariq när de anlände till de höga bergen. Höljd i dimma satt en ung pojke vid namn Kenji på en sten, kramande ett alldeles för stort träsvärd. Hans ögon spärrades upp av entusiasm och förvåning vid deras ankomst. 'Vilka är ni?' frågade han, innan han snabbt förklarade hur Den Onde Shogunens styrkor börjat invadera hans berg och sprida en mörk, onaturlig dimma över landet.",
+            "story_hook": "Den bitande luften i Jade-topparna mötte Amara och Tariq när de anlände till de höga bergen. Höljd i dimma satt en ung pojke vid namn Kenji på en sten, kramande ett alldeles för stort träsvärd. Hans ögon spärrades upp av entusiasm och förvåning vid deras ankomst. 'Vilka är ni?' frågade han, innan han snabbt förklarade hur Skuggmästarens styrkor börjat invadera hans berg och sprida en mörk, onaturlig dimma över landet.",
             "completion_summary": "Järnhantlangaren har drivits tillbaka och dimman har tillfälligt skingrats. Kenji, imponerad av nykomlingarnas mod och visdom, torkar pannan och bugar formellt. Vägen till topparna är farlig, men med nya allierade har resan uppåt precis börjat.",
             "mystery_path": "Stigen leder högre upp i de frusna höjderna...",
             "nodes": {
@@ -114,13 +114,13 @@
                     "label": "Bambudungens bakhåll"
                 },
                 "3_2": {
-                    "label": "Ronin-patrull"
+                    "label": "Dimkrigarpatrull"
                 },
                 "3_3": {
                     "label": "Spegeldammen"
                 },
                 "3_4": {
-                    "label": "Fotbergets förtrupp"
+                    "label": "Fotbergsspanare"
                 },
                 "3_5": {
                     "label": "Höljda samurajer"
@@ -129,13 +129,13 @@
                     "label": "Chifferplattorna"
                 },
                 "3_7": {
-                    "label": "Fästningens vakter"
+                    "label": "Samuraj-trupp"
                 },
                 "3_8": {
                     "label": "Stjärnbildsstenarna"
                 },
                 "3_9": {
-                    "label": "Befälhavarens fäste"
+                    "label": "Kaptenens fäste"
                 },
                 "3_10": {
                     "label": "Vägen till topparna"
@@ -143,9 +143,9 @@
             }
         },
         "4": {
-            "title": "Den Onde Shogunens uppgång",
-            "story_hook": "Dimman har skingrats och avslöjat en väg som vaktas tungt av samurajkrigare. Den Onde Shogunen väntar i sin fästning och planerar att utöka sitt herravälde. Våra hjältar måste smyga genom fiendens linjer och lösa de uråldriga pussel som låser fästningens portar.",
-            "completion_summary": "Den Onde Shogunen är besegrad! Hans samurajarmé har upplösts och fästningen är nu tyst. Amara och hennes vänner har räddat Jade-topparna från det mörka hotet.",
+            "title": "Skuggmästarens uppgång",
+            "story_hook": "Dimman har skingrats och avslöjat en väg som vaktas tungt av samurajkrigare. Skuggmästaren väntar i sin fästning och planerar att utöka sitt herravälde. Våra hjältar måste smyga genom fiendens linjer och lösa de uråldriga pussel som låser fästningens portar.",
+            "completion_summary": "Skuggmästaren är besegrad! Hans samurajarmé har upplösts och fästningen är nu tyst. Amara och hennes vänner har räddat Jade-topparna från det mörka hotet.",
             "mystery_path": "Fästningen tornar upp sig framför er...",
             "nodes": {
                 "4_1": {
@@ -167,7 +167,7 @@
                     "label": "Spegelport"
                 },
                 "4_7": {
-                    "label": "Shogunens hundar"
+                    "label": "Skuggmästarens hundar"
                 },
                 "4_8": {
                     "label": "Dolda bågskyttar"
@@ -179,7 +179,7 @@
                     "label": "Den inre cirkeln"
                 },
                 "4_11": {
-                    "label": "Den Onde Shogunen"
+                    "label": "Skuggmästaren"
                 },
                 "4_12": {
                     "label": "Res vidare"
@@ -382,9 +382,9 @@
         },
         "kenji": {
             "title": "Bergets samuraj",
-            "evolution_1": "Ronin-försvarare",
+            "evolution_1": "Krigarförsvarare",
             "evolution_2": "Stålväktaren",
-            "evolution_3": "Shogunens mur"
+            "evolution_3": "Skuggmuren"
         },
         "zahara": {
             "title": "Savannmagikern",
@@ -491,13 +491,13 @@
             "name": "Banditledare"
         },
         "mist_ronin": {
-            "name": "Dim-Ronin"
+            "name": "Dimkrigare"
         },
         "ninja_scout": {
             "name": "Ninjaspanare"
         },
         "samurai_vanguard": {
-            "name": "Samuraj-förtrupp"
+            "name": "Samuraj-spanare"
         },
         "samurai_archer": {
             "name": "Samuraj-bågskytt"
@@ -509,10 +509,10 @@
             "name": "Samuraj-soldat"
         },
         "samurai_commander": {
-            "name": "Samuraj-befälhavaren"
+            "name": "Samuraj-kaptenen"
         },
         "evil_shogun": {
-            "name": "Den Onde Shogunen"
+            "name": "Skuggmästaren"
         },
         "blaze_hyena": {
             "name": "Låghyena"
