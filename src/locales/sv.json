@@ -70,31 +70,31 @@
             "mystery_path": "Djupt inne i ruinerna växer en ny skugga...",
             "nodes": {
                 "2_1": {
-                    "label": "Banditvakter"
+                    "label": "Banditutkik"
                 },
                 "2_2": {
-                    "label": "Fyll på fältflaskan"
+                    "label": "Den uråldriga cisternen"
                 },
                 "2_3": {
-                    "label": "Patrullerande banditer"
+                    "label": "Plundrarnas bakhåll"
                 },
                 "2_4": {
-                    "label": "Banditläger"
+                    "label": "Banditernas högkvarter"
                 },
                 "2_5": {
-                    "label": "Uppvaknade väktare"
+                    "label": "Tysta väktare"
                 },
                 "2_6": {
-                    "label": "Symbolalgebra"
+                    "label": "Den vises piedestal"
                 },
                 "2_7": {
                     "label": "Salens väktare"
                 },
                 "2_8": {
-                    "label": "Statyernas hyllning"
+                    "label": "Mosaikgården"
                 },
                 "2_9": {
-                    "label": "Inre helgedomsvakter"
+                    "label": "Kejsarens elit"
                 },
                 "2_10": {
                     "label": "Stenkejsaren"

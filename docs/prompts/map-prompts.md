@@ -20,11 +20,15 @@ Try to make it as long as possible.
 **Prompt:**
 A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a descent into a subterranean cavernous city, flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
 
-At the top, a narrow canyon entrance transitions into a cool, shadowed cave system. Here, an ancient, crumbling stone cistern or fountain stands, still holding water in the darkness (Refill Canteen location).
+At the top, a narrow canyon entrance transitions into a cool, shadowed cave system. Here, an ancient, crumbling stone cistern or fountain stands, still holding water in the darkness.
 
-Moving downwards, the cavern opens up into the ruins of an ancient Assyrian-style city. The path passes a massive wall section covered in glowing mathematical runes and equations (Equation puzzle). Further down, a large courtyard is paved with a distinct grid of colored stone tiles (Latin Square location), interspersed with makeshift bandit camps.
+Moving downwards, the cavern opens up into the ruins of an ancient Assyrian-style city. The upper districts are cluttered with the chaotic, makeshift camps of bandits—tattered tents, wooden barricades, and smoldering campfires set up amidst the crumbling limestone walls and fallen pillars.
+ 
+Descending deeper into the sacred sanctum, the environment changes. The chaotic camps give way to pristine a magical hallways lined with imposing, motionless stone sentinels and massive winged bull statues (lamassu). In the center of the corridor there is a pedestal with an old parchment on it.
 
-At the very bottom, a grand, expansive chamber houses the throne room of the Stone Emperor, surrounded by imposing statues and ancient machinery.
+The hallway leads into a large ceremonial courtyard paved with a distinct grid of colored stone tiles.
+
+At the very bottom, a grand, expansive chamber houses 2 large massive winged bull statues (lamassu) on the right and a throne on the left.
 
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 

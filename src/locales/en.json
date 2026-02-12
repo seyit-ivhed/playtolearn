@@ -70,31 +70,31 @@
             "mystery_path": "Deep within the ruins, a new shadow grows...",
             "nodes": {
                 "2_1": {
-                    "label": "Bandit Guards"
+                    "label": "Bandit Lookout"
                 },
                 "2_2": {
-                    "label": "Refill Canteen"
+                    "label": "The Ancient Cistern"
                 },
                 "2_3": {
-                    "label": "Common Area"
+                    "label": "Raider Ambush"
                 },
                 "2_4": {
-                    "label": "Bandit Camp"
+                    "label": "Bandit Headquarters"
                 },
                 "2_5": {
-                    "label": "Awakened Guardians"
+                    "label": "Silent Sentinels"
                 },
                 "2_6": {
-                    "label": "Symbol Algebra"
+                    "label": "The Sage's Pedestal"
                 },
                 "2_7": {
                     "label": "Guardians of the Hall"
                 },
                 "2_8": {
-                    "label": "The Statues' Tribute"
+                    "label": "Mosaic Courtyard"
                 },
                 "2_9": {
-                    "label": "Inner Sanctum Guards"
+                    "label": "The Emperor's Elite"
                 },
                 "2_10": {
                     "label": "The Stone Emperor"
