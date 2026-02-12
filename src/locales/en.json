@@ -111,34 +111,34 @@
             "mystery_path": "The trail leads higher into the frozen heights...",
             "nodes": {
                 "3_1": {
-                    "label": "Mist Ronin Sighting"
+                    "label": "Bamboo Grove Ambush"
                 },
                 "3_2": {
-                    "label": "Ronin Ambush"
+                    "label": "Ronin Patrol"
                 },
                 "3_3": {
-                    "label": "The Mirror Mist"
+                    "label": "The Mirror Pond"
                 },
                 "3_4": {
-                    "label": "Foothill Patrol"
+                    "label": "Foothill Vanguard"
                 },
                 "3_5": {
-                    "label": "Mist-Bound Warriors"
+                    "label": "Shrouded Samurai"
                 },
                 "3_6": {
-                    "label": "The Keystone Cipher"
+                    "label": "The Cipher Plates"
                 },
                 "3_7": {
-                    "label": "Samurai Phalanx"
+                    "label": "Fortress Guards"
                 },
                 "3_8": {
-                    "label": "The Star Path"
+                    "label": "The Constellation Stones"
                 },
                 "3_9": {
-                    "label": "Commander of the Mists"
+                    "label": "The Commander's Stronghold"
                 },
                 "3_10": {
-                    "label": "To the Jade Peaks"
+                    "label": "Path to the Peaks"
                 }
             }
         },

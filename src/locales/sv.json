@@ -111,34 +111,34 @@
             "mystery_path": "Stigen leder högre upp i de frusna höjderna...",
             "nodes": {
                 "3_1": {
-                    "label": "Syn på en Dim-Ronin"
+                    "label": "Bambudungens bakhåll"
                 },
                 "3_2": {
-                    "label": "Roninbakhåll"
+                    "label": "Ronin-patrull"
                 },
                 "3_3": {
-                    "label": "Spegeldimman"
+                    "label": "Spegeldammen"
                 },
                 "3_4": {
-                    "label": "Fotbergspatrull"
+                    "label": "Fotbergets förtrupp"
                 },
                 "3_5": {
-                    "label": "Dimbundna krigare"
+                    "label": "Höljda samurajer"
                 },
                 "3_6": {
-                    "label": "Slutstenschiffret"
+                    "label": "Chifferplattorna"
                 },
                 "3_7": {
-                    "label": "Samuraj-falang"
+                    "label": "Fästningens vakter"
                 },
                 "3_8": {
-                    "label": "Stjärnvägen"
+                    "label": "Stjärnbildsstenarna"
                 },
                 "3_9": {
-                    "label": "Dimmornas befälhavare"
+                    "label": "Befälhavarens fäste"
                 },
                 "3_10": {
-                    "label": "Till Jade-topparna"
+                    "label": "Vägen till topparna"
                 }
             }
         },
