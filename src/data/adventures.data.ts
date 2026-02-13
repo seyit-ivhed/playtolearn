@@ -184,65 +184,65 @@ export const ADVENTURES: Adventure[] = [
             {
                 id: '3_1',
                 type: EncounterType.BATTLE,
-                coordinates: { x: -200, y: 800 },
+                coordinates: { x: 0, y: 4300 },
                 enemies: [MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN],
                 unlocksCompanion: 'kenji',
             },
             {
                 id: '3_2',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 150, y: 1000 },
+                coordinates: { x: 300, y: 3800 },
                 enemies: [MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN],
             },
 
             {
                 id: '3_3',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: -250, y: 1600 },
+                coordinates: { x: 0, y: 3600 },
                 puzzleData: { puzzleType: PuzzleType.MIRROR },
             },
             {
                 id: '3_4',
                 type: EncounterType.BATTLE,
-                coordinates: { x: 200, y: 1900 },
+                coordinates: { x: -150, y: 3100 },
                 enemies: [MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER, MONSTERS.MIST_RONIN],
             },
             {
                 id: '3_5',
                 type: EncounterType.BATTLE,
-                coordinates: { x: -150, y: 2200 },
+                coordinates: { x: -60, y: 2500 },
                 enemies: [MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN, MONSTERS.SAMURAI_SOLDIER],
             },
 
             {
                 id: '3_6',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 300, y: 2800 },
+                coordinates: { x: 150, y: 2000 },
                 puzzleData: { puzzleType: PuzzleType.NUMBER_PATH },
             },
             {
                 id: '3_7',
                 type: EncounterType.BATTLE,
-                coordinates: { x: -100, y: 3100 },
+                coordinates: { x: 250, y: 1600 },
                 enemies: [MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER],
             },
             {
                 id: '3_8',
                 type: EncounterType.PUZZLE,
-                coordinates: { x: 250, y: 3400 },
+                coordinates: { x: 200, y: 1300 },
                 puzzleData: { puzzleType: PuzzleType.SEQUENCE },
             },
 
             {
                 id: '3_9',
                 type: EncounterType.BOSS,
-                coordinates: { x: 0, y: 4100 },
+                coordinates: { x: -50, y: 800 },
                 enemies: [MONSTERS.SAMURAI_COMMANDER],
             },
             {
                 id: '3_10',
                 type: EncounterType.ENDING,
-                coordinates: { x: -300, y: 4400 },
+                coordinates: { x: -300, y: 400 },
             }
         ]
     },

@@ -37,13 +37,13 @@ Try to make it as long as possible.
 ## Adventure 3 Map Background
 
 **Prompt:**
-A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts an ascent into the misty Jade Peaks, flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts an ascent into the misty Jade Peaks, flowing from bottom to top (bottom-up perspective) without any text, labels, or grid lines. Edges and corners should fade to black with black background.
 
-At the top, the terrain features lush foothills with dense bamboo groves. A serene, glass-like pond reflects the surroundings, bordered by stone lanterns and mirrors (Mirror puzzle location).
+At the very bottom, in the lush foothills, the journey begins amongst dense bamboo groves shrouded in mist. Hidden here is a serene, glass-like pond framed by ancient stone lanterns (Mirror puzzle location).
 
-Moving downwards, the path climbs steeply. A section of the path is paved with heavy stone plates engraved with numbers, requiring careful navigation (Number Path puzzle). Below this, a circle of standing stones emerges from the mist, arranged for observing constellations (Sequence puzzle). Hints of samurai banners appear among the rocks.
+Moving upwards, the path climbs steeply through rocky terrain and swirling mists where Mist Warriors lie in wait. A massive stone surface engraved with glowing numbers blocks the way (Number Path puzzle), forcing travelers to solve the riddle to proceed. Higher up, the mist clears slightly to reveal a sacred plateau with a circle of standing stones arranged for observing the stars (Sequence puzzle).
 
-At the very bottom, the map culminates in a narrow mountain pass guarded by a fortified, traditional wooden gate with samurai crests—the stronghold of the Samurai Commander.
+At the very top, the path culminates at a heavily fortified wooden stronghold with iron-reinforced gates—the command post of the Samurai Captain, guarding the only pass to the higher peaks.
 
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 
