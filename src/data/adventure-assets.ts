@@ -14,7 +14,7 @@ const adventure1Map = new URL('../assets/images/maps/adventure-1.jpg', import.me
 const adventure2Map = new URL('../assets/images/maps/adventure-2.jpg', import.meta.url).href;
 const adventure3Map = new URL('../assets/images/maps/adventure-3.jpg', import.meta.url).href;
 const adventure4Map = new URL('../assets/images/maps/adventure-4.jpg', import.meta.url).href;
-const adventure5Map = new URL('../assets/images/maps/adventure-5.png', import.meta.url).href;
+const adventure5Map = new URL('../assets/images/maps/adventure-5.jpg', import.meta.url).href;
 const adventure6Map = new URL('../assets/images/maps/adventure-6.png', import.meta.url).href;
 
 const ADVENTURE_ILLUSTRATIONS: Record<string, string> = {

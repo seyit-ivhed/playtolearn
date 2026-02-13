@@ -193,40 +193,40 @@
             "mystery_path": "Horisonten brinner med en ny utmaning...",
             "nodes": {
                 "5_1": {
-                    "label": "Hyenflock"
+                    "label": "Plundrarens läger"
                 },
                 "5_2": {
-                    "label": "Lejoninnejakt"
+                    "label": "Lejoninnans avsats"
                 },
                 "5_3": {
-                    "label": "Fyll på fältflaskan"
+                    "label": "Den rostiga porten"
                 },
                 "5_4": {
-                    "label": "Noshörningsanfall"
+                    "label": "Noshörningens flodbädd"
                 },
                 "5_5": {
-                    "label": "Flockbakhåll"
+                    "label": "Glödens bakhåll"
                 },
                 "5_6": {
-                    "label": "Glödspåret"
+                    "label": "Obsidianvägen"
                 },
                 "5_7": {
-                    "label": "Andehägring"
+                    "label": "Hägringens slätter"
                 },
                 "5_8": {
-                    "label": "Symmetrisk Sand"
+                    "label": "Reflektionsfälten"
                 },
                 "5_9": {
-                    "label": "Odjurens Kamp"
+                    "label": "Svedd drabbning"
                 },
                 "5_10": {
-                    "label": "Stjärnmönster"
+                    "label": "Rökspaning"
                 },
                 "5_11": {
                     "label": "Inferno-Man"
                 },
                 "5_12": {
-                    "label": "Zaharas Triumf"
+                    "label": "Zaharas triumf"
                 }
             }
         },

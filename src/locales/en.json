@@ -193,34 +193,34 @@
             "mystery_path": "The horizon burns with a new challenge...",
             "nodes": {
                 "5_1": {
-                    "label": "Hyena Pack"
+                    "label": "Scavenger's Camp"
                 },
                 "5_2": {
-                    "label": "Lioness Hunt"
+                    "label": "Lioness Ledge"
                 },
                 "5_3": {
-                    "label": "Refill Canteen"
+                    "label": "The Rusting Gate"
                 },
                 "5_4": {
-                    "label": "Rhino Charge"
+                    "label": "Rhino Riverbed"
                 },
                 "5_5": {
-                    "label": "Pride Ambush"
+                    "label": "Ember Ambush"
                 },
                 "5_6": {
-                    "label": "Trail of Embers"
+                    "label": "The Obsidian Path"
                 },
                 "5_7": {
-                    "label": "Spirit Mirage"
+                    "label": "Mirage Plains"
                 },
                 "5_8": {
-                    "label": "Symmetrical Sands"
+                    "label": "Reflection Fields"
                 },
                 "5_9": {
-                    "label": "Clash of Beasts"
+                    "label": "Scorched Skirmish"
                 },
                 "5_10": {
-                    "label": "Star Pattern"
+                    "label": "Smoke Watch"
                 },
                 "5_11": {
                     "label": "The Inferno Mane"

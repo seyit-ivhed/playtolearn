@@ -69,13 +69,17 @@ Try to make it as long as possible.
 ## Adventure 5 Map Background
 
 **Prompt:**
-A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a journey through the "Scorched Plains," flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a journey through the "Scorched Plains," flowing from bottom to top (bottom-up perspective) without any text, labels, or grid lines. Edges and corners should fade to black with black background.
 
-At the top, the path descends from iron-spiked foothills. A massive metal gate suspended over a lava flow blocks the path, held by heavy iron chains and counterweights (Balance puzzle location).
+At the very bottom, the journey begins at the arid entrance to the plains, where the ground is parched and sun-baked. A small, makeshift camp is nestled against sun-bleached rocks—the place where the Flame-Caller Zahara is first encountered. Packs of scrawny, glowing Blaze Hyenas prowl the surrounding burnt scrubland and jagged stone outcroppings.
 
-Moving downwards, the map opens into the vast savannah. A river of lava cuts through the land, crossable only by a set of specific floating stepping stones (Number Path location). Lower down, fields of jagged obsidian shards reflect the fiery landscape (Mirror puzzle), and a high volcanic ridge offers a view of smoke patterns in the sky (Sequence puzzle).
+Moving upwards, the terrain rises into rugged, stepped cliffs and rocky plateaus. This is the territory of the Ember Lionesses, who stalk the high ledges. The path is blocked by a massive, rusted iron gate suspended between two pillars by heavy rusted chains and counterweights (Balance puzzle location). Beyond the gate, the earth becomes more volatile, with deep fissures emitting steam.
 
-At the very bottom, the plains lead into a desolate "Volcanic Rim" and a massive, sun-blasted rocky arena where the ground smolders, the domain of the Inferno Mane.
+Further up, the map opens into a vast, cracked savanna where massive, armored Sun-Scorched Rhinos roam near wide, dry riverbeds. A slow-moving river of molten lava cuts across the landscape, crossable only by a series of floating obsidian stepping stones (Number Path puzzle location). In the shimmering heat haze beyond the lava, ethereal Mirage Spirits begin to manifest.
+
+Higher still, the path winds through fields of jagged obsidian shards and natural volcanic glass that create crystalline reflections (Mirror puzzle location). The spirits and rhinos guard the approach to the volcanic peaks. Near the summit, a high, jagged ridge offers a vantage point overlooking the smoldering plains, used to observe rising smoke patterns (Sequence puzzle location).
+
+At the very top, the map culminates in the "Great Ember Crater"—a massive, blackened arena surrounded by high volcanic walls where the ground itself smolders and glows with heat, the throne of the Inferno Mane.
 
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 
