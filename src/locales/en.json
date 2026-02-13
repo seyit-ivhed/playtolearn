@@ -149,31 +149,31 @@
             "mystery_path": "The fortress looms large ahead...",
             "nodes": {
                 "4_1": {
-                    "label": "Ninja Lookout"
+                    "label": "Shadow Scouts"
                 },
                 "4_2": {
-                    "label": "Night Stalkers"
+                    "label": "Night Patrol"
                 },
                 "4_3": {
                     "label": "Gate Guards"
                 },
                 "4_4": {
-                    "label": "The Cipher Path"
+                    "label": "The Pressure Plates"
                 },
                 "4_5": {
-                    "label": "Fortress Defenders"
+                    "label": "Fortress Archers"
                 },
                 "4_6": {
-                    "label": "Mirror Gate"
+                    "label": "The Locked Gears"
                 },
                 "4_7": {
-                    "label": "Shadow Master's Hounds"
+                    "label": "Watch Hounds"
                 },
                 "4_8": {
-                    "label": "Hidden Archers"
+                    "label": "Wall Sentinels"
                 },
                 "4_9": {
-                    "label": "The Gem Tribute"
+                    "label": "Drill Grounds"
                 },
                 "4_10": {
                     "label": "The Inner Circle"

@@ -149,31 +149,31 @@
             "mystery_path": "Fästningen tornar upp sig framför er...",
             "nodes": {
                 "4_1": {
-                    "label": "Ninja-utpost"
+                    "label": "Skuggspanare"
                 },
                 "4_2": {
-                    "label": "Nattliga jägare"
+                    "label": "Nattpatrull"
                 },
                 "4_3": {
                     "label": "Portvaktare"
                 },
                 "4_4": {
-                    "label": "Chifferstigen"
+                    "label": "Tryckplattorna"
                 },
                 "4_5": {
-                    "label": "Fästningsförsvarare"
+                    "label": "Fästningens bågskyttar"
                 },
                 "4_6": {
-                    "label": "Spegelport"
+                    "label": "De låsta kugghjulen"
                 },
                 "4_7": {
-                    "label": "Skuggmästarens hundar"
+                    "label": "Vakthundar"
                 },
                 "4_8": {
-                    "label": "Dolda bågskyttar"
+                    "label": "Murväktare"
                 },
                 "4_9": {
-                    "label": "Ädelstenshyllningen"
+                    "label": "Övningsfältet"
                 },
                 "4_10": {
                     "label": "Den inre cirkeln"
