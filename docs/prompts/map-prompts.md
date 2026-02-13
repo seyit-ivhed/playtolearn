@@ -52,13 +52,15 @@ Try to make it as long as possible.
 ## Adventure 4 Map Background
 
 **Prompt:**
-A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts the approach and infiltration of the formidable Shogun's Fortress, flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
+A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts the approach and infiltration of the formidable Shadow Master's Fortress, flowing from bottom to top (bottom-up perspective) without any text, labels, or grid lines. Edges and corners should fade to black with black background.
 
-At the top, the path traverses a scarred battlefield. An open field is littered with pressure plates and traps on a stone floor, blocking the way (Number Path location). Tattered flags and wooden barricades suggest a history of conflict.
+At the very bottom, the journey begins across a scarred, desolate battlefield where small, shadowy scout outposts are nestled among jagged rocks. An open stone area is littered with heavy pressure plates and ancient traps (The Pressure Plates - Number Path location), surrounded by tattered flags and broken wooden barricades where night patrols roam with their hounds.
 
-Moving downwards, the landscape is dominated by the fortress walls. A heavy iron gate blocks the ascent, locked by a mechanism involving complex gear equations (Equation puzzle location). Further in, a military training ground is marked with a distinct grid pattern for formation drills (Latin Square location).
+Moving upwards, the path leads to the towering stone walls of the fortress, heavily guarded by soldiers standing watch. A massive, heavy iron gate blocks the way, locked by a complex mechanism of interlocking brass gears (The Locked Gears - Equation puzzle location). Beyond the gate, the path winds past tall archer towers and stone battlements bristling with sentinels.
 
-At the very bottom, the map reveals the inner keep of the Evil Shogun—a majestic, dark-lacquered castle keep with multiple levels and curved roofs, bristling with defensive spikes.
+Higher up, the path enters the inner wards, passing through the broad training area marked with a distinct grid for formation drills (Drill Grounds - Latin Square location), where elite guards and watch hounds maintain a constant presence.
+
+At the very top, the map culminates in the inner keep of the Shadow Master—a majestic, dark-lacquered castle with multiple levels and curved roofs, bristling with sharp defensive spikes and shrouded in an ominous aura.
 
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 
