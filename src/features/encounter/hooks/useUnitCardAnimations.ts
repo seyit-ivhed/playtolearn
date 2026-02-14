@@ -21,6 +21,12 @@ export const useUnitCardAnimations = (unit: EncounterUnit, isMonster: boolean) =
             setTimeout(() => {
                 if (healthDiff < 0) {
                     setAnimationClass('anim-shake-damage');
+
+                    // Trigger shield animation if active
+                    const hasShield = unit.statusEffects?.some(e => e.type === 'SHIELD');
+                    if (hasShield) {
+                        setShieldAnimClass('shield-absorb-anim');
+                    }
                 }
 
                 // Add Floating Text
