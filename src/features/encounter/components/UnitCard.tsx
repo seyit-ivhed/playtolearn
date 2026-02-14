@@ -13,7 +13,6 @@ import { HealthBar } from './HealthBar';
 import { useGameStore } from '../../../stores/game/store';
 import { UnitCardShield } from './UnitCardShield';
 import { UnitCardVFX } from './UnitCardVFX';
-import { UnitLevelBadge } from './UnitLevelBadge';
 import { useUnitCardAnimations } from '../hooks/useUnitCardAnimations';
 import { RestingIndicator } from './RestingIndicator';
 
@@ -118,8 +117,6 @@ export const UnitCard = ({
         >
             <FloatingTextOverlay floatingTexts={floatingTexts} />
             <UnitNameBadge displayName={displayName} />
-
-            {!isMonster && !isFlipped && <UnitLevelBadge level={level} />}
 
             <div className="unit-card-front">
                 <UnitCardImage
