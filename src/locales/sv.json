@@ -237,37 +237,37 @@
             "mystery_path": "Andarna viskar om ännu större prövningar...",
             "nodes": {
                 "6_1": {
-                    "label": "Splittrad tröskel"
+                    "label": "Tomma skal"
                 },
                 "6_2": {
-                    "label": "Tomma väktare"
+                    "label": "Förvridna spegelbilder"
                 },
                 "6_3": {
-                    "label": "Andestigen"
+                    "label": "Andarnas spegel"
                 },
                 "6_4": {
-                    "label": "Ekon av disharmoni"
+                    "label": "Oredans ekon"
                 },
                 "6_5": {
-                    "label": "Skugganfall"
+                    "label": "Skuggvåg"
                 },
                 "6_6": {
-                    "label": "Andens hyllning"
+                    "label": "Andarnas ruta"
                 },
                 "6_7": {
-                    "label": "Förvriden spegel"
+                    "label": "Splittrade spegelbilder"
                 },
                 "6_8": {
-                    "label": "Själarnas balans"
+                    "label": "Andarnas ekvation"
                 },
                 "6_9": {
-                    "label": "Sista nedstigningen"
+                    "label": "Den sista oredan"
                 },
                 "6_10": {
                     "label": "Andekonungen"
                 },
                 "6_11": {
-                    "label": "Evig frid"
+                    "label": "Evig harmoni"
                 }
             }
         }

@@ -90,11 +90,13 @@ Try to make it as long as possible.
 **Prompt:**
 A vertical scrolling fantasy map background on ancient worn parchment paper. The map depicts a journey through the "Spirit Realm," flowing from top to bottom without any text, labels, or grid lines. Edges and corners should fade to black with black background.
 
-At the top, the path begins at a shimmering threshold where the physical world ends. Floating islands drift in the void, one holding large, crystalline mirrors reflecting the nebula sky (Mirror puzzle location).
+At the very top, the journey begins at a shimmering threshold where the physical world ends and the astral void begins. Floating islands drift in a nebula sky, littered with the spectral remains of empty, glowing armor (Hollow Shells) and jagged, light-warping crystalline formations (Twisted Reflections).
 
-Moving downwards, the landscape becomes fractured. A translucent, glowing grid floats in the void (Latin Square location), surrounded by swirling "Discord Clouds." Further down, a bridge made of floating magical mathematics symbols connects two landmasses (Equation puzzle location).
+Moving downwards, a massive, ornate floating mirror—the Mirror of Spirits—reflects the celestial chaos (Mirror puzzle location). Beyond it, the path descends through swirling, shadowy clouds of discordant energy (Discordant Echoes) and pulsing rivers of dark light known as the Shadow Surge.
 
-At the very bottom, the map leads into the "Core of Harmony," a grand celestial theater where the Spirit King resides, filled with concentric circles of pure light.
+Further down, the landscape features a translucent, glowing geometric grid floating in the center of the void (The Spirit Square - Latin Square location). The environment becomes more fractured, with sharp mirror shards floating in the air. A grand bridge made of glowing, magical mathematics symbols (The Spirit Equation - Equation puzzle location) spans a deep chasm filled with a chaotic maelstrom of energy (Final Discord).
+
+At the very bottom, the map leads into the "Core of Harmony," a grand, orderly celestial theater filled with radiant, concentric circles of pure light where the Spirit King resides. Behind the throne, a final, peaceful portal of eternal light marks the end of the journey (Eternal Harmony).
 
 The style is hand-drawn ink with sepia and brown tones, weathered paper texture, burnt edges, and detailed cartographic linework. High contrast, atmospheric shading, no markers, no paths, no UI elements.
 
