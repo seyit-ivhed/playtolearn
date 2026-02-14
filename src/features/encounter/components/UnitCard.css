@@ -61,7 +61,8 @@
 
 /* Boss Visuals */
 .unit-card.is-boss {
-    transform: scale(1.05);
+    width: 250px;
+    height: 400px;
     z-index: 5;
     animation: boss-pulse-glow 3s infinite ease-in-out;
 }
