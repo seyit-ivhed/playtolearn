@@ -1,3 +1,4 @@
+import './MathCardFace.css';
 import type { MathProblem } from '../../../types/math.types';
 import { useState } from 'react';
 

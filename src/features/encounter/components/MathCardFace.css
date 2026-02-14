@@ -1,0 +1,129 @@
+/* Math Card Face (Back) - Kept mostly same but ensured unified height */
+.unit-card-face.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    border: 3px solid #334155;
+}
+
+.math-title {
+    color: #ffd700;
+    /* Gold */
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+    /* Increased space */
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    width: 60%;
+    /* Narrower line for visual style */
+    text-align: center;
+    padding-bottom: 8px;
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.math-problem-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    /* Reduced gap */
+    margin-bottom: 20px;
+    font-family: var(--font-display);
+    font-size: 22px;
+    /* Reduced from 1.75rem */
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+    width: 100%;
+    /* Ensure it doesn't try to grow too much */
+}
+
+.math-problem-display .operator {
+    font-size: 28px;
+    /* Reduced from 2.25rem but still prominent */
+    color: #f59e0b;
+    /* Amber */
+    margin: 0 4px;
+    /* Reduced margin */
+    font-weight: 900;
+}
+
+.math-problem-display .operand {
+    font-weight: 800;
+}
+
+.math-problem-display .equals {
+    margin: 0 2px;
+    /* Reduced margin */
+    opacity: 0.8;
+}
+
+.math-problem-display .question-mark {
+    color: #38bdf8;
+    /* Blue */
+    font-weight: 900;
+}
+
+.math-choices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    /* Reduced from 0.5rem */
+    width: 100%;
+    /* Ensure it takes available space but doesn't overflow unnecessarily */
+    flex-grow: 1;
+    align-content: center;
+}
+
+.math-choices-grid.single-col {
+    grid-template-columns: 1fr;
+    padding: 0 8px;
+    /* Reduced from 1rem */
+    gap: 4px;
+}
+
+.math-choice-btn {
+    padding: 4px;
+    background: #334155;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    /* Added explicit smaller font size */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    /* Reduced from 2.5rem */
+}
+
+.math-choice-btn.correct {
+    background-color: #16a34a;
+}
+
+.math-choice-btn.wrong {
+    background-color: #dc2626;
+}
+
+.math-remainder-text {
+    font-size: 0.6em;
+    color: #94a3b8;
+    /* Slate-400 */
+    margin: 0 5px;
+    font-weight: normal;
+    text-transform: lowercase;
+}

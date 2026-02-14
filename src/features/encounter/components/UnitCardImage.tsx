@@ -1,3 +1,4 @@
+import './UnitCardImage.css';
 import type { Companion } from '../../../types/companion.types';
 import { getCompanionCardImage } from '../../../data/companion-sprites';
 

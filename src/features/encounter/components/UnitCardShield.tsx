@@ -1,4 +1,5 @@
 import React from 'react';
+import './UnitCardShield.css';
 
 interface UnitCardShieldProps {
     currentShield: number;

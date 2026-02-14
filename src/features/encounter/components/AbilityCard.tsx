@@ -1,3 +1,5 @@
+import './AbilityCard.css';
+
 interface AbilityCardProps {
     abilityName: string;
     abilityDescription: string;

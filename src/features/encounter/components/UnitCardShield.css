@@ -1,0 +1,64 @@
+/* Shield Overlay - Minimalist CSS Design */
+.shield-overlay-container {
+    position: absolute;
+    bottom: -8px;
+    /* Slightly overlapping the bottom of the card/health bar */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    /* Above health bar */
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+    backface-visibility: hidden;
+    /* Ensure it hides when card flips */
+    pointer-events: none;
+    /* Let clicks pass through to card */
+    width: 26px;
+    /* ~75% of 2.2rem */
+    height: 31px;
+    /* ~75% of 2.6rem */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shield-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4));
+}
+
+.shield-amount-text {
+    color: #fff;
+    font-family: var(--font-display, sans-serif);
+    font-weight: 800;
+    font-size: 11px;
+    /* Reduced from 0.9rem */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 2;
+    top: -2px;
+    /* Optical center adjustment due to pointed bottom */
+}
+
+@keyframes shield-absorb {
+    0% {
+        transform: translateX(-50%) scale(1);
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+    }
+
+    40% {
+        transform: translateX(-50%) scale(3);
+        filter: drop-shadow(0 0 30px rgba(59, 130, 246, 1)) brightness(1.8);
+    }
+
+    100% {
+        transform: translateX(-50%) scale(1);
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+    }
+}
+
+.shield-absorb-anim {
+    animation: shield-absorb 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}

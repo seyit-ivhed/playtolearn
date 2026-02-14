@@ -1,4 +1,4 @@
-import './UnitCard.css';
+import './RestingIndicator.css';
 
 export const RestingIndicator = () => {
     return (

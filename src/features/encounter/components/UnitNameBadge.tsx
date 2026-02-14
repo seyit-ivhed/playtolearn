@@ -1,3 +1,5 @@
+import './UnitNameBadge.css';
+
 interface UnitNameBadgeProps {
     displayName: string;
 }

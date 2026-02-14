@@ -1,0 +1,137 @@
+/* Unified Action Panel (Ability + Spirit) */
+.ability-card {
+    position: relative;
+    width: 100%;
+    background-color: rgba(30, 25, 20, 0.95);
+    /* Very dark brown */
+    border: 1px solid #5d4632;
+    border-radius: 8px;
+    padding: 8px 8px 12px;
+    /* Extra bottom padding for progress bar */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.ability-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    z-index: 2;
+}
+
+.ability-name {
+    color: #ffd700;
+    /* Gold */
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.ability-text {
+    color: #e5e5e5;
+    font-size: 10px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.3;
+    opacity: 0.9;
+}
+
+/* Simplified Layout */
+.ability-card.simplified {
+    padding: 6px 10px 10px;
+    min-height: 32px;
+    justify-content: center;
+}
+
+.ability-card.is-monster {
+    background-color: rgba(45, 20, 20, 0.95);
+    border-color: #7f1d1d;
+}
+
+.ability-content.simplified {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2px;
+}
+
+.ability-card.simplified .ability-name {
+    margin-bottom: 0;
+    font-size: 13px;
+    color: #e5e7eb;
+    /* Slightly muted white for the label */
+}
+
+.ability-power {
+    color: #ffd700;
+    /* Gold for power */
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 900;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+/* Integrated Progress Bar */
+.ability-progress-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: #1f2937;
+    z-index: 1;
+}
+
+.ability-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    /* Blue to Cyan */
+    width: 0%;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 5px rgba(6, 182, 212, 0.5);
+}
+
+/* Ultimate Ready State */
+.ability-card.ultimate-ready {
+    background: linear-gradient(135deg, #311b0e 0%, #4a2c10 100%);
+    border-color: #f59e0b;
+    /* Amber-500 */
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+    animation: pulse-border 2s infinite;
+}
+
+.ability-card.ultimate-ready .ability-name {
+    color: #fff;
+    text-shadow: 0 0 5px #f59e0b;
+}
+
+.ability-card.ultimate-ready .ability-progress-fill {
+    background: linear-gradient(90deg, #f59e0b, #ef4444);
+    /* Amber to Red */
+    box-shadow: 0 0 8px #f59e0b;
+}
+
+@keyframes pulse-border {
+
+    0%,
+    100% {
+        border-color: #f59e0b;
+        box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+    }
+
+    50% {
+        border-color: #fbbf24;
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    }
+}

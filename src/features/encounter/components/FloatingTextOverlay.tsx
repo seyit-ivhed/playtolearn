@@ -1,3 +1,5 @@
+import '../encounter-animations.css';
+
 interface FloatingText {
     id: number;
     text: string;
