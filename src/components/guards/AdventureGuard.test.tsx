@@ -21,6 +21,7 @@ describe('AdventureGuard', () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.spyOn(console, 'warn').mockImplementation(() => { });
 
         // Default store mocks
         (useGameStore as unknown as ReturnType<typeof vi.fn>).mockReturnValue({

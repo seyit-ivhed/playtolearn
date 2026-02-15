@@ -4,14 +4,6 @@ import { useGameStore } from '../stores/game/store';
 import { usePremiumStore } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
 
-
-/**
- * Orchestrates the initial loading sequence:
- * 1. Checks authentication status
- * 2. Fetches player profile and rehydrates game state from cloud
- * 3. Initializes premium entitlements
- * 4. Resolves the landing page (Chronicle)
- */
 export const useInitializeGame = () => {
     const { isAuthenticated, user, loading: authLoading, refreshSession } = useAuth();
     const [isInitializing, setIsInitializing] = useState(true);
@@ -46,7 +38,7 @@ export const useInitializeGame = () => {
                 // 2. Fetch state and entitlements in parallel
                 const [cloudState] = await Promise.all([
                     PersistenceService.pullState(user.id),
-                    initializePremium(false, profile) // Not forced, using shared profile
+                    initializePremium(true, profile) // Force re-fetch for new user
                 ]);
 
                 if (cloudState) {
