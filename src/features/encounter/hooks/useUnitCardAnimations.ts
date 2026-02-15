@@ -47,7 +47,7 @@ export const useUnitCardAnimations = (unit: EncounterUnit, isMonster: boolean) =
                 }, 0);
             }
         }
-    }, [unit.currentHealth, unit.hasActed, unit.isDead, isMonster]);
+    }, [unit.currentHealth, unit.hasActed, unit.isDead, isMonster, unit.statusEffects]);
 
     // Effect for cleanup and timeouts only
     useEffect(() => {
