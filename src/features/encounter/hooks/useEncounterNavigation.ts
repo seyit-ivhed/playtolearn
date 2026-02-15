@@ -1,10 +1,8 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGameStore } from '../../../stores/game/store';
-import { usePremiumStore } from '../../../stores/premium.store';
 import { useEncounterStore } from '../../../stores/encounter/store';
-import { checkNavigationAccess } from '../../../utils/navigation-security.utils';
 import { EncounterPhase } from '../../../types/encounter.types';
 import { ADVENTURES } from '../../../data/adventures.data';
 import { EXPERIENCE_CONFIG } from '../../../data/experience.data';
@@ -25,30 +23,11 @@ export const useEncounterNavigation = ({
     const navigate = useNavigate();
 
     // Global Store Access
-    const { encounterResults, completeEncounter, addCompanionExperience, companionStats, activeParty, isAdventureUnlocked: isProgressionUnlocked } = useGameStore();
-    const { isAdventureUnlocked: isPremiumUnlocked, initialized: premiumInitialized } = usePremiumStore();
-
+    const { completeEncounter, addCompanionExperience, companionStats, activeParty } = useGameStore();
 
     // Local State
     const [showExperienceScreen, setShowExperienceScreen] = useState(false);
     const [previousCompanionStats, setPreviousCompanionStats] = useState<Record<string, { experience?: number; level?: number }>>({});
-
-    // Safety Gate
-    useEffect(() => {
-        if (premiumInitialized && adventureId) {
-            const access = checkNavigationAccess({
-                adventureId,
-                nodeIndex,
-                isPremiumUnlocked,
-                isProgressionUnlocked,
-                encounterResults
-            });
-
-            if (!access.allowed) {
-                navigate('/chronicle', { replace: true });
-            }
-        }
-    }, [premiumInitialized, adventureId, nodeIndex, isPremiumUnlocked, isProgressionUnlocked, encounterResults, navigate]);
 
     // Handle Completion Trigger (Continue Button)
     const handleCompletionContinue = useCallback(() => {

@@ -3,9 +3,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
 import { useEncounterStore } from '../../stores/encounter/store';
-import { usePremiumStore } from '../../stores/premium.store';
 import { getFocalNodeIndex } from './utils/navigation.utils';
-import { checkNavigationAccess } from '../../utils/navigation-security.utils';
 import { DifficultySelectionModal } from './components/DifficultySelectionModal';
 import './AdventurePage.css';
 import { ADVENTURES } from '../../data/adventures.data';
@@ -27,14 +25,10 @@ const AdventurePage = () => {
         completeEncounter,
         completeAdventure,
         unlockAdventure,
-        isAdventureUnlocked: isProgressionUnlocked,
         notifyEncounterStarted
     } = useGameStore();
+
     const { initializeEncounter } = useEncounterStore();
-    const {
-        isAdventureUnlocked: isPremiumUnlocked,
-        initialized: premiumInitialized
-    } = usePremiumStore();
 
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
     const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
@@ -42,21 +36,6 @@ const AdventurePage = () => {
 
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === adventureId);
-
-    // Safety gate: Validate premium and progression
-    if (premiumInitialized && adventureId) {
-        const access = checkNavigationAccess({
-            adventureId,
-            isPremiumUnlocked,
-            isProgressionUnlocked,
-            encounterResults
-        });
-
-        if (!access.allowed) {
-            navigate('/chronicle', { replace: true });
-            return null;
-        }
-    }
 
     if (!adventure || !adventureId) {
         return <div>{t('adventure.not_found', 'Adventure not found')}</div>;
@@ -127,8 +106,6 @@ const AdventurePage = () => {
         // activeEncounterDifficulty tracks the last difficulty used to START an encounter.
         return activeEncounterDifficulty;
     };
-
-
 
     return (
         <div className="adventure-page custom-scrollbar">

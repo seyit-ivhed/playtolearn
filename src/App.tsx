@@ -8,8 +8,7 @@ import Layout from './components/Layout';
 import { useInitializeGame } from './hooks/useInitializeGame';
 import { useAnonymousLoginTrigger } from './hooks/useAnonymousLoginTrigger';
 import { LoadingScreen } from './components/LoadingScreen';
-
-// LandingPage is now integrated into ChronicleBook
+import { AdventureGuard } from './components/guards/AdventureGuard';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
@@ -30,9 +29,22 @@ function AppContent() {
         <Route path="/chronicle" element={<ChronicleBook />} />
         <Route path="/chronicle/:pageId" element={<ChronicleBook />} />
 
-        <Route path="/map/:adventureId" element={<AdventurePage />} />
-        <Route path="/encounter/:adventureId/:nodeIndex" element={<EncounterPage />} />
-        <Route path="/puzzle/:adventureId/:nodeIndex" element={<PuzzlePage />} />
+        {/* Protected Adventure Routes */}
+        <Route path="/map/:adventureId" element={
+          <AdventureGuard>
+            <AdventurePage />
+          </AdventureGuard>
+        } />
+        <Route path="/encounter/:adventureId/:nodeIndex" element={
+          <AdventureGuard>
+            <EncounterPage />
+          </AdventureGuard>
+        } />
+        <Route path="/puzzle/:adventureId/:nodeIndex" element={
+          <AdventureGuard>
+            <PuzzlePage />
+          </AdventureGuard>
+        } />
         <Route path="/math-debug" element={<MathTestPage />} />
       </Route>
     </Routes>
