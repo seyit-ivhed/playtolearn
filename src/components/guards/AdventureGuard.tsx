@@ -1,4 +1,4 @@
-
+import React, { useCallback } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useGameStore } from '../../stores/game/store';
 import { usePremiumStore } from '../../stores/premium.store';
@@ -22,6 +22,13 @@ export const AdventureGuard = ({ children }: AdventureGuardProps) => {
     const isFreeAdventure = adventureId === '1';
     const shouldWait = !premiumInitialized && !isFreeAdventure;
 
+    const safeIsPremiumUnlocked = useCallback((id: string) => {
+        if (id === '1') {
+            return true;
+        }
+        return isPremiumUnlocked(id);
+    }, [isPremiumUnlocked]);
+
     if (shouldWait) {
         return <LoadingScreen />;
     }
@@ -29,13 +36,6 @@ export const AdventureGuard = ({ children }: AdventureGuardProps) => {
     if (!adventureId) {
         return <Navigate to="/chronicle" replace />;
     }
-
-    const safeIsPremiumUnlocked = (id: string) => {
-        if (id === '1') {
-            return true;
-        }
-        return isPremiumUnlocked(id);
-    };
 
     const access = checkNavigationAccess({
         adventureId,

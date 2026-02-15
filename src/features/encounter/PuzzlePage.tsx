@@ -59,11 +59,9 @@ const PuzzlePage = () => {
     const nodeIndex = parseInt(nodeIndexParam || '1', 10);
     const { completeEncounter, activeEncounterDifficulty } = useGameStore();
 
-
     const [isCompleted, setIsCompleted] = useState(false);
     const adventure = ADVENTURES.find(a => a.id === adventureId);
     const encounter = adventure?.encounters[nodeIndex - 1];
-    const isLocked = false;
 
     // Dynamically generate puzzle values based on difficulty
     const puzzleData = useMemo(() => {
@@ -85,9 +83,6 @@ const PuzzlePage = () => {
         return t(puzzleDef.instructionKey);
     }, [puzzleDef, t]);
 
-
-
-
     const handleSolve = () => {
         setIsCompleted(true);
     };
@@ -105,14 +100,12 @@ const PuzzlePage = () => {
         navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
     };
 
-    if (!encounter || !puzzleData || !puzzleDef || isLocked) {
+    if (!encounter || !puzzleData || !puzzleDef) {
         return (
             <div className={styles.errorContainer}>
-                <h2>{isLocked ? t('puzzle.locked', 'Puzzle Locked') : t('puzzle.not_found', 'Puzzle Not Found')}</h2>
+                <h2>{t('puzzle.not_found', 'Puzzle Not Found')}</h2>
                 <div style={{ margin: '1rem', color: '#666' }}>
-                    {isLocked ? t('puzzle.locked_desc', 'You haven\'t reached this part of the journey yet!') : (
-                        `Node Index: ${nodeIndex}`
-                    )}
+                    {`Node Index: ${nodeIndex}`}
                 </div>
                 <button
                     className={styles.backButton}

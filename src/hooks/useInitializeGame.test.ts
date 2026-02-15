@@ -76,10 +76,9 @@ describe('useInitializeGame', () => {
             expect(result.current.isInitializing).toBe(false);
         });
 
-        // THIS IS THE BUG REPRODUCTION:
-        // We EXPECT it to be called with `true` (force) because the user changed.
-        // Currently it is called with `false`, which causes the bug.
-        // We assert `true` here to demonstrate the fix requirement.
+        // VERIFY FIX:
+        // We ensure it is called with `true` (force) because the user changed.
+        // This confirms that entitlements are correctly re-fetched for the new identity.
         expect(mockInitializePremium).toHaveBeenCalledWith(true, expect.anything());
     });
 });
