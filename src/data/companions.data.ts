@@ -31,7 +31,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 4
                 },
                 newSpecialAbility: {
-                    id: 'jaguar_strike_2',
+                    id: 'jaguar_strike',
                     variables: { damage: 45 }
                 }
             },
@@ -43,7 +43,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 6
                 },
                 newSpecialAbility: {
-                    id: 'jaguar_strike_3',
+                    id: 'jaguar_strike',
                     variables: { damage: 65 }
                 }
             },
@@ -55,7 +55,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 10
                 },
                 newSpecialAbility: {
-                    id: 'jaguar_strike_4',
+                    id: 'jaguar_strike',
                     variables: { damage: 100 }
                 }
             }
@@ -85,7 +85,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 3
                 },
                 newSpecialAbility: {
-                    id: 'elixir_of_life_2',
+                    id: 'elixir_of_life',
                     variables: { heal: 35 }
                 }
             },
@@ -97,7 +97,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 4
                 },
                 newSpecialAbility: {
-                    id: 'elixir_of_life_3',
+                    id: 'elixir_of_life',
                     variables: { heal: 50 }
                 }
             },
@@ -109,7 +109,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 6
                 },
                 newSpecialAbility: {
-                    id: 'elixir_of_life_4',
+                    id: 'elixir_of_life',
                     variables: { heal: 80 }
                 }
             }
@@ -139,7 +139,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 3
                 },
                 newSpecialAbility: {
-                    id: 'blade_barrier_2',
+                    id: 'blade_barrier',
                     variables: { damage: 30, duration: 2, reduction: 50 }
                 }
             },
@@ -151,7 +151,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 4
                 },
                 newSpecialAbility: {
-                    id: 'blade_barrier_3',
+                    id: 'blade_barrier',
                     variables: { damage: 45, duration: 2, reduction: 50 }
                 }
             },
@@ -163,7 +163,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 5
                 },
                 newSpecialAbility: {
-                    id: 'blade_barrier_4',
+                    id: 'blade_barrier',
                     variables: { damage: 65, duration: 2, reduction: 50 }
                 }
             }
@@ -193,7 +193,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 5
                 },
                 newSpecialAbility: {
-                    id: 'ancestral_storm_2',
+                    id: 'ancestral_storm',
                     variables: { damage: 35 }
                 }
             },
@@ -205,7 +205,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 7
                 },
                 newSpecialAbility: {
-                    id: 'ancestral_storm_3',
+                    id: 'ancestral_storm',
                     variables: { damage: 50 }
                 }
             },
@@ -217,7 +217,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 10
                 },
                 newSpecialAbility: {
-                    id: 'ancestral_storm_4',
+                    id: 'ancestral_storm',
                     variables: { damage: 65 }
                 }
             }

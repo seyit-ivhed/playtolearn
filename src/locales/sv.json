@@ -398,64 +398,16 @@
             "name": "Jaguarhugg",
             "description": "Gör {{value}} skada på en enskild fiende."
         },
-        "jaguar_strike_2": {
-            "name": "Jaguarhugg II",
-            "description": "Gör {{value}} skada på en enskild fiende."
-        },
-        "jaguar_strike_3": {
-            "name": "Jaguarhugg III",
-            "description": "Gör {{value}} skada på en enskild fiende."
-        },
-        "jaguar_strike_4": {
-            "name": "Jaguarhugg IV",
-            "description": "Gör {{value}} skada på en enskild fiende."
-        },
         "elixir_of_life": {
             "name": "Livselixir",
-            "description": "Helar alla allierade med {{value}} HP."
-        },
-        "elixir_of_life_2": {
-            "name": "Livselixir II",
-            "description": "Helar alla allierade med {{value}} HP."
-        },
-        "elixir_of_life_3": {
-            "name": "Livselixir III",
-            "description": "Helar alla allierade med {{value}} HP."
-        },
-        "elixir_of_life_4": {
-            "name": "Livselixir IV",
             "description": "Helar alla allierade med {{value}} HP."
         },
         "blade_barrier": {
             "name": "Bladbarriär",
             "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
         },
-        "blade_barrier_2": {
-            "name": "Bladbarriär II",
-            "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
-        },
-        "blade_barrier_3": {
-            "name": "Bladbarriär III",
-            "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
-        },
-        "blade_barrier_4": {
-            "name": "Bladbarriär IV",
-            "description": "Gör {{damage}} skada och skyddar alla allierade i {{duration}} turer."
-        },
         "ancestral_storm": {
             "name": "Urgammal storm",
-            "description": "Gör {{value}} skada på alla fiender."
-        },
-        "ancestral_storm_2": {
-            "name": "Urgammal storm II",
-            "description": "Gör {{value}} skada på alla fiender."
-        },
-        "ancestral_storm_3": {
-            "name": "Urgammal storm III",
-            "description": "Gör {{value}} skada på alla fiender."
-        },
-        "ancestral_storm_4": {
-            "name": "Urgammal storm IV",
             "description": "Gör {{value}} skada på alla fiender."
         }
     },
