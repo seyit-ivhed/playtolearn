@@ -155,14 +155,14 @@
 .node-stars {
     display: flex;
     gap: 3px;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 4px 8px;
-    border-radius: 12px;
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.85);
+    padding: 6px 10px;
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
     z-index: 20;
     pointer-events: none;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 2px solid #fbbf24;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.4), 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .star-icon {
