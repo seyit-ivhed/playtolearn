@@ -225,78 +225,10 @@
     /* Allow spectacular rings to spill out */
 }
 
-/* Abyssal Flare Rings */
-.node-container.boss::before,
-.node-container.boss::after {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border: 3px solid rgba(239, 68, 68, 0.4);
-    border-radius: 9999px;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.node-container.boss::before {
-    border-top-color: #fca5a5;
-    border-bottom-color: #f87171;
-    animation: boss-rotate-cw 4s linear infinite;
-}
-
-.node-container.boss::after {
-    inset: -16px;
-    border-left-color: #ef4444;
-    border-right-color: #b91c1c;
-    animation: boss-rotate-ccw 6s linear infinite;
-}
-
-@keyframes boss-rotate-cw {
-    from {
-        transform: rotate(0deg) scale(1.05);
-    }
-
-    50% {
-        transform: rotate(180deg) scale(1.1);
-    }
-
-    to {
-        transform: rotate(360deg) scale(1.05);
-    }
-}
-
-@keyframes boss-rotate-ccw {
-    from {
-        transform: rotate(360deg) scale(1);
-    }
-
-    50% {
-        transform: rotate(180deg) scale(1.15);
-    }
-
-    to {
-        transform: rotate(0deg) scale(1);
-    }
-}
-
-/* Pulsating Icon for Boss */
+/* Static Icon for Boss */
 .boss .node-icon {
-    animation: boss-icon-intensity 2s ease-in-out infinite;
     color: #fee2e2;
     filter: drop-shadow(0 0 12px #ef4444);
-}
-
-@keyframes boss-icon-intensity {
-
-    0%,
-    100% {
-        transform: scale(1);
-        filter: brightness(1) drop-shadow(0 0 10px #ef4444);
-    }
-
-    50% {
-        transform: scale(1.15);
-        filter: brightness(1.5) drop-shadow(0 0 20px #ef4444);
-    }
 }
 
 .node-container.boss.current {
@@ -340,6 +272,33 @@
 .node-container.current {
     cursor: pointer;
     animation: bounce 1s infinite;
+    position: relative;
+}
+
+/* Next Encounter Flare Rings */
+.node-container.current::before,
+.node-container.current::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border: 3px solid transparent;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.node-container.current::before {
+    border-top-color: currentColor;
+    border-bottom-color: currentColor;
+    animation: node-rotate-cw 4s linear infinite;
+}
+
+.node-container.current::after {
+    inset: -16px;
+    border-left-color: currentColor;
+    border-right-color: currentColor;
+    animation: node-rotate-ccw 6s linear infinite;
 }
 
 .node-container.current.default,
@@ -463,5 +422,33 @@
 
     50% {
         opacity: .7;
+    }
+}
+
+@keyframes node-rotate-cw {
+    from {
+        transform: rotate(0deg) scale(1.05);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+
+    to {
+        transform: rotate(360deg) scale(1.05);
+    }
+}
+
+@keyframes node-rotate-ccw {
+    from {
+        transform: rotate(360deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.15);
+    }
+
+    to {
+        transform: rotate(0deg) scale(1);
     }
 }
