@@ -69,18 +69,18 @@ export interface MathEngineConfig {
     level3: LevelConfig;
 }
 
-interface Range {
+export interface Range {
     min: number;
     max: number;
 }
 
-interface OperationConfig {
+export interface OperationConfig {
     enabled: boolean;
     left: Range;
     right: Range;
 }
 
-interface LevelConfig {
+export interface LevelConfig {
     addition: OperationConfig;
     subtraction: OperationConfig;
     multiplication: OperationConfig;
