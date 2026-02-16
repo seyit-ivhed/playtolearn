@@ -146,12 +146,7 @@ export const generateBalanceData = (difficulty: DifficultyLevel): BalanceData =>
     // Final check for initial imbalance. 
     // It's possible for noise weights to accidentally sum to the same value on both sides.
     if (validateBalance(leftStack, rightStack)) {
-        // Find a non-heavy weight to modify. Since noiseCount is at least 1, 
-        // there is always at least one non-heavy weight.
-        const noiseWeight = leftStack.find(w => !w.isHeavy);
-        if (noiseWeight) {
-            noiseWeight.value += getRandomInt(1, 3);
-        }
+        return generateBalanceData(difficulty);
     }
 
     return {
