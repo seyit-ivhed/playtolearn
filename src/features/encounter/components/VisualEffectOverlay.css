@@ -152,16 +152,33 @@
     position: absolute;
     top: 50%;
     left: -100vw;
-    width: 600px;
-    /* Long streak */
-    height: 8px;
-    background: linear-gradient(90deg, transparent 0%, #0ea5e9 20%, #e0f2fe 50%, #fff 100%);
-    box-shadow:
-        0 0 20px #0ea5e9,
-        0 0 40px #fff;
-    transform: translateY(-50%);
+    width: 240px;
+    height: 120px;
+    background-image: url('../../../assets/images/effects/arrow.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translate(-100%, -50%);
+    transform-origin: right center;
     animation: arrow-snipe 0.4s cubic-bezier(0.1, 0.7, 0.1, 1) forwards;
-    filter: blur(1px);
+    filter:
+        drop-shadow(0 0 15px #0ea5e9) drop-shadow(0 0 30px rgba(14, 165, 233, 0.6)) brightness(1.5) contrast(1.2);
+    z-index: 10;
+}
+
+/* Magical Spirit Trail */
+.vfx-arrow-streak::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    width: 400px;
+    height: 10px;
+    background: linear-gradient(90deg, transparent 0%, #0ea5e9 50%, #fff 100%);
+    transform: translateY(-50%);
+    filter: blur(4px);
+    opacity: 0.8;
+    box-shadow: 0 0 20px #0ea5e9;
 }
 
 /* Impact Flash - now a radial burst at the target */
@@ -182,18 +199,23 @@
     0% {
         left: -100vw;
         opacity: 0;
-        transform: translateY(-50%) scaleX(2);
+        transform: translate(-100%, -50%) scaleX(2);
     }
 
-    30% {
+    20% {
         opacity: 1;
     }
 
+    80% {
+        opacity: 1;
+        transform: translate(-100%, -50%) scaleX(1);
+    }
+
     100% {
-        left: -200px;
-        /* Ends at target center */
+        left: 0;
+        /*tip (right edge) lands exactly at target center */
         opacity: 0;
-        transform: translateY(-50%) scaleX(0.1);
+        transform: translate(-100%, -50%) scaleX(0.8);
     }
 }
 
