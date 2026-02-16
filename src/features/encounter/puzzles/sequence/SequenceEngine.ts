@@ -139,7 +139,7 @@ const getLevelConfig = (difficulty: DifficultyLevel) => {
         return {
             rule: new AdditionRule(step),
             startValue: getRandomInt(1, 10),
-            count: 8
+            count: 12
         };
     }
     // Difficulty 3+
@@ -147,7 +147,7 @@ const getLevelConfig = (difficulty: DifficultyLevel) => {
     return {
         rule: new AdditionRule(step),
         startValue: getRandomInt(1, 10),
-        count: 6
+        count: 12
     };
 };
 

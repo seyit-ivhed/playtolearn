@@ -50,8 +50,8 @@ describe('SequenceEngine', () => {
 
         it('should provide correct number of options', () => {
             expect(generateSequenceData(1).options).toHaveLength(10);
-            expect(generateSequenceData(2).options).toHaveLength(8);
-            expect(generateSequenceData(3).options).toHaveLength(6);
+            expect(generateSequenceData(2).options).toHaveLength(12);
+            expect(generateSequenceData(3).options).toHaveLength(12);
         });
 
         it('should produce valid sequence', () => {
