@@ -14,6 +14,5 @@ Review code, branches, or pull requests for quality, best practices, and potenti
 - Look at the /docs directory and read all the files to understand the project structure and architecture, and standards
 - Go through all the files edited or added in the current branch or pull request and check for any violations of the rules, standards or general good software development practices. 
 - Don't limit yourself to only the files edited or added, also check for any related files that might be affected by the changes
-- Make a plan for improving the code but wait for confirmation on executing the plan
-
+- Make a plan for improving the code and execute all improvements including the minor or optional ones
 
