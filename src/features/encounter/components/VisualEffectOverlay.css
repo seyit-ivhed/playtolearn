@@ -151,81 +151,67 @@
 .vfx-arrow-streak {
     position: absolute;
     top: 50%;
-    left: -20%;
-    width: 300%;
-    /* Massive length for speed sensation */
-    height: 12px;
-    /* Core is white, edges are blue/cyan */
-    background: linear-gradient(90deg, transparent 0%, #0ea5e9 20%, #e0f2fe 50%, #fff 80%, transparent 100%);
+    left: -100vw;
+    width: 600px;
+    /* Long streak */
+    height: 8px;
+    background: linear-gradient(90deg, transparent 0%, #0ea5e9 20%, #e0f2fe 50%, #fff 100%);
     box-shadow:
-        0 0 30px #0ea5e9,
-        0 0 60px #38bdf8,
-        0 0 100px #fff;
-    transform: translateY(-50%) rotate(-2deg);
-    /* Dynamic angle */
-    animation: arrow-snipe 0.5s cubic-bezier(0.8, 0, 1, 1) forwards;
-    /* Accelerate dramatically */
+        0 0 20px #0ea5e9,
+        0 0 40px #fff;
+    transform: translateY(-50%);
+    animation: arrow-snipe 0.4s cubic-bezier(0.1, 0.7, 0.1, 1) forwards;
     filter: blur(1px);
 }
 
-/* Screen Impact Flash */
+/* Impact Flash - now a radial burst at the target */
 .vfx-impact-flash {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(186, 230, 253, 0.5));
-    mix-blend-mode: overlay;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #fff 0%, #0ea5e9 30%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
     opacity: 0;
-    animation: impact-shake-flash 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
-    /* Trigger on "hit" */
+    animation: impact-burst 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    z-index: 2;
 }
 
 @keyframes arrow-snipe {
     0% {
-        left: -100%;
+        left: -100vw;
         opacity: 0;
-        width: 50%;
+        transform: translateY(-50%) scaleX(2);
     }
 
-    20% {
+    30% {
         opacity: 1;
-        width: 100%;
     }
 
     100% {
-        left: 200%;
+        left: -200px;
+        /* Ends at target center */
         opacity: 0;
-        width: 300%;
+        transform: translateY(-50%) scaleX(0.1);
     }
 }
 
-@keyframes impact-shake-flash {
+@keyframes impact-burst {
     0% {
         opacity: 0;
-        transform: translate(0, 0);
+        transform: translate(-50%, -50%) scale(0);
     }
 
     10% {
         opacity: 1;
-        transform: translate(-20px, 10px) skewX(-5deg);
-        filter: brightness(2);
-    }
-
-    /* Hard Hit */
-    20% {
-        transform: translate(15px, -10px) skewX(5deg);
-    }
-
-    30% {
-        transform: translate(-10px, 5px);
-    }
-
-    40% {
-        transform: translate(5px, -5px);
+        transform: translate(-50%, -50%) scale(1.2);
     }
 
     100% {
         opacity: 0;
-        transform: translate(0, 0);
+        transform: translate(-50%, -50%) scale(2);
+        filter: blur(20px);
     }
 }
 
@@ -608,11 +594,30 @@
     filter: blur(0.5px);
 }
 
-.vfx-storm-bolt-1 { left: 10%; animation: storm-bolt 0.4s ease-in 0.1s forwards; }
-.vfx-storm-bolt-2 { left: 30%; animation: storm-bolt 0.4s ease-in 0.3s forwards; }
-.vfx-storm-bolt-3 { left: 50%; animation: storm-bolt 0.4s ease-in 0.2s forwards; }
-.vfx-storm-bolt-4 { left: 70%; animation: storm-bolt 0.4s ease-in 0.4s forwards; }
-.vfx-storm-bolt-5 { left: 90%; animation: storm-bolt 0.4s ease-in 0.25s forwards; }
+.vfx-storm-bolt-1 {
+    left: 10%;
+    animation: storm-bolt 0.4s ease-in 0.1s forwards;
+}
+
+.vfx-storm-bolt-2 {
+    left: 30%;
+    animation: storm-bolt 0.4s ease-in 0.3s forwards;
+}
+
+.vfx-storm-bolt-3 {
+    left: 50%;
+    animation: storm-bolt 0.4s ease-in 0.2s forwards;
+}
+
+.vfx-storm-bolt-4 {
+    left: 70%;
+    animation: storm-bolt 0.4s ease-in 0.4s forwards;
+}
+
+.vfx-storm-bolt-5 {
+    left: 90%;
+    animation: storm-bolt 0.4s ease-in 0.25s forwards;
+}
 
 .vfx-storm-impact {
     position: absolute;
@@ -625,10 +630,21 @@
 }
 
 @keyframes storm-cloud-fade {
-    0% { opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 @keyframes storm-bolt {
@@ -636,14 +652,17 @@
         opacity: 0;
         transform: scaleY(0.1) translateY(-100px);
     }
+
     10% {
         opacity: 1;
         transform: scaleY(1) translateY(0);
     }
+
     20% {
         opacity: 1;
         filter: brightness(3);
     }
+
     100% {
         opacity: 0;
         transform: scaleY(1.5) translateY(50px);
@@ -651,7 +670,18 @@
 }
 
 @keyframes storm-impact-glow {
-    0% { opacity: 0; transform: scale(0.5); }
-    50% { opacity: 0.8; transform: scale(1.2); }
-    100% { opacity: 0; transform: scale(1.5); }
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
 }

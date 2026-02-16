@@ -28,8 +28,28 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
         }
 
         if (effectType.startsWith('precision_shot')) {
+            const style: React.CSSProperties = {};
+
+            if (targetId) {
+                const targetElement = document.querySelector(`[data-unit-id="${targetId}"]`);
+                if (targetElement) {
+                    const rect = targetElement.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+
+                    style.position = 'fixed';
+                    style.left = `${centerX}px`;
+                    style.top = `${centerY}px`;
+                    style.transform = 'translate(-50%, -50%)';
+                    style.zIndex = 9999;
+                    style.width = '0px';
+                    style.height = '0px';
+                    style.overflow = 'visible';
+                }
+            }
+
             return (
-                <div className="vfx-arrow-container">
+                <div className="vfx-arrow-container" style={style}>
                     <div className="vfx-impact-flash" />
                     <div className="vfx-arrow-streak" />
                 </div>
