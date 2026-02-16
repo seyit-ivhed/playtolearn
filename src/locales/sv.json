@@ -394,8 +394,8 @@
         }
     },
     "abilities": {
-        "jaguar_strike": {
-            "name": "Jaguarhugg",
+        "precision_shot": {
+            "name": "Precisionsskott",
             "description": "Gör {{value}} skada på en enskild fiende."
         },
         "elixir_of_life": {

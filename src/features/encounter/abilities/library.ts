@@ -2,8 +2,8 @@ import { type AbilityImplementation, type AbilityResult } from './types';
 
 import { applyDamageEffect } from './helpers';
 
-// Amara: Jaguar Strike - Single Target Damage
-export const jaguar_strike: AbilityImplementation = ({ allUnits, variables }): AbilityResult => {
+// Amara: Precision Shot - Single Target Damage
+export const precision_shot: AbilityImplementation = ({ allUnits, variables }): AbilityResult => {
     const damage = variables.damage || 0;
     return applyDamageEffect(allUnits, 'SINGLE_ENEMY', damage);
 };

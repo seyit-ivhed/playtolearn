@@ -12,7 +12,7 @@ vi.mock('../../../data/companions.data', () => ({
                 name: 'Warrior',
                 baseStats: { abilityDamage: 10 },
                 spiritGain: 35,
-                specialAbility: { id: 'jaguar_strike', variables: { damage: 20 } }
+                specialAbility: { id: 'precision_shot', variables: { damage: 20 } }
             };
         }
 
@@ -84,7 +84,7 @@ describe('Player Actions Slice', () => {
         };
 
         it('should deal single target damage', async () => {
-            const warrior = { ...baseUnit, id: 'u1', templateId: 'warrior_id', name: 'Warrior', maxHealth: 100, currentHealth: 100, specialAbilityId: 'jaguar_strike', specialAbilityVariables: { damage: 20 } };
+            const warrior = { ...baseUnit, id: 'u1', templateId: 'warrior_id', name: 'Warrior', maxHealth: 100, currentHealth: 100, specialAbilityId: 'precision_shot', specialAbilityVariables: { damage: 20 } };
             const monster = { ...baseUnit, id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isPlayer: false };
 
             useEncounterStore.setState({ party: [warrior], monsters: [monster] });
@@ -124,7 +124,7 @@ describe('Player Actions Slice', () => {
         });
 
         it('should handle failure (drain spirit, end turn)', () => {
-            const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, currentSpirit: 100, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, maxSpirit: 100, spiritGain: 10, specialAbilityId: 'jaguar_strike' };
+            const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, currentSpirit: 100, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, maxSpirit: 100, spiritGain: 10, specialAbilityId: 'precision_shot' };
             useEncounterStore.setState({ party: [warrior], monsters: [] });
 
             useEncounterStore.getState().resolveSpecialAttack('u1', false);

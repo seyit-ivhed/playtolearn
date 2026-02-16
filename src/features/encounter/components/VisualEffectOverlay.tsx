@@ -27,43 +27,11 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
             return null;
         }
 
-        if (effectType.startsWith('piercing_shot')) {
+        if (effectType.startsWith('precision_shot')) {
             return (
                 <div className="vfx-arrow-container">
                     <div className="vfx-impact-flash" />
                     <div className="vfx-arrow-streak" />
-                </div>
-            );
-        }
-
-        if (effectType.startsWith('jaguar_strike')) {
-            const style: React.CSSProperties = {};
-
-            if (targetId) {
-                const targetElement = document.querySelector(`[data-unit-id="${targetId}"]`);
-                if (targetElement) {
-                    const rect = targetElement.getBoundingClientRect();
-                    // Position roughly center of the card
-                    const centerX = rect.left + rect.width / 2;
-                    const centerY = rect.top + rect.height / 2;
-
-                    style.position = 'fixed'; // Use fixed to be relative to viewport, safer than absolute if parents have transform
-                    style.left = `${centerX}px`;
-                    style.top = `${centerY}px`;
-                    style.transform = 'translate(-50%, -50%)'; // Center the effect container on that point
-                    style.zIndex = 9999;
-                    style.width = '0px'; // Collapse container
-                    style.height = '0px';
-                    style.overflow = 'visible'; // Allow effect to spill out
-                }
-            }
-
-            return (
-                <div className="vfx-jaguar-container" style={style}>
-                    <div className="vfx-jaguar-slash vfx-jaguar-slash-1" />
-                    <div className="vfx-jaguar-slash vfx-jaguar-slash-2" />
-                    <div className="vfx-jaguar-slash vfx-jaguar-slash-3" />
-                    <div className="vfx-jaguar-impact" />
                 </div>
             );
         }

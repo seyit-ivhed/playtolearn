@@ -54,7 +54,7 @@ describe('CombatEngine', () => {
             const result = CombatEngine.executeSpecialAbility(
                 mockAttacker,
                 [mockAttacker, mockEnemy],
-                'jaguar_strike',
+                'precision_shot',
                 { damage: 20 }
             );
             const damagedEnemy = result.updatedUnits.find(u => u.id === mockEnemy.id);

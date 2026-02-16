@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ancestral_storm, jaguar_strike, elixir_of_life, blade_barrier } from './library';
+import { ancestral_storm, precision_shot, elixir_of_life, blade_barrier } from './library';
 import { type BattleUnit } from '../../../types/encounter.types';
 
 describe('Ability Library', () => {
@@ -59,10 +59,10 @@ describe('Ability Library', () => {
         hasActed: false
     };
 
-    describe('jaguar_strike', () => {
+    describe('precision_shot', () => {
         it('should damage a single enemy', () => {
             const allUnits = [player1, monster1, monster2];
-            const result = jaguar_strike({ attacker: player1, allUnits, variables: { damage: 10 } });
+            const result = precision_shot({ attacker: player1, allUnits, variables: { damage: 10 } });
 
             const updatedMonster1 = result.updatedUnits.find(u => u.id === 'monster1');
             const updatedMonster2 = result.updatedUnits.find(u => u.id === 'monster2');

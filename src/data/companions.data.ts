@@ -17,7 +17,7 @@ export const COMPANIONS: Record<string, Companion> = {
             abilityDamage: 8
         },
         specialAbility: {
-            id: 'jaguar_strike',
+            id: 'precision_shot',
             variables: { damage: 30 }
         },
         initialSpirit: 65,
@@ -31,7 +31,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 4
                 },
                 newSpecialAbility: {
-                    id: 'jaguar_strike',
+                    id: 'precision_shot',
                     variables: { damage: 45 }
                 }
             },
@@ -43,7 +43,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 6
                 },
                 newSpecialAbility: {
-                    id: 'jaguar_strike',
+                    id: 'precision_shot',
                     variables: { damage: 65 }
                 }
             },
@@ -55,7 +55,7 @@ export const COMPANIONS: Record<string, Companion> = {
                     abilityDamage: 10
                 },
                 newSpecialAbility: {
-                    id: 'jaguar_strike',
+                    id: 'precision_shot',
                     variables: { damage: 100 }
                 }
             }

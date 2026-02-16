@@ -394,8 +394,8 @@
         }
     },
     "abilities": {
-        "jaguar_strike": {
-            "name": "Jaguar Strike",
+        "precision_shot": {
+            "name": "Precision Shot",
             "description": "Deals {{value}} damage to a single enemy."
         },
         "elixir_of_life": {

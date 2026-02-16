@@ -3,7 +3,7 @@ import * as library from './library';
 
 export const AbilityRegistry: Record<string, AbilityImplementation> = {
     // Amara
-    'jaguar_strike': library.jaguar_strike,
+    'precision_shot': library.precision_shot,
 
     // Tariq
     'elixir_of_life': library.elixir_of_life,
