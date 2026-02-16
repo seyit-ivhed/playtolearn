@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { supabase } from '../services/supabase.service';
 
-interface PremiumState {
+export interface PremiumState {
     entitlements: string[];
     isLoading: boolean;
     initialized: boolean;

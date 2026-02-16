@@ -2,8 +2,9 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import { useInitializeGame } from './useInitializeGame';
 import { useAuth } from './useAuth';
-import { usePremiumStore } from '../stores/premium.store';
+import { usePremiumStore, type PremiumState } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
+import type { Session, User } from '@supabase/supabase-js';
 
 // Mocks
 vi.mock('./useAuth');
@@ -24,11 +25,11 @@ describe('useInitializeGame', () => {
         vi.spyOn(console, 'log').mockImplementation(() => { });
 
         // Setup default mocks
-        vi.mocked(usePremiumStore).mockImplementation((selector: any) => {
+        vi.mocked(usePremiumStore).mockImplementation((selector?: unknown) => {
             if (typeof selector === 'function') {
                 return mockInitializePremium;
             }
-            return { initialize: mockInitializePremium } as any;
+            return { initialize: mockInitializePremium } as unknown as PremiumState;
         });
 
         // Mock PersistenceService
@@ -39,14 +40,14 @@ describe('useInitializeGame', () => {
     it('should force re-initialize premium when user changes (Reproduction Case)', async () => {
         // 1. Start as Anonymous
         vi.mocked(useAuth).mockReturnValue({
-            session: { user: { id: 'anon-user' } } as any,
+            session: { user: { id: 'anon-user' } } as unknown as Session,
             isAuthenticated: true,
-            user: { id: 'anon-user' } as any,
+            user: { id: 'anon-user' } as unknown as User,
             loading: false,
             refreshSession: mockRefreshSession,
-            signIn: vi.fn() as any,
-            signInAnonymously: vi.fn() as any
-        } as any);
+            signIn: vi.fn(),
+            signInAnonymously: vi.fn()
+        } as ReturnType<typeof useAuth>);
 
         const { result, rerender } = renderHook(() => useInitializeGame());
 
@@ -61,14 +62,14 @@ describe('useInitializeGame', () => {
 
         // 2. Simulate Login (User changes)
         vi.mocked(useAuth).mockReturnValue({
-            session: { user: { id: 'premium-user' } } as any,
+            session: { user: { id: 'premium-user' } } as unknown as Session,
             isAuthenticated: true,
-            user: { id: 'premium-user' } as any,
+            user: { id: 'premium-user' } as unknown as User,
             loading: false,
             refreshSession: mockRefreshSession,
-            signIn: vi.fn() as any,
-            signInAnonymously: vi.fn() as any
-        } as any);
+            signIn: vi.fn(),
+            signInAnonymously: vi.fn()
+        } as ReturnType<typeof useAuth>);
 
         rerender();
 
