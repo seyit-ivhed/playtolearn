@@ -32,7 +32,9 @@ export const validateBalance = (
  * 4. Generate "noise" weights (extra weights) and mix them into the solution stacks.
  * 5. Player must remove the noise weights to return to the balanced state.
  */
-export const generateBalanceData = (difficulty: DifficultyLevel): BalanceData => {
+const MAX_GENERATION_RETRIES = 10;
+
+export const generateBalanceData = (difficulty: DifficultyLevel, retryCount: number = 0): BalanceData => {
     // 1. Config based on difficulty
     // Higher difficulty -> Higher values, more weights
     const minTarget = difficulty === 1 ? 5 : difficulty === 2 ? 10 : 15;
@@ -146,7 +148,12 @@ export const generateBalanceData = (difficulty: DifficultyLevel): BalanceData =>
     // Final check for initial imbalance. 
     // It's possible for noise weights to accidentally sum to the same value on both sides.
     if (validateBalance(leftStack, rightStack)) {
-        return generateBalanceData(difficulty);
+        if (retryCount >= MAX_GENERATION_RETRIES) {
+            console.error('Failed to generate unbalanced puzzle after max retries');
+            leftStack[leftStack.length - 1].value += 1;
+        } else {
+            return generateBalanceData(difficulty, retryCount + 1);
+        }
     }
 
     return {

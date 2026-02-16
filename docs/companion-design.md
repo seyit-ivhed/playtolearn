@@ -26,7 +26,7 @@ This document defines the 4 MVP companions for Math Quest Adventures.
 
 **Standard Ability:** Attack (10 damage → single enemy)
 
-**Ultimate — Jaguar Strike:**
+**Ultimate — Precision Shot:**
 - Stage 0: Deals 30 damage (SINGLE_ENEMY)
 - Stage 1: Deals 45 damage (SINGLE_ENEMY)
 - Stage 2: Deals 65 damage (SINGLE_ENEMY)
