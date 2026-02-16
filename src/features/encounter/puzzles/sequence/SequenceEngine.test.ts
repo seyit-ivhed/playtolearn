@@ -5,7 +5,6 @@ import {
     generateStarPositions,
     generateSequenceData,
     AdditionRule,
-    MultiplicationRule,
     SequenceRuleFactory
 } from './SequenceEngine';
 
@@ -17,14 +16,6 @@ describe('SequenceEngine', () => {
             expect(validateNextStep([1], 4, rules)).toBe(true);
             expect(validateNextStep([1, 4], 7, rules)).toBe(true);
             expect(validateNextStep([1], 2, rules)).toBe(false);
-        });
-
-        it('should handle MULTIPLY_2', () => {
-            const rules = ['MULTIPLY_2'];
-            expect(validateNextStep([], 2, rules)).toBe(true);
-            expect(validateNextStep([2], 4, rules)).toBe(true);
-            expect(validateNextStep([2, 4], 8, rules)).toBe(true);
-            expect(validateNextStep([2], 5, rules)).toBe(false);
         });
     });
 
@@ -47,18 +38,19 @@ describe('SequenceEngine', () => {
     describe('generateSequenceData', () => {
         it('should respect difficulty constraints for rules', () => {
             const lvl1 = generateSequenceData(1);
-            expect(lvl1.rules![0]).toMatch(/ADD_\d+/);
+            expect(lvl1.rules![0]).toBe('ADD_1');
+            expect(lvl1.options[0]).toBe(1);
 
             const lvl2 = generateSequenceData(2);
-            expect(lvl2.rules![0]).toMatch(/ADD_\d+/);
+            expect(lvl2.rules![0]).toMatch(/ADD_[23]/);
 
             const lvl3 = generateSequenceData(3);
-            expect(lvl3.rules![0]).toMatch(/MULTIPLY_\d+/);
+            expect(lvl3.rules![0]).toMatch(/ADD_[456]/);
         });
 
         it('should provide correct number of options', () => {
-            expect(generateSequenceData(1).options).toHaveLength(8);
-            expect(generateSequenceData(2).options).toHaveLength(12);
+            expect(generateSequenceData(1).options).toHaveLength(10);
+            expect(generateSequenceData(2).options).toHaveLength(8);
             expect(generateSequenceData(3).options).toHaveLength(6);
         });
 
@@ -76,16 +68,6 @@ describe('SequenceEngine', () => {
             const rule = new AdditionRule('invalid');
             expect(rule.step).toBe(0);
             expect(new AdditionRule(NaN).step).toBe(0);
-            expect(spy).toHaveBeenCalled();
-            spy.mockRestore();
-        });
-
-        it('MultiplicationRule should handle invalid factor', () => {
-            const spy = vi.spyOn(console, 'error').mockImplementation(() => { });
-            // @ts-expect-error: Testing invalid input
-            const rule = new MultiplicationRule('invalid');
-            expect(rule.factor).toBe(1);
-            expect(new MultiplicationRule(NaN).factor).toBe(1);
             expect(spy).toHaveBeenCalled();
             spy.mockRestore();
         });
@@ -139,4 +121,3 @@ describe('SequenceEngine', () => {
         });
     });
 });
-

@@ -32,23 +32,6 @@ export class AdditionRule implements SequenceRule {
     isValid(lastValue: number, nextValue: number) { return nextValue === lastValue + this.step; }
 }
 
-export class MultiplicationRule implements SequenceRule {
-    readonly factor: number;
-
-    constructor(factor: number) {
-        if (typeof factor !== 'number' || Number.isNaN(factor)) {
-            console.error('Invalid factor for MultiplicationRule');
-            this.factor = 1;
-            return;
-        }
-        this.factor = factor;
-    }
-
-    get name() { return `MULTIPLY_${this.factor}`; }
-    getNext(lastValue: number) { return lastValue * this.factor; }
-    isValid(lastValue: number, nextValue: number) { return nextValue === lastValue * this.factor; }
-}
-
 export const SequenceRuleFactory = {
     getRule(ruleName: string): SequenceRule | null {
         if (!ruleName) {
@@ -59,10 +42,6 @@ export const SequenceRuleFactory = {
         if (ruleName.startsWith('ADD_')) {
             const step = parseInt(ruleName.replace('ADD_', ''), 10);
             return new AdditionRule(step);
-        }
-        if (ruleName.startsWith('MULTIPLY_')) {
-            const factor = parseInt(ruleName.replace('MULTIPLY_', ''), 10);
-            return new MultiplicationRule(factor);
         }
 
         console.error(`Unknown sequence rule: ${ruleName}`);
@@ -150,23 +129,24 @@ export const generateStarPositions = (
 const getLevelConfig = (difficulty: DifficultyLevel) => {
     if (difficulty === 1) {
         return {
-            rule: new AdditionRule(getRandomInt(1, 2)),
-            startValue: getRandomInt(1, 5),
-            count: 8
+            rule: new AdditionRule(1),
+            startValue: 1,
+            count: 10
         };
     }
     if (difficulty === 2) {
-        const step = getRandomInt(3, 10);
+        const step = getRandomInt(2, 3);
         return {
             rule: new AdditionRule(step),
             startValue: getRandomInt(1, 10),
-            count: 12
+            count: 8
         };
     }
-    const factor = getRandomInt(2, 5);
+    // Difficulty 3+
+    const step = getRandomInt(4, 6);
     return {
-        rule: new MultiplicationRule(factor),
-        startValue: factor,
+        rule: new AdditionRule(step),
+        startValue: getRandomInt(1, 10),
         count: 6
     };
 };
