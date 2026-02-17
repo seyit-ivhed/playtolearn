@@ -5,20 +5,18 @@ import type { Adventure } from '../../../types/adventure.types';
 
 interface UseChronicleNavigationProps {
     currentAdventureIndex: number;
-    volumeAdventures: Adventure[];
+    adventures: Adventure[];
     currentAdventure: Adventure | undefined;
     setActiveAdventureId: (id: string) => void;
     setIsPremiumModalOpen: (open: boolean) => void;
-    setIsTocOpen: (open: boolean) => void;
 }
 
 export const useChronicleNavigation = ({
     currentAdventureIndex,
-    volumeAdventures,
+    adventures,
     currentAdventure,
     setActiveAdventureId,
-    setIsPremiumModalOpen,
-    setIsTocOpen
+    setIsPremiumModalOpen
 }: UseChronicleNavigationProps) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -28,27 +26,22 @@ export const useChronicleNavigation = ({
     const isJustCompleted = currentAdventure && justCompletedAdventureId === currentAdventure.id;
 
     const handleNext = useCallback(() => {
-        if (currentAdventureIndex < volumeAdventures.length - 1) {
-            const nextAdj = volumeAdventures[currentAdventureIndex + 1];
+        if (currentAdventureIndex < adventures.length - 1) {
+            const nextAdj = adventures[currentAdventureIndex + 1];
             setActiveAdventureId(nextAdj.id);
 
             if (isJustCompleted) {
                 navigate(location.pathname, { replace: true, state: {} });
             }
         }
-    }, [currentAdventureIndex, volumeAdventures, setActiveAdventureId, isJustCompleted, navigate, location.pathname]);
+    }, [currentAdventureIndex, adventures, setActiveAdventureId, isJustCompleted, navigate, location.pathname]);
 
     const handlePrev = useCallback(() => {
         if (currentAdventureIndex > 0) {
-            const prevAdj = volumeAdventures[currentAdventureIndex - 1];
+            const prevAdj = adventures[currentAdventureIndex - 1];
             setActiveAdventureId(prevAdj.id);
         }
-    }, [currentAdventureIndex, volumeAdventures, setActiveAdventureId]);
-
-    const handleJumpToChapter = useCallback((_volumeId: string, adventureId: string) => {
-        setActiveAdventureId(adventureId);
-        setIsTocOpen(false);
-    }, [setActiveAdventureId, setIsTocOpen]);
+    }, [currentAdventureIndex, adventures, setActiveAdventureId]);
 
     const handleBegin = useCallback((id: string) => {
         if (!isAdventureUnlocked(id)) {
@@ -63,7 +56,6 @@ export const useChronicleNavigation = ({
     return {
         handleNext,
         handlePrev,
-        handleJumpToChapter,
         handleBegin,
         isJustCompleted
     };

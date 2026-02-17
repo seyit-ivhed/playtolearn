@@ -9,17 +9,13 @@ import type { EncounterResult } from '../../../stores/game/interfaces';
  */
 export const getHighestUnlockedAdventure = (
     adventureStatuses: Record<AdventureId, AdventureStatus>
-): { volumeId: string; adventureId: AdventureId } | undefined => {
+): { adventureId: AdventureId } | undefined => {
     // Search backwards through adventures to find the furthest unlocked one
     for (let i = ADVENTURES.length - 1; i >= 0; i--) {
         const adventure = ADVENTURES[i];
         const status = adventureStatuses[adventure.id];
         if (status === AdventureStatus.AVAILABLE || status === AdventureStatus.COMPLETED) {
-            if (!adventure.volumeId) {
-                console.error(`Volume ID missing for adventure ${adventure.id}`);
-                return;
-            }
-            return { volumeId: adventure.volumeId, adventureId: adventure.id };
+            return { adventureId: adventure.id };
         }
     }
 
@@ -30,13 +26,7 @@ export const getHighestUnlockedAdventure = (
         return;
     }
 
-    if (!firstAdventure.volumeId) {
-        console.error(`Volume ID missing for adventure ${firstAdventure.id}`);
-        return;
-    }
-
     return {
-        volumeId: firstAdventure.volumeId,
         adventureId: firstAdventure.id
     };
 };

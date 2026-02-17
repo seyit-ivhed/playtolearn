@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
-import { VOLUMES } from '../../data/volumes.data';
 import { calculateAdventureStars } from '../../utils/progression.utils';
 import { ChapterPage } from './components/ChapterPage';
-import { TableOfContents } from './components/TableOfContents';
 import { PremiumStoreModal } from '../premium/components/PremiumStoreModal';
 import { useChronicleData } from './hooks/useChronicleData';
 import { useChronicleNavigation } from './hooks/useChronicleNavigation';
@@ -20,7 +17,6 @@ import { BookDifficulty } from './components/Book/BookDifficulty';
 import { getBookStateFromUrl, calculatePageZIndex } from './utils/chronicle.utils';
 
 export const ChronicleBook: React.FC = () => {
-    const { t } = useTranslation();
     const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
     const navigate = useNavigate();
     const { pageId } = useParams<{ pageId: string }>();
@@ -33,15 +29,13 @@ export const ChronicleBook: React.FC = () => {
     const urlAdventureId = bookState === 'ADVENTURE' ? pageId : undefined;
 
     // UI State
-    const [isTocOpen, setIsTocOpen] = React.useState(false);
     const [isPremiumModalOpen, setIsPremiumModalOpen] = React.useState(false);
 
     // Hooks
     const {
-        volumeAdventures,
+        adventures,
         currentAdventureIndex,
         currentAdventure,
-        adventureTitles,
         activeAdventureId // This comes from useChronicleData (either override or internal default)
     } = useChronicleData(urlAdventureId);
 
@@ -70,23 +64,19 @@ export const ChronicleBook: React.FC = () => {
     const {
         handleNext,
         handlePrev,
-        handleJumpToChapter,
         handleBegin,
         isJustCompleted
     } = useChronicleNavigation({
         currentAdventureIndex,
-        volumeAdventures,
+        adventures,
         currentAdventure,
         setActiveAdventureId: handleSetActiveAdventureId,
-        setIsPremiumModalOpen,
-        setIsTocOpen
+        setIsPremiumModalOpen
     });
 
     useChronicleKeyboardShortcuts({
-        isTocOpen,
         handleNext: bookState === 'ADVENTURE' ? handleNext : () => { },
-        handlePrev: bookState === 'ADVENTURE' ? handlePrev : () => { },
-        setIsTocOpen: bookState === 'ADVENTURE' ? setIsTocOpen : () => { }
+        handlePrev: bookState === 'ADVENTURE' ? handlePrev : () => { }
     });
 
     // Handlers for Cover Interactions
@@ -167,7 +157,7 @@ export const ChronicleBook: React.FC = () => {
         </BookPage>
 
         {/* ADVENTURE ITEM PAGES (The main content) */}
-        {volumeAdventures.map((adventure, index) => {
+        {adventures.map((adventure, index) => {
             const isCurrentAdventure = index === currentAdventureIndex;
             const isPastAdventure = index < currentAdventureIndex;
 
@@ -199,10 +189,10 @@ export const ChronicleBook: React.FC = () => {
                                     handlePrev();
                                 }
                             }}
-                            canNext={index < volumeAdventures.length - 1}
+                            canNext={index < adventures.length - 1}
                             canPrev={true}
                             currentPage={index + 1}
-                            totalPages={volumeAdventures.length}
+                            totalPages={adventures.length}
                             isJustCompleted={isJustCompleted && adventure.id === currentAdventure?.id}
                             isPremiumLocked={!isAdventureUnlocked(adventure.id)}
                             hasProgress={Object.keys(encounterResults).some(key => key.startsWith(`${adventure.id}_`))}
@@ -216,30 +206,6 @@ export const ChronicleBook: React.FC = () => {
             isOpen={isPremiumModalOpen}
             onClose={() => setIsPremiumModalOpen(false)}
         />
-
-        {bookState === 'ADVENTURE' && (
-            <>
-                {/* TOC Button Overlay */}
-                <button
-                    className={styles.tocTrigger}
-                    onClick={() => setIsTocOpen(true)}
-                    data-testid="toc-trigger-btn"
-                >
-                    {t('chronicle.contents')}
-                </button>
-
-                {isTocOpen && currentAdventure && (
-                    <TableOfContents
-                        volumes={VOLUMES}
-                        adventureStatuses={adventureStatuses}
-                        adventureTitles={adventureTitles}
-                        activeAdventureId={currentAdventure.id}
-                        onJumpToChapter={handleJumpToChapter}
-                        onClose={() => setIsTocOpen(false)}
-                    />
-                )}
-            </>
-        )}
     </BookLayout>
     );
 };

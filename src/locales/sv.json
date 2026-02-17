@@ -287,12 +287,6 @@
         "subtitle": "Din resa genom tidsåldrarna",
         "adventure_fallback": "Äventyr {{id}}"
     },
-    "volumes": {
-        "origins": {
-            "title": "Ursprungets värld",
-            "description": "Där resan börjar. Följ med Amara och Tariq när de möter sina första utmaningar."
-        }
-    },
     "shared_xp": "Delad XP",
     "retreat": "Retirera",
     "combat": {

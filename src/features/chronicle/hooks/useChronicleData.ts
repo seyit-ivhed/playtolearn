@@ -4,8 +4,6 @@ import { ADVENTURES } from '../../../data/adventures.data';
 import { useGameStore } from '../../../stores/game/store';
 import { getHighestUnlockedAdventure } from '../../adventure/utils/navigation.utils';
 import {
-    resolveCurrentVolume,
-    resolveVolumeAdventures,
     resolveCurrentAdventureIndex,
     generateAdventureTitles
 } from '../utils/chronicle.utils';
@@ -44,36 +42,26 @@ export const useChronicleData = (overrideAdventureId?: string) => {
     const [internalActiveAdventureId, setInternalActiveAdventureId] = useState<string>(initialAdventure);
 
     // If override is provided (from URL), usage that. Otherwise use internal state.
-    // Note: We sync internal state to override if it changes, to keep them consistent if we switch back to uncontrolled? 
-    // Actually simpler: 
     const activeAdventureId = overrideAdventureId || internalActiveAdventureId;
 
     // We expose a setter that updates internal state. 
     // The consumer (ChronicleBook) must assume responsibility for navigation if they provided an override.
     const setActiveAdventureId = setInternalActiveAdventureId;
 
-
-    const currentVolume = useMemo(() =>
-        resolveCurrentVolume(activeAdventureId)
-        , [activeAdventureId]);
-
-    const volumeAdventures = useMemo(() =>
-        resolveVolumeAdventures(currentVolume)
-        , [currentVolume]);
+    const adventures = ADVENTURES;
 
     const currentAdventureIndex = useMemo(() =>
-        resolveCurrentAdventureIndex(volumeAdventures, activeAdventureId)
-        , [volumeAdventures, activeAdventureId]);
+        resolveCurrentAdventureIndex(adventures, activeAdventureId)
+        , [adventures, activeAdventureId]);
 
-    const currentAdventure = volumeAdventures[currentAdventureIndex];
+    const currentAdventure = adventures[currentAdventureIndex];
 
     const adventureTitles = useMemo(() =>
         generateAdventureTitles(t)
         , [t]);
 
     return {
-        currentVolume,
-        volumeAdventures,
+        adventures,
         currentAdventureIndex,
         currentAdventure,
         adventureTitles,

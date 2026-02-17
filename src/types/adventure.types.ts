@@ -64,22 +64,11 @@ export interface Adventure {
     completionSummary?: string; // Summary shown after completion
     illustration?: string; // Thumbnail/Illustration for the storybook page
     mapImage?: string;     // The background image for the adventure map
-    volumeId?: string;    // The volume (realm) this adventure belongs to
-    encounters: Encounter[]; // The sequence of nodes for this adventure
+    // The sequence of nodes for this adventure
+    encounters: Encounter[];
     levelRange?: [number, number]; // Recommended level range [min, max]
     requirements?: {
         minLevel?: number;
         previousAdventureId?: AdventureId;
     };
-}
-
-export type VolumeId = string;
-
-export interface Volume {
-    id: VolumeId;
-    title: string;
-    description: string;
-    coverImage?: string;
-    isLocked: boolean;
-    price?: number;
 }

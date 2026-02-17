@@ -3,7 +3,6 @@ import { MONSTERS } from '../monsters.data';
 
 export const ADVENTURE_5: Adventure = {
     id: '5',
-    volumeId: 'origins',
     levelRange: [10, 11],
     encounters: [
         {
