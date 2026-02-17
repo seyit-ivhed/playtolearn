@@ -423,29 +423,98 @@
     box-shadow: 0 0 20px rgba(255, 165, 2, 0.1);
 }
 
-.create-btn {
-    background: #FFD700;
-    color: #1a0b2e;
+.cancel-button-link {
+    background: none;
     border: none;
-    padding: 1.5rem 4rem;
-    border-radius: 100px;
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 800;
+    color: var(--color-text-secondary);
+    text-decoration: underline;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-transform: uppercase;
-    margin: 2rem auto 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: fit-content;
-    min-width: 280px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
 }
 
-.create-btn:hover {
-    transform: scale(1.05) translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+.cancel-button-link:hover {
+    opacity: 1;
+}
+
+.processing-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+    gap: 2rem;
+}
+
+.processing-text {
+    font-family: var(--font-display);
+    color: var(--color-brand-accent);
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    background: #1a0b2e;
+    padding: 1.5rem 3rem;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.1);
+    letter-spacing: 0.1em;
+    text-align: center;
+    max-width: 80%;
+    animation: pulseText 2s infinite ease-in-out;
+}
+
+@keyframes pulseText {
+
+    0%,
+    100% {
+        opacity: 0.9;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.03);
+    }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+div.spinner {
+    width: 64px;
+    height: 64px;
+    border: 5px solid rgba(255, 215, 0, 0.1);
+    border-top-color: var(--color-brand-accent);
+    border-radius: 50%;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.payment-error {
+    margin-top: 1.5rem;
+    background: rgba(255, 71, 87, 0.1);
+    border: 1px solid #ff4757;
+    color: #ff4757;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    text-align: center;
 }
 
 .form-error {
@@ -460,7 +529,6 @@
     border: 1px solid rgba(255, 71, 87, 0.2);
 }
 
-/* Success Screen Override */
 .success-screen {
     text-align: center;
     max-width: 600px;
@@ -473,26 +541,6 @@
     filter: drop-shadow(0 0 20px rgba(46, 213, 115, 0.3));
 }
 
-.back-to-journey-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--color-brand-accent);
-    color: var(--color-brand-accent);
-    padding: 1.2rem 3rem;
-    border-radius: 100px;
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 2rem;
-}
-
-.back-to-journey-btn:hover {
-    background: var(--color-brand-accent);
-    color: #1a0b2e;
-    box-shadow: 0 0 30px rgba(255, 165, 2, 0.4);
-}
-
 .premium-title {
     font-family: var(--font-display);
     font-size: 2.5rem;
@@ -502,7 +550,6 @@
     letter-spacing: 0.05em;
 }
 
-/* Stripe Checkout Form Styles */
 .premium-checkout {
     display: flex;
     flex-direction: column;
@@ -548,78 +595,34 @@
     align-items: center;
 }
 
-.pay-button {
-    background: #FFD700;
-    color: #1a0b2e;
-    border: none;
-    padding: 1.2rem 4rem;
-    border-radius: 100px;
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-transform: uppercase;
-    width: 100%;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-.pay-button:hover:not(:disabled) {
-    transform: scale(1.02) translateY(-3px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-}
-
-.pay-button:disabled {
-    background: #4a3721;
-    color: #8c7b66;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.cancel-button-link {
-    background: none;
-    border: none;
-    color: var(--color-text-secondary);
-    text-decoration: underline;
-    cursor: pointer;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-}
-
-.cancel-button-link:hover {
-    opacity: 1;
-}
-
-.processing-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    z-index: 10;
+/* Page & Payment Initialization Loading States */
+.checkout-page-loading,
+.checkout-loading-state {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: inherit;
-    gap: 1.5rem;
+    gap: 2rem;
+    padding: 4rem;
+    text-align: center;
 }
 
-.processing-text {
+.checkout-page-loading {
+    min-height: 100vh;
+    background: #000000;
+}
+
+.checkout-page-loading p,
+.checkout-loading-state p {
     font-family: var(--font-display);
     color: var(--color-brand-accent);
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
 }
 
-.payment-error {
-    margin-top: 1.5rem;
-    background: rgba(255, 71, 87, 0.1);
-    border: 1px solid #ff4757;
-    color: #ff4757;
-    padding: 1rem;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    text-align: center;
+.checkout-loading-state p {
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
 }

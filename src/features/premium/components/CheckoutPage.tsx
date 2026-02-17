@@ -4,6 +4,7 @@ import { useAuth } from '../../../hooks/useAuth';
 import { AccountCreationStep } from './AccountCreationStep';
 import { CheckoutOverlay } from './CheckoutOverlay';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { CheckCircle2 } from 'lucide-react';
 import './Premium.css';
 
@@ -45,9 +46,14 @@ export const CheckoutPage: React.FC = () => {
                         <p className="success-description">
                             {t('premium.store.success_message')}
                         </p>
-                        <button className="back-to-journey-btn" onClick={handleBackToGame}>
+                        <PrimaryButton
+                            variant="gold"
+                            radiate={true}
+                            onClick={handleBackToGame}
+                            style={{ marginTop: '2rem' }}
+                        >
                             {t('adventure.back', 'Back to Journey')}
-                        </button>
+                        </PrimaryButton>
                     </div>
                 ) : isAnonymous ? (
                     <div className="account-creation-container">

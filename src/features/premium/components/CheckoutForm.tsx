@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useTranslation } from 'react-i18next';
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { supabase } from '../../../services/supabase.service';
 import './Premium.css';
 
@@ -142,13 +143,15 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                 <div className="price-display-simple">
                     {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value">{price}</span>
                 </div>
-                <button
+                <PrimaryButton
                     type="submit"
-                    className="pay-button"
+                    variant="gold"
+                    radiate={true}
                     disabled={isProcessing || !stripe || !elements}
+                    style={{ width: '100%' }}
                 >
                     {isProcessing ? t('common.processing', 'Processing...') : t('premium.store.buy_now')}
-                </button>
+                </PrimaryButton>
                 <button
                     type="button"
                     className="cancel-button-link"

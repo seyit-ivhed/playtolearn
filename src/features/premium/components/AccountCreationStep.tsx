@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { useAuth } from '../../../hooks/useAuth';
 import { supabase } from '../../../services/supabase.service';
 import { validateAccountCreationForm, performAccountConversion } from '../utils/account-creation.utils';
@@ -127,13 +128,14 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 </AnimatePresence>
 
                 <div className="account-actions single-action">
-                    <button
+                    <PrimaryButton
                         type="submit"
-                        className="create-btn"
+                        variant="gold"
+                        radiate={true}
                         disabled={loading}
                     >
                         {loading ? <Loader2 className="spinner" /> : translation('premium.store.account.continue_btn')}
-                    </button>
+                    </PrimaryButton>
                 </div>
             </form>
         </motion.div>
