@@ -131,7 +131,7 @@
 }
 
 .unlock-button-large {
-    background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+    background: #FFD700;
     color: #1a0b2e;
     padding: 1.5rem 4rem;
     border: none;
@@ -301,8 +301,11 @@
 /* Checkout Page & Account Creation CSS */
 .checkout-page-container {
     min-height: 100vh;
+    height: 100%;
     background: #0f051a;
-    background: radial-gradient(circle at center, #1a0b2e 0%, #050208 100%);
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
     color: var(--color-text-primary);
     display: flex;
     flex-direction: column;
@@ -330,9 +333,8 @@
 }
 
 .account-step {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #1a0b2e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 32px;
     padding: 4rem;
     max-width: 500px;
@@ -422,7 +424,7 @@
 }
 
 .create-btn {
-    background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+    background: #FFD700;
     color: #1a0b2e;
     border: none;
     padding: 1.5rem 4rem;
@@ -443,7 +445,7 @@
 
 .create-btn:hover {
     transform: scale(1.05) translateY(-5px);
-    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
 }
 
 .form-error {

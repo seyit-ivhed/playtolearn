@@ -1,11 +1,11 @@
 /* Global Variables */
 :root {
   /* Color Palette - Fantasy Realm (Math Quest Adventures) */
-  --color-bg-primary: #1a0b2e;
+  --color-bg-primary: #000000;
   /* Deep Indigo Void */
-  --color-bg-secondary: #2d1b4e;
+  --color-bg-secondary: #000000b1;
   /* Dark Mystic Purple */
-  --color-bg-tertiary: #4a235a;
+  --color-bg-tertiary: #0000005a;
   /* Magical Stone/Button Background */
   --color-bg-overlay: rgba(0, 0, 0, 0.85);
 
@@ -102,7 +102,6 @@ body {
   min-width: 320px;
   min-height: 100vh;
   flex-direction: column;
-  background-image: radial-gradient(circle at center, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
 }
 
 #root {
