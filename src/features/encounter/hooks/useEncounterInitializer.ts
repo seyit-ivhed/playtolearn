@@ -5,7 +5,7 @@ import { useGameStore } from '../../../stores/game/store';
 import { buildBattleEncounterData } from '../utils/encounter-initializer';
 
 export function useEncounterInitializer(adventureId: string | undefined, nodeIndex: number) {
-    const { initializeEncounter, party, nodeIndex: activeNodeIndex } = useEncounterStore();
+    const { initializeEncounter, party, monsters, nodeIndex: activeNodeIndex } = useEncounterStore();
     const { activeParty, companionStats, activeEncounterDifficulty } = useGameStore();
     const { t } = useTranslation();
 
@@ -30,7 +30,11 @@ export function useEncounterInitializer(adventureId: string | undefined, nodeInd
         const currentPartyIds = party.map(u => u.templateId).join(',');
         const hasPartyChanged = currentPartyIds !== data.activeParty.join(',');
 
-        if (activeNodeIndex !== nodeIndex || party.length === 0 || hasPartyChanged) {
+        const currentMonsterIds = monsters.map(m => m.templateId).join(',');
+        const expectedMonsterIds = data.localizedEnemies.map(e => e.id).join(',');
+        const hasMonstersChanged = currentMonsterIds !== expectedMonsterIds;
+
+        if (activeNodeIndex !== nodeIndex || party.length === 0 || hasPartyChanged || hasMonstersChanged) {
             initializeEncounter(
                 data.activeParty,
                 data.localizedEnemies,
@@ -39,5 +43,5 @@ export function useEncounterInitializer(adventureId: string | undefined, nodeInd
                 data.companionStats
             );
         }
-    }, [adventureId, nodeIndex, activeParty, companionStats, activeEncounterDifficulty, initializeEncounter, t, activeNodeIndex, party]);
+    }, [adventureId, nodeIndex, activeParty, companionStats, activeEncounterDifficulty, initializeEncounter, t, activeNodeIndex, party, monsters]);
 }
