@@ -30,10 +30,6 @@ const getBaseTargetStyle = (selector: string): React.CSSProperties => {
     };
 };
 
-/**
- * Polymorphic Effect Components
- */
-
 const PrecisionShotVFX: React.FC<{ targetId?: string }> = ({ targetId }) => (
     <div
         className="vfx-arrow-container"

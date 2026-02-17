@@ -50,13 +50,19 @@ const EncounterPage = () => {
                     name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)
                 }));
 
+                // Check if party composition has changed
+                const currentPartyIds = party.map(u => u.templateId).join(',');
+                const targetPartyIds = activeParty.join(',');
+                const hasPartyChanged = currentPartyIds !== targetPartyIds;
+
                 // Only initialize if we haven't already for this node or if we're coming fresh
-                if (activeNodeIndex !== nodeIndex || party.length === 0) {
+                // or if the party composition has changed (e.g. newly unlocked companion)
+                if (activeNodeIndex !== nodeIndex || party.length === 0 || hasPartyChanged) {
                     initializeEncounter(activeParty, localizedEnemies, nodeIndex, activeEncounterDifficulty, companionStats);
                 }
             }
         }
-    }, [adventureId, nodeIndex, activeParty, companionStats, activeEncounterDifficulty, initializeEncounter, t]);
+    }, [adventureId, nodeIndex, activeParty, companionStats, activeEncounterDifficulty, initializeEncounter, t, activeNodeIndex, party]);
 
     const difficulty = typeof rawDifficulty === 'number' ? rawDifficulty : 1;
 
