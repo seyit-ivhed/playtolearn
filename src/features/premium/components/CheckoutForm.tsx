@@ -38,10 +38,8 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                 .maybeSingle();
 
             if (entitlement) {
-                console.log('Entitlement verified in database!');
                 return true;
             }
-            console.log(`Verifying entitlement (attempt ${i + 1}/${maxRetries})...`);
             await new Promise(resolve => setTimeout(resolve, delay));
         }
 
@@ -77,9 +75,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                 setErrorMessage(error.message || 'Payment failed');
                 setIsProcessing(false);
             } else if (paymentIntent) {
-                console.log('Payment intent received:', paymentIntent.id, 'Status:', paymentIntent.status);
                 if (paymentIntent.status === 'succeeded') {
-                    console.log('Payment confirmed as succeeded. Starting verification...');
                     setIsVerifying(true);
 
                     const verified = await verifyEntitlement();

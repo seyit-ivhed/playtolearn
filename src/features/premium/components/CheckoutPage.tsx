@@ -9,6 +9,10 @@ import { CheckCircle2 } from 'lucide-react';
 import './Premium.css';
 
 export const CheckoutPage: React.FC = () => {
+    // NOTE: This page is intentionally isolated from the main SPA routing to prevent 
+    // Stripe cookies/scripts from persisting in the main game application.
+    // We use window.location.href instead of useNavigate to ensure a clean environment context.
+
     const { t } = useTranslation();
     const { user, loading: authLoading } = useAuth();
     const [showSuccess, setShowSuccess] = useState(false);
