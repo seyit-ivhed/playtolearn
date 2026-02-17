@@ -102,7 +102,6 @@ export const useEncounterNavigation = ({
     return {
         showExperienceScreen,
         previousCompanionStats,
-        handleCompletionContinue,
-        activeParty // Exposing this as it's needed by the UI
+        handleCompletionContinue
     };
 };

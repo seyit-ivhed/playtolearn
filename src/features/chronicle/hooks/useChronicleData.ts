@@ -1,16 +1,11 @@
 import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ADVENTURES } from '../../../data/adventures.data';
 import { useGameStore } from '../../../stores/game/store';
 import { getHighestUnlockedAdventure } from '../../adventure/utils/navigation.utils';
-import {
-    resolveCurrentAdventureIndex,
-    generateAdventureTitles
-} from '../utils/chronicle.utils';
+import { resolveCurrentAdventureIndex } from '../utils/chronicle.utils';
 
 export const useChronicleData = (overrideAdventureId?: string) => {
     const { encounterResults, adventureStatuses } = useGameStore();
-    const { t } = useTranslation();
 
     // For new players (no progress), default to first adventure
     // For returning players, show their highest unlocked adventure
@@ -41,7 +36,7 @@ export const useChronicleData = (overrideAdventureId?: string) => {
     // Internal state for when no URL param is present
     const [internalActiveAdventureId, setInternalActiveAdventureId] = useState<string>(initialAdventure);
 
-    // If override is provided (from URL), usage that. Otherwise use internal state.
+    // If override is provided (from URL), use that. Otherwise use internal state.
     const activeAdventureId = overrideAdventureId || internalActiveAdventureId;
 
     // We expose a setter that updates internal state. 
@@ -56,15 +51,10 @@ export const useChronicleData = (overrideAdventureId?: string) => {
 
     const currentAdventure = adventures[currentAdventureIndex];
 
-    const adventureTitles = useMemo(() =>
-        generateAdventureTitles(t)
-        , [t]);
-
     return {
         adventures,
         currentAdventureIndex,
         currentAdventure,
-        adventureTitles,
         encounterResults,
         activeAdventureId,
         setActiveAdventureId

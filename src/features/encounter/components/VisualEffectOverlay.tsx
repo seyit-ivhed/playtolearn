@@ -7,9 +7,6 @@ interface VisualEffectOverlayProps {
     targetId?: string;
 }
 
-/**
- * Helper to get basic positioning styles for a DOM element.
- */
 const getBaseTargetStyle = (selector: string): React.CSSProperties => {
     if (!selector) {
         return {};
@@ -110,7 +107,7 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
         }, duration);
 
         return () => {
-            return clearTimeout(timer);
+            clearTimeout(timer);
         };
     }, [onComplete, config]);
 

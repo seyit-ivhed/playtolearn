@@ -274,7 +274,6 @@
     },
     "chronicle": {
         "title": "Krönikan",
-        "contents": "Innehållsförteckning",
         "chapter_prefix": "Kapitel",
         "mystery_path": "Denna väg förblir höljd i dunkel...",
         "completed": "Slutfört",

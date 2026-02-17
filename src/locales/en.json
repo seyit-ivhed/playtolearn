@@ -274,7 +274,6 @@
     },
     "chronicle": {
         "title": "The Chronicle",
-        "contents": "Table of Contents",
         "chapter_prefix": "Chapter",
         "mystery_path": "This path remains shrouded in mystery...",
         "completed": "Completed",

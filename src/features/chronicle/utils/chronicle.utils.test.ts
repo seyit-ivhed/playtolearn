@@ -1,23 +1,12 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import {
     resolveCurrentAdventureIndex,
-    generateAdventureTitles,
     getBookStateFromUrl,
     calculatePageZIndex
 } from './chronicle.utils';
-import { ADVENTURES } from '../../../data/adventures.data';
-import type { TFunction } from 'i18next';
 import type { Adventure } from '../../../types/adventure.types';
 
 describe('chronicle.utils', () => {
-    const mockT = vi.fn((key: string) => {
-        if (key.startsWith('adventures.') && key.endsWith('.title')) {
-            const id = key.split('.')[1];
-            return `Title ${id}`;
-        }
-        return key;
-    });
-
     describe('resolveCurrentAdventureIndex', () => {
         const mockAdventures = [
             { id: '1' },
@@ -35,17 +24,6 @@ describe('chronicle.utils', () => {
 
         it('should return 0 if id is undefined', () => {
             expect(resolveCurrentAdventureIndex(mockAdventures, undefined)).toBe(0);
-        });
-    });
-
-    describe('generateAdventureTitles', () => {
-        it('should generate a map of titles', () => {
-            const result = generateAdventureTitles(mockT as unknown as TFunction);
-
-            ADVENTURES.forEach(a => {
-                expect(result[a.id]).toBe(`Title ${a.id}`);
-            });
-            expect(result['prologue']).toBeUndefined();
         });
     });
 

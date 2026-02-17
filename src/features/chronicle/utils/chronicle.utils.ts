@@ -1,28 +1,10 @@
-import { ADVENTURES } from '../../../data/adventures.data';
 import type { Adventure } from '../../../types/adventure.types';
-import type { TFunction } from 'i18next';
 
-/**
- * Gets the index of the current adventure within the volume's adventures.
- */
 export const resolveCurrentAdventureIndex = (adventures: Adventure[], adventureId?: string): number => {
     const idx = adventures.findIndex(a => a.id === adventureId);
     return idx !== -1 ? idx : 0;
 };
 
-/**
- * Generates a mapping of adventure IDs to their translated titles.
- */
-export const generateAdventureTitles = (t: TFunction): Record<string, string> => {
-    return ADVENTURES.reduce((acc, a) => {
-        acc[a.id] = t(`adventures.${a.id}.title`, { defaultValue: a.title || t('chronicle.adventure_fallback', { id: a.id }) });
-        return acc;
-    }, {} as Record<string, string>);
-};
-
-/**
- * Determines the book state based on the URL pageId parameter.
- */
 export const getBookStateFromUrl = (pageId?: string): 'COVER' | 'LOGIN' | 'DIFFICULTY' | 'ADVENTURE' => {
     if (!pageId || pageId === 'cover') {
         return 'COVER';
@@ -39,10 +21,6 @@ export const getBookStateFromUrl = (pageId?: string): 'COVER' | 'LOGIN' | 'DIFFI
     return 'COVER';
 };
 
-/**
- * Calculates the z-index for pages in the 3D book view.
- * Unified stacking logic: lower position = closer to front in a closed book.
- */
 export const calculatePageZIndex = (state: 'active' | 'flipped' | 'upcoming', position: number): number => {
     if (state === 'active') {
         return 100;
