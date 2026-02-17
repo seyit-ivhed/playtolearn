@@ -2,11 +2,11 @@
 :root {
   /* Color Palette - Fantasy Realm (Math Quest Adventures) */
   --color-bg-primary: #000000;
-  /* Deep Indigo Void */
+  /* Pure Black */
   --color-bg-secondary: #000000b1;
-  /* Dark Mystic Purple */
+  /* Semi-transparent Black */
   --color-bg-tertiary: #0000005a;
-  /* Magical Stone/Button Background */
+  /* Transparent Black */
   --color-bg-overlay: rgba(0, 0, 0, 0.85);
 
   /* Primary Brand Colors */

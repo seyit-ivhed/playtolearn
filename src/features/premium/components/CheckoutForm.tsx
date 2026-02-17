@@ -100,9 +100,9 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                 setIsProcessing(false);
             }
         } catch (err: unknown) {
-            const error = err as Error;
-            console.error('Submission error:', error);
-            setErrorMessage(error.message || 'An unexpected error occurred');
+            console.error('Submission error:', err);
+            const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+            setErrorMessage(message);
             setIsProcessing(false);
             setIsVerifying(false);
         }
