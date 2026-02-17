@@ -53,7 +53,7 @@ describe('useInitializeGame', () => {
 
         await waitFor(() => {
             expect(result.current.isInitializing).toBe(false);
-        });
+        }, { interval: 5 });
 
         // Verify initial call - expecting true because we now force it
         expect(mockInitializePremium).toHaveBeenCalledWith(true, expect.anything());
@@ -75,7 +75,7 @@ describe('useInitializeGame', () => {
 
         await waitFor(() => {
             expect(result.current.isInitializing).toBe(false);
-        });
+        }, { interval: 5 });
 
         // VERIFY FIX:
         // We ensure it is called with `true` (force) because the user changed.
