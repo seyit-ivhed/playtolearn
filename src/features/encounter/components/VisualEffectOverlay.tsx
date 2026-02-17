@@ -9,13 +9,22 @@ interface VisualEffectOverlayProps {
 
 export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: VisualEffectOverlayProps) => {
     useEffect(() => {
-        // Duration depends on the animation length roughly
+        // Map effect types to their actual total completion time (CSS animation length + delays)
+        const getEffectDuration = (type: string): number => {
+            if (type.startsWith('precision_shot')) return 700; // 0.3s delay + 0.35s burst
+            if (type.startsWith('blade_barrier')) return 1000; // 0.4s delay + 0.5s slash
+            if (type.startsWith('ancestral_storm')) return 1200; // 0.4s delay + 0.8s impact
+            if (type.startsWith('elixir_of_life')) return 1900; // 0.65s delay + 1.2s particle duration
+            return 1200; // Default fallback
+        };
+
+        const duration = getEffectDuration(effectType);
         const timer = setTimeout(() => {
             onComplete();
-        }, 1200); // 1.2s safety buffer for all effects
+        }, duration);
 
         return () => clearTimeout(timer);
-    }, [onComplete]);
+    }, [onComplete, effectType]);
 
     const renderEffect = () => {
         if (effectType.startsWith('precision_shot')) {

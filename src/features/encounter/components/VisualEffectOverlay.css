@@ -78,7 +78,7 @@
     background: radial-gradient(circle, #fff 0%, #0ea5e9 30%, transparent 70%);
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
-    animation: impact-burst 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    animation: impact-burst 0.35s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
     z-index: 2;
 }
 
