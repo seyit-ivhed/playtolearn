@@ -501,3 +501,125 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
+
+/* Stripe Checkout Form Styles */
+.premium-checkout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.checkout-overlay-container {
+    width: 100%;
+}
+
+.checkout-form {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 32px;
+    padding: 3rem;
+    width: 100%;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.price-display-simple {
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    font-family: var(--font-display);
+}
+
+.price-display-simple .price-value {
+    color: var(--color-brand-accent);
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.checkout-actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.pay-button {
+    background: #FFD700;
+    color: #1a0b2e;
+    border: none;
+    padding: 1.2rem 4rem;
+    border-radius: 100px;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-transform: uppercase;
+    width: 100%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.pay-button:hover:not(:disabled) {
+    transform: scale(1.02) translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.pay-button:disabled {
+    background: #4a3721;
+    color: #8c7b66;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.cancel-button-link {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.cancel-button-link:hover {
+    opacity: 1;
+}
+
+.processing-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+    gap: 1.5rem;
+}
+
+.processing-text {
+    font-family: var(--font-display);
+    color: var(--color-brand-accent);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.payment-error {
+    margin-top: 1.5rem;
+    background: rgba(255, 71, 87, 0.1);
+    border: 1px solid #ff4757;
+    color: #ff4757;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    text-align: center;
+}

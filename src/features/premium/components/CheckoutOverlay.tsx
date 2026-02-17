@@ -64,22 +64,34 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
         appearance: {
             theme: 'night' as const,
             variables: {
-                colorPrimary: '#e5c05b',
-                colorBackground: '#1a1a2e',
+                colorPrimary: '#FFD700',
+                colorBackground: '#000000',
                 colorText: '#ffffff',
-                colorDanger: '#ef4444',
-                fontFamily: 'Inter, system-ui, sans-serif',
+                colorDanger: '#ff4757',
+                fontFamily: 'Fredoka, system-ui, sans-serif',
                 spacingUnit: '4px',
-                borderRadius: '8px',
+                borderRadius: '12px',
             },
             rules: {
                 '.Input': {
-                    backgroundColor: '#2a2a40',
-                    border: '1px solid #e5c05b33',
+                    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                    border: '1px solid rgba(255, 215, 0, 0.2)',
                 },
                 '.Input:focus': {
-                    border: '1px solid #e5c05b',
-                    boxShadow: '0 0 0 2px #e5c05b1a',
+                    border: '1px solid #FFD700',
+                    boxShadow: '0 0 15px rgba(255, 215, 0, 0.2)',
+                },
+                '.Tab': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 215, 0, 0.2)',
+                },
+                '.Tab:hover': {
+                    border: '1px solid #FFD700',
+                    backgroundColor: 'rgba(255, 215, 0, 0.05)',
+                },
+                '.Tab--selected': {
+                    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                    borderColor: '#FFD700',
                 }
             }
         },
