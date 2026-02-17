@@ -1,8 +1,11 @@
 
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEncounterStore } from '../../stores/encounter/store';
+import { useGameStore } from '../../stores/game/store';
+import { ADVENTURES } from '../../data/adventures.data';
+import { EncounterType, type AdventureMonster } from '../../types/adventure.types';
 import { EncounterPhase } from '../../types/encounter.types';
 import { generateProblem, getAllowedOperations } from '../../utils/math-generator';
 import { type MathProblem, type DifficultyLevel } from '../../types/math.types';
@@ -29,8 +32,31 @@ const EncounterPage = () => {
         phase, party, monsters,
         performAction,
         resolveSpecialAttack,
-        difficulty: rawDifficulty
+        difficulty: rawDifficulty,
+        initializeEncounter,
+        nodeIndex: activeNodeIndex
     } = useEncounterStore();
+
+    const { activeParty, companionStats, activeEncounterDifficulty } = useGameStore();
+
+    useLayoutEffect(() => {
+        const adventure = ADVENTURES.find(a => a.id === adventureId);
+        const encounter = adventure?.encounters[nodeIndex - 1];
+
+        if (encounter && (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS)) {
+            if (encounter.enemies && encounter.enemies.length > 0) {
+                const localizedEnemies = encounter.enemies.map((enemy: AdventureMonster) => ({
+                    ...enemy,
+                    name: t(`monsters.${enemy.id}.name`, enemy.name || enemy.id)
+                }));
+
+                // Only initialize if we haven't already for this node or if we're coming fresh
+                if (activeNodeIndex !== nodeIndex || party.length === 0) {
+                    initializeEncounter(activeParty, localizedEnemies, nodeIndex, activeEncounterDifficulty, companionStats);
+                }
+            }
+        }
+    }, [adventureId, nodeIndex, activeParty, companionStats, activeEncounterDifficulty, initializeEncounter, t]);
 
     const difficulty = typeof rawDifficulty === 'number' ? rawDifficulty : 1;
 
@@ -55,8 +81,7 @@ const EncounterPage = () => {
     const {
         showExperienceScreen,
         previousCompanionStats,
-        handleCompletionContinue,
-        activeParty
+        handleCompletionContinue
     } = useEncounterNavigation({ adventureId, nodeIndex, phase });
 
     const isEncounterOver = checkIsEncounterOver(monsters);
