@@ -40,6 +40,7 @@ const defaultParty = ['companion-a', 'companion-b'];
 const defaultStats = { 'companion-a': { level: 2 }, 'companion-b': { level: 3 } };
 
 describe('buildBattleEncounterData', () => {
+    vi.spyOn(console, 'error').mockImplementation(() => { });
     it('returns localized enemy data for a battle encounter', () => {
         const result = buildBattleEncounterData(
             'test-adventure', 1, defaultParty, defaultStats, 2, mockT
