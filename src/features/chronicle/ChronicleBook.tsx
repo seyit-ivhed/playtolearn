@@ -6,7 +6,7 @@ import { ChapterPage } from './components/ChapterPage';
 import { PremiumStoreModal } from '../premium/components/PremiumStoreModal';
 import { useChronicleData } from './hooks/useChronicleData';
 import { useChronicleNavigation } from './hooks/useChronicleNavigation';
-import { useChronicleKeyboardShortcuts } from './hooks/useChronicleKeyboardShortcuts';
+
 import styles from './ChronicleBook.module.css';
 import { BookLayout } from './components/Book/BookLayout';
 import { BookPage } from './components/Book/BookPage';
@@ -72,11 +72,6 @@ export const ChronicleBook: React.FC = () => {
         currentAdventure,
         setActiveAdventureId: handleSetActiveAdventureId,
         setIsPremiumModalOpen
-    });
-
-    useChronicleKeyboardShortcuts({
-        handleNext: bookState === 'ADVENTURE' ? handleNext : () => { },
-        handlePrev: bookState === 'ADVENTURE' ? handlePrev : () => { }
     });
 
     // Handlers for Cover Interactions
