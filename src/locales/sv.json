@@ -490,15 +490,23 @@
     "premium": {
         "store": {
             "title": "Lås upp hela äventyret",
-            "description": "Fortsätt resan med Amara och Tariq. Lås upp alla 6 äventyr, följeslagar-evolutioner och framtida riken.",
+            "description": "Resan har bara börjat...",
             "features": {
-                "adventures": "Lås upp alla 6 äventyr",
-                "evolutions": "Lås upp följeslagar-evolutioner",
-                "realms": "Tillgång till framtida riken",
-                "support": "Stöd soloutveckling"
+                "adventures_title": "Lås upp 5 fler äventyr",
+                "adventures_desc": "Res genom Ashurs ruiner, de dimmiga fotbergen och bortom.",
+                "companions_title": "Lås upp 2 fler följeslagare",
+                "companions_desc": "Rekrytera samurajen Kenji och magikern Zahara.",
+                "evolutions_title": "Lås upp alla följeslagar-evolutioner",
+                "evolutions_desc": "Se dina vänner bli starkare och lära sig nya kraftfulla förmågor.",
+                "opponents_title": "Nya motståndare",
+                "opponents_desc": "Möt Skuggmästaren, Inferno-Man och Andekonungen.",
+                "puzzles_title": "Nya pussel",
+                "puzzles_desc": "Utmana ditt sinne med spegel-, balans- och sekvenspussel.",
+                "support_title": "Stöd en soloutvecklare",
+                "support_desc": "Ditt stöd hjälper mig att skapa fler magiska läroupplevelser."
             },
             "price": "89 KR",
-            "buy_now": "Lås upp Premium",
+            "buy_now": "Lås upp",
             "account": {
                 "title": "Säkra dina framsteg",
                 "subtitle": "Skapa ett konto för att spara ditt köp och spela på valfri enhet.",

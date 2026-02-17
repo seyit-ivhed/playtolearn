@@ -490,15 +490,23 @@
     "premium": {
         "store": {
             "title": "Unlock the Full Adventure",
-            "description": "Continue the journey with Amara and Tariq. Unlock all 6 adventures, companion evolutions, and future realms.",
+            "description": "The journey has just begun...",
             "features": {
-                "adventures": "Unlock All 6 Adventures",
-                "evolutions": "Unlock Companion Evolutions",
-                "realms": "Future Realm Access",
-                "support": "Support Solo Development"
+                "adventures_title": "Unlock 5 More Adventures",
+                "adventures_desc": "Journey through the Ruins of Ashur, the Misty Foothills, and beyond.",
+                "companions_title": "Unlock 2 More Companions",
+                "companions_desc": "Recruit Kenji the Samurai and Zahara the Mage.",
+                "evolutions_title": "Unlock All Companion Evolutions",
+                "evolutions_desc": "Watch your friends grow stronger and learn powerful new abilities.",
+                "opponents_title": "New Opponents",
+                "opponents_desc": "Face off against the Shadow Master, the Inferno Mane, and the Spirit King.",
+                "puzzles_title": "New Puzzles",
+                "puzzles_desc": "Challenge your mind with the Mirror, Balance, and Sequence puzzles.",
+                "support_title": "Support a Solo Developer",
+                "support_desc": "Your support helps me create more magical learning experiences."
             },
             "price": "89 SEK",
-            "buy_now": "Unlock Premium",
+            "buy_now": "Unlock",
             "account": {
                 "title": "Secure Your Progress",
                 "subtitle": "Create an account to save your purchase and play on any device.",
