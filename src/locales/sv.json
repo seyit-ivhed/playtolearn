@@ -508,14 +508,14 @@
             "price": "59 KR",
             "buy_now": "Lås upp",
             "account": {
-                "title": "Säkra dina framsteg",
-                "subtitle": "Skapa ett konto för att spara ditt köp och spela på valfri enhet.",
+                "title": "Säkra din resa",
+                "subtitle": "Skapa ett konto för att spara dina framsteg och spela på valfri enhet.",
                 "email_label": "E-postadress",
                 "email_placeholder": "din@e-post.se",
                 "confirm_email_label": "Bekräfta e-postadress",
                 "password_label": "Lösenord",
                 "password_placeholder": "Välj ett starkt lösenord",
-                "continue_btn": "Fortsätt till köp",
+                "continue_btn": "Fortsätt",
                 "already_registered": "Har du redan ett konto? Logga in",
                 "errors": {
                     "invalid_email": "Ange en giltig e-postadress.",

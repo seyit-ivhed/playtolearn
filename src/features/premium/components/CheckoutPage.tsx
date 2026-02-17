@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../hooks/useAuth';
 import { AccountCreationStep } from './AccountCreationStep';
 import { CheckoutOverlay } from './CheckoutOverlay';
-import { ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { FormCloseButton } from '../../../components/ui/FormCloseButton';
+import { CheckCircle2 } from 'lucide-react';
 import './Premium.css';
 
 export const CheckoutPage: React.FC = () => {
@@ -32,13 +33,7 @@ export const CheckoutPage: React.FC = () => {
 
     return (
         <div className="checkout-page-container">
-            <header className="checkout-header">
-                <button className="back-btn" onClick={handleBackToGame}>
-                    <ArrowLeft size={20} />
-                    {t('common.back_to_game', 'Back to Game')}
-                </button>
-                <h1 className="checkout-title">{t('premium.store.title', 'Premium Access')}</h1>
-            </header>
+            <FormCloseButton onClick={handleBackToGame} />
 
             <main className="checkout-main">
                 {showSuccess ? (
@@ -67,7 +62,7 @@ export const CheckoutPage: React.FC = () => {
                             contentPackId="premium_base"
                             onSuccess={handleSuccess}
                             onCancel={handleBackToGame}
-                            price={t('premium.store.price', '89 SEK')}
+                            price={t('premium.store.price', '59 SEK')}
                         />
                     </div>
                 )}
