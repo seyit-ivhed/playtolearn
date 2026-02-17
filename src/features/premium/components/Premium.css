@@ -219,7 +219,7 @@
     right: 35%;
     transform: rotate(-5deg);
     width: 220px;
-    z-index: 20;
+    z-index: 30;
     border: 3px solid var(--color-brand-accent);
 }
 
@@ -228,7 +228,7 @@
     right: 10%;
     transform: rotate(10deg);
     width: 220px;
-    z-index: 21;
+    z-index: 31;
     border: 3px solid var(--color-brand-accent);
 }
 

@@ -11,10 +11,10 @@ import adventure4 from '../../../assets/images/maps/adventure-4.jpg';
 import adventure5 from '../../../assets/images/maps/adventure-5.jpg';
 import adventure6 from '../../../assets/images/maps/adventure-6.jpg';
 
-import kenjiCard from '../../../assets/images/companions/Kenji/unit-card/kenji-0.jpg';
-import zaharaCard from '../../../assets/images/companions/Zahara/unit-card/zahara-0.jpg';
+import kenjiCard from '../../../assets/images/companions/Kenji/unit-card/kenji-2.jpg';
+import zaharaCard from '../../../assets/images/companions/Zahara/unit-card/zahara-2.jpg';
 import amaraEvo2 from '../../../assets/images/companions/Amara/unit-card/amara-2.jpg';
-import amaraEvo3 from '../../../assets/images/companions/Amara/unit-card/amara-3.jpg';
+import tariqEvo4 from '../../../assets/images/companions/Tariq/unit-card/tariq-3.jpg';
 
 import shadowMaster from '../../../assets/images/enemies/the-evil-shogun.jpg';
 import spiritKing from '../../../assets/images/enemies/spirit-king.jpg';
@@ -97,9 +97,9 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
                     <img src={kenjiCard} className="collage-item comp-card-1" alt="Kenji" />
                     <img src={zaharaCard} className="collage-item comp-card-2" alt="Zahara" />
 
-                    {/* Amara Evolutions */}
+                    {/* Amara and Tariq Evolutions */}
                     <img src={amaraEvo2} className="collage-item puz-card-1" alt="Amara Evo 2" />
-                    <img src={amaraEvo3} className="collage-item puz-card-2" alt="Amara Evo 3" />
+                    <img src={tariqEvo4} className="collage-item puz-card-2" alt="Tariq Evo 4" />
                 </div>
             </div>
         </div>
