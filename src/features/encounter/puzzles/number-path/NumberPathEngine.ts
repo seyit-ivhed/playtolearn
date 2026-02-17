@@ -161,7 +161,7 @@ function generateHamiltonianPath(size: number): Position[] {
     // With Warnsdorff's Heuristic, we rarely need many attempts.
     // Reducing to 10 is safer for performance.
     for (let attempt = 0; attempt < 10; attempt++) {
-        let startRow = Math.floor(Math.random() * size);
+        const startRow = Math.floor(Math.random() * size);
         let startCol = Math.floor(Math.random() * size);
 
         // Parity check for odd grids: Hamiltonian path must start on a "majority" color cell.
