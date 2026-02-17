@@ -63,7 +63,7 @@ export const CheckoutPage: React.FC = () => {
                     </div>
                 ) : (
                     <div className="premium-checkout">
-                        <h2 className="premium-title">{t('premium.store.buy_now', 'Finalize Purchase')}</h2>
+
                         <CheckoutOverlay
                             contentPackId="premium_base"
                             onSuccess={handleSuccess}
