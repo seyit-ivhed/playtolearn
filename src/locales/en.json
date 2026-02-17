@@ -279,7 +279,7 @@
         "mystery_path": "This path remains shrouded in mystery...",
         "completed": "Completed",
         "replay_chapter": "Replay Adventure",
-        "continue_chapter": "Continue Adventure",
+        "continue_chapter": "Continue",
         "begin_chapter": "Begin Adventure",
         "locked": "Locked",
         "page_x_of_y": "{{current}} of {{total}}",

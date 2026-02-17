@@ -84,7 +84,7 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
                                 }}
                                 data-testid="begin-chapter-btn"
                             >
-                                {hasProgress ? t('chronicle.continue_chapter', 'Continue Adventure') : t('chronicle.begin_chapter')}
+                                {hasProgress ? t('chronicle.continue_chapter') : t('chronicle.begin_chapter')}
                             </PrimaryButton>
                         )
                     ) : isPremiumLocked && !isProgressionLocked ? (
