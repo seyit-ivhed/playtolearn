@@ -8,11 +8,8 @@ interface VisualEffectOverlayProps {
 }
 
 export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: VisualEffectOverlayProps) => {
-
     useEffect(() => {
         // Duration depends on the animation length roughly
-        // Shield: ~1s
-        // Arrow: ~0.8s
         const timer = setTimeout(() => {
             onComplete();
         }, 1200); // 1.2s safety buffer for all effects
@@ -21,12 +18,6 @@ export const VisualEffectOverlay = ({ effectType, onComplete, targetId }: Visual
     }, [onComplete]);
 
     const renderEffect = () => {
-        if (effectType.startsWith('protective_stance')) {
-            // Updated: Return null to hide global overlay (handled by per-card VFX now)
-            // The useEffect timer still runs to trigger onComplete!
-            return null;
-        }
-
         if (effectType.startsWith('precision_shot')) {
             const style: React.CSSProperties = {};
 
