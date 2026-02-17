@@ -14,7 +14,7 @@ import { AdventureHeader } from './components/AdventureHeader';
 const AdventurePage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const location = useLocation();
+    const location = useLocation()
     const { adventureId } = useParams<{ adventureId: string }>();
 
     const {
@@ -32,7 +32,6 @@ const AdventurePage = () => {
 
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
     const [selectedEncounter, setSelectedEncounter] = useState<Encounter | null>(null);
-
 
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === adventureId);
@@ -101,12 +100,6 @@ const AdventurePage = () => {
         setIsDifficultyModalOpen(false);
     };
 
-    const getInitialDifficulty = () => {
-        // Per user request: Always stick to previously selected difficulty ("sticky").
-        // activeEncounterDifficulty tracks the last difficulty used to START an encounter.
-        return activeEncounterDifficulty;
-    };
-
     return (
         <div className="adventure-page custom-scrollbar">
             <main className="adventure-content">
@@ -128,7 +121,7 @@ const AdventurePage = () => {
                 onClose={() => setIsDifficultyModalOpen(false)}
                 onStart={handleStartEncounter}
                 title={(selectedEncounter ? t(`adventures.${adventureId}.nodes.${selectedEncounter.id}.label`, selectedEncounter.label || '') : '') as string}
-                initialDifficulty={getInitialDifficulty()}
+                initialDifficulty={activeEncounterDifficulty}
             />
         </div>
     );
