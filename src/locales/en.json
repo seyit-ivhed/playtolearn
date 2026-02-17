@@ -24,8 +24,8 @@
     "adventures": {
         "1": {
             "title": "The Hidden Entrance",
-            "story_hook": "Amara, a young traveler from distant southern lands, is visiting her friend Tariq in his homeland. Strange sightings near the great stone archway have caught their attention. Together, they set out to investigate an ancient cave entrance, long buried by sand, that has been revealed by the shifting dunes.",
-            "completion_summary": "The Sand Colossus is defeated! Amara and Tariq stand together at the mouth of the massive cave, their friendship strengthened by their first adventure. The dark tunnel beckons them forward into the unknown depths.",
+            "story_hook": "Amara visits her friend Tariq in the desert. They see something strange near the big stone arch. Together, they go to check out a hidden cave that appeared in the sand.",
+            "completion_summary": "You beat the Sand Colossus! Amara and Tariq are now best friends. They stand at the cave entrance, ready for their next adventure.",
             "mystery_path": "A mysterious path into the unknown...",
             "nodes": {
                 "1_1": {
@@ -65,8 +65,8 @@
         },
         "2": {
             "title": "The Ruins of Ashur",
-            "story_hook": "Leaving the desert sun behind, Amara and Tariq descend into the cool depths of the canyon cave. The tunnel opens into a vast subterranean city—the ancient Ashur. But bandits have turned the ruins into their camp, and the stones themselves are beginning to stir with ancient magic.",
-            "completion_summary": "With the Stone Emperor defeated, the heart of Ashur is safe. As Amara and Tariq stand among the ancient ruins, they realize this is just the beginning. Inspired by their adventures together, they make a pact: to explore the world beyond these lands, to see what wonders await, and to face whatever challenges come their way—together.",
+            "story_hook": "Amara and Tariq go deep into a cool cave. Inside, they find an old underground city called Ashur. But watch out! Bandits are hiding in the ruins, and the stones are moving like magic.",
+            "completion_summary": "The Stone Emperor is defeated! The city of Ashur is safe. Amara and Tariq promise to explore the whole world together and help anyone in need.",
             "mystery_path": "Deep within the ruins, a new shadow grows...",
             "nodes": {
                 "2_1": {
@@ -106,8 +106,8 @@
         },
         "3": {
             "title": "The Misty Foothills",
-            "story_hook": "The biting air of the Jade Peaks greeted Amara and Tariq as they arrived in the high mountains. Shrouded in mist, a young boy named Kenji sat on a rock, clutching an oversized wooden sword. His eyes widened with excitement and surprise at their arrival. 'Who are you?' he asked, before hurriedly explaining how the Shadow Master's forces had begun to invade his mountains, spreading a dark, unnatural mist across the land.",
-            "completion_summary": "The Iron Enforcer has been driven back, and the mists have momentarily parted. Kenji, impressed by the newcomers' bravery and wisdom, wipes his brow and offers a formal bow. The path to the peaks is dangerous, but with new allies, the journey upward has just begun.",
+            "story_hook": "Amara and Tariq climb the cold Jade Peaks. They meet Kenji, a boy with a wooden sword. He needs help! Bad ninjas and a dark mist are taking over his mountain home.",
+            "completion_summary": "Great job! The bad guys ran away, and the mist is gone for now. Kenji bows to say thank you. The path up the mountain is safe again.",
             "mystery_path": "The trail leads higher into the frozen heights...",
             "nodes": {
                 "3_1": {
@@ -144,8 +144,8 @@
         },
         "4": {
             "title": "Rise of the Shadow Master",
-            "story_hook": "The mists have cleared, revealing a path heavily guarded by samurai warriors. The Shadow Master awaits in his fortress, plotting to expand his dominion. Our heroes must stealthily navigate through the enemy lines and solve the ancient puzzles that lock the fortress gates.",
-            "completion_summary": "The Shadow Master is defeated! His samurai army has been dispersed, and the fortress is now silent. Amara and her friends have saved the Jade Peaks from the dark threat.",
+            "story_hook": "The mist clears, and our heroes see a big fortress. The Shadow Master lives there! You must sneak past the guards and solve puzzles to open the gates.",
+            "completion_summary": "You did it! The Shadow Master is gone. The fortress is quiet, and the Jade Peaks are free.",
             "mystery_path": "The fortress looms large ahead...",
             "nodes": {
                 "4_1": {
@@ -188,8 +188,8 @@
         },
         "5": {
             "title": "The Scorched Plains",
-            "story_hook": "The heat is intense, and the air shimmers with mirages. The pride has been corrupted, and the spirits are restless. Zahara must reclaim her birthright and restore balance to the plains.",
-            "completion_summary": "The Inferno Mane is defeated! The fire in his eyes fades, replaced by a respectful nod. The pride bows to Zahara, acknowledging her strength. The scorching heat begins to subside, promising rain.",
+            "story_hook": "It is very hot here! The lions are acting strange, and the spirits are upset. Zahara must use her magic to fix the plains.",
+            "completion_summary": "The Inferno Mane calms down. The fire in his eyes goes away. The lions bow to Zahara. The heat cools down, and rain is coming.",
             "mystery_path": "The horizon burns with a new challenge...",
             "nodes": {
                 "5_1": {
@@ -232,8 +232,8 @@
         },
         "6": {
             "title": "The Spirit Realm",
-            "story_hook": "Amara, Tariq, Kenji, and Zahara stand at the threshold of the Spirit Realm. The once peaceful land is now fractured by chaotic energy. The Spirit King, guardian of harmony, has been overwhelmed by the shadow of the Warlord's influence. Our heroes must unite their strengths to calm the king and restore the eternal balance.",
-            "completion_summary": "Harmony is restored! The Spirit King, now calm and radiant, bows to the heroes. The fractured pieces of the realm mend before their eyes. Amara and her friends have secured the peace, but they know their journey of learning and discovery has only just reached its first great milestone.",
+            "story_hook": "The friends enter the Spirit Realm. Everything is messy and broken here. The Spirit King is sad. You must help him feel better to fix the world.",
+            "completion_summary": "Everything is fixed! The Spirit King is happy again. Amara and her friends have saved the day!",
             "mystery_path": "The spirits whisper of even greater trials...",
             "nodes": {
                 "6_1": {
@@ -332,7 +332,7 @@
             "instruction": "Refill your canteen by choosing the right amount of water"
         },
         "balance": {
-            "instruction": "Remove stones until both piles are of equal weight!"
+            "instruction": "Make both piles weigh the same!"
         },
         "number_path": {
             "instruction": "Create a continuous path by filling in the numbers!"
@@ -344,7 +344,7 @@
             "rune_alt": "Rune"
         },
         "latin_square": {
-            "instruction": "Place runes so each appears exactly once in every row and column."
+            "instruction": "Put runes in the grid. Use each rune only once in every row and column."
         },
         "equation": {
             "instruction": "Find the value of the mystery symbol!"
