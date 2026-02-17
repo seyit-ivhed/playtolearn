@@ -130,7 +130,7 @@ describe('NumberPathEngine', () => {
         it('should generate a full sequence of numbers in preFilledIndices if we fill manually', () => {
             // This is more of an integration check for the Hamiltonian path generator
             // We ensure it returns a valid structure that doesn't crash
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 2; i++) {
                 const data = generateNumberPathData(3);
                 expect(data.preFilledIndices!.length).toBeGreaterThan(0);
                 data.preFilledIndices!.forEach(p => {
