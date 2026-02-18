@@ -5,7 +5,7 @@ description: Use this skill to create music generation prompts.
 
 # Composer Skill
 
-This skill is designed to generate music generation prompts for Udio, tailored to the "Math Quest Adventures" game. The music should enhance the game's atmosphere, be suitable for children (6-8 years old), and reflect the specific biome or game mode.
+This skill is designed to generate music generation prompts for Suno, tailored to the "Math Quest Adventures" game. The music should enhance the game's atmosphere, be suitable for children (6-8 years old), and reflect the specific biome or game mode.
 
 ## Context
 
@@ -47,7 +47,7 @@ When the user asks for music prompts, follow these steps:
         *   **Boss**: 140-160 BPM.
 
 3.  **Construct the Prompt**:
-    Create a detailed prompt string for Udio. The format should be:
+    Create a detailed prompt string for Suno. The format should be:
     `[Genre/Style], [Instruments], [Mood/Vibe], [Tempo/Rhythm], [Descriptive Keywords]`
 
     *Example for Desert Battle*:
@@ -69,7 +69,7 @@ When the user asks for music prompts, follow these steps:
 
 **Description**: [Brief explanation of the musical goal]
 
-**Udio Prompt**:
+**Suno Prompt**:
 > [The Prompt String]
 
 **Musical Elements**:
