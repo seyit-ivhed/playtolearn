@@ -8,6 +8,7 @@
   --color-bg-tertiary: #0000005a;
   /* Transparent Black */
   --color-bg-overlay: rgba(0, 0, 0, 0.85);
+  --color-battleground-bg: var(--color-chronicle-bg);
 
   /* Primary Brand Colors */
   --color-brand-primary: #3498db;
