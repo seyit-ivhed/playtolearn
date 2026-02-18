@@ -104,7 +104,8 @@ src/
 │   └── constants.ts
 │
 ├── assets/                # Static assets
-│   └── images/
+│   ├── images/
+│   └── music/             # Background music and large audio files (>4MB)
 │
 ├── App.tsx                # Root application component
 ├── main.tsx              # Application entry point
@@ -207,6 +208,19 @@ feature-name/
 - Must be used in 2+ features
 - Follow React hooks naming convention (`use*`)
 - Feature-specific hooks go in `features/[feature]/hooks/`
+
+---
+
+### `/src/assets/` - Static Assets
+
+**Purpose**: Images, fonts, and media files.
+
+**Guidelines**:
+- **Images**: Place in `/src/assets/images/`
+- **Music/Audio**: Place in `/src/assets/music/`
+  - Large files (>4MB) should be in `src/assets/music` to leverage Vite's asset handling (hashing/cache busting).
+  - Use dynamic imports or `new Audio(importedUrl)` for large media to avoid bundling them into the initial JS payload.
+
 
 ---
 
