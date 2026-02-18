@@ -9,6 +9,7 @@ import { useInitializeGame } from './hooks/useInitializeGame';
 import { useAnonymousLoginTrigger } from './hooks/useAnonymousLoginTrigger';
 import { LoadingScreen } from './components/LoadingScreen';
 import { AdventureGuard } from './components/guards/AdventureGuard';
+import { BackgroundMusic } from './components/audio/BackgroundMusic';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
@@ -20,34 +21,37 @@ function AppContent() {
   }
 
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        {/* Unified Entry Point */}
-        <Route path="/" element={<Navigate to="/chronicle" replace />} />
+    <>
+      <BackgroundMusic />
+      <Routes>
+        <Route element={<Layout />}>
+          {/* Unified Entry Point */}
+          <Route path="/" element={<Navigate to="/chronicle" replace />} />
 
-        {/* Chronicle Routes */}
-        <Route path="/chronicle" element={<ChronicleBook />} />
-        <Route path="/chronicle/:pageId" element={<ChronicleBook />} />
+          {/* Chronicle Routes */}
+          <Route path="/chronicle" element={<ChronicleBook />} />
+          <Route path="/chronicle/:pageId" element={<ChronicleBook />} />
 
-        {/* Protected Adventure Routes */}
-        <Route path="/map/:adventureId" element={
-          <AdventureGuard>
-            <AdventurePage />
-          </AdventureGuard>
-        } />
-        <Route path="/encounter/:adventureId/:nodeIndex" element={
-          <AdventureGuard>
-            <EncounterPage />
-          </AdventureGuard>
-        } />
-        <Route path="/puzzle/:adventureId/:nodeIndex" element={
-          <AdventureGuard>
-            <PuzzlePage />
-          </AdventureGuard>
-        } />
-        <Route path="/math-debug" element={<MathTestPage />} />
-      </Route>
-    </Routes>
+          {/* Protected Adventure Routes */}
+          <Route path="/map/:adventureId" element={
+            <AdventureGuard>
+              <AdventurePage />
+            </AdventureGuard>
+          } />
+          <Route path="/encounter/:adventureId/:nodeIndex" element={
+            <AdventureGuard>
+              <EncounterPage />
+            </AdventureGuard>
+          } />
+          <Route path="/puzzle/:adventureId/:nodeIndex" element={
+            <AdventureGuard>
+              <PuzzlePage />
+            </AdventureGuard>
+          } />
+          <Route path="/math-debug" element={<MathTestPage />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

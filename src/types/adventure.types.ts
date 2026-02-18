@@ -64,6 +64,11 @@ export interface Adventure {
     completionSummary?: string; // Summary shown after completion
     illustration?: string; // Thumbnail/Illustration for the storybook page
     mapImage?: string;     // The background image for the adventure map
+
+    // Background Music
+    mapMusic?: string;     // Music played during map exploration and puzzles
+    combatMusic?: string;  // Music played during combat encounters
+
     // The sequence of nodes for this adventure
     encounters: Encounter[];
     levelRange?: [number, number]; // Recommended level range [min, max]
