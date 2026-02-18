@@ -1,11 +1,11 @@
 ---
-name: Prompt Engineer
-description: Use this skill to generate prompts for generating images using large language models.
+name: 2D Artist
+description: Use this skill to create prompts for generating 2d images using large language models.
 ---
 
 # Goal
 
-Generate prompts for generating images using large language models.
+Generate prompts for generating 2d images using large language models.
 
 # Instructions
 
