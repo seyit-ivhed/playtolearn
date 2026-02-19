@@ -20,7 +20,7 @@ export const getTargetMusicTrack = (pathname: string, adventures: Adventure[]): 
         return adventure?.mapMusic || null;
     }
 
-    // 3. Combat -> Combat Music
+    // 3. Battle -> Battle Music
     const combatMatch = matchPath('/encounter/:adventureId/:nodeIndex', pathname);
     if (combatMatch) {
         const { adventureId, nodeIndex } = combatMatch.params;
@@ -29,11 +29,11 @@ export const getTargetMusicTrack = (pathname: string, adventures: Adventure[]): 
         if (adventure && nodeIndex) {
             const index = parseInt(nodeIndex, 10) - 1;
             const encounter = adventure.encounters[index];
-            // Prefer encounter-specific music, then fall back to adventure global combat music
-            return encounter?.combatMusic || adventure.combatMusic || null;
+            // Only play music if explicitly defined for this encounter
+            return encounter?.battleMusic || null;
         }
 
-        return adventure?.combatMusic || null;
+        return null;
     }
 
     return null;

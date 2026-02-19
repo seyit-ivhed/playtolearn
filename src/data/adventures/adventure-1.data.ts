@@ -5,13 +5,13 @@ export const ADVENTURE_1: Adventure = {
     id: '1',
     levelRange: [1, 5],
     mapMusic: 'adventure-1/map.mp3',
-    combatMusic: 'adventure-1/combat-intense.mp3',
     encounters: [
         {
             id: '1_1',
             type: EncounterType.BATTLE,
             coordinates: { x: 300, y: 4300 },
             enemies: [MONSTERS.SCORPION_1],
+            battleMusic: 'adventure-1/combat-1.mp3',
         },
         {
             id: '1_2',
@@ -20,6 +20,7 @@ export const ADVENTURE_1: Adventure = {
             enemies: [
                 ...Array.from({ length: 3 }).map(() => MONSTERS.TINY_SCORPION)
             ],
+            battleMusic: 'adventure-1/combat-2.mp3',
         },
         {
             id: '1_3',
@@ -38,6 +39,7 @@ export const ADVENTURE_1: Adventure = {
                 MONSTERS.DESERT_SCAVENGER,
                 MONSTERS.DESERT_SCAVENGER
             ],
+            battleMusic: 'adventure-1/combat-1.mp3',
         },
         {
             id: '1_5',
@@ -48,6 +50,7 @@ export const ADVENTURE_1: Adventure = {
                 MONSTERS.DESERT_SCAVENGER,
                 MONSTERS.TINY_SCORPION
             ],
+            battleMusic: 'adventure-1/combat-intense.mp3',
         },
         {
             id: '1_6',
@@ -68,6 +71,7 @@ export const ADVENTURE_1: Adventure = {
                 MONSTERS.SCORPION_1,
                 MONSTERS.SAND_SPIRIT_1
             ],
+            battleMusic: 'adventure-1/combat-2.mp3',
         },
         {
             id: '1_8',
@@ -86,6 +90,7 @@ export const ADVENTURE_1: Adventure = {
                 MONSTERS.SAND_SPIRIT_1,
                 MONSTERS.SCORPION_1
             ],
+            battleMusic: 'adventure-1/combat-1.mp3',
         },
 
         {
@@ -93,7 +98,7 @@ export const ADVENTURE_1: Adventure = {
             type: EncounterType.BOSS,
             coordinates: { x: 0, y: 1000 },
             enemies: [MONSTERS.SAND_COLOSSUS],
-            combatMusic: 'adventure-1/boss-battle.mp3',
+            battleMusic: 'adventure-1/combat-intense.mp3',
         },
         {
             id: '1_11',

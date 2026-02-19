@@ -24,14 +24,22 @@ const mockAdventures: Adventure[] = [
     {
         id: '1',
         mapMusic: 'desert-map.mp3',
-        combatMusic: 'desert-combat.mp3',
-        encounters: [],
+        encounters: [
+            { id: '1_1', type: 'BATTLE' as any, battleMusic: 'battle.mp3' }
+        ],
     },
     {
         id: '2',
         encounters: [],
     }
 ];
+
+// Mock Audio
+const playMock = vi.fn(() => Promise.resolve());
+const pauseMock = vi.fn();
+
+window.HTMLMediaElement.prototype.play = playMock;
+window.HTMLMediaElement.prototype.pause = pauseMock;
 
 describe('getTargetMusicTrack', () => {
     it('returns chronicles.mp3 for home path', () => {
@@ -51,21 +59,14 @@ describe('getTargetMusicTrack', () => {
         expect(getTargetMusicTrack('/puzzle/1/5', mockAdventures)).toBe('desert-map.mp3');
     });
 
-    it('returns adventure combat music for encounter paths', () => {
-        expect(getTargetMusicTrack('/encounter/1/1', mockAdventures)).toBe('desert-combat.mp3');
+    it('returns null for battle paths if not explicitly defined on encounter', () => {
+        // mockAdventures[0] has encounters[0] at index 0 (node 1)
+        // Let's check a battle node that doesn't exist or doesn't have music
+        expect(getTargetMusicTrack('/encounter/1/2', mockAdventures)).toBeNull();
     });
 
-    it('returns encounter-specific combat music if provided', () => {
-        const customAdventures = [
-            {
-                id: '1',
-                combatMusic: 'default-combat.mp3',
-                encounters: [
-                    { id: '1_1', type: 'BATTLE' as any, combatMusic: 'special-combat.mp3' }
-                ]
-            }
-        ];
-        expect(getTargetMusicTrack('/encounter/1/1', customAdventures as any)).toBe('special-combat.mp3');
+    it('returns encounter-specific battle music if provided', () => {
+        expect(getTargetMusicTrack('/encounter/1/1', mockAdventures)).toBe('battle.mp3');
     });
 
     it('returns null if adventure has no music configured', () => {
