@@ -37,6 +37,10 @@ describe('getTargetMusicTrack', () => {
         expect(getTargetMusicTrack('/map/1', mockAdventures)).toBe('desert-map.mp3');
     });
 
+    it('returns adventure map music for puzzle paths', () => {
+        expect(getTargetMusicTrack('/puzzle/1/5', mockAdventures)).toBe('desert-map.mp3');
+    });
+
     it('returns null for battle paths if not explicitly defined on encounter', () => {
         // mockAdventures[0] has encounters[0] at index 0 (node 1)
         // Let's check a battle node that doesn't exist or doesn't have music

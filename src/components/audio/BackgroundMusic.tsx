@@ -4,8 +4,16 @@ import { useAudioStore } from '../../stores/audio.store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { getTargetMusicTrack } from './audio.utils';
 
+// Load all music files from the assets directory
+const musicFiles = import.meta.glob('../../assets/music/**/*.mp3', {
+    eager: true,
+    query: '?url',
+    import: 'default'
+}) as Record<string, string>;
+
 const getMusicUrl = (filename: string) => {
-    return new URL(`../../assets/music/${filename}`, import.meta.url).href;
+    const key = `../../assets/music/${filename}`;
+    return musicFiles[key] || '';
 };
 
 export const BackgroundMusic = () => {

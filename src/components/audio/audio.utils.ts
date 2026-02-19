@@ -17,7 +17,7 @@ export const getTargetMusicTrack = (pathname: string, adventures: Adventure[]): 
         return null;
     }
 
-    if (type === 'map') {
+    if (type === 'map' || type === 'puzzle') {
         return adventure.mapMusic || null;
     }
 
