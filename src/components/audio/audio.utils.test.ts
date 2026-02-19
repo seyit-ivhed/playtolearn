@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { getTargetMusicTrack } from './audio.utils';
+import { getTargetMusicTrack, getRandomSuccessTrack } from './audio.utils';
 import { type Adventure } from '../../types/adventure.types';
 
 const mockAdventures: Adventure[] = [
@@ -51,11 +51,38 @@ describe('getTargetMusicTrack', () => {
         expect(getTargetMusicTrack('/encounter/1/1', mockAdventures)).toBe('battle.mp3');
     });
 
+    it('returns success track during victory phase in encounters', () => {
+        expect(getTargetMusicTrack('/encounter/1/1', mockAdventures, 'VICTORY', 'success/win.mp3')).toBe('success/win.mp3');
+    });
+
+    it('returns null during victory phase if no success track is provided', () => {
+        expect(getTargetMusicTrack('/encounter/1/1', mockAdventures, 'VICTORY', null)).toBeNull();
+    });
+
     it('returns null if adventure has no music configured', () => {
         expect(getTargetMusicTrack('/map/2', mockAdventures)).toBeNull();
     });
 
     it('returns null for unknown paths', () => {
         expect(getTargetMusicTrack('/unknown', mockAdventures)).toBeNull();
+    });
+});
+
+describe('getRandomSuccessTrack', () => {
+    const musicKeys = [
+        '../../assets/music/chronicles.mp3',
+        '../../assets/music/adventure-1/map.mp3',
+        '../../assets/music/success/success-1.mp3',
+        '../../assets/music/success/success-2.mp3',
+    ];
+
+    it('picks one of the success tracks', () => {
+        const track = getRandomSuccessTrack(musicKeys);
+        expect(['success/success-1.mp3', 'success/success-2.mp3']).toContain(track);
+    });
+
+    it('returns null if no success tracks are available', () => {
+        const track = getRandomSuccessTrack(['../../assets/music/other.mp3']);
+        expect(track).toBeNull();
     });
 });

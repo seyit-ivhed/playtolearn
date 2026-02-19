@@ -2,7 +2,9 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAudioStore } from '../../stores/audio.store';
 import { ADVENTURES } from '../../data/adventures.data';
-import { getTargetMusicTrack } from './audio.utils';
+import { getTargetMusicTrack, getRandomSuccessTrack } from './audio.utils';
+import { useEncounterStore } from '../../stores/encounter/store';
+import { EncounterPhase } from '../../types/encounter.types';
 
 // Load all music files from the assets directory
 const musicFiles = import.meta.glob('../../assets/music/**/*.mp3', {
@@ -21,12 +23,30 @@ export const BackgroundMusic = () => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const { isMuted, volume } = useAudioStore();
     const [currentTrack, setCurrentTrack] = useState<string | null>(null);
+    const [successTrack, setSuccessTrack] = useState<string | null>(null);
     const [isAudioUnlocked, setIsAudioUnlocked] = useState(false);
 
-    // Determine target track based on route
+    // Get encounter phase to detect victory
+    const { phase } = useEncounterStore();
+
+    // Determine target track based on route and game state
     const targetFilename = useMemo(() => {
-        return getTargetMusicTrack(location.pathname, ADVENTURES);
-    }, [location.pathname]);
+        let currentSuccess = successTrack;
+
+        // 1. Handle randomization for battle victory
+        if (location.pathname.startsWith('/encounter') && phase === EncounterPhase.VICTORY && !currentSuccess) {
+            currentSuccess = getRandomSuccessTrack(Object.keys(musicFiles));
+            setSuccessTrack(currentSuccess);
+        }
+
+        // 2. Reset success track when leaving victory state
+        if (successTrack && phase !== EncounterPhase.VICTORY) {
+            setSuccessTrack(null);
+            currentSuccess = null;
+        }
+
+        return getTargetMusicTrack(location.pathname, ADVENTURES, phase, currentSuccess);
+    }, [location.pathname, phase, successTrack]);
 
     // Handle track switching
     useEffect(() => {
