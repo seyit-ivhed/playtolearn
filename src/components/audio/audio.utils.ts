@@ -68,4 +68,3 @@ export const getRandomSuccessTrack = (musicFileKeys: string[]): string | null =>
 
     return availableSuccessTracks[Math.floor(Math.random() * availableSuccessTracks.length)];
 };
-

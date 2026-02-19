@@ -1,13 +1,13 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { getTargetMusicTrack, getRandomSuccessTrack } from './audio.utils';
-import { type Adventure } from '../../types/adventure.types';
+import { type Adventure, EncounterType } from '../../types/adventure.types';
 
 const mockAdventures: Adventure[] = [
     {
         id: '1',
         mapMusic: 'desert-map.mp3',
         encounters: [
-            { id: '1_1', type: 'BATTLE' as any, battleMusic: 'battle.mp3' }
+            { id: '1_1', type: EncounterType.BATTLE, battleMusic: 'battle.mp3' }
         ],
     },
     {
@@ -15,13 +15,6 @@ const mockAdventures: Adventure[] = [
         encounters: [],
     }
 ];
-
-// Mock Audio
-const playMock = vi.fn(() => Promise.resolve());
-const pauseMock = vi.fn();
-
-window.HTMLMediaElement.prototype.play = playMock;
-window.HTMLMediaElement.prototype.pause = pauseMock;
 
 describe('getTargetMusicTrack', () => {
     it('returns chronicles.mp3 for home path', () => {
