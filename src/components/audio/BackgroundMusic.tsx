@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAudioStore } from '../../stores/audio.store';
 import { ADVENTURES } from '../../data/adventures.data';
-import { getTargetMusicTrack, getRandomSuccessTrack } from './audio.utils';
+import { getRandomSuccessTrack, getTargetMusicTrack } from './audio.utils';
 import { useEncounterStore } from '../../stores/encounter/store';
 import { EncounterPhase } from '../../types/encounter.types';
 
@@ -11,6 +11,8 @@ const musicFiles = import.meta.glob('../../assets/music/**/*.mp3', {
     query: '?url',
     import: 'default'
 }) as Record<string, string>;
+
+const MUSIC_FILE_KEYS = Object.keys(musicFiles);
 
 const getMusicUrl = (filename: string) => {
     const key = `../../assets/music/${filename}`;
@@ -21,80 +23,74 @@ export const BackgroundMusic = () => {
     const location = useLocation();
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const { isMuted, volume } = useAudioStore();
-    const [currentTrack, setCurrentTrack] = useState<string | null>(null);
-    const [isAudioUnlocked, setIsAudioUnlocked] = useState(false);
-    const successTrackRef = useRef<string | null>(null);
-
     const { phase } = useEncounterStore();
+
+    // Use useRef to track the currently playing file without causing re-renders
+    const currentTrackRef = useRef<string | null>(null);
 
     const isVictoryEncounter = location.pathname.startsWith('/encounter') && phase === EncounterPhase.VICTORY;
 
-    if (isVictoryEncounter && !successTrackRef.current) {
-        successTrackRef.current = getRandomSuccessTrack(Object.keys(musicFiles));
-    }
-
-    if (!isVictoryEncounter) {
-        successTrackRef.current = null;
-    }
+    // Stable selection of victory music
+    const victoryTrack = useMemo(() => {
+        if (isVictoryEncounter) {
+            return getRandomSuccessTrack(MUSIC_FILE_KEYS);
+        }
+        return null;
+    }, [isVictoryEncounter]);
 
     const targetFilename = getTargetMusicTrack(
         location.pathname,
         ADVENTURES,
         phase,
-        successTrackRef.current
+        victoryTrack
     );
 
     useEffect(() => {
-        if (targetFilename !== currentTrack) {
-            setCurrentTrack(targetFilename);
+        if (!audioRef.current) return;
 
-            if (audioRef.current) {
-                if (targetFilename) {
-                    const url = getMusicUrl(targetFilename);
-                    audioRef.current.src = url;
+        // Only act if the track actually changes
+        if (targetFilename !== currentTrackRef.current) {
+            currentTrackRef.current = targetFilename;
 
-                    audioRef.current.play().then(() => {
-                        setIsAudioUnlocked(true);
-                    }).catch(e => {
-                        console.info("Autoplay blocked, waiting for user interaction.", e);
-                    });
-                } else {
-                    audioRef.current.pause();
-                    audioRef.current.src = '';
-                }
+            if (targetFilename) {
+                const url = getMusicUrl(targetFilename);
+                audioRef.current.src = url;
+
+                audioRef.current.play().catch(e => {
+                    console.info("Autoplay blocked, waiting for user interaction.", e);
+                });
+            } else {
+                audioRef.current.pause();
+                audioRef.current.src = '';
             }
         }
-    }, [targetFilename, currentTrack]);
+    }, [targetFilename]);
 
+    // Volume control effect
     useEffect(() => {
-        if (isAudioUnlocked) {
-            return;
+        if (audioRef.current) {
+            audioRef.current.volume = isMuted ? 0 : volume;
         }
+    }, [isMuted, volume]);
 
+    // Global interaction listener to retry playback if blocked
+    useEffect(() => {
         const handleInteraction = () => {
-            if (audioRef.current && audioRef.current.paused && currentTrack) {
-                audioRef.current.play()
-                    .then(() => setIsAudioUnlocked(true))
-                    .catch(e => console.error("Failed to play on interaction:", e));
+            if (audioRef.current && audioRef.current.paused && currentTrackRef.current) {
+                audioRef.current.play().catch(e => console.error("Failed to play on interaction:", e));
             }
         };
 
-        window.addEventListener('click', handleInteraction, { once: true });
-        window.addEventListener('touchstart', handleInteraction, { once: true });
-        window.addEventListener('keydown', handleInteraction, { once: true });
+        window.addEventListener('click', handleInteraction);
+        window.addEventListener('touchstart', handleInteraction);
+        window.addEventListener('keydown', handleInteraction);
 
         return () => {
             window.removeEventListener('click', handleInteraction);
             window.removeEventListener('touchstart', handleInteraction);
             window.removeEventListener('keydown', handleInteraction);
         };
-    }, [isAudioUnlocked, currentTrack]);
-
-    useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.volume = isMuted ? 0 : volume;
-        }
-    }, [isMuted, volume]);
+    }, []);
 
     return (
         <audio
