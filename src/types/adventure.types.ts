@@ -48,6 +48,7 @@ export interface Encounter {
     coordinates?: MapCoordinates;
     enemies?: AdventureMonster[]; // If type is BATTLE or BOSS
     puzzleData?: PuzzleConfig;       // If type is PUZZLE
+    combatMusic?: string;           // Optional specific music for this encounter
     unlocksCompanion?: string;      // Companion ID that joins when this encounter is started
 
     storyBeat?: {

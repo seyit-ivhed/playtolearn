@@ -93,6 +93,7 @@ export const ADVENTURE_1: Adventure = {
             type: EncounterType.BOSS,
             coordinates: { x: 0, y: 1000 },
             enemies: [MONSTERS.SAND_COLOSSUS],
+            combatMusic: 'adventure-1/boss-battle.mp3',
         },
         {
             id: '1_11',

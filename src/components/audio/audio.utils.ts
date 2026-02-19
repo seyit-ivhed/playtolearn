@@ -23,8 +23,16 @@ export const getTargetMusicTrack = (pathname: string, adventures: Adventure[]): 
     // 3. Combat -> Combat Music
     const combatMatch = matchPath('/encounter/:adventureId/:nodeIndex', pathname);
     if (combatMatch) {
-        const adventureId = combatMatch.params.adventureId;
+        const { adventureId, nodeIndex } = combatMatch.params;
         const adventure = adventures.find(a => a.id === adventureId);
+
+        if (adventure && nodeIndex) {
+            const index = parseInt(nodeIndex, 10) - 1;
+            const encounter = adventure.encounters[index];
+            // Prefer encounter-specific music, then fall back to adventure global combat music
+            return encounter?.combatMusic || adventure.combatMusic || null;
+        }
+
         return adventure?.combatMusic || null;
     }
 

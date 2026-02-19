@@ -55,6 +55,19 @@ describe('getTargetMusicTrack', () => {
         expect(getTargetMusicTrack('/encounter/1/1', mockAdventures)).toBe('desert-combat.mp3');
     });
 
+    it('returns encounter-specific combat music if provided', () => {
+        const customAdventures = [
+            {
+                id: '1',
+                combatMusic: 'default-combat.mp3',
+                encounters: [
+                    { id: '1_1', type: 'BATTLE' as any, combatMusic: 'special-combat.mp3' }
+                ]
+            }
+        ];
+        expect(getTargetMusicTrack('/encounter/1/1', customAdventures as any)).toBe('special-combat.mp3');
+    });
+
     it('returns null if adventure has no music configured', () => {
         expect(getTargetMusicTrack('/map/2', mockAdventures)).toBeNull();
     });
