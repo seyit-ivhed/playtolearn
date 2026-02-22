@@ -24,6 +24,7 @@ interface ChapterPageProps {
     isJustCompleted?: boolean;
     isPremiumLocked?: boolean;
     hasProgress: boolean;
+    isActive: boolean;
 }
 
 export const ChapterPage: React.FC<ChapterPageProps> = ({
@@ -41,15 +42,16 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     totalPages,
     isJustCompleted,
     isPremiumLocked,
-    hasProgress
+    hasProgress,
+    isActive
 }) => {
     const isProgressionLocked = status === AdventureStatus.LOCKED;
     const isLocked = isProgressionLocked || isPremiumLocked;
     const isCompleted = status === AdventureStatus.COMPLETED;
     const illustration = getAdventureIllustration(adventure.id);
 
-    // Only play voiceover if the chapter is not locked
-    useVoiceOver('chronicles', isLocked ? '' : `adventure-${adventure.id}`);
+    // Only play voiceover if the chapter is active and not locked
+    useVoiceOver('chronicles', isActive && !isLocked ? `adventure-${adventure.id}` : '');
 
     return (
         <div className={`chapter-page ${isLocked ? 'locked' : ''}`} data-testid="chapter-page">

@@ -14,6 +14,10 @@ export const useVoiceOver = (category: string, filename: string) => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
+        if (!filename) {
+            return;
+        }
+
         // Find the right path in the preloaded map
         const pathSuffix = `/voice/${i18n.language}/${category}/${filename}.mp3`;
         const moduleKey = Object.keys(voiceOverMap).find(key => key.endsWith(pathSuffix));

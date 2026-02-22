@@ -193,6 +193,7 @@ export const ChronicleBook: React.FC = () => {
                                     isJustCompleted={isJustCompleted && adventure.id === currentAdventure?.id}
                                     isPremiumLocked={!isAdventureUnlocked(adventure.id)}
                                     hasProgress={Object.keys(encounterResults).some(key => key.startsWith(`${adventure.id}_`))}
+                                    isActive={state === 'active'}
                                 />
                             </div>
                         </BookPage>
