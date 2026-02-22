@@ -4,12 +4,14 @@ import { MONSTERS } from '../monsters.data';
 export const ADVENTURE_3: Adventure = {
     id: '3',
     levelRange: [7, 8],
+    mapMusic: 'adventure-3/map.mp3',
     encounters: [
         {
             id: '3_1',
             type: EncounterType.BATTLE,
             coordinates: { x: 0, y: 4300 },
             enemies: [MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN],
+            battleMusic: 'adventure-3/combat-1.mp3',
             unlocksCompanion: 'kenji',
         },
         {
@@ -17,6 +19,7 @@ export const ADVENTURE_3: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: 300, y: 3800 },
             enemies: [MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN],
+            battleMusic: 'adventure-3/combat-2.mp3',
         },
 
         {
@@ -30,12 +33,14 @@ export const ADVENTURE_3: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: -150, y: 3100 },
             enemies: [MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER, MONSTERS.MIST_RONIN],
+            battleMusic: 'adventure-3/combat-1.mp3',
         },
         {
             id: '3_5',
             type: EncounterType.BATTLE,
             coordinates: { x: -60, y: 2500 },
             enemies: [MONSTERS.MIST_RONIN, MONSTERS.MIST_RONIN, MONSTERS.SAMURAI_SOLDIER],
+            battleMusic: 'adventure-3/combat-2.mp3',
         },
 
         {
@@ -49,6 +54,7 @@ export const ADVENTURE_3: Adventure = {
             type: EncounterType.BATTLE,
             coordinates: { x: 250, y: 1600 },
             enemies: [MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER, MONSTERS.SAMURAI_SOLDIER],
+            battleMusic: 'adventure-3/combat-1.mp3',
         },
         {
             id: '3_8',
@@ -62,6 +68,7 @@ export const ADVENTURE_3: Adventure = {
             type: EncounterType.BOSS,
             coordinates: { x: -50, y: 800 },
             enemies: [MONSTERS.SAMURAI_COMMANDER],
+            battleMusic: 'adventure-3/combat-2.mp3',
         },
         {
             id: '3_10',
