@@ -6,6 +6,7 @@ import { ChapterHeader } from './ChapterHeader';
 import { ChapterIllustration } from './ChapterIllustration';
 import { ChapterStory } from './ChapterStory';
 import { ChapterActions } from './ChapterActions';
+import { useVoiceOver } from '../../../hooks/useVoiceOver';
 import './ChapterPage.css';
 
 interface ChapterPageProps {
@@ -46,6 +47,9 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     const isLocked = isProgressionLocked || isPremiumLocked;
     const isCompleted = status === AdventureStatus.COMPLETED;
     const illustration = getAdventureIllustration(adventure.id);
+
+    // Only play voiceover if the chapter is not locked
+    useVoiceOver('chronicles', isLocked ? '' : `adventure-${adventure.id}`);
 
     return (
         <div className={`chapter-page ${isLocked ? 'locked' : ''}`} data-testid="chapter-page">

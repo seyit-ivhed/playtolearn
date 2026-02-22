@@ -24,7 +24,7 @@
     "adventures": {
         "1": {
             "title": "The Hidden Entrance",
-            "story_hook": "Amara visits her friend Tariq in the desert. They see something strange near the big stone arch. Together, they go to check out a hidden cave that appeared in the sand.",
+            "story_hook": "Amara is a brave young explorer from a faraway jungle. She travels to the desert to visit her friend Tariq. They see something strange near the big stone arch. Together, they go to check out a hidden cave that appeared in the sand.",
             "completion_summary": "You beat the Sand Colossus! Amara and Tariq are now best friends. They stand at the cave entrance, ready for their next adventure.",
             "mystery_path": "A mysterious path into the unknown...",
             "nodes": {

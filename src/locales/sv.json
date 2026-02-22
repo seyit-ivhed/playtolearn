@@ -24,7 +24,7 @@
     "adventures": {
         "1": {
             "title": "Den gömda ingången",
-            "story_hook": "Amara besöker sin vän Tariq i öknen. De ser något konstigt nära den stora stenporten. Tillsammans går de för att undersöka en hemlig grotta som dök upp i sanden.",
+            "story_hook": "Amara är en modig ung utforskare från en avlägsen djungel. Hon reser till öknen för att besöka sin vän Tariq. De ser något konstigt nära den stora stenporten. Tillsammans går de för att undersöka en hemlig grotta som dök upp i sanden.",
             "completion_summary": "Du besegrade Sandkolossen! Amara och Tariq är nu bästa vänner. De står vid grottingången, redo för sitt nästa äventyr.",
             "mystery_path": "En mystisk väg in i det okända...",
             "nodes": {
