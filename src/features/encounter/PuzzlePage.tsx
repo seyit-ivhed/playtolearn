@@ -14,6 +14,7 @@ import { LatinSquarePuzzle } from './puzzles/latin-square/LatinSquarePuzzle';
 import { NumberPathPuzzle } from './puzzles/number-path/NumberPathPuzzle';
 import { EquationPuzzle } from './puzzles/equation/EquationPuzzle';
 import { EncounterCompletionModal } from './components/EncounterCompletionModal';
+import { useVoiceOver } from '../../hooks/useVoiceOver';
 import styles from './PuzzlePage.module.css';
 
 interface PuzzleDefinition {
@@ -82,6 +83,15 @@ const PuzzlePage = () => {
         }
         return t(puzzleDef.instructionKey);
     }, [puzzleDef, t]);
+
+    const voFilename = useMemo(() => {
+        if (isCompleted || !puzzleData) {
+            return '';
+        }
+        return puzzleData.puzzleType.toLowerCase();
+    }, [isCompleted, puzzleData]);
+
+    useVoiceOver('puzzles', voFilename);
 
     const handleSolve = () => {
         setIsCompleted(true);
