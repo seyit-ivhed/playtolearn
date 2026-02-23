@@ -106,7 +106,7 @@
         },
         "3": {
             "title": "The Misty Foothills",
-            "story_hook": "Amara and Tariq climb the cold Jade Peaks. They meet Kenji, a boy with a wooden sword. He needs help! Bad ninjas and a dark mist are taking over his mountain home.",
+            "story_hook": "Amara and Tariq climb the cold mountain tops. They meet Kenji, a boy with a wooden sword. He needs help! Bad ninjas and a dark mist are taking over his mountain home.",
             "completion_summary": "Great job! The bad guys ran away, and the mist is gone for now. Kenji bows to say thank you. The path up the mountain is safe again.",
             "mystery_path": "The trail leads higher into the frozen heights...",
             "nodes": {
@@ -145,7 +145,7 @@
         "4": {
             "title": "Rise of the Shadow Master",
             "story_hook": "The mist clears, and our heroes see a big fortress. The Shadow Master lives there! You must sneak past the guards and solve puzzles to open the gates.",
-            "completion_summary": "You did it! The Shadow Master is gone. The fortress is quiet, and the Jade Peaks are free.",
+            "completion_summary": "You did it! The Shadow Master is gone. The fortress is quiet, and the mountain tops are free.",
             "mystery_path": "The fortress looms large ahead...",
             "nodes": {
                 "4_1": {
@@ -188,7 +188,7 @@
         },
         "5": {
             "title": "The Scorched Plains",
-            "story_hook": "It is very hot here! The lions are acting strange, and the spirits are upset. Zahara must use her magic to fix the plains.",
+            "story_hook": "Amara, Tariq, and Kenji travel to the Scorched Plains and meet Zahara. It is very hot here! The lions are acting strange, and the spirits are upset. Zahara must use her magic to fix the plains.",
             "completion_summary": "The Inferno Mane calms down. The fire in his eyes goes away. The lions bow to Zahara. The heat cools down, and rain is coming.",
             "mystery_path": "The horizon burns with a new challenge...",
             "nodes": {
@@ -232,8 +232,8 @@
         },
         "6": {
             "title": "The Spirit Realm",
-            "story_hook": "The friends enter the Spirit Realm. Everything is messy and broken here. The Spirit King is sad. You must help him feel better to fix the world.",
-            "completion_summary": "Everything is fixed! The Spirit King is happy again. Amara and her friends have saved the day!",
+            "story_hook": "The friends enter the Spirit Realm. A dark spell has taken over the Spirit King, making him wild and angry! You must battle him to break the spell and fix the world.",
+            "completion_summary": "You did it! The dark spell is broken, and the Spirit King is free. Amara and her friends have saved the day!",
             "mystery_path": "The spirits whisper of even greater trials...",
             "nodes": {
                 "6_1": {

@@ -106,7 +106,7 @@
         },
         "3": {
             "title": "De dimmiga fotbergen",
-            "story_hook": "Amara och Tariq klättrar upp för de kalla Jade-topparna. De träffar Kenji, en pojke med ett träsvärd. Han behöver hjälp! Elaka ninjor och en mörk dimma tar över hans berghem.",
+            "story_hook": "Amara och Tariq klättrar upp för de kalla bergstopparna. De träffar Kenji, en pojke med ett träsvärd. Han behöver hjälp! Elaka ninjor och en mörk dimma tar över hans berghem.",
             "completion_summary": "Bra jobbat! Skurkarna sprang iväg och dimman är borta för stunden. Kenji bugar för att säga tack. Vägen upp för berget är säker igen.",
             "mystery_path": "Stigen leder högre upp i de frusna höjderna...",
             "nodes": {
@@ -145,7 +145,7 @@
         "4": {
             "title": "Skuggmästarens uppgång",
             "story_hook": "Dimman lättar och våra hjältar ser en stor fästning. Skuggmästaren bor där! Du måste smyga förbi vakterna och lösa pussel för att öppna portarna.",
-            "completion_summary": "Du klarade det! Skuggmästaren är borta. Fästningen är tyst och Jade-topparna är fria.",
+            "completion_summary": "Du klarade det! Skuggmästaren är borta. Fästningen är tyst och bergstopparna är fria.",
             "mystery_path": "Fästningen tornar upp sig framför er...",
             "nodes": {
                 "4_1": {
@@ -188,7 +188,7 @@
         },
         "5": {
             "title": "De Svedda Slätterna",
-            "story_hook": "Det är väldigt varmt här! Lejonen beter sig konstigt och andarna är upprörda. Zahara måste använda sin magi för att laga slätterna.",
+            "story_hook": "Amara, Tariq och Kenji reser till de Svedda Slätterna och träffar Zahara. Det är väldigt varmt här! Lejonen beter sig konstigt och andarna är upprörda. Zahara måste använda sin magi för att laga slätterna.",
             "completion_summary": "Inferno-Man lugnar ner sig. Elden i hans ögon försvinner. Lejonen bugar för Zahara. Hettan svalnar och regnet är på väg.",
             "mystery_path": "Horisonten brinner med en ny utmaning...",
             "nodes": {
@@ -232,8 +232,8 @@
         },
         "6": {
             "title": "Andevärlden",
-            "story_hook": "Vännerna går in i Andevärlden. Allt är rörigt och trasigt här. Andekonungen är ledsen. Du måste hjälpa honom att må bättre för att laga världen.",
-            "completion_summary": "Allt är lagat! Andekonungen är glad igen. Amara och hennes vänner har räddat dagen!",
+            "story_hook": "Vännerna går in i Andevärlden. En mörk magi har tagit över Andekonungen och gjort honom vild och arg! Du måste strida mot honom för att bryta förtrollningen och laga världen.",
+            "completion_summary": "Du klarade det! Den mörka magin är bruten och Andekonungen är fri. Amara och hennes vänner har räddat dagen!",
             "mystery_path": "Andarna viskar om ännu större prövningar...",
             "nodes": {
                 "6_1": {
