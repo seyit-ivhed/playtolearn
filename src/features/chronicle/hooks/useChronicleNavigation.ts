@@ -37,11 +37,13 @@ export const useChronicleNavigation = ({
     }, [currentAdventureIndex, adventures, setActiveAdventureId, isJustCompleted, navigate, location.pathname]);
 
     const handlePrev = useCallback(() => {
-        if (currentAdventureIndex > 0) {
+        if (currentAdventureIndex === 0) {
+            navigate('/chronicle/difficulty');
+        } else {
             const prevAdj = adventures[currentAdventureIndex - 1];
             setActiveAdventureId(prevAdj.id);
         }
-    }, [currentAdventureIndex, adventures, setActiveAdventureId]);
+    }, [currentAdventureIndex, adventures, setActiveAdventureId, navigate]);
 
     const handleBegin = useCallback((id: string) => {
         if (!isAdventureUnlocked(id)) {

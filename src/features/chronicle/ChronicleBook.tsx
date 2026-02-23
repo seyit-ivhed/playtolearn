@@ -6,12 +6,10 @@ import { ChapterPage } from './components/ChapterPage';
 import { PremiumStoreModal } from '../premium/components/PremiumStoreModal';
 import { useChronicleData } from './hooks/useChronicleData';
 import { useChronicleNavigation } from './hooks/useChronicleNavigation';
-
 import styles from './ChronicleBook.module.css';
 import { BookLayout } from './components/Book/BookLayout';
 import { BookPage } from './components/Book/BookPage';
 import { BookCover } from './components/Book/BookCover';
-
 import { BookLogin } from './components/Book/BookLogin';
 import { BookDifficulty } from './components/Book/BookDifficulty';
 import { getBookStateFromUrl, calculatePageZIndex } from './utils/chronicle.utils';
@@ -36,7 +34,7 @@ export const ChronicleBook: React.FC = () => {
         adventures,
         currentAdventureIndex,
         currentAdventure,
-        activeAdventureId // This comes from useChronicleData (either override or internal default)
+        activeAdventureId
     } = useChronicleData(urlAdventureId);
 
     // Redirect Logic
@@ -179,13 +177,7 @@ export const ChronicleBook: React.FC = () => {
                                     onBegin={handleBegin}
                                     onReplay={handleBegin}
                                     onNext={handleNext}
-                                    onPrev={() => {
-                                        if (index === 0) {
-                                            navigate('/chronicle/difficulty');
-                                        } else {
-                                            handlePrev();
-                                        }
-                                    }}
+                                    onPrev={handlePrev}
                                     canNext={index < adventures.length - 1}
                                     canPrev={true}
                                     currentPage={index + 1}

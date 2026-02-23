@@ -2,60 +2,92 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAudioStore } from '../stores/audio.store';
 
-// Eagerly load all voiceover paths
-const voiceOverMap: Record<string, string> = import.meta.glob('/src/assets/voice/**/*.mp3', {
-    eager: true,
+const voiceOverMap = import.meta.glob<string>('/src/assets/voice/**/*.mp3', {
     import: 'default'
 });
 
+const resolveVoiceOverUrl = async (language: string, category: string, filename: string): Promise<string | null> => {
+    const pathSuffix = `/voice/${language}/${category}/${filename}.mp3`;
+    const moduleKey = Object.keys(voiceOverMap).find(key => key.endsWith(pathSuffix));
+
+    if (!moduleKey) {
+        console.warn(`Voiceover file not found for ${pathSuffix}`);
+        return null;
+    }
+
+    const url = await voiceOverMap[moduleKey]();
+    return url;
+};
+
 export const useVoiceOver = (category: string, filename: string) => {
     const { i18n } = useTranslation();
-    const { isMuted, volume, setVoiceOverPlaying } = useAudioStore();
+    const { setVoiceOverPlaying } = useAudioStore();
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
+        if (!category) {
+            console.error('useVoiceOver: category is required');
+            return;
+        }
+
         if (!filename) {
             setVoiceOverPlaying(false);
             return;
         }
 
-        // Find the right path in the preloaded map
-        const pathSuffix = `/voice/${i18n.language}/${category}/${filename}.mp3`;
-        const moduleKey = Object.keys(voiceOverMap).find(key => key.endsWith(pathSuffix));
+        let cancelled = false;
 
-        if (!moduleKey) {
-            console.warn(`Voiceover file not found for ${pathSuffix}`);
+        const playAudio = async () => {
+            const audioUrl = await resolveVoiceOverUrl(i18n.language, category, filename);
+
+            if (cancelled || !audioUrl) {
+                if (!audioUrl) {
+                    setVoiceOverPlaying(false);
+                }
+                return;
+            }
+
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.src = '';
+            }
+
+            const audio = new Audio(audioUrl);
+            const store = useAudioStore.getState();
+            audio.volume = store.volume;
+            audio.muted = store.isMuted;
+
+            audio.onended = () => setVoiceOverPlaying(false);
+            audio.onpause = () => setVoiceOverPlaying(false);
+            audio.onplay = () => setVoiceOverPlaying(true);
+
+            audioRef.current = audio;
+
+            audio.play().catch(e => {
+                console.warn('Autoplay prevented for voiceover:', e);
+                setVoiceOverPlaying(false);
+            });
+        };
+
+        playAudio();
+
+        return () => {
+            cancelled = true;
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.src = '';
+            }
             setVoiceOverPlaying(false);
+        };
+    }, [i18n.language, category, filename, setVoiceOverPlaying]);
+
+    useEffect(() => {
+        if (!audioRef.current) {
             return;
         }
 
-        const audioUrl = voiceOverMap[moduleKey];
-
-        if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.src = '';
-        }
-
-        const audio = new Audio(audioUrl);
-        audio.volume = volume;
-        audio.muted = isMuted;
-
-        audio.onended = () => setVoiceOverPlaying(false);
-        audio.onpause = () => setVoiceOverPlaying(false);
-        audio.onplay = () => setVoiceOverPlaying(true);
-
-        audioRef.current = audio;
-
-        // Play the audio automatically
-        audio.play().catch(e => {
-            console.warn('Autoplay prevented for voiceover:', e);
-            setVoiceOverPlaying(false);
-        });
-
-        return () => {
-            audio.pause();
-            audio.src = '';
-            setVoiceOverPlaying(false);
-        };
-    }, [i18n.language, category, filename, volume, isMuted, setVoiceOverPlaying]);
+        const store = useAudioStore.getState();
+        audioRef.current.volume = store.volume;
+        audioRef.current.muted = store.isMuted;
+    });
 };
