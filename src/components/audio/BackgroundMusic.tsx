@@ -22,7 +22,7 @@ const getMusicUrl = (filename: string) => {
 export const BackgroundMusic = () => {
     const location = useLocation();
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const { isMuted, volume } = useAudioStore();
+    const { isMuted, volume, isVoiceOverPlaying } = useAudioStore();
     const { phase } = useEncounterStore();
 
     // Use useRef to track the currently playing file without causing re-renders
@@ -69,9 +69,10 @@ export const BackgroundMusic = () => {
     // Volume control effect
     useEffect(() => {
         if (audioRef.current) {
-            audioRef.current.volume = isMuted ? 0 : volume;
+            const currentVolume = isVoiceOverPlaying ? volume * 0.25 : volume;
+            audioRef.current.volume = isMuted ? 0 : currentVolume;
         }
-    }, [isMuted, volume]);
+    }, [isMuted, volume, isVoiceOverPlaying]);
 
     // Global interaction listener to retry playback if blocked
     useEffect(() => {

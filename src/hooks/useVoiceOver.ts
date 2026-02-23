@@ -10,11 +10,12 @@ const voiceOverMap: Record<string, string> = import.meta.glob('/src/assets/voice
 
 export const useVoiceOver = (category: string, filename: string) => {
     const { i18n } = useTranslation();
-    const { isMuted, volume } = useAudioStore();
+    const { isMuted, volume, setVoiceOverPlaying } = useAudioStore();
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
         if (!filename) {
+            setVoiceOverPlaying(false);
             return;
         }
 
@@ -24,6 +25,7 @@ export const useVoiceOver = (category: string, filename: string) => {
 
         if (!moduleKey) {
             console.warn(`Voiceover file not found for ${pathSuffix}`);
+            setVoiceOverPlaying(false);
             return;
         }
 
@@ -38,16 +40,22 @@ export const useVoiceOver = (category: string, filename: string) => {
         audio.volume = volume;
         audio.muted = isMuted;
 
+        audio.onended = () => setVoiceOverPlaying(false);
+        audio.onpause = () => setVoiceOverPlaying(false);
+        audio.onplay = () => setVoiceOverPlaying(true);
+
         audioRef.current = audio;
 
         // Play the audio automatically
         audio.play().catch(e => {
             console.warn('Autoplay prevented for voiceover:', e);
+            setVoiceOverPlaying(false);
         });
 
         return () => {
             audio.pause();
             audio.src = '';
+            setVoiceOverPlaying(false);
         };
-    }, [i18n.language, category, filename, volume, isMuted]);
+    }, [i18n.language, category, filename, volume, isMuted, setVoiceOverPlaying]);
 };
