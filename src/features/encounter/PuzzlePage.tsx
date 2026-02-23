@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
+import { Volume2 } from 'lucide-react';
 import { useGameStore } from '../../stores/game/store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType, type PuzzleProps } from '../../types/adventure.types';
@@ -61,6 +62,7 @@ const PuzzlePage = () => {
     const { completeEncounter, activeEncounterDifficulty } = useGameStore();
 
     const [isCompleted, setIsCompleted] = useState(false);
+    const [replayKey, setReplayKey] = useState(0);
     const adventure = ADVENTURES.find(a => a.id === adventureId);
     const encounter = adventure?.encounters[nodeIndex - 1];
 
@@ -91,7 +93,11 @@ const PuzzlePage = () => {
         return puzzleData.puzzleType.toLowerCase();
     }, [isCompleted, puzzleData]);
 
-    useVoiceOver('puzzles', voFilename);
+    useVoiceOver('puzzles', voFilename, replayKey);
+
+    const handleReplayVO = useCallback(() => {
+        setReplayKey(prev => prev + 1);
+    }, []);
 
     const handleSolve = () => {
         setIsCompleted(true);
@@ -139,7 +145,17 @@ const PuzzlePage = () => {
 
             {instruction && (
                 <div className={styles.instructionContainer}>
-                    <p className={styles.instructionText}>{instruction}</p>
+                    <p className={styles.instructionText}>
+                        {instruction}
+                        <button
+                            className={styles.voButton}
+                            onClick={handleReplayVO}
+                            aria-label={t('puzzle.replay_instruction')}
+                            title={t('puzzle.replay_instruction')}
+                        >
+                            <Volume2 size={24} />
+                        </button>
+                    </p>
                 </div>
             )}
 

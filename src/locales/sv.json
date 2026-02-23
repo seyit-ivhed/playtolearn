@@ -4,7 +4,8 @@
         "start_over": "Börja om",
         "back": "Tillbaka",
         "level": "Nivå",
-        "lvl": "Nivå"
+        "lvl": "Nivå",
+        "back_to_map": "Tillbaka till kartan"
     },
     "remainder_text": " rest ",
     "adventure": {
@@ -336,7 +337,9 @@
         },
         "equation": {
             "instruction": "Hitta värdet på den hemliga symbolen!"
-        }
+        },
+        "replay_instruction": "Lyssna på instruktionen igen",
+        "not_found": "Pusslet hittades inte"
     },
     "companions": {
         "unlock": "Ny följeslagare upplåst!",

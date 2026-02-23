@@ -4,7 +4,8 @@
         "start_over": "Start Over",
         "back": "Back",
         "level": "Level",
-        "lvl": "Lvl"
+        "lvl": "Lvl",
+        "back_to_map": "Back to Map"
     },
     "remainder_text": " R ",
     "adventure": {
@@ -336,7 +337,9 @@
         },
         "equation": {
             "instruction": "Find the value of the mystery symbol!"
-        }
+        },
+        "replay_instruction": "Replay Instruction",
+        "not_found": "Puzzle Not Found"
     },
     "companions": {
         "unlock": "New Companion Unlocked!",

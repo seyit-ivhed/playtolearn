@@ -20,7 +20,7 @@ const resolveVoiceOverUrl = async (language: string, category: string, filename:
     return url;
 };
 
-export const useVoiceOver = (category: string, filename: string) => {
+export const useVoiceOver = (category: string, filename: string, replayKey?: number) => {
     const { i18n } = useTranslation();
     const { setVoiceOverPlaying } = useAudioStore();
     const { volume, isMuted } = useAudioStore(useShallow(s => ({ volume: s.volume, isMuted: s.isMuted })));
@@ -81,7 +81,7 @@ export const useVoiceOver = (category: string, filename: string) => {
             }
             setVoiceOverPlaying(false);
         };
-    }, [i18n.language, category, filename, setVoiceOverPlaying]);
+    }, [i18n.language, category, filename, setVoiceOverPlaying, replayKey]);
 
     useEffect(() => {
         if (!audioRef.current) {

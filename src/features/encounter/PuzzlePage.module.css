@@ -104,9 +104,39 @@
 }
 
 .instructionText {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    /* Reduced slightly to fit button better */
     color: var(--color-chronicle-text);
     margin: 0;
     line-height: 1.6;
     font-family: var(--font-display);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.voButton {
+    background: transparent;
+    border: 2px solid var(--color-chronicle-text);
+    color: var(--color-chronicle-text);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.voButton:hover {
+    background: var(--color-chronicle-text);
+    color: var(--color-chronicle-bg);
+    transform: scale(1.1);
+}
+
+.voButton:active {
+    transform: scale(0.95);
 }
