@@ -147,7 +147,7 @@ All phrases are between 3 and 5 words long.
 * **Translatable 2:** English: "This is wild magic!" | Swedish: "Det här är vild magi!"
 * **Translatable 3:** English: "The storm is rising!" | Swedish: "Stormen stiger nu!"
 * **Success Native:** "Nguvu yetu ni kubwa!" *(Power!)*
-* **Failure:** English: "Try again, feel wind!" | Swedish: "Försök igen, känn vinden!"
+* **Failure:** English: "Try again, feel the wind!" | Swedish: "Försök igen, känn vinden!"
 * **Level-Up:** English: "My power is sparking!" | Swedish: "Min kraft gnistrar!"
 
 ### Evolution Stage 3 (Age 15)
@@ -155,8 +155,8 @@ All phrases are between 3 and 5 words long.
 * **Success 2:** English: "This is true power!" | Swedish: "Det här är sann kraft!"
 * **Success 3:** English: "Wash them all away!" | Swedish: "Svep bort dem alla!"
 * **Success Native:** "Dhoruba kubwa inakuja sasa!" *(Storm!)*
-* **Failure:** English: "Again! The storm calls!" | Swedish: "Igen! Stormen kallar!"
-* **Level-Up:** English: "I control the lightning!" | Swedish: "Jag kontrollerar blixten!"
+* **Failure:** English: "The storm lost its power!" | Swedish: "Stormen förlorade sin kraft!"
+* **Level-Up:** English: "My power is growing stronger!" | Swedish: "Min kraft växer sig starkare!"
 
 ### Evolution Stage 4 (Age 18)
 * **Success 1:** English: "I command the skies!" | Swedish: "Jag befaller himlen!"
