@@ -68,7 +68,7 @@ export class CombatEngine {
 
         const result = applyDamage(target, damage);
 
-        const updatedParty = playerParty.map((p, idx) =>
+        const updatedParty = playerParty.map(p =>
             p.id === target.id ? result.unit : p
         );
 
