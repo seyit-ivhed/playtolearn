@@ -2,10 +2,8 @@ import type { StateCreator } from 'zustand';
 import type { EncounterStore, PlayerActionsSlice } from '../interfaces';
 import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.types';
 import { CombatEngine } from '../../../utils/battle/combat-engine';
-import type { BattleUnit } from '../../../types/encounter.types';
 
 export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => {
-
     const finalizeActionResult = (updatedUnits: EncounterUnit[]) => {
         const finalParty = updatedUnits.filter(u => u.isPlayer);
         const finalMonsters = updatedUnits.filter(u => !u.isPlayer);
@@ -55,9 +53,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
                 allUnits
             );
 
-            finalizeActionResult(
-                result.updatedTargets as EncounterUnit[]
-            );
+            finalizeActionResult(result.updatedTargets);
         },
 
         resolveSpecialAttack: (unitId, success) => {
@@ -82,11 +78,10 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
                     variables
                 );
 
-                // Force reset spirit and acted for attacker in the result set
-                const finalUnits = (result.updatedUnits as unknown as EncounterUnit[]).map(u => {
+                const finalUnits = result.updatedUnits.map(u => {
                     if (u.id === unitId) {
-                        const consumed = CombatEngine.consumeSpiritCost(u as unknown as BattleUnit);
-                        return { ...(consumed as unknown as EncounterUnit), hasActed: true };
+                        const consumed = CombatEngine.consumeSpiritCost(u);
+                        return { ...consumed, hasActed: true };
                     }
                     return u;
                 });
@@ -98,7 +93,7 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
                 const updatedParty = party.map(u => {
                     if (u.id === unitId) {
                         const consumed = CombatEngine.consumeSpiritCost(u);
-                        return { ...(consumed as unknown as EncounterUnit), hasActed: true };
+                        return { ...consumed, hasActed: true };
                     }
                     return u;
                 });

@@ -118,10 +118,10 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 let newParty = currentParty.map(u => ({ ...u, hasActed: false }));
 
                 // Tick Status Effects (e.g. Shield duration)
-                newParty = CombatEngine.tickStatusEffects(newParty) as EncounterUnit[];
+                newParty = CombatEngine.tickStatusEffects(newParty);
 
                 // Passive Charge at start of Player Turn via CombatEngine
-                newParty = CombatEngine.regenerateSpirit(newParty) as EncounterUnit[];
+                newParty = CombatEngine.regenerateSpirit(newParty);
 
                 // Add a cooldown before returning to player turn
                 setTimeout(() => {
@@ -157,7 +157,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
 
             // Add logs and update state
             set(() => ({
-                party: result.updatedParty as unknown as EncounterUnit[]
+                party: result.updatedParty
             }));
 
             // Wait 1s before the next monster attacks

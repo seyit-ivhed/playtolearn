@@ -1,11 +1,5 @@
-import type { EncounterUnit } from '../../types/encounter.types';
 import { applyDamage } from './damage.utils';
 import { executeAbility } from '../../features/encounter/abilities/registry';
-
-/**
- * Unified Combat Engine
- * Source of truth for all battle mechanics (Simulation & UI)
- */
 
 import type { BattleUnit } from '../../types/encounter.types';
 
@@ -13,25 +7,19 @@ import { processEffectTick } from '../../features/encounter/effects/registry';
 
 export class CombatEngine {
 
-    /**
-     * Ticks status effects for all units in the array
-     */
-    static tickStatusEffects(units: BattleUnit[]): BattleUnit[] {
+    static tickStatusEffects<T extends BattleUnit>(units: T[]): T[] {
         return units.map(unit => ({
             ...unit,
             statusEffects: processEffectTick(unit.statusEffects)
-        }));
+        } as T));
     }
 
-    /**
-     * Execute a specific ability from an attacker
-     */
-    static executeSpecialAbility(
-        attacker: BattleUnit,
-        allUnits: BattleUnit[],
+    static executeSpecialAbility<T extends BattleUnit>(
+        attacker: T,
+        allUnits: T[],
         abilityId: string,
         variables: Record<string, number> = {}
-    ): { updatedUnits: BattleUnit[] } {
+    ): { updatedUnits: T[] } {
         const result = executeAbility(abilityId, {
             attacker,
             allUnits,
@@ -39,17 +27,14 @@ export class CombatEngine {
         });
 
         return {
-            updatedUnits: result.updatedUnits
+            updatedUnits: result.updatedUnits as T[]
         };
     }
 
-    /**
-     * Execute a standard attack
-     */
-    static executeStandardAttack(
-        attacker: BattleUnit,
-        targets: BattleUnit[]
-    ): { updatedTargets: BattleUnit[] } {
+    static executeStandardAttack<T extends BattleUnit>(
+        attacker: T,
+        targets: T[]
+    ): { updatedTargets: T[] } {
         // Find target (different team, using pure utility)
         const targetIndex = CombatEngine.findFirstValidEnemy(attacker, targets);
 
@@ -58,24 +43,19 @@ export class CombatEngine {
         const target = targets[targetIndex];
         const damage = attacker.damage || 0;
 
-        const result = applyDamage(target as EncounterUnit, damage);
+        const result = applyDamage(target, damage);
 
-        const updatedTargets = targets.map(t =>
-            t.id === target.id ? (result.unit as BattleUnit) : t
+        const updatedTargets = targets.map((t, idx) =>
+            idx === targetIndex ? result.unit : t
         );
 
         return { updatedTargets };
     }
 
-    /**
-     * Process a monster's turn
-     * - Random target selection
-     * - Attack execution
-     */
-    static processMonsterAction(
-        attacker: BattleUnit,
-        playerParty: BattleUnit[]
-    ): { updatedParty: BattleUnit[] } {
+    static processMonsterAction<T extends BattleUnit>(
+        attacker: T,
+        playerParty: T[]
+    ): { updatedParty: T[] } {
         const livingParty = playerParty.filter(p => !p.isDead);
 
         if (livingParty.length === 0) return { updatedParty: playerParty };
@@ -86,41 +66,32 @@ export class CombatEngine {
         const target = livingParty[targetIdx];
         const damage = attacker.damage || 0;
 
-        const result = applyDamage(target as EncounterUnit, damage);
+        const result = applyDamage(target, damage);
 
-        const updatedParty = playerParty.map(p =>
-            p.id === target.id ? (result.unit as BattleUnit) : p
+        const updatedParty = playerParty.map((p, idx) =>
+            p.id === target.id ? result.unit : p
         );
 
         return { updatedParty };
     }
 
-    /**
-     * Regenerate spirit for units
-     */
-    static regenerateSpirit(units: BattleUnit[]): BattleUnit[] {
+    static regenerateSpirit<T extends BattleUnit>(units: T[]): T[] {
         return units.map(unit => {
             if (unit.isDead) return unit;
             return {
                 ...unit,
                 currentSpirit: Math.min(unit.maxSpirit, unit.currentSpirit + unit.spiritGain)
-            };
+            } as T;
         });
     }
 
-    /**
-     * Consume ability cost (spirit)
-     */
-    static consumeSpiritCost(unit: BattleUnit): BattleUnit {
+    static consumeSpiritCost<T extends BattleUnit>(unit: T): T {
         return {
             ...unit,
             currentSpirit: 0
-        };
+        } as T;
     }
 
-    /**
-     * Select random living target from array
-     */
     static selectRandomTarget<T extends { isDead: boolean }>(
         targets: T[]
     ): number {
@@ -134,9 +105,6 @@ export class CombatEngine {
         return livingTargets[randomIndex].i;
     }
 
-    /**
-     * Find first valid enemy target (alive, different team, not self)
-     */
     static findFirstValidEnemy<T extends { id: string, isPlayer: boolean, isDead: boolean }>(
         attacker: { id: string, isPlayer: boolean },
         targets: T[]
