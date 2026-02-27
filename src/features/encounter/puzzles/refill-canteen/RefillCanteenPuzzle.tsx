@@ -127,14 +127,9 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
 
             {/* Reset Button or Success Message */}
             <div className={styles.controls}>
-                {isSolved ? (
-                    <div className={styles.successMessage}>
-                        {t('puzzle.success', 'Success! ✨')}
-                    </div>
-                ) : (
+                {!isSolved && (
                     <PrimaryButton
                         onClick={handleReset}
-                        disabled={isSolved}
                     >
                         {t('common.start_over', 'Start Over')}
                     </PrimaryButton>
