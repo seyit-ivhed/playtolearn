@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Map } from 'lucide-react';
 import { useEncounterStore } from '../../stores/encounter/store';
 import { useGameStore } from '../../stores/game/store';
 import { EncounterPhase } from '../../types/encounter.types';
@@ -163,8 +164,10 @@ const EncounterPage = () => {
                         className={styles.abortLink}
                         onClick={() => navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } })}
                         disabled={!!activeChallenge || !!activeVFX || isEncounterOver}
+                        aria-label={t('common.back_to_map')}
+                        title={t('common.back_to_map')}
                     >
-                        {t('retreat')}
+                        <Map size={32} />
                     </button>
                 </div>
             </header>

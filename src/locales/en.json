@@ -276,7 +276,6 @@
         "adventure_fallback": "Adventure {{id}}"
     },
     "shared_xp": "Shared XP",
-    "retreat": "Retreat",
     "combat": {
         "completion": {
             "victory_title": "VICTORY!",

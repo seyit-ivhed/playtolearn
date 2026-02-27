@@ -43,6 +43,23 @@
     transform: translateY(-1px);
 }
 
+.iconButton {
+    background: none !important;
+    border: none !important;
+    padding: 8px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.iconButton:hover {
+    color: #fff !important;
+    transform: translateX(-4px) !important;
+    background: none !important;
+}
+
 .title {
     flex: 1;
     text-align: center;

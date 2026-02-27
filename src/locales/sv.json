@@ -276,7 +276,6 @@
         "adventure_fallback": "Äventyr {{id}}"
     },
     "shared_xp": "Delad XP",
-    "retreat": "Retirera",
     "combat": {
         "completion": {
             "victory_title": "SEGER!",

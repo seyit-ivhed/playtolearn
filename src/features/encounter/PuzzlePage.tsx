@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useMemo, useState, useCallback } from 'react';
-import { Volume2 } from 'lucide-react';
+import { Volume2, Map } from 'lucide-react';
 import { useGameStore } from '../../stores/game/store';
 import { ADVENTURES } from '../../data/adventures.data';
 import { PuzzleType, type PuzzleProps } from '../../types/adventure.types';
@@ -134,8 +134,13 @@ const PuzzlePage = () => {
     return (
         <div className={styles.puzzlePage}>
             <header className={styles.header}>
-                <button className={styles.backButton} onClick={handleBack}>
-                    {t('retreat', 'Retreat')}
+                <button
+                    className={`${styles.backButton} ${styles.iconButton}`}
+                    onClick={handleBack}
+                    aria-label={t('common.back_to_map')}
+                    title={t('common.back_to_map')}
+                >
+                    <Map size={32} />
                 </button>
             </header>
 
