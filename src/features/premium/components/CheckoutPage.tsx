@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../hooks/useAuth';
 import { AccountCreationStep } from './AccountCreationStep';
 import { CheckoutOverlay } from './CheckoutOverlay';
+import { CheckoutMusic } from './CheckoutMusic';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { CheckCircle2 } from 'lucide-react';
@@ -38,6 +39,7 @@ export const CheckoutPage: React.FC = () => {
 
     return (
         <div className="checkout-page-container">
+            <CheckoutMusic />
             <FormCloseButton onClick={handleBackToGame} />
 
             <main className="checkout-main">
