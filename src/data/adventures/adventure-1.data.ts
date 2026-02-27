@@ -3,7 +3,7 @@ import { MONSTERS } from '../monsters.data';
 
 export const ADVENTURE_1: Adventure = {
     id: '1',
-    levelRange: [1, 5],
+    levelRange: [1, 6],
     mapMusic: 'adventure-1/map.mp3',
     encounters: [
         {
