@@ -30,7 +30,7 @@ describe('useEncounterNavigation', () => {
             addCompanionExperience: mockAddCompanionExperience,
             companionStats: {
                 'amara': { level: 1, experience: 0 },
-                'tariq': { level: 5, experience: 100 }
+                'tariq': { level: 6, experience: 100 }
             },
             activeParty: ['amara', 'tariq']
         } as ReturnType<typeof useGameStore>);
@@ -59,9 +59,9 @@ describe('useEncounterNavigation', () => {
 
             // Previous stats should be snapshotted
             expect(result.current.previousCompanionStats['amara']).toEqual({ level: 1, experience: 0 });
-            expect(result.current.previousCompanionStats['tariq']).toEqual({ level: 5, experience: 100 });
+            expect(result.current.previousCompanionStats['tariq']).toEqual({ level: 6, experience: 100 });
 
-            // XP should be awarded (Adventure 1 max level is 4, so Tariq at lvl 5 should NOT get XP)
+            // XP should be awarded (Adventure 1 max level is 6, so Tariq at lvl 6 should NOT get XP)
             // Amara (lvl 1) should get XP
             expect(mockAddCompanionExperience).toHaveBeenCalledWith('amara', expect.any(Number));
             expect(mockAddCompanionExperience).not.toHaveBeenCalledWith('tariq', expect.any(Number));

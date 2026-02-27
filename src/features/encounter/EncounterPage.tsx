@@ -78,10 +78,14 @@ const EncounterPage = () => {
     const isEncounterOver = checkIsEncounterOver(monsters);
 
     const handleUnitAction = (unitId: string) => {
-        if (phase !== EncounterPhase.PLAYER_TURN || isEncounterOver) return;
+        if (phase !== EncounterPhase.PLAYER_TURN || isEncounterOver) {
+            return;
+        }
 
         const unit = party.find(u => u.id === unitId);
-        if (!unit) return;
+        if (!unit) {
+            return;
+        }
 
         // Check for Ultimate (Spirit >= 100)
         if (unit.currentSpirit >= 100) {
@@ -111,7 +115,9 @@ const EncounterPage = () => {
     };
 
     const handleChallengeComplete = (success: boolean) => {
-        if (!activeChallenge) return;
+        if (!activeChallenge) {
+            return;
+        }
 
         // Play Success or Failure Voice Over
         const unitId = activeChallenge.unitId;
