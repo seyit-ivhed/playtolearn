@@ -8,16 +8,9 @@
     align-items: center;
     justify-content: space-between;
     z-index: 90;
-    background: transparent;
-    pointer-events: none;
-    /* Let clicks pass through empty areas */
-}
-
-/* Ensure interactive elements receive clicks */
-.leftSection,
-.centerSection,
-.rightSection {
-    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .leftSection {
