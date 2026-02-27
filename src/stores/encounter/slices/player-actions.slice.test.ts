@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useEncounterStore } from '../store';
 import { initialEncounterState } from '../initial-state';
-import { EncounterPhase } from '../../../types/encounter.types';
+import { EncounterPhase, EncounterUnit } from '../../../types/encounter.types';
 
 
 // Mock getCompanionById
@@ -60,7 +60,7 @@ describe('Player Actions Slice', () => {
             const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, currentSpirit: 0, maxSpirit: 100, spiritGain: 10, damage: 10 };
             const monster = { id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isDead: false, isPlayer: false, currentSpirit: 0, maxSpirit: 100, hasActed: false, spiritGain: 10 };
 
-            useEncounterStore.setState({ party: [warrior] as any, monsters: [monster] as any, endPlayerTurn: vi.fn() as any });
+            useEncounterStore.setState({ party: [warrior] as EncounterUnit[], monsters: [monster] as EncounterUnit[], endPlayerTurn: vi.fn() });
 
             useEncounterStore.getState().performAction('u1');
 
@@ -73,7 +73,7 @@ describe('Player Actions Slice', () => {
             const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, currentSpirit: 0, maxSpirit: 100, spiritGain: 10, damage: 100 };
             const monster = { id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 10, maxHealth: 50, isDead: false, isPlayer: false, currentSpirit: 0, maxSpirit: 100, hasActed: false, spiritGain: 10 };
 
-            useEncounterStore.setState({ party: [warrior] as any, monsters: [monster] as any, phase: EncounterPhase.PLAYER_TURN });
+            useEncounterStore.setState({ party: [warrior] as EncounterUnit[], monsters: [monster] as EncounterUnit[], phase: EncounterPhase.PLAYER_TURN });
 
             useEncounterStore.getState().performAction('u1');
 
@@ -89,7 +89,7 @@ describe('Player Actions Slice', () => {
             const monster = { id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isDead: false, isPlayer: false, currentSpirit: 0, maxSpirit: 100, hasActed: false, spiritGain: 10 };
 
             const endPlayerTurnMock = vi.fn();
-            useEncounterStore.setState({ party: [warrior] as any, monsters: [monster] as any, endPlayerTurn: endPlayerTurnMock as any });
+            useEncounterStore.setState({ party: [warrior] as EncounterUnit[], monsters: [monster] as EncounterUnit[], endPlayerTurn: endPlayerTurnMock });
 
             useEncounterStore.getState().performAction('u1');
             expect(endPlayerTurnMock).toHaveBeenCalled();
@@ -102,7 +102,7 @@ describe('Player Actions Slice', () => {
             const monster = { id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isDead: false, isPlayer: false, currentSpirit: 0, maxSpirit: 100, hasActed: false, spiritGain: 10 };
 
             const endPlayerTurnMock = vi.fn();
-            useEncounterStore.setState({ party: [warrior, deadWarrior] as any, monsters: [monster] as any, endPlayerTurn: endPlayerTurnMock as any });
+            useEncounterStore.setState({ party: [warrior, deadWarrior] as EncounterUnit[], monsters: [monster] as EncounterUnit[], endPlayerTurn: endPlayerTurnMock });
 
             useEncounterStore.getState().performAction('u1');
             expect(endPlayerTurnMock).toHaveBeenCalled();
@@ -110,7 +110,7 @@ describe('Player Actions Slice', () => {
 
         it('should return early if unit not found or already acted', () => {
             const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: true, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, currentSpirit: 0, maxSpirit: 100, spiritGain: 10, damage: 10 };
-            useEncounterStore.setState({ party: [warrior] as any, monsters: [] });
+            useEncounterStore.setState({ party: [warrior] as EncounterUnit[], monsters: [] });
             useEncounterStore.getState().performAction('u1'); // already acted
             useEncounterStore.getState().performAction('u2'); // not found
         });
@@ -170,7 +170,7 @@ describe('Player Actions Slice', () => {
 
         it('should return early if unit not found or no ability', () => {
             const warrior = { ...baseUnit, id: 'u1', templateId: 'warrior_id', specialAbilityId: undefined };
-            useEncounterStore.setState({ party: [warrior] as any, monsters: [] });
+            useEncounterStore.setState({ party: [warrior] as EncounterUnit[], monsters: [] });
             useEncounterStore.getState().resolveSpecialAttack('u1', true); // no ability
             useEncounterStore.getState().resolveSpecialAttack('u2', true); // not found
         });
@@ -180,7 +180,7 @@ describe('Player Actions Slice', () => {
             const warrior2 = { ...baseUnit, id: 'u2', templateId: 'warrior_id', name: 'Warrior 2', hasActed: false, currentSpirit: 50 };
 
             const endPlayerTurnMock = vi.fn();
-            useEncounterStore.setState({ party: [warrior, warrior2] as any, monsters: [], endPlayerTurn: endPlayerTurnMock as any });
+            useEncounterStore.setState({ party: [warrior, warrior2] as EncounterUnit[], monsters: [], endPlayerTurn: endPlayerTurnMock });
 
             useEncounterStore.getState().resolveSpecialAttack('u1', false);
 
@@ -203,7 +203,7 @@ describe('Player Actions Slice', () => {
     describe('consumeSpirit', () => {
         it('should set currentSpirit to 0 for a given unit', () => {
             const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', currentSpirit: 100, isPlayer: true };
-            useEncounterStore.setState({ party: [warrior as any] });
+            useEncounterStore.setState({ party: [warrior as EncounterUnit] });
 
             useEncounterStore.getState().consumeSpirit('u1');
             expect(useEncounterStore.getState().party[0].currentSpirit).toBe(0);
@@ -211,7 +211,7 @@ describe('Player Actions Slice', () => {
 
         it('should return early if unit not found', () => {
             const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', currentSpirit: 100, isPlayer: true };
-            useEncounterStore.setState({ party: [warrior as any] });
+            useEncounterStore.setState({ party: [warrior as EncounterUnit] });
 
             useEncounterStore.getState().consumeSpirit('u2'); // not found
             expect(useEncounterStore.getState().party[0].currentSpirit).toBe(100);
