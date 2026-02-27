@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Star, ChevronDown } from 'lucide-react';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { getDifficultyExamples } from '../../../utils/math/difficulty-examples';
+import { DifficultyExamples } from '../../../components/ui/DifficultyExamples';
 import styles from './DifficultySelectionModal.module.css';
 
 interface DifficultySelectionModalProps {
@@ -133,13 +133,7 @@ export const DifficultySelectionModal: React.FC<DifficultySelectionModalProps> =
                                 </p>
                             </div>
                             <div className={styles.explanationRight}>
-                                <div className={styles.examplesContainer}>
-                                    {getDifficultyExamples(displayDifficulty).map((example, index) => (
-                                        <div key={index} className={styles.exampleTag}>
-                                            {example}
-                                        </div>
-                                    ))}
-                                </div>
+                                <DifficultyExamples level={displayDifficulty} limit={3} />
                             </div>
                         </div>
                     </div>

@@ -78,25 +78,6 @@
     line-height: 1.4;
 }
 
-/* Example Math Questions Styling */
-.examplesContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-.exampleTag {
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 12px;
-    padding: 0.2rem 0.6rem;
-    font-family: monospace;
-    font-size: 0.8rem;
-    color: #5c4e32;
-    font-weight: 500;
-}
-
 .backBtn {
     background: none;
     border: none;

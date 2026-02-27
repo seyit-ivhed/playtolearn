@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star, ChevronLeft } from 'lucide-react';
-import { getDifficultyExamples } from '../../../../utils/math/difficulty-examples';
+import { DifficultyExamples } from '../../../../components/ui/DifficultyExamples';
 import styles from './BookDifficulty.module.css';
 
 interface BookDifficultyProps {
@@ -61,11 +61,7 @@ export const BookDifficulty: React.FC<BookDifficultyProps> = ({ onSelect, onBack
                             {getDifficultyDescription(level)}
                         </p>
 
-                        <div className={styles.examplesContainer}>
-                            {getDifficultyExamples(level).slice(0, 3).map((example, i) => (
-                                <span key={i} className={styles.exampleTag}>{example}</span>
-                            ))}
-                        </div>
+                        <DifficultyExamples level={level} limit={3} />
                     </div>
                 ))}
             </div>
