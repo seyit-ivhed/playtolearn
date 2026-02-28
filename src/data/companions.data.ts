@@ -15,11 +15,13 @@ export const COMPANIONS: Record<string, Companion> = {
         baseStats: {
             maxHealth: 75,
             abilityDamage: 8,
+            attackSound: 'battle/bow-and-arrow',
             evolutionIndex: 1
         },
         specialAbility: {
             id: 'precision_shot',
-            variables: { damage: 30 }
+            variables: { damage: 30 },
+            soundEffect: 'battle/bow-and-arrow'
         },
         initialSpirit: 65,
         spiritGain: 35,
@@ -34,7 +36,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'precision_shot',
-                    variables: { damage: 45 }
+                    variables: { damage: 45 },
+                    soundEffect: 'battle/bow-and-arrow'
                 }
             },
             {
@@ -47,7 +50,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'precision_shot',
-                    variables: { damage: 65 }
+                    variables: { damage: 65 },
+                    soundEffect: 'battle/bow-and-arrow'
                 }
             },
             {
@@ -60,7 +64,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'precision_shot',
-                    variables: { damage: 100 }
+                    variables: { damage: 100 },
+                    soundEffect: 'battle/bow-and-arrow'
                 }
             }
         ]
@@ -73,11 +78,13 @@ export const COMPANIONS: Record<string, Companion> = {
         baseStats: {
             maxHealth: 85,
             abilityDamage: 5,
+            attackSound: 'battle/travel-stick',
             evolutionIndex: 1
         },
         specialAbility: {
             id: 'elixir_of_life',
-            variables: { heal: 25 }
+            variables: { heal: 25 },
+            soundEffect: 'battle/health'
         },
         initialSpirit: 0,
         spiritGain: 35,
@@ -92,7 +99,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'elixir_of_life',
-                    variables: { heal: 35 }
+                    variables: { heal: 35 },
+                    soundEffect: 'battle/health'
                 }
             },
             {
@@ -105,7 +113,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'elixir_of_life',
-                    variables: { heal: 50 }
+                    variables: { heal: 50 },
+                    soundEffect: 'battle/health'
                 }
             },
             {
@@ -118,7 +127,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'elixir_of_life',
-                    variables: { heal: 80 }
+                    variables: { heal: 80 },
+                    soundEffect: 'battle/health'
                 }
             }
         ]
@@ -131,11 +141,13 @@ export const COMPANIONS: Record<string, Companion> = {
         baseStats: {
             maxHealth: 100,
             abilityDamage: 7,
+            attackSound: 'battle/katana',
             evolutionIndex: 1
         },
         specialAbility: {
             id: 'blade_barrier',
-            variables: { damage: 20, duration: 2, reduction: 50 }
+            variables: { damage: 20, duration: 2, reduction: 50 },
+            soundEffect: 'battle/katana'
         },
         initialSpirit: 100,
         spiritGain: 35,
@@ -150,7 +162,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'blade_barrier',
-                    variables: { damage: 30, duration: 2, reduction: 50 }
+                    variables: { damage: 30, duration: 2, reduction: 50 },
+                    soundEffect: 'battle/katana'
                 }
             },
             {
@@ -163,7 +176,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'blade_barrier',
-                    variables: { damage: 45, duration: 2, reduction: 50 }
+                    variables: { damage: 45, duration: 2, reduction: 50 },
+                    soundEffect: 'battle/katana'
                 }
             },
             {
@@ -176,7 +190,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'blade_barrier',
-                    variables: { damage: 65, duration: 2, reduction: 50 }
+                    variables: { damage: 65, duration: 2, reduction: 50 },
+                    soundEffect: 'battle/katana'
                 }
             }
         ]
@@ -189,11 +204,13 @@ export const COMPANIONS: Record<string, Companion> = {
         baseStats: {
             maxHealth: 70,
             abilityDamage: 8,
+            attackSound: 'battle/travel-stick',
             evolutionIndex: 1
         },
         specialAbility: {
             id: 'ancestral_storm',
-            variables: { damage: 20 }
+            variables: { damage: 20 },
+            soundEffect: 'battle/lightning'
         },
         initialSpirit: 40,
         spiritGain: 35,
@@ -208,7 +225,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'ancestral_storm',
-                    variables: { damage: 35 }
+                    variables: { damage: 35 },
+                    soundEffect: 'battle/lightning'
                 }
             },
             {
@@ -221,7 +239,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'ancestral_storm',
-                    variables: { damage: 50 }
+                    variables: { damage: 50 },
+                    soundEffect: 'battle/lightning'
                 }
             },
             {
@@ -234,7 +253,8 @@ export const COMPANIONS: Record<string, Companion> = {
                 },
                 newSpecialAbility: {
                     id: 'ancestral_storm',
-                    variables: { damage: 65 }
+                    variables: { damage: 65 },
+                    soundEffect: 'battle/lightning'
                 }
             }
         ]

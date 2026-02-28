@@ -41,6 +41,8 @@ export interface EncounterUnit extends BattleUnit {
     title?: string;
     specialAbilityId?: string;
     specialAbilityVariables?: Record<string, number>;
+    attackSound?: string;
+    specialAbilitySound?: string;
 
     // Visuals
     image?: string;

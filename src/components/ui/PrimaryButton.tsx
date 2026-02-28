@@ -1,4 +1,5 @@
 import React from 'react';
+import { playSfx } from '../audio/audio.utils';
 import styles from './PrimaryButton.module.css';
 
 interface PrimaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -29,6 +30,12 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
         <button
             className={buttonClasses}
             {...props}
+            onClick={(e) => {
+                playSfx('interface/click');
+                if (props.onClick) {
+                    props.onClick(e);
+                }
+            }}
         >
             {children}
         </button>

@@ -1,14 +1,17 @@
 export interface SpecialAbility {
     id: string; // Used for translation key, VFX lookup, and implementation registry
     variables?: Record<string, number>; // Flexible numerical parameters for the ability implementation
+    soundEffect?: string;
 }
 
 export interface CompanionStats {
     maxHealth: number;
     title?: string;
     abilityDamage?: number;
+    attackSound?: string;
     specialAbilityId?: string;
     specialAbilityVariables?: Record<string, number>;
+    specialAbilitySound?: string;
     evolutionIndex: number;
 }
 

@@ -6,11 +6,13 @@ export const MONSTERS = {
         id: 'scorpion_1',
         maxHealth: 40,
         attack: 8,
+        attackSound: 'battle/scorpion'
     },
     TINY_SCORPION: {
         id: 'tiny_scorpion',
         maxHealth: 15,
         attack: 4,
+        attackSound: 'battle/scorpion'
     },
     DESERT_SCAVENGER: {
         id: 'desert_scavenger',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import { playSfx } from '../audio/audio.utils';
 import styles from './FormCloseButton.module.css';
 
 interface FormCloseButtonProps {
@@ -20,7 +21,10 @@ export const FormCloseButton: React.FC<FormCloseButtonProps> = ({
     return (
         <button
             className={`${styles.formCloseButton} ${className}`}
-            onClick={onClick}
+            onClick={(e) => {
+                playSfx('interface/click');
+                onClick();
+            }}
             aria-label={ariaLabel}
         >
             <X size={size} color={color} />

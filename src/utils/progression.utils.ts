@@ -51,8 +51,10 @@ export const getStatsForLevel = (companion: Companion, level: number): Companion
         maxHealth: Math.floor(companion.baseStats.maxHealth * scalingFactor) + (evolutionBonus.maxHealth || 0),
         title: currentEvolution ? currentEvolution.title : companion.title,
         abilityDamage: companion.baseStats.abilityDamage ? Math.floor(companion.baseStats.abilityDamage * scalingFactor) + (evolutionBonus.abilityDamage || 0) : undefined,
+        attackSound: companion.baseStats.attackSound,
         specialAbilityId: evolvedAbility.id,
         specialAbilityVariables: scaledVariables,
+        specialAbilitySound: evolvedAbility.soundEffect,
         evolutionIndex: currentEvolution ? currentEvolution.evolutionIndex : companion.baseStats.evolutionIndex
     };
 };

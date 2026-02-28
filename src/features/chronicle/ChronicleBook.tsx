@@ -14,6 +14,7 @@ import { BookLogin } from './components/Book/BookLogin';
 import { BookDifficulty } from './components/Book/BookDifficulty';
 import { getBookStateFromUrl, calculatePageZIndex } from './utils/chronicle.utils';
 import { Header } from '../../components/Header';
+import { playSfx } from '../../components/audio/audio.utils';
 
 export const ChronicleBook: React.FC = () => {
     const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
@@ -178,8 +179,14 @@ export const ChronicleBook: React.FC = () => {
                                     stars={calculateAdventureStars(adventure.id, adventure.encounters, encounterResults)}
                                     onBegin={handleBegin}
                                     onReplay={handleBegin}
-                                    onNext={handleNext}
-                                    onPrev={handlePrev}
+                                    onNext={() => {
+                                        playSfx('interface/page-shuffle');
+                                        handleNext();
+                                    }}
+                                    onPrev={() => {
+                                        playSfx('interface/page-shuffle');
+                                        handlePrev();
+                                    }}
                                     canNext={index < adventures.length - 1}
                                     canPrev={true}
                                     currentPage={index + 1}

@@ -2,6 +2,7 @@ import type { StateCreator } from 'zustand';
 import type { EncounterStore, PlayerActionsSlice } from '../interfaces';
 import { EncounterPhase, type EncounterUnit } from '../../../types/encounter.types';
 import { CombatEngine } from '../../../utils/battle/combat-engine';
+import { playSfx } from '../../../components/audio/audio.utils';
 
 export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], PlayerActionsSlice> = (set, get) => {
     const finalizeActionResult = (updatedUnits: EncounterUnit[]) => {
@@ -47,6 +48,10 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
 
             const allUnits = [...updatedParty, ...monsters];
 
+            if (actingUnit.attackSound) {
+                playSfx(actingUnit.attackSound);
+            }
+
             // Execute Standard Attack via Combat Engine
             const result = CombatEngine.executeStandardAttack(
                 actingUnit,
@@ -68,6 +73,10 @@ export const createPlayerActionsSlice: StateCreator<EncounterStore, [], [], Play
             if (!abilityId) return;
 
             if (success) {
+                if (unit.specialAbilitySound) {
+                    playSfx(unit.specialAbilitySound);
+                }
+
                 // EXECUTE ABILITY LOGIC via CombatEngine
                 const allUnits = [...party, ...monsters];
 

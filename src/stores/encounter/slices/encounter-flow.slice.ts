@@ -7,6 +7,7 @@ import { getMonsterSprite } from '../../../data/monster-sprites';
 import { getCompanionCardImage } from '../../../data/companion-sprites';
 import { CombatEngine } from '../../../utils/battle/combat-engine';
 import { initialEncounterState } from '../initial-state';
+import { playSfx } from '../../../components/audio/audio.utils';
 
 export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], EncounterFlowSlice> = (set, get) => ({
     initializeEncounter: (partyIds, enemies, nodeIndex, difficulty, companionStats) => {
@@ -35,6 +36,8 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                     damage: calculatedStats.abilityDamage || 0,
                     specialAbilityId: calculatedStats.specialAbilityId,
                     specialAbilityVariables: calculatedStats.specialAbilityVariables,
+                    attackSound: calculatedStats.attackSound,
+                    specialAbilitySound: calculatedStats.specialAbilitySound,
                     isDead: false,
                     hasActed: false,
                     currentSpirit: data.initialSpirit || 0,
@@ -55,6 +58,7 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 currentHealth: enemy.maxHealth,
                 damage: enemy.attack,
                 image: getMonsterSprite(enemy.id),
+                attackSound: enemy.attackSound,
                 isDead: false,
                 hasActed: false,
                 currentSpirit: 0,
@@ -147,6 +151,10 @@ export const createEncounterFlowSlice: StateCreator<EncounterStore, [], [], Enco
                 const updatedMonsters = [...currentMonsters];
                 updatedMonsters[monsterMainIndex] = { ...updatedMonsters[monsterMainIndex], hasActed: true };
                 set({ monsters: updatedMonsters });
+            }
+
+            if (monster.attackSound) {
+                playSfx(monster.attackSound);
             }
 
             const currentPlayerParty = get().party; // Latest party state
