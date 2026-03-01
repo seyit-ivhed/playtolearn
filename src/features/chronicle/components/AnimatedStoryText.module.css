@@ -1,0 +1,32 @@
+.container {
+    display: inline;
+    /* Use inline carefully, since words should wrap normally */
+}
+
+.word {
+    opacity: 0;
+    display: inline-block;
+    animation-name: revealWord;
+    animation-fill-mode: forwards;
+    white-space: pre-wrap;
+    /* Ensure space after word is maintained */
+}
+
+.word.skipped {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+}
+
+@keyframes revealWord {
+    0% {
+        opacity: 0;
+        transform: translateY(3px) scale(0.96);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

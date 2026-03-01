@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Adventure } from '../../../types/adventure.types';
 import { AdventureStatus } from '../../../types/adventure.types';
 import { getAdventureIllustration } from '../../../data/adventure-assets';
@@ -52,6 +52,16 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
 
     useVoiceOver('chronicles', isActive && !isLocked ? `adventure-${adventure.id}` : '');
 
+    const [isRevealing, setIsRevealing] = useState(false);
+
+    useEffect(() => {
+        if (isActive && !isLocked) {
+            setIsRevealing(true);
+        } else {
+            setIsRevealing(false);
+        }
+    }, [adventure.id, isActive, isLocked]);
+
     return (
         <div className={`chapter-page ${isLocked ? 'locked' : ''}`} data-testid="chapter-page">
             <ChapterHeader
@@ -59,7 +69,15 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                 adventureTitle={adventure.title}
             />
 
-            <div className="chapter-content">
+            <div
+                className="chapter-content"
+                onClick={() => {
+                    if (isRevealing) {
+                        setIsRevealing(false);
+                    }
+                }}
+                style={{ cursor: isRevealing ? 'pointer' : 'default' }}
+            >
                 <ChapterIllustration
                     illustration={illustration}
                     adventureTitle={adventure.title || ''}
@@ -73,6 +91,8 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                     adventureId={adventure.id}
                     adventureStoryHook={adventure.storyHook}
                     isLocked={isLocked}
+                    isRevealing={isRevealing}
+                    onCompleteReveal={() => setIsRevealing(false)}
                 />
             </div>
 
@@ -92,6 +112,8 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
                 currentPage={currentPage}
                 totalPages={totalPages}
                 hasProgress={hasProgress}
+                isRevealing={isRevealing}
+                onSkipReveal={() => setIsRevealing(false)}
             />
         </div>
     );
