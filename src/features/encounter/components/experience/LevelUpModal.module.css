@@ -134,24 +134,11 @@
 }
 
 .modalContinueButtonSmall {
-    background: rgba(0, 0, 0, 0.6);
-    color: var(--color-brand-accent);
-    border: 2px solid var(--color-brand-accent);
     padding: 1.2rem 4rem;
-    font-family: var(--font-display);
     font-size: 1.4rem;
-    font-weight: 900;
+    text-transform: uppercase;
     letter-spacing: 4px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-md);
-}
-
-.modalContinueButtonSmall:hover {
-    background: var(--color-brand-accent);
-    color: var(--color-bg-primary);
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    font-weight: 900;
 }
 
 .flairContainer {

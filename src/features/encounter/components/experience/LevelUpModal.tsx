@@ -8,6 +8,7 @@ import type { Companion } from '../../../../types/companion.types';
 import { getStatsForLevel } from '../../../../utils/progression.utils';
 import { getCompanionLevelUpImage } from '../../../../data/companion-sprites';
 import { useVoiceOver } from '../../../../hooks/useVoiceOver';
+import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 
 interface LevelUpModalProps {
     companion: Companion;
@@ -163,9 +164,15 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({ companion, onConfirm
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.8, duration: 0.5 }}
                                 >
-                                    <button className={styles.modalContinueButtonSmall} onClick={onConfirm} data-testid="modal-continue-button">
+                                    <PrimaryButton
+                                        variant="gold"
+                                        radiate={true}
+                                        className={styles.modalContinueButtonSmall}
+                                        onClick={onConfirm}
+                                        data-testid="modal-continue-button"
+                                    >
                                         {t('common.continue').toUpperCase()}
-                                    </button>
+                                    </PrimaryButton>
                                 </motion.div>
                             </div>
 
