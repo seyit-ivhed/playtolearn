@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import SettingsMenu from './SettingsMenu';
+import { playSfx } from './audio/audio.utils';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -29,7 +30,10 @@ export const Header: React.FC<HeaderProps> = ({
                 {leftIcon && onLeftClick && (
                     <button
                         className={styles.iconButton}
-                        onClick={onLeftClick}
+                        onClick={() => {
+                            playSfx('interface/click');
+                            onLeftClick();
+                        }}
                         aria-label={leftAriaLabel}
                         title={leftAriaLabel}
                         data-testid={leftTestId}

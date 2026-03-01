@@ -4,6 +4,7 @@ import { Settings } from 'lucide-react';
 import { usePlayerStore } from '../stores/player.store';
 import { DebugConsole } from './DebugConsole';
 import { FormCloseButton } from './ui/FormCloseButton';
+import { playSfx } from './audio/audio.utils';
 import styles from './SettingsMenu.module.css';
 
 import { useTranslation } from 'react-i18next';
@@ -46,7 +47,10 @@ const SettingsMenu: React.FC = () => {
         <div className={styles.settingsContainer}>
             <button
                 className={styles.settingsTrigger}
-                onClick={toggleMenu}
+                onClick={() => {
+                    playSfx('interface/click');
+                    toggleMenu();
+                }}
                 aria-label={t('settings.title', 'Settings')}
                 data-testid="settings-button"
             >
