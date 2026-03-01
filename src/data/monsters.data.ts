@@ -143,7 +143,7 @@ export const MONSTERS = {
         maxHealth: 980,
         attack: 98,
         isBoss: true,
-        attackSound: 'battle/horse'
+        attackSound: 'battle/lion'
     },
     DISCORD_SPIRIT: {
         id: 'discord_spirit',
