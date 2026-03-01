@@ -21,7 +21,7 @@ export const FormCloseButton: React.FC<FormCloseButtonProps> = ({
     return (
         <button
             className={`${styles.formCloseButton} ${className}`}
-            onClick={(e) => {
+            onClick={() => {
                 playSfx('interface/click');
                 onClick();
             }}
