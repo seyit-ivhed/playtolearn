@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star, ChevronLeft } from 'lucide-react';
 import { DifficultyExamples } from '../../../../components/ui/DifficultyExamples';
+import { playSfx } from '../../../../components/audio/audio.utils';
 import styles from './BookDifficulty.module.css';
 
 interface BookDifficultyProps {
@@ -45,7 +46,10 @@ export const BookDifficulty: React.FC<BookDifficultyProps> = ({ onSelect, onBack
                     <div
                         key={level}
                         className={styles.difficultyCard}
-                        onClick={() => onSelect(level)}
+                        onClick={() => {
+                            playSfx('interface/click');
+                            onSelect(level);
+                        }}
                         data-testid={`difficulty-option-${level}`}
                     >
                         <div className={styles.cardHeader}>
@@ -68,7 +72,10 @@ export const BookDifficulty: React.FC<BookDifficultyProps> = ({ onSelect, onBack
 
             <button
                 className={styles.backBtn}
-                onClick={onBack}
+                onClick={() => {
+                    playSfx('interface/click');
+                    onBack();
+                }}
                 data-testid="difficulty-back-btn"
             >
                 <ChevronLeft size={16} />
