@@ -22,15 +22,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue.number,
-              body: [
-                `@copilot Please resolve this issue following the **issue-resolver** skill`,
-                `(\`.agent/skills/issue-resolver/SKILL.md\`).`,
-                ``,
-                `Steps to follow:`,
-                `1. Create a new branch from \`main\` named \`copilot/issue-${issue.number}-<short-description>\``,
-                `2. Implement the fix using the **frontend-developer** skill`,
-                `3. Review the code using the **code-reviewer** skill`,
-                `4. Run tests and add any missing unit tests`,
-                `5. Open a pull request targeting \`main\` that closes this issue`,
-              ].join('\n'),
+              body: `@copilot Please resolve this issue following the **issue-resolver** skill (\`.agent/skills/issue-resolver/SKILL.md\`).`
             });

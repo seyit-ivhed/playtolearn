@@ -1,11 +1,11 @@
 ---
 name: issue-resolver
-description: Use this skill to autonomously resolve a GitHub issue end-to-end — coding, reviewing, testing, and opening a pull request
+description: Use this skill to autonomously resolve a GitHub issue end-to-end — coding, reviewing, testing, and pinging the developer
 ---
 
 # Goal
 
-Fully resolve the assigned GitHub issue by writing code, reviewing it, testing it, and creating a pull request for human review.
+Fully resolve the assigned GitHub issue by writing code, reviewing it, testing it, and pinging the developer for human review.
 
 # Instructions
 
@@ -34,12 +34,12 @@ Fully resolve the assigned GitHub issue by writing code, reviewing it, testing i
 - Follow all instructions in `/.agent/skills/code-reviewer/SKILL.md`
 - Check every file you have added or modified for violations of the rules in `/.agent/rules/`
 - Check for gaps in test coverage and address them
-- Fix all issues found during review before opening the pull request
+- Fix all issues found during review before finishing the implementation
 
-## 6. Open a pull request
-- Target the `main` branch
-- Write a clear PR title and description that explains:
-  - What issue is being resolved (link it with `Closes #<issue-number>`)
+## 6. Comment and request review
+- Push the branch to the repository
+- Go back to the issue and add a comment pinging the developer
+- In the comment, include:
+  - The name of the branch you created
   - A summary of the changes made
   - Any decisions or trade-offs worth highlighting
-- Request a human review before merging

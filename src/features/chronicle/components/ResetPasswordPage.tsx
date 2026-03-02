@@ -7,6 +7,9 @@ import { supabase } from '../../../services/supabase.service';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import styles from './ResetPasswordPage.module.css';
 
+const TOKEN_PROCESSING_TIMEOUT_MS = 1500;
+const MIN_PASSWORD_LENGTH = 6;
+
 export const ResetPasswordPage: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -19,25 +22,17 @@ export const ResetPasswordPage: React.FC = () => {
     const [success, setSuccess] = useState(false);
     const [isValidSession, setIsValidSession] = useState<boolean | null>(null);
 
-    const TOKEN_PROCESSING_TIMEOUT_MS = 1500;
-    const MIN_PASSWORD_LENGTH = 6;
-
     useEffect(() => {
-        // Supabase appends the recovery token to the URL hash.
-        // onAuthStateChange will fire with event PASSWORD_RECOVERY when the user
-        // follows the magic link, which gives us an authenticated session.
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
             if (event === 'PASSWORD_RECOVERY') {
                 setIsValidSession(true);
             }
         });
 
-        // Also check if there's already a valid session (e.g. page reload)
         supabase.auth.getSession().then(({ data: { session } }) => {
             if (session) {
                 setIsValidSession(true);
             } else {
-                // Give Supabase a moment to process the hash token before declaring invalid
                 setTimeout(() => {
                     setIsValidSession((prev) => prev ?? false);
                 }, TOKEN_PROCESSING_TIMEOUT_MS);
