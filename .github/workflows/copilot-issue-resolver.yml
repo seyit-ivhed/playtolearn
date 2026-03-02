@@ -31,6 +31,6 @@ jobs:
                 `2. Implement the fix using the **frontend-developer** skill`,
                 `3. Review the code using the **code-reviewer** skill`,
                 `4. Run tests and add any missing unit tests`,
-                `5. Open a pull request targeting \`main\` that closes this issue`,
+                `5. Respond to the issue with the detailed explanation of implementation`,
               ].join('\n'),
             });
