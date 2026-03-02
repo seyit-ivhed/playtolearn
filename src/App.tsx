@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
 import { ChronicleBook } from './features/chronicle/ChronicleBook';
+import { ResetPasswordPage } from './features/chronicle/components/ResetPasswordPage';
 import EncounterPage from './features/encounter/EncounterPage';
 import PuzzlePage from './features/encounter/PuzzlePage';
 import MathTestPage from './features/math/MathTestPage';
@@ -31,6 +32,9 @@ function AppContent() {
           {/* Chronicle Routes */}
           <Route path="/chronicle" element={<ChronicleBook />} />
           <Route path="/chronicle/:pageId" element={<ChronicleBook />} />
+
+          {/* Password Reset Route */}
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Protected Adventure Routes */}
           <Route path="/map/:adventureId" element={

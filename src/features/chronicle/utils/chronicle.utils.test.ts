@@ -40,6 +40,10 @@ describe('chronicle.utils', () => {
             expect(getBookStateFromUrl('login')).toBe('LOGIN');
         });
 
+        it('should return FORGOT_PASSWORD when pageId is "forgot-password"', () => {
+            expect(getBookStateFromUrl('forgot-password')).toBe('FORGOT_PASSWORD');
+        });
+
         it('should return DIFFICULTY when pageId is "difficulty"', () => {
             expect(getBookStateFromUrl('difficulty')).toBe('DIFFICULTY');
         });

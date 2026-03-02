@@ -532,7 +532,35 @@
         "password_label": "Lösenord",
         "password_placeholder": "••••••••",
         "open_journal": "Logga in",
-        "invalid_credentials": "Ogiltig e-post eller lösenord"
+        "invalid_credentials": "Ogiltig e-post eller lösenord",
+        "forgot_password": "Glömt ditt lösenord?"
+    },
+    "forgot_password": {
+        "title": "Återställ lösenord",
+        "subtitle": "Ange din e-postadress så skickar vi en återställningslänk.",
+        "email_label": "E-postadress",
+        "email_placeholder": "namn@exempel.se",
+        "submit_btn": "Skicka återställningslänk",
+        "success_title": "Kolla din inkorg",
+        "success_message": "Om ett konto finns för den e-postadressen har en återställningslänk skickats. Det kan ta några minuter — kom ihåg att kolla din skräppost.",
+        "error_generic": "Något gick fel. Försök igen."
+    },
+    "reset_password": {
+        "title": "Ange nytt lösenord",
+        "new_password_label": "Nytt lösenord",
+        "new_password_placeholder": "Välj ett starkt lösenord",
+        "confirm_password_label": "Bekräfta nytt lösenord",
+        "confirm_password_placeholder": "Upprepa ditt lösenord",
+        "submit_btn": "Spara nytt lösenord",
+        "success_title": "Lösenord uppdaterat",
+        "success_message": "Ditt lösenord har uppdaterats. Du kan nu logga in med ditt nya lösenord.",
+        "go_to_login": "Gå till inloggning",
+        "errors": {
+            "passwords_dont_match": "Lösenorden matchar inte.",
+            "weak_password": "Lösenordet måste vara minst 6 tecken.",
+            "generic": "Något gick fel. Försök igen.",
+            "invalid_link": "Denna återställningslänk är ogiltig eller har gått ut. Begär en ny."
+        }
     },
     "settings": {
         "title": "Inställningar",

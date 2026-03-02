@@ -532,7 +532,35 @@
         "password_label": "Password",
         "password_placeholder": "••••••••",
         "open_journal": "Login",
-        "invalid_credentials": "Invalid email or password"
+        "invalid_credentials": "Invalid email or password",
+        "forgot_password": "Forgot your password?"
+    },
+    "forgot_password": {
+        "title": "Recover Password",
+        "subtitle": "Enter your email address and we will send you a recovery link.",
+        "email_label": "Email Address",
+        "email_placeholder": "name@example.com",
+        "submit_btn": "Send Recovery Link",
+        "success_title": "Check Your Inbox",
+        "success_message": "If an account exists for that email, a recovery link has been sent. This may take a few minutes — remember to check your spam folder.",
+        "error_generic": "Something went wrong. Please try again."
+    },
+    "reset_password": {
+        "title": "Set New Password",
+        "new_password_label": "New Password",
+        "new_password_placeholder": "Choose a strong password",
+        "confirm_password_label": "Confirm New Password",
+        "confirm_password_placeholder": "Repeat your password",
+        "submit_btn": "Save New Password",
+        "success_title": "Password Updated",
+        "success_message": "Your password has been updated. You can now log in with your new password.",
+        "go_to_login": "Go to Login",
+        "errors": {
+            "passwords_dont_match": "Passwords do not match.",
+            "weak_password": "Password must be at least 6 characters.",
+            "generic": "Something went wrong. Please try again.",
+            "invalid_link": "This recovery link is invalid or has expired. Please request a new one."
+        }
     },
     "settings": {
         "title": "Settings",

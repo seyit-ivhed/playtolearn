@@ -8,9 +8,10 @@ import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 interface BookLoginProps {
     onBack: () => void;
     onSuccess: () => void;
+    onForgotPassword: () => void;
 }
 
-export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess }) => {
+export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgotPassword }) => {
     const { t } = useTranslation();
     const { signIn } = useAuth();
 
@@ -94,6 +95,15 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess }) => {
                 >
                     {loading ? <Loader2 className={styles.spinner} /> : t('login.open_journal')}
                 </PrimaryButton>
+
+                <button
+                    type="button"
+                    className={styles.forgotPasswordLink}
+                    onClick={onForgotPassword}
+                    data-testid="login-forgot-password-btn"
+                >
+                    {t('login.forgot_password')}
+                </button>
             </form>
 
             <button
