@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type PuzzleOption, type PuzzleProps, type RefillCanteenData } from '../../../../types/adventure.types';
+import { playSfx } from '../../../../components/audio/audio.utils';
 import { calculateNextSum, formatActionLabel, isPuzzleSolved } from './RefillCanteenEngine';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 import styles from './RefillCanteenPuzzle.module.css';
@@ -37,6 +38,7 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
             return;
         }
 
+        playSfx('puzzle/pouring-water');
         const nextSum = calculateNextSum(currentSum, option);
         const actionLabel = formatActionLabel(option);
 
