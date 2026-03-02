@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PuzzleType, type PuzzleProps, type EquationData } from '../../../../types/adventure.types';
 import { validateAnswer } from './EquationEngine';
 import styles from './EquationPuzzle.module.css';
+import { playSfx } from '../../../../components/audio/audio.utils';
 
 const SHAKE_DURATION_MS = 500;
 const SUCCESS_DELAY_MS = 2000;
@@ -33,11 +34,13 @@ export const EquationPuzzle = ({ data, onSolve }: PuzzleProps) => {
 
         if (validateAnswer(value, puzzleData.correctAnswer)) {
             setIsSolved(true);
+            playSfx('puzzle/magical-success');
             setTimeout(() => {
                 onSolve();
             }, SUCCESS_DELAY_MS);
         } else {
             setIsShaking(true);
+            playSfx('puzzle/wrong');
             setTimeout(() => {
                 setIsShaking(false);
                 setSelectedAnswer(null);
