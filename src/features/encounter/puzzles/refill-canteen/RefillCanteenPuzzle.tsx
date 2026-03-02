@@ -48,6 +48,7 @@ export const RefillCanteenPuzzle = ({ data, onSolve }: PuzzleProps) => {
 
         if (isPuzzleSolved(nextSum, target) && !isSolved) {
             setIsSolved(true);
+            playSfx('puzzle/magical-success');
             setTimeout(() => {
                 onSolve();
             }, 2000);
