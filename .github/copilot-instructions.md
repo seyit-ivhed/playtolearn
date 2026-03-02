@@ -7,4 +7,4 @@ Key points:
 - Write code following the **frontend-developer** skill in `/.agent/skills/frontend-developer/SKILL.md`.
 - After writing code, review it following the **code-reviewer** skill in `/.agent/skills/code-reviewer/SKILL.md`.
 - Run existing tests and add new unit tests for any logic you introduce.
-- Comment on the issue to request a manual review after pushing the branch.
+- Respond to the issue with detailed solution explanation and ping the developer
