@@ -37,6 +37,13 @@ through space-themed missions and challenges.
    cd ..
    ```
 
+4. **Set up environment files:** Copy the example templates and fill in your values:
+   ```bash
+   cp .env.example .env                                  # Production Supabase + Stripe keys
+   cp .env.local.example .env.local                      # Local Supabase keys (from `supabase status`)
+   cp supabase/functions/.env.example supabase/functions/.env  # Stripe secret keys for Edge Functions
+   ```
+
 ## Running the Project
 
 To run the full application, you will need to start both the client (frontend)
@@ -73,15 +80,20 @@ The project uses Supabase for authentication, database, and edge functions.
 We use a local Supabase instance run via Docker.
 
 **1. Manage Local Secrets:** To use features like Stripe payments locally, you
-must set your API keys.
+must set your API keys. If you haven't already done so in the Installation
+step, copy the template and fill in the values:
 
-1. Create a `supabase/functions/.env` file.
-2. Add your secrets there (this file is git-ignored and safe):
-   ```
-   STRIPE_SECRET_KEY=sk_test_...
-   STRIPE_WEBHOOK_SECRET=whsec_...
-   ```
-3. Restart services to load the keys: `npm run deploy-supabase`
+```bash
+cp supabase/functions/.env.example supabase/functions/.env
+```
+
+Add your secrets there (this file is git-ignored and safe):
+```
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+```
+
+Restart services to load the keys: `npm run deploy-supabase`
 
 **2. View Edge Function Logs:** Supabase Edge Functions run effectively in a
 Docker container locally. To view real-time logs (including `console.log` from
