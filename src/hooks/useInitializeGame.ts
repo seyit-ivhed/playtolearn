@@ -19,7 +19,6 @@ export const useInitializeGame = () => {
         await Promise.resolve();
         if (authLoading) return;
 
-
         if (initialized.current && lastAuthId.current === user?.id) {
             return;
         }
