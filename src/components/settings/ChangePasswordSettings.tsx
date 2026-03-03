@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import sectionStyles from './SettingsSection.module.css';
+import styles from './ChangePasswordSettings.module.css';
 
 export const ChangePasswordSettings: React.FC = () => {
     const { t } = useTranslation();
@@ -15,8 +16,9 @@ export const ChangePasswordSettings: React.FC = () => {
 
     const handleChangePassword = async () => {
         if (!user?.email) {
-            return
-        };
+            console.error('Cannot change password: user email is missing');
+            return;
+        }
         setError(null);
         setLoading(true);
 
@@ -37,14 +39,14 @@ export const ChangePasswordSettings: React.FC = () => {
             <h4 className={sectionStyles.sectionTitle}>{t('change_password.title')}</h4>
 
             {submitted ? (
-                <div data-testid="change-password-success">
+                <div className={styles.successMessage} data-testid="change-password-success">
                     <CheckCircle size={16} />
                     <span>{t('change_password.success_message')}</span>
                 </div>
             ) : (
                 <>
                     {error && (
-                        <div data-testid="change-password-error">
+                        <div className={styles.errorMessage} data-testid="change-password-error">
                             <AlertCircle size={14} />
                             <span>{error}</span>
                         </div>
