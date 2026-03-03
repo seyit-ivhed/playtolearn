@@ -1,0 +1,55 @@
+/* Attack Tutorial Tap Hint */
+.tap-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    z-index: 70;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.tap-hint-icon {
+    font-size: 3rem;
+    animation: tap-bounce 1s infinite ease-in-out;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
+}
+
+.tap-hint-ripple {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    animation: tap-ripple 1s infinite ease-out;
+    margin-top: -12px;
+}
+
+@keyframes tap-bounce {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    40% {
+        transform: translateY(12px) scale(0.9);
+    }
+    60% {
+        transform: translateY(8px) scale(0.95);
+    }
+}
+
+@keyframes tap-ripple {
+    0% {
+        transform: scale(0.5);
+        opacity: 0.8;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}

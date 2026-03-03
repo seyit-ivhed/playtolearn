@@ -13,6 +13,7 @@ interface BattlefieldProps {
     activeChallengeUnitId?: string | null;
     isVFXActive: boolean;
     onUnitAction: (unitId: string) => void;
+    showAttackHint?: boolean;
 }
 
 export const Battlefield = ({
@@ -24,7 +25,8 @@ export const Battlefield = ({
     activeVFXType,
     activeChallengeUnitId,
     isVFXActive,
-    onUnitAction
+    onUnitAction,
+    showAttackHint = false
 }: BattlefieldProps) => {
     const { t } = useTranslation();
     const visibleMonsters = monsters.filter(m => visibleMonsterIds.includes(m.id));
@@ -46,6 +48,7 @@ export const Battlefield = ({
                                         : activeVFXType
                                 }
                                 disableInteraction={isEncounterOver || !!activeChallengeUnitId || isVFXActive}
+                                showAttackHint={showAttackHint}
                             />
                         </div>
                     ))}

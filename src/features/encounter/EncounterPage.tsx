@@ -77,6 +77,9 @@ const EncounterPage = () => {
 
     const isEncounterOver = checkIsEncounterOver(monsters);
 
+    const isFirstEncounter = adventureId === '1' && nodeIndex === 1;
+    const showAttackHint = isFirstEncounter && phase === EncounterPhase.PLAYER_TURN && party.some(u => !u.hasActed && !u.isDead);
+
     const handleUnitAction = (unitId: string) => {
         if (phase !== EncounterPhase.PLAYER_TURN || isEncounterOver) {
             return;
@@ -190,6 +193,7 @@ const EncounterPage = () => {
                 activeChallengeUnitId={activeChallenge?.unitId}
                 isVFXActive={!!activeVFX}
                 onUnitAction={handleUnitAction}
+                showAttackHint={showAttackHint}
             />
 
             {activeChallenge && (

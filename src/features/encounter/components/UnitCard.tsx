@@ -15,6 +15,7 @@ import { UnitCardShield } from './UnitCardShield';
 import { UnitCardVFX } from './UnitCardVFX';
 import { useUnitCardAnimations } from '../hooks/useUnitCardAnimations';
 import { RestingIndicator } from './RestingIndicator';
+import { TapHint } from './TapHint';
 
 interface UnitCardProps {
     unit: EncounterUnit;
@@ -25,6 +26,7 @@ interface UnitCardProps {
     onMathAnswer?: (correct: boolean) => void;
     activeVisualEffect?: string | null;
     disableInteraction?: boolean;
+    showAttackHint?: boolean;
 }
 
 export const UnitCard = ({
@@ -35,7 +37,8 @@ export const UnitCard = ({
     mathProblem,
     onMathAnswer,
     activeVisualEffect,
-    disableInteraction = false
+    disableInteraction = false,
+    showAttackHint = false
 }: UnitCardProps) => {
     const { t } = useTranslation();
     const isMonster = !unit.isPlayer;
@@ -181,6 +184,9 @@ export const UnitCard = ({
 
             {/* Sleeping/Resting State Indicator */}
             {unit.hasActed && !unit.isDead && !isMonster && <RestingIndicator />}
+
+            {/* Attack Tutorial Hint (first encounter only) */}
+            {showAttackHint && canAct && !isMonster && <TapHint />}
 
         </div>
     );
