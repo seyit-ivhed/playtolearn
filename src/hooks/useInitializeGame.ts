@@ -11,26 +11,19 @@ export const useInitializeGame = () => {
 
     const initializePremium = usePremiumStore(state => state.initialize);
     const initialized = useRef(false);
-    const [lastAuthId, setLastAuthId] = useState<string | undefined>(user?.id);
-
-    if (user?.id !== lastAuthId) {
-        setLastAuthId(user?.id);
-    }
-
-    const needsReInit = !authLoading && (!initialized.current || lastAuthId !== user?.id);
+    const lastAuthId = useRef<string | undefined>(user?.id);
 
     const performInitialization = useCallback(async () => {
-        if (authLoading) {
-            return;
-        }
+        await Promise.resolve();
+        if (authLoading) return;
 
-        if (initialized.current && lastAuthId === user?.id) {
+        if (initialized.current && lastAuthId.current === user?.id) {
             return;
         }
 
         console.log('Starting game initialization sequence...');
         initialized.current = true;
-        setLastAuthId(user?.id);
+        lastAuthId.current = user?.id;
         setError(null);
         setIsInitializing(true);
 
@@ -61,7 +54,10 @@ export const useInitializeGame = () => {
     }, [authLoading, isAuthenticated, user, initializePremium]);
 
     useEffect(() => {
-        performInitialization();
+        const runInit = async () => {
+            await performInitialization();
+        };
+        runInit();
     }, [performInitialization]);
 
     const retry = useCallback(() => {
@@ -72,7 +68,7 @@ export const useInitializeGame = () => {
     }, [performInitialization, refreshSession]);
 
     return {
-        isInitializing: isInitializing || authLoading || needsReInit,
+        isInitializing: isInitializing || authLoading,
         error,
         retry
     };
