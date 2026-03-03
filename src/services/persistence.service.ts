@@ -1,10 +1,12 @@
 import { supabase } from './supabase.service';
 import { IdentityService } from './identity.service';
 import { DebouncedQueue } from '../utils/debounced-queue';
+import { mergeGameState } from '../utils/merge-game-state';
+import type { GameState } from '../stores/game/interfaces';
 
 interface SyncInput {
     authId: string;
-    state: object;
+    state: GameState;
 }
 
 export const PersistenceService = {
@@ -42,15 +44,21 @@ export const PersistenceService = {
 
     /**
      * Pushes the current game state to Supabase.
+     * Fetches the current cloud state and merges before writing so that
+     * progress from concurrent sessions never regresses.
      */
-    async pushState(authId: string, state: object) {
+    async pushState(authId: string, state: GameState) {
         try {
-            // Upsert the game state
+            const cloudState = await PersistenceService.pullState(authId);
+            const stateToWrite = cloudState
+                ? mergeGameState(state, cloudState as Partial<GameState>)
+                : state;
+
             const { error: upsertError } = await supabase
                 .from('game_states')
                 .upsert({
                     player_id: authId,
-                    state_blob: state,
+                    state_blob: stateToWrite,
                     updated_at: new Date().toISOString()
                 }, {
                     onConflict: 'player_id'
@@ -87,7 +95,7 @@ export const PersistenceService = {
      * Uses a debounced queue to prevent race conditions when multiple
      * rapid sync calls occur. Only the latest state will be pushed.
      */
-    async sync(state: object) {
+    async sync(state: GameState) {
         try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
