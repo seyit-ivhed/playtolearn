@@ -173,6 +173,7 @@ const EncounterPage = () => {
                 leftIcon={<Map size={32} />}
                 onLeftClick={() => navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } })}
                 leftAriaLabel={t('common.back_to_map')}
+                leftTestId="back-to-map-btn"
             />
 
             <TurnAnnouncer phase={phase} />

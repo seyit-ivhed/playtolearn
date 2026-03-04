@@ -91,6 +91,7 @@ const AdventurePage = () => {
                     leftIcon={<BookOpen size={32} />}
                     onLeftClick={() => navigate(`/chronicle/${adventureId}`)}
                     leftAriaLabel={t('common.back')}
+                    leftTestId="back-to-chronicle-btn"
                     title={t(`adventures.${adventureId}.title`, adventure.title || t('common.adventure', 'Adventure')) as string}
                 />
 

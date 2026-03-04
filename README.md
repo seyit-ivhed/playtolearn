@@ -165,16 +165,38 @@ We use **Vitest** for unit testing.
 
 ### End-to-End Tests (Playwright)
 
-We use **Playwright** for end-to-end testing.
+We use **Playwright** for end-to-end testing. Tests live in the `/e2e` directory and
+are automatically served by the Vite dev server when the test suite runs. No real
+Supabase credentials are required — the Playwright config injects fake credentials and
+the tests intercept any outbound auth requests.
+
+| File | Covers |
+|---|---|
+| `e2e/onboarding.spec.ts` | Cover page → difficulty selection → first adventure chapter |
+| `e2e/adventure-map.spec.ts` | Adventure map → encounter node → difficulty modal → encounter start |
+| `e2e/encounter.spec.ts` | Encounter battle page loads, unit cards render, back navigation |
+| `e2e/settings.spec.ts` | Settings modal accessible from all major pages |
+
+#### Conventions
+
+- Selectors always use `data-testid` attributes — never element text.
+- All button clicks use the `{ force: true }` option.
+- Supabase network calls are intercepted via `page.route()` in `e2e/helpers.ts`
+  so tests never depend on a live backend.
 
 - **Run all E2E tests:**
   ```bash
-  npx playwright test
+  npm run test:e2e
   ```
 
 - **Run E2E tests with UI mode:**
   ```bash
   npx playwright test --ui
+  ```
+
+- **Run a single test file:**
+  ```bash
+  npx playwright test e2e/onboarding.spec.ts
   ```
 
 - **View the last HTML report:**
