@@ -77,7 +77,9 @@ const EncounterPage = () => {
 
     const isEncounterOver = checkIsEncounterOver(monsters);
 
-    const isFirstEncounter = adventureId === '1' && nodeIndex === 1;
+    const TUTORIAL_ADVENTURE_ID = '1';
+    const TUTORIAL_NODE_INDEX = 1;
+    const isFirstEncounter = adventureId === TUTORIAL_ADVENTURE_ID && nodeIndex === TUTORIAL_NODE_INDEX;
     const showAttackHint = isFirstEncounter && phase === EncounterPhase.PLAYER_TURN && party.some(u => !u.hasActed && !u.isDead);
 
     const handleUnitAction = (unitId: string) => {

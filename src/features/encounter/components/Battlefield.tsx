@@ -30,6 +30,7 @@ export const Battlefield = ({
 }: BattlefieldProps) => {
     const { t } = useTranslation();
     const visibleMonsters = monsters.filter(m => visibleMonsterIds.includes(m.id));
+    const firstActableUnitId = showAttackHint ? party.find(u => !u.hasActed && !u.isDead)?.id : undefined;
 
     return (
         <div className="battlefield">
@@ -48,7 +49,7 @@ export const Battlefield = ({
                                         : activeVFXType
                                 }
                                 disableInteraction={isEncounterOver || !!activeChallengeUnitId || isVFXActive}
-                                showAttackHint={showAttackHint}
+                                showAttackHint={unit.id === firstActableUnitId}
                             />
                         </div>
                     ))}
