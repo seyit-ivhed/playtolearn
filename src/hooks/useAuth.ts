@@ -9,6 +9,8 @@ import { supabase } from '../services/supabase.service';
 import { IdentityService } from '../services/identity.service';
 import type { Session, User } from '@supabase/supabase-js';
 
+const AUTH_TIMEOUT_MS = 8000;
+
 export const useAuth = () => {
     const [session, setSession] = useState<Session | null>(null);
     const [user, setUser] = useState<User | null>(null);
@@ -31,7 +33,15 @@ export const useAuth = () => {
     useEffect(() => {
         // Initial load
         const init = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
+            let clearAuthTimeout = () => {};
+            const timeoutResult = new Promise<{ data: { session: null } }>((resolve) => {
+                const id = setTimeout(() => resolve({ data: { session: null } }), AUTH_TIMEOUT_MS);
+                clearAuthTimeout = () => clearTimeout(id);
+            });
+            const { data: { session } } = await Promise.race([
+                supabase.auth.getSession(),
+                timeoutResult
+            ]).finally(clearAuthTimeout);
             setSession(session);
 
             if (session?.user?.id) {
