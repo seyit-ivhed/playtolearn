@@ -33,11 +33,12 @@ Fully resolve the assigned GitHub issue by writing code, reviewing it, testing i
 - Check for gaps in test coverage and address them
 - Fix all issues found during review before finishing the implementation
 
-## 6. Push and Comment
+## 6. Push, Open a Draft PR, and Comment
 - Push the branch to the repository
-- Go back to the issue and add a comment pinging the developer
-- In the comment, include:
-  - The name of the branch you created
+- Create a **draft** pull request targeting `main`
+- Assign the draft PR to `copilot` — this triggers an independent code review by a second Copilot agent
+- Go back to the issue and add a comment that includes:
+  - A link to the draft PR
   - A summary of the changes made
   - Any decisions or trade-offs worth highlighting
-- DO NOT create a pull request. The developer will review the branch directly and merge it when ready.
+

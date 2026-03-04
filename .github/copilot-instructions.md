@@ -7,4 +7,12 @@ Key points:
 - Write code following the **frontend-developer** skill in `/.agent/skills/frontend-developer/SKILL.md`.
 - After writing code, review it following the **code-reviewer** skill in `/.agent/skills/code-reviewer/SKILL.md`.
 - Run existing tests and add new unit tests for any logic you introduce.
-- Respond to the issue with detailed solution explanation and ping the developer
+- When done, create a **draft** pull request and assign it to `copilot` to trigger an independent secondary code review.
+
+When working on a pull request assigned to you for review, follow the **code-reviewer** skill defined in `/.agent/skills/code-reviewer/SKILL.md`.
+
+Key points:
+- Treat the review as fully independent — do not assume the implementation is correct.
+- Check correctness, quality, test coverage, and adherence to `/docs/developer-expectations.md`.
+- Apply all improvements directly to the branch.
+- When done, mark the PR as ready for review and assign it to @seyit-ivhed.

@@ -22,5 +22,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue.number,
-              body: `@copilot Please resolve this issue following the **issue-resolver** skill (\`.agent/skills/issue-resolver/SKILL.md\`).`
+              body: `@copilot Please resolve this issue following the **issue-resolver** skill (\`.agent/skills/issue-resolver/SKILL.md\`). When done, create a **draft** pull request and assign it to \`copilot\` to trigger an independent code review.`
             });
