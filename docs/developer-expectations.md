@@ -1,0 +1,169 @@
+# Developer Expectations
+
+This document defines the standards, rules, and practices expected from every developer (human or AI) contributing to this codebase. Read this before starting any implementation, bug fix, or code review.
+
+Also read [technical-architecture.md](technical-architecture.md) before planning any implementation.
+
+---
+
+## Architecture
+
+- Always consult [technical-architecture.md](technical-architecture.md) before planning. Stick to the architectural guidance there.
+- Respect the established project structure. Do not introduce new patterns without strong justification.
+
+---
+
+## Code Style
+
+### Comments
+- Do not write extensive comments. Write self-explanatory code with good variable, function, and class names instead.
+- Only add a comment when logic is genuinely complex and cannot be made clearer through naming alone.
+
+### Conditional Statements
+- Always use curly brackets in conditional statements, even for single-line bodies.
+
+```typescript
+// Good
+if (companion.level >= EXPERIENCE_CONFIG.MAX_LEVEL) {
+  return false;
+}
+
+// Bad
+if (companion.level >= EXPERIENCE_CONFIG.MAX_LEVEL) return false;
+```
+
+### Imports
+- Use relative imports, not absolute/path-alias imports.
+
+```typescript
+// Good
+import { PuzzleType } from '../../../../types/adventure.types';
+
+// Bad
+import { PuzzleType } from '@/types/adventure.types';
+```
+
+---
+
+## TypeScript
+
+### No `enum`
+- Do not use `enum`. Use `const` objects with `as const` and derived types instead (required for `erasableSyntaxOnly` / `verbatimModuleSyntax` compatibility).
+
+```typescript
+// Good
+export const MyEnum = {
+  A: 'A',
+  B: 'B',
+} as const;
+export type MyEnum = typeof MyEnum[keyof typeof MyEnum];
+
+// Bad
+export enum MyEnum {
+  A = 'A',
+  B = 'B',
+}
+```
+
+### No `any`
+- Never use the `any` type. It causes lint failures and masks real type errors.
+- Do not cast through `unknown` to work around type mismatches. Define, extend, or inherit types properly instead.
+
+```typescript
+// Bad
+newParty = CombatEngine.tickStatusEffects(newParty as unknown as BattleUnit[]) as unknown as EncounterUnit[];
+```
+
+### Parameter Validation
+- At the start of a function, validate that required parameters and dependencies exist and have the expected type.
+- Log a `console.error` and return early if validation fails. Do not substitute default values.
+
+```typescript
+if (!stats) {
+  console.error(`Companion stats not found in levelUpCompanion for ${companionId}`);
+  return;
+}
+
+if (typeof stats.level !== 'number') {
+  console.error(`Invalid level for companion ${companionId}`);
+  return;
+}
+```
+
+---
+
+## Modularization and File Size
+
+- Break long functions into smaller, focused functions.
+- Aggressively modularize `.tsx` files into smaller components.
+- When a `.ts` or `.tsx` file exceeds **250 lines**, consider refactoring into smaller units.
+- Each component should have a **single responsibility**. If a component does more than one thing, split it.
+
+---
+
+## React
+
+### Minimize `useEffect`
+- Avoid `useEffect` wherever possible. Prefer native React reactivity (derived state, memoization, event handlers).
+- Only use `useEffect` when there is no cleaner alternative.
+
+### Component Testability
+- If a `.tsx` component contains complex logic, extract that logic to a `.ts` file and write unit tests there.
+- Do not write unit tests for `.tsx` files directly.
+
+---
+
+## Localization
+
+- All user-readable text must be localized using the i18n system. Never hardcode strings visible to users in code or data files.
+- Exception: companion names do not need to be localized.
+
+---
+
+## Styling and Animation
+
+- Use CSS rules and transitions for animations first.
+- Only introduce `framer-motion` if CSS becomes genuinely too complex or insufficient.
+
+---
+
+## Polymorphism Over Conditionals
+
+- Avoid long `switch/case` or `if/else` chains. Refactor into polymorphic solutions (strategy pattern, lookup maps, etc.) instead.
+
+---
+
+## Testing
+
+### Unit Tests
+- Write unit tests for `.ts` files that contain non-trivial logic.
+- Do not write unit tests for `.tsx` files — extract logic to `.ts` files first.
+- Do not add unit tests to files that have an explicit comment opting out of unit testing.
+- Unit tests must not perform I/O operations (no file reads, network calls, database access).
+
+### End-to-End Tests (Playwright)
+- Never assert on element text content. Use `data-testid` attributes instead.
+- Always use the `{ force: true }` option when clicking buttons.
+
+---
+
+## Code Review Checklist
+
+When reviewing code (your own or others'), verify:
+
+1. Architecture aligns with [technical-architecture.md](technical-architecture.md).
+2. No hardcoded user-visible strings — all text goes through i18n.
+3. No `any` types or unsafe `unknown` casts.
+4. No `enum` — use `const` + `as const` pattern.
+5. Relative imports used throughout.
+6. Curly brackets on all conditionals.
+7. `useEffect` usage is justified and minimal.
+8. Functions and components have single responsibilities.
+9. Files under 250 lines (flag if over).
+10. Complex `.tsx` logic is extracted to `.ts` files with tests.
+11. Unit tests present for non-trivial `.ts` logic, passing, and I/O-free.
+12. E2E tests use `data-testid`, not text content.
+13. Parameters validated at function entry with `console.error` + early return on failure.
+14. Animations use CSS first; `framer-motion` only when necessary.
+15. Long conditionals replaced with polymorphic patterns.
+16. Comments only where logic is genuinely opaque.
