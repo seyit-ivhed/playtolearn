@@ -176,6 +176,7 @@ the tests intercept any outbound auth requests.
 | `e2e/adventure-map.spec.ts` | Adventure map → encounter node → difficulty modal → encounter start |
 | `e2e/encounter.spec.ts` | Encounter battle page loads, unit cards render, back navigation |
 | `e2e/settings.spec.ts` | Settings modal accessible from all major pages |
+| `e2e/checkout.spec.ts` | Premium store modal → account creation form → payment flow on `checkout.html` |
 
 #### Setup
 
