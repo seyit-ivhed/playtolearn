@@ -72,6 +72,10 @@ window.Stripe = function(key, options) {
     };
     return {
         elements: function() { return mockElements; },
+        // Required by @stripe/react-stripe-js v5 isStripe() validation:
+        createToken: async function() { return { token: null, error: null }; },
+        createPaymentMethod: async function() { return { paymentMethod: null, error: null }; },
+        confirmCardPayment: async function() { return { paymentIntent: null, error: null }; },
         confirmPayment: async function() {
             return {
                 paymentIntent: { id: 'pi_test_mock', status: 'succeeded' },
@@ -83,7 +87,30 @@ window.Stripe = function(key, options) {
         },
     };
 };
+// @stripe/stripe-js v3+ calls window.Stripe.registerAppInfo() as a static method
+// before instantiating. Without this no-op, the loadStripe() promise rejects.
+window.Stripe.registerAppInfo = function() {};
 `;
+
+/**
+ * Injects a <style> that disables all CSS animations and transitions.
+ * Prevents Playwright's "element not stable" errors on animated buttons.
+ * Must be called before page.goto().
+ */
+async function injectAnimationDisablingCSS(page: Page): Promise<void> {
+    await page.addInitScript(() => {
+        const inject = () => {
+            const style = document.createElement('style');
+            style.textContent = '*, *::before, *::after { animation: none !important; transition: none !important; }';
+            (document.head || document.documentElement).appendChild(style);
+        };
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', inject, { once: true });
+        } else {
+            inject();
+        }
+    });
+}
 
 /**
  * Intercepts Supabase auth API calls so tests work without a live Supabase instance.
@@ -91,6 +118,7 @@ window.Stripe = function(key, options) {
  * stored session exists. This interception ensures those calls return cleanly.
  */
 export async function interceptSupabaseAuth(page: Page): Promise<void> {
+    await injectAnimationDisablingCSS(page);
     await page.route('**/auth/v1/**', (route) => {
         route.fulfill({
             status: 200,
@@ -133,7 +161,15 @@ export function buildGameStateScript(partial: {
  * For VITE_SUPABASE_URL=http://localhost:54321 this resolves to sb-localhost-auth-token.
  */
 export function buildAuthenticatedSessionScript(): string {
-    return `localStorage.setItem('sb-localhost-auth-token', JSON.stringify(${JSON.stringify(AUTH_SESSION)}));`;
+    // Supabase JS v2 storage key: sb-${hostname.split('.')[0]}-auth-token
+    // Seed both common local dev keys to handle whichever VITE_SUPABASE_URL is active:
+    //   http://localhost:54321  → sb-localhost-auth-token
+    //   http://127.0.0.1:54321 → sb-127-auth-token
+    const sessionStr = JSON.stringify(JSON.stringify(AUTH_SESSION));
+    return [
+        `localStorage.setItem('sb-localhost-auth-token', ${sessionStr});`,
+        `localStorage.setItem('sb-127-auth-token', ${sessionStr});`,
+    ].join('\n');
 }
 
 /**
@@ -202,6 +238,7 @@ export async function mockSupabaseRestApis(page: Page): Promise<void> {
  *   - GET  /user    → authenticated user (for getUser() calls)
  */
 export async function mockSupabaseAuthForConversion(page: Page): Promise<void> {
+    await injectAnimationDisablingCSS(page);
     await page.route('**/auth/v1/**', async (route) => {
         const url = route.request().url();
         const method = route.request().method();
@@ -225,6 +262,7 @@ export async function mockSupabaseAuthForConversion(page: Page): Promise<void> {
  * the "email already registered" error path.
  */
 export async function mockSupabaseAuthForAlreadyRegistered(page: Page): Promise<void> {
+    await injectAnimationDisablingCSS(page);
     await page.route('**/auth/v1/**', async (route) => {
         const url = route.request().url();
         const method = route.request().method();
@@ -250,6 +288,7 @@ export async function mockSupabaseAuthForAlreadyRegistered(page: Page): Promise<
  * - GET  /user  → authenticated user (for getUser() calls in CheckoutForm)
  */
 export async function mockSupabaseAuthForCheckout(page: Page): Promise<void> {
+    await injectAnimationDisablingCSS(page);
     await page.route('**/auth/v1/**', async (route) => {
         const url = route.request().url();
         const method = route.request().method();

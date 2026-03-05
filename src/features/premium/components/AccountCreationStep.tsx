@@ -67,7 +67,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
             <h3 className="account-title">{translation('premium.store.account.title')}</h3>
             <p className="account-subtitle">{translation('premium.store.account.subtitle')}</p>
 
-            <form onSubmit={handleSubmit} className="account-form" data-testid="account-creation-form">
+            <form onSubmit={handleSubmit} className="account-form" data-testid="account-creation-form" noValidate>
                 <div className="input-group">
                     <label>
                         <Mail size={16} />
