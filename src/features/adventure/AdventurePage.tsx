@@ -26,7 +26,6 @@ const AdventurePage = () => {
         completeAdventure,
         unlockAdventure,
         notifyEncounterStarted,
-        resetGameProgress,
     } = useGameStore();
 
     const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
@@ -94,7 +93,7 @@ const AdventurePage = () => {
     };
 
     const handlePlayAgain = (nextDifficulty: number) => {
-        resetGameProgress(nextDifficulty);
+        setEncounterDifficulty(nextDifficulty);
         setIsGameCompleteModalOpen(false);
         navigate('/chronicle');
     };

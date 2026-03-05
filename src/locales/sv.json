@@ -591,7 +591,7 @@
         "adventure_stats_heading": "Din resa",
         "play_again_higher": "Spela igen på {{difficulty}}",
         "play_again_max": "Spela igen",
-        "play_again_hint": "Återställ dina framsteg och ge dig ut på en ny resa på en högre svårighetsnivå.",
-        "play_again_max_hint": "Du har redan bemästrat den högsta svårighetsnivån. Spela igen för att utmana dig själv!"
+        "play_again_hint": "Slutför äventyren igen på en högre svårighetsnivå för att samla alla stjärnor!",
+        "play_again_max_hint": "Du är på den högsta svårighetsnivån. Spela om äventyren för att tjäna alla stjärnor!"
     }
 }

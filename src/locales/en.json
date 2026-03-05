@@ -591,7 +591,7 @@
         "adventure_stats_heading": "Your Journey",
         "play_again_higher": "Play Again on {{difficulty}}",
         "play_again_max": "Play Again",
-        "play_again_hint": "Reset your progress and embark on a new journey at a higher difficulty.",
-        "play_again_max_hint": "You have already mastered the highest difficulty. Play again to challenge yourself!"
+        "play_again_hint": "Complete the adventures again at a higher difficulty to collect all the stars!",
+        "play_again_max_hint": "You're at the highest difficulty. Replay the adventures to earn every star!"
     }
 }
