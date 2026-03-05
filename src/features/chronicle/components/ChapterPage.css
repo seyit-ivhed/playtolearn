@@ -315,6 +315,45 @@
     background: rgba(74, 55, 33, 0.05);
 }
 
+/* Journey Complete Banner */
+.journey-complete-banner {
+    width: 100%;
+    background: linear-gradient(135deg, rgba(20, 15, 10, 0.85) 0%, rgba(40, 30, 15, 0.85) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 0 12px rgba(255, 215, 0, 0.05);
+}
+
+.journey-complete-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: #ffd700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+}
+
+.journey-complete-message {
+    font-size: 0.78rem;
+    color: rgba(255, 235, 200, 0.9);
+    line-height: 1.4;
+    margin: 0 0 0.35rem;
+}
+
+.journey-complete-hint {
+    font-size: 0.72rem;
+    color: rgba(255, 215, 0, 0.7);
+    line-height: 1.4;
+    margin: 0;
+    font-style: italic;
+}
+
 /* Scrollbar styling - now for content */
 .chapter-content::-webkit-scrollbar {
     width: 6px;

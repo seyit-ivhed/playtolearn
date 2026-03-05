@@ -273,7 +273,12 @@
         "page_x_of_y": "{{current}} of {{total}}",
         "next_chapter": "Next Chapter",
         "subtitle": "Your Journey Through the Ages",
-        "adventure_fallback": "Adventure {{id}}"
+        "adventure_fallback": "Adventure {{id}}",
+        "journey_complete": {
+            "title": "Journey Complete!",
+            "message": "You have defeated the Spirit King and restored harmony to all the realms. Your companions have grown stronger than ever before.",
+            "hint": "Replay past adventures for a perfect score, level up your companions further, or keep an eye out for new journeys ahead!"
+        }
     },
     "shared_xp": "Shared XP",
     "combat": {

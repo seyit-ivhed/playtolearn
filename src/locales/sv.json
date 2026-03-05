@@ -273,7 +273,12 @@
         "page_x_of_y": "{{current}} av {{total}}",
         "next_chapter": "Nästa kapitel",
         "subtitle": "Din resa genom tidsåldrarna",
-        "adventure_fallback": "Äventyr {{id}}"
+        "adventure_fallback": "Äventyr {{id}}",
+        "journey_complete": {
+            "title": "Resan slutförd!",
+            "message": "Du har besegrat Andarnas Konung och återställt harmonin i alla riken. Dina följeslagare har blivit starkare än någonsin.",
+            "hint": "Spela om tidigare äventyr för ett perfekt resultat, nivåhöj dina följeslagare ytterligare, eller håll utkik efter nya resor att ge sig ut på!"
+        }
     },
     "shared_xp": "Delad XP",
     "combat": {

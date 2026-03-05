@@ -41,8 +41,29 @@ export const ChapterActions: React.FC<ChapterActionsProps> = ({
 }) => {
     const { t } = useTranslation();
 
+    const isJourneyComplete = isJustCompleted && !canNext;
+
     return (
         <div className="chapter-footer">
+            {isJourneyComplete && (
+                <motion.div
+                    className="journey-complete-banner"
+                    data-testid="journey-complete-banner"
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <div className="journey-complete-title">
+                        {t('chronicle.journey_complete.title')}
+                    </div>
+                    <p className="journey-complete-message">
+                        {t('chronicle.journey_complete.message')}
+                    </p>
+                    <p className="journey-complete-hint">
+                        {t('chronicle.journey_complete.hint')}
+                    </p>
+                </motion.div>
+            )}
             <div className="footer-controls">
                 <motion.button
                     className="nav-btn"
