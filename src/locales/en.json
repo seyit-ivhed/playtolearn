@@ -585,7 +585,7 @@
         "retry": "RETRY CONNECTION"
     },
     "game_complete": {
-        "title": "Quest Complete!",
+        "title": "Journey Complete!",
         "subtitle": "You have conquered all six adventures!",
         "adventure_label": "Adventure {{number}}",
         "adventure_stats_heading": "Your Journey",

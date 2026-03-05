@@ -585,7 +585,7 @@
         "retry": "FÖRSÖK IGEN"
     },
     "game_complete": {
-        "title": "Uppdrag slutfört!",
+        "title": "Resan slutförd!",
         "subtitle": "Du har erövrat alla sex äventyr!",
         "adventure_label": "Äventyr {{number}}",
         "adventure_stats_heading": "Din resa",
