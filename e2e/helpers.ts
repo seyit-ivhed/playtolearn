@@ -43,6 +43,43 @@ export async function interceptSupabaseAuth(page: Page): Promise<void> {
 }
 
 /**
+ * Intercepts Supabase auth API calls and returns responses for a permanent (non-anonymous) user.
+ * Use this in place of interceptSupabaseAuth for tests that require a logged-in permanent user.
+ *
+ * Returns raw API-format responses (not the JS client wrapper) so that Supabase's internal
+ * _userResponse / _sessionResponse parsers resolve to the permanent user correctly.
+ */
+export async function interceptSupabaseAuthAsPermanentUser(page: Page): Promise<void> {
+    const permanentSession = {
+        access_token: 'fake-permanent-access-token',
+        token_type: 'bearer',
+        expires_in: 3600,
+        expires_at: 9999999999,
+        refresh_token: 'fake-permanent-refresh-token',
+        user: PERMANENT_USER,
+    };
+
+    await page.route('**/auth/v1/**', (route) => {
+        const url = route.request().url();
+        if (url.includes('/auth/v1/user') && route.request().method() === 'GET') {
+            // GET /auth/v1/user — Supabase expects the raw user object at the top level
+            route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify(PERMANENT_USER),
+            });
+        } else {
+            // Token refresh and all other auth endpoints — return the full session object
+            route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify(permanentSession),
+            });
+        }
+    });
+}
+
+/**
  * Seeds the Zustand game store in localStorage before the page loads.
  * Call this via page.addInitScript() so it runs before any JS.
  */
@@ -117,7 +154,9 @@ export async function interceptAccountConversion(page: Page): Promise<void> {
                 body: JSON.stringify(PERMANENT_USER),
             });
         } else {
-            route.continue();
+            // Fall back to the previously-registered auth interceptor rather than
+            // hitting the real (offline) network, which would cause a connection error.
+            route.fallback();
         }
     });
 

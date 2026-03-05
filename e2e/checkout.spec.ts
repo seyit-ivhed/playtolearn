@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import {
     interceptSupabaseAuth,
+    interceptSupabaseAuthAsPermanentUser,
     buildGameStateScript,
     buildAnonymousSessionScript,
     buildPermanentSessionScript,
@@ -160,7 +161,7 @@ test.describe('Account Creation Flow', () => {
 
 test.describe('Payment Flow', () => {
     test.beforeEach(async ({ page }) => {
-        await interceptSupabaseAuth(page);
+        await interceptSupabaseAuthAsPermanentUser(page);
         await page.addInitScript(buildPermanentSessionScript());
     });
 
