@@ -5,6 +5,7 @@ import { usePremiumStore } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
 import { mergeGameState } from '../utils/merge-game-state';
 import type { GameState } from '../stores/game/interfaces';
+import { analyticsService } from '../services/analytics.service';
 
 export const INIT_TIMEOUT_MS = 10000;
 
@@ -62,6 +63,8 @@ export const useInitializeGame = () => {
             ]).finally(clearInitTimeout);
 
             setIsInitializing(false);
+            const hasProgress = Object.keys(useGameStore.getState().encounterResults).length > 0;
+            analyticsService.trackEvent('session_started', { has_progress: hasProgress });
         } catch (err: unknown) {
             console.error('Initialization failed:', err);
             initialized.current = false;

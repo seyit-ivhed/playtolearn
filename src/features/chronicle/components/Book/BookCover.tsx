@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from '../../ChronicleBook.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 import { GameParticles } from '../../../../components/ui/GameParticles';
 import { BOOK_MAGIC_OPTIONS } from '../../../../components/ui/GameParticles.constants';
+import { analyticsService } from '../../../../services/analytics.service';
 
 interface BookCoverProps {
     onStart: () => void;
@@ -22,6 +23,11 @@ export const BookCover: React.FC<BookCoverProps> = ({
     isActive = true
 }) => {
     const { t } = useTranslation();
+
+    useEffect(() => {
+        analyticsService.trackEvent('cover_viewed', { has_progress: hasProgress });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={styles.coverContent}>

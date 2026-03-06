@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../../hooks/useAuth';
 import { Mail, Lock, ChevronLeft, Loader2, AlertCircle } from 'lucide-react';
 import styles from '../../ChronicleBook.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
+import { analyticsService } from '../../../../services/analytics.service';
 
 interface BookLoginProps {
     onBack: () => void;
@@ -21,6 +22,10 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    useEffect(() => {
+        analyticsService.trackEvent('login_viewed');
+    }, []);
+
     const handleLogInSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
@@ -32,6 +37,7 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
         } catch (err: unknown) {
             console.error('Failed to sign in:', err);
             setError(err instanceof Error ? err.message : t('login.invalid_credentials'));
+            analyticsService.trackEvent('login_failed');
         } finally {
             setLoading(false);
         }

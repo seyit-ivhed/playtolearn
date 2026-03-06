@@ -16,6 +16,7 @@ import { BookDifficulty } from './components/Book/BookDifficulty';
 import { getBookStateFromUrl, calculatePageZIndex } from './utils/chronicle.utils';
 import { Header } from '../../components/Header';
 import { playSfx } from '../../components/audio/audio.utils';
+import { analyticsService } from '../../services/analytics.service';
 
 export const ChronicleBook: React.FC = () => {
     const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
@@ -31,6 +32,7 @@ export const ChronicleBook: React.FC = () => {
 
     // UI State
     const [isPremiumModalOpen, setIsPremiumModalOpen] = React.useState(false);
+    const [premiumSourceAdventureId, setPremiumSourceAdventureId] = React.useState<string | undefined>(undefined);
 
     // Hooks
     const {
@@ -65,23 +67,30 @@ export const ChronicleBook: React.FC = () => {
     const {
         handleNext,
         handlePrev,
-        handleBegin,
+        handleBegin: handleBeginInternal,
         isJustCompleted
     } = useChronicleNavigation({
         currentAdventureIndex,
         adventures,
         currentAdventure,
         setActiveAdventureId: handleSetActiveAdventureId,
-        setIsPremiumModalOpen
+        setIsPremiumModalOpen,
+        setPremiumSourceAdventureId,
     });
+
+    const handleBegin = (id: string) => {
+        const hasProgress = Object.keys(encounterResults).some(key => key.startsWith(`${id}_`));
+        analyticsService.trackEvent('adventure_begun', { adventure_id: id, has_progress: hasProgress });
+        handleBeginInternal(id);
+    };
 
     // Handlers for Cover Interactions
     const handleStartNewGame = () => {
         if (hasAnyProgress) {
-            // Continue game (go to current adventure)
-            // activeAdventureId already holds the "highest unlocked" or "current" adventure logic from useChronicleData
+            analyticsService.trackEvent('cover_start_clicked', { has_progress: true, destination: 'adventure' });
             navigate(`/chronicle/${activeAdventureId}`);
         } else {
+            analyticsService.trackEvent('cover_start_clicked', { has_progress: false, destination: 'difficulty' });
             navigate('/chronicle/difficulty');
         }
     };
@@ -93,6 +102,7 @@ export const ChronicleBook: React.FC = () => {
     };
 
     const handleGoToLogin = () => {
+        analyticsService.trackEvent('cover_login_clicked');
         navigate('/chronicle/login');
     };
 
@@ -109,6 +119,7 @@ export const ChronicleBook: React.FC = () => {
     };
 
     const handleLoginSuccess = () => {
+        analyticsService.trackEvent('login_succeeded');
         // Login success -> Go to adventure (will use default logic to pick right one)
         // Navigate to root /chronicle and let the redirect logic pick the best adventure
         navigate('/chronicle', { replace: true });
@@ -225,7 +236,11 @@ export const ChronicleBook: React.FC = () => {
             </BookLayout>
             <PremiumStoreModal
                 isOpen={isPremiumModalOpen}
-                onClose={() => setIsPremiumModalOpen(false)}
+                onClose={() => {
+                    setIsPremiumModalOpen(false);
+                    setPremiumSourceAdventureId(undefined);
+                }}
+                sourceAdventureId={premiumSourceAdventureId}
             />
         </>
     );

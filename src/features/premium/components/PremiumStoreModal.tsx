@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ShieldCheck, Sparkles, Map, Users, Skull, Puzzle } from 'lucide-react';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
+import { analyticsService } from '../../../services/analytics.service';
 import './Premium.css';
 
 // Import Assets
@@ -22,20 +23,34 @@ import spiritKing from '../../../assets/images/enemies/spirit-king.jpg';
 interface PremiumStoreModalProps {
     isOpen: boolean;
     onClose: () => void;
+    sourceAdventureId?: string;
 }
 
-export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, onClose }) => {
+export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, onClose, sourceAdventureId }) => {
     const { t } = useTranslation();
+
+    useEffect(() => {
+        if (isOpen) {
+            analyticsService.trackEvent('premium_store_viewed', { source_adventure_id: sourceAdventureId ?? null });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
     const handleUnlock = () => {
-        window.location.href = '/checkout.html';
+        analyticsService.trackEvent('premium_unlock_clicked');
+        window.location.href = `/checkout.html?ref_session=${analyticsService.getSessionId()}`;
+    };
+
+    const handleClose = () => {
+        analyticsService.trackEvent('premium_store_dismissed');
+        onClose();
     };
 
     return (
         <div className="premium-modal-overlay">
-            <FormCloseButton onClick={onClose} />
+            <FormCloseButton onClick={handleClose} />
 
             <div className="premium-single-page-layout">
                 {/* Left Side: Information and CTA */}

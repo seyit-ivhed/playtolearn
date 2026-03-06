@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Adventure } from '../../../types/adventure.types';
 import { AdventureStatus } from '../../../types/adventure.types';
 import { getAdventureIllustration } from '../../../data/adventure-assets';
@@ -7,6 +7,7 @@ import { ChapterIllustration } from './ChapterIllustration';
 import { ChapterStory } from './ChapterStory';
 import { ChapterActions } from './ChapterActions';
 import { useVoiceOver } from '../../../hooks/useVoiceOver';
+import { analyticsService } from '../../../services/analytics.service';
 import './ChapterPage.css';
 
 interface ChapterPageProps {
@@ -51,6 +52,16 @@ export const ChapterPage: React.FC<ChapterPageProps> = ({
     const illustration = getAdventureIllustration(adventure.id);
 
     useVoiceOver('chronicles', isActive && !isLocked ? `adventure-${adventure.id}` : '');
+
+    useEffect(() => {
+        if (isActive) {
+            analyticsService.trackEvent('chapter_viewed', {
+                adventure_id: adventure.id,
+                status,
+            });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isActive, adventure.id]);
 
     const [lastFlags, setLastFlags] = useState({ id: adventure.id, active: isActive, locked: isLocked });
     const [isRevealing, setIsRevealing] = useState(isActive && !isLocked);

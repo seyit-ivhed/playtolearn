@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../../stores/game/store';
@@ -11,6 +11,7 @@ import { EncounterType, type Encounter } from '../../types/adventure.types';
 import { FantasyMap } from './components/FantasyMap';
 import { Header } from '../../components/Header';
 import { BookOpen } from 'lucide-react';
+import { analyticsService } from '../../services/analytics.service';
 
 const AdventurePage = () => {
     const { t } = useTranslation();
@@ -35,25 +36,45 @@ const AdventurePage = () => {
     // Get active adventure
     const adventure = ADVENTURES.find(a => a.id === adventureId);
 
+    // Dynamic focal node logic (computed before early return so hooks run unconditionally)
+    const focalNodeFromState = (location.state as { focalNode?: number } | null)?.focalNode;
+    const currentNode = focalNodeFromState ?? getFocalNodeIndex(adventureId ?? '', encounterResults);
+
+    const { encounters = [] } = adventure ?? {};
+
+    const isLastAdventure = ADVENTURES.length > 0 && ADVENTURES[ADVENTURES.length - 1].id === adventureId;
+
+    useEffect(() => {
+        if (adventureId) {
+            analyticsService.trackEvent('map_viewed', {
+                adventure_id: adventureId,
+                current_node: currentNode,
+            });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [adventureId]);
+
     if (!adventure || !adventureId) {
         return <div>{t('adventure.not_found', 'Adventure not found')}</div>;
     }
 
-    // Dynamic focal node logic
-    const focalNodeFromState = (location.state as { focalNode?: number } | null)?.focalNode;
-    const currentNode = focalNodeFromState ?? getFocalNodeIndex(adventureId, encounterResults);
-
-    const { encounters } = adventure;
-
-    const isLastAdventure = ADVENTURES.length > 0 && ADVENTURES[ADVENTURES.length - 1].id === adventureId;
-
     const handleNodeClick = (encounter: typeof encounters[0]) => {
+        const nodeIndex = encounters.findIndex(e => e.id === encounter.id) + 1;
+
+        analyticsService.trackEvent('node_clicked', {
+            adventure_id: adventureId,
+            node_index: nodeIndex,
+            encounter_type: encounter.type,
+        });
+
         if (encounter.type === EncounterType.BATTLE || encounter.type === EncounterType.BOSS || encounter.type === EncounterType.PUZZLE) {
             setSelectedEncounter(encounter);
             setIsDifficultyModalOpen(true);
         }
 
         if (encounter.type === EncounterType.ENDING) {
+            analyticsService.trackEvent('adventure_completed', { adventure_id: adventureId });
+
             // Complete current adventure in game progress
             completeEncounter(adventureId, encounters.findIndex(e => e.id === encounter.id) + 1);
 
@@ -68,6 +89,7 @@ const AdventurePage = () => {
             }
 
             if (isLastAdventure) {
+                analyticsService.trackEvent('game_completed');
                 setIsGameCompleteModalOpen(true);
             } else {
                 navigate('/chronicle', { state: { justCompletedAdventureId: adventureId } });
@@ -82,6 +104,13 @@ const AdventurePage = () => {
 
         const nodeStep = encounters.findIndex(e => e.id === selectedEncounter.id) + 1;
         setEncounterDifficulty(difficulty);
+
+        analyticsService.trackEvent('encounter_difficulty_selected', {
+            adventure_id: adventureId,
+            node_index: nodeStep,
+            encounter_type: selectedEncounter.type,
+            difficulty,
+        });
 
         // Notify store encounter started (handles data-driven companion joins)
         notifyEncounterStarted(adventureId, nodeStep);

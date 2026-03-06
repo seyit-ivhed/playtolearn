@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
@@ -6,6 +6,7 @@ import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { useAuth } from '../../../hooks/useAuth';
 import { supabase } from '../../../services/supabase.service';
 import { validateAccountCreationForm, performAccountConversion } from '../utils/account-creation.utils';
+import { analyticsService } from '../../../services/analytics.service';
 
 interface AccountCreationStepProps {
     onSuccess: () => void;
@@ -21,6 +22,13 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    const refSessionId = analyticsService.getRefSessionId();
+
+    useEffect(() => {
+        analyticsService.trackEvent('account_creation_viewed', { ref_session_id: refSessionId });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -44,8 +52,10 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
             });
 
             if (result.success) {
+                analyticsService.trackEvent('account_created', { ref_session_id: refSessionId });
                 onSuccess();
             } else if (result.error) {
+                analyticsService.trackEvent('account_creation_failed', { ref_session_id: refSessionId });
                 setError(result.error);
             }
         } finally {

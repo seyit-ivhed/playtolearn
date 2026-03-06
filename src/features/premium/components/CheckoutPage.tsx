@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../hooks/useAuth';
 import { AccountCreationStep } from './AccountCreationStep';
@@ -7,6 +7,7 @@ import { CheckoutMusic } from './CheckoutMusic';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { CheckCircle2 } from 'lucide-react';
+import { analyticsService } from '../../../services/analytics.service';
 import './Premium.css';
 
 export const CheckoutPage: React.FC = () => {
@@ -19,6 +20,14 @@ export const CheckoutPage: React.FC = () => {
     const [showSuccess, setShowSuccess] = useState(false);
 
     const isAnonymous = user?.is_anonymous ?? true;
+
+    useEffect(() => {
+        if (!authLoading && !isAnonymous) {
+            analyticsService.trackEvent('checkout_viewed', {
+                ref_session_id: analyticsService.getRefSessionId(),
+            });
+        }
+    }, [authLoading, isAnonymous]);
 
     const handleBackToGame = () => {
         window.location.href = '/';

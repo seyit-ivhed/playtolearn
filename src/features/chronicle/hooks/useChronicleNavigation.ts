@@ -9,6 +9,7 @@ interface UseChronicleNavigationProps {
     currentAdventure: Adventure | undefined;
     setActiveAdventureId: (id: string) => void;
     setIsPremiumModalOpen: (open: boolean) => void;
+    setPremiumSourceAdventureId?: (id: string | undefined) => void;
 }
 
 export const useChronicleNavigation = ({
@@ -16,7 +17,8 @@ export const useChronicleNavigation = ({
     adventures,
     currentAdventure,
     setActiveAdventureId,
-    setIsPremiumModalOpen
+    setIsPremiumModalOpen,
+    setPremiumSourceAdventureId,
 }: UseChronicleNavigationProps) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -47,13 +49,14 @@ export const useChronicleNavigation = ({
 
     const handleBegin = useCallback((id: string) => {
         if (!isAdventureUnlocked(id)) {
+            setPremiumSourceAdventureId?.(id);
             setIsPremiumModalOpen(true);
             return;
         }
 
         // Navigate to the map for this adventure
         navigate(`/map/${id}`);
-    }, [isAdventureUnlocked, navigate, setIsPremiumModalOpen]);
+    }, [isAdventureUnlocked, navigate, setIsPremiumModalOpen, setPremiumSourceAdventureId]);
 
     return {
         handleNext,

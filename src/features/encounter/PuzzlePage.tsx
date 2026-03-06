@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect } from 'react';
 import { Volume2, Map } from 'lucide-react';
 import { useGameStore } from '../../stores/game/store';
 import { ADVENTURES } from '../../data/adventures.data';
@@ -18,6 +18,7 @@ import { EncounterCompletionModal } from './components/EncounterCompletionModal'
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { useVoiceOver } from '../../hooks/useVoiceOver';
 import { Header } from '../../components/Header';
+import { analyticsService } from '../../services/analytics.service';
 import styles from './PuzzlePage.module.css';
 
 interface PuzzleDefinition {
@@ -80,6 +81,18 @@ const PuzzlePage = () => {
 
     const puzzleDef = puzzleData ? PUZZLE_DEFINITIONS[puzzleData.puzzleType] : null;
 
+    useEffect(() => {
+        if (puzzleData) {
+            analyticsService.trackEvent('puzzle_started', {
+                adventure_id: adventureId,
+                node_index: nodeIndex,
+                puzzle_type: puzzleData.puzzleType,
+                difficulty: activeEncounterDifficulty,
+            });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const instruction = useMemo(() => {
         if (!puzzleDef) {
             return '';
@@ -101,6 +114,12 @@ const PuzzlePage = () => {
     }, []);
 
     const handleSolve = () => {
+        analyticsService.trackEvent('puzzle_completed', {
+            adventure_id: adventureId,
+            node_index: nodeIndex,
+            puzzle_type: puzzleData?.puzzleType,
+            difficulty: activeEncounterDifficulty,
+        });
         setIsCompleted(true);
     };
 
@@ -114,6 +133,12 @@ const PuzzlePage = () => {
     };
 
     const handleBack = () => {
+        if (!isCompleted) {
+            analyticsService.trackEvent('puzzle_abandoned', {
+                adventure_id: adventureId,
+                node_index: nodeIndex,
+            });
+        }
         navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
     };
 
