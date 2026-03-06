@@ -62,6 +62,6 @@ All phrases are between 3 and 5 words long.
 * **Success 1:** English: "Feel the fierce wind!" | Swedish: "Känn den vilda vinden!"
 * **Success 2:** English: "Thunder obeys my call!" | Swedish: "Åskan lyder mitt rop!"
 * **Success 3:** English: "I command the skies!" | Swedish: "Jag befaller himlen!"
-* **Success Native:** "Dhoruba kubwa inakuja sasa!" *(Storm!)*
+* **Success Native:** "Ninaamuru anga!" | "I command the skies!"
 * **Failure:** English: "Try again, feel the wind!" | Swedish: "Försök igen, känn vinden!"
 * **Level-Up:** English: "My power is growing stronger!" | Swedish: "Min kraft blir starkare!"
