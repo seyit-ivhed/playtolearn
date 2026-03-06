@@ -73,7 +73,6 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
-| `adventure_begun` | `{ adventure_id: string, has_progress: boolean }` | `ChronicleBook` | Player enters an adventure (new or resumed). |
 | `node_clicked` | `{ adventure_id: string, node_index: number, encounter_type: string }` | `AdventurePage` | Player taps a node on the map. |
 | `encounter_difficulty_selected` | `{ adventure_id: string, node_index: number, encounter_type: string, difficulty: string }` | `AdventurePage` | Player confirms a difficulty before starting a node. |
 | `chapter_viewed` | `{ adventure_id: string, status: string }` | `ChapterPage` | A chapter page (story interstitial) becomes active. |

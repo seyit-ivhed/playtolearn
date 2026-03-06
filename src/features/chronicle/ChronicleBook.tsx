@@ -79,8 +79,6 @@ export const ChronicleBook: React.FC = () => {
     });
 
     const handleBegin = (id: string) => {
-        const hasProgress = Object.keys(encounterResults).some(key => key.startsWith(`${id}_`));
-        analyticsService.trackEvent('adventure_begun', { adventure_id: id, has_progress: hasProgress });
         handleBeginInternal(id);
     };
 
