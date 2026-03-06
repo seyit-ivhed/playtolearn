@@ -81,7 +81,7 @@ const EncounterPage = () => {
                 });
             }
         }
-    });
+    }, [phase, adventureId, nodeIndex, difficulty]);
 
     const [activeChallenge, setActiveChallenge] = useState<{
         type: 'SPECIAL';

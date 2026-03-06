@@ -33,8 +33,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
         if (isOpen) {
             analyticsService.trackEvent('premium_store_viewed', { source_adventure_id: sourceAdventureId ?? null });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOpen]);
+    }, [isOpen, sourceAdventureId]);
 
     if (!isOpen) return null;
 
