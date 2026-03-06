@@ -41,9 +41,8 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
-| `cover_viewed` | `{ has_progress: boolean }` | `BookCover` | Cover page mounted. |
-| `cover_start_clicked` | `{ has_progress: boolean, destination: 'adventure' \| 'difficulty' }` | `BookCover` | Player taps the start button. Destination is `'adventure'` if progress exists, otherwise `'difficulty'`. |
-| `cover_login_clicked` | — | `BookCover` | Player taps the login link on the cover. |
+| `cover_start_clicked` | `{ has_progress: boolean, destination: 'adventure' \| 'difficulty' }` | `ChronicleBook` | Player taps the start button. Destination is `'adventure'` if progress exists, otherwise `'difficulty'`. |
+| `cover_login_clicked` | — | `ChronicleBook` | Player taps the login link on the cover. |
 
 ---
 
@@ -51,10 +50,8 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
-| `login_viewed` | — | `BookLogin` | Login form mounted. |
-| `login_succeeded` | — | `BookLogin` | Successful sign-in. |
+| `login_succeeded` | — | `ChronicleBook` | Successful sign-in. |
 | `login_failed` | — | `BookLogin` | Sign-in attempt failed. |
-| `password_reset_viewed` | — | `BookForgotPassword` | Forgot-password screen mounted. |
 | `password_reset_requested` | — | `BookForgotPassword` | Reset email submitted. |
 | `password_reset_failed` | — | `BookForgotPassword` | Reset email submission failed. |
 
@@ -64,8 +61,7 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
-| `difficulty_page_viewed` | — | `BookDifficulty` | Difficulty selection screen mounted. |
-| `initial_difficulty_selected` | `{ difficulty: string }` | `BookDifficulty` | Player picks a difficulty for the first time. |
+| `initial_difficulty_selected` | `{ difficulty: number }` | `BookDifficulty` | Player picks a difficulty for the first time. |
 
 ---
 
@@ -74,8 +70,7 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
 | `node_clicked` | `{ adventure_id: string, node_index: number, encounter_type: string }` | `AdventurePage` | Player taps a node on the map. |
-| `encounter_difficulty_selected` | `{ adventure_id: string, node_index: number, encounter_type: string, difficulty: string }` | `AdventurePage` | Player confirms a difficulty before starting a node. |
-| `chapter_viewed` | `{ adventure_id: string, status: string }` | `ChapterPage` | A chapter page (story interstitial) becomes active. |
+| `encounter_difficulty_selected` | `{ adventure_id: string, node_index: number, encounter_type: string, difficulty: number }` | `AdventurePage` | Player confirms a difficulty before starting a node. |
 
 ---
 
@@ -83,10 +78,10 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
-| `encounter_started` | `{ adventure_id: string, node_index: number, difficulty: string }` | `EncounterPage` | Encounter screen mounts. |
-| `encounter_completed` | `{ adventure_id: string, node_index: number, difficulty: string }` | `EncounterPage` | Player reaches VICTORY phase. |
-| `encounter_failed` | `{ adventure_id: string, node_index: number, difficulty: string }` | `EncounterPage` | Player reaches DEFEAT phase. |
-| `encounter_abandoned` | `{ adventure_id: string, node_index: number, difficulty: string }` | `EncounterPage` | Player navigates away mid-encounter (not victory/defeat). |
+| `encounter_started` | `{ adventure_id: string, node_index: number, difficulty: number, encounter_type: string }` | `EncounterPage` | Encounter screen mounts. |
+| `encounter_completed` | `{ adventure_id: string, node_index: number, difficulty: number, turn_count: number }` | `EncounterPage` | Player reaches VICTORY phase. |
+| `encounter_failed` | `{ adventure_id: string, node_index: number, difficulty: number, turn_count: number }` | `EncounterPage` | Player reaches DEFEAT phase. |
+| `encounter_abandoned` | `{ adventure_id: string, node_index: number, difficulty: number }` | `EncounterPage` | Player navigates away mid-encounter (not victory/defeat). Fired on unmount, covering all navigation paths. |
 | `special_attack_attempted` | `{ adventure_id: string, node_index: number, success: boolean }` | `EncounterPage` | Player uses a special attack. |
 
 ---
@@ -95,9 +90,9 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
-| `puzzle_started` | `{ adventure_id: string, node_index: number, puzzle_type: string, difficulty: string }` | `PuzzlePage` | Puzzle data loaded and displayed. |
-| `puzzle_completed` | `{ adventure_id: string, node_index: number, puzzle_type: string, difficulty: string }` | `PuzzlePage` | Player solves the puzzle. |
-| `puzzle_abandoned` | `{ adventure_id: string, node_index: number }` | `PuzzlePage` | Player leaves the puzzle before completing it. |
+| `puzzle_started` | `{ adventure_id: string, node_index: number, puzzle_type: string, difficulty: number }` | `PuzzlePage` | Puzzle data loaded and displayed. |
+| `puzzle_completed` | `{ adventure_id: string, node_index: number, puzzle_type: string, difficulty: number }` | `PuzzlePage` | Player solves the puzzle. |
+| `puzzle_abandoned` | `{ adventure_id: string, node_index: number }` | `PuzzlePage` | Player leaves the puzzle before completing it. Fired on unmount, covering all navigation paths. |
 
 ---
 

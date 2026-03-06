@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Star, ChevronLeft } from 'lucide-react';
 import { DifficultyExamples } from '../../../../components/ui/DifficultyExamples';
@@ -15,10 +15,6 @@ export const BookDifficulty: React.FC<BookDifficultyProps> = ({ onSelect, onBack
     const { t } = useTranslation();
 
     const difficulties = [1, 2, 3];
-
-    useEffect(() => {
-        analyticsService.trackEvent('difficulty_page_viewed');
-    }, []);
 
     const getDifficultyLabel = (level: number) => {
         switch (level) {

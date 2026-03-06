@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useMemo, useState, useCallback, useEffect } from 'react';
+import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { Volume2, Map } from 'lucide-react';
 import { useGameStore } from '../../stores/game/store';
 import { ADVENTURES } from '../../data/adventures.data';
@@ -65,6 +65,7 @@ const PuzzlePage = () => {
     const { completeEncounter, activeEncounterDifficulty } = useGameStore();
 
     const [isCompleted, setIsCompleted] = useState(false);
+    const isCompletedRef = useRef(false);
     const [replayKey, setReplayKey] = useState(0);
     const adventure = ADVENTURES.find(a => a.id === adventureId);
     const encounter = adventure?.encounters[nodeIndex - 1];
@@ -90,6 +91,14 @@ const PuzzlePage = () => {
                 difficulty: activeEncounterDifficulty,
             });
         }
+        return () => {
+            if (!isCompletedRef.current) {
+                analyticsService.trackEvent('puzzle_abandoned', {
+                    adventure_id: adventureId,
+                    node_index: nodeIndex,
+                });
+            }
+        };
     }, [puzzleData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const instruction = useMemo(() => {
@@ -119,6 +128,7 @@ const PuzzlePage = () => {
             puzzle_type: puzzleData?.puzzleType,
             difficulty: activeEncounterDifficulty,
         });
+        isCompletedRef.current = true;
         setIsCompleted(true);
     };
 
@@ -132,12 +142,6 @@ const PuzzlePage = () => {
     };
 
     const handleBack = () => {
-        if (!isCompleted) {
-            analyticsService.trackEvent('puzzle_abandoned', {
-                adventure_id: adventureId,
-                node_index: nodeIndex,
-            });
-        }
         navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
     };
 

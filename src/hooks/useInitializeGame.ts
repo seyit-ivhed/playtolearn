@@ -17,6 +17,7 @@ export const useInitializeGame = () => {
     const initializePremium = usePremiumStore(state => state.initialize);
     const initialized = useRef(false);
     const lastAuthId = useRef<string | undefined>(user?.id);
+    const sessionStartedFired = useRef(false);
 
     const performInitialization = useCallback(async () => {
         await Promise.resolve();
@@ -63,8 +64,11 @@ export const useInitializeGame = () => {
             ]).finally(clearInitTimeout);
 
             setIsInitializing(false);
-            const hasProgress = Object.keys(useGameStore.getState().encounterResults).length > 0;
-            analyticsService.trackEvent('session_started', { has_progress: hasProgress });
+            if (!sessionStartedFired.current) {
+                sessionStartedFired.current = true;
+                const hasProgress = Object.keys(useGameStore.getState().encounterResults).length > 0;
+                analyticsService.trackEvent('session_started', { has_progress: hasProgress });
+            }
         } catch (err: unknown) {
             console.error('Initialization failed:', err);
             initialized.current = false;

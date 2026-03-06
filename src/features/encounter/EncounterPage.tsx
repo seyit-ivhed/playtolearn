@@ -48,7 +48,8 @@ const EncounterPage = () => {
     // Look up encounter type for analytics
     const encounterType = ADVENTURES.find(a => a.id === adventureId)?.encounters[nodeIndex - 1]?.type;
 
-    // Track encounter_started once on mount
+    // Track encounter_started once on mount; track encounter_abandoned on any unmount
+    // where the encounter did not reach a terminal phase (covers back button, browser nav, etc.)
     useEffect(() => {
         analyticsService.trackEvent('encounter_started', {
             adventure_id: adventureId,
@@ -56,6 +57,16 @@ const EncounterPage = () => {
             difficulty,
             encounter_type: encounterType,
         });
+        return () => {
+            const { phase: currentPhase } = useEncounterStore.getState();
+            if (currentPhase !== EncounterPhase.VICTORY && currentPhase !== EncounterPhase.DEFEAT) {
+                analyticsService.trackEvent('encounter_abandoned', {
+                    adventure_id: adventureId,
+                    node_index: nodeIndex,
+                    difficulty,
+                });
+            }
+        };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -218,13 +229,6 @@ const EncounterPage = () => {
             <Header
                 leftIcon={<Map size={32} />}
                 onLeftClick={() => {
-                    if (phase !== EncounterPhase.VICTORY && phase !== EncounterPhase.DEFEAT) {
-                        analyticsService.trackEvent('encounter_abandoned', {
-                            adventure_id: adventureId,
-                            node_index: nodeIndex,
-                            difficulty,
-                        });
-                    }
                     navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
                 }}
                 leftAriaLabel={t('common.back_to_map')}

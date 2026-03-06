@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../../hooks/useAuth';
 import { Mail, Lock, ChevronLeft, Loader2, AlertCircle } from 'lucide-react';
@@ -21,10 +21,6 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        analyticsService.trackEvent('login_viewed');
-    }, []);
 
     const handleLogInSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
