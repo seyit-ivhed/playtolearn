@@ -1,11 +1,11 @@
-import { type ReactElement, type HTMLAttributes, useState, useRef, useCallback, useEffect, cloneElement } from 'react';
+import { type ReactNode, useState, useRef, useCallback, useEffect } from 'react';
 import { DebugConsole } from './DebugConsole';
 
 const DEBUG_TAP_THRESHOLD = 7;
 const DEBUG_TAP_WINDOW_MS = 1500;
 
 interface DebugTapTargetProps {
-    children: ReactElement<HTMLAttributes<HTMLElement>>;
+    children: ReactNode;
     onClick?: () => void;
 }
 
@@ -39,7 +39,9 @@ export const DebugTapTarget: React.FC<DebugTapTargetProps> = ({ children, onClic
 
     return (
         <>
-            {cloneElement(children, { onClick: handleClick })}
+            <div onClick={handleClick} style={{ display: 'contents' }}>
+                {children}
+            </div>
             {isDebugOpen && <DebugConsole onClose={() => setIsDebugOpen(false)} />}
         </>
     );
