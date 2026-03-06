@@ -134,7 +134,6 @@ const AdventurePage = () => {
                 encounterResults={encounterResults}
                 currentDifficulty={activeEncounterDifficulty}
             />
-
         </div>
     );
 };

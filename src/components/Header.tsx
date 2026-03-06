@@ -11,7 +11,6 @@ interface HeaderProps {
     leftTestId?: string;
     title?: string | ReactNode;
     titleTestId?: string;
-    onTitleClick?: () => void;
     rightContent?: ReactNode;
     className?: string;
 }
@@ -23,7 +22,6 @@ export const Header: React.FC<HeaderProps> = ({
     leftTestId,
     title,
     titleTestId,
-    onTitleClick,
     rightContent,
     className = ''
 }) => {
@@ -48,8 +46,9 @@ export const Header: React.FC<HeaderProps> = ({
 
             {title && (
                 <div className={styles.centerSection}>
+                    {/* DebugTapTarget only wraps string titles; ReactNode titles are rendered as-is */}
                     {typeof title === 'string' ? (
-                        <DebugTapTarget onTap={onTitleClick}>
+                        <DebugTapTarget>
                             <h1
                                 className={styles.title}
                                 data-testid={titleTestId}

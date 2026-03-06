@@ -1,15 +1,15 @@
-import { type ReactNode, useState, useRef, useCallback, useEffect } from 'react';
+import { type ReactElement, type HTMLAttributes, useState, useRef, useCallback, useEffect, cloneElement } from 'react';
 import { DebugConsole } from './DebugConsole';
 
 const DEBUG_TAP_THRESHOLD = 7;
 const DEBUG_TAP_WINDOW_MS = 1500;
 
 interface DebugTapTargetProps {
-    children: ReactNode;
-    onTap?: () => void;
+    children: ReactElement<HTMLAttributes<HTMLElement>>;
+    onClick?: () => void;
 }
 
-export const DebugTapTarget: React.FC<DebugTapTargetProps> = ({ children, onTap }) => {
+export const DebugTapTarget: React.FC<DebugTapTargetProps> = ({ children, onClick }) => {
     const [isDebugOpen, setIsDebugOpen] = useState(false);
     const tapCountRef = useRef(0);
     const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -21,7 +21,7 @@ export const DebugTapTarget: React.FC<DebugTapTargetProps> = ({ children, onTap 
     }, []);
 
     const handleClick = useCallback(() => {
-        onTap?.();
+        onClick?.();
         tapCountRef.current += 1;
 
         if (tapTimerRef.current) clearTimeout(tapTimerRef.current);
@@ -35,13 +35,11 @@ export const DebugTapTarget: React.FC<DebugTapTargetProps> = ({ children, onTap 
         tapTimerRef.current = setTimeout(() => {
             tapCountRef.current = 0;
         }, DEBUG_TAP_WINDOW_MS);
-    }, [onTap]);
+    }, [onClick]);
 
     return (
         <>
-            <div onClick={handleClick} style={{ display: 'contents' }}>
-                {children}
-            </div>
+            {cloneElement(children, { onClick: handleClick })}
             {isDebugOpen && <DebugConsole onClose={() => setIsDebugOpen(false)} />}
         </>
     );
