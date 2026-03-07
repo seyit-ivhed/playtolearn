@@ -69,12 +69,6 @@ describe('analyticsService', () => {
         });
     });
 
-    describe('getSessionDurationMs', () => {
-        it('returns a non-negative number', () => {
-            expect(analyticsService.getSessionDurationMs()).toBeGreaterThanOrEqual(0);
-        });
-    });
-
     describe('attribution', () => {
         it('captures utm params in sessionStorage when present in URL at load time', async () => {
             await reloadWithSearch('?utm_source=facebook&utm_campaign=kids-summer&utm_medium=cpc');

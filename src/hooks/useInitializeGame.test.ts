@@ -36,6 +36,7 @@ describe('useInitializeGame', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         vi.spyOn(console, 'log').mockImplementation(() => { });
+        vi.spyOn(console, 'error').mockImplementation(() => { });
 
         vi.mocked(usePremiumStore).mockImplementation((selector?: unknown) => {
             if (typeof selector === 'function') {
