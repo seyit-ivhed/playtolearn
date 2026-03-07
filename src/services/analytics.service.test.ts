@@ -88,7 +88,7 @@ describe('analyticsService', () => {
         it('inserts an event with session_id and event_type', async () => {
             const { supabase } = await import('./supabase.service');
             const insertMock = vi.fn().mockResolvedValue({ error: null });
-            vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as ReturnType<typeof supabase.from>);
+            vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as unknown as ReturnType<typeof supabase.from>);
 
             await analyticsService.trackEvent('test_event', { foo: 'bar' });
 
@@ -105,7 +105,7 @@ describe('analyticsService', () => {
         it('inserts null payload when no payload is provided', async () => {
             const { supabase } = await import('./supabase.service');
             const insertMock = vi.fn().mockResolvedValue({ error: null });
-            vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as ReturnType<typeof supabase.from>);
+            vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as unknown as ReturnType<typeof supabase.from>);
 
             await analyticsService.trackEvent('session_started');
 
@@ -117,7 +117,7 @@ describe('analyticsService', () => {
         it('silently swallows errors without throwing', async () => {
             const { supabase } = await import('./supabase.service');
             const insertMock = vi.fn().mockRejectedValue(new Error('Network error'));
-            vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as ReturnType<typeof supabase.from>);
+            vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as unknown as ReturnType<typeof supabase.from>);
 
             await expect(analyticsService.trackEvent('test_event')).resolves.toBeUndefined();
         });
