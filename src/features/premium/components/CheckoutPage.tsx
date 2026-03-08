@@ -25,15 +25,12 @@ export const CheckoutPage: React.FC = () => {
     useEffect(() => {
         if (!authLoading && !isAnonymous && !checkoutViewedFired.current) {
             checkoutViewedFired.current = true;
-            analyticsService.trackEvent('checkout_viewed', {
-                ref_session_id: analyticsService.getRefSessionId(),
-            });
+            analyticsService.trackEvent('checkout_viewed');
         }
     }, [authLoading, isAnonymous]);
 
     const handleBackToGame = () => {
-        const refSession = analyticsService.getRefSessionId();
-        window.location.href = refSession ? `/?game_session=${refSession}` : '/';
+        window.location.href = '/';
     };
 
     const handleSuccess = () => {
@@ -81,9 +78,7 @@ export const CheckoutPage: React.FC = () => {
                                 // account_created (both are fire-and-forget async inserts;
                                 // the reactive auth-state effect would race against it).
                                 checkoutViewedFired.current = true;
-                                analyticsService.trackEvent('checkout_viewed', {
-                                    ref_session_id: analyticsService.getRefSessionId(),
-                                });
+                                analyticsService.trackEvent('checkout_viewed');
                             }}
                         />
                     </div>

@@ -55,10 +55,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
         setIsProcessing(true);
         setErrorMessage(null);
 
-        const refSessionId = analyticsService.getRefSessionId();
-
         analyticsService.trackEvent('payment_submitted', {
-            ref_session_id: refSessionId,
             content_pack_id: contentPackId,
         });
 
@@ -81,7 +78,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
 
             if (error) {
                 console.error('Stripe confirmPayment error:', error);
-                analyticsService.trackEvent('payment_failed', { ref_session_id: refSessionId });
+                analyticsService.trackEvent('payment_failed');
                 setErrorMessage(error.message || 'Payment failed');
                 setIsProcessing(false);
             } else if (paymentIntent) {
@@ -91,12 +88,11 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                     const verified = await verifyEntitlement();
                     if (verified) {
                         analyticsService.trackEvent('payment_succeeded', {
-                            ref_session_id: refSessionId,
                             content_pack_id: contentPackId,
                         });
                         onSuccess();
                     } else {
-                        analyticsService.trackEvent('payment_verification_timeout', { ref_session_id: refSessionId });
+                        analyticsService.trackEvent('payment_verification_timeout');
                         console.warn('Verification timed out, but payment succeeded.');
                         setErrorMessage(t('premium.store.verification_timeout', 'Payment succeeded, but we are still processing your access. It will appear in your account shortly.'));
                         setIsProcessing(false);
@@ -114,7 +110,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
         } catch (err: unknown) {
             console.error('Submission error:', err);
             const message = err instanceof Error ? err.message : 'An unexpected error occurred';
-            analyticsService.trackEvent('payment_failed', { ref_session_id: refSessionId });
+            analyticsService.trackEvent('payment_failed');
             setErrorMessage(message);
             setIsProcessing(false);
             setIsVerifying(false);

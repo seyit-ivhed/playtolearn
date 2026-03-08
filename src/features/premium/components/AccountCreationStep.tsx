@@ -23,13 +23,11 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const refSessionId = analyticsService.getRefSessionId();
-
     const hasTrackedViewRef = useRef(false);
     useEffect(() => {
         if (hasTrackedViewRef.current) return;
         hasTrackedViewRef.current = true;
-        analyticsService.trackEvent('account_creation_viewed', { ref_session_id: refSessionId });
+        analyticsService.trackEvent('account_creation_viewed');
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -55,10 +53,10 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
             });
 
             if (result.success) {
-                analyticsService.trackEvent('account_created', { ref_session_id: refSessionId });
+                analyticsService.trackEvent('account_created');
                 onSuccess();
             } else if (result.error) {
-                analyticsService.trackEvent('account_creation_failed', { ref_session_id: refSessionId });
+                analyticsService.trackEvent('account_creation_failed');
                 setError(result.error);
             }
         } finally {

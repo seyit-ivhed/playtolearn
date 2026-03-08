@@ -1,20 +1,15 @@
 import { supabase } from './supabase.service';
 
-// Memory-only session ID — generated fresh per page load, never persisted.
-// If the game is returning from the checkout flow, game_session restores the
-// original session so all events share a single session_id.
-const _urlParams = new URLSearchParams(window.location.search);
-const SESSION_ID: string = _urlParams.get('game_session') ?? _urlParams.get('ref_session') ?? crypto.randomUUID();
+// Session ID persisted in sessionStorage so it survives page refreshes and
+// navigations within the same tab (including game ↔ checkout). sessionStorage
+// is tab-scoped and clears when the tab closes, making it the right primitive
+// for a "session".
+const SESSION_STORAGE_KEY = 'play_session_id';
+const SESSION_ID: string =
+    sessionStorage.getItem(SESSION_STORAGE_KEY) ??
+    crypto.randomUUID();
 
-// Remove game_session from the address bar after reading so it doesn't linger
-if (_urlParams.has('game_session')) {
-    _urlParams.delete('game_session');
-    const newSearch = _urlParams.toString();
-    history.replaceState(null, '', newSearch ? `?${newSearch}` : window.location.pathname);
-}
-
-// Read ref_session from URL params once (checkout page context)
-const REF_SESSION_ID: string | null = _urlParams.get('ref_session');
+sessionStorage.setItem(SESSION_STORAGE_KEY, SESSION_ID);
 
 function initAttribution(): void {
     const params = new URLSearchParams(window.location.search);
@@ -63,6 +58,5 @@ initAttribution();
 
 export const analyticsService = {
     getSessionId: (): string => SESSION_ID,
-    getRefSessionId: (): string | null => REF_SESSION_ID,
     trackEvent,
 };

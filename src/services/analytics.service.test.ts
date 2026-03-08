@@ -17,7 +17,7 @@ vi.stubGlobal('crypto', { randomUUID: () => MOCK_UUID });
 const { analyticsService } = await import('./analytics.service');
 
 // Reloads the analytics module with a given URL search string so that
-// top-level constants (REF_SESSION_ID, initAttribution) are re-evaluated
+// top-level constants (SESSION_ID, initAttribution) are re-evaluated
 // against the new location. vi.mock registrations survive resetModules.
 async function reloadWithSearch(search: string) {
     Object.defineProperty(window, 'location', {
@@ -55,17 +55,6 @@ describe('analyticsService', () => {
         it('does not write session_id to sessionStorage', () => {
             analyticsService.getSessionId();
             expect(sessionStorage.getItem('session_id')).toBeNull();
-        });
-    });
-
-    describe('getRefSessionId', () => {
-        it('returns null when ref_session is absent from URL', () => {
-            expect(analyticsService.getRefSessionId()).toBeNull();
-        });
-
-        it('returns the ref_session value when present in URL at load time', async () => {
-            const fresh = await reloadWithSearch('?ref_session=orig-session-abc');
-            expect(fresh.getRefSessionId()).toBe('orig-session-abc');
         });
     });
 

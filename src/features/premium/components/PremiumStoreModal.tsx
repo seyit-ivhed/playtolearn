@@ -42,7 +42,7 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
 
     const handleUnlock = () => {
         analyticsService.trackEvent('premium_unlock_clicked');
-        window.location.href = `/checkout.html?ref_session=${analyticsService.getSessionId()}`;
+        window.location.href = '/checkout.html';
     };
 
     const handleClose = () => {
