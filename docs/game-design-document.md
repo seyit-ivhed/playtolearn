@@ -1,5 +1,8 @@
 # Game Design Document: Math Quest Adventures
 
+<!-- This document describes the full game design for Math Quest Adventures. -->
+
+
 ## Executive Summary
 
 **Game Title:** Math Quest Adventures (working title)
