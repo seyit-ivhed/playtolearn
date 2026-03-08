@@ -57,7 +57,7 @@ export const useInitializeGame = () => {
         };
 
         try {
-            let timeoutId: ReturnType<typeof setTimeout>;
+            let timeoutId: ReturnType<typeof setTimeout> | undefined;
             await Promise.race([
                 doInit(),
                 new Promise<never>((_, reject) => {
