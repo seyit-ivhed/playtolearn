@@ -258,7 +258,7 @@ export async function mockSupabaseAuthForConversion(page: Page): Promise<void> {
 }
 
 /**
- * Like mockSupabaseAuthForConversion but PUT /user returns a 422 to simulate
+ * Like mockSupabaseAuthForConversion but POST /signup returns a 422 to simulate
  * the "email already registered" error path.
  */
 export async function mockSupabaseAuthForAlreadyRegistered(page: Page): Promise<void> {
@@ -268,12 +268,10 @@ export async function mockSupabaseAuthForAlreadyRegistered(page: Page): Promise<
         const method = route.request().method();
 
         if (method === 'POST' && url.includes('/signup')) {
-            route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(ANON_SESSION) });
-        } else if (method === 'PUT' && url.includes('/user')) {
             route.fulfill({
                 status: 422,
                 contentType: 'application/json',
-                body: JSON.stringify({ message: 'Email already registered', status: 422 }),
+                body: JSON.stringify({ message: 'User already registered', status: 422 }),
             });
         } else {
             route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({}) });
