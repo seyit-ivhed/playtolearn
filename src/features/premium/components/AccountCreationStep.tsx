@@ -59,7 +59,7 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                 analyticsService.trackEvent('account_signed_in');
                 onSuccess();
             } catch {
-                analyticsService.trackEvent('account_creation_failed');
+                analyticsService.trackEvent('sign_in_failed');
                 setError(translation('premium.store.account.errors.sign_in_failed'));
             } finally {
                 setLoading(false);
