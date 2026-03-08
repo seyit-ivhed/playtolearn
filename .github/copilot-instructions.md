@@ -1,18 +1,11 @@
-# Copilot Coding Agent Instructions
+# Copilot Instructions
 
-When working on a GitHub issue, follow the **issue-resolver** skill defined in `/.agent/skills/issue-resolver/SKILL.md`.
+## When assigned as a reviewer on a Pull Request
 
-Key points:
-- Always create a new branch from `main` before making any changes. Use the pattern `copilot/issue-<issue-number>-<short-description>`.
-- Write code following the **frontend-developer** skill in `/.agent/skills/frontend-developer/SKILL.md`.
-- After writing code, review it following the **code-reviewer** skill in `/.agent/skills/code-reviewer/SKILL.md`.
-- Run existing tests and add new unit tests for any logic you introduce.
-- When done, create a **draft** pull request and assign it to `copilot` to trigger an independent secondary code review.
+Follow the **code-reviewer** skill at `.agent/skills/code-reviewer/SKILL.md`.
 
-When working on a pull request assigned to you for review, follow the **code-reviewer** skill defined in `/.agent/skills/code-reviewer/SKILL.md`.
+Review the PR as if you have no knowledge of the original implementation — focus on correctness, quality, test coverage, and adherence to the standards in `/docs/developer-expectations.md`. Apply all improvements directly. When done, mark the PR as ready for review and assign it to @seyit-ivhed.
 
-Key points:
-- Treat the review as fully independent — do not assume the implementation is correct.
-- Check correctness, quality, test coverage, and adherence to `/docs/developer-expectations.md`.
-- Apply all improvements directly to the branch.
-- When done, mark the PR as ready for review and assign it to @seyit-ivhed.
+## When assigned to an Issue
+
+Follow the **issue-resolver** skill at `.agent/skills/issue-resolver/SKILL.md`. When done, create a pull request.
