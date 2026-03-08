@@ -28,7 +28,6 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
         if (hasTrackedViewRef.current) return;
         hasTrackedViewRef.current = true;
         analyticsService.trackEvent('account_creation_viewed');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
