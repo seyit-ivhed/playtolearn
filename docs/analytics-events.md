@@ -56,7 +56,7 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 | `password_reset_email_sent` | — | `ChangePasswordSettings` | Recovery email sent successfully from account settings. |
 | `password_reset_email_failed` | — | `ChangePasswordSettings` | Recovery email failed to send from account settings. |
 | `password_reset_succeeded` | — | `ResetPasswordPage` | Password updated successfully after following the recovery link. |
-| `password_reset_failed` | — | `ResetPasswordPage` | Password update failed after following the recovery link. |
+| `password_reset_update_failed` | — | `ResetPasswordPage` | Password update failed after following the recovery link. |
 
 ---
 

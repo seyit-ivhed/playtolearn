@@ -40,6 +40,7 @@ describe('analyticsService', () => {
             writable: true,
             value: { ...window.location, search: '' },
         });
+        vi.unstubAllEnvs();
     });
 
     describe('getSessionId', () => {

@@ -64,7 +64,7 @@ export const ResetPasswordPage: React.FC = () => {
             setSuccess(true);
         } catch (err: unknown) {
             console.error('Failed to update password:', err);
-            analyticsService.trackEvent('password_reset_failed');
+            analyticsService.trackEvent('password_reset_update_failed');
             setError(t('reset_password.errors.generic'));
         } finally {
             setLoading(false);
