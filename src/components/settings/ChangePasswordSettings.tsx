@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
+import { analyticsService } from '../../services/analytics.service';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import sectionStyles from './SettingsSection.module.css';
@@ -25,9 +26,11 @@ export const ChangePasswordSettings: React.FC = () => {
         try {
             const redirectTo = `${window.location.origin}/reset-password`;
             await resetPasswordForEmail(user.email, redirectTo);
+            analyticsService.trackEvent('password_reset_email_sent');
             setSubmitted(true);
         } catch (err: unknown) {
             console.error('Failed to send password change email:', err);
+            analyticsService.trackEvent('password_reset_email_failed');
             setError(t('change_password.error_generic'));
         } finally {
             setLoading(false);

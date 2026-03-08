@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
 import { Lock, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { supabase } from '../../../services/supabase.service';
+import { analyticsService } from '../../../services/analytics.service';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import styles from './ResetPasswordPage.module.css';
 
@@ -59,9 +60,11 @@ export const ResetPasswordPage: React.FC = () => {
         setLoading(true);
         try {
             await updatePassword(newPassword);
+            analyticsService.trackEvent('password_reset_succeeded');
             setSuccess(true);
         } catch (err: unknown) {
             console.error('Failed to update password:', err);
+            analyticsService.trackEvent('password_reset_failed');
             setError(t('reset_password.errors.generic'));
         } finally {
             setLoading(false);

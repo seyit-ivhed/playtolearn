@@ -1,6 +1,6 @@
 # Analytics Events
 
-First-party analytics implemented via Supabase (`play_events` table). All events are anonymous — no personal identifiers are stored. `session_id` is a memory-only UUID generated fresh per page load and never persisted.
+First-party analytics implemented via Supabase (`play_events` table). All events are anonymous — no personal identifiers are stored. `session_id` is persisted in `sessionStorage` so it survives page refreshes and navigations within the same browser tab (including the game ↔ checkout flow). It is cleared when the tab closes.
 
 Related GitHub issue: `copilot/add-first-party-analytics`
 
@@ -12,7 +12,7 @@ Every event shares this base structure:
 
 | Field | Type | Description |
 |---|---|---|
-| `session_id` | `text` | Memory-only UUID, per page load |
+| `session_id` | `text` | Tab-scoped UUID, persisted in `sessionStorage`. Shared across game and checkout pages within the same tab. |
 | `event_type` | `text` | Event name (see below) |
 | `payload` | `jsonb` | Event-specific data (nullable) |
 | `attribution` | `jsonb` | UTM source/campaign/medium from URL params (nullable) |
@@ -51,8 +51,12 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 |---|---|---|---|
 | `login_succeeded` | — | `ChronicleBook` | Successful sign-in. |
 | `login_failed` | — | `BookLogin` | Sign-in attempt failed. |
-| `password_reset_requested` | — | `BookForgotPassword` | Reset email submitted. |
-| `password_reset_failed` | — | `BookForgotPassword` | Reset email submission failed. |
+| `password_reset_requested` | — | `BookForgotPassword` | Reset email submitted from the forgot-password form. |
+| `password_reset_failed` | — | `BookForgotPassword` | Reset email submission failed from the forgot-password form. |
+| `password_reset_email_sent` | — | `ChangePasswordSettings` | Recovery email sent successfully from account settings. |
+| `password_reset_email_failed` | — | `ChangePasswordSettings` | Recovery email failed to send from account settings. |
+| `password_reset_succeeded` | — | `ResetPasswordPage` | Password updated successfully after following the recovery link. |
+| `password_reset_failed` | — | `ResetPasswordPage` | Password update failed after following the recovery link. |
 
 ---
 
@@ -98,27 +102,27 @@ If the URL contains `utm_source` on load, `{ source, campaign, medium }` is capt
 | Event | Payload | Where fired | Description |
 |---|---|---|---|
 | `premium_store_viewed` | `{ source_adventure_id: string \| null }` | `PremiumStoreModal` | Premium store modal opens. `source_adventure_id` identifies which adventure triggered it (null if opened directly). |
-| `premium_unlock_clicked` | — | `PremiumStoreModal` | Player taps the unlock/buy button in the store. Redirects to checkout with `ref_session` in URL. |
-| `checkout_viewed` | `{ ref_session_id: string \| null }` | `CheckoutPage` | Checkout page loads for an authenticated non-anonymous user. `ref_session_id` links back to the originating game session. |
-| `account_creation_viewed` | `{ ref_session_id: string \| null }` | `AccountCreationStep` | Account creation form shown during checkout flow. |
-| `account_created` | `{ ref_session_id: string \| null }` | `AccountCreationStep` | New account successfully created. |
-| `account_creation_failed` | `{ ref_session_id: string \| null }` | `AccountCreationStep` | Account creation attempt failed. |
-| `payment_submitted` | `{ ref_session_id: string \| null, content_pack_id: string }` | `CheckoutForm` | Player submits the payment form. |
-| `payment_succeeded` | `{ ref_session_id: string \| null, content_pack_id: string }` | `CheckoutForm` | Payment confirmed and verified. |
-| `payment_failed` | `{ ref_session_id: string \| null }` | `CheckoutForm` | Payment failed (Stripe error or webhook timeout). |
-| `payment_verification_timeout` | `{ ref_session_id: string \| null }` | `CheckoutForm` | Webhook confirmation did not arrive in time. |
+| `premium_unlock_clicked` | — | `PremiumStoreModal` | Player taps the unlock/buy button in the store. |
+| `checkout_viewed` | — | `CheckoutPage` | Checkout page loads for an authenticated non-anonymous user. |
+| `account_creation_viewed` | — | `AccountCreationStep` | Account creation form shown during checkout flow. |
+| `account_created` | — | `AccountCreationStep` | New account successfully created. |
+| `account_creation_failed` | — | `AccountCreationStep` | Account creation attempt failed. |
+| `payment_submitted` | `{ content_pack_id: string }` | `CheckoutForm` | Player submits the payment form. |
+| `payment_succeeded` | `{ content_pack_id: string }` | `CheckoutForm` | Payment confirmed and verified. |
+| `payment_failed` | — | `CheckoutForm` | Payment failed (Stripe error or webhook timeout). |
+| `payment_verification_timeout` | — | `CheckoutForm` | Webhook confirmation did not arrive in time. |
 
 ---
 
-## Cross-session attribution
+## Session continuity across checkout
 
-The checkout flow spans two sessions (game → checkout page). The game session passes its `session_id` as `ref_session` in the URL (`/checkout.html?ref_session=<uuid>`). The checkout page reads this via `analyticsService.getRefSessionId()` and attaches it as `ref_session_id` in all payment events, enabling cross-session funnel analysis.
+The game and checkout pages share the same `session_id` via `sessionStorage`. When a player navigates from the game to `checkout.html` and back, all events — including account creation and payment — are recorded under the same session, enabling end-to-end funnel analysis without any URL parameter passing.
 
 ---
 
 ## Privacy
 
 - No user IDs, emails, or device fingerprints are stored.
-- `session_id` is in-memory only and resets on every page load.
+- `session_id` is scoped to the browser tab via `sessionStorage` and is cleared when the tab closes.
 - UTM attribution excludes individual-level ad click identifiers (`fbclid`, `gclid`).
 - RLS policy allows anonymous insert only — no read access for clients.
