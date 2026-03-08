@@ -2,12 +2,10 @@ name: Copilot PR Reviewer
 
 on:
   pull_request:
-    types: [assigned]
+    types: [ready_for_review]
 
 jobs:
   trigger-copilot-review:
-    # Only run when the PR is assigned to the Copilot bot
-    if: contains(github.event.assignee.login, 'opilot')
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
