@@ -76,7 +76,15 @@ export const CheckoutPage: React.FC = () => {
                 ) : isAnonymous ? (
                     <div className="account-creation-container">
                         <AccountCreationStep
-                            onSuccess={() => {/* useAuth state change will trigger re-render */ }}
+                            onSuccess={() => {
+                                // Fire checkout_viewed here to guarantee it comes after
+                                // account_created (both are fire-and-forget async inserts;
+                                // the reactive auth-state effect would race against it).
+                                checkoutViewedFired.current = true;
+                                analyticsService.trackEvent('checkout_viewed', {
+                                    ref_session_id: analyticsService.getRefSessionId(),
+                                });
+                            }}
                         />
                     </div>
                 ) : (
