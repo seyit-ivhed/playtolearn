@@ -75,10 +75,14 @@ export const CheckoutPage: React.FC = () => {
                         <AccountCreationStep
                             onSuccess={() => {
                                 // Fire checkout_viewed here to guarantee it comes after
-                                // account_created (both are fire-and-forget async inserts;
-                                // the reactive auth-state effect would race against it).
-                                checkoutViewedFired.current = true;
-                                analyticsService.trackEvent('checkout_viewed');
+                                // account_created. Guard with the ref because the auth-state
+                                // change (isAnonymous → false) can fire the useEffect above
+                                // before performAccountConversion resolves, causing both paths
+                                // to fire otherwise.
+                                if (!checkoutViewedFired.current) {
+                                    checkoutViewedFired.current = true;
+                                    analyticsService.trackEvent('checkout_viewed');
+                                }
                             }}
                         />
                     </div>
