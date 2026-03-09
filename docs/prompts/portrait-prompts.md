@@ -1,6 +1,6 @@
 # Portrait Generation Prompts
 
-This document serves as a central repository for all character and monster portrait prompts used in Math Quest Adventures.
+This document serves as a central repository for all character and monster portrait prompts used in Math with Magic.
 
 ---
 

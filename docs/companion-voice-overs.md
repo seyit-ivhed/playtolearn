@@ -1,6 +1,6 @@
 # Companion Voice-Overs
 
-This document contains the suggested voice-over phrases for all MVP companions in Math Quest Adventures. These phrases are designed to be shouted gladly by the companions when they successfully complete a match challenge, use their ultimate special abilities, fail a challenge, or grow up.
+This document contains the suggested voice-over phrases for all MVP companions in Math with Magic. These phrases are designed to be shouted gladly by the companions when they successfully complete a match challenge, use their ultimate special abilities, fail a challenge, or grow up.
 
 Each companion has **6 total phrases**
 - **3 Success Translatable phrases** per evolution.

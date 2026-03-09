@@ -56,12 +56,23 @@ describe('mergeGameState', () => {
             expect(result.encounterResults['1_1'].stars).toBe(3);
         });
 
-        it('keeps most recent when stars are equal', () => {
+        it('keeps most recent when stars are equal (primary newer)', () => {
             const primary = base({
                 encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 300 } },
             });
             const secondary = base({
                 encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 100 } },
+            });
+            const result = mergeGameState(primary, secondary);
+            expect(result.encounterResults['1_1'].completedAt).toBe(300);
+        });
+
+        it('keeps secondary when stars are equal but secondary is more recent', () => {
+            const primary = base({
+                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 100 } },
+            });
+            const secondary = base({
+                encounterResults: { '1_1': { stars: 2, difficulty: 2, completedAt: 300 } },
             });
             const result = mergeGameState(primary, secondary);
             expect(result.encounterResults['1_1'].completedAt).toBe(300);
@@ -197,18 +208,31 @@ describe('mergeGameState', () => {
             expect(mergeGameState(primary, secondary).adventureStatuses['3']).toBe(AdventureStatus.AVAILABLE);
         });
 
+        it('keeps LOCKED when both are LOCKED', () => {
+            const primary = base({ adventureStatuses: { '4': AdventureStatus.LOCKED } });
+            const secondary = base({ adventureStatuses: { '4': AdventureStatus.LOCKED } });
+            expect(mergeGameState(primary, secondary).adventureStatuses['4']).toBe(AdventureStatus.LOCKED);
+        });
+
+        it('keeps secondary when primary has lower rank (secondary has higher rank)', () => {
+            const primary = base({ adventureStatuses: { '3': AdventureStatus.LOCKED } });
+            const secondary = base({ adventureStatuses: { '3': AdventureStatus.AVAILABLE } });
+            expect(mergeGameState(primary, secondary).adventureStatuses['3']).toBe(AdventureStatus.AVAILABLE);
+        });
+
         it('includes adventures only in secondary', () => {
             const secondary = base({ adventureStatuses: { '4': AdventureStatus.AVAILABLE } });
             const result = mergeGameState(base(), secondary);
             expect(result.adventureStatuses['4']).toBe(AdventureStatus.AVAILABLE);
         });
 
-        it('includes adventures from both states', () => {
-            const primary = base({ adventureStatuses: { '1': AdventureStatus.COMPLETED } });
-            const secondary = base({ adventureStatuses: { '2': AdventureStatus.AVAILABLE } });
+        it('includes adventures only in primary (secondary missing that adventure)', () => {
+            const primary = base({ adventureStatuses: { '5': AdventureStatus.COMPLETED } });
+            // secondary doesn't have adventure '5'
+            const secondary = base({ adventureStatuses: {} });
             const result = mergeGameState(primary, secondary);
-            expect(result.adventureStatuses['1']).toBe(AdventureStatus.COMPLETED);
-            expect(result.adventureStatuses['2']).toBe(AdventureStatus.AVAILABLE);
+            // primary '5' should appear (other !== undefined becomes false → otherRank = -1)
+            expect(result.adventureStatuses['5']).toBe(AdventureStatus.COMPLETED);
         });
     });
 
@@ -224,7 +248,25 @@ describe('mergeGameState', () => {
     });
 
     // ------------------------------------------------------------------ //
-    // Full scenario: concurrent session conflict
+    // Partial secondary (missing optional fields) - covers ?? defaults
+    // ------------------------------------------------------------------ //
+    describe('partial secondary', () => {
+        it('handles secondary with no companionStats, activeParty, or adventureStatuses', () => {
+            const primary = base({
+                activeParty: ['hero1'],
+                companionStats: { hero1: { level: 2, experience: 50 } },
+                adventureStatuses: { '1': AdventureStatus.AVAILABLE },
+            });
+            // Only provide encounterResults in secondary (all other fields are undefined/missing)
+            const partialSecondary: Partial<GameState> = { encounterResults: {} };
+            const result = mergeGameState(primary, partialSecondary);
+
+            // Primary values preserved
+            expect(result.activeParty).toContain('hero1');
+            expect(result.companionStats['hero1'].level).toBe(2);
+            expect(result.adventureStatuses['1']).toBe(AdventureStatus.AVAILABLE);
+        });
+    });
     // ------------------------------------------------------------------ //
     describe('full scenario — concurrent sessions', () => {
         it('should never lose progress when merging two advanced states', () => {

@@ -3,12 +3,81 @@ export interface Position {
     col: number;
 }
 
+const MOVES = [
+    { r: -1, c: 0 }, { r: 1, c: 0 }, { r: 0, c: -1 }, { r: 0, c: 1 }
+] as const;
+
+export function countUnvisitedNeighbors(size: number, visited: boolean[][], row: number, col: number): number {
+    let count = 0;
+    for (const m of MOVES) {
+        const nr = row + m.r;
+        const nc = col + m.c;
+        if (nr >= 0 && nr < size && nc >= 0 && nc < size && !visited[nr][nc]) {
+            count++;
+        }
+    }
+    return count;
+}
+
+export function getScoredMoves(
+    size: number,
+    visited: boolean[][],
+    currRow: number,
+    currCol: number
+): Array<{ r: number; c: number }> {
+    return MOVES
+        .filter(move => {
+            const nr = currRow + move.r;
+            const nc = currCol + move.c;
+            return nr >= 0 && nr < size && nc >= 0 && nc < size && !visited[nr][nc];
+        })
+        .map(move => ({
+            move,
+            score: countUnvisitedNeighbors(size, visited, currRow + move.r, currCol + move.c),
+        }))
+        .sort((a, b) => {
+            if (a.score !== b.score) {
+                return a.score - b.score;
+            }
+            return Math.random() - 0.5;
+        })
+        .map(({ move }) => move);
+}
+
+export function backtrackPath(
+    size: number,
+    targetLength: number,
+    visited: boolean[][],
+    path: Position[],
+    currRow: number,
+    currCol: number
+): boolean {
+    if (path.length === targetLength) {
+        return true;
+    }
+
+    for (const move of getScoredMoves(size, visited, currRow, currCol)) {
+        const nextRow = currRow + move.r;
+        const nextCol = currCol + move.c;
+
+        visited[nextRow][nextCol] = true;
+        path.push({ row: nextRow, col: nextCol });
+
+        if (backtrackPath(size, targetLength, visited, path, nextRow, nextCol)) {
+            return true;
+        }
+
+        path.pop();
+        visited[nextRow][nextCol] = false;
+    }
+
+    return false;
+}
+
 export function generateHamiltonianPath(size: number): Position[] {
     const totalCells = size * size;
     const isOdd = totalCells % 2 !== 0;
 
-    // With Warnsdorff's Heuristic, we rarely need many attempts.
-    // Reducing to 10 is safer for performance.
     for (let attempt = 0; attempt < 10; attempt++) {
         const startRow = Math.floor(Math.random() * size);
         let startCol = Math.floor(Math.random() * size);
@@ -16,7 +85,6 @@ export function generateHamiltonianPath(size: number): Position[] {
         // Parity check for odd grids: Hamiltonian path must start on a "majority" color cell.
         // On an odd grid, cells where (r + c) is even are the majority (e.g. 0,0).
         if (isOdd && (startRow + startCol) % 2 !== 0) {
-            // Move to an adjacent cell which will have the correct parity
             if (startCol < size - 1) {
                 startCol++;
             } else {
@@ -36,68 +104,6 @@ export function generateHamiltonianPath(size: number): Position[] {
     }
 
     return generateSnakePath(size);
-}
-
-function backtrackPath(
-    size: number,
-    targetLength: number,
-    visited: boolean[][],
-    path: Position[],
-    currRow: number,
-    currCol: number
-): boolean {
-    if (path.length === targetLength) {
-        return true;
-    }
-
-    const moves = [
-        { r: -1, c: 0 }, { r: 1, c: 0 }, { r: 0, c: -1 }, { r: 0, c: 1 }
-    ];
-
-    // Warnsdorff's Heuristic: Sort moves by the number of available neighbors
-    // of the destination cell. We want cells with the FEWEST neighbors first.
-    const scoredMoves = moves
-        .map(move => {
-            const nr = currRow + move.r;
-            const nc = currCol + move.c;
-            if (nr >= 0 && nr < size && nc >= 0 && nc < size && !visited[nr][nc]) {
-                // Count unvisited neighbors for this potential next cell
-                let neighborCount = 0;
-                for (const m of moves) {
-                    const nnr = nr + m.r;
-                    const nnc = nc + m.c;
-                    if (nnr >= 0 && nnr < size && nnc >= 0 && nnc < size && !visited[nnr][nnc]) {
-                        neighborCount++;
-                    }
-                }
-                return { move, score: neighborCount, valid: true };
-            }
-            return { move, score: 99, valid: false };
-        })
-        .filter(m => m.valid)
-        .sort((a, b) => {
-            if (a.score !== b.score) {
-                return a.score - b.score;
-            }
-            return Math.random() - 0.5; // Randomize ties for variety
-        });
-
-    for (const { move } of scoredMoves) {
-        const nextRow = currRow + move.r;
-        const nextCol = currCol + move.c;
-
-        visited[nextRow][nextCol] = true;
-        path.push({ row: nextRow, col: nextCol });
-
-        if (backtrackPath(size, targetLength, visited, path, nextRow, nextCol)) {
-            return true;
-        }
-
-        path.pop();
-        visited[nextRow][nextCol] = false;
-    }
-
-    return false;
 }
 
 export function generateSnakePath(size: number): Position[] {

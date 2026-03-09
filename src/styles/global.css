@@ -1,6 +1,6 @@
 /* Global Variables */
 :root {
-  /* Color Palette - Fantasy Realm (Math Quest Adventures) */
+  /* Color Palette - Fantasy Realm (Math with Magic) */
   --color-bg-primary: #000000;
   /* Pure Black */
   --color-bg-secondary: #000000b1;
@@ -93,6 +93,17 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--color-brand-accent);
+    -webkit-box-shadow: 0 0 1px;
 }
 
 body {

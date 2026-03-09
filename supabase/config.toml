@@ -1,5 +1,5 @@
 # Supabase Configuration
-project_id = "playtolearn"
+project_id = "mathwithmagic"
 
 [auth]
 site_url = "http://localhost:5173"

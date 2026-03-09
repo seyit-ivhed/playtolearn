@@ -71,15 +71,15 @@ fi
 
 echo -e "${GREEN}Successfully merged main into $CURRENT_BRANCH.${NC}\n"
 
-# Run unit tests
-echo -e "${YELLOW}Running unit tests...${NC}"
-npm run test -- --run
+# Run unit tests with coverage (enforces 90% statements/branches/functions/lines per file)
+echo -e "${YELLOW}Running unit tests with coverage...${NC}"
+npm run test:coverage -- --run
 if [ $? -ne 0 ]; then
-    echo -e "${RED}Unit tests failed. Please fix the tests before merging to main.${NC}"
+    echo -e "${RED}Unit tests or coverage thresholds failed. Please fix before merging to main.${NC}"
     exit 1
 fi
 
-echo -e "${GREEN}Unit tests passed.${NC}\n"
+echo -e "${GREEN}Unit tests and coverage thresholds passed.${NC}\n"
 
 # Run Edge Function tests
 echo -e "${YELLOW}Running Edge Function tests (Deno)...${NC}"

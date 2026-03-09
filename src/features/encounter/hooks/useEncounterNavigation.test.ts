@@ -119,6 +119,23 @@ describe('useEncounterNavigation', () => {
         });
     });
 
+    describe('handleCompletionContinue - missing adventureId', () => {
+        it('should navigate to chronicle when no adventureId is provided', () => {
+
+            const { result } = renderHook(() => useEncounterNavigation({
+                adventureId: undefined,
+                nodeIndex: 1,
+                phase: EncounterPhase.VICTORY
+            }));
+
+            act(() => {
+                result.current.handleCompletionContinue();
+            });
+
+            expect(mockNavigate).toHaveBeenCalledWith('/chronicle');
+        });
+    });
+
     describe('handleCompletionContinue - Defeat', () => {
         it('should navigate back to the same node on map', () => {
 
@@ -135,6 +152,53 @@ describe('useEncounterNavigation', () => {
             expect(mockNavigate).toHaveBeenCalledWith('/map/1', {
                 state: { focalNode: 5 }
             });
+            expect(mockCompleteEncounter).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('handleCompletionContinue - companion not in stats', () => {
+        it('should skip companions in activeParty that are not in companionStats', () => {
+            // activeParty has 'unknown_companion' which is not in companionStats
+            vi.mocked(useGameStore).mockReturnValue({
+                encounterResults: {},
+                completeEncounter: mockCompleteEncounter,
+                addCompanionExperience: mockAddCompanionExperience,
+                companionStats: {
+                    'amara': { level: 1, experience: 0 }
+                },
+                activeParty: ['amara', 'unknown_companion']
+            } as ReturnType<typeof useGameStore>);
+
+            const { result } = renderHook(() => useEncounterNavigation({
+                adventureId: '1',
+                nodeIndex: 1,
+                phase: EncounterPhase.VICTORY
+            }));
+
+            act(() => {
+                result.current.handleCompletionContinue();
+            });
+
+            // unknown_companion skipped; only amara captured
+            expect(result.current.previousCompanionStats['amara']).toBeDefined();
+            expect(result.current.previousCompanionStats['unknown_companion']).toBeUndefined();
+        });
+    });
+
+    describe('handleCompletionContinue - other phases', () => {
+        it('should do nothing when phase is PLAYER_TURN', () => {
+            const { result } = renderHook(() => useEncounterNavigation({
+                adventureId: '1',
+                nodeIndex: 1,
+                phase: EncounterPhase.PLAYER_TURN
+            }));
+
+            act(() => {
+                result.current.handleCompletionContinue();
+            });
+
+            // Should not navigate or complete
+            expect(mockNavigate).not.toHaveBeenCalled();
             expect(mockCompleteEncounter).not.toHaveBeenCalled();
         });
     });

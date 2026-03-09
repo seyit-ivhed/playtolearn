@@ -1,6 +1,5 @@
 import type { Page } from '@playwright/test';
-
-const GAME_STORE_KEY = 'playtolearn-game-store';
+import { GAME_STORE_KEY } from '../src/stores/storage-keys';
 
 // ---------------------------------------------------------------------------
 // Checkout mock fixtures

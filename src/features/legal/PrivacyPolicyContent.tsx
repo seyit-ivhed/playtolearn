@@ -11,12 +11,11 @@ export const PrivacyPolicyContent: React.FC = () => (
         <h2>1. Who We Are</h2>
         <p>
             Outlean AB is a limited company registered in Sweden (Aktiebolag). We operate the educational
-            game <em>Play to Learn</em>. As a company established in the EU, we act as a <strong>data
+            game <em>Math with Magic</em>. As a company established in the EU, we act as a <strong>data
             controller</strong> under the General Data Protection Regulation (GDPR).
         </p>
         <p>
-            <strong>Privacy contact:</strong> seyit@outlean.net<br />
-            <em>(This address will be updated once the game domain is purchased.)</em>
+            <strong>Privacy contact:</strong> hello@mathwithmagic.com<br />
         </p>
 
         <h2>2. What Data We Collect and Why</h2>
@@ -93,7 +92,7 @@ export const PrivacyPolicyContent: React.FC = () => (
 
         <h2>4. Children's Privacy (COPPA)</h2>
         <p>
-            <em>Play to Learn</em> is designed for children ages 6–8. However, <strong>children play
+            <em>Math with Magic</em> is designed for children ages 6–8. However, <strong>children play
             the game without creating accounts</strong>. We do not knowingly collect personal
             information from children under the age of 13.
         </p>
@@ -105,7 +104,7 @@ export const PrivacyPolicyContent: React.FC = () => (
         </ul>
         <p>
             If you believe a child has provided personal information to us, please contact us at
-            seyit@outlean.net and we will promptly delete it.
+            hello@mathwithmagic.com and we will promptly delete it.
         </p>
 
         <h2>5. Third-Party Data Processors</h2>
@@ -178,7 +177,7 @@ export const PrivacyPolicyContent: React.FC = () => (
             </li>
             <li>
                 <strong>Right to data portability:</strong> Request your data in a machine-readable
-                format (JSON/CSV) by emailing seyit@outlean.net.
+                format (JSON/CSV) by emailing hello@mathwithmagic.com.
             </li>
             <li>
                 <strong>Right to object:</strong> Object to processing based on legitimate interests
@@ -196,7 +195,7 @@ export const PrivacyPolicyContent: React.FC = () => (
             </li>
         </ul>
         <p>
-            To exercise any of these rights, email us at <strong>seyit@outlean.net</strong>. We will
+            To exercise any of these rights, email us at <strong>hello@mathwithmagic.com</strong>. We will
             respond within 30 days as required by GDPR.
         </p>
 
@@ -226,7 +225,7 @@ export const PrivacyPolicyContent: React.FC = () => (
         <h2>12. Contact Us</h2>
         <p>
             For any privacy-related questions or to exercise your rights, contact us at:<br />
-            <strong>seyit@outlean.net</strong>
+            <strong>hello@mathwithmagic.com</strong>
         </p>
         <p>
             <em>Outlean AB, Sweden</em>
