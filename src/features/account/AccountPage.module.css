@@ -6,6 +6,7 @@
     align-items: flex-start;
     background-color: var(--background-dim, #0f0f0f);
     padding: 2rem 1rem;
+    padding-top: calc(60px + 2rem);
     box-sizing: border-box;
 }
 
