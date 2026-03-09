@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../context/AuthContext';
 import { AccountCreationStep } from './AccountCreationStep';
 import { CheckoutOverlay } from './CheckoutOverlay';
 import { CheckoutMusic } from './CheckoutMusic';

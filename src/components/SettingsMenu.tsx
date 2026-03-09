@@ -6,7 +6,7 @@ import { playSfx } from './audio/audio.utils';
 import { Modal } from './ui/Modal';
 import { LanguageSettings } from './settings/LanguageSettings';
 import { SoundSettings } from './settings/SoundSettings';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/AuthContext';
 import styles from './SettingsMenu.module.css';
 import sectionStyles from './settings/SettingsSection.module.css';
 

@@ -12,6 +12,7 @@ import { AdventureGuard } from './components/guards/AdventureGuard';
 import { BackgroundMusic } from './components/audio/BackgroundMusic';
 import { RootRedirect } from './components/RootRedirect';
 import { AccountPage } from './features/account/AccountPage';
+import { AuthProvider } from './context/AuthContext';
 
 function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
@@ -64,7 +65,9 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </BrowserRouter>
   );
 }
