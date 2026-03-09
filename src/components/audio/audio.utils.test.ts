@@ -149,7 +149,6 @@ describe('playSfx', () => {
         const mockAudioInstance = { play: mockPlay, volume: 0 };
 
         // Use a regular function (not arrow) so it can be called with `new`
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         vi.stubGlobal('Audio', function (this: unknown) { return mockAudioInstance; });
 
         playSfx('battle/lion');
