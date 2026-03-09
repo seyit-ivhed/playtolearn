@@ -6,8 +6,6 @@ CREATE TABLE IF NOT EXISTS public.player_profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     created_at TIMESTAMPTZ DEFAULT now(),
     last_login TIMESTAMPTZ DEFAULT now(),
-    -- Whether the parent/guardian opted in to receive product update emails.
-    -- GDPR Art. 6(1)(a) — Consent.
     product_update_consent BOOLEAN NOT NULL DEFAULT FALSE
 );
 
@@ -60,10 +58,10 @@ CREATE TABLE IF NOT EXISTS public.player_entitlements (
 );
 
 -- 7. Play Events (first-party anonymous analytics)
--- No personal identifiers are stored. session_id is a memory-only UUID
--- generated fresh per app load and is never written to localStorage.
+-- No personal identifiers are stored. session_id is a tab-scoped UUID
+-- persisted in sessionStorage and cleared when the tab closes.
 CREATE TABLE IF NOT EXISTS public.play_events (
-    id          UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+    id          UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
     session_id  TEXT        NOT NULL,
     event_type  TEXT        NOT NULL,
     payload     JSONB,
