@@ -44,6 +44,11 @@ describe('encounter-flow.slice', () => {
         }));
 
         vi.useFakeTimers();
+        Object.defineProperty(HTMLMediaElement.prototype, 'play', {
+            writable: true,
+            configurable: true,
+            value: vi.fn().mockResolvedValue(undefined),
+        });
     });
 
     afterEach(() => {
@@ -286,19 +291,13 @@ describe('encounter-flow.slice', () => {
 
     describe('processMonsterTurn', () => {
         it('should play attack sound when monster has one', () => {
-            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
             const { initializeEncounter, processMonsterTurn } = useTestStore.getState();
 
-            // Monster with an attack sound
             initializeEncounter(['c1'], [
                 { id: 'm1', name: 'M1', maxHealth: 50, attack: 5, sprite: '', attackSound: 'battle/lion' }
             ], 0, 0, {});
 
-            // playSfx will try to find 'battle/lion' - it may or may not succeed depending on test env
-            // Either way, it should not throw
             expect(() => processMonsterTurn()).not.toThrow();
-
-            consoleSpy.mockRestore();
         });
     });
 });

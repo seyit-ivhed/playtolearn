@@ -53,6 +53,11 @@ describe('Player Actions Slice', () => {
             monsters: []
         });
         vi.useFakeTimers();
+        Object.defineProperty(HTMLMediaElement.prototype, 'play', {
+            writable: true,
+            configurable: true,
+            value: vi.fn().mockResolvedValue(undefined),
+        });
     });
 
     describe('performAction', () => {
@@ -116,16 +121,12 @@ describe('Player Actions Slice', () => {
         });
 
         it('should play attack sound when unit has one', () => {
-            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
             const warrior: EncounterUnit = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, currentSpirit: 0, maxSpirit: 100, spiritGain: 10, damage: 10, attackSound: 'battle/lion' } as unknown as EncounterUnit;
             const monster: EncounterUnit = { id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isDead: false, isPlayer: false, currentSpirit: 0, maxSpirit: 100, hasActed: false, spiritGain: 10 } as EncounterUnit;
 
             useEncounterStore.setState({ party: [warrior] as EncounterUnit[], monsters: [monster] as EncounterUnit[], endPlayerTurn: vi.fn() });
 
-            // playSfx will try to play - either succeeds or logs error, but shouldn't throw
             expect(() => useEncounterStore.getState().performAction('u1')).not.toThrow();
-
-            consoleSpy.mockRestore();
         });
     });
 
@@ -189,16 +190,12 @@ describe('Player Actions Slice', () => {
         });
 
         it('should play special ability sound when unit has one', () => {
-            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
             const warrior = { ...baseUnit, id: 'u1', templateId: 'warrior_id', name: 'Warrior', maxHealth: 100, currentHealth: 100, specialAbilityId: 'precision_shot', specialAbilityVariables: { damage: 20 }, specialAbilitySound: 'battle/katana' };
             const monster = { ...baseUnit, id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isPlayer: false };
 
             useEncounterStore.setState({ party: [warrior], monsters: [monster] });
 
-            // playSfx will try to play - either succeeds or logs error, but shouldn't throw
             expect(() => useEncounterStore.getState().resolveSpecialAttack('u1', true)).not.toThrow();
-
-            consoleSpy.mockRestore();
         });
 
         it('should handle failure (drain spirit, end turn)', () => {

@@ -143,8 +143,10 @@ describe('LatinSquareEngine', () => {
         });
 
         it('should return false for null/undefined input', () => {
+            const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
             // @ts-expect-error testing invalid input
             expect(LatinSquareEngine.checkSolution(null)).toBe(false);
+            consoleSpy.mockRestore();
         });
     });
 
