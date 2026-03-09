@@ -79,6 +79,20 @@ test.describe('Settings - authenticated user', () => {
                 body: JSON.stringify([{ id: 'test-user-id', product_update_consent: false }]),
             });
         });
+        await page.route('**/rest/v1/game_states**', (route) => {
+            route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify([]),
+            });
+        });
+        await page.route('**/rest/v1/player_entitlements**', (route) => {
+            route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify([]),
+            });
+        });
     });
 
     test('Account button appears in settings for authenticated users', async ({ page }) => {
