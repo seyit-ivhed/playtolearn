@@ -54,7 +54,14 @@ Deno.test({
 
             // Password re-authentication via signInWithPassword (token endpoint)
             if (url.includes('/auth/v1/token') && init?.method === 'POST') {
-                return new Response(JSON.stringify({ access_token: 'new-token', user: { id: 'user-123' } }), {
+                return new Response(JSON.stringify({
+                    access_token: 'new-token',
+                    token_type: 'bearer',
+                    expires_in: 3600,
+                    expires_at: Math.floor(Date.now() / 1000) + 3600,
+                    refresh_token: 'refresh-token',
+                    user: { id: 'user-123', email: 'test@example.com' },
+                }), {
                     status: 200,
                     headers: { 'Content-Type': 'application/json' },
                 });
