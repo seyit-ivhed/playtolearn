@@ -77,7 +77,20 @@ The project uses Supabase for authentication, database, and edge functions.
 
 We use a local Supabase instance run via Docker.
 
-**1. Manage Local Secrets:** To use features like Stripe payments locally, you
+**1. Generate a signing key (first-time only):** The local Supabase instance
+uses a pinned signing key so that API keys stay stable across restarts. Generate
+one before your first `supabase start`:
+
+```bash
+npx supabase gen signing-key --output json > supabase/signing_key.json
+# Wrap the output in an array
+node -e "const k=require('./supabase/signing_key.json'); require('fs').writeFileSync('./supabase/signing_key.json', JSON.stringify([k]))"
+```
+
+This file is git-ignored. Without it, keys regenerate on every restart and your
+`.env.local` will go out of sync.
+
+**2. Manage Local Secrets:** To use features like Stripe payments locally, you
 must set your API keys. If you haven't already done so in the Installation
 step, copy the template and fill in the values:
 
@@ -93,7 +106,7 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 
 Restart services to load the keys: `npm run deploy-supabase`
 
-**2. View Edge Function Logs:** Supabase Edge Functions run effectively in a
+**3. View Edge Function Logs:** Supabase Edge Functions run effectively in a
 Docker container locally. To view real-time logs (including `console.log` from
 your functions):
 
