@@ -9,15 +9,19 @@ logger.warn = (msg) => {
   throw new Error(msg)
 }
 
+const useHttps = !process.env.VITE_NO_HTTPS
+
 export default defineConfig({
   plugins: [react()],
   customLogger: logger,
   server: {
     host: '127.0.0.1',
-    https: {
-      key: fs.readFileSync('./localhost+1-key.pem'),
-      cert: fs.readFileSync('./localhost+1.pem'),
-    },
+    ...(useHttps && {
+      https: {
+        key: fs.readFileSync('./localhost+1-key.pem'),
+        cert: fs.readFileSync('./localhost+1.pem'),
+      },
+    }),
   },
   build: {
     rollupOptions: {

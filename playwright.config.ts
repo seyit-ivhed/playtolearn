@@ -8,12 +8,10 @@ export default defineConfig({
     workers: process.env.CI ? 1 : undefined,
     reporter: 'html',
     use: {
-        baseURL: 'https://127.0.0.1:5173',
-        ignoreHTTPSErrors: true,
+        baseURL: 'http://127.0.0.1:15176',
         trace: 'on-first-retry',
         locale: 'en-US',
         timezoneId: 'Europe/Stockholm',
-        reducedMotion: 'reduce',
     },
     projects: [
         {
@@ -22,11 +20,11 @@ export default defineConfig({
         },
     ],
     webServer: {
-        command: 'npm run dev',
-        url: 'https://127.0.0.1:5173',
+        command: 'npx vite --port 15176 --strictPort',
+        url: 'http://127.0.0.1:15176',
         reuseExistingServer: !process.env.CI,
         env: {
-            NODE_TLS_REJECT_UNAUTHORIZED: '0',
+            VITE_NO_HTTPS: '1',
             VITE_SUPABASE_URL: 'http://localhost:54321',
             VITE_SUPABASE_ANON_KEY: 'test-anon-key-for-e2e',
         },
