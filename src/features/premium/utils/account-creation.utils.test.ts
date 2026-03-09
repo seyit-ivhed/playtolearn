@@ -208,7 +208,7 @@ describe('account-creation.utils', () => {
         it('should succeed when signup returns no user id (no userId branch)', async () => {
             mockSupabaseClient.auth.getSession
                 .mockResolvedValueOnce({ data: { session: null }, error: null })
-                .mockResolvedValueOnce({ data: { session: null }, error: null });
+                .mockResolvedValueOnce({ data: { session: { user: { id: '123', is_anonymous: false } } as unknown as Session }, error: null });
 
             mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
                 data: { user: null, session: null },
