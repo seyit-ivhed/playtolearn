@@ -73,7 +73,7 @@ export const usePlayerStore = create<PlayerState>()(
             },
         }),
         {
-            name: 'space-math-player-storage',
+            name: 'mathwithmagic-player-storage',
             partialize: (state) => ({
                 language: state.language,
                 masterVolume: state.masterVolume,

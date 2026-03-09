@@ -15,21 +15,21 @@ describe('getInitialLanguage', () => {
     });
 
     it('should return persisted language if valid (en)', () => {
-        localStorage.setItem('space-math-player-storage', JSON.stringify({
+        localStorage.setItem('mathwithmagic-player-storage', JSON.stringify({
             state: { language: 'en' }
         }));
         expect(getInitialLanguage()).toBe('en');
     });
 
     it('should return persisted language if valid (sv)', () => {
-        localStorage.setItem('space-math-player-storage', JSON.stringify({
+        localStorage.setItem('mathwithmagic-player-storage', JSON.stringify({
             state: { language: 'sv' }
         }));
         expect(getInitialLanguage()).toBe('sv');
     });
 
     it('should ignore invalid persisted language', () => {
-        localStorage.setItem('space-math-player-storage', JSON.stringify({
+        localStorage.setItem('mathwithmagic-player-storage', JSON.stringify({
             state: { language: 'de' }
         }));
         expect(getInitialLanguage()).toBe('en'); // Default fallback since navigator is 'fr'
@@ -52,7 +52,7 @@ describe('getInitialLanguage', () => {
     });
 
     it('should prioritize persistence over navigator', () => {
-        localStorage.setItem('space-math-player-storage', JSON.stringify({
+        localStorage.setItem('mathwithmagic-player-storage', JSON.stringify({
             state: { language: 'en' }
         }));
         Object.defineProperty(window, 'navigator', {
@@ -63,7 +63,7 @@ describe('getInitialLanguage', () => {
     });
     
     it('should handle malformed json in local storage', () => {
-        localStorage.setItem('space-math-player-storage', '{ invalid json ');
+        localStorage.setItem('mathwithmagic-player-storage', '{ invalid json ');
         // Should fallback to navigator (fr -> en)
         expect(getInitialLanguage()).toBe('en');
     });
