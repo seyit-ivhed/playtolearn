@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 import { analyticsService } from '../../services/analytics.service';
+import { clearAppStorage } from '../../utils/clearAppStorage';
 import { Loader2, AlertTriangle, Trash2 } from 'lucide-react';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import sectionStyles from './SettingsSection.module.css';
@@ -31,7 +32,8 @@ export const DeleteAccountSettings: React.FC = () => {
         try {
             await deleteAccount();
             analyticsService.trackEvent('account_deleted');
-            // After deletion the auth state change will redirect the user
+            clearAppStorage();
+            window.location.href = '/farewell';
         } catch (err: unknown) {
             const errObj = err as Error;
             console.error('Account deletion failed:', errObj);

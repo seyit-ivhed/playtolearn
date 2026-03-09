@@ -628,5 +628,10 @@
     "cancel_button": "Cancel",
     "success": "Your account has been deleted.",
     "error_generic": "Something went wrong. Please try again or contact support."
+  },
+  "farewell": {
+    "title": "Farewell, adventurer",
+    "message": "It's sad for you to go, but thanks for the adventure.",
+    "start_fresh": "Start a new adventure"
   }
 }

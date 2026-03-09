@@ -628,5 +628,10 @@
     "cancel_button": "Avbryt",
     "success": "Ditt konto har raderats.",
     "error_generic": "Något gick fel. Försök igen eller kontakta support."
+  },
+  "farewell": {
+    "title": "Farväl, äventyrare",
+    "message": "Det är tråkigt att du går, men tack för äventyret.",
+    "start_fresh": "Börja ett nytt äventyr"
   }
 }

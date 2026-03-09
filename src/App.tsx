@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdventurePage from './features/adventure/AdventurePage';
 import { ChronicleBook } from './features/chronicle/ChronicleBook';
 import { ResetPasswordPage } from './features/chronicle/components/ResetPasswordPage';
+import { FarewellPage } from './features/chronicle/components/FarewellPage';
 import EncounterPage from './features/encounter/EncounterPage';
 import PuzzlePage from './features/encounter/PuzzlePage';
 import MathTestPage from './features/math/MathTestPage';
@@ -60,7 +61,10 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <Routes>
+        <Route path="/farewell" element={<FarewellPage />} />
+        <Route path="/*" element={<AppContent />} />
+      </Routes>
     </BrowserRouter>
   );
 }
