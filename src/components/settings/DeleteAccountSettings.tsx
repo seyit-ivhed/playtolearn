@@ -38,12 +38,11 @@ export const DeleteAccountSettings: React.FC = () => {
         try {
             await deleteAccount(password);
             analyticsService.trackEvent('account_deleted');
-            // After deletion the auth state change will redirect the user
         } catch (err: unknown) {
-            const errObj = err as Error;
-            console.error('Account deletion failed:', errObj);
+            console.error('Account deletion failed:', err);
             analyticsService.trackEvent('account_delete_failed');
-            if (errObj.message === 'Incorrect password') {
+            const message = err instanceof Error ? err.message : '';
+            if (message === 'Incorrect password') {
                 setError(t('delete_account.wrong_password', 'Incorrect password. Please try again.'));
             } else {
                 setError(t('delete_account.error_generic', 'Something went wrong. Please try again or contact support.'));
