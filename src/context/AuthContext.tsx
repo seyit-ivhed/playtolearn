@@ -101,21 +101,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const { data: { session } } = await supabase.auth.getSession();
         if (!session?.access_token) { throw new Error('Not authenticated'); }
 
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
-        const response = await fetch(`${supabaseUrl}/functions/v1/delete-account`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${session.access_token}`,
-                'apikey': supabaseAnonKey,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ password }),
+        const { data, error } = await supabase.functions.invoke('delete-account', {
+            body: { password },
         });
 
-        if (!response.ok) {
-            const data = await response.json() as { error?: string };
-            throw new Error(data.error || 'Failed to delete account');
+        if (error) {
+            const message = (data as { error?: string })?.error || 'Failed to delete account';
+            throw new Error(message);
         }
 
         await supabase.auth.signOut();
