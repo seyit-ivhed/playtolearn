@@ -1,18 +1,17 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { pollUntil } from '../../../utils/poll-until';
 
 const POLL_INTERVAL_MS = 300;
 const POLL_TIMEOUT_MS = 8000;
 
 export async function waitForSession(client: SupabaseClient): Promise<boolean> {
-    const deadline = Date.now() + POLL_TIMEOUT_MS;
-    while (Date.now() < deadline) {
-        const { data: { session } } = await client.auth.getSession();
-        if (session?.user && !session.user.is_anonymous) {
-            return true;
-        }
-        await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL_MS));
-    }
-    return false;
+    return pollUntil(
+        async () => {
+            const { data: { session } } = await client.auth.getSession();
+            return !!(session?.user && !session.user.is_anonymous);
+        },
+        { intervalMs: POLL_INTERVAL_MS, timeoutMs: POLL_TIMEOUT_MS }
+    );
 }
 
 interface AccountConversionResult {
