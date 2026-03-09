@@ -82,9 +82,7 @@ uses a pinned signing key so that API keys stay stable across restarts. Generate
 one before your first `supabase start`:
 
 ```bash
-npx supabase gen signing-key --output json > supabase/signing_key.json
-# Wrap the output in an array
-node -e "const k=require('./supabase/signing_key.json'); require('fs').writeFileSync('./supabase/signing_key.json', JSON.stringify([k]))"
+npx supabase gen signing-key
 ```
 
 This file is git-ignored. Without it, keys regenerate on every restart and your
