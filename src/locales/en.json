@@ -5,7 +5,8 @@
     "back": "Back",
     "level": "Level",
     "lvl": "Lvl",
-    "back_to_map": "Back to Map"
+    "back_to_map": "Back to Map",
+    "loading": "Loading..."
   },
   "remainder_text": " R ",
   "adventure": {

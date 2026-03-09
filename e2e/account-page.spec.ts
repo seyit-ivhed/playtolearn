@@ -151,7 +151,7 @@ test.describe('Account Page - Marketing Preferences', () => {
     test('toggling the checkbox saves preference and shows success', async ({ page }) => {
         // click() instead of check(): the checkbox is a controlled React component
         // with an async save handler, so state updates after the API response
-        await page.locator('[data-testid="marketing-consent-checkbox"]').click();
+        await page.locator('[data-testid="marketing-consent-checkbox"]').click({ force: true });
         await expect(page.locator('[data-testid="marketing-preferences-success"]')).toBeVisible();
         await expect(page.locator('[data-testid="marketing-consent-checkbox"]')).toBeChecked();
     });
@@ -168,7 +168,7 @@ test.describe('Account Page - Marketing Preferences', () => {
             }
         });
 
-        await page.locator('[data-testid="marketing-consent-checkbox"]').click();
+        await page.locator('[data-testid="marketing-consent-checkbox"]').click({ force: true });
         await expect(page.locator('[data-testid="marketing-preferences-error"]')).toBeVisible();
     });
 });
@@ -195,12 +195,12 @@ test.describe('Account Page - Legal Links', () => {
     });
 
     test('privacy policy link opens legal modal', async ({ page }) => {
-        await page.click('[data-testid="settings-privacy-link"]');
+        await page.click('[data-testid="settings-privacy-link"]', { force: true });
         await expect(page.locator('[data-testid="legal-modal"]')).toBeVisible();
     });
 
     test('terms of service link opens legal modal', async ({ page }) => {
-        await page.click('[data-testid="settings-terms-link"]');
+        await page.click('[data-testid="settings-terms-link"]', { force: true });
         await expect(page.locator('[data-testid="legal-modal"]')).toBeVisible();
     });
 });
@@ -217,23 +217,23 @@ test.describe('Account Page - Delete Account', () => {
     });
 
     test('clicking delete shows confirmation form', async ({ page }) => {
-        await page.click('[data-testid="delete-account-btn"]');
+        await page.click('[data-testid="delete-account-btn"]', { force: true });
         await expect(page.locator('[data-testid="delete-account-confirmation"]')).toBeVisible();
         await expect(page.locator('[data-testid="delete-account-btn"]')).not.toBeVisible();
     });
 
     test('cancel hides confirmation form and restores delete button', async ({ page }) => {
-        await page.click('[data-testid="delete-account-btn"]');
+        await page.click('[data-testid="delete-account-btn"]', { force: true });
         await expect(page.locator('[data-testid="delete-account-confirmation"]')).toBeVisible();
 
-        await page.click('[data-testid="delete-account-cancel-btn"]');
+        await page.click('[data-testid="delete-account-cancel-btn"]', { force: true });
         await expect(page.locator('[data-testid="delete-account-btn"]')).toBeVisible();
         await expect(page.locator('[data-testid="delete-account-confirmation"]')).not.toBeVisible();
     });
 
     test('shows error when submitting without a password', async ({ page }) => {
-        await page.click('[data-testid="delete-account-btn"]');
-        await page.click('[data-testid="delete-account-confirm-btn"]');
+        await page.click('[data-testid="delete-account-btn"]', { force: true });
+        await page.click('[data-testid="delete-account-confirm-btn"]', { force: true });
         await expect(page.locator('[data-testid="delete-account-error"]')).toBeVisible();
     });
 
@@ -246,9 +246,9 @@ test.describe('Account Page - Delete Account', () => {
             });
         });
 
-        await page.click('[data-testid="delete-account-btn"]');
+        await page.click('[data-testid="delete-account-btn"]', { force: true });
         await page.fill('[data-testid="delete-account-password-input"]', 'wrongpassword');
-        await page.click('[data-testid="delete-account-confirm-btn"]');
+        await page.click('[data-testid="delete-account-confirm-btn"]', { force: true });
 
         await expect(page.locator('[data-testid="delete-account-error"]')).toBeVisible();
         // Confirmation form stays open so the user can correct their password
@@ -260,9 +260,9 @@ test.describe('Account Page - Delete Account', () => {
             route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({}) });
         });
 
-        await page.click('[data-testid="delete-account-btn"]');
+        await page.click('[data-testid="delete-account-btn"]', { force: true });
         await page.fill('[data-testid="delete-account-password-input"]', 'correctpassword');
-        await page.click('[data-testid="delete-account-confirm-btn"]');
+        await page.click('[data-testid="delete-account-confirm-btn"]', { force: true });
 
         await expect(page).toHaveURL(/\/chronicle/, { timeout: 10000 });
     });

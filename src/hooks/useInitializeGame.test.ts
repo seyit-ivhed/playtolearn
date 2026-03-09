@@ -64,6 +64,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         const { result, rerender } = renderHook(() => useInitializeGame());
@@ -85,6 +86,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         rerender();
@@ -123,6 +125,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         const { result } = renderHook(() => useInitializeGame());
@@ -148,6 +151,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         const { result } = renderHook(() => useInitializeGame());
@@ -171,6 +175,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         const { result, rerender } = renderHook(() => useInitializeGame());
@@ -192,6 +197,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         rerender();
@@ -216,6 +222,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         // Simulate a hanging network request that never resolves
@@ -243,6 +250,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         const { result } = renderHook(() => useInitializeGame());
@@ -262,6 +270,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         const { result } = renderHook(() => useInitializeGame());
@@ -283,6 +292,7 @@ describe('useInitializeGame', () => {
             signIn: vi.fn(),
             resetPasswordForEmail: vi.fn(),
             updatePassword: vi.fn(),
+            deleteAccount: vi.fn(),
         } as ReturnType<typeof useAuth>);
 
         const { result } = renderHook(() => useInitializeGame());

@@ -5,7 +5,8 @@
     "back": "Tillbaka",
     "level": "Nivå",
     "lvl": "Nivå",
-    "back_to_map": "Tillbaka till kartan"
+    "back_to_map": "Tillbaka till kartan",
+    "loading": "Laddar..."
   },
   "remainder_text": " rest ",
   "adventure": {
