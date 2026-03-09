@@ -237,7 +237,7 @@ describe('account-creation.utils', () => {
             });
 
             expect(result.success).toBe(false);
-            expect(result.error).toBe('Server error occurred');
+            expect(result.error).toBe('premium.store.account.errors.generic');
         });
     });
 });
