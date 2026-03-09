@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { getInitialLanguage } from './i18n.utils';
+import { PLAYER_STORE_KEY } from '../stores/storage-keys';
 
 describe('getInitialLanguage', () => {
     beforeEach(() => {
@@ -15,21 +16,21 @@ describe('getInitialLanguage', () => {
     });
 
     it('should return persisted language if valid (en)', () => {
-        localStorage.setItem('mathwithmagic-player-storage', JSON.stringify({
+        localStorage.setItem(PLAYER_STORE_KEY, JSON.stringify({
             state: { language: 'en' }
         }));
         expect(getInitialLanguage()).toBe('en');
     });
 
     it('should return persisted language if valid (sv)', () => {
-        localStorage.setItem('mathwithmagic-player-storage', JSON.stringify({
+        localStorage.setItem(PLAYER_STORE_KEY, JSON.stringify({
             state: { language: 'sv' }
         }));
         expect(getInitialLanguage()).toBe('sv');
     });
 
     it('should ignore invalid persisted language', () => {
-        localStorage.setItem('mathwithmagic-player-storage', JSON.stringify({
+        localStorage.setItem(PLAYER_STORE_KEY, JSON.stringify({
             state: { language: 'de' }
         }));
         expect(getInitialLanguage()).toBe('en'); // Default fallback since navigator is 'fr'
@@ -52,7 +53,7 @@ describe('getInitialLanguage', () => {
     });
 
     it('should prioritize persistence over navigator', () => {
-        localStorage.setItem('mathwithmagic-player-storage', JSON.stringify({
+        localStorage.setItem(PLAYER_STORE_KEY, JSON.stringify({
             state: { language: 'en' }
         }));
         Object.defineProperty(window, 'navigator', {
@@ -63,7 +64,7 @@ describe('getInitialLanguage', () => {
     });
     
     it('should handle malformed json in local storage', () => {
-        localStorage.setItem('mathwithmagic-player-storage', '{ invalid json ');
+        localStorage.setItem(PLAYER_STORE_KEY, '{ invalid json ');
         // Should fallback to navigator (fr -> en)
         expect(getInitialLanguage()).toBe('en');
     });

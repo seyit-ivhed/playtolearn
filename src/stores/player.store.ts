@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { AUDIO_CONFIG } from '../config/audio.config';
+import { PLAYER_STORE_KEY } from './storage-keys';
 
 interface PlayerState {
 
@@ -73,7 +74,7 @@ export const usePlayerStore = create<PlayerState>()(
             },
         }),
         {
-            name: 'mathwithmagic-player-storage',
+            name: PLAYER_STORE_KEY,
             partialize: (state) => ({
                 language: state.language,
                 masterVolume: state.masterVolume,

@@ -6,6 +6,7 @@ import { createAdventureProgressSlice } from './slices/adventure-progress.slice'
 import { createAdventureStatusSlice } from './slices/adventure-status.slice';
 import { createProgressionSlice } from './slices/progression.slice';
 import { createDebugSlice } from './slices/debug.slice';
+import { GAME_STORE_KEY } from '../storage-keys';
 
 export const useGameStore = create<GameStore>()(
     persist(
@@ -17,7 +18,7 @@ export const useGameStore = create<GameStore>()(
             ...createDebugSlice(...a),
         }),
         {
-            name: 'mathwithmagic-game-store',
+            name: GAME_STORE_KEY,
         }
     )
 );
