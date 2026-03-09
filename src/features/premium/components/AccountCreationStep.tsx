@@ -40,8 +40,6 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
         analyticsService.trackEvent('account_creation_viewed');
     }, []);
 
-
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
@@ -151,16 +149,16 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                     </div>
 
                     <ConsentCheckboxes
-                            ageConsent={ageConsent}
-                            termsConsent={termsConsent}
-                            productUpdates={productUpdates}
-                            disabled={loading}
-                            onAgeConsentChange={setAgeConsent}
-                            onTermsConsentChange={setTermsConsent}
-                            onProductUpdatesChange={setProductUpdates}
-                            legalModal={legalModal}
-                            onOpenLegalModal={setLegalModal}
-                            onCloseLegalModal={() => setLegalModal(null)}
+                        ageConsent={ageConsent}
+                        termsConsent={termsConsent}
+                        productUpdates={productUpdates}
+                        disabled={loading}
+                        onAgeConsentChange={setAgeConsent}
+                        onTermsConsentChange={setTermsConsent}
+                        onProductUpdatesChange={setProductUpdates}
+                        legalModal={legalModal}
+                        onOpenLegalModal={setLegalModal}
+                        onCloseLegalModal={() => setLegalModal(null)}
                     />
 
                     <AnimatePresence>

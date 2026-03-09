@@ -17,7 +17,6 @@ export async function waitForSession(client: SupabaseClient): Promise<boolean> {
 interface AccountConversionResult {
     success: boolean;
     error?: string;
-    emailAlreadyExists?: boolean;
 }
 
 interface AccountConversionParams {
@@ -78,7 +77,6 @@ export const performAccountConversion = async ({
                 signUpError.status === 422) {
                 return {
                     success: false,
-                    emailAlreadyExists: true,
                     error: translation('premium.store.account.errors.already_exists', { defaultValue: 'This email is already registered. Please sign in with your existing account.' })
                 };
             }
