@@ -160,6 +160,50 @@ describe('useInitializeGame', () => {
         expect(mockSetState).not.toHaveBeenCalled();
     });
 
+    it('should not reinitialize when re-rendered with the same user id but a new auth object reference', async () => {
+        const userObj1 = { id: 'stable-user', email: 'old@test.com' };
+        vi.mocked(useAuth).mockReturnValue({
+            session: { user: userObj1 } as unknown as Session,
+            isAuthenticated: true,
+            user: userObj1 as unknown as User,
+            loading: false,
+            refreshSession: mockRefreshSession,
+            signIn: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
+        } as ReturnType<typeof useAuth>);
+
+        const { result, rerender } = renderHook(() => useInitializeGame());
+
+        await waitFor(() => {
+            expect(result.current.isInitializing).toBe(false);
+        }, { interval: 5 });
+
+        const callCountAfterFirst = vi.mocked(PersistenceService.getOrCreateProfile).mock.calls.length;
+
+        // Change the user object reference (different object, same id) → triggers useCallback recreation
+        const userObj2 = { id: 'stable-user', email: 'new@test.com' };
+        vi.mocked(useAuth).mockReturnValue({
+            session: { user: userObj2 } as unknown as Session,
+            isAuthenticated: true,
+            user: userObj2 as unknown as User, // new reference → performInitialization recreated → useEffect re-runs
+            loading: false,
+            refreshSession: mockRefreshSession,
+            signIn: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
+        } as ReturnType<typeof useAuth>);
+
+        rerender();
+
+        await waitFor(() => {
+            expect(result.current.isInitializing).toBe(false);
+        }, { interval: 5 });
+
+        // Should NOT call getOrCreateProfile again — same userId triggers line 27 early return
+        expect(vi.mocked(PersistenceService.getOrCreateProfile).mock.calls.length).toBe(callCountAfterFirst);
+    });
+
     it('should show connectivity error when initialization times out', async () => {
         vi.useFakeTimers();
 
@@ -187,6 +231,76 @@ describe('useInitializeGame', () => {
 
         expect(result.current.isInitializing).toBe(false);
         expect(result.current.error).toBe('offline');
+    });
+
+    it('should not initialize while auth is still loading', async () => {
+        vi.mocked(useAuth).mockReturnValue({
+            session: null,
+            isAuthenticated: false,
+            user: null,
+            loading: true,
+            refreshSession: mockRefreshSession,
+            signIn: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
+        } as ReturnType<typeof useAuth>);
+
+        const { result } = renderHook(() => useInitializeGame());
+
+        // isInitializing should remain true because authLoading is true
+        expect(result.current.isInitializing).toBe(true);
+        expect(PersistenceService.getOrCreateProfile).not.toHaveBeenCalled();
+    });
+
+    it('should initialize for unauthenticated user without fetching profile', async () => {
+        vi.mocked(useAuth).mockReturnValue({
+            session: null,
+            isAuthenticated: false,
+            user: null,
+            loading: false,
+            refreshSession: mockRefreshSession,
+            signIn: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
+        } as ReturnType<typeof useAuth>);
+
+        const { result } = renderHook(() => useInitializeGame());
+
+        await waitFor(() => {
+            expect(result.current.isInitializing).toBe(false);
+        }, { interval: 5 });
+
+        expect(PersistenceService.getOrCreateProfile).not.toHaveBeenCalled();
+    });
+
+    it('should call retry and re-initialize', async () => {
+        vi.mocked(useAuth).mockReturnValue({
+            session: { user: { id: 'retry-user' } } as unknown as Session,
+            isAuthenticated: true,
+            user: { id: 'retry-user' } as unknown as User,
+            loading: false,
+            refreshSession: mockRefreshSession.mockResolvedValue(undefined),
+            signIn: vi.fn(),
+            resetPasswordForEmail: vi.fn(),
+            updatePassword: vi.fn(),
+        } as ReturnType<typeof useAuth>);
+
+        const { result } = renderHook(() => useInitializeGame());
+
+        await waitFor(() => {
+            expect(result.current.isInitializing).toBe(false);
+        }, { interval: 5 });
+
+        const initialCallCount = vi.mocked(PersistenceService.getOrCreateProfile).mock.calls.length;
+
+        // Call retry
+        await act(async () => {
+            result.current.retry();
+        });
+
+        await waitFor(() => {
+            expect(vi.mocked(PersistenceService.getOrCreateProfile).mock.calls.length).toBeGreaterThan(initialCallCount);
+        }, { interval: 5 });
     });
 });
 
