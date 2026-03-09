@@ -26,7 +26,7 @@ const SettingsMenu: React.FC = () => {
     };
 
     return (
-        <div className={styles.settingsContainer}>
+        <div>
             <button
                 className={styles.settingsTrigger}
                 onClick={() => {

@@ -8,7 +8,6 @@ import { DeleteAccountSettings } from '../../components/settings/DeleteAccountSe
 import { MarketingPreferencesSettings } from './MarketingPreferencesSettings';
 import { LegalModal, type LegalDocumentType } from '../legal/LegalModal';
 import sectionStyles from '../../components/settings/SettingsSection.module.css';
-import settingsMenuStyles from '../../components/SettingsMenu.module.css';
 import styles from './AccountPage.module.css';
 
 export const AccountPage: React.FC = () => {
@@ -52,16 +51,16 @@ export const AccountPage: React.FC = () => {
                             <h4 className={sectionStyles.sectionTitle}>
                                 {t('legal.section_title', 'Legal')}
                             </h4>
-                            <div className={settingsMenuStyles.legalLinkGroup}>
+                            <div className={styles.legalLinkGroup}>
                                 <button
-                                    className={settingsMenuStyles.legalLink}
+                                    className={styles.legalLink}
                                     onClick={() => setLegalModal('privacy')}
                                     data-testid="settings-privacy-link"
                                 >
                                     {t('legal.privacy_policy', 'Privacy Policy')}
                                 </button>
                                 <button
-                                    className={settingsMenuStyles.legalLink}
+                                    className={styles.legalLink}
                                     onClick={() => setLegalModal('terms')}
                                     data-testid="settings-terms-link"
                                 >
