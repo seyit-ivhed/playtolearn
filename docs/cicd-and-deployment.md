@@ -28,8 +28,7 @@ feature/xxx  →  main  →  [staging environment]
 | Branch | Environment | Deployment trigger |
 |---|---|---|
 | `main` | Staging | Automatic on merge |
-| `production` | Production | Manual push or PR |
-| `feature/*` | PR preview | Automatic per PR |
+| `production` | Production | on PR to production branch |
 
 ---
 
@@ -41,7 +40,6 @@ Two environments configured in the Vercel project settings:
 
 - **Production branch:** `production` → serves the live domain
 - **Preview branch:** `main` → serves a stable staging URL
-- **Feature branches:** each PR gets its own ephemeral preview URL
 
 ### Backend (Supabase)
 
@@ -67,6 +65,7 @@ readiness before merging:
 - [ ] No destructive or non-reversible migrations
 - [ ] Stripe/payment flows tested if changed
 - [ ] Player data is safe if a rollback is needed
+- [ ] A snapshot of player database is saved
 ```
 
 Every merge to `production` becomes a permanent record of what shipped and why.
@@ -123,29 +122,6 @@ adding a **required reviewer** gate in GitHub settings — even just yourself �
 so migrations cannot run until you explicitly approve the deployment in the
 GitHub Actions UI.
 
-### `ci.yml` — runs on every pull request
-
-```yaml
-on:
-  pull_request:
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run build
-      - run: npm run test:coverage
-      - run: npx playwright test
-        env:
-          PLAYWRIGHT_BASE_URL: ${{ env.VERCEL_PREVIEW_URL }}
-```
-
 ---
 
 ## Database Migrations (Player Data Safety)
@@ -153,6 +129,8 @@ jobs:
 Migrations that affect player data must be **backward-compatible** at every
 step. The running app code must work correctly both before and after the
 migration runs.
+
+Before each production deployment we should save a production database snapshot in case we need to recover.
 
 ### Two-phase migration pattern
 
@@ -199,17 +177,25 @@ Located in `e2e/staging/`. Run against the live staging URL with a real
 Supabase staging database and Stripe test mode API. These test that the whole
 system works together after a deploy.
 
-- Triggered manually or automatically after `main` deploys to staging
+- Triggered automatically after `main` deploys to staging
 - Require a seed step (create test account) and a teardown step (delete it)
 - Cover critical paths only — the flows that, if broken, mean no player can
   use the product
 
 **What to cover:**
 
-1. Player signs up with a real email (written to staging DB)
-2. Player completes checkout with a Stripe test card
-3. Entitlement is granted and player can access premium content
-4. Player progresses through a level and progress is saved
+1. First play flow
+  - Player starts a new journey
+  - Completes the first encounter
+  - Levels up both of their companions
+2. Checkout flow
+  - Player signs up with a real email
+  - Completes checkout with stripe test card
+  - Unlocks the second adventure
+  - Starts the first encounter of the second adventure
+3. Login flow
+  - Player signs in with an existing account
+  - All the existing game state is preserved
 
 ### Stripe test cards
 
@@ -259,7 +245,7 @@ STAGING_URL=https://your-staging-url.vercel.app npx playwright test --config=pla
 3. Open PR → CI runs (lint, build, unit tests, E2E)
 4. Merge to main → staging deploys automatically (~5 min)
 5. Play-test on staging URL
-6. Satisfied? → git push origin main:production
+6. Satisfied? → PR to main:production
 7. Production deploys (~5 min)
 8. Verify on production
 ```
