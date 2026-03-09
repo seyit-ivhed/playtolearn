@@ -1,6 +1,6 @@
 import type { Page } from '@playwright/test';
 
-const GAME_STORE_KEY = 'playtolearn-game-store';
+const GAME_STORE_KEY = 'mathwithmagic-game-store';
 
 // ---------------------------------------------------------------------------
 // Checkout mock fixtures

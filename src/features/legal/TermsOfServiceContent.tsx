@@ -15,11 +15,11 @@ export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ on
         <h2>1. Who We Are</h2>
         <p>
             These Terms of Service ("Terms") are between you and <strong>Outlean AB</strong>, a limited
-            company registered in Sweden, operating the educational game <em>Play to Learn</em>
+            company registered in Sweden, operating the educational game <em>Math with Magic</em>
             ("Service"). By creating an account or making a purchase, you agree to these Terms.
         </p>
         <p>
-            <strong>Contact:</strong> seyit@outlean.net
+            <strong>Contact:</strong> hello@mathwithmagic.com
         </p>
 
         <h2>2. Who Can Use the Service</h2>
@@ -40,7 +40,7 @@ export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ on
 
         <h2>3. Description of the Service</h2>
         <p>
-            <em>Play to Learn</em> is an educational adventure game designed for children ages 6–8. It
+            <em>Math with Magic</em> is an educational adventure game designed for children ages 6–8. It
             uses storytelling, math puzzles, and companion characters to make learning engaging. The
             Service is available in two tiers:
         </p>
@@ -60,7 +60,7 @@ export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ on
         <ul>
             <li>Keep your login credentials confidential.</li>
             <li>
-                Notify us immediately at seyit@outlean.net if you suspect unauthorized access to your
+                Notify us immediately at hello@mathwithmagic.com if you suspect unauthorized access to your
                 account.
             </li>
             <li>You are responsible for all activity that occurs under your account.</li>
@@ -146,7 +146,7 @@ export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ on
 
         <h2>12. Contact</h2>
         <p>
-            Questions about these Terms? Contact us at <strong>seyit@outlean.net</strong>.
+            Questions about these Terms? Contact us at <strong>hello@mathwithmagic.com</strong>.
         </p>
 
         {/* Refund Policy Section */}
@@ -157,13 +157,13 @@ export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ on
 
         <h2>Digital Goods — General Policy</h2>
         <p>
-            Premium content in <em>Play to Learn</em> is delivered as a digital product. Because
+            Premium content in <em>Math with Magic</em> is delivered as a digital product. Because
             access is granted immediately upon purchase, <strong>digital content is generally
             non-refundable</strong> once access has been provided.
         </p>
         <p>
             If you have not yet accessed the premium content after purchasing, you may request a
-            refund within 14 days of purchase by emailing <strong>seyit@outlean.net</strong> with your
+            refund within 14 days of purchase by emailing <strong>hello@mathwithmagic.com</strong> with your
             purchase confirmation and email address.
         </p>
 
@@ -185,7 +185,7 @@ export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ on
         </p>
         <p>
             If you believe you are entitled to a refund for any other reason, please contact us at{' '}
-            <strong>seyit@outlean.net</strong>. We will review all requests on a case-by-case basis.
+            <strong>hello@mathwithmagic.com</strong>. We will review all requests on a case-by-case basis.
         </p>
 
         <h2>Refund Processing</h2>
@@ -196,7 +196,7 @@ export const TermsOfServiceContent: React.FC<TermsOfServiceContentProps> = ({ on
         </p>
 
         <h2>How to Request a Refund</h2>
-        <p>Email <strong>seyit@outlean.net</strong> with:</p>
+        <p>Email <strong>hello@mathwithmagic.com</strong> with:</p>
         <ul>
             <li>Your account email address</li>
             <li>The date of purchase</li>

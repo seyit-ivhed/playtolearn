@@ -1,4 +1,4 @@
-# Math Quest Adventures - Project Style Guide
+# Math with Magic - Project Style Guide
 
 ## 1. Design Philosophy
 **Theme:** High-Fantasy RPG (Magic, Knights, Questing).

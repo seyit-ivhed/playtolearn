@@ -1,4 +1,4 @@
-# Space Math Academy (PlayToLearn)
+# Math with Magic
 
 A browser-based educational game designed to teach math concepts to children
 through space-themed missions and challenges.
@@ -21,7 +21,7 @@ through space-themed missions and challenges.
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
-   cd playtolearn
+   cd mathwithmagic
    ```
 
 2. **Install Frontend Dependencies:**

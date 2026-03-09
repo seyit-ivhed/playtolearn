@@ -3,7 +3,7 @@
 ## Overview
 
 This document defines the technical architecture and directory structure for
-Math Quest Adventures. The architecture follows a **feature-based organization**
+Math with Magic. The architecture follows a **feature-based organization**
 pattern that promotes modularity, maintainability, and scalability.
 
 ---

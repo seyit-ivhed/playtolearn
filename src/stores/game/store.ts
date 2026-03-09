@@ -17,7 +17,7 @@ export const useGameStore = create<GameStore>()(
             ...createDebugSlice(...a),
         }),
         {
-            name: 'playtolearn-game-store',
+            name: 'mathwithmagic-game-store',
         }
     )
 );

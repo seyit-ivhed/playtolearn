@@ -1,7 +1,7 @@
 # Legal & Compliance Reference
 
 > **Company:** Outlean AB (registered limited company, Sweden)
-> **Privacy contact:** seyit@outlean.net *(temporary — update after game domain is purchased)*
+> **Privacy contact:** hello@mathwithmagic.com
 > **Last reviewed:** 2026-03-08
 
 ---
@@ -245,7 +245,7 @@ When drafting the Privacy Policy, include all of the following:
 
 ### Identity & Contact
 - [ ] Data controller: Outlean AB, Sweden
-- [ ] Privacy contact email: *(update when game domain is purchased)*
+- [ ] Privacy contact email: hello@mathwithmagic.com
 - [ ] Date of last update
 
 ### Data Collected
@@ -319,7 +319,7 @@ When drafting the Privacy Policy, include all of the following:
 - [ ] Changes to terms (how we notify users of updates; what consent applies)
 - [ ] Governing law: Sweden / EU law
 - [ ] Dispute resolution: IMY for privacy; Swedish courts for general disputes
-- [ ] Contact: seyit@outlean.net *(update when game domain is purchased)*
+- [ ] Contact: hello@mathwithmagic.com
 
 ---
 
@@ -384,7 +384,6 @@ When a parent deletes their account, **all associated data must be deleted**:
 | Respond to data subject access/deletion requests | Within 30 days of request (GDPR) | Outlean AB |
 | Maintain Records of Processing Activities (RoPA) | Keep current; review annually | Outlean AB |
 | Monitor Supabase and Stripe for DPA/policy changes | When notified by processor | Outlean AB |
-| Update privacy contact email | After game domain is purchased | Outlean AB |
 | Notify users of material Privacy Policy / ToS changes | Before changes take effect | Outlean AB |
 
 ---
@@ -393,18 +392,17 @@ When a parent deletes their account, **all associated data must be deleted**:
 
 | # | Item | Status | Blocked by |
 |---|---|---|---|
-| 1 | Update privacy contact email | Blocked | Game domain not yet purchased |
-| 2 | Verify Supabase region is EU | Action required | Check Supabase dashboard |
-| 3 | Sign Supabase DPA | Action required | Manual action in Supabase dashboard |
-| 4 | Sign Stripe DPA | Action required | Manual action in Stripe dashboard |
-| 5 | Draft and publish Privacy Policy | Ready to implement | — |
-| 6 | Draft and publish Terms of Service | Ready to implement | — |
-| 7 | Draft Refund Policy (section in ToS) | Ready to implement | — |
-| 8 | Update account creation modal with consent checkboxes | Ready to implement | — |
-| 9 | Add legal page links to Chronicles footer | Ready to implement | — |
-| 10 | Add legal page links to account creation + settings | Ready to implement | — |
-| 11 | Implement account deletion flow (full cascade) | Ready to implement | — |
-| 12 | Add EU withdrawal waiver checkbox at checkout | Ready to implement | — |
-| 13 | Create internal RoPA document | Action required | No blocker — internal document |
-| 14 | Optional: lightweight DPIA (children's app) | Recommended | No blocker — internal document |
-| 15 | Optional: lawyer review of final documents | Recommended | Drafts must exist first |
+| 1 | Verify Supabase region is EU | Action required | Check Supabase dashboard |
+| 2 | Sign Supabase DPA | Action required | Manual action in Supabase dashboard |
+| 3 | Sign Stripe DPA | Action required | Manual action in Stripe dashboard |
+| 4 | Draft and publish Privacy Policy | Ready to implement | — |
+| 5 | Draft and publish Terms of Service | Ready to implement | — |
+| 6 | Draft Refund Policy (section in ToS) | Ready to implement | — |
+| 7 | Update account creation modal with consent checkboxes | Ready to implement | — |
+| 8 | Add legal page links to Chronicles footer | Ready to implement | — |
+| 9 | Add legal page links to account creation + settings | Ready to implement | — |
+| 10 | Implement account deletion flow (full cascade) | Ready to implement | — |
+| 11 | Add EU withdrawal waiver checkbox at checkout | Ready to implement | — |
+| 12 | Create internal RoPA document | Action required | No blocker — internal document |
+| 13 | Optional: lightweight DPIA (children's app) | Recommended | No blocker — internal document |
+| 14 | Optional: lawyer review of final documents | Recommended | Drafts must exist first |

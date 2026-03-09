@@ -3,7 +3,7 @@
 ## Overview
 
 This document describes the CI/CD pipeline and deployment methodology for
-Math Quest Adventures. The goal is to deploy to live production multiple times
+Math with Magic. The goal is to deploy to live production multiple times
 per day with confidence, while protecting player data from accidental changes.
 
 ---
@@ -47,8 +47,8 @@ Two environments configured in the Vercel project settings:
 
 Two separate Supabase projects:
 
-- **`playtolearn-staging`** — linked to `main` branch deployments
-- **`playtolearn-prod`** — linked to `production` branch deployments only
+- **`mathwithmagic-staging`** — linked to `main` branch deployments
+- **`mathwithmagic-prod`** — linked to `production` branch deployments only
 
 Environment variables are scoped per Vercel environment so staging always
 points to the staging Supabase project and production always points to the
