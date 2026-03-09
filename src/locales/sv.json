@@ -510,8 +510,7 @@
           "password_required": "Ange ditt lösenord.",
           "generic": "Något gick fel. Försök igen.",
           "session_timeout": "Kontot skapades men sessionen aktiverades inte i tid. Försök logga in."
-        },
-
+        }
       },
       "success_title": "Premium upplåst!",
       "success_message": "Tack för ditt stöd!",

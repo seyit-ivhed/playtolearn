@@ -510,8 +510,7 @@
           "password_required": "Please enter your password.",
           "generic": "Something went wrong. Please try again.",
           "session_timeout": "Account created but session did not activate in time. Please try signing in."
-        },
-
+        }
       },
       "success_title": "Premium Unlocked!",
       "success_message": "Thank you for your support!",
