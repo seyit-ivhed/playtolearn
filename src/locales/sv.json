@@ -522,7 +522,8 @@
       "processing_payment": "Säkrar ditt äventyr...",
       "verifying_access": "Verifierar ditt nya innehåll...",
       "verification_timeout": "Betalningen lyckades, men vi behandlar fortfarande din åtkomst. Den kommer att dyka upp på ditt konto inom kort.",
-      "total_amount": "Totalt belopp"
+      "total_amount": "Totalt belopp",
+      "payment_failed": "Betalningen misslyckades. Försök igen."
     }
   },
   "landing": {

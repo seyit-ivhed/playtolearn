@@ -58,17 +58,6 @@ production Supabase project.
 
 ## Promoting to Production
 
-### Option A — Command line (fastest)
-
-```bash
-git push origin main:production
-```
-
-One intentional command. Use this when you have verified staging and are
-confident the change is safe.
-
-### Option B — GitHub PR (adds a paper trail)
-
 Open a pull request from `main` → `production`. Use a checklist to confirm
 readiness before merging:
 

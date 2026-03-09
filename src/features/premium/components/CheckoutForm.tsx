@@ -74,7 +74,7 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
             if (error) {
                 console.error('Stripe confirmPayment error:', error);
                 analyticsService.trackEvent('payment_failed');
-                setErrorMessage(error.message || 'Payment failed');
+                setErrorMessage(error.message || t('premium.store.payment_failed'));
                 setIsProcessing(false);
             } else if (paymentIntent) {
                 if (paymentIntent.status === 'succeeded') {
@@ -104,9 +104,8 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
             }
         } catch (err: unknown) {
             console.error('Submission error:', err);
-            const message = err instanceof Error ? err.message : 'An unexpected error occurred';
             analyticsService.trackEvent('payment_failed');
-            setErrorMessage(message);
+            setErrorMessage(t('premium.store.payment_failed'));
             setIsProcessing(false);
             setIsVerifying(false);
         }

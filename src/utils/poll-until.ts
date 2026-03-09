@@ -8,7 +8,9 @@ export async function pollUntil(
 ): Promise<boolean> {
     const deadline = Date.now() + options.timeoutMs;
     while (Date.now() < deadline) {
-        if (await condition()) return true;
+        if (await condition()) {
+            return true;
+        }
         await new Promise(resolve => setTimeout(resolve, options.intervalMs));
     }
     return false;

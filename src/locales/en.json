@@ -522,7 +522,8 @@
       "processing_payment": "Securing your adventure...",
       "verifying_access": "Verifying your new content...",
       "verification_timeout": "Payment succeeded, but we are still processing your access. It will appear in your account shortly.",
-      "total_amount": "Total Amount"
+      "total_amount": "Total Amount",
+      "payment_failed": "Payment failed. Please try again."
     }
   },
   "landing": {

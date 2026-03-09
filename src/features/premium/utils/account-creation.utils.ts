@@ -29,10 +29,6 @@ interface AccountConversionParams {
     supabaseClient: SupabaseClient;
 }
 
-/**
- * Validates the account creation form fields.
- * Returns an error message if invalid, or null if valid.
- */
 export const validateAccountCreationForm = (
     email: string,
     confirmEmail: string,
@@ -54,10 +50,6 @@ export const validateAccountCreationForm = (
     return null;
 };
 
-/**
- * Creates a fresh Supabase account for the player and uploads any local game state.
- * Progress is only synced to Supabase once the player has a real account.
- */
 export const performAccountConversion = async ({
     email,
     password,
