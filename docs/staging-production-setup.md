@@ -107,12 +107,14 @@ Vercel can serve the frontend independently of Supabase, so set it up next.
 
 ### 2.2 Configure branch → environment mapping
 
-In the Vercel project go to **Settings → Git**:
+In the Vercel project go to **Settings → Environments**:
 
-| Branch | Vercel environment |
-|---|---|
-| `production` | Production |
-| `main` | Preview (acts as stable staging URL) |
+- **Production** — set the branch to `production`
+- **Preview** — no changes needed. Preview automatically deploys every branch
+  that is not the production branch. Since `main` is the primary branch we merge
+  to, its latest Preview deployment acts as the stable staging URL. Feature
+  branch PRs also get their own Preview URLs, which is useful for testing before
+  merging.
 
 This means every merge to `main` produces an updated staging preview, and every
 merge to `production` updates the live domain.
