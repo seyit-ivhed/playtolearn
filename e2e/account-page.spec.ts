@@ -231,8 +231,20 @@ test.describe('Account Page - Delete Account', () => {
         await expect(page.locator('[data-testid="delete-account-confirmation"]')).not.toBeVisible();
     });
 
+    test('acknowledge checkbox reveals password field and confirm button', async ({ page }) => {
+        await page.click('[data-testid="delete-account-btn"]', { force: true });
+        await expect(page.locator('[data-testid="delete-account-password-input"]')).not.toBeVisible();
+        await expect(page.locator('[data-testid="delete-account-confirm-btn"]')).not.toBeVisible();
+
+        await page.locator('[data-testid="delete-account-acknowledge"] input').click({ force: true });
+        await expect(page.locator('[data-testid="delete-account-password-input"]')).toBeVisible();
+        await expect(page.locator('[data-testid="delete-account-confirm-btn"]')).toBeVisible();
+    });
+
     test('shows error when submitting without a password', async ({ page }) => {
         await page.click('[data-testid="delete-account-btn"]', { force: true });
+        await page.locator('[data-testid="delete-account-acknowledge"] input').click({ force: true });
+        await expect(page.locator('[data-testid="delete-account-confirm-btn"]')).toBeEnabled({ timeout: 10000 });
         await page.click('[data-testid="delete-account-confirm-btn"]', { force: true });
         await expect(page.locator('[data-testid="delete-account-error"]')).toBeVisible();
     });
@@ -247,6 +259,8 @@ test.describe('Account Page - Delete Account', () => {
         });
 
         await page.click('[data-testid="delete-account-btn"]', { force: true });
+        await page.locator('[data-testid="delete-account-acknowledge"] input').click({ force: true });
+        await expect(page.locator('[data-testid="delete-account-confirm-btn"]')).toBeEnabled({ timeout: 10000 });
         await page.fill('[data-testid="delete-account-password-input"]', 'wrongpassword');
         await page.click('[data-testid="delete-account-confirm-btn"]', { force: true });
 
@@ -255,15 +269,17 @@ test.describe('Account Page - Delete Account', () => {
         await expect(page.locator('[data-testid="delete-account-confirmation"]')).toBeVisible();
     });
 
-    test('successful deletion redirects to chronicle', async ({ page }) => {
+    test('successful deletion redirects to farewell page', async ({ page }) => {
         await page.route('**/functions/v1/delete-account**', (route) => {
             route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({}) });
         });
 
         await page.click('[data-testid="delete-account-btn"]', { force: true });
+        await page.locator('[data-testid="delete-account-acknowledge"] input').click({ force: true });
+        await expect(page.locator('[data-testid="delete-account-confirm-btn"]')).toBeEnabled({ timeout: 10000 });
         await page.fill('[data-testid="delete-account-password-input"]', 'correctpassword');
         await page.click('[data-testid="delete-account-confirm-btn"]', { force: true });
 
-        await expect(page).toHaveURL(/\/chronicle/, { timeout: 10000 });
+        await expect(page).toHaveURL(/\/farewell/, { timeout: 10000 });
     });
 });
