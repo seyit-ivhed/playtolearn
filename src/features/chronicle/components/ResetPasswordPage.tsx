@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../context/useAuth';
 import { Lock, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { supabase } from '../../../services/supabase.service';
 import { analyticsService } from '../../../services/analytics.service';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
+import { PasswordInput } from '../../../components/ui/PasswordInput';
 import styles from './ResetPasswordPage.module.css';
 
 const TOKEN_PROCESSING_TIMEOUT_MS = 1500;
@@ -128,9 +129,8 @@ export const ResetPasswordPage: React.FC = () => {
                                 <Lock size={14} />
                                 {t('reset_password.new_password_label')}
                             </label>
-                            <input
+                            <PasswordInput
                                 id="new-password"
-                                type="password"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 placeholder={t('reset_password.new_password_placeholder')}
@@ -145,9 +145,8 @@ export const ResetPasswordPage: React.FC = () => {
                                 <Lock size={14} />
                                 {t('reset_password.confirm_password_label')}
                             </label>
-                            <input
+                            <PasswordInput
                                 id="confirm-password"
-                                type="password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 placeholder={t('reset_password.confirm_password_placeholder')}

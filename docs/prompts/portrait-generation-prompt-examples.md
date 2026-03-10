@@ -1,6 +1,6 @@
 # Portrait Generation Prompt Guide
 
-This document provides child-friendly prompt templates for Math Quest Adventures character and monster portraits.
+This document provides child-friendly prompt templates for Math with Magic character and monster portraits.
 
 ---
 

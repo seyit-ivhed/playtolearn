@@ -1,8 +1,9 @@
+import { PLAYER_STORE_KEY } from '../stores/storage-keys';
+
 export const getInitialLanguage = (): string => {
     try {
         // 1. Try to get from persisted player store
-        // We handle the parsing manually here to avoid importing the whole store and its dependencies
-        const storageItem = localStorage.getItem('space-math-player-storage');
+        const storageItem = localStorage.getItem(PLAYER_STORE_KEY);
         if (storageItem) {
             const parsed = JSON.parse(storageItem);
             // zustand persist stores data in { state: { ... } }

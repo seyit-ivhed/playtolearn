@@ -1,6 +1,6 @@
 # Voice Generation Prompts
 
-This document contains the Voice Design prompts for the companions in Math Quest Adventures, formatted for ElevenLabs. Each companion has 4 distinct prompts representing different stages of their evolution. 
+This document contains the Voice Design prompts for the companions in Math with Magic, formatted for ElevenLabs. Each companion has 4 distinct prompts representing different stages of their evolution. 
 
 As per the game's story, companions grow up through their journey:
 - Stage 1 (Evo 0): 8 years old

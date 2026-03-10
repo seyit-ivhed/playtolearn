@@ -1,8 +1,8 @@
-# Game Design Document: Math Quest Adventures
+# Game Design Document: Math with Magic
 
 ## Executive Summary
 
-**Game Title:** Math Quest Adventures (working title)
+**Game Title:** Math with Magic
 
 **Target Audience:** Children ages 6-8
 
@@ -17,7 +17,7 @@
 ### 1. Game Overview
 
 ### 1.1 Vision Statement
-Math Quest Adventures transforms math practicing into an exciting fantasy **Journey** where every challenge overcome makes your party stronger. Players lead their own fellowship through multiple **Adventures**, each containing a series of **Encounters** (battles and puzzles) that culminate in epic **Boss Fights**. Companions solve contextual math challenges to achieve **Companion Growth**, defeat monsters, and unlock new regions of the realm.
+Math with Magic transforms math practicing into an exciting fantasy **Journey** where every challenge overcome makes your party stronger. Players lead their own fellowship through multiple **Adventures**, each containing a series of **Encounters** (battles and puzzles) that culminate in epic **Boss Fights**. Companions solve contextual math challenges to achieve **Companion Growth**, defeat monsters, and unlock new regions of the realm.
 
 ### 1.2 Core Gameplay Loop
 * Choose Adventure/Chapter
