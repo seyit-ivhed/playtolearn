@@ -51,7 +51,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
 
     if (error) {
         return (
-            <div className="checkout-error-state">
+            <div className="checkout-error-state" data-testid="checkout-error-state">
                 <p>{error}</p>
                 <button onClick={onCancel}>{t('common.back', 'Back')}</button>
             </div>

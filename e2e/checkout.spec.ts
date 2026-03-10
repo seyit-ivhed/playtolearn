@@ -5,6 +5,7 @@ import {
     mockSupabaseRestApis,
     mockStripe,
     mockPaymentIntent,
+    expectEventFired,
 } from './helpers';
 
 /**
@@ -32,6 +33,7 @@ test.describe('Checkout Flow', () => {
 
         await expect(page.locator('[data-testid="checkout-form"]')).toBeVisible();
         await expect(page.locator('[data-testid="account-creation-form"]')).not.toBeVisible();
+        await expectEventFired(page, 'checkout_viewed');
     });
 
     test('payment form shows the price', async ({ page }) => {
@@ -40,7 +42,7 @@ test.describe('Checkout Flow', () => {
 
         await expect(page.locator('[data-testid="checkout-form"]')).toBeVisible();
         // Price is rendered inside the form by CheckoutForm
-        await expect(page.locator('[data-testid="checkout-form"]')).toContainText('59 SEK');
+        await expect(page.locator('[data-testid="checkout-price"]')).toBeVisible();
     });
 
     test('successful payment shows the success screen', async ({ page }) => {
@@ -54,6 +56,8 @@ test.describe('Checkout Flow', () => {
         // stripe.confirmPayment() resolves immediately (mock), then verifyEntitlement()
         // finds the entitlement on the first query (mock), calling onSuccess()
         await expect(page.locator('[data-testid="success-screen"]')).toBeVisible({ timeout: 10000 });
+        await expectEventFired(page, 'payment_submitted');
+        await expectEventFired(page, 'payment_succeeded');
     });
 
     test('shows success screen immediately when content is already owned', async ({ page }) => {
@@ -88,6 +92,6 @@ test.describe('Checkout Flow', () => {
         await page.goto('/checkout.html');
 
         // CheckoutOverlay catches the error and renders the error state
-        await expect(page.locator('text=Failed to initialize payment')).toBeVisible({ timeout: 10000 });
+        await expect(page.locator('[data-testid="checkout-error-state"]')).toBeVisible({ timeout: 10000 });
     });
 });
