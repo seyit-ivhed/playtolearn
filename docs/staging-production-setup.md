@@ -14,7 +14,9 @@ Before you start, make sure you have accounts and CLI tools ready:
 |---|---|---|
 | [Supabase CLI](https://supabase.com/docs/guides/cli) | Push migrations, deploy edge functions | `brew install supabase/tap/supabase` |
 | [Vercel CLI](https://vercel.com/docs/cli) (optional) | Pull environment variables locally | `npm i -g vercel` |
-| [Stripe CLI](https://stripe.com/docs/stripe-cli) (optional) | Forward webhooks locally for testing | `brew install stripe/stripe-cli/stripe` |
+| [Stripe CLI](https://stripe.com/docs/stripe-cli) (optional) | Forward webhooks locally for testing 
+
+| `brew install stripe/stripe-cli/stripe` |
 | Node.js ≥ 20 | Build and test | [nodejs.org](https://nodejs.org) |
 | [Deno](https://deno.land/) | Edge function tests | `curl -fsSL https://deno.land/install.sh | sh` |
 
@@ -27,127 +29,74 @@ You also need accounts on:
 
 ---
 
-## 1. Supabase Setup
+## 1. GitHub Settings
 
-### 1.1 Create two Supabase projects
+Everything else depends on the repository and branch structure, so set this up
+first.
 
-Go to [supabase.com/dashboard](https://supabase.com/dashboard) and create **two
-separate projects**:
+### 1.1 Create the `production` branch
 
-| Project | Suggested name | Notes |
+```bash
+git checkout main
+git checkout -b production
+git push -u origin production
+```
+
+All production deployments are triggered by merging `main` into `production`
+through a pull request.
+
+### 1.2 Add repository secrets
+
+Go to **Settings → Secrets and variables → Actions → New repository secret**
+and add:
+
+| Secret name | Value |
+|---|---|
+| `SUPABASE_ACCESS_TOKEN` | Your personal access token from [supabase.com/dashboard/account/tokens](https://supabase.com/dashboard/account/tokens) |
+| `STAGING_PROJECT_REF` | Reference ID of the staging Supabase project (from Step 3.1) |
+| `PROD_PROJECT_REF` | Reference ID of the production Supabase project (from Step 3.1) |
+
+The `SUPABASE_ACCESS_TOKEN` is the same token for both projects — it is your
+personal CLI token that authorizes the `supabase` CLI to act on your behalf.
+
+> You can create the `SUPABASE_ACCESS_TOKEN` secret now. The two project ref
+> secrets can be added after completing Supabase setup in Step 3.
+
+### 1.3 Add a GitHub environment with a required reviewer
+
+Adding a required reviewer to the `production` environment means the database
+migration workflow will pause and wait for explicit approval before running
+against the live database.
+
+1. Go to **Settings → Environments → New environment**
+2. Name it `production` (must match the `environment:` key in
+   `.github/workflows/production.yml`)
+3. Under **Deployment protection rules**, enable **Required reviewers** and add
+   yourself (or a trusted team member)
+
+This creates a manual gate: after a PR is merged to `production`, GitHub Actions
+will pause before running the migration and prompt the reviewer to approve.
+
+### 1.4 Verify the GitHub Actions workflows
+
+Three workflow files are committed to the repository:
+
+| File | Trigger | Purpose |
 |---|---|---|
-| Staging | `mathwithmagic-staging` | Used by the `main` branch |
-| Production | `mathwithmagic-prod` | Used by the `production` branch only |
+| `.github/workflows/ci.yml` | Every PR to `main` or `production` | Lint, build, unit tests, E2E tests |
+| `.github/workflows/staging.yml` | Push to `main` | Same checks + run DB migrations on staging |
+| `.github/workflows/production.yml` | Push to `production` | Run DB migrations on production (gated by reviewer) |
 
-Save the **Project Reference ID** for each project (found under
-**Settings → General → Reference ID**). You will need these later.
-
-### 1.2 Apply migrations
-
-Link the Supabase CLI to each project and push the migration history.
-
-**Staging:**
-
-```bash
-supabase link --project-ref <STAGING_PROJECT_REF>
-supabase db push
-```
-
-**Production:**
-
-```bash
-supabase link --project-ref <PROD_PROJECT_REF>
-supabase db push
-```
-
-This applies all files under `supabase/migrations/` in timestamp order. Verify
-the tables exist in **Table Editor** in each project's dashboard before
-continuing.
-
-### 1.3 Set edge function secrets
-
-Deploy the edge functions and set the required secrets for **each** project.
-
-**Set secrets (do this for both staging and production):**
-
-```bash
-# Link to the target project first
-supabase link --project-ref <PROJECT_REF>
-
-# Staging uses Stripe test keys; production uses Stripe live keys
-supabase secrets set STRIPE_SECRET_KEY=<sk_test_... or sk_live_...>
-supabase secrets set STRIPE_WEBHOOK_SECRET=<whsec_...>
-```
-
-**Deploy edge functions:**
-
-```bash
-supabase functions deploy create-payment-intent --project-ref <PROJECT_REF>
-supabase functions deploy stripe-webhook --project-ref <PROJECT_REF>
-supabase functions deploy delete-account --project-ref <PROJECT_REF>
-```
-
-### 1.4 Get the API keys for each project
-
-In each project's dashboard go to **Settings → API** and copy:
-
-- **Project URL** (`https://<ref>.supabase.co`)
-- **anon / public key** (safe for the browser)
-
-You will paste these into Vercel in the next section.
-
-### 1.5 Configure Auth settings
-
-In each project's dashboard go to **Authentication → URL Configuration**:
-
-| Setting | Staging value | Production value |
-|---|---|---|
-| Site URL | `https://<staging-url>.vercel.app` | `https://yourdomain.com` |
-| Additional redirect URLs | `https://<staging-url>.vercel.app/**` | `https://yourdomain.com/**` |
-
-Set **"Anonymous sign-ins"** to **disabled** (already reflected in
-`supabase/config.toml` for local dev; apply the same in the dashboard).
+Vercel deploys the frontend automatically once migrations succeed — no
+additional deploy step is needed in the workflows.
 
 ---
 
-## 2. Stripe Setup
+## 2. Vercel Setup
 
-### 2.1 Get publishable keys
+Vercel can serve the frontend independently of Supabase, so set it up next.
 
-In the [Stripe Dashboard](https://dashboard.stripe.com):
-
-- **Test mode** publishable key (`pk_test_...`) → for staging
-- **Live mode** publishable key (`pk_live_...`) → for production
-
-The secret keys (`sk_test_...` / `sk_live_...`) go into Supabase edge function
-secrets (done in Step 1.3 above) and **never** into frontend environment
-variables.
-
-### 2.2 Configure the Stripe webhook
-
-You need one webhook endpoint per Supabase project so Stripe can notify the edge
-function when a payment completes.
-
-**In the Stripe Dashboard → Developers → Webhooks → Add endpoint:**
-
-| Field | Staging value | Production value |
-|---|---|---|
-| Endpoint URL | `https://<staging-ref>.supabase.co/functions/v1/stripe-webhook` | `https://<prod-ref>.supabase.co/functions/v1/stripe-webhook` |
-| Events to listen | `payment_intent.succeeded`, `payment_intent.payment_failed` | same |
-
-After saving, click **Reveal** on the **Signing secret** (`whsec_...`) and add
-it to the corresponding Supabase project:
-
-```bash
-supabase link --project-ref <PROJECT_REF>
-supabase secrets set STRIPE_WEBHOOK_SECRET=<whsec_...>
-```
-
----
-
-## 3. Vercel Setup
-
-### 3.1 Create a Vercel project and connect the GitHub repository
+### 2.1 Create a Vercel project and connect the GitHub repository
 
 1. Go to [vercel.com/new](https://vercel.com/new)
 2. Import the GitHub repository
@@ -156,7 +105,7 @@ supabase secrets set STRIPE_WEBHOOK_SECRET=<whsec_...>
    - Build command: `npm run build`
    - Output directory: `dist`
 
-### 3.2 Configure branch → environment mapping
+### 2.2 Configure branch → environment mapping
 
 In the Vercel project go to **Settings → Git**:
 
@@ -168,7 +117,7 @@ In the Vercel project go to **Settings → Git**:
 This means every merge to `main` produces an updated staging preview, and every
 merge to `production` updates the live domain.
 
-### 3.3 Set environment variables
+### 2.3 Set environment variables
 
 In **Settings → Environment Variables**, add the following. Use the **Environment**
 toggle to scope each value correctly.
@@ -193,68 +142,140 @@ toggle to scope each value correctly.
 > browser bundle. Never put secret keys (Stripe secret key, Supabase service role
 > key) in Vercel environment variables — those belong in Supabase edge function
 > secrets only.
+>
+> The Supabase values come from Step 3.4 and the Stripe key from Step 4.1. You
+> can create the project now and fill in the values after those steps.
 
-### 3.4 (Optional) Add a custom domain
+### 2.4 (Optional) Add a custom domain
 
 Under **Settings → Domains**, add your production domain and follow the DNS
 instructions Vercel provides.
 
 ---
 
-## 4. GitHub Settings
+## 3. Supabase Setup
 
-### 4.1 Add repository secrets
+The game can be played and served without Stripe, so set up Supabase before
+configuring payments.
 
-Go to **Settings → Secrets and variables → Actions → New repository secret**
-and add:
+### 3.1 Create two Supabase projects
 
-| Secret name | Value |
-|---|---|
-| `SUPABASE_ACCESS_TOKEN` | Your personal access token from [supabase.com/dashboard/account/tokens](https://supabase.com/dashboard/account/tokens) |
-| `STAGING_PROJECT_REF` | Reference ID of the staging Supabase project |
-| `PROD_PROJECT_REF` | Reference ID of the production Supabase project |
+Go to [supabase.com/dashboard](https://supabase.com/dashboard) and create **two
+separate projects**:
 
-The `SUPABASE_ACCESS_TOKEN` is the same token for both projects — it is your
-personal CLI token that authorizes the `supabase` CLI to act on your behalf.
+| Project | Suggested name | Notes |
+|---|---|---|
+| Staging | `mathwithmagic-staging` | Used by the `main` branch |
+| Production | `mathwithmagic-prod` | Used by the `production` branch only |
 
-### 4.2 Create the `production` branch
+Save the **Project Reference ID** for each project (found under
+**Settings → General → Reference ID**). You will need these later.
+
+If you have not done so already, go back and add `STAGING_PROJECT_REF` and
+`PROD_PROJECT_REF` as GitHub repository secrets (Step 1.2).
+
+### 3.2 Apply migrations
+
+Link the Supabase CLI to each project and push the migration history.
+
+**Staging:**
 
 ```bash
-git checkout main
-git checkout -b production
-git push -u origin production
+supabase link --project-ref <STAGING_PROJECT_REF>
+supabase db push
 ```
 
-All production deployments are triggered by merging `main` into `production`
-through a pull request.
+**Production:**
 
-### 4.3 Add a GitHub environment with a required reviewer
+```bash
+supabase link --project-ref <PROD_PROJECT_REF>
+supabase db push
+```
 
-Adding a required reviewer to the `production` environment means the database
-migration workflow will pause and wait for explicit approval before running
-against the live database.
+This applies all files under `supabase/migrations/` in timestamp order. Verify
+the tables exist in **Table Editor** in each project's dashboard before
+continuing.
 
-1. Go to **Settings → Environments → New environment**
-2. Name it `production` (must match the `environment:` key in
-   `.github/workflows/production.yml`)
-3. Under **Deployment protection rules**, enable **Required reviewers** and add
-   yourself (or a trusted team member)
+### 3.3 Deploy edge functions
 
-This creates a manual gate: after a PR is merged to `production`, GitHub Actions
-will pause before running the migration and prompt the reviewer to approve.
+Deploy the edge functions for **each** project. Stripe secrets are not required
+yet — the `delete-account` function works without them, and the payment
+functions will start working once you complete Step 4.
 
-### 4.4 Verify the GitHub Actions workflows
+```bash
+supabase functions deploy create-payment-intent --project-ref <PROJECT_REF>
+supabase functions deploy stripe-webhook --project-ref <PROJECT_REF>
+supabase functions deploy delete-account --project-ref <PROJECT_REF>
+```
 
-Three workflow files are committed to the repository:
+### 3.4 Get the API keys for each project
 
-| File | Trigger | Purpose |
+In each project's dashboard go to **Settings → API** and copy:
+
+- **Project URL** (`https://<ref>.supabase.co`)
+- **anon / public key** (safe for the browser)
+
+Go back to Vercel and fill in the environment variables from Step 2.3.
+
+### 3.5 Configure Auth settings
+
+In each project's dashboard go to **Authentication → URL Configuration**:
+
+| Setting | Staging value | Production value |
 |---|---|---|
-| `.github/workflows/ci.yml` | Every PR to `main` or `production` | Lint, build, unit tests, E2E tests |
-| `.github/workflows/staging.yml` | Push to `main` | Same checks + run DB migrations on staging |
-| `.github/workflows/production.yml` | Push to `production` | Run DB migrations on production (gated by reviewer) |
+| Site URL | `https://<staging-url>.vercel.app` | `https://yourdomain.com` |
+| Additional redirect URLs | `https://<staging-url>.vercel.app/**` | `https://yourdomain.com/**` |
 
-Vercel deploys the frontend automatically once migrations succeed — no
-additional deploy step is needed in the workflows.
+Set **"Anonymous sign-ins"** to **disabled** (already reflected in
+`supabase/config.toml` for local dev; apply the same in the dashboard).
+
+---
+
+## 4. Stripe Setup
+
+Stripe powers in-app purchases. The game is fully playable without it, so this
+is the last piece to wire up.
+
+### 4.1 Get publishable keys
+
+In the [Stripe Dashboard](https://dashboard.stripe.com):
+
+- **Test mode** publishable key (`pk_test_...`) → for staging
+- **Live mode** publishable key (`pk_live_...`) → for production
+
+The secret keys (`sk_test_...` / `sk_live_...`) go into Supabase edge function
+secrets (Step 4.3 below) and **never** into frontend environment variables.
+
+If you have not done so already, go back and add
+`VITE_STRIPE_PUBLISHABLE_KEY` to the Vercel environment variables (Step 2.3).
+
+### 4.2 Configure the Stripe webhook
+
+You need one webhook endpoint per Supabase project so Stripe can notify the edge
+function when a payment completes.
+
+**In the Stripe Dashboard → Developers → Webhooks → Add endpoint:**
+
+| Field | Staging value | Production value |
+|---|---|---|
+| Endpoint URL | `https://<staging-ref>.supabase.co/functions/v1/stripe-webhook` | `https://<prod-ref>.supabase.co/functions/v1/stripe-webhook` |
+| Events to listen | `payment_intent.succeeded`, `payment_intent.payment_failed` | same |
+
+After saving, click **Reveal** on the **Signing secret** (`whsec_...`) — you
+will need it in the next step.
+
+### 4.3 Set Supabase edge function secrets
+
+Set the required Stripe secrets for **each** Supabase project:
+
+```bash
+# Link to the target project first
+supabase link --project-ref <PROJECT_REF>
+
+# Staging uses Stripe test keys; production uses Stripe live keys
+supabase secrets set STRIPE_SECRET_KEY=<sk_test_... or sk_live_...>
+supabase secrets set STRIPE_WEBHOOK_SECRET=<whsec_...>
+```
 
 ---
 
@@ -334,7 +355,7 @@ After merging the PR:
 
 ### Frontend (Vercel)
 
-These are set per Vercel environment (see Step 3.3):
+These are set per Vercel environment (see Step 2.3):
 
 | Variable | Description | Example |
 |---|---|---|
@@ -344,7 +365,7 @@ These are set per Vercel environment (see Step 3.3):
 
 ### Supabase Edge Functions
 
-These are set via `supabase secrets set` per project (see Step 1.3):
+These are set via `supabase secrets set` per project (see Step 4.3):
 
 | Variable | Description |
 |---|---|
