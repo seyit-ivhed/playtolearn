@@ -134,7 +134,7 @@ describe('account-creation.utils', () => {
             expect(mockSupabaseClient.auth.signUp).not.toHaveBeenCalled();
         });
 
-        it('should return emailAlreadyExists error if email already registered', async () => {
+        it('should return already_exists error if email already registered', async () => {
             mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: null }, error: null });
 
             mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
@@ -151,11 +151,10 @@ describe('account-creation.utils', () => {
             });
 
             expect(result.success).toBe(false);
-            expect(result.emailAlreadyExists).toBe(true);
             expect(result.error).toBe('premium.store.account.errors.already_exists');
         });
 
-        it('should return emailAlreadyExists error if email already in use', async () => {
+        it('should return already_exists error if email already in use', async () => {
             mockSupabaseClient.auth.getSession.mockResolvedValueOnce({ data: { session: null }, error: null });
 
             mockSupabaseClient.auth.signUp.mockResolvedValueOnce({
@@ -172,7 +171,7 @@ describe('account-creation.utils', () => {
             });
 
             expect(result.success).toBe(false);
-            expect(result.emailAlreadyExists).toBe(true);
+            expect(result.error).toBe('premium.store.account.errors.already_exists');
         });
 
         it('should handle upsert error for player profile gracefully', async () => {
