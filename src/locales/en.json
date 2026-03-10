@@ -6,7 +6,9 @@
     "level": "Level",
     "lvl": "Lvl",
     "back_to_map": "Back to Map",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "show_password": "Show password",
+    "hide_password": "Hide password"
   },
   "remainder_text": " R ",
   "adventure": {

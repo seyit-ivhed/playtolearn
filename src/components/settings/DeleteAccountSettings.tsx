@@ -5,6 +5,7 @@ import { analyticsService } from '../../services/analytics.service';
 import { clearAppStorage } from '../../utils/app-storage';
 import { Loader2, AlertTriangle, Trash2 } from 'lucide-react';
 import { PrimaryButton } from '../ui/PrimaryButton';
+import { PasswordInput } from '../ui/PasswordInput';
 import sectionStyles from './SettingsSection.module.css';
 import styles from './DeleteAccountSettings.module.css';
 
@@ -153,9 +154,8 @@ export const DeleteAccountSettings: React.FC = () => {
                                 <label htmlFor="delete-account-password" className={styles.passwordLabel}>
                                     {t('delete_account.password_label', 'Confirm with your password')}
                                 </label>
-                                <input
+                                <PasswordInput
                                     id="delete-account-password"
-                                    type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder={t('delete_account.password_placeholder', 'Your password')}

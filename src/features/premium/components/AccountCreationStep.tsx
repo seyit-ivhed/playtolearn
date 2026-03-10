@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, ShieldCheck, AlertCircle, Loader2 } from 'lucide-react';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
+import { PasswordInput } from '../../../components/ui/PasswordInput';
 import { useAuth } from '../../../context/useAuth';
 import { supabase } from '../../../services/supabase.service';
 import { validateAccountCreationForm, performAccountConversion } from '../utils/account-creation.utils';
@@ -136,9 +137,8 @@ export const AccountCreationStep: React.FC<AccountCreationStepProps> = ({
                             <Lock size={16} />
                             {translation('premium.store.account.password_label')}
                         </label>
-                        <input
+                        <PasswordInput
                             id="account-password"
-                            type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder={translation('premium.store.account.password_placeholder')}

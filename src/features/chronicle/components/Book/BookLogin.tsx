@@ -4,6 +4,7 @@ import { useAuth } from '../../../../context/useAuth';
 import { Mail, Lock, ChevronLeft, Loader2, AlertCircle } from 'lucide-react';
 import styles from '../../ChronicleBook.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
+import { PasswordInput } from '../../../../components/ui/PasswordInput';
 import { analyticsService } from '../../../../services/analytics.service';
 
 interface BookLoginProps {
@@ -71,9 +72,8 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
                         <Lock size={14} />
                         {t('login.password_label')}
                     </label>
-                    <input
+                    <PasswordInput
                         id="password"
-                        type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder={t('login.password_placeholder')}
