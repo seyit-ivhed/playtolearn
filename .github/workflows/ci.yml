@@ -30,6 +30,13 @@ jobs:
       - name: Unit tests with coverage
         run: npm run test:coverage
 
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Edge function tests
+        run: deno test --allow-env --allow-net --allow-read supabase/functions/
+
       - name: Install Playwright browsers
         run: npm run playwright:install
 

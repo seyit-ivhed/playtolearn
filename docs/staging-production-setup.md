@@ -84,11 +84,11 @@ Three workflow files are committed to the repository:
 | File | Trigger | Purpose |
 |---|---|---|
 | `.github/workflows/ci.yml` | Every PR to `main` or `production` | Lint, build, unit tests, E2E tests |
-| `.github/workflows/staging.yml` | Push to `main` | Same checks + run DB migrations on staging |
-| `.github/workflows/production.yml` | Push to `production` | Run DB migrations on production (gated by reviewer) |
+| `.github/workflows/staging.yml` | Push to `main` | Same checks + run DB migrations and deploy edge functions on staging |
+| `.github/workflows/production.yml` | Push to `production` | Run DB migrations and deploy edge functions on production (gated by reviewer) |
 
-Vercel deploys the frontend automatically once migrations succeed — no
-additional deploy step is needed in the workflows.
+Vercel deploys the frontend automatically. Database migrations and edge
+function deployments are handled by the workflows.
 
 ---
 
@@ -198,9 +198,11 @@ continuing.
 
 ### 3.3 Deploy edge functions
 
-Deploy the edge functions for **each** project. Stripe secrets are not required
-yet — the `delete-account` function works without them, and the payment
-functions will start working once you complete Step 4.
+Deploy the edge functions for **each** project for the initial setup. After this,
+the CI/CD workflows automatically redeploy all functions on every push to `main`
+or `production`. Stripe secrets are not required yet — the `delete-account`
+function works without them, and the payment functions will start working once
+you complete Step 4.
 
 ```bash
 supabase functions deploy create-payment-intent --project-ref <PROJECT_REF>
