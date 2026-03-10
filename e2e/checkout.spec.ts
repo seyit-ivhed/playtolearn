@@ -92,6 +92,6 @@ test.describe('Checkout Flow', () => {
         await page.goto('/checkout.html');
 
         // CheckoutOverlay catches the error and renders the error state
-        await expect(page.locator('text=Failed to initialize payment')).toBeVisible({ timeout: 10000 });
+        await expect(page.locator('[data-testid="checkout-error-state"]')).toBeVisible({ timeout: 10000 });
     });
 });

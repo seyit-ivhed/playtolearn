@@ -29,7 +29,9 @@ function initAttribution(): void {
 
 function getAttribution(): Record<string, string | null> | null {
     const stored = sessionStorage.getItem('attribution');
-    if (!stored) return null;
+    if (!stored) {
+        return null;
+    }
     try {
         return JSON.parse(stored) as Record<string, string | null>;
     } catch {
