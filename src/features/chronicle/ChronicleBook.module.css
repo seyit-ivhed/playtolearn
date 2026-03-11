@@ -81,12 +81,17 @@
 }
 
 .cover .pageFront {
-    background-image: url('../../assets/images/tome-cover/tome-cover.png');
-    background-size: 140%;
-    background-position: 50% 40%;
-    background-repeat: no-repeat;
     overflow: visible;
-    /* Allow particles to show outside */
+    /* Allow particles and cover image to show outside */
+}
+
+.coverImage {
+    position: absolute;
+    top: -50px;
+    left: -70px;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .coverContent {

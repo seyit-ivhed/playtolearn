@@ -4,6 +4,7 @@ import styles from '../../ChronicleBook.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 import { GameParticles } from '../../../../components/ui/GameParticles';
 import { BOOK_MAGIC_OPTIONS } from '../../../../components/ui/GameParticles.constants';
+import coverImage from '../../../../assets/images/tome-cover/cover.png';
 
 interface BookCoverProps {
     onStart: () => void;
@@ -25,6 +26,7 @@ export const BookCover: React.FC<BookCoverProps> = ({
 
     return (
         <div className={styles.coverContent}>
+            <img src={coverImage} alt="" className={`${styles.coverImage} ${!isActive ? styles.coverImageHidden : ''}`} />
             <div className={styles.runeGlow} />
             <div style={{
                 position: 'absolute',
