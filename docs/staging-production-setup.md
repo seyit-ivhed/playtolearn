@@ -55,12 +55,19 @@ and add:
 | `SUPABASE_ACCESS_TOKEN` | Your personal access token from [supabase.com/dashboard/account/tokens](https://supabase.com/dashboard/account/tokens) |
 | `STAGING_PROJECT_REF` | Reference ID of the staging Supabase project (from Step 3.1) |
 | `PROD_PROJECT_REF` | Reference ID of the production Supabase project (from Step 3.1) |
+| `STAGING_DB_PASSWORD` | Database password for the staging Supabase project (from Step 3.1) |
+| `PROD_DB_PASSWORD` | Database password for the production Supabase project (from Step 3.1) |
 
 The `SUPABASE_ACCESS_TOKEN` is the same token for both projects — it is your
 personal CLI token that authorizes the `supabase` CLI to act on your behalf.
 
-> You can create the `SUPABASE_ACCESS_TOKEN` secret now. The two project ref
-> secrets can be added after completing Supabase setup in Step 3.
+The database passwords are set when you create each Supabase project. You can
+find or reset them under **Settings → Database → Database password** in each
+project's dashboard. If the password contains special characters, it must be
+percent-encoded (the workflow embeds it in a PostgreSQL connection URL).
+
+> You can create the `SUPABASE_ACCESS_TOKEN` secret now. The other secrets
+> can be added after completing Supabase setup in Step 3.
 
 ### 1.3 Add a GitHub environment with a required reviewer
 
