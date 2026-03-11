@@ -51,6 +51,9 @@ jobs:
         with:
           version: latest
 
+      - name: Create empty signing key for CLI
+        run: echo '[]' > supabase/signing_key.json
+
       - name: Run database migrations on staging
         run: |
           ENCODED_PASSWORD=$(python3 -c "import urllib.parse, os; print(urllib.parse.quote(os.environ['DB_PASSWORD'], safe=''))")
