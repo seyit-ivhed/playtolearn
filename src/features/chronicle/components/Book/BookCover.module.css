@@ -1,0 +1,148 @@
+.coverImage {
+    position: absolute;
+    top: -50px;
+    left: -80px;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 1;
+    transition: opacity 0s ease 0s;
+}
+
+.coverImageHidden {
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s;
+}
+
+.particlesWrapper {
+    position: absolute;
+    width: 200%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.particlesHidden {
+    opacity: 0;
+}
+
+.coverContent {
+    padding: 60px 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    margin: 15px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+}
+
+.coverHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: -5px;
+}
+
+.coverTitle {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: #fcedcf;
+    letter-spacing: 0.05em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    text-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(212, 175, 55, 0.4),
+        0 0 40px rgba(212, 175, 55, 0.2),
+        0 0 80px rgba(255, 215, 0, 0.15);
+}
+
+.coverTitleWord {
+    display: block;
+}
+
+.coverActions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 250px;
+}
+
+.btnPrimaryOverrides {
+    background: linear-gradient(to bottom, #FADCA1 0%, #D4AF37 100%);
+    color: #2c1e11;
+    border: 1px solid #8a702b;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    width: 100%;
+}
+
+/* Increased specificity to override PrimaryButton module styles */
+.btnPrimaryOverrides.btnPrimaryOverrides:hover {
+    background: linear-gradient(to bottom, #FADCA1 0%, #D4AF37 100%) !important;
+    color: #2c1e11 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    filter: brightness(1.1);
+}
+
+.btnSecondary {
+    background: #2a2015;
+    border: 1px solid #5c4d3c;
+    color: #c4b5a3;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    width: 100%;
+}
+
+.btnSecondary:hover {
+    background: #3e3020;
+    color: #FADCA1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Rune Glow Animation */
+.runeGlow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.6) 0%, rgba(255, 165, 0, 0.2) 50%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(20px);
+    animation: pulse 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}

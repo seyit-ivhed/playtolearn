@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../../context/useAuth';
 import { Mail, ChevronLeft, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
-import styles from '../../ChronicleBook.module.css';
+import styles from './BookAuth.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 import { analyticsService } from '../../../../services/analytics.service';
 

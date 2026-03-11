@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from '../../ChronicleBook.module.css';
+import styles from './BookCover.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
 import { GameParticles } from '../../../../components/ui/GameParticles';
 import { BOOK_MAGIC_OPTIONS } from '../../../../components/ui/GameParticles.constants';

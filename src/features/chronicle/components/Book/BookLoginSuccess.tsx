@@ -2,7 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CheckCircle2 } from 'lucide-react';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
-import styles from '../../ChronicleBook.module.css';
+import styles from './BookAuth.module.css';
+import coverStyles from './BookCover.module.css';
 
 interface BookLoginSuccessProps {
     onContinue: () => void;
@@ -28,7 +29,7 @@ export const BookLoginSuccess: React.FC<BookLoginSuccessProps> = ({ onContinue }
 
             <PrimaryButton
                 onClick={onContinue}
-                className={styles.btnPrimaryOverrides}
+                className={coverStyles.btnPrimaryOverrides}
                 data-testid="login-success-continue-btn"
             >
                 {t('login.success_continue')}

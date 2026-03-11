@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { LegalDocumentType } from '../../legal/LegalModal';
-import styles from '../ChronicleBook.module.css';
+import styles from './ChroniclesLegalFooter.module.css';
 
 interface ChroniclesLegalFooterProps {
     onOpen: (type: LegalDocumentType) => void;

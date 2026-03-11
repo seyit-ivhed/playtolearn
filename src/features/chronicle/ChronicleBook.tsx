@@ -6,7 +6,7 @@ import { ChapterPage } from './components/ChapterPage';
 import { PremiumStoreModal } from '../premium/components/PremiumStoreModal';
 import { useChronicleData } from './hooks/useChronicleData';
 import { useChronicleNavigation } from './hooks/useChronicleNavigation';
-import styles from './ChronicleBook.module.css';
+import styles from './components/Book/BookLayout.module.css';
 import { BookLayout } from './components/Book/BookLayout';
 import { BookPage } from './components/Book/BookPage';
 import { BookCover } from './components/Book/BookCover';
