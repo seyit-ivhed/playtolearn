@@ -67,11 +67,6 @@
     border: 1px solid #2c2216;
 }
 
-/* Page States */
-.active {
-    /* z-index handled via props ideally, or specific classes */
-}
-
 /* Cover Styling */
 .cover {
     border-radius: 4px 14px 14px 4px;
