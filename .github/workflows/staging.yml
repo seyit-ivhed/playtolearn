@@ -31,8 +31,8 @@ jobs:
       - name: Type check and build
         run: npm run build
 
-      - name: Unit tests with coverage
-        run: npm run test:coverage
+      - name: Unit tests
+        run: npm test
 
       - uses: denoland/setup-deno@v2
         with:
