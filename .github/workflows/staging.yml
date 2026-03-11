@@ -51,8 +51,8 @@ jobs:
         with:
           version: latest
 
-      - name: Create empty signing key for CLI
-        run: echo '[]' > supabase/signing_key.json
+      - name: Generate signing key for CLI
+        run: supabase gen signing-key --algorithm ES256 -o supabase/signing_key.json
 
       - name: Run database migrations on staging
         run: |
