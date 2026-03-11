@@ -13,7 +13,9 @@ interface FantasyMapProps {
 
 export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, onNodeClick }) => {
     const currentNodeRef = useRef<HTMLDivElement>(null);
+    const endNodeRef = useRef<HTMLDivElement>(null);
     const mapImageRef = useRef<HTMLImageElement>(null);
+    const hasAnimatedRef = useRef(false);
 
     // Reference height based on original design (where nodes were placed)
     // Looking at current data, nodes go up to y: 3900.
@@ -24,14 +26,40 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
 
     const { getAdventureNodes } = useGameStore();
 
+    const lastNodeIndex = adventure.encounters.length;
+
     useLayoutEffect(() => {
-        if (currentNodeRef.current) {
-            currentNodeRef.current.scrollIntoView({
+        // On first render: instantly jump to end node, then smooth scroll to current node
+        if (!hasAnimatedRef.current && endNodeRef.current) {
+            hasAnimatedRef.current = true;
+
+            // Instantly scroll to the end (last) node
+            endNodeRef.current.scrollIntoView({
                 behavior: 'instant',
                 block: 'center'
             });
+
+            // After a brief pause, smooth scroll to the current/focal node
+            const timer = setTimeout(() => {
+                if (currentNodeRef.current) {
+                    currentNodeRef.current.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }, 400);
+
+            return () => clearTimeout(timer);
         }
-    }, [currentNode]);
+
+        // On subsequent currentNode changes (e.g. navigating back), scroll directly
+        if (hasAnimatedRef.current && currentNodeRef.current) {
+            currentNodeRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    }, [currentNode, lastNodeIndex]);
 
     const { encounters } = adventure;
     const nodes = getAdventureNodes(adventure.id);
@@ -54,18 +82,28 @@ export const FantasyMap: React.FC<FantasyMapProps> = ({ adventure, currentNode, 
                 <div className="map-col-inner">
                     <MapPathSVG encounters={encounters} referenceHeight={referenceHeight} />
 
-                    {nodes.map((node, index) => (
-                        <MapNode
-                            key={node.id}
-                            node={node}
-                            index={index}
-                            currentNode={currentNode}
-                            adventureId={adventure.id}
-                            onNodeClick={onNodeClick}
-                            nodeRef={(index + 1) === currentNode ? currentNodeRef : null}
-                            referenceHeight={referenceHeight}
-                        />
-                    ))}
+                    {nodes.map((node, index) => {
+                        const nodeStep = index + 1;
+                        const isCurrentNode = nodeStep === currentNode;
+                        const isEndNode = nodeStep === lastNodeIndex;
+
+                        let ref = null;
+                        if (isCurrentNode) ref = currentNodeRef;
+                        else if (isEndNode) ref = endNodeRef;
+
+                        return (
+                            <MapNode
+                                key={node.id}
+                                node={node}
+                                index={index}
+                                currentNode={currentNode}
+                                adventureId={adventure.id}
+                                onNodeClick={onNodeClick}
+                                nodeRef={ref}
+                                referenceHeight={referenceHeight}
+                            />
+                        );
+                    })}
                 </div>
             </div>
         </div>
