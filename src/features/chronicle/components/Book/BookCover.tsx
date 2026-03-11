@@ -10,7 +10,6 @@ interface BookCoverProps {
     onStart: () => void;
     onLogin: () => void;
     hasProgress?: boolean;
-    subtitle?: string;
     isActive?: boolean;
 }
 
@@ -26,14 +25,7 @@ export const BookCover: React.FC<BookCoverProps> = ({
         <div className={styles.coverContent}>
             <img src={coverImage} alt="" className={`${styles.coverImage} ${!isActive ? styles.coverImageHidden : ''}`} />
             <div className={styles.runeGlow} />
-            <div style={{
-                position: 'absolute',
-                width: '200%',
-                zIndex: 0,
-                pointerEvents: 'none',
-                opacity: isActive ? 1 : 0,
-                transition: 'opacity 0.5s ease-out'
-            }}>
+            <div className={`${styles.particlesWrapper} ${!isActive ? styles.particlesHidden : ''}`}>
                 <GameParticles options={BOOK_MAGIC_OPTIONS} />
             </div>
             <header className={styles.coverHeader}>
@@ -62,6 +54,6 @@ export const BookCover: React.FC<BookCoverProps> = ({
                 </PrimaryButton>
             </div>
 
-        </div >
+        </div>
     );
 };
