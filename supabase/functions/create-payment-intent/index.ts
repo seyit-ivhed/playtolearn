@@ -21,7 +21,15 @@ export const handler = async (req: Request) => {
     }
 
     try {
-        const { contentPackId } = await req.json()
+        const body = await req.json()
+        const contentPackId = body?.contentPackId
+
+        if (!contentPackId || typeof contentPackId !== 'string') {
+            return new Response(JSON.stringify({ error: 'Missing or invalid contentPackId' }), {
+                status: 400,
+                headers: { ...headers, 'Content-Type': 'application/json' },
+            })
+        }
 
         // Get user from token using Admin Client for better reliability in Edge Functions
         const authHeader = req.headers.get('Authorization')
@@ -43,7 +51,6 @@ export const handler = async (req: Request) => {
             return new Response(
                 JSON.stringify({
                     error: 'Unauthorized',
-                    details: authError?.message
                 }),
                 { status: 401, headers: { ...headers, 'Content-Type': 'application/json' } }
             )
@@ -209,8 +216,8 @@ export const handler = async (req: Request) => {
     } catch (err: unknown) {
         const error = err as Error;
         console.error('Error creating payment intent:', error)
-        return new Response(JSON.stringify({ error: error.message }), {
-            status: 400,
+        return new Response(JSON.stringify({ error: 'An internal error occurred. Please try again.' }), {
+            status: 500,
             headers: { ...headers, 'Content-Type': 'application/json' },
         })
     }
