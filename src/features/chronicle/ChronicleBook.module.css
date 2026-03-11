@@ -80,7 +80,7 @@
 .coverImage {
     position: absolute;
     top: -50px;
-    left: -70px;
+    left: -80px;
     object-fit: cover;
     pointer-events: none;
     z-index: -1;
@@ -112,20 +112,30 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    margin-top: 60px;
-    /* Move title downwards */
+    margin-top: -5px;
 }
 
 
 .coverTitle {
     font-family: var(--font-display);
-    font-size: 2.8rem;
+    font-size: 2.4rem;
     text-align: center;
     margin-bottom: 0.5rem;
-    color: #FADCA1;
-    /* Highlight Gold from image */
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+    color: #fcedcf;
     letter-spacing: 0.05em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    text-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(212, 175, 55, 0.4),
+        0 0 40px rgba(212, 175, 55, 0.2),
+        0 0 80px rgba(255, 215, 0, 0.15);
+}
+
+.coverTitleWord {
+    display: block;
 }
 
 

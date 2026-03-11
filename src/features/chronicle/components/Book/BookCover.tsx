@@ -10,7 +10,6 @@ interface BookCoverProps {
     onStart: () => void;
     onLogin: () => void;
     hasProgress?: boolean;
-    title?: string;
     subtitle?: string;
     isActive?: boolean;
 }
@@ -19,7 +18,6 @@ export const BookCover: React.FC<BookCoverProps> = ({
     onStart,
     onLogin,
     hasProgress = false,
-    title,
     isActive = true
 }) => {
     const { t } = useTranslation();
@@ -39,7 +37,11 @@ export const BookCover: React.FC<BookCoverProps> = ({
                 <GameParticles options={BOOK_MAGIC_OPTIONS} />
             </div>
             <header className={styles.coverHeader}>
-                <h1 className={styles.coverTitle}>{title || t('landing.title')}</h1>
+                <h1 className={styles.coverTitle}>
+                    <span className={styles.coverTitleWord}>Math</span>
+                    <span className={styles.coverTitleWord}>with</span>
+                    <span className={styles.coverTitleWord}>Magic</span>
+                </h1>
             </header>
 
             <div className={styles.coverActions}>
