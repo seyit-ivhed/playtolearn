@@ -285,6 +285,9 @@ supabase link --project-ref <PROJECT_REF>
 # Staging uses Stripe test keys; production uses Stripe live keys
 supabase secrets set STRIPE_SECRET_KEY=<sk_test_... or sk_live_...>
 supabase secrets set STRIPE_WEBHOOK_SECRET=<whsec_...>
+
+# Comma-separated list of origins allowed to call edge functions (CORS)
+supabase secrets set ALLOWED_ORIGINS=<https://yourdomain.com,https://staging.yourdomain.com>
 ```
 
 ---
@@ -381,6 +384,7 @@ These are set via `supabase secrets set` per project (see Step 4.3):
 |---|---|
 | `STRIPE_SECRET_KEY` | Stripe secret key (never exposed to browser) |
 | `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret |
+| `ALLOWED_ORIGINS` | Comma-separated list of allowed CORS origins (e.g. `https://mathwithmagic.com,https://staging.mathwithmagic.com`) |
 
 `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are injected automatically by
 the Supabase edge runtime — you do not need to set them manually.
