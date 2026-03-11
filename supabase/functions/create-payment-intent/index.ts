@@ -5,13 +5,10 @@ import { createClient } from 'npm:@supabase/supabase-js@^2.0.0'
 export const handler = async (req: Request) => {
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '')
     const origin = req.headers.get('Origin')
-    const productionUrl = Deno.env.get('CLIENT_URL')
 
-    // Dynamic CORS origin check
-    let corsOrigin = productionUrl || ''
-    if (origin && (origin.startsWith('http://localhost:') || origin === 'http://localhost')) {
-        corsOrigin = origin
-    }
+    // ALLOWED_ORIGINS: comma-separated list of allowed origins (e.g. "https://mathwithmagic.com,https://staging.mathwithmagic.com")
+    const allowedOrigins = (Deno.env.get('ALLOWED_ORIGINS') || '').split(',').map(o => o.trim()).filter(Boolean)
+    const corsOrigin = (origin && allowedOrigins.includes(origin)) ? origin : allowedOrigins[0] || ''
 
     const headers = {
         'Access-Control-Allow-Origin': corsOrigin,

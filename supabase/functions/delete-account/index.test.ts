@@ -10,7 +10,7 @@ import { createHandler } from "./index.ts";
 const mockEnv: Record<string, string> = {
     SUPABASE_URL: 'https://mock.supabase.co',
     SUPABASE_SERVICE_ROLE_KEY: 'service-role-key',
-    CLIENT_URL: 'http://localhost:5173',
+    ALLOWED_ORIGINS: 'http://localhost:5173',
 };
 
 function withMockEnv(fn: () => Promise<void>): () => Promise<void> {
@@ -228,9 +228,9 @@ Deno.test({
             headers: { "Origin": "https://example.com" },
         });
 
-        // Override CLIENT_URL for this test
+        // Override ALLOWED_ORIGINS for this test
         const originalGet = Deno.env.get;
-        Deno.env.get = (key: string) => key === 'CLIENT_URL' ? 'https://example.com' : (mockEnv[key] ?? originalGet(key));
+        Deno.env.get = (key: string) => key === 'ALLOWED_ORIGINS' ? 'https://example.com' : (mockEnv[key] ?? originalGet(key));
         try {
             const res = await handler(req);
             assertEquals(res.status, 200);

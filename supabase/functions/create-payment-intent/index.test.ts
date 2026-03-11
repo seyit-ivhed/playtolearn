@@ -16,7 +16,7 @@ Deno.test({
             'STRIPE_SECRET_KEY': 'sk_test_mock',
             'SUPABASE_URL': 'https://mock.supabase.co',
             'SUPABASE_SERVICE_ROLE_KEY': 'service-role-key',
-            'CLIENT_URL': 'http://localhost:5173'
+            'ALLOWED_ORIGINS': 'http://localhost:5173'
         };
 
         // Stub Deno.env.get
