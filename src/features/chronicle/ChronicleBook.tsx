@@ -6,16 +6,20 @@ import { ChapterPage } from './components/ChapterPage';
 import { PremiumStoreModal } from '../premium/components/PremiumStoreModal';
 import { useChronicleData } from './hooks/useChronicleData';
 import { useChronicleNavigation } from './hooks/useChronicleNavigation';
-import styles from './ChronicleBook.module.css';
+import styles from './components/Book/BookLayout.module.css';
 import { BookLayout } from './components/Book/BookLayout';
 import { BookPage } from './components/Book/BookPage';
 import { BookCover } from './components/Book/BookCover';
 import { BookLogin } from './components/Book/BookLogin';
 import { BookForgotPassword } from './components/Book/BookForgotPassword';
 import { BookDifficulty } from './components/Book/BookDifficulty';
+import { BookLoginSuccess } from './components/Book/BookLoginSuccess';
 import { getBookStateFromUrl, calculatePageZIndex } from './utils/chronicle.utils';
 import { Header } from '../../components/Header';
 import { playSfx } from '../../components/audio/audio.utils';
+import { analyticsService } from '../../services/analytics.service';
+import { LegalModal, type LegalDocumentType } from '../legal/LegalModal';
+import { ChroniclesLegalFooter } from './components/ChroniclesLegalFooter';
 
 export const ChronicleBook: React.FC = () => {
     const { adventureStatuses, isAdventureUnlocked, encounterResults, setEncounterDifficulty } = useGameStore();
@@ -31,6 +35,8 @@ export const ChronicleBook: React.FC = () => {
 
     // UI State
     const [isPremiumModalOpen, setIsPremiumModalOpen] = React.useState(false);
+    const [premiumSourceAdventureId, setPremiumSourceAdventureId] = React.useState<string | undefined>(undefined);
+    const [legalModal, setLegalModal] = React.useState<LegalDocumentType | null>(null);
 
     // Hooks
     const {
@@ -65,23 +71,28 @@ export const ChronicleBook: React.FC = () => {
     const {
         handleNext,
         handlePrev,
-        handleBegin,
+        handleBegin: handleBeginInternal,
         isJustCompleted
     } = useChronicleNavigation({
         currentAdventureIndex,
         adventures,
         currentAdventure,
         setActiveAdventureId: handleSetActiveAdventureId,
-        setIsPremiumModalOpen
+        setIsPremiumModalOpen,
+        setPremiumSourceAdventureId,
     });
+
+    const handleBegin = (id: string) => {
+        handleBeginInternal(id);
+    };
 
     // Handlers for Cover Interactions
     const handleStartNewGame = () => {
         if (hasAnyProgress) {
-            // Continue game (go to current adventure)
-            // activeAdventureId already holds the "highest unlocked" or "current" adventure logic from useChronicleData
+            analyticsService.trackEvent('cover_start_clicked', { has_progress: true, destination: 'adventure' });
             navigate(`/chronicle/${activeAdventureId}`);
         } else {
+            analyticsService.trackEvent('cover_start_clicked', { has_progress: false, destination: 'difficulty' });
             navigate('/chronicle/difficulty');
         }
     };
@@ -93,6 +104,7 @@ export const ChronicleBook: React.FC = () => {
     };
 
     const handleGoToLogin = () => {
+        analyticsService.trackEvent('cover_login_clicked');
         navigate('/chronicle/login');
     };
 
@@ -109,7 +121,11 @@ export const ChronicleBook: React.FC = () => {
     };
 
     const handleLoginSuccess = () => {
-        // Login success -> Go to adventure (will use default logic to pick right one)
+        analyticsService.trackEvent('login_succeeded');
+        navigate('/chronicle/login-success', { replace: true });
+    };
+
+    const handleLoginSuccessContinue = () => {
         // Navigate to root /chronicle and let the redirect logic pick the best adventure
         navigate('/chronicle', { replace: true });
     };
@@ -121,8 +137,9 @@ export const ChronicleBook: React.FC = () => {
     // Calculate z-indices and states for 3D pages
     const coverState = bookState === 'COVER' ? 'active' : 'flipped';
     const loginState = bookState === 'LOGIN' ? 'active' : (bookState === 'COVER' ? 'upcoming' : 'flipped');
-    const forgotPasswordState = bookState === 'FORGOT_PASSWORD' ? 'active' : (bookState === 'COVER' || bookState === 'LOGIN' ? 'upcoming' : 'flipped');
-    const difficultyState = bookState === 'DIFFICULTY' ? 'active' : (bookState === 'COVER' || bookState === 'LOGIN' || bookState === 'FORGOT_PASSWORD' ? 'upcoming' : 'flipped');
+    const loginSuccessState = bookState === 'LOGIN_SUCCESS' ? 'active' : (bookState === 'COVER' || bookState === 'LOGIN' ? 'upcoming' : 'flipped');
+    const forgotPasswordState = bookState === 'FORGOT_PASSWORD' ? 'active' : (bookState === 'COVER' || bookState === 'LOGIN' || bookState === 'LOGIN_SUCCESS' ? 'upcoming' : 'flipped');
+    const difficultyState = bookState === 'DIFFICULTY' ? 'active' : (bookState === 'COVER' || bookState === 'LOGIN' || bookState === 'LOGIN_SUCCESS' || bookState === 'FORGOT_PASSWORD' ? 'upcoming' : 'flipped');
 
     return (
         <>
@@ -154,10 +171,20 @@ export const ChronicleBook: React.FC = () => {
                     />
                 </BookPage>
 
+                {/* LOGIN SUCCESS PAGE */}
+                <BookPage
+                    state={loginSuccessState}
+                    zIndex={calculatePageZIndex(loginSuccessState, 2)}
+                >
+                    <BookLoginSuccess
+                        onContinue={handleLoginSuccessContinue}
+                    />
+                </BookPage>
+
                 {/* FORGOT PASSWORD PAGE */}
                 <BookPage
                     state={forgotPasswordState}
-                    zIndex={calculatePageZIndex(forgotPasswordState, 2)}
+                    zIndex={calculatePageZIndex(forgotPasswordState, 3)}
                 >
                     <BookForgotPassword
                         onBack={handleBackToLogin}
@@ -167,7 +194,7 @@ export const ChronicleBook: React.FC = () => {
                 {/* DIFFICULTY SELECTION PAGE */}
                 <BookPage
                     state={difficultyState}
-                    zIndex={calculatePageZIndex(difficultyState, 3)}
+                    zIndex={calculatePageZIndex(difficultyState, 4)}
                 >
                     <BookDifficulty
                         onSelect={handleDifficultySelected}
@@ -185,7 +212,7 @@ export const ChronicleBook: React.FC = () => {
                         ? (isPastAdventure ? 'flipped' : isCurrentAdventure ? 'active' : 'upcoming')
                         : 'upcoming';
 
-                    const position = 4 + index;
+                    const position = 5 + index;
 
                     return (
                         <BookPage
@@ -225,8 +252,18 @@ export const ChronicleBook: React.FC = () => {
             </BookLayout>
             <PremiumStoreModal
                 isOpen={isPremiumModalOpen}
-                onClose={() => setIsPremiumModalOpen(false)}
+                onClose={() => {
+                    setIsPremiumModalOpen(false);
+                    setPremiumSourceAdventureId(undefined);
+                }}
+                sourceAdventureId={premiumSourceAdventureId}
             />
+
+            <ChroniclesLegalFooter onOpen={setLegalModal} />
+
+            {legalModal && (
+                <LegalModal type={legalModal} onClose={() => setLegalModal(null)} onOpenPrivacy={() => setLegalModal('privacy')} />
+            )}
         </>
     );
 };

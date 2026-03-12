@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../../hooks/useAuth';
+import { useAuth } from '../../../../context/useAuth';
 import { Mail, Lock, ChevronLeft, Loader2, AlertCircle } from 'lucide-react';
-import styles from '../../ChronicleBook.module.css';
+import styles from './BookAuth.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
+import { PasswordInput } from '../../../../components/ui/PasswordInput';
+import { analyticsService } from '../../../../services/analytics.service';
 
 interface BookLoginProps {
     onBack: () => void;
@@ -15,7 +17,6 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
     const { t } = useTranslation();
     const { signIn } = useAuth();
 
-    // Login Form State
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -31,7 +32,8 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
             onSuccess();
         } catch (err: unknown) {
             console.error('Failed to sign in:', err);
-            setError(err instanceof Error ? err.message : t('login.invalid_credentials'));
+            setError(t('login.invalid_credentials'));
+            analyticsService.trackEvent('login_failed');
         } finally {
             setLoading(false);
         }
@@ -39,8 +41,6 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
 
     return (
         <div className={styles.loginPageContent}>
-
-
             <header className={styles.pageHeader}>
                 <h2 className={styles.pageTitle}>{t('login.member_access')}</h2>
                 <div className={styles.divider} />
@@ -69,9 +69,8 @@ export const BookLogin: React.FC<BookLoginProps> = ({ onBack, onSuccess, onForgo
                         <Lock size={14} />
                         {t('login.password_label')}
                     </label>
-                    <input
+                    <PasswordInput
                         id="password"
-                        type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder={t('login.password_placeholder')}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../../hooks/useAuth';
+import { useAuth } from '../../../../context/useAuth';
 import { Mail, ChevronLeft, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
-import styles from '../../ChronicleBook.module.css';
+import styles from './BookAuth.module.css';
 import { PrimaryButton } from '../../../../components/ui/PrimaryButton';
+import { analyticsService } from '../../../../services/analytics.service';
 
 interface BookForgotPasswordProps {
     onBack: () => void;
@@ -27,9 +28,11 @@ export const BookForgotPassword: React.FC<BookForgotPasswordProps> = ({ onBack }
             const redirectTo = `${window.location.origin}/reset-password`;
             await resetPasswordForEmail(email, redirectTo);
             setSubmitted(true);
+            analyticsService.trackEvent('password_reset_requested');
         } catch (err: unknown) {
             console.error('Failed to send reset email:', err);
             setError(t('forgot_password.error_generic'));
+            analyticsService.trackEvent('password_reset_failed');
         } finally {
             setLoading(false);
         }

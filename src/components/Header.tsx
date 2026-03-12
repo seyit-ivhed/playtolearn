@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import SettingsMenu from './SettingsMenu';
+import { DebugTapTarget } from './DebugTapTarget';
 import { playSfx } from './audio/audio.utils';
 import styles from './Header.module.css';
 
@@ -45,8 +46,14 @@ export const Header: React.FC<HeaderProps> = ({
 
             {title && (
                 <div className={styles.centerSection}>
+                    {/* DebugTapTarget only wraps string titles; ReactNode titles are rendered as-is */}
                     {typeof title === 'string' ? (
-                        <h1 className={styles.title} data-testid={titleTestId}>{title}</h1>
+                        <DebugTapTarget>
+                            <h1
+                                className={styles.title}
+                                data-testid={titleTestId}
+                            >{title}</h1>
+                        </DebugTapTarget>
                     ) : (
                         title
                     )}

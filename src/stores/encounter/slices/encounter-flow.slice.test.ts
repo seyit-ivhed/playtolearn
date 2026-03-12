@@ -6,16 +6,19 @@ import type { EncounterStore } from '../interfaces';
 
 // Mock dependencies
 vi.mock('../../../data/companions.data', () => ({
-    getCompanionById: (id: string) => ({
-        id,
-        name: `Companion ${id}`,
-        stats: { maxHealth: 100 },
-        baseStats: { maxHealth: 100 },
-        spiritGain: 35,
-        initialSpirit: 0,
-        evolutions: [],
-        specialAbility: { id: 'sa', value: 10 }
-    })
+    getCompanionById: (id: string) => {
+        if (id === 'invalid_companion') return null;
+        return {
+            id,
+            name: `Companion ${id}`,
+            stats: { maxHealth: 100 },
+            baseStats: { maxHealth: 100 },
+            spiritGain: 35,
+            initialSpirit: 0,
+            evolutions: [],
+            specialAbility: { id: 'sa', value: 10 }
+        };
+    }
 }));
 
 describe('encounter-flow.slice', () => {
@@ -41,6 +44,11 @@ describe('encounter-flow.slice', () => {
         }));
 
         vi.useFakeTimers();
+        Object.defineProperty(HTMLMediaElement.prototype, 'play', {
+            writable: true,
+            configurable: true,
+            value: vi.fn().mockResolvedValue(undefined),
+        });
     });
 
     afterEach(() => {
@@ -88,6 +96,34 @@ describe('encounter-flow.slice', () => {
                 damage: 10,
                 isPlayer: false
             });
+        });
+
+        it('should skip companions not found in data', () => {
+            const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+            const { initializeEncounter } = useTestStore.getState();
+
+            initializeEncounter(['c1', 'invalid_companion'], [], 0, 0, {});
+
+            const state = useTestStore.getState();
+            expect(state.party).toHaveLength(1); // invalid_companion skipped
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('invalid_companion'));
+            consoleSpy.mockRestore();
+        });
+    });
+
+    describe('resetEncounter', () => {
+        it('should reset encounter to initial state', () => {
+            const { initializeEncounter, resetEncounter } = useTestStore.getState();
+            initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 10, attack: 1, sprite: '' }], 1, 2, {});
+
+            resetEncounter();
+
+            const state = useTestStore.getState();
+            expect(state.phase).toBe(EncounterPhase.INIT);
+            expect(state.party).toHaveLength(0);
+            expect(state.monsters).toHaveLength(0);
+            expect(state.nodeIndex).toBeUndefined();
+            expect(state.difficulty).toBeUndefined();
         });
     });
 
@@ -210,6 +246,18 @@ describe('encounter-flow.slice', () => {
             expect(state.party[0].currentSpirit).toBe(35);
         });
 
+        it('should do nothing if there are no active monsters', () => {
+            const { initializeEncounter, processMonsterTurn } = useTestStore.getState();
+            initializeEncounter(['c1'], [], 0, 0, {});
+
+            // No monsters, processMonsterTurn should return early
+            expect(() => processMonsterTurn()).not.toThrow();
+
+            vi.advanceTimersByTime(2000);
+            // Phase should remain PLAYER_TURN since no monsters attacked
+            expect(useTestStore.getState().phase).toBe(EncounterPhase.PLAYER_TURN);
+        });
+
         it('should handle player death and defeat condition', () => {
             const { initializeEncounter, processMonsterTurn } = useTestStore.getState();
             initializeEncounter(['c1'], [{ id: 'm1', name: 'M1', maxHealth: 50, attack: 200, sprite: '' }], 0, 0, {}); // Overkill
@@ -227,6 +275,29 @@ describe('encounter-flow.slice', () => {
             const finalState = useTestStore.getState();
             expect(finalState.phase).toBe(EncounterPhase.DEFEAT);
 
+        });
+
+        it('should use enemy id as name when enemy has no name property', () => {
+            const { initializeEncounter } = useTestStore.getState();
+            // Enemy without a name - covers the `enemy.name || enemy.id` fallback
+            initializeEncounter(['c1'], [
+                { id: 'nameless_enemy', maxHealth: 30, attack: 5, sprite: '' }
+            ], 0, 0, {});
+
+            const state = useTestStore.getState();
+            expect(state.monsters[0].name).toBe('nameless_enemy');
+        });
+    });
+
+    describe('processMonsterTurn', () => {
+        it('should play attack sound when monster has one', () => {
+            const { initializeEncounter, processMonsterTurn } = useTestStore.getState();
+
+            initializeEncounter(['c1'], [
+                { id: 'm1', name: 'M1', maxHealth: 50, attack: 5, sprite: '', attackSound: 'battle/lion' }
+            ], 0, 0, {});
+
+            expect(() => processMonsterTurn()).not.toThrow();
         });
     });
 });

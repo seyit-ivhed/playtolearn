@@ -3,6 +3,8 @@ import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { supabase } from '../../../services/supabase.service';
+import { pollUntil } from '../../../utils/poll-until';
+import { analyticsService } from '../../../services/analytics.service';
 import './Premium.css';
 
 interface CheckoutFormProps {
@@ -20,31 +22,25 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
     const [isVerifying, setIsVerifying] = useState(false);
     const [paymentSucceeded, setPaymentSucceeded] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [withdrawalConsent, setWithdrawalConsent] = useState(false);
 
     const verifyEntitlement = async (): Promise<boolean> => {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return false;
 
-        // Poll for up to 30 seconds (15 retries * 2 seconds)
-        // High latency on edge functions is expected during redeploys
-        const maxRetries = 15;
-        const delay = 2000;
-
-        for (let i = 0; i < maxRetries; i++) {
-            const { data: entitlement } = await supabase
-                .from('player_entitlements')
-                .select('id')
-                .eq('player_id', user.id)
-                .eq('content_pack_id', contentPackId)
-                .maybeSingle();
-
-            if (entitlement) {
-                return true;
-            }
-            await new Promise(resolve => setTimeout(resolve, delay));
-        }
-
-        return false;
+        // Poll for up to 30 seconds — high latency on edge functions is expected during redeploys
+        return pollUntil(
+            async () => {
+                const { data: entitlement } = await supabase
+                    .from('player_entitlements')
+                    .select('id')
+                    .eq('player_id', user.id)
+                    .eq('content_pack_id', contentPackId)
+                    .maybeSingle();
+                return !!entitlement;
+            },
+            { intervalMs: 2000, timeoutMs: 30000 }
+        );
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -53,6 +49,10 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
 
         setIsProcessing(true);
         setErrorMessage(null);
+
+        analyticsService.trackEvent('payment_submitted', {
+            content_pack_id: contentPackId,
+        });
 
         try {
             // Get current user email for billing details (required because we hide the email field)
@@ -73,7 +73,8 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
 
             if (error) {
                 console.error('Stripe confirmPayment error:', error);
-                setErrorMessage(error.message || 'Payment failed');
+                analyticsService.trackEvent('payment_failed');
+                setErrorMessage(error.message || t('premium.store.payment_failed'));
                 setIsProcessing(false);
             } else if (paymentIntent) {
                 if (paymentIntent.status === 'succeeded') {
@@ -81,8 +82,12 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
 
                     const verified = await verifyEntitlement();
                     if (verified) {
+                        analyticsService.trackEvent('payment_succeeded', {
+                            content_pack_id: contentPackId,
+                        });
                         onSuccess();
                     } else {
+                        analyticsService.trackEvent('payment_verification_timeout');
                         console.warn('Verification timed out, but payment succeeded.');
                         setErrorMessage(t('premium.store.verification_timeout', 'Payment succeeded, but we are still processing your access. It will appear in your account shortly.'));
                         setIsProcessing(false);
@@ -99,15 +104,15 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
             }
         } catch (err: unknown) {
             console.error('Submission error:', err);
-            const message = err instanceof Error ? err.message : 'An unexpected error occurred';
-            setErrorMessage(message);
+            analyticsService.trackEvent('payment_failed');
+            setErrorMessage(t('premium.store.payment_failed'));
             setIsProcessing(false);
             setIsVerifying(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="checkout-form">
+        <form onSubmit={handleSubmit} className="checkout-form" data-testid="checkout-form">
             {isProcessing && (
                 <div className="processing-overlay">
                     <div className="spinner"></div>
@@ -135,18 +140,36 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ contentPackId, onSuc
                 }
             }} />
 
-            {errorMessage && <div className="payment-error">{errorMessage}</div>}
+            {errorMessage && <div className="payment-error" data-testid="payment-error">{errorMessage}</div>}
 
             <div className="checkout-actions">
+                <p className="stripe-disclosure">
+                    {t('checkout.stripe_disclosure', 'Payment is processed securely by Stripe. Outlean AB does not store your payment details.')}
+                </p>
+
+                <label className="withdrawal-waiver" data-testid="withdrawal-waiver-label">
+                    <input
+                        type="checkbox"
+                        checked={withdrawalConsent}
+                        onChange={(e) => setWithdrawalConsent(e.target.checked)}
+                        disabled={isProcessing}
+                        data-testid="withdrawal-consent-checkbox"
+                    />
+                    <span>
+                        {t('checkout.withdrawal_waiver', 'I understand that by accessing the purchased content immediately, I waive my 14-day right of withdrawal under EU consumer law.')}
+                    </span>
+                </label>
+
                 <div className="price-display-simple">
-                    {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value">{price}</span>
+                    {t('premium.store.total_amount', 'Total Amount')}: <span className="price-value" data-testid="checkout-price">{price}</span>
                 </div>
                 <PrimaryButton
                     type="submit"
                     variant="gold"
                     radiate={true}
-                    disabled={isProcessing || !stripe || !elements || paymentSucceeded}
+                    disabled={isProcessing || !stripe || !elements || paymentSucceeded || !withdrawalConsent}
                     style={{ width: '100%' }}
+                    data-testid="checkout-submit"
                 >
                     {isProcessing ? t('common.processing', 'Processing...') : t('premium.store.buy_now')}
                 </PrimaryButton>

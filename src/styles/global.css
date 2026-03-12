@@ -1,6 +1,6 @@
 /* Global Variables */
 :root {
-  /* Color Palette - Fantasy Realm (Math Quest Adventures) */
+  /* Color Palette - Fantasy Realm (Math with Magic) */
   --color-bg-primary: #000000;
   /* Pure Black */
   --color-bg-secondary: #000000b1;
@@ -19,12 +19,14 @@
   /* Treasure Gold */
 
   /* Functional Colors */
-  --color-success: #2ed573;
+  --color-success: #0c6330;
   /* Emerald Guard */
   --color-danger: #ff4757;
   /* Dragon Red */
   --color-warning: #ffa502;
   /* Treasure Gold */
+  --color-error: #d32f2f;
+  /* Crimson Error */
   --color-info: #1e90ff;
   /* Mana Blue */
 
@@ -95,6 +97,17 @@
   padding: 0;
 }
 
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--color-brand-accent);
+    -webkit-box-shadow: 0 0 1px;
+}
+
 body {
   margin: 0;
   display: flex;
@@ -152,9 +165,6 @@ button:hover {
   filter: brightness(1.1);
 }
 
-button:active {
-  transform: scale(0.95);
-}
 
 button:disabled {
   background-color: var(--color-text-secondary);

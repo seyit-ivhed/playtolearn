@@ -53,6 +53,11 @@ describe('Player Actions Slice', () => {
             monsters: []
         });
         vi.useFakeTimers();
+        Object.defineProperty(HTMLMediaElement.prototype, 'play', {
+            writable: true,
+            configurable: true,
+            value: vi.fn().mockResolvedValue(undefined),
+        });
     });
 
     describe('performAction', () => {
@@ -114,6 +119,15 @@ describe('Player Actions Slice', () => {
             useEncounterStore.getState().performAction('u1'); // already acted
             useEncounterStore.getState().performAction('u2'); // not found
         });
+
+        it('should play attack sound when unit has one', () => {
+            const warrior = { id: 'u1', templateId: 'warrior_id', name: 'Warrior', hasActed: false, maxHealth: 100, currentHealth: 100, isDead: false, isPlayer: true, currentSpirit: 0, maxSpirit: 100, spiritGain: 10, damage: 10, attackSound: 'battle/lion' };
+            const monster = { id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isDead: false, isPlayer: false, currentSpirit: 0, maxSpirit: 100, hasActed: false, spiritGain: 10 };
+
+            useEncounterStore.setState({ party: [warrior] as EncounterUnit[], monsters: [monster] as EncounterUnit[], endPlayerTurn: vi.fn() });
+
+            expect(() => useEncounterStore.getState().performAction('u1')).not.toThrow();
+        });
     });
 
     describe('resolveSpecialAttack', () => {
@@ -173,6 +187,15 @@ describe('Player Actions Slice', () => {
             useEncounterStore.setState({ party: [warrior] as EncounterUnit[], monsters: [] });
             useEncounterStore.getState().resolveSpecialAttack('u1', true); // no ability
             useEncounterStore.getState().resolveSpecialAttack('u2', true); // not found
+        });
+
+        it('should play special ability sound when unit has one', () => {
+            const warrior = { ...baseUnit, id: 'u1', templateId: 'warrior_id', name: 'Warrior', maxHealth: 100, currentHealth: 100, specialAbilityId: 'precision_shot', specialAbilityVariables: { damage: 20 }, specialAbilitySound: 'battle/katana' };
+            const monster = { ...baseUnit, id: 'm1', templateId: 'goblin', name: 'Goblin', currentHealth: 50, maxHealth: 50, isPlayer: false };
+
+            useEncounterStore.setState({ party: [warrior], monsters: [monster] });
+
+            expect(() => useEncounterStore.getState().resolveSpecialAttack('u1', true)).not.toThrow();
         });
 
         it('should handle failure (drain spirit, end turn)', () => {

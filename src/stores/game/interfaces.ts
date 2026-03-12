@@ -33,6 +33,7 @@ export interface AdventureStatusSlice {
     completeAdventure: (id: AdventureId) => void;
     unlockAdventure: (id: AdventureId) => void;
     isAdventureUnlocked: (id: AdventureId) => boolean;
+
 }
 
 // XP & Leveling
@@ -48,6 +49,7 @@ export interface DebugSlice {
     debugResetEncounterResults: () => void;
     debugSetCompanionLevel: (companionId: string, level: number) => void;
     debugSetEncounterStars: (adventureId: string, nodeIndex: number, stars: number) => void;
+    debugSetAdventureStars: (adventureId: string, stars: number) => void;
 }
 
 // Combined store type

@@ -1,6 +1,6 @@
 # Companion Design Document
 
-This document defines the 4 MVP companions for Math Quest Adventures.
+This document defines the 4 MVP companions for Math with Magic.
 
 ## Design Philosophy
 

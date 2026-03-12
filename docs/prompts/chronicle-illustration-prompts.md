@@ -6,7 +6,7 @@ This document provides image generation prompts for the **Chronicles** section (
 
 ## Art Style Guidelines
 
-To maintain consistency with the *Math Quest Adventures* aesthetic, use the following style keywords for all Chapter Illustrations:
+To maintain consistency with the *Math with Magic* aesthetic, use the following style keywords for all Chapter Illustrations:
 
 - **Art Style:** `Semi-realistic, hand-painted digital illustration`, `stylized fantasy art`, `rich painterly textures`, `storybook illustration style`.
 - **Lighting:** `Dramatic lighting`, `atmospheric shading`, `cinematic composition`.

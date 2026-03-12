@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Map } from 'lucide-react';
@@ -21,7 +21,9 @@ import { useEncounterNavigation } from './hooks/useEncounterNavigation';
 import { useEncounterInitializer } from './hooks/useEncounterInitializer';
 import { useVoiceOver } from '../../hooks/useVoiceOver';
 import { COMPANIONS } from '../../data/companions.data';
+import { ADVENTURES } from '../../data/adventures.data';
 import { Header } from '../../components/Header';
+import { analyticsService } from '../../services/analytics.service';
 
 const EncounterPage = () => {
     const { t } = useTranslation();
@@ -42,6 +44,53 @@ const EncounterPage = () => {
     useEncounterInitializer(adventureId, nodeIndex);
 
     const difficulty = typeof rawDifficulty === 'number' ? rawDifficulty : 1;
+
+    // Look up encounter type for analytics
+    const encounterType = ADVENTURES.find(a => a.id === adventureId)?.encounters[nodeIndex - 1]?.type;
+
+    // Track encounter_started once on mount.
+    // Difficulty is read from the store at effect-fire time (after useLayoutEffect in
+    // useEncounterInitializer has already set the correct value) rather than from the
+    // render-time closure, which captures the reset store's undefined → fallback 1.
+    // The ref guard prevents a duplicate event in React 18 StrictMode (dev), which
+    // intentionally runs effects twice.
+    const hasTrackedStartRef = useRef(false);
+    useEffect(() => {
+        if (hasTrackedStartRef.current) return;
+        hasTrackedStartRef.current = true;
+        const { difficulty: startDifficulty } = useEncounterStore.getState();
+        analyticsService.trackEvent('encounter_started', {
+            adventure_id: adventureId,
+            node_index: nodeIndex,
+            difficulty: startDifficulty ?? 1,
+            encounter_type: encounterType,
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Track encounter_completed / encounter_failed when phase changes
+    const prevPhaseRef = useRef<string>(phase);
+    useEffect(() => {
+        if (prevPhaseRef.current !== phase) {
+            prevPhaseRef.current = phase;
+            const turnCount = useEncounterStore.getState().turnCount;
+            if (phase === EncounterPhase.VICTORY) {
+                analyticsService.trackEvent('encounter_completed', {
+                    adventure_id: adventureId,
+                    node_index: nodeIndex,
+                    difficulty,
+                    turn_count: turnCount,
+                });
+            } else if (phase === EncounterPhase.DEFEAT) {
+                analyticsService.trackEvent('encounter_failed', {
+                    adventure_id: adventureId,
+                    node_index: nodeIndex,
+                    difficulty,
+                    turn_count: turnCount,
+                });
+            }
+        }
+    }, [phase, adventureId, nodeIndex, difficulty]);
 
     const [activeChallenge, setActiveChallenge] = useState<{
         type: 'SPECIAL';
@@ -124,6 +173,12 @@ const EncounterPage = () => {
             return;
         }
 
+        analyticsService.trackEvent('special_attack_attempted', {
+            adventure_id: adventureId,
+            node_index: nodeIndex,
+            success,
+        });
+
         // Play Success or Failure Voice Over
         const unitId = activeChallenge.unitId;
         const liveUnit = party.find(u => u.id === unitId);
@@ -171,7 +226,9 @@ const EncounterPage = () => {
         <div className="encounter-page">
             <Header
                 leftIcon={<Map size={32} />}
-                onLeftClick={() => navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } })}
+                onLeftClick={() => {
+                    navigate(`/map/${adventureId}`, { state: { focalNode: nodeIndex } });
+                }}
                 leftAriaLabel={t('common.back_to_map')}
                 leftTestId="back-to-map-btn"
             />

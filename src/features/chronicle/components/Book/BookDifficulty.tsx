@@ -4,6 +4,7 @@ import { Star, ChevronLeft } from 'lucide-react';
 import { DifficultyExamples } from '../../../../components/ui/DifficultyExamples';
 import { playSfx } from '../../../../components/audio/audio.utils';
 import styles from './BookDifficulty.module.css';
+import { analyticsService } from '../../../../services/analytics.service';
 
 interface BookDifficultyProps {
     onSelect: (difficulty: number) => void;
@@ -48,6 +49,7 @@ export const BookDifficulty: React.FC<BookDifficultyProps> = ({ onSelect, onBack
                         className={styles.difficultyCard}
                         onClick={() => {
                             playSfx('interface/click');
+                            analyticsService.trackEvent('initial_difficulty_selected', { difficulty: level });
                             onSelect(level);
                         }}
                         data-testid={`difficulty-option-${level}`}

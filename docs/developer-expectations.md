@@ -113,10 +113,50 @@ if (typeof stats.level !== 'number') {
 
 ---
 
+## Security
+
+- Every new Supabase table must have **Row Level Security (RLS) enabled**. Never create a table without RLS unless there is an explicit, documented reason.
+- Edge functions must **verify the user's JWT** (via `supabase.auth.getUser(jwt)`) before performing any data read or write. Never trust the request payload alone.
+- Never include secrets, service role keys, or any sensitive credentials in client-side code. These belong in server-side environment variables only.
+
+---
+
 ## Localization
 
 - All user-readable text must be localized using the i18n system. Never hardcode strings visible to users in code or data files.
 - Exception: companion names do not need to be localized.
+- When adding a new i18n key, add it to **both** `src/locales/en.json` and `src/locales/sv.json` in the same commit. Leaving one locale behind causes runtime fallback text to appear in production.
+- Key names use `snake_case` and are grouped by feature namespace (e.g. `"premium.store.account.title"`).
+
+---
+
+## Accessibility
+
+- All interactive elements (buttons, inputs, links) must have an accessible label — either visible text, `aria-label`, or `aria-labelledby`.
+- Modals must trap focus within the modal while open and close on `Escape`.
+- Use semantic HTML first: `<button>` for actions, `<a>` for navigation, `<label>` for form fields. Do not use `<div>` or `<span>` with `onClick` in place of a proper element.
+
+---
+
+## Error Handling
+
+- User-facing errors must be displayed in the UI — do not silently swallow errors or only log them.
+- For unexpected/internal errors, show a generic user-friendly message (e.g. "Something went wrong. Please try again.") and log the full detail with `console.error`.
+- Do not expose raw error messages, stack traces, or internal identifiers to the user.
+
+---
+
+## Naming Conventions
+
+| Artifact | Convention | Example |
+|---|---|---|
+| React components | `PascalCase` file and export | `CheckoutForm.tsx` |
+| Hooks | `camelCase` prefixed with `use` | `useAuth.ts` |
+| Services | `camelCase` suffixed with `.service` | `analytics.service.ts` |
+| Types files | `camelCase` suffixed with `.types` | `adventure.types.ts` |
+| CSS Modules | Same name as component file | `LegalModal.module.css` |
+| i18n keys | `snake_case`, grouped by feature | `premium.store.account.title` |
+| Constants | `UPPER_SNAKE_CASE` | `EXPERIENCE_CONFIG.MAX_LEVEL` |
 
 ---
 
@@ -147,6 +187,39 @@ if (typeof stats.level !== 'number') {
 
 ---
 
+## Database Migrations
+
+Player data must never be corrupted by a deploy or a rollback. Every migration
+must leave the database in a state that the **currently running app code** can
+work with — both before and after the migration runs.
+
+### Rules
+
+- **Never rename a column** that the current app code reads. Add the new column
+  alongside the old one first; remove the old one in a separate deployment once
+  the app no longer references it.
+- **Never drop a column** before deploying app code that stops using it.
+- **Never change a column type** in a way that breaks existing rows or makes the
+  current app code fail to read them.
+- **Always use the two-phase pattern** for any destructive schema change: Phase 1
+  adds the new structure and backfills data; Phase 2 (a separate deployment)
+  removes the old structure only after Phase 1 has been confirmed stable.
+
+### What backwards-compatible looks like
+
+A migration is backwards-compatible when the app code deployed *before* the
+migration still works correctly after the migration runs. A migration is
+forwards-compatible when the app code deployed *after* the migration still works
+if the migration is rolled back.
+
+If a migration cannot satisfy both conditions, split it into smaller steps until
+it can.
+
+See [cicd-and-deployment.md](cicd-and-deployment.md) for the full two-phase
+migration pattern with SQL examples.
+
+---
+
 ## Code Review Checklist
 
 When reviewing code (your own or others'), verify:
@@ -167,3 +240,9 @@ When reviewing code (your own or others'), verify:
 14. Animations use CSS first; `framer-motion` only when necessary.
 15. Long conditionals replaced with polymorphic patterns.
 16. Comments only where logic is genuinely opaque.
+17. Any `supabase/migrations` changes are backwards- and forwards-compatible: no column renames, drops, or type changes that break the running app code; destructive changes use the two-phase pattern.
+18. New Supabase tables have RLS enabled; edge functions verify JWT before any data operation; no secrets in client-side code.
+19. New i18n keys added to both `en.json` and `sv.json`; no hardcoded user-visible strings.
+20. Interactive elements have accessible labels; modals trap focus and close on Escape; semantic HTML used correctly.
+21. User-facing errors displayed in the UI; generic message shown for unexpected errors; no raw stack traces or internal details exposed.
+22. File, component, hook, and i18n key names follow the naming conventions table.

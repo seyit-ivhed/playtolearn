@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useAuth } from './useAuth';
+import { useAuth } from '../context/useAuth';
 import { useGameStore } from '../stores/game/store';
 import { usePremiumStore } from '../stores/premium.store';
 import { PersistenceService } from '../services/persistence.service';
 import { mergeGameState } from '../utils/merge-game-state';
 import type { GameState } from '../stores/game/interfaces';
+import { analyticsService } from '../services/analytics.service';
 
 export const INIT_TIMEOUT_MS = 10000;
 
@@ -16,6 +17,7 @@ export const useInitializeGame = () => {
     const initializePremium = usePremiumStore(state => state.initialize);
     const initialized = useRef(false);
     const lastAuthId = useRef<string | undefined>(user?.id);
+    const sessionStartedFired = useRef(false);
 
     const performInitialization = useCallback(async () => {
         await Promise.resolve();
@@ -47,21 +49,28 @@ export const useInitializeGame = () => {
                     const localState = useGameStore.getState();
                     const mergedState = mergeGameState(localState, cloudState as Partial<GameState>);
                     useGameStore.setState(mergedState);
+                } else {
+                    console.log('No cloud state found, pushing local state to new account...');
+                    await PersistenceService.pushState(user.id, useGameStore.getState());
                 }
             }
         };
 
         try {
-            let clearInitTimeout = () => {};
+            let timeoutId: ReturnType<typeof setTimeout> | undefined;
             await Promise.race([
                 doInit(),
                 new Promise<never>((_, reject) => {
-                    const id = setTimeout(() => reject(new Error('Game initialization timed out')), INIT_TIMEOUT_MS);
-                    clearInitTimeout = () => clearTimeout(id);
+                    timeoutId = setTimeout(() => reject(new Error('Game initialization timed out')), INIT_TIMEOUT_MS);
                 })
-            ]).finally(clearInitTimeout);
+            ]).finally(() => clearTimeout(timeoutId));
 
             setIsInitializing(false);
+            if (!sessionStartedFired.current) {
+                sessionStartedFired.current = true;
+                const hasProgress = Object.keys(useGameStore.getState().encounterResults).length > 0;
+                analyticsService.trackEvent('session_started', { has_progress: hasProgress });
+            }
         } catch (err: unknown) {
             console.error('Initialization failed:', err);
             initialized.current = false;

@@ -67,6 +67,18 @@ describe('progression.slice', () => {
             expect(PersistenceService.sync).not.toHaveBeenCalled();
         });
 
+        it('should log error and do nothing if companion level is not a number', () => {
+            const slice = setupSlice({
+                // @ts-expect-error testing invalid level type
+                companionStats: { 'valid_companion': { level: 'invalid', experience: 0 } }
+            });
+
+            slice.addCompanionExperience('valid_companion', 50);
+
+            expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid level'));
+            expect(mockSet).not.toHaveBeenCalled();
+        });
+
         it('should add experience EVEN if companion already has enough to level up', () => {
             const requiredXp = getRequiredXpForNextLevel(1);
             const slice = setupSlice({
@@ -142,6 +154,27 @@ describe('progression.slice', () => {
 
             slice.levelUpCompanion('valid_companion');
 
+            expect(mockSet).not.toHaveBeenCalled();
+        });
+
+        it('should log error and do nothing if companion stats not found', () => {
+            const slice = setupSlice({ companionStats: {} });
+
+            slice.levelUpCompanion('missing_companion');
+
+            expect(consoleErrorSpy).toHaveBeenCalled();
+            expect(mockSet).not.toHaveBeenCalled();
+        });
+
+        it('should log error and do nothing if companion level is not a number', () => {
+            const slice = setupSlice({
+                // @ts-expect-error testing invalid level type
+                companionStats: { 'valid_companion': { level: 'not-a-number', experience: 0 } }
+            });
+
+            slice.levelUpCompanion('valid_companion');
+
+            expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid level'));
             expect(mockSet).not.toHaveBeenCalled();
         });
     });

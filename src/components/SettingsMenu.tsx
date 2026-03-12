@@ -1,28 +1,30 @@
 import React, { useState } from 'react';
-import { Settings } from 'lucide-react';
+import { Settings, UserCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { DebugConsole } from './DebugConsole';
+import { useNavigate } from 'react-router-dom';
 import { playSfx } from './audio/audio.utils';
 import { Modal } from './ui/Modal';
 import { LanguageSettings } from './settings/LanguageSettings';
 import { SoundSettings } from './settings/SoundSettings';
-import { ChangePasswordSettings } from './settings/ChangePasswordSettings';
-import { useAuth } from '../hooks/useAuth';
-import sectionStyles from './settings/SettingsSection.module.css';
+import { useAuth } from '../context/useAuth';
 import styles from './SettingsMenu.module.css';
+import sectionStyles from './settings/SettingsSection.module.css';
 
 const SettingsMenu: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isDebugOpen, setIsDebugOpen] = useState(false);
     const { t } = useTranslation();
-    const { user } = useAuth();
-
-    const hasAccount = !!user && !user.is_anonymous;
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
+    const handleAccountClick = () => {
+        setIsOpen(false);
+        navigate('/account');
+    };
+
     return (
-        <div className={styles.settingsContainer}>
+        <div>
             <button
                 className={styles.settingsTrigger}
                 onClick={() => {
@@ -45,21 +47,19 @@ const SettingsMenu: React.FC = () => {
 
                 <SoundSettings />
 
-                {hasAccount && <ChangePasswordSettings />}
-
-                <div className={sectionStyles.settingsSection}>
-                    <button
-                        className={styles.debugButton}
-                        onClick={() => { setIsDebugOpen(true); setIsOpen(false); }}
-                    >
-                        🛠️ {t('settings.debug_console', 'Open Debug Console')}
-                    </button>
-                </div>
+                {isAuthenticated && (
+                    <div className={sectionStyles.settingsSection}>
+                        <button
+                            className={styles.accountButton}
+                            onClick={handleAccountClick}
+                            data-testid="settings-account-btn"
+                        >
+                            <UserCircle size={18} />
+                            {t('account.manage_account_btn', 'Account')}
+                        </button>
+                    </div>
+                )}
             </Modal>
-
-            {isDebugOpen && (
-                <DebugConsole onClose={() => setIsDebugOpen(false)} />
-            )}
         </div>
     );
 };

@@ -16,7 +16,7 @@ Deno.test({
             'STRIPE_SECRET_KEY': 'sk_test_mock',
             'SUPABASE_URL': 'https://mock.supabase.co',
             'SUPABASE_SERVICE_ROLE_KEY': 'service-role-key',
-            'CLIENT_URL': 'http://localhost:5173'
+            'ALLOWED_ORIGINS': 'http://localhost:5173'
         };
 
         // Stub Deno.env.get
@@ -121,6 +121,44 @@ Deno.test({
 
             assertEquals(res.status, 400);
             assertEquals(data.error.includes("Account with a valid email is required for purchases"), true);
+
+        } finally {
+            globalThis.fetch = originalFetch;
+            Deno.env.get = originalGet;
+        }
+    }
+});
+
+Deno.test({
+    name: "create-payment-intent handler - returns 400 when contentPackId is missing",
+    sanitizeResources: false,
+    sanitizeOps: false,
+    async fn() {
+        const originalGet = Deno.env.get;
+        const originalFetch = globalThis.fetch;
+
+        Deno.env.get = (key: string) => ({
+            'SUPABASE_URL': 'https://mock.supabase.co',
+            'SUPABASE_SERVICE_ROLE_KEY': 'service-role-key',
+        }[key] || originalGet(key));
+
+        globalThis.fetch = async () => new Response(JSON.stringify([]), { status: 200 });
+
+        try {
+            const req = new Request("http://localhost/create-payment-intent", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer mock-jwt",
+                },
+                body: JSON.stringify({}),
+            });
+
+            const res = await handler(req);
+            const data = await res.json();
+
+            assertEquals(res.status, 400);
+            assertEquals(data.error, "Missing or invalid contentPackId");
 
         } finally {
             globalThis.fetch = originalFetch;

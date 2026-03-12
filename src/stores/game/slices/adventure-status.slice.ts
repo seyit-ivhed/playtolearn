@@ -49,4 +49,5 @@ export const createAdventureStatusSlice: StateCreator<GameStore, [], [], Adventu
         const status = get().adventureStatuses[id];
         return status === AdventureStatus.AVAILABLE || status === AdventureStatus.COMPLETED;
     },
+
 });
