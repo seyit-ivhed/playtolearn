@@ -28,10 +28,10 @@ export const LandingHero: React.FC = () => {
         <section className={styles.hero}>
             <div className={styles.heroContent}>
                 <h1 className={styles.heroHeadline}>
-                    {t('landing.hero_headline', 'Math meets adventure.')}
+                    {t('landing.title', 'Math with Magic')}
                 </h1>
                 <p className={styles.heroTagline}>
-                    {t('landing.hero_tagline', 'Solve puzzles, grow magical companions, and conquer six epic worlds — all while mastering math.')}
+                    {t('landing.hero_tagline', 'Solve puzzles, grow magical companions, and enjoy epic adventures — all while practicing math.')}
                 </p>
                 <div className={styles.ctaGroup}>
                     <button
@@ -42,7 +42,7 @@ export const LandingHero: React.FC = () => {
                         {t('landing.hero_cta', 'Start Your Adventure')}
                     </button>
                     <p className={styles.ctaNote}>
-                        {t('landing.hero_cta_free', 'Free to play — no account needed')}
+                        {t('landing.hero_age_note', 'Designed for children ages 6–8')}
                     </p>
                 </div>
             </div>

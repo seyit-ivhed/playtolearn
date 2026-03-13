@@ -1,15 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Map, Users, Puzzle, BookOpen } from 'lucide-react';
+import { Swords, Users, Puzzle, Skull } from 'lucide-react';
 import styles from './LandingFeatures.module.css';
 
 const FEATURES = [
     {
-        icon: <Map size={28} />,
+        icon: <Swords size={28} />,
         titleKey: 'landing.feature_adventures_title',
-        titleDefault: 'Six Epic Adventures',
+        titleDefault: 'Epic Adventures',
         descKey: 'landing.feature_adventures_desc',
-        descDefault: 'Six magical worlds with hundreds of challenges designed for ages 6–8.',
+        descDefault: 'Explore magical worlds filled with hundreds of challenges and quests.',
     },
     {
         icon: <Users size={28} />,
@@ -19,18 +19,18 @@ const FEATURES = [
         descDefault: 'Level up Amara, Tariq, and their friends by solving math puzzles.',
     },
     {
+        icon: <Skull size={28} />,
+        titleKey: 'landing.feature_opponents_title',
+        titleDefault: 'Magical Opponents',
+        descKey: 'landing.feature_opponents_desc',
+        descDefault: 'Battle fearsome bosses and mysterious creatures on your journey.',
+    },
+    {
         icon: <Puzzle size={28} />,
         titleKey: 'landing.feature_puzzles_title',
         titleDefault: 'Real Math Practice',
         descKey: 'landing.feature_puzzles_desc',
         descDefault: 'Addition, subtraction, multiplication, and division — disguised as magic.',
-    },
-    {
-        icon: <BookOpen size={28} />,
-        titleKey: 'landing.feature_progress_title',
-        titleDefault: 'Save Your Journey',
-        descKey: 'landing.feature_progress_desc',
-        descDefault: 'Create a free account to save progress and play across any device.',
     },
 ] as const;
 

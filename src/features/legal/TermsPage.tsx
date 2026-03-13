@@ -10,13 +10,15 @@ export const TermsPage: React.FC = () => {
 
     return (
         <div className={styles.legalPageWrapper}>
-            <div className={styles.legalPageContent}>
+            <header className={styles.legalPageHeader}>
                 <nav className={styles.legalPageNav}>
                     <Link to="/" className={styles.legalPageBackLink}>
                         <ChevronLeft size={16} aria-hidden="true" />
                         {t('landing.title', 'Math with Magic')}
                     </Link>
                 </nav>
+            </header>
+            <div className={styles.legalPageContent}>
                 <div className={styles.legalScrollArea}>
                     <TermsOfServiceContent />
                 </div>

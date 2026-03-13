@@ -39,51 +39,22 @@
     gap: 0.3rem;
 }
 
-.footerContactItem {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.45);
-}
-
-.footerContactItem a {
-    color: rgba(255, 255, 255, 0.55);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.footerContactItem a:hover {
-    color: var(--color-brand-accent);
-}
-
-.footerPayments {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-end;
-}
-
-.footerPaymentsLabel {
+.footerContactLabel {
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.3);
     text-transform: uppercase;
     letter-spacing: 0.06em;
 }
 
-.footerPaymentBadges {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    flex-wrap: wrap;
+.footerContactLink {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-.footerPaymentBadge {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 6px;
-    padding: 0.3rem 0.7rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.55);
-    letter-spacing: 0.04em;
+.footerContactLink:hover {
+    color: var(--color-brand-accent);
 }
 
 .footerBottom {
@@ -131,7 +102,4 @@
         gap: 1.5rem;
     }
 
-    .footerPayments {
-        align-items: flex-start;
-    }
 }

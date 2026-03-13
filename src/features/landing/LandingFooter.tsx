@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './LandingFooter.module.css';
 
-const PAYMENT_BADGES = ['Visa', 'Mastercard', 'Amex'] as const;
-
 const LEGAL_LINKS = [
     { labelKey: 'legal.privacy_policy', labelDefault: 'Privacy Policy', to: '/privacy' },
     { labelKey: 'legal.terms_of_service', labelDefault: 'Terms of Service', to: '/terms' },
@@ -31,24 +29,12 @@ export const LandingFooter: React.FC = () => {
                 </div>
 
                 <div className={styles.footerContact}>
-                    <span className={styles.footerContactItem}>
-                        <a href="mailto:hello@mathwithmagic.com">
-                            {t('landing.footer_contact', 'hello@mathwithmagic.com')}
-                        </a>
+                    <span className={styles.footerContactLabel}>
+                        {t('landing.footer_contact_label', 'Get in touch')}
                     </span>
-                </div>
-
-                <div className={styles.footerPayments}>
-                    <span className={styles.footerPaymentsLabel}>
-                        {t('landing.footer_accepted_payments', 'Accepted payments')}
-                    </span>
-                    <div className={styles.footerPaymentBadges}>
-                        {PAYMENT_BADGES.map((badge) => (
-                            <span key={badge} className={styles.footerPaymentBadge}>
-                                {badge}
-                            </span>
-                        ))}
-                    </div>
+                    <a href="mailto:hello@mathwithmagic.com" className={styles.footerContactLink}>
+                        hello@mathwithmagic.com
+                    </a>
                 </div>
             </div>
 
