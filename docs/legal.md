@@ -135,13 +135,14 @@ Supabase and Stripe are US-headquartered companies. GDPR requires a valid transf
 
 GDPR Article 30 requires data controllers to maintain an internal record of processing activities. While companies with fewer than 250 employees are partially exempt, it is best practice to maintain one. This is an internal document, not published.
 
-**Minimum RoPA content:**
+The RoPA is maintained in **[`docs/ropa.md`](ropa.md)**. It covers all processing activities (authentication, game progress, analytics, payments, product updates) and includes all minimum required fields:
+
 - Name and contact details of controller (Outlean AB)
 - Purposes of processing
-- Categories of data subjects (parents/guardians)
-- Categories of personal data (email, hashed password, session tokens)
+- Categories of data subjects (parents/guardians of children ages 6–8)
+- Categories of personal data (email, hashed password, Supabase session token)
 - Categories of recipients (Supabase, Stripe)
-- International transfer details
+- International transfer details (Supabase EU region / SCCs; Stripe DPF)
 - Retention periods
 
 ### 4.6 IMY Registration
@@ -403,6 +404,6 @@ When a parent deletes their account, **all associated data must be deleted**:
 | 9 | Add legal page links to account creation + settings | Ready to implement | — |
 | 10 | Implement account deletion flow (full cascade) | Ready to implement | — |
 | 11 | Add EU withdrawal waiver checkbox at checkout | Ready to implement | — |
-| 12 | Create internal RoPA document | Action required | No blocker — internal document |
+| 12 | Create internal RoPA document | ✅ Done — see [`docs/ropa.md`](ropa.md) | — |
 | 13 | Optional: lightweight DPIA (children's app) | Recommended | No blocker — internal document |
 | 14 | Optional: lawyer review of final documents | Recommended | Drafts must exist first |
