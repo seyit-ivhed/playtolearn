@@ -49,12 +49,17 @@ export const verifyAndGrantEntitlement = async (
             .update({ status: 'succeeded', updated_at: new Date().toISOString() })
             .eq('id', pendingIntent.id)
 
-        await supabaseAdmin.from('player_entitlements')
+        const { error: entitlementError } = await supabaseAdmin.from('player_entitlements')
             .upsert({
                 player_id: playerId,
                 content_pack_id: contentPackId,
                 purchase_intent_id: pendingIntent.id,
             }, { onConflict: 'player_id, content_pack_id' })
+
+        if (entitlementError) {
+            console.error('Error granting entitlement during self-heal:', entitlementError)
+            throw new Error('Database error during entitlement grant')
+        }
 
         console.log(`SELF-HEAL: Entitlement granted for Player ${playerId} (Pack: ${contentPackId})`)
         return { verified: true }
