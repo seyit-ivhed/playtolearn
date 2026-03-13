@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { analyticsService } from '../../services/analytics.service';
 
 import adventure2 from '../../assets/images/maps/adventure-2.jpg';
 import adventure3 from '../../assets/images/maps/adventure-3.jpg';
@@ -21,6 +22,7 @@ export const LandingHero: React.FC = () => {
     const navigate = useNavigate();
 
     const handlePlayNow = () => {
+        analyticsService.trackEvent('landing_cta_clicked');
         navigate('/chronicle');
     };
 
