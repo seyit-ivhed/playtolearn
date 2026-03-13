@@ -1,12 +1,14 @@
 .legalPageWrapper {
-    min-height: 100vh;
-    background: #050208;
+    position: fixed;
+    inset: 0;
+    background: var(--color-bg-deep);
     display: flex;
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
     color: var(--color-text-primary);
     animation: legalFadeIn 0.5s ease-out;
+    overflow-y: auto;
 }
 
 @keyframes legalFadeIn {

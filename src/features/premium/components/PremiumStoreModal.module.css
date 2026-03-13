@@ -1,8 +1,8 @@
 .premiumModalOverlay {
     position: fixed;
     inset: 0;
-    background: #0f051a;
-    background: radial-gradient(circle at center, #1a0b2e 0%, #050208 100%);
+    background: var(--color-bg-mystic-dark);
+    background: radial-gradient(circle at center, var(--color-bg-mystic) 0%, var(--color-bg-deep) 100%);
     z-index: 9999;
     overflow: hidden;
     display: flex;
@@ -117,7 +117,7 @@
 
 .unlockButton {
     background: var(--color-brand-accent);
-    color: #1a0b2e;
+    color: var(--color-bg-mystic);
     padding: 1.5rem 4rem;
     border: none;
     border-radius: 50px;

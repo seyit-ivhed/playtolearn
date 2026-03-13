@@ -43,7 +43,7 @@
 
 .ctaButton {
     background: var(--color-brand-accent);
-    color: #1a0b2e;
+    color: var(--color-bg-mystic);
     padding: 1.5rem 4rem;
     border: none;
     border-radius: 50px;

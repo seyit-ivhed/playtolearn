@@ -1,5 +1,5 @@
 .accountStep {
-    background: #1a0b2e;
+    background: var(--color-bg-mystic);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 32px;
     padding: 2.5rem 3rem;
