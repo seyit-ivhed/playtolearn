@@ -22,14 +22,13 @@ function AppContent() {
   const { isInitializing, error, retry } = useInitializeGame();
   useDisableContextMenu();
 
-  if (isInitializing || error) {
-    return <LoadingScreen error={error} onRetry={retry} />;
-  }
-
   return (
     <>
       <BackgroundMusic />
-      <Routes>
+      {isInitializing || error ? (
+        <LoadingScreen error={error} onRetry={retry} />
+      ) : (
+        <Routes>
         <Route element={<Layout />}>
           {/* Chronicle Routes */}
           <Route path="/chronicle" element={<ChronicleBook />} />
@@ -60,6 +59,7 @@ function AppContent() {
           <Route path="/math-debug" element={<MathTestPage />} />
         </Route>
       </Routes>
+      )}
     </>
   );
 }
