@@ -45,9 +45,13 @@ export const verifyAndGrantEntitlement = async (
 
     if (intent.status === 'succeeded') {
         // 3. Self-heal: grant entitlement since Stripe confirms payment
-        await supabaseAdmin.from('purchase_intents')
+        const { error: updateError } = await supabaseAdmin.from('purchase_intents')
             .update({ status: 'succeeded', updated_at: new Date().toISOString() })
             .eq('id', pendingIntent.id)
+
+        if (updateError) {
+            console.error('Error updating purchase intent status:', updateError)
+        }
 
         const { error: entitlementError } = await supabaseAdmin.from('player_entitlements')
             .upsert({

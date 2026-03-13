@@ -16,7 +16,12 @@ const MUSIC_FILE_KEYS = Object.keys(musicFiles);
 
 const getMusicUrl = (filename: string) => {
     const key = `../../assets/music/${filename}`;
-    return musicFiles[key] || '';
+    const url = musicFiles[key];
+    if (!url) {
+        console.error(`Music file not found: ${filename}`);
+        return '';
+    }
+    return url;
 };
 
 export const BackgroundMusic = () => {
