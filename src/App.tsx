@@ -13,6 +13,9 @@ import { BackgroundMusic } from './components/audio/BackgroundMusic';
 import { RootRedirect } from './components/RootRedirect';
 import { AccountPage } from './features/account/AccountPage';
 import { FarewellPage } from './features/farewell/FarewellPage';
+import { PrivacyPage } from './features/legal/PrivacyPage';
+import { TermsPage } from './features/legal/TermsPage';
+import { Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 
 function AppContent() {
@@ -27,9 +30,6 @@ function AppContent() {
       <BackgroundMusic />
       <Routes>
         <Route element={<Layout />}>
-          {/* Unified Entry Point */}
-          <Route path="/" element={<RootRedirect />} />
-
           {/* Chronicle Routes */}
           <Route path="/chronicle" element={<ChronicleBook />} />
           <Route path="/chronicle/:pageId" element={<ChronicleBook />} />
@@ -68,7 +68,14 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
+          {/* Public routes — no game initialization required */}
           <Route path="/farewell" element={<FarewellPage />} />
+          <Route path="/" element={<RootRedirect />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/refund-policy" element={<Navigate to="/terms" replace />} />
+
+          {/* All other routes go through AppContent (game initialization) */}
           <Route path="/*" element={<AppContent />} />
         </Routes>
       </AuthProvider>

@@ -1,0 +1,26 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { ChevronLeft } from 'lucide-react';
+import { PrivacyPolicyContent } from './PrivacyPolicyContent';
+import styles from './LegalStandalonePage.module.css';
+
+export const PrivacyPage: React.FC = () => {
+    const { t } = useTranslation();
+
+    return (
+        <div className={styles.legalPageWrapper}>
+            <div className={styles.legalPageContent}>
+                <nav className={styles.legalPageNav}>
+                    <Link to="/" className={styles.legalPageBackLink}>
+                        <ChevronLeft size={16} aria-hidden="true" />
+                        {t('landing.title', 'Math with Magic')}
+                    </Link>
+                </nav>
+                <div className={styles.legalScrollArea}>
+                    <PrivacyPolicyContent />
+                </div>
+            </div>
+        </div>
+    );
+};
