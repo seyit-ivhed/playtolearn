@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ShieldCheck, Sparkles, Map, Users, Skull, Puzzle } from 'lucide-react';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { analyticsService } from '../../../services/analytics.service';
+import { useModalAccessibility } from '../../../hooks/useModalAccessibility';
 import styles from './PremiumStoreModal.module.css';
 import collage from '../../../styles/collage.module.css';
 
@@ -29,6 +30,7 @@ interface PremiumStoreModalProps {
 
 export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, onClose, sourceAdventureId }) => {
     const { t } = useTranslation();
+    const modalRef = useModalAccessibility(onClose, isOpen);
 
     useEffect(() => {
         if (isOpen) {
@@ -39,20 +41,24 @@ export const PremiumStoreModal: React.FC<PremiumStoreModalProps> = ({ isOpen, on
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen]);
 
-    if (!isOpen) return null;
+    if (!isOpen) {
+        return null;
+    }
 
     const handleUnlock = () => {
         analyticsService.trackEvent('premium_unlock_clicked');
         window.location.href = '/checkout.html';
     };
 
-    const handleClose = () => {
-        onClose();
-    };
-
     return (
-        <div className={styles.premiumModalOverlay}>
-            <FormCloseButton onClick={handleClose} className={styles.closeButton} />
+        <div
+            className={styles.premiumModalOverlay}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t('premium.store.title')}
+            ref={modalRef}
+        >
+            <FormCloseButton onClick={onClose} className={styles.closeButton} />
 
             <div className={styles.singlePageLayout}>
                 {/* Left Side: Information and CTA */}
