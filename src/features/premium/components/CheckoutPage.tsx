@@ -9,10 +9,10 @@ import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { CheckCircle2 } from 'lucide-react';
 import { analyticsService } from '../../../services/analytics.service';
 import { LegalModal, type LegalDocumentType } from '../../legal/LegalModal';
-import './Premium.css';
+import styles from './CheckoutPage.module.css';
 
 export const CheckoutPage: React.FC = () => {
-    // NOTE: This page is intentionally isolated from the main SPA routing to prevent 
+    // NOTE: This page is intentionally isolated from the main SPA routing to prevent
     // Stripe cookies/scripts from persisting in the main game application.
     // We use window.location.href instead of useNavigate to ensure a clean environment context.
 
@@ -20,6 +20,7 @@ export const CheckoutPage: React.FC = () => {
     const { isAuthenticated, loading: authLoading } = useAuth();
     const [showSuccess, setShowSuccess] = useState(false);
     const [legalModal, setLegalModal] = useState<LegalDocumentType | null>(null);
+    const [checkoutKey, setCheckoutKey] = useState(0);
 
     const isAnonymous = !isAuthenticated;
     const checkoutViewedFired = useRef(false);
@@ -39,10 +40,16 @@ export const CheckoutPage: React.FC = () => {
         setShowSuccess(true);
     };
 
+    const handleRestart = () => {
+        // Remount CheckoutOverlay to re-run create-payment-intent,
+        // which will detect the existing successful Stripe payment and self-heal.
+        setCheckoutKey(prev => prev + 1);
+    };
+
     if (authLoading) {
         return (
-            <div className="checkout-page-loading">
-                <div className="spinner"></div>
+            <div className={styles.loading}>
+                <div className={styles.spinner}></div>
                 <p>{t('common.loading', 'Loading...')}</p>
             </div>
         );
@@ -50,18 +57,18 @@ export const CheckoutPage: React.FC = () => {
 
     return (
         <>
-            <div className="checkout-page-container">
+            <div className={styles.container}>
                 <CheckoutMusic />
-                <FormCloseButton onClick={handleBackToGame} />
+                <FormCloseButton onClick={handleBackToGame} className={styles.closeButton} />
 
-                <main className="checkout-main">
+                <main className={styles.main}>
                     {showSuccess ? (
-                        <div className="success-screen" data-testid="success-screen">
-                            <div className="success-icon-container">
+                        <div className={styles.successScreen} data-testid="success-screen">
+                            <div className={styles.successIconContainer}>
                                 <CheckCircle2 size={80} />
                             </div>
-                            <h2 className="premium-title">{t('premium.store.success_title')}</h2>
-                            <p className="success-description">
+                            <h2 className={styles.successTitle}>{t('premium.store.success_title')}</h2>
+                            <p className={styles.successDescription}>
                                 {t('premium.store.success_message')}
                             </p>
                             <PrimaryButton
@@ -74,7 +81,7 @@ export const CheckoutPage: React.FC = () => {
                             </PrimaryButton>
                         </div>
                     ) : isAnonymous ? (
-                        <div className="account-creation-container">
+                        <div className={styles.accountCreationContainer}>
                             <AccountCreationStep
                                 onSuccess={() => {
                                     // Fire checkout_viewed here to guarantee it comes after
@@ -90,29 +97,31 @@ export const CheckoutPage: React.FC = () => {
                             />
                         </div>
                     ) : (
-                        <div className="premium-checkout">
+                        <div className={styles.premiumCheckout}>
 
                             <CheckoutOverlay
+                                key={checkoutKey}
                                 contentPackId="premium_base"
                                 onSuccess={handleSuccess}
                                 onCancel={handleBackToGame}
+                                onRestart={handleRestart}
                                 price={t('premium.store.price', '59 SEK')}
                             />
                         </div>
                     )}
                 </main>
 
-                <footer className="checkout-legal-footer">
+                <footer className={styles.legalFooter}>
                     <button
-                        className="checkout-legal-link"
+                        className={styles.legalLink}
                         onClick={() => setLegalModal('privacy')}
                         data-testid="checkout-privacy-link"
                     >
                         {t('legal.privacy_policy', 'Privacy Policy')}
                     </button>
-                    <span className="checkout-legal-sep">|</span>
+                    <span className={styles.legalSep}>|</span>
                     <button
-                        className="checkout-legal-link"
+                        className={styles.legalLink}
                         onClick={() => setLegalModal('terms')}
                         data-testid="checkout-terms-link"
                     >

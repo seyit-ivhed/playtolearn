@@ -4,11 +4,13 @@ import { PaymentService } from '../../../services/payment.service';
 import { CheckoutForm } from './CheckoutForm';
 import { FormCloseButton } from '../../../components/ui/FormCloseButton';
 import { useTranslation } from 'react-i18next';
+import styles from './CheckoutOverlay.module.css';
 
 interface CheckoutOverlayProps {
     contentPackId: string;
     onSuccess: () => void;
     onCancel: () => void;
+    onRestart: () => void;
     price: string;
 }
 
@@ -16,6 +18,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
     contentPackId,
     onSuccess,
     onCancel,
+    onRestart,
     price
 }) => {
     const { t } = useTranslation();
@@ -51,7 +54,7 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
 
     if (error) {
         return (
-            <div className="checkout-error-state" data-testid="checkout-error-state">
+            <div className={styles.errorState} data-testid="checkout-error-state">
                 <p>{error}</p>
                 <button onClick={onCancel}>{t('common.back', 'Back')}</button>
             </div>
@@ -60,8 +63,8 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
 
     if (!clientSecret) {
         return (
-            <div className="checkout-loading-state">
-                <div className="spinner"></div>
+            <div className={styles.loadingState}>
+                <div className={styles.spinner}></div>
                 <p>{t('premium.store.loading_payment', 'Securing payment portal...')}</p>
             </div>
         );
@@ -128,10 +131,10 @@ export const CheckoutOverlay: React.FC<CheckoutOverlayProps> = ({
     };
 
     return (
-        <div className="checkout-overlay-container" data-testid="checkout-overlay">
+        <div className={styles.container} data-testid="checkout-overlay">
             <FormCloseButton onClick={onCancel} />
             <Elements key={clientSecret} stripe={stripePromise} options={options}>
-                <CheckoutForm contentPackId={contentPackId} onSuccess={onSuccess} onCancel={onCancel} price={price} />
+                <CheckoutForm contentPackId={contentPackId} onSuccess={onSuccess} onCancel={onCancel} onRestart={onRestart} price={price} />
             </Elements>
         </div>
     );
